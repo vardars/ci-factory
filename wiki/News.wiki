@@ -1,0 +1,19 @@
+#summary CI Factory News
+#labels Featured
+
+= Dec 7th 2006 =
+
+CI Factory is moving from Berlios to Google Project Hosting.  I had been using some of the
+services of Berlios combine with Morten Mertner's Confluence/Jira and my own Joomla.  I
+would rather have it all hosted by the same service provider so Google wins.
+=== Wiki ===
+I have not decided on the best place to relocate the old wiki content to yet.  At the
+moment the Google Groups Pages seems to be the best fit.  Though I am betting that after
+JotSpot is fulling absorbed into Google's infrastructure it will be the best spot.
+=== Source ===
+I have not uploaded the source just yet.  I hope to do that on Monday.
+=== Downloads ===
+I have mirrored all the downloads here at Google Project Hosting.  I will not remove what
+is currently available for download on http://www.jayflowers.com nor will I update it with
+new releases in the future.
+
