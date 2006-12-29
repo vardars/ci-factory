@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
+
+  <loadtasks assembly="nAnt\bin\Common.Functions.dll" />
+
+  <include buildfile="Properties.build.xml"/>
+  <include buildfile="Common.Build.xml" />
+
+  <description>Begin Package Includes</description>
+  <description>End Package Includes</description>
+
+	<target name="Triggered" depends="SetUps" >
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+        <description>End Compile Actions</description>
+
+        <description>Begin Varification Actions</description>
+        <description>End Varification Actions</description>
+
+        <description>Begin Post Build Actions</description>
+        <description>End Post Build Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+
+        <call target="TearDowns"/>
+
+      </finally>
+    </trycatch>
+	</target>
+
+	<target name="SetUps" >
+    <description>Begin SetUps</description>
+    <description>End SetUps</description>
+	</target>
+
+  <target name="TearDowns">
+    <description>Begin TearDowns</description>
+    <description>End TearDowns</description>
+  </target>
+
+</project>

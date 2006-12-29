@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSS.Properties">
+  
+  <property name="VSS.DBPath" value="%VSS.DBPath%" />
+  <property name="VSS.Username" value="%VSS.Username%" />
+  <property name="VSS.Password" value="%VSS.Password%" />
+
+</project>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nAntInstaller" >
+
+  <property name="nAnt.BuildDirectory" value="${BuildDirectory}\nAnt"/>
+  <property name="nAnt.MainBuildFile" value="${BuildDirectory}\Main.build.xml"/>
+  <property name="nAnt.PropertiesBuildFile" value="${BuildDirectory}\Properties.build.xml"/>
+  <property name="nAnt.CommonBuildFile" value="${BuildDirectory}\Common.build.xml"/>
+  <property name="nAnt.ScratchFile" value="${BuildDirectory}\Scratch.build.xml"/>
+  <property name="nAnt.UpdatenAntSchemaBatFile" value="${BuildDirectory}\UpdatenAntSchema.bat"/>
+  <property name="nAnt.UpdatenAntSchemaBuildFile" value="${BuildDirectory}\UpdatenAntSchema.xml"/>
+
+  <!-- These are private... -->
+  
+  <property name="Private.nAnt.DefaultBuildDirectory" value="${SourceBuildDirectory}\nAnt"/>
+  <property name="Private.nAnt.DefaultMainBuildFile" value="${SourceBuildDirectory}\Main.build.xml"/>
+  <property name="Private.nAnt.DefaultPropertiesBuildFile" value="${SourceBuildDirectory}\Properties.build.xml"/>
+  <property name="Private.nAnt.DefaultCommonBuildFile" value="${SourceBuildDirectory}\Common.build.xml"/>
+  <property name="Private.nAnt.DefaultScratchFile" value="${SourceBuildDirectory}\Scratch.build.xml"/>
+  <property name="Private.nAnt.DefaultUpdatenAntSchemaBatFile" value="${SourceBuildDirectory}\UpdatenAntSchema.bat"/>
+  <property name="Private.nAnt.DefaultUpdatenAntSchemaBuildFile" value="${SourceBuildDirectory}\UpdatenAntSchema.xml"/>
+
+  <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
+    <copy file="${Private.nAnt.DefaultMainBuildFile}" tofile="${nAnt.MainBuildFile}" />
+    <copy file="${Private.nAnt.DefaultPropertiesBuildFile}" tofile="${nAnt.PropertiesBuildFile}" />
+    <copy file="${Private.nAnt.DefaultCommonBuildFile}" tofile="${nAnt.CommonBuildFile}" />
+    <copy file="${Private.nAnt.DefaultScratchFile}" tofile="${nAnt.ScratchFile}" />
+    <copy file="${Private.nAnt.DefaultUpdatenAntSchemaBatFile}" tofile="${nAnt.UpdatenAntSchemaBatFile}" />
+    <copy file="${Private.nAnt.DefaultUpdatenAntSchemaBuildFile}" tofile="${nAnt.UpdatenAntSchemaBuildFile}" />
+    <call target="Private.nAnt.CopyToBuild"/>
+    <exec program="${nAnt.UpdatenAntSchemaBatFile}" workingdir="${path::get-directory-name(nAnt.UpdatenAntSchemaBatFile)}"/>
+  </target>
+
+  <target name="nAnt.ValidateParameters">
+
+  </target>
+
+  <target name="Private.nAnt.CopyToBuild">
+    <copy todir="${nAnt.BuildDirectory}">
+      <fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+  </target>
+
+</project>

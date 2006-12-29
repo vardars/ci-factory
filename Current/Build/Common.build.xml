@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Common">
+  
+  <property name="Common.FilesToDelete" value="" overwrite="false"/>
+
+  <target name="Common.DeleteFiles">
+    <echo message="The property Common.FilesToDelete was not specified." if="${Common.FilesToDelete == ''}"/>
+    <foreach item="String" in="${Common.FilesToDelete}" delim=";" property="Private.Common.FileToDelete" unless="${Common.FilesToDelete == ''}">
+      <echo message="Attempting to delete ${Private.Common.FileToDelete}."/>
+      <delete verbose="true">
+        <fileset>
+          <include name="${Private.Common.FileToDelete}"/>
+        </fileset>
+      </delete>
+    </foreach>
+  </target>
+
+  <script language="C#" prefix="list">
+    <code>
+      <![CDATA[                 
+					
+          private static System.Collections.Hashtable MasterTable = new System.Collections.Hashtable();
+          
+          [Function("create")]
+					public static string Create(string listName)
+          {
+            if (!MasterTable.Contains(listName))
+              MasterTable.Add(listName, new System.Collections.ArrayList());
+            return listName;
+          }
+          
+          [Function("destroy")]
+					public static string Destroy(string listName)
+          {
+            if (!MasterTable.Contains(listName))
+              MasterTable.Remove(listName);
+            return listName;
+          }
+          
+          [Function("contains")]
+					public static bool Contains(string listName, string item)
+          {
+            return ((System.Collections.ArrayList)MasterTable[listName]).Contains(item);
+          }
+          
+          [Function("add")]
+					public static void Add(string listName, string item)
+          {
+            ((System.Collections.ArrayList)MasterTable[listName]).Add(item);
+          }
+          
+          [Function("remove")]
+					public static void Remove(string listName, string item)
+          {
+            ((System.Collections.ArrayList)MasterTable[listName]).Remove(item);
+          }
+          
+          [Function("flatten")]
+          public static string Flatten(string listName)
+          {
+            System.Collections.ArrayList List = (System.Collections.ArrayList) MasterTable[listName];
+            if (List.Count == 0)
+                return string.Empty;
+            StringBuilder builder = new StringBuilder();
+            builder.Append(List[0]);
+            for (int i = 1; i < List.Count; ++i)
+            {
+                builder.Append(",");
+                builder.Append(List[i]);
+            }
+            return builder.ToString();
+          }
+          
+			]]>
+    </code>
+  </script>
+  
+</project>  

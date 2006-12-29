@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
+  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
+  <property name="Compile.XmlLogFileName" value="Debug.xml" />
+  <property name="Compile.ToConvertLogFile" value="true" />
+  <property name="Compile.ConfigName" value="debug"/>
+  <property name="Compile.ZipFileName" value="Doubler.zip"/>
+  <property name="Compile.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\*.xml" />
+
+  <fileset id="Compile.ToCopy">
+    <include name="${ProductionDirectory}\Double.Common\bin\.Net 1.1\Release\*.*"/>
+    <include name="${ProductionDirectory}\Doubler\bin\Release\*.*"/>
+    <exclude name="${ProductionDirectory}\Doubler\bin\Release\Reflector.exe"/>
+    <include name="${ProductionDirectory}\ReflectorDouble\bin\Release\*.*" />
+    <exclude name="${ProductionDirectory}\ReflectorDouble\bin\Release\Reflector.exe" />
+  </fileset>
+</project>

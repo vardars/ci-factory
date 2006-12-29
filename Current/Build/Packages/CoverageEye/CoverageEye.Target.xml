@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Coverage" >
+
+  <include buildfile="CoverageEye.Properties.xml" />
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+	<property name="Coverage.ReportFolder" value="${BuildDirectory}\Coverage Reports"/>
+  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
+  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
+
+  <fileset id="Coverage.Targets">
+    <include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
+    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
+  </fileset>
+
+  <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
+	-->
+
+  <!-- The following properties are for internal use only -->
+	
+  <property name="Private.Coverage.ConfigFile" value="" />
+  <property name="Private.Coverage.COMServer" value="" />
+  <property name="Private.Coverage.CorProfiler" value="{18656C37-035D-41CD-82C2-85DEF2DD5F7B}" />
+
+  <target name="Private.Coverage.GetConfigFile">
+    <readregistry hive="ClassesRoot" key="CLSID\${Private.Coverage.CorProfiler}\InprocServer32\" property="Private.Coverage.COMServer"/>
+    <property name="Private.Coverage.ConfigFile" value="${path::get-directory-name(Private.Coverage.COMServer)}\Configuration\CoverageConfiguration.xml" />
+  </target>
+  
+	<target name="Private.Coverage.WriteConfiguration">
+    <call target="Private.Coverage.GetConfigFile"/>
+    
+    <write file="${Private.Coverage.ConfigFile}" append="false">
+      <text><![CDATA[<?xml version="1.0"?>
+<CoverageConfiguration targetNamespace="urn:CoverageConfiguration">]]>
+</text>
+    </write>
+    
+    <foreach item="File" property="Private.Coverage.PrepareFor.AssemblyPath" >
+      <in>
+        <items refid="Coverage.Targets" />
+      </in>
+      <do>
+        <write file="${Private.Coverage.ConfigFile}" append="true">
+          <text>
+            <![CDATA[<Assembly Owner="bogas@nowhere.com" Description="%Description%" AssemblyName="%AssemblyName%" ReportDirectory="%ReportDirectory%"/>]]>
+        </text>
+        <filterchain>
+          <replacestring from="%Description%" to="${path::get-file-name-without-extension(Private.Coverage.PrepareFor.AssemblyPath)}" />
+          <replacestring from="%AssemblyName%" to="${string::to-lower(path::get-file-name(Private.Coverage.PrepareFor.AssemblyPath))}" />
+          <replacestring from="%ReportDirectory%" to="${Coverage.ReportFolder}" />
+          </filterchain>
+        </write>
+      </do>
+    </foreach>
+
+    <write file="${Private.Coverage.ConfigFile}" append="true">
+      <text><![CDATA[        <Asp Selected="false"/>
+        <Services>
+        </Services>
+</CoverageConfiguration>]]>
+</text>
+    </write>
+	</target>
+
+	<target name="Private.Coverage.MergeReports">
+    <property name="CoverageReports" value="${list::create('CoverageReports')}"/>
+    <foreach item="File" property="ReportFilePath">
+      <in>
+        <items>
+          <include name="${Coverage.ReportFolder}\Report.*.xml" />
+        </items>
+      </in>
+      <do>
+        <regex pattern="Report\.\{[\w|\d|-]+\}\.(?'AssemblyFileName'[\w\.?]+)\.xml$" input="${ReportFilePath}" />
+        <ifnot test="${list::contains(CoverageReports, AssemblyFileName)}">
+          <property name="nothing" value="${list::add(CoverageReports, AssemblyFileName)}"/>
+        </ifnot>
+      </do>
+    </foreach>
+
+    <foreach item="String" delim="," property="AssemblyFileName" in="${list::flatten(CoverageReports)}">
+      <do>
+        
+        <property name="ReportFiles" value="${Coverage.ReportFolder}\Report.*.${AssemblyFileName}.xml"/>
+
+        <regex pattern="^(?'AssemblyName'[\w\.?]+)\.(dll|exe)$" input="${AssemblyFileName}" />
+        <property name="AssemblyBinLocation" value="${ProductionDirectory}\${AssemblyName}\bin"/>
+        
+        <property name="AssemblyReportName" value="CoverageReport.${AssemblyFileName}.xml"/>
+
+        <exec program="cemerge.exe" basedir="${BuildDirectory}\Packages\CoverageEye\bin">
+            <arg value="${Coverage.ReportFolder}\${AssemblyReportName}" />
+            <arg value="${AssemblyBinLocation}" />
+            <arg value="${ReportFiles}" />
+        </exec>
+
+        <property name="Deployment.SourceFileName" value="${AssemblyReportName}" />
+        <property name="Deployment.SourceDir"	value="${Coverage.ReportFolder}" />
+        <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+        <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+        <call target="Deployment.PublishFileSilently"/>
+        
+      </do>
+    </foreach>
+
+    <call target="Private.Coverage.MergeInToSingleReport"/>
+	</target>
+
+  <target name="Private.Coverage.MergeInToSingleReport">
+    <exec program="cemerge.exe" 
+			basedir="${BuildDirectory}\Packages\CoverageEye\bin">
+      <arg value='"${Coverage.ReportFolder}\ConsolidatedReport.xml"' />
+      <arg value=".\" />
+      <!-- This is a bogas value. -->
+      <arg value='"${Coverage.ReportFolder}\Report.*.xml"' />
+    </exec>
+  </target>
+	
+  <target name="UnitTest.RunTests">
+    <call target="Private.Coverage.CreatePropertiesFile"/>
+    <call target="Private.Coverage.WriteConfiguration"/>
+    <trycatch>
+      <try>
+        <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+          <environment>
+            <variable name="Cor_Enable_Profiling" value="1"/>
+            <variable name="Cor_Profiler" value="${Private.Coverage.CorProfiler}"/>
+          </environment>
+          <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
+          <arg line='@"${Coverage.CommonPropertiesFile}"' />
+          <arg line="UnitTest.RunTests"/>
+        </exec>
+      </try>
+      <finally>
+        <call target="Private.Coverage.MergeReports"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Private.Coverage.CreatePropertiesFile">
+    <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+    <saveproperties file="${Coverage.CommonPropertiesFile}" format="CommandLine" >
+      <property name="CCNetBuildCondition"/>
+      <property name="CCNetIntegrationStatus"/>
+      <property name="CCNetLabel"/>
+      <property name="CCNetLastIntegrationStatus"/>
+      <property name="CCNetProject"/>
+      <property name="CCNetBuildDate"/>
+      <property name="CCNetBuildTime"/>
+      <property name="CCNetArtifactDirectory"/>
+      <property name="CCNetWorkingDirectory"/>
+      <property name="ProjectName"/>
+      <property name="ProjectCodeLineName"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
+      <property name="Compile.ConfigName"/>
+    </saveproperties>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <call target="Private.Coverage.GetConfigFile"/>
+    <mkdir if="${directory::exists(Coverage.ReportFolder) == false}" dir="${Coverage.ReportFolder}"/>
+    
+    <property name="Common.FilesToDelete" value="${Coverage.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+
+    <call target="Private.Coverage.CreatePropertiesFile"/>
+    
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
+      <arg line='@"${Coverage.CommonPropertiesFile}"' />
+      <arg line="UnitTest.SetUp"/>
+    </exec>
+  </target>
+
+  <target name="UnitTest.TearDown">
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
+      <arg line='@"${Coverage.CommonPropertiesFile}"' />
+      <arg line="UnitTest.TearDown"/>
+    </exec>
+  </target>
+
+</project>

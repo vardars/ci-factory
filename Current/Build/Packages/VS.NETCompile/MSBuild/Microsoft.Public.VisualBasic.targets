@@ -1,0 +1,120 @@
+﻿<!--
+***********************************************************************************************
+Microsoft.Public.VisualBasic.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+This file defines the steps in the standard build process specific for VB .NET projects
+being targeted for .NET Framework 1.1. For example, it contains the step that calls 
+the VB compiler. The remainder of the build process is defined in Microsoft.Public.Common.targets.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="Microsoft.Public.Common.targets" />
+
+  <PropertyGroup Condition=" '$(Platform)' == '.NET 1.1'">
+    <MSBuildAllProjects>$(MSBuildAllProjects)</MSBuildAllProjects>
+    <DefaultLanguageSourceExtension>.vb</DefaultLanguageSourceExtension>
+    <Language>VB</Language>
+  </PropertyGroup>
+
+  <!-- POINT TO EVERETT VBC -->
+
+  <!-- 
+  VbcToolPath - controls where msbuild looks for vbc.exe
+  -->
+
+  <PropertyGroup Condition=" '$(Platform)' == '.NET 1.1'">
+    <VbcToolPath>$(TargetFrameworkDirectory)</VbcToolPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Platform)' == '.NET 1.1'">
+    <CoreCompileDependsOn>_ComputeNonExistentFileProperty</CoreCompileDependsOn>
+  </PropertyGroup>
+  <Target Condition=" '$(Platform)' == '.NET 1.1' "
+        Name="CoreCompile"
+        Inputs="$(MSBuildAllProjects);
+                @(Compile);
+                @(ManifestResourceWithNoCulture);
+                $(ApplicationIcon);
+                $(AssemblyOriginatorKeyFile);
+                @(ManifestNonResxWithNoCultureOnDisk);
+                @(ReferencePath);
+                @(CompiledLicenseFile);
+                @(EmbeddedDocumentation);
+                @(CustomAdditionalCompileInputs)"
+        Outputs="@(DocFileItem);
+                 @(IntermediateAssembly);
+                 $(NonExistentFile);
+                 @(CustomAdditionalCompileOutputs)"
+        DependsOnTargets="$(CoreCompileDependsOn)"
+  >
+
+        <Vbc
+              AdditionalLibPaths="$(AdditionalLibPaths)"
+              AddModules="@(AddModules)"
+              BaseAddress="$(BaseAddress)"          
+              DebugType="$(DebugType)"
+              DefineConstants="$(FinalDefineConstants)"
+              DelaySign="$(DelaySign)"
+              EmitDebugInformation="$(DebugSymbols)"
+              Imports="@(Import)"
+              KeyContainer="$(KeyContainerName)"
+              KeyFile="$(KeyOriginatorFile)"
+              MainEntryPoint="$(StartupObject)"
+              NoStandardLib="$(NoStdLib)"
+              NoWarnings="$(_NoWarnings)"
+              Optimize="$(Optimize)"
+              OptionCompare="$(OptionCompare)"
+              OptionExplicit="$(OptionExplicit)"
+              OptionStrict="$(OptionStrict)"
+              OptionStrictType="$(OptionStrictType)" 
+              OutputAssembly="@(IntermediateAssembly)"
+              References="@(ReferencePath)"
+              RemoveIntegerChecks="$(RemoveIntegerChecks)"
+              Resources="@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile)"
+              ResponseFiles="$(CompilerResponseFile)"
+              RootNamespace="$(RootNamespace)"
+              SdkPath="$(FrameworkPathOverride)"
+              Sources="@(Compile)"
+              TargetCompactFramework="$(TargetCompactFramework)"
+              TargetType="$(OutputType)"
+              ToolPath="$(VbcToolPath)"
+              TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+              UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+              Utf8Output="$(Utf8Output)"
+              Verbosity="$(VbcVerbosity)"
+              Win32Icon="$(ApplicationIcon)"
+              Win32Resource="$(Win32Resource)"
+             
+          />
+
+              <!-- These properties only apply to vbc 2.0 and are filtered for the vbc task above. 
+                Thus, if you set these flags in the Whidbey IDE, they will be ignored when targeting
+                Everett. You can uncomment these properties and add them to the vbc task if you wish.
+                You will then receive a warning or error if you set these properties because csc 1.1 
+                won't recognize the corresponding switches. 
+              -->
+              <!--
+              CodePage="$(CodePage)"
+              DocumentationFile="@(DocFileItem)"
+              ErrorReport="$(ErrorReport)"
+              FileAlignment="$(FileAlignment)"
+              GenerateDocumentation="$(GenerateDocumentation)"
+              NoConfig="true"
+              Platform="$(PlatformTarget)"
+              WarningsAsErrors="$(WarningsAsErrors)"
+              WarningsNotAsErrors="$(WarningsNotAsErrors)"
+              -->
+    
+              <!-- This property should remain commented out. vbc 1.1 can't disable specific warnings. -->
+              <!-- DisabledWarnings="$(NoWarn)" -->
+        </Target>
+
+</Project>

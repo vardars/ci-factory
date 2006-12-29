@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="LinesOfCode.Target">
+
+  <include buildfile="LinesOfCode.Properties.xml" />
+  <loadtasks assembly="Packages\InstallShield\bin\InstallShield.Tasks.dll"/>
+  
+  <target name="LinesOfCode.GetCount">
+    <call target="LinesOfCode.CountCodeLines" />
+    <call target="LinesOfCode.CountInstallShield" />
+  </target>
+  
+  <target name="LinesOfCode.CountCodeLines">
+    <codestats output="${BuildDirectory}\LinesOfCode\LinesOfCode.xml" append="true" buildname="${CCNetLabel}">
+      <counts>
+        <count label="C# (*.cs) Files">
+          <fileset basedir="${ProductDirectory}">
+            <include name="**/*.cs" />
+          </fileset>
+        </count>
+        <count label="VB (*.vb) Files">
+          <fileset basedir="${ProductDirectory}">
+            <include name="**\*.vb" />
+          </fileset>
+        </count>
+        <count label="C++ (*.h, *.cpp) Files">
+          <fileset basedir="${ProductDirectory}">
+            <include name="**\*.cpp" />
+            <include name="**\*.h" />
+            <exclude name="${InstallDirectory}" />
+          </fileset>
+        </count>
+      </counts>
+    </codestats>
+  </target>
+  
+  <target name="LinesOfCode.CountInstallShield">
+    <ismcodestats output="${LinesOfCode.File}" append="true" buildname="${CCNetLabel}">
+      <counts>
+        <count label="InstallShield Project (.ism) Files">
+          <fileset basedir="${InstallDirectory}">
+            <include name="**/*.ism" />
+          </fileset>
+        </count>
+      </counts>
+    </ismcodestats>
+
+    <codestats output="${BuildDirectory}\LinesOfCode\LinesOfCode.xml" append="true" buildname="${CCNetLabel}">
+      <counts>
+        <count label="InstallShield Script (*.rul,*.h) Files">
+          <fileset basedir="${ProductDirectory}">
+            <include name="**/*.rul" />
+            <include name="**/*.h" />
+          </fileset>
+        </count>        
+      </counts>
+    </codestats>
+  </target>
+
+  <target name="LinesOfCode.SetUp">
+    <mkdir if="${directory::exists(LinesOfCode.Directory) == false}" dir="${LinesOfCode.Directory}"/>
+    <delete if="${file::exists(LinesOfCode.File)}" >
+      <fileset>
+        <include name="${LinesOfCode.File}" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="LinesOfCode.TearDown">
+
+  </target>
+</project>

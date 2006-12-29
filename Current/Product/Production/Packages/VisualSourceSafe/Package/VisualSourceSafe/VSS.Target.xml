@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSS">
+
+  <property name="VSS.Debug" value="false" overwrite="false" />
+
+  <include buildfile="VSS.Properties.xml" />
+
+  <property name="Private.VSS.ReportDirectory" value="${BuildDirectory}\VSS" overwrite="false"/>
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+	<property name="VSS.DBPath" value="" />
+	<property name="VSS.Username" value="" />
+	<property name="VSS.Password" value="" />
+	
+	-->
+
+  <!-- The following will be set by the target. 
+  
+  <property name="SourceControl.ThirdPartyChanged" value=""/>
+  -->
+  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(ThirdPartyDirectory, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath, '\', '/')}"/>
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="$/${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}"/>
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath, '//', '/')}"/>
+
+    <call target="SourceModificationReport.GetOldestModificationTime"/>
+
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile" value="${Private.VSS.ReportDirectory}\ThirdPartyHistory.xml"/>
+    <trycatch>
+      <try>
+        <vsshistory
+          dbpath="${VSS.DBPath}"
+          path="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" 
+		      username="${VSS.Username}"
+		      password="${VSS.Password}" 
+          fromdate="${SourceModificationReport.OldestModificationTime}"
+          todate="${datetime::now()}"
+          output="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}"
+        />
+      </try>
+      <catch>
+        <echo message="dbpath= ${VSS.DBPath}"/>
+        <echo message="path=${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" />
+        <echo message="username=${VSS.Username}"/>
+        <echo message="password=${VSS.Password}"/>
+        <echo message="fromdate=${SourceModificationReport.OldestModificationTime}"/>
+        <echo message="todate=${datetime::now()}"/>
+        <echo message="output=${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}"/>
+
+        <fail message="Failed in SourceControl.CleanGetOfThirdPartyDirectory, please review log." />
+      </catch>
+    </trycatch>
+
+
+    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile" value="${Private.VSS.ReportDirectory}\ThirdPartyHistoryPaths.txt"/>
+    <style style="Packages\VisualSourceSafe\HistoryPaths.xsl" in="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}" out="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile}" />
+
+    <property name="SourceControl.ThirdPartyChanged" value="false"/>
+    <loadfile file="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile}" property="SourceControl.ThirdPartyChanged" />
+
+    <if test="${SourceControl.ThirdPartyChanged or not directory::exists(ThirdPartyDirectory)}" >
+      <if test="${directory::exists(ThirdPartyDirectory)}" >
+        <attrib readonly="false">
+          <fileset>
+            <include name="${ThirdPartyDirectory}\*" />
+          </fileset>
+        </attrib>
+
+        <trycatch>
+          <try>
+            <delete dir="${ThirdPartyDirectory}"/>
+          </try>
+          <catch>
+            <exec program="cmd" commandline='/C "rmdir /S /Q "${ThirdPartyDirectory}""' />
+          </catch>
+        </trycatch>
+      </if>
+      <mkdir dir="${ThirdPartyDirectory}" />
+      <vssget 
+			  localpath="${ThirdPartyDirectory}" 
+			  dbpath="${VSS.DBPath}" 
+			  path="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" 
+			  username="${VSS.Username}"
+			  password="${VSS.Password}" 
+			  recursive="True"
+			  filetimestamp="Modified"
+			  removedeleted="True"
+			  replace="True"
+			  writable="True"
+			  verbose="True" 
+		  />
+    </if>
+  </target>
+
+  <target name="SourceControl.CleanGetOfProductDirectory" >
+    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(ProductDirectory, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(Private.SourceControl.CleanGetOfProductDirectory.ProductPath, '\', '/')}"/>
+    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="$/${Private.SourceControl.CleanGetOfProductDirectory.ProductPath}"/>
+    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(Private.SourceControl.CleanGetOfProductDirectory.ProductPath, '//', '/')}"/>
+    <if test="${directory::exists(ProductDirectory)}" >
+      <attrib readonly="false">
+        <fileset>
+          <include name="${ProductDirectory}\*" />
+        </fileset>
+      </attrib>
+
+      <trycatch>
+        <try>
+          <delete dir="${ProductDirectory}"/>
+        </try>
+        <catch>
+          <exec program="cmd" commandline='/C "rmdir /S /Q "${ProductDirectory}""' />
+        </catch>
+      </trycatch>
+    </if>
+    <mkdir dir="${ProductDirectory}" />
+    <vssget 
+      localpath="${ProductDirectory}" 
+      dbpath="${VSS.DBPath}" 
+      path="${Private.SourceControl.CleanGetOfProductDirectory.ProductPath}" 
+      username="${VSS.Username}"
+      password="${VSS.Password}" 
+      recursive="True"
+      filetimestamp="Modified"
+      removedeleted="True"
+      replace="True"
+      writable="True"
+      verbose="True" 
+	  />
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckOut" >
+    <property name="Private.SourceControl.CheckOut.Path" value="${string::replace(SourceControl.CheckOut.File, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.CheckOut.Path" value="${string::replace(Private.SourceControl.CheckOut.Path, '\', '/')}"/>
+    <property name="Private.SourceControl.CheckOut.Path" value="$/${Private.SourceControl.CheckOut.Path}"/>
+    <property name="Private.SourceControl.CheckOut.Path" value="${string::replace(Private.SourceControl.CheckOut.Path, '//', '/')}"/>
+
+    <delete file="${SourceControl.CheckOut.File}" />
+
+    <vsscheckout
+      dbpath="${VSS.DBPath}" localpath="${path::get-directory-name(SourceControl.CheckOut.File)}" password="${VSS.Password}" path="${Private.SourceControl.CheckOut.Path}" username="${VSS.Username}" writable="true"
+    />
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckIn" >
+    <property name="Private.SourceControl.CheckIn.Path" value="${string::replace(SourceControl.CheckIn.File, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.CheckIn.Path" value="${string::replace(Private.SourceControl.CheckIn.Path, '\', '/')}"/>
+    <property name="Private.SourceControl.CheckIn.Path" value="$/${Private.SourceControl.CheckIn.Path}"/>
+    <property name="Private.SourceControl.CheckIn.Path" value="${string::replace(Private.SourceControl.CheckIn.Path, '//', '/')}"/>
+
+    <vsscheckin
+      dbpath="${VSS.DBPath}" localpath="${SourceControl.CheckIn.File}" password="${VSS.Password}" path="${Private.SourceControl.CheckIn.Path}" username="${VSS.Username}" writable="true"
+    />
+  </target>
+
+  <target name="SourceControl.SetUp">
+    <mkdir unless="${directory::exists(Private.VSS.ReportDirectory)}" dir="${Private.VSS.ReportDirectory}"/>
+  </target>
+
+  <target name="SourceControl.TearDown">
+
+  </target>
+
+</project>

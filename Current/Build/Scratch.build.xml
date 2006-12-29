@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" >
+
+  <loadtasks assembly=".\nAnt\bin\NAnt.Contrib.Tasks.dll" />
+
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2005-08-10"/>
+  <property name="CCNetBuildTime" value="08:45:12"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+  
+  <property name="CCNetLabel" value="Dev"/>
+  <property name="CCNetProject" value="CI Factory"/>
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
+
+  <property name="Compile.ConfigName" value="debug"/>
+  <include buildfile=".\Packages\CoverageEye\CoverageEye.Target.xml" />
+
+
+  <target name="test">
+
+    <call target="UnitTest.SetUp"/>
+    <call target="UnitTest.RunTests" />
+
+  </target>
+
+</project>

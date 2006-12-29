@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Coverage xmlns="http://tempuri.org/CoverageExclusions.xsd">
+  <exclusions>
+    <assemblies>
+    </assemblies>
+    <namespaces>
+    </namespaces>
+    <classes>
+      <assembly name="ef.common.messaging.dll">
+        <namespace name="EF.Common.Messaging">
+          <class name="msgSequenceConverter"/>
+          <class name="msgHeaderConverter"/>
+          <class name="msgEnvelopeConverter"/>
+          <class name="msgBodyConverter"/>
+          <class name="msgAttributesConverter"/>
+          <class name="msgApplicationAttributesConverter"/>
+          <class name="EFMessageConverter"/>
+          <class name="ContextAttributesConverter"/>
+          <class name="ContextConverter"/>
+        </namespace>
+      </assembly>
+      <assembly name="ef.common.directory.dll">
+        <namespace name="EF.Common.Directory">
+          <class name="DeviceOptionsConverter"/>
+          <class name="IPAddressList"/>
+          <class name="MACAddressList"/>
+        </namespace>
+      </assembly>
+    </classes>
+    <members>
+      
+    </members>
+  </exclusions>
+</Coverage>

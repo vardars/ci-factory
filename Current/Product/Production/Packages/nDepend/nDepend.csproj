@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{97388DC2-FD77-4A99-9F4D-FFDD01007C78}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nDepend</RootNamespace>
+    <AssemblyName>nDepend</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Content Include="Package\nDepend\bin\ILReader.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.Analyse.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.BitmapBuilder.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.Console.exe" />
+    <Content Include="Package\nDepend\bin\NDepend.DependenciesContainers.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.Helpers.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.In.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.Metrics.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.MSIL.dll" />
+    <Content Include="Package\nDepend\bin\NDepend.Out.dll" />
+    <Content Include="Package\nDepend\bin\NGraphviz.dll" />
+    <Content Include="Package\nDepend\bin\NGraphviz.Helpers.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Algorithms.Graphviz.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Collections.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Concepts.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Exceptions.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Predicates.dll" />
+    <Content Include="Package\nDepend\bin\QuickGraph.Representations.dll" />
+    <Content Include="Package\nDepend\Install\Install.xml" />
+    <Content Include="Package\nDepend\Install\Properties.xml" />
+    <Content Include="Package\nDepend\nDepend.Properties.xml" />
+    <Content Include="Package\nDepend\nDepend.Target.xml" />
+    <Content Include="Package\nDepend\nDependReport.xsl" />
+  </ItemGroup>
+</Project>

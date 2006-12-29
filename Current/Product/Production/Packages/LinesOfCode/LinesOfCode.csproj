@@ -1,0 +1,10 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{62AC19FF-AB08-437C-9E16-85CC4D0FAD11}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup >
+    <Content Include="**\*" Exclude="**\.svn\**\*"/>
+  </ItemGroup>
+</Project>

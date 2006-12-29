@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cruisecontrol [
+  <!ENTITY email '<email from="CIFactory.Build@noreply.com" mailhost="localhost" includeDetails="true">
+        <users>
+          <user name="jay flowers" group="buildmaster" address="jay.flowers@gmail.com"/>
+        </users>
+        <groups>
+          <group name="buildmaster" notification="failed"/>
+        </groups>
+      </email>'>
+  <!ENTITY labeller '<labeller type="stateFileLabeller">
+      <project>CI Factory</project>
+    </labeller>'>
+  <!ENTITY webURL '<webURL>http://66.92.154.37/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>'>
+]>
+<cruisecontrol>
+  <project name="CI Factory Build">
+    &webURL;
+    <state type="state" />
+    <publishExceptions>false</publishExceptions>
+    <triggers>
+      <intervalTrigger seconds="90" />
+    </triggers>
+    <modificationDelaySeconds>120</modificationDelaySeconds>
+    <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
+      <trunkUrl>https://svn.berlios.de/svnroot/repos/cif/Current/Build</trunkUrl>
+      <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
+      <username>cifactorybuild</username>
+      <password>C0ntinuou2</password>
+      <webUrlBuilder type="websvn">
+        <url>http://svn.berlios.de/wsvn/cif/Current/{0}?op=diff&amp;rev=0&amp;sc=0</url>
+      </webUrlBuilder>
+    </sourcecontrol>
+    &labeller;
+    <tasks>
+      <nullTask/>
+    </tasks>
+    <publishers>
+      <xmllogger />
+      &email;
+    </publishers>
+  </project>
+  <project name="CI Factory">
+    &webURL;
+    <externalLinks>
+      <externalLink name="Home Page" url="http://www.mertner.com/confluence/display/CIF/CI+Factory+Home" />
+    </externalLinks>
+    <state type="state" />
+    <publishExceptions>false</publishExceptions>
+    <triggers>
+      <intervalTrigger seconds="90" />
+    </triggers>
+    <modificationDelaySeconds>120</modificationDelaySeconds>
+    <sourcecontrol type="filtered">
+      <sourceControlProvider  type="svn" tagOnSuccess="true">
+        <trunkUrl>https://svn.berlios.de/svnroot/repos/cif/Current</trunkUrl>
+        <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
+        <username>cifactorybuild</username>
+        <password>C0ntinuou2</password>
+        <webUrlBuilder type="websvn">
+          <url>http://svn.berlios.de/wsvn/cif/{0}?op=diff&amp;rev=0&amp;sc=0</url>
+        </webUrlBuilder>
+        <tagBaseUrl>https://svn.berlios.de/svnroot/repos/cif/Tags</tagBaseUrl>
+      </sourceControlProvider>
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>**/Current/Product/**/AssemblyInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Product/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Product/**/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Build/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Build/**/*.*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>
+    <labeller type="defaultlabeller">
+      <prefix>0.7.0.</prefix>
+    </labeller>
+    <tasks>
+      <modificationWriter>
+        <filename>SourceModificationReport.xml</filename>
+        <path>c:\Projects\CI Factory\Current\Build\SourceModificationReports</path>
+      </modificationWriter>
+      <nant>
+        <executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+        <baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Main.build.xml</buildFile>
+        <targetList>
+          <target>Triggered</target>
+        </targetList>
+
+        <buildTimeoutSeconds>600</buildTimeoutSeconds>
+      </nant>
+    </tasks>
+    <publishers>
+      <merge>
+        <files>
+          <file>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\Tracker Reports\*.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
+          <file>C:\Projects\Doubler\trunk\Build\Coverage Reports\ConsolidatedReport.xml</file>
+        </files>
+      </merge>
+      <xmllogger />
+      &email;
+    </publishers>
+  </project>
+</cruisecontrol>

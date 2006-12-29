@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
+
+  <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
+	<property name="Compile.ConfigName" value="debug" overwrite="false"/>
+	<property name="Compile.ToCopyToBin" value="false" overwrite="false" />
+  <property name="Compile.ToConvertLogFile" value="false" overwrite="false" />
+  <property name="Compile.ToDeployZip" value="false" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+	
+  <include buildfile="Compile.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="Compile.SolutionFile" value="" />
+	<property name="Compile.Bin" value="" />
+	<property name="Compile.XmlLogFileName" value="" />
+  <property name="Compile.FilesToDeleteAtSetup" value="" />
+	-->
+	
+	<!-- The following properties are for internal use only -->
+  <property name="Private.Compile.Pattern" value="" />
+  <property name="Private.Compile.FromDirectory" value="" />
+  <property name="Private.Compile.LogFileName" value="" />
+  <property name="Private.Compile.Result" value="" />
+    
+  <target name="Compile.CompileSource">
+		<property name="Private.Compile.LogFileName" value="${path::get-temp-file-name()}" />
+    <exec 
+	    program="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe"
+	    commandline='"${Compile.SolutionFile}" /build "${Compile.ConfigName}" /out "${Private.Compile.LogFileName}"'
+	    failonerror="false"
+	    resultproperty="Private.Compile.Result"
+    />
+    <call target="Private.Compile.ConvertLogToXml" />
+    <if test="${int::parse(Private.Compile.Result) != 0}">
+		  <fail message="The compilation failed, check the build log." />
+    </if>
+    <call target="Private.Compile.CopyToWorkingBin" />
+    <call target="Private.Compile.DeployZip" />
+  </target>
+    
+  <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">
+    <attrib readonly="false">
+      <fileset refid="Compile.ToCopy" />
+    </attrib>
+
+    <mkdir if="${directory::exists(Compile.Bin) == false}" dir="${Compile.Bin}"/>
+
+    <copy failonerror="true" overwrite="true" flatten="true" todir="${Compile.Bin}" verbose="true">
+      <fileset refid="Compile.ToCopy" />
+    </copy>
+  </target>
+
+  <target name="Private.Compile.DeployZip" if="${Compile.ToDeployZip}">
+    <zip zipfile="${Compile.Bin}\${Compile.ZipFileName}">
+      <fileset>
+        <include name="${Compile.Bin}/**" />
+      </fileset>
+    </zip>
+    <property name="Deployment.SourceFileName" value="${Compile.ZipFileName}"/>
+    <property name="Deployment.SourceDir"	value="${Compile.Bin}\" />
+    <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+    <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+    <property name="Deployment.FileWebPath"	value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.SourceFileName}" />
+    <property name="Deployment.FileWebName"	value="${CCNetLabel}-${Deployment.SourceFileName}" />
+
+    <call target="Deployment.PublishFile"/>
+  </target>
+    
+  <target name="Private.Compile.ConvertLogToXml" if="${Compile.ToConvertLogFile}">
+		<script language="C#" >
+			<imports >
+				<import namespace="System.Xml"/>
+				<import namespace="System.Text.RegularExpressions"/>
+			</imports >
+			<code>
+              <![CDATA[                 
+					
+					public static void ScriptMain(Project project)
+					{
+						string sourcefilename = project.Properties["Private.Compile.LogFileName"];
+						string targetfilename = project.Properties["Compile.LogFileDirectory"] + "\\" + project.Properties["Compile.XmlLogFileName"];
+						
+						Regex error = new Regex(@"error[^s]");
+						XmlTextWriter writer = new XmlTextWriter(targetfilename,System.Text.Encoding.UTF8);
+						writer.Formatting = Formatting.Indented;
+						writer.WriteStartDocument();
+						writer.WriteStartElement("log");
+            
+            writer.WriteStartAttribute("configuration", null);
+            writer.WriteString(project.Properties["Compile.ConfigName"]);
+            writer.WriteEndAttribute();
+            
+            writer.WriteStartAttribute("time", null);
+            writer.WriteString(System.DateTime.Now.ToString("F"));
+            writer.WriteEndAttribute();
+            
+						using (StreamReader sr = new StreamReader(sourcefilename)) 
+						{
+							String line;
+							while ((line = sr.ReadLine()) != null) 
+							{
+								line = line.Replace("\0",string.Empty);
+								bool isError = error.IsMatch(line);
+								if (isError)
+								{
+									writer.WriteStartElement("builderror");
+									writer.WriteStartElement("message");
+									writer.WriteString(line);
+									writer.WriteEndElement();
+									writer.WriteEndElement();
+								}
+								else
+								{
+									writer.WriteStartElement("line");
+									writer.WriteString(line);
+									writer.WriteEndElement();
+								}
+							}
+						}
+						writer.WriteEndElement();
+						writer.WriteEndDocument();
+						writer.Close();
+					}
+			]]></code>
+		</script>
+	</target>
+
+  <target name="Compile.SetUp">
+    <mkdir if="${directory::exists(Compile.LogFileDirectory) == false}" dir="${Compile.LogFileDirectory}"/>
+    <property name="Common.FilesToDelete" value="${Compile.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+  </target>
+
+  <target name="Compile.TearDown">
+
+  </target>
+
+</project>

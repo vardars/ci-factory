@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Install" default="nDepend.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="nDepend.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="nDepend.Calculate" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\NDepend.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\nDepend\NDependMain.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="nDepend.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="nDepend"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="nDepend.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="nDepend"/>
+  </target>
+
+  <target name="nDepend.ValidateParameters">
+    
+  </target>
+  
+</project>

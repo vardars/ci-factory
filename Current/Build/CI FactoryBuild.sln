@@ -1,0 +1,112 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4D79084-4A48-436F-A77E-2E1309EF6478}"
+	ProjectSection(SolutionItems) = preProject
+		ccnetproject.xml = ccnetproject.xml
+		CCNETServer.Bat = CCNETServer.Bat
+		Common.Build.xml = Common.Build.xml
+		Main.build.xml = Main.build.xml
+		NAnt.xsd = NAnt.xsd
+		Properties.build.xml = Properties.build.xml
+		Scratch.build.xml = Scratch.build.xml
+		UpdatenAntSchema.bat = UpdatenAntSchema.bat
+		UpdatenAntSchema.xml = UpdatenAntSchema.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{BE4448BC-99ED-4497-9FF6-2762D46AC29A}"
+	ProjectSection(SolutionItems) = preProject
+		server\ccnet.exe.config = server\ccnet.exe.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboard", "dashboard", "{5204B581-CA40-491E-8523-D5AB5520B8CF}"
+	ProjectSection(SolutionItems) = preProject
+		dashboard\dashboard.config = dashboard\dashboard.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xsl", "xsl", "{D7CADE5E-A81B-4C9B-A22A-CEA8EA16C82F}"
+	ProjectSection(SolutionItems) = preProject
+		dashboard\xsl\compile.xsl = dashboard\xsl\compile.xsl
+		dashboard\xsl\header.xsl = dashboard\xsl\header.xsl
+		dashboard\xsl\modifications.xsl = dashboard\xsl\modifications.xsl
+		dashboard\xsl\NAnt.xsl = dashboard\xsl\NAnt.xsl
+		dashboard\xsl\NAntTiming.xsl = dashboard\xsl\NAntTiming.xsl
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{AE340C0D-B495-41F6-B7B0-0DD091C285CC}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\Deployment\Deployment.Target.xml = Packages\Deployment\Deployment.Target.xml
+		Packages\Deployment\deployment.xsl = Packages\Deployment\deployment.xsl
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DotNetUnitTest", "DotNetUnitTest", "{2EFEFF99-5CF4-40DB-816A-1159B86E2CD1}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\DotNetUnitTest\UnitTest.Properties.xml = Packages\DotNetUnitTest\UnitTest.Properties.xml
+		Packages\DotNetUnitTest\UnitTest.Target.xml = Packages\DotNetUnitTest\UnitTest.Target.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VS.NETCompile", "VS.NETCompile", "{1E1A47E8-B6AD-46A5-8242-34019D058DCD}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\VS.NETCompile\Compile.Properties.xml = Packages\VS.NETCompile\Compile.Properties.xml
+		Packages\VS.NETCompile\Compile.Target.xml = Packages\VS.NETCompile\Compile.Target.xml
+		Packages\VS.NETCompile\DevEnvCompileDetails.xsl = Packages\VS.NETCompile\DevEnvCompileDetails.xsl
+		Packages\VS.NETCompile\Install.Properties.xml = Packages\VS.NETCompile\Install.Properties.xml
+		Packages\VS.NETCompile\Install.Target.xml = Packages\VS.NETCompile\Install.Target.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SourceModificationReport", "SourceModificationReport", "{45D6B57A-BFCE-416B-8E67-42A2818180A3}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\SourceModificationReport\SourceModificationReport.Properties.xml = Packages\SourceModificationReport\SourceModificationReport.Properties.xml
+		Packages\SourceModificationReport\SourceModificationReport.Target.xml = Packages\SourceModificationReport\SourceModificationReport.Target.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versioning", "Versioning", "{98172691-77C2-450A-A64D-83D425C95F12}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\Versioning\Versioning.Properties.xml = Packages\Versioning\Versioning.Properties.xml
+		Packages\Versioning\Versioning.Target.xml = Packages\Versioning\Versioning.Target.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Subversion", "Subversion", "{6D1FA855-E058-405E-8513-A4565227F9F5}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\Subversion\HistoryPaths.xsl = Packages\Subversion\HistoryPaths.xsl
+		Packages\Subversion\SVN.Properties.xml = Packages\Subversion\SVN.Properties.xml
+		Packages\Subversion\SVN.Target.xml = Packages\Subversion\SVN.Target.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SetupScripts", "SetupScripts", "{DF5E3D67-4B04-40F8-9249-CBC8E9EBB576}"
+	ProjectSection(SolutionItems) = preProject
+		SetupScripts\run.bat = SetupScripts\run.bat
+		SetupScripts\Setup.xml = SetupScripts\Setup.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CoverageEye", "CoverageEye", "{5DEC58B7-2355-40FE-AD5D-0217FF7E6666}"
+	ProjectSection(SolutionItems) = preProject
+		Packages\CoverageEye\CoverageExclusions.xsd = Packages\CoverageEye\CoverageExclusions.xsd
+		Packages\CoverageEye\CoverageEye.Properties.xml = Packages\CoverageEye\CoverageEye.Properties.xml
+		Packages\CoverageEye\CoverageEye.Target.xml = Packages\CoverageEye\CoverageEye.Target.xml
+		Packages\CoverageEye\CoverageReport.xsl = Packages\CoverageEye\CoverageReport.xsl
+		Packages\CoverageEye\CoverageStuff.xsl = Packages\CoverageEye\CoverageStuff.xsl
+		Packages\CoverageEye\CoverageSummary.xsl = Packages\CoverageEye\CoverageSummary.xsl
+		Packages\CoverageEye\PostExclusion.xml = Packages\CoverageEye\PostExclusion.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE4448BC-99ED-4497-9FF6-2762D46AC29A} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+		{5204B581-CA40-491E-8523-D5AB5520B8CF} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+		{ACC8E9C6-A44C-438B-94E1-419BADD4CAD5} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+		{DF5E3D67-4B04-40F8-9249-CBC8E9EBB576} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+		{D7CADE5E-A81B-4C9B-A22A-CEA8EA16C82F} = {5204B581-CA40-491E-8523-D5AB5520B8CF}
+		{AE340C0D-B495-41F6-B7B0-0DD091C285CC} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{2EFEFF99-5CF4-40DB-816A-1159B86E2CD1} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{1E1A47E8-B6AD-46A5-8242-34019D058DCD} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{45D6B57A-BFCE-416B-8E67-42A2818180A3} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{98172691-77C2-450A-A64D-83D425C95F12} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{6D1FA855-E058-405E-8513-A4565227F9F5} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+		{5DEC58B7-2355-40FE-AD5D-0217FF7E6666} = {ACC8E9C6-A44C-438B-94E1-419BADD4CAD5}
+	EndGlobalSection
+EndGlobal

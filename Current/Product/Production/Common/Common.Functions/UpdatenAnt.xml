@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Update" default="Update">
+
+  <target name="Update">
+    <attrib file="..\..\..\..\Third Party\nAnt\bin\Common.Functions.dll" readonly="false"/>
+  </target>
+</project>

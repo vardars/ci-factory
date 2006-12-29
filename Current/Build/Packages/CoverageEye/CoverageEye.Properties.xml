@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd"  name="Coverage.Properties">
+  
+  <property name="Coverage.ReportFolder" value="${BuildDirectory}\Coverage Reports"/>
+  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
+  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.AssemblyNameFormat" value="EF.*.dll"/>
+
+  <fileset id="Coverage.Targets">
+    <include name="${ProductionDirectory}\**\bin\Plugin.dll" />
+    <include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
+    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
+  </fileset>
+
+  <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
+</project>

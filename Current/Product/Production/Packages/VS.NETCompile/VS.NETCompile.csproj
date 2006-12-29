@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{83DAB51C-AF7C-4BC2-BEE7-C42C342FC441}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotNetUnitTest</RootNamespace>
+    <AssemblyName>DotNetUnitTest</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Content Include="Package\VS.NETCompile\Compile.Properties.xml" />
+    <Content Include="Package\VS.NETCompile\Compile.Target.xml" />
+    <Content Include="Package\VS.NETCompile\DevEnvCompileDetails.xsl" />
+    <Content Include="Package\VS.NETCompile\Install.Properties.xml" />
+    <Content Include="Package\VS.NETCompile\Install.Target.xml" />
+    <Content Include="Package\VS.NETCompile\Install\Install.xml" />
+    <Content Include="Package\VS.NETCompile\Install\Properties.xml" />
+    <Content Include="Package\VS.NETCompile\Install\Scratch.build.xml" />
+    <Content Include="Package\VS.NETCompile\MSBuild\MSBee.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package\VS.NETCompile\Install\2003.sln.remove" />
+    <None Include="Package\VS.NETCompile\Install\2005.sln.remove" />
+    <None Include="Package\VS.NETCompile\Install\OpenSolution.bat" />
+    <None Include="Package\VS.NETCompile\MSBuild\Microsoft.Public.Common.targets" />
+    <None Include="Package\VS.NETCompile\MSBuild\Microsoft.Public.CSharp.targets" />
+    <None Include="Package\VS.NETCompile\MSBuild\Microsoft.Public.VisualBasic.targets" />
+  </ItemGroup>
+</Project>

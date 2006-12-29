@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
+  <property name="ProjectName" value="${CCNetProject}" />
+  <property name="UnixProjectName" value="cif" />
+  <property name="ProjectCodeLineName" value="Current" />
+  <property name="ProjectsDirectory" value="c:\Projects" />
+  <property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}" />
+  <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+  <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+  <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+  <property name="ProductionDirectory" value="${ProductDirectory}\Production" />
+  <property name="UnitTestDirectory" value="${ProductDirectory}\Unit Test" overwrite="false"/>
+  <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+  <property name="BuildPackagesDirectory" value="${BuildDirectory}\Packages" overwrite="false"/>
+  <property name="InstallDirectory" value="${ProductDirectory}\Install"/>
+  <property name="InstallsDirectory" value="${BuildDirectory}\Installs" overwrite="false"/>
+</project>

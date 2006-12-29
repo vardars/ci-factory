@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Deployment" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir="Deployment">
+
+  <!--
+	The following properties should be specified in the calling script.
+  
+  <property name="Deployment.SourceFileName" value="TraCHIIPI.tar" />
+  <property name="Deployment.SourceDir"	value="${ProductionDirectory}\lib" />
+  <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+  <property name="Deployment.TargetFile"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
+  <property name="Deployment.FileWebPath"	value="/${ProjectName}/trunk/Build/Installs/${CCNetLabel}/${DeploymentFileName}" />
+  <property name="Deployment.FileWebName"	value="${CCNetLabel} ${DeploymentFileName}" />
+  
+  -->
+  
+  <target name="Deployment.PublishFile">
+    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Private.Deployment.EchoDeploymentFileWebName" />
+    <call target="Private.Deployment.EchoDeploymentFileWebPath" />
+  </target>
+
+  <target name="Deployment.PublishFileSilently">
+    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Private.Deployment.EchoDeploymentWebPath" />
+  </target>
+
+  <target name="Private.Deployment.EchoDeploymentWebPath" >
+    <echo message="/${ProjectName} Installs/${CCNetLabel}" level="Info"/>
+  </target>
+
+  <target name="Private.Deployment.CopyDeplymentToPublicationDir" >
+    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
+    <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
+  </target>
+
+  <target name="Private.Deployment.EchoDeploymentFileWebName" >
+    <echo message="${Deployment.FileWebName}" level="Info"/>
+  </target>
+  
+  <target name="Private.Deployment.EchoDeploymentFileWebPath" >
+    <echo message="${Deployment.FileWebPath}" level="Info"/>
+  </target>
+
+  <target name="Deployment.SetUp">
+    
+  </target>
+
+  <target name="Deployment.TearDown">
+
+  </target>
+  
+</project>

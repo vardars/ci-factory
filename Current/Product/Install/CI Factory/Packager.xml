@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Factory Packager" default="Packager.Create" basedir="..\..\..\Build">
+
+  <loadtasks assembly=".\nant\bin\Common.Functions.dll" />
+
+  <target name="Packager.Create">
+
+    <delete file="..\Product\Install\CI Factory\Zip\CI Factory.zip" if="${file::exists('Zip\CI Factory.zip')}"/>
+
+    <zip zipfile="..\Product\Install\CI Factory\Zip\CI Factory.zip" includeemptydirs="true">
+      <fileset basedir="..\Product\Production\CI Installer" >
+        <include name="Install Scripts\**\*"/>
+      </fileset>
+
+      <fileset basedir="..\Product\Production\Foundation">
+        <include name="Default\**\*"/>
+        <exclude name="Default\Build\nAnt\**\*"/>
+      </fileset>
+    </zip>
+    
+    <fileset id="CommonnAntTasks"/>
+    <foreach item="Folder" property="ProjectFolder" >
+      <in>
+        <items>
+          <include name="..\Product\Production\Common\*"/>
+          <exclude name="..\Product\Production\Common"/>
+          <exclude name="..\Product\Production\Common\.svn"/>
+        </items>
+      </in>
+      <do>
+        <function execute="${fileset::include-add('CommonnAntTasks', ProjectFolder + '\bin\.NET 1.1\Release\*.dll')}"/>
+        <echo message="There are ${fileset::file-count('CommonnAntTasks')} files in ${ProjectFolder}\bin\.NET 1.1\Release\*.dll."/>
+        <if test="${fileset::file-count('CommonnAntTasks') != 0}">
+          <copy todir="..\Third Party\nAnt\bin" overwrite="true">
+            <fileset>
+              <include name="${ProjectFolder}\bin\.NET 1.1\Release\*"/>
+            </fileset>
+          </copy>
+        </if>
+        <function execute="${fileset::include-remove('CommonnAntTasks', ProjectFolder + '\bin\.NET 1.1\Release\*.dll')}"/>
+      </do>
+    </foreach>
+
+    <zip zipfile="..\Product\Install\CI Factory\Zip\CI Factory.zip" includeemptydirs="true" append="true">
+      <fileset prefix="Default\Build\nAnt" basedir="..\Third Party\nAnt">
+        <include name="**\*"/>
+      </fileset>
+
+      <fileset prefix="nAnt" basedir="..\Third Party\nAnt">
+        <include name="**\*"/>
+      </fileset>
+    </zip>
+
+
+    <fileset id="PackageBinaries"/>
+    <foreach item="Folder" property="PackageFolder" >
+      <in>
+        <items>
+          <include name="..\Product\Production\Packages\*"/>
+          <exclude name="..\Product\Production\Packages"/>
+          <exclude name="..\Product\Production\Packages\.svn"/>
+        </items>
+      </in>
+      <do>
+        <function execute="${fileset::include-add('PackageBinaries', PackageFolder + '\bin\.NET 1.1\Release\*.dll')}"/>
+        <echo message="There are ${fileset::file-count('PackageBinaries')} files in ${PackageFolder}\bin\.NET 1.1\Release\*.dll."/>
+        <if test="${fileset::file-count('PackageBinaries') != 0}">
+          <copy todir="${PackageFolder}\Package\${path::get-file-name(PackageFolder)}\bin">
+            <fileset>
+              <include name="${PackageFolder}\bin\.NET 1.1\Release\*"/>
+            </fileset>
+          </copy>
+        </if>
+        <zip zipfile="..\Product\Install\CI Factory\Zip\CI Factory.zip" includeemptydirs="true" append="true">
+          <fileset prefix="Packages" basedir="${PackageFolder}\Package">
+            <include name="**\*"/>
+          </fileset>
+        </zip>
+        <function execute="${fileset::include-remove('PackageBinaries', PackageFolder + '\bin\.NET 1.1\Release\*.dll')}"/>
+      </do>
+    </foreach>
+
+  </target>
+  
+</project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
+  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
+  <property name="Compile.XmlLogFileName" value="Debug.xml" />
+  <property name="Compile.ToConvertLogFile" value="true" />
+  <property name="Compile.ConfigName" value="debug"/>
+  <property name="Compile.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" />
+</project>

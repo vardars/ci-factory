@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
+
+  <include buildfile="${BuildDirectory}\Common.Build.xml" />
+  <loadtasks assembly="${BuildDirectory}\Packages\DotNetUnitTest\bin\MbUnit.Tasks.dll" />
+  
+  <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
+	<property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
+
+  <include buildfile="UnitTest.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="UnitTest.TestPath" value=""/>
+	<property name="UnitTest.TestAssemblyFormat" value=""/>
+	<property name="UnitTest.ReportFolder" value=""/>
+	<property name="UnitTest.ReportNameFormat" value=""/>
+	-->
+	
+	<!-- The following properties are for internal use only -->
+
+	<target name="UnitTest.RunTests">
+    <foreach item="File" property="AssemblyPath">
+      <in>
+        <items refid="UnitTest.TestAssemblies" />
+      </in>
+      <do>
+        <echo message="Preparing to run unit tests from assembly ${AssemblyPath}"/>
+      </do>
+    </foreach>
+    
+		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
+			<assemblies refid="UnitTest.TestAssemblies" />
+		</mbunit>
+	</target>
+
+  <target name="UnitTest.SetUp">
+    <mkdir if="${directory::exists(UnitTest.ReportFolder) == false}" dir="${UnitTest.ReportFolder}"/>
+    <property name="Common.FilesToDelete" value="${UnitTest.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+  </target>
+
+  <target name="UnitTest.TearDown">
+
+  </target>
+
+</project>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\Build" >
+
+  <loadtasks assembly=".\nAnt\bin\NAnt.Contrib.Tasks.dll" />
+
+  <property name="CCNetLabel" value="Dev"/>
+  <property name="CCNetProject" value="Doubler"/>
+  <property name="Compile.ConfigName" value="Release"/>
+  <include buildfile="Properties.build.xml"/>
+  <include buildfile="Common.Build.xml" />
+  <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
+  <include buildfile=".\Packages\VS.NETCompile\Compile.Target.xml" />
+  
+  <target name="test">
+    <property name="Compile.ConfigName" value="release"/>
+    <property name="Compile.Bin" value="${ProductDirectory}\ReleaseBin" />
+    <property name="Compile.ToCopyToBin" value="true" />
+    <property name="Compile.ToDeployZip" value="true"/>
+    <property name="Compile.ZipFileName" value="Doubler.zip"/>
+    <delete>
+      <fileset>
+        <include name="${Compile.Bin}\*.*"/>
+      </fileset>
+    </delete>
+    <call target="Private.Compile.CopyToWorkingBin" />
+    <call target="Private.Compile.DeployZip" />
+  </target>
+
+</project>

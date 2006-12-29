@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" >
+
+  <loadtasks assembly="..\..\Third Party\nAnt\bin\Common.Functions.dll" />
+
+  <target name="test">
+    <delete file="C:\Temp\reportcontent.xml" />
+    <property name="SourceFile" value="C:\Projects\dod.ahlta\Current\Build\server\dod.ahlta team1\Artifacts\buildlogs\log20061103143625Lbuild.Team1-1.0.0.647.xml"/>
+
+    <foreach item="File" property="SourceFile">
+      <in>
+        <items>
+          <include name="C:\Projects\dod.ahlta\Current\Build\server\dod.ahlta team1\Artifacts\buildlogs\*.xml"/>
+        </items>
+      </in>
+      <do>
+        <echo message="${SourceFile}"/>
+        <property name="report" value="${xsl::get-string-output(SourceFile, 'C:\Temp\StatisticsPublisher.xsl')}" />
+
+        <echo append="true" message="${report}" file="C:\Temp\reportcontent.xml"/>
+      </do>
+    </foreach>
+  </target>
+
+
+  <script language="C#" prefix="xsl">
+    <imports >
+      <import namespace="System.Xml"/>
+      <import namespace="System.IO"/>
+      <import namespace="System.Xml.XPath"/>
+      <import namespace="System.Xml.Xsl"/>
+    </imports >
+    <code>
+      <![CDATA[                 
+					
+          [Function("get-string-output")]
+          public static String GetStringOutput(String inFilePath, String xslFilePath)
+          {
+              using(FileStream inputReader = File.OpenRead(inFilePath))
+              {
+                XslTransform transform = new XslTransform();
+                transform.Load(xslFilePath);
+                StringWriter output = new StringWriter();
+                transform.Transform(new XPathDocument(inputReader), null, output);
+                return output.ToString();
+              }
+          }
+          
+			]]>
+    </code>
+  </script>
+
+</project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN.Properties">
+
+  <property name="SVN.URI" value="%SVN.URI%" />
+  <property name="SVN.Username" value="%SVN.Username%" />
+  <property name="SVN.Password" value="%SVN.Password%" />
+
+</project>

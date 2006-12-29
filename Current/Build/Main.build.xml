@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
+
+  <loadtasks assembly=".\nant\bin\Common.Functions.dll" />
+
+  <include buildfile="Properties.build.xml"/>
+  <include buildfile="Common.Build.xml" />
+  <include buildfile=".\Packages\Subversion\SVN.Target.xml" />
+  <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
+  <include buildfile=".\Packages\VS.NETCompile\Compile.Target.xml" />
+  <include buildfile=".\Packages\CoverageEye\CoverageEye.Target.xml" />
+  <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
+  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml"/>
+
+	<target name="Triggered" depends="SetUps" >
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+        
+        <call target="SourceModificationReport.ConsolidateReports" />
+		    
+		    <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+		    <call target="SourceControl.CleanGetOfProductDirectory" />
+
+        <property name="Compile.ConfigName" value="Debug|.NET 1.1"/>
+        <property name="Compile.XmlLogFileName" value="Debug.xml" />
+		    <call target="Compile.CompileSource" />
+    		
+		    <call target="UnitTest.RunTests" />
+
+        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies"/>
+        <property name="Versioning.ProductInformationFile" value="ProjectInfo.vb" />
+        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
+        <property name="Versioning.ProductInformationFile" value="ProjectInfo.cs" />
+        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
+
+        <property name="Compile.ConfigName" value="Release|.NET 1.1"/>
+        <property name="Compile.XmlLogFileName" value="Release.xml" />
+        <call target="Compile.CompileSource" />
+
+        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+
+        <property name="Deployment.SourceFileName"  value="CI Factory.zip"/>
+        <property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
+        <property name="Deployment.TargetDir"	      value="${BuildDirectory}\Installs\${CCNetLabel}"/>
+        <property name="Deployment.TargetFile"	    value="CI Factory${CCNetLabel}.zip"/>
+        <property name="Deployment.FileWebPath"	    value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.TargetFile}"/>
+        <property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
+
+        <call target="Deployment.PublishFile"/>
+		    
+        <description>End Main Build</description>
+      </try>
+      <finally>
+
+        <call target="TearDowns"/>
+
+      </finally>
+    </trycatch>
+	</target>
+
+	<target name="SetUps" >
+    <!--<call target="Tracker.SetUp"/>-->
+    <call target="SourceControl.SetUp"/>
+    <call target="Versioning.SetUp"/>
+    <call target="Compile.SetUp"/>
+    <call target="UnitTest.SetUp"/>
+    <call target="Deployment.SetUp"/>
+    <call target="SourceModificationReport.SetUp"/>
+	</target>
+
+  <target name="TearDowns">
+    <!--<call target="Tracker.TearDown"/>-->
+    <call target="SourceControl.TearDown"/>
+    <call target="Versioning.TearDown"/>
+    <call target="Compile.TearDown"/>
+    <call target="UnitTest.TearDown"/>
+    <call target="Deployment.TearDown"/>
+    <call target="SourceModificationReport.TearDown"/>
+  </target>
+
+</project>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceModificationReport">
+
+  <include buildfile="SourceModificationReport.Properties.xml" />
+  <property name="SourceModificationReport.ReportDirectory" value="${BuildDirectory}\SourceModificationReports" overwrite="false"/>
+  <property name="SourceModificationReport.ReportFile" value="${SourceModificationReport.ReportDirectory}\SourceModificationReport.xml" overwrite="false"/>
+  <property name="SourceModificationReport.FilesToDeleteAtSetup" value="" overwrite="false"/>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceModificationReportDirectory" value="${BuildDirectory}\SourceModificationReports" />
+  -->
+
+  <!-- The following properties are for internal use only -->
+  <property name="Private.SourceModificationReport.OldSourceModificationReportFile" value="${SourceModificationReport.ReportDirectory}\OldSourceModificationReport.xml" />
+
+  <!-- The following properties are outputs -->
+  <property name="SourceModificationReport.OldestModificationTime" value=""/>
+
+  <!-- ************* Targets ************* -->
+
+  <target name="SourceModificationReport.GetOldestModificationTime">
+    <script language="VB">
+      <references>
+        <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
+      </references>
+      <imports >
+        <import namespace="System.Xml"/>
+      </imports >
+      <code>
+        <![CDATA[
+					Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
+						Dim pd As PropertyDictionary = project.Properties
+            Dim OldestModificationTime As DateTime = DateTime.Now.Subtract(New TimeSpan(100, 0, 0, 0))
+            Dim SaveOldestModificationTime As DateTime = OldestModificationTime
+						Dim ModificationList As ThoughtWorks.CruiseControl.Core.Modification()
+						ModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("SourceModificationReport.ReportFile"))
+
+            For Each modification As ThoughtWorks.CruiseControl.Core.Modification In ModificationList
+					    If (OldestModificationTime.CompareTo(modification.ModifiedTime) < 0) Then
+                OldestModificationTime = modification.ModifiedTime
+              End If
+            Next
+            
+            If (SaveOldestModificationTime = OldestModificationTime) Then
+              OldestModificationTime = DateTime.Now
+            End If
+
+            pd("SourceModificationReport.OldestModificationTime") = OldestModificationTime.ToString
+					End Sub
+					
+					Private Shared Function Deserialize(ByVal ObjectType As System.Type, ByVal SourceFile As String) As Object
+						Dim mySerializer As System.Xml.Serialization.XmlSerializer = New System.Xml.Serialization.XmlSerializer(ObjectType)
+						Dim myFileStream As System.IO.FileStream
+				
+						Try
+							myFileStream = New System.IO.FileStream(SourceFile, System.IO.FileMode.Open, IO.FileAccess.Read)
+							return mySerializer.Deserialize(myFileStream)
+						Finally
+							If Not myFileStream Is Nothing Then
+								myFileStream.Close()
+							End If
+						End Try
+					End Function	
+      ]]>
+      </code>
+    </script>
+  </target>
+
+  <target name="SourceModificationReport.ConsolidateReports" >
+    <script language="VB">
+      <imports >
+        <import namespace="System.Xml"/>
+      </imports >
+      <code>
+        <![CDATA[
+        Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
+					Dim pd As PropertyDictionary = project.Properties
+					Dim ReadStream As New IO.StreamReader(pd("SourceModificationReport.ReportFile"), System.Text.Encoding.Default)
+					Dim content As String = ReadStream.ReadToEnd
+					ReadStream.Close()
+					Dim WriteStream As New IO.StreamWriter(pd("SourceModificationReport.ReportFile"), False, System.Text.Encoding.Default)
+					WriteStream.Write(content.Replace("utf-16", "utf-8"))
+					WriteStream.Close()
+        End Sub
+			]]>
+      </code>
+    </script>
+
+    <if test="${CCNetIntegrationStatus != 'Success'}" >
+      <script language="VB">
+        <references>
+          <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
+        </references>
+        <imports >
+          <import namespace="System.Xml"/>
+        </imports >
+        <code>
+          <![CDATA[
+          Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
+						Dim pd As PropertyDictionary = project.Properties
+						Dim NewModificationList As ThoughtWorks.CruiseControl.Core.Modification()
+						Dim OldModificationList As ThoughtWorks.CruiseControl.Core.Modification()
+						NewModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("SourceModificationReport.ReportFile"))
+						OldModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("Private.SourceModificationReport.OldSourceModificationReportFile"))
+						Dim CombineModificationList(NewModificationList.Length + OldModificationList.Length - 1) As ThoughtWorks.CruiseControl.Core.Modification
+						Dim Count As Integer
+						For Each modi As ThoughtWorks.CruiseControl.Core.Modification In NewModificationList
+							CombineModificationList(Count) = modi
+							Count += 1
+						Next
+						For Each modi As ThoughtWorks.CruiseControl.Core.Modification In OldModificationList
+							CombineModificationList(Count) = modi
+							Count += 1
+						Next
+						Serialize(CombineModificationList, pd("SourceModificationReport.ReportFile"))
+          End Sub
+					
+					Private Shared Function Deserialize(ByVal ObjectType As System.Type, ByVal SourceFile As String) As Object
+						Dim mySerializer As System.Xml.Serialization.XmlSerializer = New System.Xml.Serialization.XmlSerializer(ObjectType)
+						Dim myFileStream As System.IO.FileStream
+				
+						Try
+							myFileStream = New System.IO.FileStream(SourceFile, System.IO.FileMode.Open, IO.FileAccess.Read)
+							return mySerializer.Deserialize(myFileStream)
+						Finally
+							If Not myFileStream Is Nothing Then
+								myFileStream.Close()
+							End If
+						End Try
+					End Function
+          
+          Private Shared Sub Serialize(ByVal SourceObject As Object, ByVal SourceFile As String)
+							Dim stream As System.IO.FileStream
+							Try
+								stream = New System.IO.FileStream(SourceFile, System.IO.FileMode.Create, IO.FileAccess.Write)
+								Dim serializer As System.Xml.Serialization.XmlSerializer = _
+									New System.Xml.Serialization.XmlSerializer(SourceObject.GetType)
+								serializer.Serialize(stream, SourceObject)
+							Finally
+								If Not stream Is Nothing Then
+									stream.Close()
+								End If
+							End Try
+					End Sub
+				]]>
+          </code>
+        </script>
+      </if>
+      <copy 
+        file="${SourceModificationReport.ReportFile}"
+			  tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
+			  verbose="true"
+		  />
+  </target>
+
+  <target name="SourceModificationReport.SetUp">
+    <mkdir if="${directory::exists(SourceModificationReport.ReportDirectory) == false}" dir="${SourceModificationReport.ReportDirectory}"/>
+    <property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+  </target>
+
+  <target name="SourceModificationReport.TearDown">
+
+  </target>
+  
+</project>
