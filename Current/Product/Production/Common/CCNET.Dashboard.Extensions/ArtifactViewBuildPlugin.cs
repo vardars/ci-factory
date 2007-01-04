@@ -6,17 +6,15 @@ using System;
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.GenericPlugins
 {
 
-    [ReflectorType("artifactXslBuildPlugin")]
-    public class ArtifactXslBuildPlugin : ProjectConfigurableBuildPlugin
+    [ReflectorType("artifactViewBuildPlugin")]
+    public class ArtifactViewBuildPlugin : ProjectConfigurableBuildPlugin
     {
         private readonly IActionInstantiator actionInstantiator;
-        private string xslFileName = "";
         private string description = "no description set";
         private string actionName = "NoActionSet";
-        private string _XmlFileName;
         private string _ArtifactRootUrl;
 
-        public ArtifactXslBuildPlugin(IActionInstantiator actionInstantiator)
+        public ArtifactViewBuildPlugin(IActionInstantiator actionInstantiator)
         {
             this.actionInstantiator = actionInstantiator;
         }
@@ -57,19 +55,6 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.GenericPlugins
             }
         }
 
-        [ReflectorProperty("xslFileName")]
-        public string XslFileName
-        {
-            get
-            {
-                return xslFileName;
-            }
-            set
-            {
-                xslFileName = value;
-            }
-        }
-
         [ReflectorProperty("artifactRootUrl")]
         public string ArtifactRootUrl
         {
@@ -83,29 +68,15 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.GenericPlugins
             }
         }
 
-        [ReflectorProperty("xmlFileName")]
-        public string XmlFileName
-        {
-            get
-            {
-                return _XmlFileName;
-            }
-            set
-            {
-                _XmlFileName = value;
-            }
-        }
-
         public override INamedAction[] NamedActions
         {
             get
             {
-                ArtifactXslReportBuildAction action = (ArtifactXslReportBuildAction)actionInstantiator.InstantiateAction(typeof(ArtifactXslReportBuildAction));
-                action.XslFileName = XslFileName;
-                action.XmlFileName = XmlFileName;
+                ArtifactViewBuildAction action = (ArtifactViewBuildAction)actionInstantiator.InstantiateAction(typeof(ArtifactViewBuildAction));
                 action.ArtifactRootUrl = ArtifactRootUrl;
                 return new INamedAction[] { new ImmutableNamedAction(actionName, action) };
             }
         }
     }
+
 }

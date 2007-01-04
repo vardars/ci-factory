@@ -11,6 +11,7 @@ using ThoughtWorks.CruiseControl.WebDashboard.MVC.Cruise;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
 {
+
     [ReflectorType("artifactXslReportBuildAction")]
 	public class ArtifactXslReportBuildAction : ICruiseAction
 	{
