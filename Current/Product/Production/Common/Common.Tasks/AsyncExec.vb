@@ -33,7 +33,6 @@ Public Class AsyncExec
         End Set
     End Property
 
-    <TaskAttribute("output", Required:=False)> _
     Public Overrides Property Output() As FileInfo
         Get
             Return Nothing
