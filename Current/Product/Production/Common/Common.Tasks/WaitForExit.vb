@@ -1,4 +1,4 @@
-Imports System.Threading
+Imports System.Diagnostics
 Imports System.Collections
 Imports System.IO
 Imports System.Text
@@ -26,12 +26,10 @@ Public Class WaitForExit
     End Property
 
     Protected Overrides Sub ExecuteTask()
-        Dim WorkerThread As Thread
+        Dim Worker As AsyncExec
         For Each TaskName As String In Me.TaskNames.StringItems.Values
-            WorkerThread = AsyncExecList.Item(TaskName)
-            If Not WorkerThread Is Nothing AndAlso WorkerThread.IsAlive Then
-                WorkerThread.Join()
-            End If
+            Worker = AsyncExecList.Item(TaskName)
+            Worker.Wait()
         Next
     End Sub
 End Class

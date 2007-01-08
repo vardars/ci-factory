@@ -22,6 +22,27 @@ Public Class AsyncExec
     Private _OutputWriter As TextWriter
     Private _ErrorWriter As TextWriter
     Private _waitForExit As Boolean = True
+    Private _process As Process
+
+    Private Property process() As Process
+        Get
+            Return _process
+        End Get
+        Set(ByVal value As Process)
+            _process = value
+        End Set
+    End Property
+
+    <TaskAttribute("output", Required:=False)> _
+    Public Overrides Property Output() As FileInfo
+        Get
+            Return Nothing
+        End Get
+        Set(ByVal value As FileInfo)
+            Log(Level.Warning, "The output attribute is not used for the asyncexec task.  Please do something like pipe the output to a file.")
+        End Set
+    End Property
+
 
     <TaskAttribute("waitforexit", required:=False)> _
     Public Property WaitForExit() As Boolean
@@ -68,39 +89,35 @@ Public Class AsyncExec
     End Property
 
     Protected Overrides Sub ExecuteTask()
-        Dim WorkerThread As New Thread(New ThreadStart(AddressOf RunProcess))
-        WorkerThread.IsBackground = True
+        Me.Process = Me.StartProcess
 
         If Not Me.TaskName = String.Empty AndAlso Me.WaitForExit = False Then
             Log(Level.Warning, "You set the attribute taskname to {0} and waitforexit to false.  You will not be able to call the waitforexit task with the task name {0} with an error.  If you wanted to wait for this to exit please set waitforexit to true.", Me.TaskName)
         End If
 
         If Not Me.TaskName = String.Empty AndAlso Me.WaitForExit Then
-            AsyncExecList.Add(Me.TaskName, WorkerThread)
+            AsyncExecList.Add(Me.TaskName, Me)
         End If
 
-        WorkerThread.Start()
+        If Me.TaskName = String.Empty AndAlso Me.WaitForExit Then
+            Me.Wait()
+        End If
     End Sub
 
-    Private Sub RunProcess()
-        Dim process1 As Process
+    Public Sub Wait()
         Try
-            process1 = Me.StartProcess
+            Me.Process.WaitForExit(Me.TimeOut)
 
-            If Me.WaitForExit Then
-                process1.WaitForExit(Me.TimeOut)
+            If Not Me.Process.HasExited Then
+                Try
+                    Me.Process.Kill()
+                Catch
+                End Try
+                Throw New BuildException(String.Format("External Program {0} did not finish within {1} milliseconds.", New Object() {Me.ProgramFileName, Me.TimeOut}), Me.Location)
+            End If
 
-                If Not process1.HasExited Then
-                    Try
-                        process1.Kill()
-                    Catch
-                    End Try
-                    Throw New BuildException(String.Format(CultureInfo.InvariantCulture, ResourceUtils.GetString("NA1118"), New Object() {Me.ProgramFileName, Me.TimeOut}), Me.Location)
-                End If
-
-                If (process1.ExitCode <> 0) Then
-                    Throw New BuildException(String.Format(CultureInfo.InvariantCulture, ResourceUtils.GetString("NA1119"), New Object() {Me.ProgramFileName, process1.ExitCode}), Me.Location)
-                End If
+            If (Me.Process.ExitCode <> 0) Then
+                Throw New BuildException(String.Format("External Program Failed: {0} (return code was {1})", New Object() {Me.ProgramFileName, Me.Process.ExitCode}), Me.Location)
             End If
         Catch exception1 As BuildException
             If MyBase.FailOnError Then
@@ -110,7 +127,7 @@ Public Class AsyncExec
             Me.Log(Level.Error, exception1.Message)
         Finally
             If (Not Me.ResultProperty Is Nothing AndAlso Me.WaitForExit) Then
-                Me.Properties.Item(Me.ResultProperty) = process1.ExitCode.ToString(CultureInfo.InvariantCulture)
+                Me.Properties.Item(Me.ResultProperty) = Me.Process.ExitCode.ToString()
             End If
         End Try
     End Sub

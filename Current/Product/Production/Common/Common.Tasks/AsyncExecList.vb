@@ -1,4 +1,3 @@
-Imports System.Threading
 Imports System.Collections
 Imports System.IO
 Imports System.Text
@@ -28,7 +27,7 @@ Public Class AsyncExecList
 
     End Sub
 
-    Public Shared Sub Add(ByVal name As String, ByVal task As Thread)
+    Public Shared Sub Add(ByVal name As String, ByVal task As AsyncExec)
         TaskNames.Add(name, task)
     End Sub
 
@@ -36,9 +35,9 @@ Public Class AsyncExecList
         TaskNames.Remove(name)
     End Sub
 
-    Public Shared ReadOnly Property Item(ByVal name As String) As Thread
+    Public Shared ReadOnly Property Item(ByVal name As String) As AsyncExec
         Get
-            Return DirectCast(TaskNames(name), Thread)
+            Return DirectCast(TaskNames(name), AsyncExec)
         End Get
     End Property
 
