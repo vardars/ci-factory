@@ -1,2 +1,2 @@
-"..\..\..\Third Party\nAnt\bin\nant.exe" -buildfile:SetUp.xml
+nant.exe -buildfile:SetUp.xml
 exit

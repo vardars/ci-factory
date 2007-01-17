@@ -68,20 +68,9 @@ namespace Tracker.Tasks
             if (this.TrackerFields.LastNote)
             {
                 XmlNode node3 = document.CreateNode(XmlNodeType.Element, null, "LastNote", null);
-                node3.InnerText = this.GetLatestNote(id);
+                node3.InnerText = this.TrackerServer.GetMostRecentNote(id);
                 node.AppendChild(node3);
             }
-        }
-
-        private string GetLatestNote(int id)
-        {
-            string text2 = string.Empty;
-            StringCollection collection1 = this.TrackerServer.GetNoteList(id);
-            if (collection1.Count > 0)
-            {
-                text2 = collection1[collection1.Count - 1];
-            }
-            return text2;
         }
 
         protected override void ExecuteTask()

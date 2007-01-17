@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 07/19/2006 14:55:41</xs:documentation>
+    <xs:documentation>NAnt schema generated at 01/16/2007 17:05:29</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -144,6 +146,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -214,7 +221,7 @@
   </xs:complexType>
   <xs:complexType name="Common.Tasks.StringList">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="string" type="nant:Common.Tasks.StringItem" />
+      <xs:element minOccurs="0" maxOccurs="1" name="string" type="nant:Common.Tasks.StringItem" />
     </xs:sequence>
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
@@ -239,12 +246,14 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -376,6 +385,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -615,6 +629,32 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Types.TfsServerConnection">
+    <xs:attribute name="domain" use="optional" />
+    <xs:attribute name="password" use="optional" />
+    <xs:attribute name="username" use="optional" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Types.Mapping">
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="localitem" use="optional" />
+    <xs:attribute name="serveritem" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Types.MappingList">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="mapping" type="nant:TF.Tasks.SourceControl.Types.Mapping" />
+    </xs:sequence>
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Types.VersionSpecElement">
+    <xs:attribute name="type" use="required" />
+    <xs:attribute name="versionspec" use="required" />
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
   <xs:complexType name="NAnt.Core.Filters.Filter">
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
@@ -711,6 +751,15 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="Common.Tasks.WaitForExit">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="tasknames" type="nant:Common.Tasks.StringList" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Common.Tasks.SwitchTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="case" type="nant:Common.Tasks.CaseElement" />
@@ -779,12 +828,14 @@
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -916,6 +967,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -961,6 +1017,61 @@
     <xs:attribute name="propertyexists" use="optional" />
     <xs:attribute name="targetexists" use="optional" />
     <xs:attribute name="test" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Core.Types.Option">
+    <xs:attribute name="name" use="required" />
+    <xs:attribute name="value" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Core.Types.EnvironmentVariable">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="path" type="nant:NAnt.Core.Types.PathSet" />
+    </xs:sequence>
+    <xs:attribute name="name" use="required" />
+    <xs:attribute name="value" use="optional" />
+    <xs:attribute name="file" use="optional" />
+    <xs:attribute name="dir" use="optional" />
+    <xs:attribute name="path" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Core.Types.EnvironmentSet">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="option" type="nant:NAnt.Core.Types.Option" />
+      <xs:element minOccurs="0" maxOccurs="1" name="variable" type="nant:NAnt.Core.Types.EnvironmentVariable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NAnt.Core.Types.Argument">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="path" type="nant:NAnt.Core.Types.PathSet" />
+    </xs:sequence>
+    <xs:attribute name="value" use="optional" />
+    <xs:attribute name="file" use="optional" />
+    <xs:attribute name="path" use="optional" />
+    <xs:attribute name="line" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Common.Tasks.AsyncExec">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="waitforexit" use="optional" />
+    <xs:attribute name="taskname" use="optional" />
+    <xs:attribute name="program" use="required" />
+    <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="workingdir" use="optional" />
+    <xs:attribute name="resultproperty" use="optional" />
+    <xs:attribute name="useruntimeengine" use="optional" />
+    <xs:attribute name="basedir" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1144,17 +1255,6 @@
     <xs:attribute name="debug" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Core.Types.Argument">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="path" type="nant:NAnt.Core.Types.PathSet" />
-    </xs:sequence>
-    <xs:attribute name="value" use="optional" />
-    <xs:attribute name="file" use="optional" />
-    <xs:attribute name="path" use="optional" />
-    <xs:attribute name="line" use="optional" />
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
@@ -2286,12 +2386,6 @@
     <xs:attribute name="path" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Core.Types.Option">
-    <xs:attribute name="name" use="required" />
-    <xs:attribute name="value" use="optional" />
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
@@ -3724,6 +3818,75 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+    </xs:sequence>
+    <xs:attribute name="workspacename" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Tasks.TfsLabelTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
+      <xs:element minOccurs="1" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+    </xs:sequence>
+    <xs:attribute name="labelname" use="required" />
+    <xs:attribute name="scope" use="optional" />
+    <xs:attribute name="itemspec" use="required" />
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="child" use="optional" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Tasks.TfsGetTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
+      <xs:element minOccurs="0" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+    </xs:sequence>
+    <xs:attribute name="all" use="optional" />
+    <xs:attribute name="localitem" use="optional" />
+    <xs:attribute name="workspacename" use="optional" />
+    <xs:attribute name="overwrite" use="optional" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="serveritem" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Tasks.TfsHistoryTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="fromversionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
+      <xs:element minOccurs="0" maxOccurs="1" name="toversionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
+      <xs:element minOccurs="1" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+    </xs:sequence>
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="reportfile" use="required" />
+    <xs:attribute name="itemspec" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="TF.Tasks.SourceControl.Tasks.TfsMapWorkspace">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+      <xs:element minOccurs="0" maxOccurs="1" name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
+    </xs:sequence>
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="workspacename" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="VSS.Tasks.VSSAddProject">
     <xs:attribute name="comment" use="optional" />
     <xs:attribute name="project" use="required" />
@@ -3817,24 +3980,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.Core.Types.EnvironmentVariable">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="path" type="nant:NAnt.Core.Types.PathSet" />
-    </xs:sequence>
-    <xs:attribute name="name" use="required" />
-    <xs:attribute name="value" use="optional" />
-    <xs:attribute name="file" use="optional" />
-    <xs:attribute name="dir" use="optional" />
-    <xs:attribute name="path" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Core.Types.EnvironmentSet">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="option" type="nant:NAnt.Core.Types.Option" />
-      <xs:element minOccurs="0" maxOccurs="1" name="variable" type="nant:NAnt.Core.Types.EnvironmentVariable" />
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="NAnt.Core.Tasks.ExecTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
@@ -3884,12 +4029,14 @@
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4021,6 +4168,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -4077,12 +4229,14 @@
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4214,6 +4368,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -4305,12 +4464,14 @@
       <xs:element minOccurs="0" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4442,6 +4603,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -4794,12 +4960,14 @@
   <xs:complexType name="Target">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+      <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
       <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
       <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
       <xs:element name="replace" type="nant:Common.Tasks.Replace" />
       <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
       <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
       <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+      <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4931,6 +5099,11 @@
       <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
       <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
       <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+      <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+      <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+      <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+      <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+      <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
       <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
       <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
       <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -4983,6 +5156,9 @@
       <xs:element name="warnaserror" type="nant:NAnt.DotNet.Types.WarningAsError" />
       <xs:element name="categoryset" type="nant:NAnt.NUnit2.Types.CategorySet" />
       <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+      <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+      <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
+      <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
       <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
       <xs:element name="credential" type="nant:NAnt.Core.Types.Credential" />
       <xs:element name="fileset" type="nant:NAnt.Core.Types.FileSet" />
@@ -5000,12 +5176,14 @@
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="write" type="nant:Common.Tasks.WriteTask" />
+        <xs:element name="waitforexit" type="nant:Common.Tasks.WaitForExit" />
         <xs:element name="switch" type="nant:Common.Tasks.SwitchTask" />
         <xs:element name="saveproperties" type="nant:Common.Tasks.SaveProperties" />
         <xs:element name="replace" type="nant:Common.Tasks.Replace" />
         <xs:element name="loopthrough" type="nant:Common.Tasks.LoopThrough" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
+        <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -5137,6 +5315,11 @@
         <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
         <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
         <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
+        <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
+        <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
+        <xs:element name="tfshistory" type="nant:TF.Tasks.SourceControl.Tasks.TfsHistoryTask" />
+        <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
         <xs:element name="vssaddproject" type="nant:VSS.Tasks.VSSAddProject" />
         <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
         <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
@@ -5189,6 +5372,9 @@
         <xs:element name="warnaserror" type="nant:NAnt.DotNet.Types.WarningAsError" />
         <xs:element name="categoryset" type="nant:NAnt.NUnit2.Types.CategorySet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
+        <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
+        <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="credential" type="nant:NAnt.Core.Types.Credential" />
         <xs:element name="fileset" type="nant:NAnt.Core.Types.FileSet" />
