@@ -312,6 +312,49 @@ namespace Tracker.Common
             return (string)this.ToolKit.GetFieldValue(scrId, fieldName);
         }
 
+        public String GetMostRecentNote(int scrId)
+        {
+            int NoteHandle = 0;
+            int RecordHandle = 0;
+
+            try
+            {
+                RecordHandle = this.ToolKit.GetSCRRecordHandle(scrId, 1);
+                NoteHandle = this.ToolKit.GetNoteHandle(RecordHandle);
+
+                this.ToolKit.InitalizeNoteList(NoteHandle);
+
+                String Note = String.Empty;
+                DateTime MostRecentTime = new DateTime(0);
+                while (this.ToolKit.GetNextNote(NoteHandle))
+                {
+                    string NoteCreationTime = this.ToolKit.GetNoteCreateTime(NoteHandle);
+                    DateTime CurrentNoteCreationTime = DateTime.Parse(NoteCreationTime);
+                    if (MostRecentTime < CurrentNoteCreationTime)
+                    {
+                        string NoteTitle = this.ToolKit.GetNoteTitle(NoteHandle);
+                        string NoteAuthor = this.ToolKit.GetNoteAuthor(NoteHandle);
+                        string NoteText = this.ToolKit.GetNoteText(NoteHandle);
+
+                        Note = string.Format("{0} ({1}) {2}, {3}", NoteTitle, NoteAuthor, NoteCreationTime, NoteText);
+                        MostRecentTime = CurrentNoteCreationTime;
+                    }
+                }
+                return Note;
+            }
+            finally
+            {
+                if (RecordHandle != 0)
+                {
+                    this.ToolKit.ReleaseRecordHandle(RecordHandle);
+                }
+                if (NoteHandle != 0)
+                {
+                    this.ToolKit.ReleaseNoteHandle(NoteHandle);
+                }
+            }
+        }
+
         public StringCollection GetNoteList(int scrId)
         {
             int NoteHandle = 0;
