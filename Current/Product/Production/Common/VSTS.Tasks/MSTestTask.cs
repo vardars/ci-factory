@@ -19,7 +19,20 @@ namespace VSTS.Tasks
         private bool _FailOnTestFailure = true;
         private string _TestMetaData;
         private System.Collections.Specialized.StringCollection _AssembliesFileNames;
-        
+        private bool _NoIsolation = true;
+
+        [TaskAttribute("noisolation", Required = false), BooleanValidator()]
+        public bool NoIsolation
+        {
+            get
+            {
+                return _NoIsolation;
+            }
+            set
+            {
+                _NoIsolation = value;
+            }
+        }
         
         [TaskAttribute("failontestfailure"), BooleanValidatorAttribute()]
         public bool FailOnTestFailure
@@ -117,7 +130,8 @@ namespace VSTS.Tasks
                 if (!String.IsNullOrEmpty(this.TestMetaData))
                     TestExecutor.Add(new TestMetaDataCommand(this.TestMetaData));
 
-                TestExecutor.Add(new NoIsolationCommand());
+                if (this.NoIsolation)
+                    TestExecutor.Add(new NoIsolationCommand());
 
                 TestExecutor.ValidateCommands();
 
