@@ -15,8 +15,8 @@ using TF.Tasks.SourceControl.Helpers;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
-    [TaskName("tfscheckin")]
-    public class TfsCheckinTask : Task
+    [TaskName("tfsadd")]
+    public class TfsAddTask : Task
     {
 
         #region Fields
@@ -27,24 +27,10 @@ namespace TF.Tasks.SourceControl.Tasks
         private string _LocalItem;
         private WorkspaceAssistant _WorkspaceHelper;
         private FileSet _LocalItems;
-        private string _Comment;
-
+        
         #endregion
 
         #region Properties
-
-        [TaskAttribute("comment", Required = false)]
-        public string Comment
-        {
-            get
-            {
-                return _Comment;
-            }
-            set
-            {
-                _Comment = value;
-            }
-        }
 
         [BuildElement("localitems", Required = false)]
         public FileSet LocalItems
@@ -136,42 +122,29 @@ namespace TF.Tasks.SourceControl.Tasks
 
             Workspace MyWorkspace = this.WorkspaceHelper.GetWorkspaceByName(this.WorkspaceName, this.ServerConnection.SourceControl);
 
-            RecursionType Recursion = RecursionType.None;
-            if (this.Recursive)
-                Recursion = RecursionType.Full;
-
-            List<String> Items = new List<string>();
-
             if (!String.IsNullOrEmpty(this.LocalItem))
             {
-                Items.Add(this.LocalItem);
-                Log(Level.Verbose, "Adding file '{0}' to changeset.", this.LocalItem);
+                MyWorkspace.PendAdd(this.LocalItem, this.Recursive);
+                Log(Level.Verbose, "Adding: '{0}', Recursive Flag: {1}, Workspace: '{2}'", this.LocalItem, this.Recursive.ToString(), this.WorkspaceName);
             }
             if (this.LocalItems != null)
             {
-                if (this.LocalItems.DirectoryNames.Count > 0)
+                foreach (String CurrentItem in this.LocalItems.DirectoryNames)
                 {
-                    foreach (String CurrentItem in this.LocalItems.DirectoryNames)
-                    {
-                        Items.Add(CurrentItem);
-                        Log(Level.Verbose, "Adding directory '{0}' to changeset.", CurrentItem);
-                    }
+                    MyWorkspace.PendAdd(CurrentItem, this.Recursive);
+                    Log(Level.Verbose, "Adding Directory: '{0}', Recursive Flag: {1}, Workspace: '{2}'", CurrentItem, this.Recursive.ToString(), this.WorkspaceName);
                 }
-                if (this.LocalItems.FileNames.Count > 0)
+            
+                foreach (String CurrentItem in this.LocalItems.FileNames)
                 {
-                    foreach (String CurrentItem in this.LocalItems.FileNames)
-                    {
-                        Items.Add(CurrentItem);
-                        Log(Level.Verbose, "Adding file '{0}' to changeset.", CurrentItem);
-                    }
+                    MyWorkspace.PendAdd(CurrentItem);
+                    Log(Level.Verbose, "Adding File: '{0}', Workspace: '{1}'", CurrentItem, this.WorkspaceName);
                 }
             }
-
-            PendingChange[] Changes = MyWorkspace.GetPendingChanges(Items.ToArray(), Recursion);
-            MyWorkspace.CheckIn(Changes, this.Comment, null, null, null);
         }
 
         #endregion
 
     }
+
 }

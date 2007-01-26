@@ -14,6 +14,7 @@ using Microsoft.TeamFoundation.VersionControl.Common;
 using Microsoft.TeamFoundation.Client;
 
 using TF.Tasks.SourceControl.Types;
+using TF.Tasks.SourceControl.Helpers;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
@@ -118,6 +119,9 @@ namespace TF.Tasks.SourceControl.Tasks
 
         #endregion
 
+        
+#region Helpers
+
         private RecursionType GetRecustiveOption()
         {
             RecursionType TypeOfRecursion = RecursionType.None;
@@ -142,7 +146,7 @@ namespace TF.Tasks.SourceControl.Tasks
             return Spec;
         }
 
-        public void FixUpVersionSpec(ref VersionSpec spec)
+        private void FixUpVersionSpec(ref VersionSpec spec)
         {
             if (spec is LabelVersionSpec)
             {
@@ -150,7 +154,7 @@ namespace TF.Tasks.SourceControl.Tasks
             }
         }
 
-        public ChangesetVersionSpec ConvertToChangesetSpec(LabelVersionSpec spec)
+        private ChangesetVersionSpec ConvertToChangesetSpec(LabelVersionSpec spec)
         {
             VersionControlLabel Label = this.ServerConnection.SourceControl.QueryLabels(spec.Label, spec.Scope, null, true)[0];
             int HighestChangesetId = 0;
@@ -164,6 +168,8 @@ namespace TF.Tasks.SourceControl.Tasks
             }
             return new ChangesetVersionSpec(HighestChangesetId);
         }
+
+        #endregion
 
         protected override void ExecuteTask()
         {

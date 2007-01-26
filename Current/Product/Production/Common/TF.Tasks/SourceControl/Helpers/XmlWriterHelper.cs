@@ -11,7 +11,7 @@ using Microsoft.TeamFoundation.VersionControl.Common;
 using Microsoft.TeamFoundation.Client;
 using TF.Tasks.SourceControl.Types;
 
-namespace TF.Tasks.SourceControl.Tasks
+namespace TF.Tasks.SourceControl.Helpers
 {
 
     public class XmlWriterHelper

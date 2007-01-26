@@ -11,6 +11,7 @@ using Microsoft.TeamFoundation.VersionControl.Common;
 using Microsoft.TeamFoundation.Client;
 
 using TF.Tasks.SourceControl.Types;
+using TF.Tasks.SourceControl.Helpers;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
@@ -28,10 +29,57 @@ namespace TF.Tasks.SourceControl.Tasks
         private TfsServerConnection _ServerConnection;
         private string _WorkspaceName;
         private string _LocalItem;
+        private WorkspaceAssistant _WorkspaceHelper;
+        private string _ResultFileSetRefId;
+        private FileSet _ResultFileSet;
 
         #endregion
 
         #region Properties
+
+        public FileSet ResultFileSet
+        {
+            get
+            {
+                if (_ResultFileSet == null)
+                {
+                    _ResultFileSet = new FileSet();
+                    _ResultFileSet.RefID = this.ResultFileSetRefId;
+                }
+                return _ResultFileSet;
+            }
+            set
+            {
+                _ResultFileSet = value;
+            }
+        }
+
+        public WorkspaceAssistant WorkspaceHelper
+        {
+            get
+            {
+                if (_WorkspaceHelper == null)
+                    _WorkspaceHelper = new WorkspaceAssistant();
+                return _WorkspaceHelper;
+            }
+            set
+            {
+                _WorkspaceHelper = value;
+            }
+        }
+
+        [TaskAttribute("resultfilesetrefid", Required = false)]
+        public string ResultFileSetRefId
+        {
+            get
+            {
+                return _ResultFileSetRefId;
+            }
+            set
+            {
+                _ResultFileSetRefId = value;
+            }
+        }
 
         [TaskAttribute("all", Required = false), BooleanValidator]
         public bool All
@@ -126,7 +174,7 @@ namespace TF.Tasks.SourceControl.Tasks
             }
         }
 
-        [BuildElement("tfsserverconnection", Required = false)]
+        [BuildElement("tfsserverconnection", Required = true)]
         public TfsServerConnection ServerConnection
         {
             get
@@ -140,41 +188,11 @@ namespace TF.Tasks.SourceControl.Tasks
         }
 
         #endregion
-
-
+        
         #region Methods
 
-        protected override void ExecuteTask()
+        private GetOptions GetGetOptions()
         {
-            if (String.IsNullOrEmpty(this.WorkspaceName) && String.IsNullOrEmpty(this.LocalItem))
-                throw new BuildException("Unable to determine Workspace to use as both the WorkspaceName and LocalItem are not set.");
-
-            Workspace MyWorkspace = null;
-
-            if (!String.IsNullOrEmpty(this.WorkspaceName))
-            {
-                Workspace[] Workspaces = this.ServerConnection.SourceControl.QueryWorkspaces(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, Workstation.Current.Name);
-                if (Workspaces.Length > 0)
-                    MyWorkspace = Workspaces[0];
-            }
-
-            if (MyWorkspace == null && !String.IsNullOrEmpty(this.LocalItem))
-            {
-                if (!Workstation.Current.IsMapped(this.LocalItem))
-                    throw new BuildException(String.Format("Unable to determine the Workspace to use, the path {0} does not map to a workspace.", this.LocalItem));
-
-                WorkspaceInfo MyWorkSpaceInfo = Workstation.Current.GetLocalWorkspaceInfo(this.LocalItem);
-
-                if (this.ServerConnection == null)
-                    this.ServerConnection = new TfsServerConnection(MyWorkSpaceInfo.ServerUri.ToString());
-
-                this.WorkspaceName = MyWorkSpaceInfo.Name;
-                MyWorkspace = MyWorkSpaceInfo.GetWorkspace(this.ServerConnection.TFS);
-            }
-
-            if (MyWorkspace == null)
-                throw new BuildException(String.Format("Unable to determine Workspace to use: WorkspaceName is set to {0} and LocalItem is set to {1}.", this.WorkspaceName, this.LocalItem));
-            
             GetOptions Options = GetOptions.None;
             if (this.All && this.OverWrite)
             {
@@ -188,6 +206,17 @@ namespace TF.Tasks.SourceControl.Tasks
             {
                 Options = GetOptions.Overwrite;
             }
+            return Options;
+        }
+
+        protected override void ExecuteTask()
+        {
+            //TODO: Adding the alternet use of a fileset instead of the LocalItem property
+            Workspace MyWorkspace = this.WorkspaceHelper.GetWorkspace(this.WorkspaceName, this.LocalItem, this.ServerConnection);
+
+            GetOptions Options = this.GetGetOptions();
+
+            this.ServerConnection.SourceControl.Getting += new GettingEventHandler(OnGet);
 
             if (!String.IsNullOrEmpty(this.ServerItem))
             {
@@ -200,10 +229,20 @@ namespace TF.Tasks.SourceControl.Tasks
             }
             else
             {
-                MyWorkspace.Get(this.VersionSpec.GetVersionSpec() ,Options);
+                MyWorkspace.Get(this.VersionSpec.GetVersionSpec(), Options);
             }
+
+            this.ServerConnection.SourceControl.Getting -= new GettingEventHandler(OnGet);
         }
 
         #endregion
+
+        private void OnGet(object sender, GettingEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(this.ResultFileSetRefId))
+                this.ResultFileSet.Includes.Add(e.TargetLocalItem);
+
+            Log(Level.Verbose, "Status: '{0}',  ChangeType: '{1}', TargetLocalItem: '{2}' ServerItem: '{3}' Version: '{4}'", e.Status.ToString(), e.ChangeType.ToString(), e.TargetLocalItem, e.ServerItem, e.Version);
+        }
     }
 }
