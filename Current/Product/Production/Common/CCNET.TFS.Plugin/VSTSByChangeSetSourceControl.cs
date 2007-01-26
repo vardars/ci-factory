@@ -277,7 +277,9 @@ namespace CCNET.TFS.Plugin
 
         public void GetSource(IIntegrationResult result)
         {
-            //do nothing
+            Changeset Set = this.ChangesetQueue.Peek();
+            result.AddIntegrationProperty("CCNetVSTSChangeSetId", Set.ChangesetId);
+
         }
 
         
