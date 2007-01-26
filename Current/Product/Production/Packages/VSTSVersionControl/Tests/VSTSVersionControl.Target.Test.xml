@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Target.Test" default="VSTSVersionControl.Target.RunAllTests">
+
+  <property name="Ignored" value="true"/>
+  
+  <loadtasks assembly="C:\Projects\CI Factory\Current\Third Party\nAnt\bin\Common.Functions.dll" />
+  
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2006-09-12"/>
+  <property name="CCNetBuildTime" value="11:10:00"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+  <property name="CCNetLabel" value="1.0.0.2"/>
+  <property name="CCNetProject" value="test.project"/>
+
+  <include buildfile="C:\Projects\CI Factory\Current\Product\Production\Foundation\Default\Build\Properties.build.xml"/>
+  <include buildfile="C:\Projects\CI Factory\Current\Product\Production\Foundation\Default\Build\Common.Build.xml" />
+
+  <include buildfile="..\Package\VSTSVersionControl\VSTSVersionControl.Target.xml"/>
+
+  <targetset id="VSTSVersionControl.Target.Tests">
+    <include value="VSTSVersionControl.Target.Test*"/>
+    <exclude value="VSTSVersionControl.Target.TestFixture.SetUp"/>
+  </targetset>
+  
+  <target name="VSTSVersionControl.Target.RunAllTests">  
+    <loopthrough property="TestTarget">
+      <items>
+        <targetset refid="VSTSVersionControl.Target.Tests"/>
+      </items>
+      <do>
+        <property name="TestFailure" value="false"/>
+        <trycatch>
+          <try>
+            <call target="${TestTarget}"/>
+          </try>
+          <catch property="exception">
+            <echo level="Error" message="Test ${TestTarget} failed: ${exception}"/>    
+            <property name="TestFailure" value="true"/>    
+          </catch>
+        </trycatch>
+        <fail message="At lease one test failed." if="${TestFailure}"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <target name="VSTSVersionControl.Target.TestFixture.SetUp">
+    
+  </target>
+
+  <target name="VSTSVersionControl.Target.Test.ConvertLocalPathToPath-RegularPaths" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="C:\Projects\test.project\Current\Product"/>
+    
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="ExpectedValue" value="$/test.project/Current/Product"/>
+    <fail if="${Private.SourceControl.ConvertLocalPathToPath.Path == ExpectedValue}" 
+          message="Expected the path to have been '${ExpectedValue}' and not '${Private.SourceControl.ConvertLocalPathToPath.Path}'."/>
+  </target>
+
+
+  <target name="VSTSVersionControl.Target.Test.convertlocaltoserver-RegularPaths" >
+    <property name="ActualValue" value="${sourcecontrol::convertlocaltoserver('C:\Projects\test.project\Current\Product')}"/>
+
+    <property name="ExpectedValue" value="$/test.project/Current/Product"/>
+    <fail if="${ActualValue == ExpectedValue}" 
+          message="Expected the path to have been '${ExpectedValue}' and not '${ActualValue}'."/>
+  </target>
+
+  <target name="VSTSVersionControl.Target.Test.ReLabel" unless="${Ignored}">
+    <!--unless="${Ignored}">-->
+    <property name="SourceControl.Relabel.OldLabel" value="OldLabel"/>
+    <property name="SourceControl.Relabel.NewLabel" value="NewLabel"/>
+    <property name="SourceControl.Relabel.Path" value="$/test.project/Current"/>
+
+    <call target="SourceControl.Relabel"/>
+
+    <fail if="${tfs-vc::label-exists('VSTSVersionControl.Connection', 'NewLabel', SourceControl.Relabel.Path)}"/>
+    <!--Diff between the Labels expecting no diff.-->
+  </target>
+  
+</project>

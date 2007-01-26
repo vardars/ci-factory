@@ -33,12 +33,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Package\VSTSVersionControl\VSTSVersionControl.Properties.xml" />
     <Content Include="Package\VSTSVersionControl\VSTSVersionControl.Target.xml" />
+    <Content Include="Tests\VSTSVersionControl.Target.Test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
