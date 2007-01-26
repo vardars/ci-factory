@@ -1,4 +1,5 @@
-"..\..\..\..\Third Party\nAnt\bin\nant.exe" -buildfile:UpdatenAnt.xml
-copy "bin\.NET 1.1\Release\Common.Tasks.dll" "..\..\..\..\Third Party\nAnt\bin"
-"..\..\..\..\Third Party\nAnt\bin\nant.exe" -buildfile:..\..\..\DevEnv\SetupScripts\SetUp.xml
-exit
+attrib -R "C:\Projects\CI Factory\Current\Third Party\nAnt\bin\Common.Tasks.dll"
+
+copy "bin\.NET 1.1\Debug\Common.Tasks.dll" "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
+copy "bin\.NET 1.1\Debug\Common.Tasks.pdb" "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
+nant -buildfile:"C:\Projects\CI Factory\Current\Product\DevEnv\SetupScripts\SetUp.xml"

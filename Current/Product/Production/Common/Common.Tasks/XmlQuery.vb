@@ -6,15 +6,21 @@ Imports System.Xml
 Imports NAnt.Core
 Imports NAnt.Core.Types
 Imports NAnt.Core.Attributes
+Imports System
 
 <ElementName("xmlquery")> _
 Public Class XmlQuery
     Inherits LoopItems
 
+#Region "Fields"
+
     Private _Query As String
     Private _File As String
     Private _Namespaces As XmlNamespaceCollection
 
+#End Region
+
+#Region "Properties"
 
     <BuildElementCollection("namespaces", "namespace")> _
     Public Property Namespaces() As XmlNamespaceCollection
@@ -45,6 +51,8 @@ Public Class XmlQuery
             _File = value
         End Set
     End Property
+
+#End Region
 
     Protected Overrides Function GetStrings() As System.Collections.IEnumerator
         Dim Strings As New ArrayList

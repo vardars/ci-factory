@@ -124,6 +124,7 @@
     <Compile Include="StringItem.vb" />
     <Compile Include="StringList.vb" />
     <Compile Include="SwitchTask.vb" />
+    <Compile Include="TargetSet.vb" />
     <Compile Include="TextElement.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -138,6 +139,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|.NET 1.1' ">
     <OutputPath>bin\.NET 1.1\Debug\</OutputPath>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <None Include="UpdatenAnt.bat" />
