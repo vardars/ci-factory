@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net;
 
@@ -31,10 +32,94 @@ namespace CCNET.TFS.Plugin
         private VSTSMonitor _Monitor;
         private string _StateFilePath;
         private int _Port;
+        private bool _AutoGetSource = false;
+        private string _WorkingDirectory;
+        private bool _CleanCopy = false;
+        private bool _DeleteWorkspace = false;
+        private string _WorkspaceName;
 
         #endregion
 
         #region NetReflectored Properties
+
+
+        [ReflectorProperty("autoGetSource", Required = false)]
+
+        public bool AutoGetSource
+        {
+            get
+            {
+                return _AutoGetSource;
+            }
+            set
+            {
+                _AutoGetSource = value;
+            }
+        }
+
+        [ReflectorProperty("workingDirectory", Required = false)]
+        public string WorkingDirectory
+        {
+            get
+            {
+                return _WorkingDirectory;
+            }
+            set
+            {
+                _WorkingDirectory = value;
+            }
+        }
+
+        [ReflectorProperty("cleanCopy", Required = false)]
+        public bool CleanCopy
+        {
+            get
+            {
+                return _CleanCopy;
+            }
+            set
+            {
+                _CleanCopy = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Name of the workspace to create.  This will revert to the DEFAULT_WORKSPACE_NAME if not passed.
+        /// </summary>
+        [ReflectorProperty("workspace", Required = false)]
+        public string Workspace
+        {
+            get
+            {
+                if (_WorkspaceName == null)
+                {
+                    _WorkspaceName = "CCNET";
+                }
+                return _WorkspaceName;
+            }
+            set
+            {
+                _WorkspaceName = value;
+            }
+        }
+
+        /// <summary>
+        ///   Flag indicating if workspace should be deleted every time or if it should be 
+        ///   left (the default).  Leaving the workspace will mean that subsequent gets 
+        ///   will only need to transfer the modified files, improving performance considerably.
+        /// </summary>
+        [ReflectorProperty("deleteWorkspace", Required = false)]
+        public bool DeleteWorkspace
+        {
+            get
+            {
+                return _DeleteWorkspace;
+            }
+            set
+            {
+                _DeleteWorkspace = value;
+            }
+        }
 
         /// <summary>
         ///   The name or URL of the team foundation server.  For example http://vstsb2:8080 or vstsb2 if it
@@ -278,8 +363,68 @@ namespace CCNET.TFS.Plugin
         public void GetSource(IIntegrationResult result)
         {
             Changeset Set = this.ChangesetQueue.Peek();
-            result.AddIntegrationProperty("CCNetVSTSChangeSetId", Set.ChangesetId);
+            result.AddIntegrationProperty("CCNetVSTSChangeSetId", Set.ChangesetId.ToString());
 
+            if (AutoGetSource)
+            {
+                if (CleanCopy)
+                {
+                    // If we have said we want a clean copy, then delete old copy before getting.
+                    Log.Debug("Deleting " + this.WorkingDirectory);
+                    this.DeleteDirectory(this.WorkingDirectory);
+                }
+
+                Workspace[] Workspaces = this.SourceControl.QueryWorkspaces(Workspace, this.SourceControl.AuthenticatedUser, Workstation.Current.Name);
+                Workspace MyWorkspace = null;
+
+                if (Workspaces.Length > 0)
+                {
+                    // The workspace exists.  
+                    if (DeleteWorkspace)
+                    {
+                        // We have asked for a new workspace every time, therefore delete the existing one.
+                        Log.Debug("Removing existing workspace " + Workspace);
+                        this.SourceControl.DeleteWorkspace(Workspace, this.SourceControl.AuthenticatedUser);
+                        Workspaces = new Workspace[0];
+                    }
+                    else
+                    {
+                        Log.Debug("Existing workspace detected - reusing");
+                        MyWorkspace = Workspaces[0];
+                    }
+                }
+                if (Workspaces.Length == 0)
+                {
+                    Log.Debug("Creating new workspace name: " + Workspace);
+                    MyWorkspace = this.SourceControl.CreateWorkspace(Workspace, this.SourceControl.AuthenticatedUser, "Created By CCNet vstsbychangesetSourceControl.");
+                }
+
+                try
+                {
+                    MyWorkspace.Map(ProjectPath, WorkingDirectory);
+
+                    Log.Debug(String.Format("Getting {0} to {1}", ProjectPath, WorkingDirectory));
+                    GetRequest GetInfo = new GetRequest(new ItemSpec(ProjectPath, RecursionType.Full), LatestVersionSpec.Instance);
+                    if (CleanCopy)
+                    {
+                        Log.Debug("Forcing a Get Specific with the options \"get all files\" and \"overwrite read/write files\"");
+                        MyWorkspace.Get(GetInfo, GetOptions.GetAll | GetOptions.Overwrite);
+                    }
+                    else
+                    {
+                        Log.Debug("Performing a Get Latest");
+                        MyWorkspace.Get(GetInfo, GetOptions.None);
+                    }
+                }
+                finally
+                {
+                    if (MyWorkspace != null && DeleteWorkspace)
+                    {
+                        Log.Debug("Deleting the workspace");
+                        MyWorkspace.Delete();
+                    }
+                }
+            }
         }
 
         
@@ -302,7 +447,37 @@ namespace CCNET.TFS.Plugin
         #endregion
 
         #region Helpers
-        
+
+        /// <summary>
+        ///   Delete a directory, even if it contains readonly files.
+        /// </summary>
+        private void DeleteDirectory(string path)
+        {
+            if (Directory.Exists(WorkingDirectory))
+            {
+                this.MarkAllFilesReadWrite(path);
+                Directory.Delete(path, true);
+            }
+        }
+
+        private void MarkAllFilesReadWrite(string path)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+
+            FileInfo[] files = dirInfo.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                file.IsReadOnly = false;
+            }
+
+            // Now recurse down the directories
+            DirectoryInfo[] dirs = dirInfo.GetDirectories();
+            foreach (DirectoryInfo dir in dirs)
+            {
+                this.MarkAllFilesReadWrite(dir.FullName);
+            }
+        }
+
         /// <summary>
         ///   Convert the passed changeset to an array of modifcations.
         /// </summary>
