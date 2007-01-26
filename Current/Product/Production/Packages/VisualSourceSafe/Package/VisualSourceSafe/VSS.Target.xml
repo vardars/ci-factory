@@ -5,7 +5,14 @@
 
   <include buildfile="VSS.Properties.xml" />
 
+  <property name="Private.VSS.CacheFile" value="CacheFile.xml"/>
   <property name="Private.VSS.ReportDirectory" value="${BuildDirectory}\VSS" overwrite="false"/>
+
+  <include buildfile="${Private.VSS.ReportDirectory}\${Private.VSS.CacheFile}" if="${file::exists(Private.VSS.ReportDirectory + '\' + Private.VSS.CacheFile)}" failonerror="false"/>
+  <property name="VSS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
+
+  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
+  <property name="VSS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
 
   <!--
 	The following properties should be specified in the calling script.
@@ -15,123 +22,344 @@
 	<property name="VSS.Password" value="" />
 	
 	-->
-
-  <!-- The following will be set by the target. 
   
-  <property name="SourceControl.ThirdPartyChanged" value=""/>
-  -->
+  <target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.DeleteDirectory"/>
+
+    <property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value="${SourceControl.GetFromLabel}"/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+  
   <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(ThirdPartyDirectory, ProjectsDirectory, '')}"/>
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath, '\', '/')}"/>
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="$/${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}"/>
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath" value="${string::replace(Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath, '//', '/')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
-    <call target="SourceModificationReport.GetOldestModificationTime"/>
+    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.DeleteDirectory"/>
 
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile" value="${Private.VSS.ReportDirectory}\ThirdPartyHistory.xml"/>
+    <property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value=""/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <target name="SourceControl.GetOfThirdPartyDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value=""/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <target name="SourceControl.SmartCleanGetOfThirdPartyDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.HasChanged.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.HasChanged.Since" value="${VSS.LastBuildTime}" />
+    <call target="SourceControl.HasChanged"/>
+    
+    <if test="${SourceControl.HasChanged}" >
+      <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
+      <call target="Private.SourceControl.DeleteDirectory"/>
+
+      <property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+      <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+      <property name="Private.SourceControl.Update.Version" value=""/>
+      <call target="Private.SourceControl.Update"/>
+    </if>
+  </target>
+
+  <!-- Needed for SourceControl.HasChanged
+  <property name="SourceControl.HasChanged.Path" value=""/>
+  <property name="SourceControl.HasChanged.Since" value=""/>
+  -->
+  <!-- The following will be set by the target. 
+  <property name="SourceControl.HasChanged" value=""/>
+  -->
+  <target name="SourceControl.HasChanged">
+    <property name="Private.SourceControl.HasChanged.HistoryFile" value="${Private.VSS.ReportDirectory}\History.xml"/>
     <trycatch>
       <try>
         <vsshistory
           dbpath="${VSS.DBPath}"
-          path="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" 
+          path="${SourceControl.HasChanged.Path}" 
 		      username="${VSS.Username}"
 		      password="${VSS.Password}" 
-          fromdate="${SourceModificationReport.OldestModificationTime}"
+          fromdate="${SourceControl.HasChanged.Since}"
           todate="${datetime::now()}"
-          output="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}"
+          output="${Private.SourceControl.HasChanged.HistoryFile}"
         />
       </try>
       <catch>
         <echo message="dbpath= ${VSS.DBPath}"/>
-        <echo message="path=${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" />
+        <echo message="path=${SourceControl.HasChanged.Path}" />
         <echo message="username=${VSS.Username}"/>
         <echo message="password=${VSS.Password}"/>
-        <echo message="fromdate=${SourceModificationReport.OldestModificationTime}"/>
+        <echo message="fromdate=${SourceControl.HasChanged.Since}"/>
         <echo message="todate=${datetime::now()}"/>
-        <echo message="output=${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}"/>
+        <echo message="output=${Private.SourceControl.HasChanged.HistoryFile}"/>
 
-        <fail message="Failed in SourceControl.CleanGetOfThirdPartyDirectory, please review log." />
+        <fail message="Failed in SourceControl.HasChanged, please review log." />
       </catch>
     </trycatch>
 
+    <property name="Private.SourceControl.HasChanged.HistoryPathsFile" value="${Private.VSS.ReportDirectory}\HistoryPaths.txt"/>
+    <style style="Packages\VisualSourceSafe\HistoryPaths.xsl" in="${Private.SourceControl.HasChanged.HistoryFile}" out="${Private.SourceControl.HasChanged.HistoryPathsFile}" />
 
-    <property name="Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile" value="${Private.VSS.ReportDirectory}\ThirdPartyHistoryPaths.txt"/>
-    <style style="Packages\VisualSourceSafe\HistoryPaths.xsl" in="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryFile}" out="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile}" />
-
-    <property name="SourceControl.ThirdPartyChanged" value="false"/>
-    <loadfile file="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyHistoryPathsFile}" property="SourceControl.ThirdPartyChanged" />
-
-    <if test="${SourceControl.ThirdPartyChanged or not directory::exists(ThirdPartyDirectory)}" >
-      <if test="${directory::exists(ThirdPartyDirectory)}" >
-        <attrib readonly="false">
-          <fileset>
-            <include name="${ThirdPartyDirectory}\*" />
-          </fileset>
-        </attrib>
-
-        <trycatch>
-          <try>
-            <delete dir="${ThirdPartyDirectory}"/>
-          </try>
-          <catch>
-            <exec program="cmd" commandline='/C "rmdir /S /Q "${ThirdPartyDirectory}""' />
-          </catch>
-        </trycatch>
-      </if>
-      <mkdir dir="${ThirdPartyDirectory}" />
-      <vssget 
-			  localpath="${ThirdPartyDirectory}" 
-			  dbpath="${VSS.DBPath}" 
-			  path="${Private.SourceControl.CleanGetOfThirdPartyDirectory.ThirdPartyPath}" 
-			  username="${VSS.Username}"
-			  password="${VSS.Password}" 
-			  recursive="True"
-			  filetimestamp="Modified"
-			  removedeleted="True"
-			  replace="True"
-			  writable="True"
-			  verbose="True" 
-		  />
-    </if>
+    <property name="SourceControl.HasChanged" value="false"/>
+    <loadfile file="${Private.SourceControl.HasChanged.HistoryPathsFile}" property="SourceControl.HasChanged" />
   </target>
 
+  <!--<property name="SourceControl.ShowChanges.FromLabel" value=""/>
+  <property name="SourceControl.ShowChanges.ToLabel" value=""/>-->
+  
+  <target name="SourceControl.ShowChangesBetweenLabelsBuild">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.FromLabel" value="${SourceControl.ShowChanges.FromLabel}"/>
+    <property name="SourceControl.ShowChangesTimeBased.ToLabel" value="${SourceControl.ShowChanges.ToLabel}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.VSS.ReportDirectory}\ThirdPartyChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesLabelBased"/>
+
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.VSS.ReportDirectory}\ProductChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesLabelBased"/>
+  </target>
+
+
+  <!--
+  <property name="SourceControl.ShowChangesTimeBased.Path" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.FromLabel" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.ToLabel" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.Output" value=""/>
+  -->
+
+  <target name="SourceControl.ShowChangesLabelBased">
+    <trycatch>
+      <try>
+        <vsshistory
+          dbpath="${VSS.DBPath}"
+          path="${SourceControl.ShowChangesTimeBased.Path}" 
+		      username="${VSS.Username}"
+		      password="${VSS.Password}"
+          fromlabel="${SourceControl.ShowChangesTimeBased.FromLabel}" 
+          tolabel="${SourceControl.ShowChangesTimeBased.ToLabel}"
+          output="${SourceControl.ShowChangesTimeBased.Output}"
+        />
+      </try>
+      <catch property="Exception">
+        <echo message="dbpath= ${VSS.DBPath}"/>
+        <echo message="path=${SourceControl.ShowChangesTimeBased.Path}" />
+        <echo message="username=${VSS.Username}"/>
+        <echo message="password=${VSS.Password}"/>
+        <echo message="fromlabel=${SourceControl.ShowChangesTimeBased.FromLabel}"/>
+        <echo message="tolabel=${SourceControl.ShowChangesTimeBased.ToLabel}"/>
+        <echo message="output=${SourceControl.ShowChangesTimeBased.Output}"/>
+
+        <fail message="Failed in SourceControl.ShowChangesTimeBased, please review log: ${Exception}" />
+      </catch>
+    </trycatch>
+  </target>
+
+  <target name="SourceControl.ShowChangesSinceLastBuild">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.FromDate" value="${VSS.LastBuildTime}"/>
+    <property name="SourceControl.ShowChangesTimeBased.ToDate" value="${datetime::now()}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.VSS.ReportDirectory}\ThirdPartyChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesTimeBased"/>
+
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.VSS.ReportDirectory}\ProductChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesTimeBased"/>
+  </target>
+
+  <!--
+  <property name="SourceControl.ShowChangesTimeBased.Path" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.FromDate" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.ToDate" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.Output" value=""/>
+  -->
+
+  <target name="SourceControl.ShowChangesTimeBased">
+    <trycatch>
+      <try>
+        <vsshistory
+          dbpath="${VSS.DBPath}"
+          path="${SourceControl.ShowChangesTimeBased.Path}" 
+		      username="${VSS.Username}"
+		      password="${VSS.Password}" 
+          fromdate="${SourceControl.ShowChangesTimeBased.FromDate}"
+          todate="${SourceControl.ShowChangesTimeBased.ToDate}"
+          output="${SourceControl.ShowChangesTimeBased.Output}"
+        />
+      </try>
+      <catch property="Exception">
+        <echo message="dbpath= ${VSS.DBPath}"/>
+        <echo message="path=${SourceControl.ShowChangesTimeBased.Path}" />
+        <echo message="username=${VSS.Username}"/>
+        <echo message="password=${VSS.Password}"/>
+        <echo message="fromdate=${SourceControl.ShowChangesTimeBased.FromDate}"/>
+        <echo message="todate=${SourceControl.ShowChangesTimeBased.ToDate}"/>
+        <echo message="output=${SourceControl.ShowChangesTimeBased.Output}"/>
+
+        <fail message="Failed in SourceControl.ShowChangesTimeBased, please review log: ${Exception}" />
+      </catch>
+    </trycatch>
+  </target>
+  
   <target name="SourceControl.CleanGetOfProductDirectory" >
-    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(ProductDirectory, ProjectsDirectory, '')}"/>
-    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(Private.SourceControl.CleanGetOfProductDirectory.ProductPath, '\', '/')}"/>
-    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="$/${Private.SourceControl.CleanGetOfProductDirectory.ProductPath}"/>
-    <property name="Private.SourceControl.CleanGetOfProductDirectory.ProductPath" value="${string::replace(Private.SourceControl.CleanGetOfProductDirectory.ProductPath, '//', '/')}"/>
-    <if test="${directory::exists(ProductDirectory)}" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.DeleteDirectory"/>
+
+    <property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value=""/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <target name="SourceControl.GetOfProductDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value=""/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
+  <property name="SourceControl.GetFromLabel" value=""/>
+  -->
+
+  <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+    
+    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.DeleteDirectory"/>
+    
+    <property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value="${SourceControl.GetFromLabel}"/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <target name="SourceControl.GetOfBuildDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${BuildDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="Private.SourceControl.Update.LocalPath" value="${BuildDirectory}"/>
+    <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.Update.Version" value=""/>
+    <call target="Private.SourceControl.Update"/>
+  </target>
+
+  <!-- Needed for Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value=""/>
+  -->
+  <!-- Returned by Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value=""/>
+  -->
+  <target name="Private.SourceControl.ConvertLocalPathToPath">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.LocalPath, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '\', '/')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="$/${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '//', '/')}"/>
+  </target>
+
+  <!-- Needed for Private.SourceControl.Update
+  <property name="Private.SourceControl.Update.LocalPath" value=""/>
+  <property name="Private.SourceControl.Update.Path" value=""/>
+  <property name="Private.SourceControl.Update.Version" value=""/>
+  
+  <property name="SourceControl.Update.ReplaceWritableFiles" value=""/>
+  <property name="SourceControl.Update.MakeWritable" value=""/>
+  <property name="SourceControl.Update.FileTimeStamp" value=""/>
+  -->
+  
+  <target name="Private.SourceControl.Update">
+    <vssget 
+      localpath="${Private.SourceControl.Update.LocalPath}" 
+      dbpath="${VSS.DBPath}" 
+      path="${Private.SourceControl.Update.Path}" 
+      username="${VSS.Username}"
+      password="${VSS.Password}" 
+      recursive="True"
+      filetimestamp="${SourceControl.Update.FileTimeStamp}" 
+      replace="${SourceControl.Update.ReplaceWritableFiles}"
+      writable="${SourceControl.Update.MakeWritable}"
+      verbose="True"
+      version="${Private.SourceControl.Update.Version}"
+	  />
+  </target>
+
+  <!-- Needed for Private.SourceControl.DeleteDirectory
+  <property name="Private.SourceControl.DeleteDirectory.Directory" value=""/>
+  -->
+  
+  <target name="Private.SourceControl.DeleteDirectory">
+    <if test="${directory::exists(Private.SourceControl.DeleteDirectory.Directory)}" >
       <attrib readonly="false">
         <fileset>
-          <include name="${ProductDirectory}\*" />
+          <include name="${Private.SourceControl.DeleteDirectory.Directory}\*" />
         </fileset>
       </attrib>
 
       <trycatch>
         <try>
-          <delete dir="${ProductDirectory}"/>
+          <delete dir="${Private.SourceControl.DeleteDirectory.Directory}"/>
         </try>
         <catch>
-          <exec program="cmd" commandline='/C "rmdir /S /Q "${ProductDirectory}""' />
+          <exec program="cmd" commandline='/C "rmdir /S /Q "${Private.SourceControl.DeleteDirectory.Directory}""' />
         </catch>
       </trycatch>
     </if>
-    <mkdir dir="${ProductDirectory}" />
-    <vssget 
-      localpath="${ProductDirectory}" 
-      dbpath="${VSS.DBPath}" 
-      path="${Private.SourceControl.CleanGetOfProductDirectory.ProductPath}" 
-      username="${VSS.Username}"
-      password="${VSS.Password}" 
-      recursive="True"
-      filetimestamp="Modified"
-      removedeleted="True"
-      replace="True"
-      writable="True"
-      verbose="True" 
-	  />
   </target>
 
+  <!-- Params for SourceControl.Relabel
+  <property name="SourceControl.Relabel.OldLabel" value=""/>
+  <property name="SourceControl.Relabel.NewLabel" value=""/>
+  <property name="SourceControl.Relabel.Path" value=""/>
+  -->
+
+  <target name="SourceControl.Relabel">
+    <vsslabel
+      dbpath="${VSS.DBPath}" 
+      path="${SourceControl.Relabel.Path}" 
+      username="${VSS.Username}"
+      password="${VSS.Password}" 
+      version="${SourceControl.Relabel.OldLabel}" 
+      label="${SourceControl.Relabel.NewLabel}"
+      comment="Relabeled by Build ${ProjectName}, was ${SourceControl.Relabel.OldLabel}"/>
+  </target>
+  
   <!--
   The following properties should be specified in the calling script.
   
@@ -167,7 +395,17 @@
   </target>
 
   <target name="SourceControl.SetUp">
-    <mkdir unless="${directory::exists(Private.VSS.ReportDirectory)}" dir="${Private.VSS.ReportDirectory}"/>
+    <mkdir dir="${Private.VSS.ReportDirectory}" unless="${directory::exists(Private.VSS.ReportDirectory)}" />
+    <delete>
+      <fileset>
+        <include name="${Private.VSS.ReportDirectory}\*.*"/>
+        <exclude name="${Private.VSS.ReportDirectory}\${Private.VSS.CacheFile}"/>
+      </fileset>
+    </delete>
+
+    <saveproperties format="Include" file="${Private.VSS.ReportDirectory}\${Private.VSS.CacheFile}">
+      <property name="VSS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}"/>
+    </saveproperties>
   </target>
 
   <target name="SourceControl.TearDown">

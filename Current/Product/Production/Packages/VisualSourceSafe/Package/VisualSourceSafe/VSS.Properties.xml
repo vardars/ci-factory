@@ -4,5 +4,8 @@
   <property name="VSS.DBPath" value="%VSS.DBPath%" />
   <property name="VSS.Username" value="%VSS.Username%" />
   <property name="VSS.Password" value="%VSS.Password%" />
+  <property name="SourceControl.Update.FileTimeStamp" value="Modified" overwrite="false"/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="True" overwrite="false"/>
+  <property name="SourceControl.Update.MakeWritable" value="True" overwrite="false"/>
 
 </project>
