@@ -67,6 +67,7 @@
     <Compile Include="NotificationReciever.cs" />
     <Compile Include="MonitorState.cs" />
     <Compile Include="QueueFactory.cs" />
+    <Compile Include="RollBackTask.cs" />
     <Compile Include="VSTSByChangeSetSourceControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VSTSByChangeSetTrigger.cs" />

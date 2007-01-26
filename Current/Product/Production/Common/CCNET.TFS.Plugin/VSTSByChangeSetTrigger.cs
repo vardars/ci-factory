@@ -37,7 +37,7 @@ namespace CCNET.TFS.Plugin
         ///   The name or URL of the team foundation server.  For example http://vstsb2:8080 or vstsb2 if it
         ///   has already been registered on the machine.
         /// </summary>
-        [ReflectorProperty("server")]
+        [ReflectorProperty("server", Required = true)]
         public string Server
         {
             get
@@ -50,7 +50,7 @@ namespace CCNET.TFS.Plugin
             }
         }
 
-        [ReflectorProperty("port")]
+        [ReflectorProperty("port", Required = true)]
         public int Port
         {
             get
@@ -63,7 +63,7 @@ namespace CCNET.TFS.Plugin
             }
         }
 
-        [ReflectorProperty("statefilepath")]
+        [ReflectorProperty("statefilepath", Required = true)]
         public string StateFilePath
         {
             get
@@ -79,7 +79,7 @@ namespace CCNET.TFS.Plugin
         /// <summary>
         ///   The path to the project in source control, for example $\VSTSPlugins
         /// </summary>
-        [ReflectorProperty("project")]
+        [ReflectorProperty("project", Required = true)]
         public string ProjectPath
         {
             get
