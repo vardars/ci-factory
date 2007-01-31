@@ -40,6 +40,14 @@ namespace TF.Tasks.SourceControl.Tasks
             return false;
         }
 
+        [Function("get-workspace-name")]
+        public string GetWorkSpaceName(string connectionRefId, string path)
+        {
+            TfsServerConnection ServerConnection = this.GetServerConnection(connectionRefId);
+            WorkspaceInfo Info = Workstation.Current.GetLocalWorkspaceInfo(path);
+            return Info.Name;
+        }
+
         [Function("label-exists")]
         public bool LabelExists(string connectionRefId, string label, string scope)
         {
