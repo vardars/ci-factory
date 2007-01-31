@@ -163,7 +163,7 @@ namespace CCNET.TFS.Plugin
             get
             {
                 if (_ChangesetQueue == null)
-                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath);
+                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath, this.SourceControl);
                 return _ChangesetQueue;
             }
             set
@@ -245,7 +245,7 @@ namespace CCNET.TFS.Plugin
 
         public void IntegrationCompleted()
         {
-            //do nothing
+            this.ChangesetQueue.EndIntegration();
         }
 
         public DateTime NextBuild
@@ -259,7 +259,10 @@ namespace CCNET.TFS.Plugin
                 this.Monitor.Subscribe();
 
             if (this.ChangesetQueue.Count > 0)
+            {
+                this.ChangesetQueue.BeginIntegration();
                 return BuildCondition.IfModificationExists;
+            }
 
             return BuildCondition.NoBuild;
         }

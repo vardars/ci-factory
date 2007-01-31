@@ -267,7 +267,7 @@ namespace CCNET.TFS.Plugin
             get
             {
                 if (_ChangesetQueue == null)
-                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath);
+                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath, this.SourceControl);
                 return _ChangesetQueue;
             }
             set
@@ -352,9 +352,11 @@ namespace CCNET.TFS.Plugin
             if (this.ChangesetQueue.Count == 0)
                 return new Modification[] { };
 
+            this.ChangesetQueue.BeginIntegration();
+
             List<Modification> Modifications = new List<Modification>();
 
-            Changeset Set = this.ChangesetQueue.Peek();
+            Changeset Set = this.ChangesetQueue.GetCurrentIntegrationSet();
             Modifications.AddRange(toModifcations(Set));
 
             return Modifications.ToArray();
@@ -362,8 +364,11 @@ namespace CCNET.TFS.Plugin
 
         public void GetSource(IIntegrationResult result)
         {
-            Changeset Set = this.ChangesetQueue.Peek();
-            result.AddIntegrationProperty("CCNetVSTSChangeSetId", Set.ChangesetId.ToString());
+            this.ChangesetQueue.BeginIntegration();
+            Changeset Set = this.ChangesetQueue.GetCurrentIntegrationSet();
+            
+            string ChangesetIdTo = ChangesetIdTo = Set.ChangesetId.ToString();
+            result.AddIntegrationProperty("CCNetVSTSChangeSetId", ChangesetIdTo);
 
             if (AutoGetSource)
             {
@@ -404,7 +409,10 @@ namespace CCNET.TFS.Plugin
                     MyWorkspace.Map(ProjectPath, WorkingDirectory);
 
                     Log.Debug(String.Format("Getting {0} to {1}", ProjectPath, WorkingDirectory));
-                    GetRequest GetInfo = new GetRequest(new ItemSpec(ProjectPath, RecursionType.Full), LatestVersionSpec.Instance);
+                    GetRequest GetInfo;
+                    GetInfo = new GetRequest(new ItemSpec(ProjectPath, RecursionType.Full), Set.ChangesetId);
+                    
+                    this.SourceControl.Getting += new GettingEventHandler(OnGet);
                     if (CleanCopy)
                     {
                         Log.Debug("Forcing a Get Specific with the options \"get all files\" and \"overwrite read/write files\"");
@@ -423,6 +431,7 @@ namespace CCNET.TFS.Plugin
                         Log.Debug("Deleting the workspace");
                         MyWorkspace.Delete();
                     }
+                    this.SourceControl.Getting -= new GettingEventHandler(OnGet);
                 }
             }
         }
@@ -436,7 +445,7 @@ namespace CCNET.TFS.Plugin
         public void LabelSourceControl(IIntegrationResult result)
         {
             this.PerformLabel(result);
-            this.ChangesetQueue.Dequeue();
+            this.ChangesetQueue.EndIntegration();
         }
 
         public void Purge(IProject project)
@@ -447,6 +456,13 @@ namespace CCNET.TFS.Plugin
         #endregion
 
         #region Helpers
+
+        private void OnGet(object sender, GettingEventArgs e)
+        {
+            Log.Debug(String.Format(
+                "Status: '{0}',  ChangeType: '{1}', TargetLocalItem: '{2}' ServerItem: '{3}' Version: '{4}'", 
+                e.Status.ToString(), e.ChangeType.ToString(), e.TargetLocalItem, e.ServerItem, e.Version));
+        }
 
         /// <summary>
         ///   Delete a directory, even if it contains readonly files.
@@ -533,7 +549,7 @@ namespace CCNET.TFS.Plugin
                 Log.Debug(String.Format("Applying label \"{0}\"", result.Label));
                 VersionControlLabel Label = new VersionControlLabel(this.SourceControl, result.Label, _SourceControl.AuthenticatedUser, this.ProjectPath, "Labeled by CruiseControl.NET");
 
-                Changeset Set = this.ChangesetQueue.Peek();
+                Changeset Set = this.ChangesetQueue.GetCurrentIntegrationSet();
 
                 LabelItemSpec[] LabelSpec = new LabelItemSpec[] {  
                     new LabelItemSpec(new ItemSpec(this.ProjectPath, RecursionType.Full), new ChangesetVersionSpec(Set.ChangesetId), false)

@@ -54,7 +54,7 @@ namespace CCNET.TFS.Plugin
             get
             {
                 if (_ChangesetQueue == null)
-                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath);
+                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath, null);
                 return _ChangesetQueue;
             }
             set
@@ -120,7 +120,7 @@ namespace CCNET.TFS.Plugin
 
         private void OnDequeueEvent(Changeset changeset)
         {
-            throw new Exception("The method or operation is not implemented.");
+            this.BadChangeSet = changeset;
         }
 
         #endregion
@@ -129,8 +129,14 @@ namespace CCNET.TFS.Plugin
 
         public void Run(IIntegrationResult result)
         {
+            if (result.Succeeded)
+                return;
+
             if (this.BadChangeSet == null)
-                throw new BuilderException(this, "The changeset to rollback has not been set.");
+            {
+                Log.Debug("The changeset to rollback has not been set.");
+                return;
+            }
 
             string Arguments = string.Format("rollback /changeset:{0} /noprompt", this.BadChangeSet.ChangesetId);
             ProcessInfo Info = new ProcessInfo(this.Executable, Arguments, this.BaseDirectory);

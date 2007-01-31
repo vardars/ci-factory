@@ -132,7 +132,7 @@ namespace CCNET.TFS.Plugin
             get
             {
                 if (_ChangesetQueue == null)
-                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath);
+                    _ChangesetQueue = QueueFactory.GetChangesetQueue(this.ProjectPath, this.SourceControl);
                 return _ChangesetQueue;
             }
             set
@@ -348,8 +348,11 @@ namespace CCNET.TFS.Plugin
 
         private void UpdateQueue()
         {
-            SortedList<int, Changeset> ChangeSets = this.RetrieveChangeSetAfter(this.State.LastChangeSetId);
-            foreach(Changeset Set in ChangeSets.Values)
+            int LastChangeSetId = this.State.LastChangeSetId;
+            if (LastChangeSetId == 0)
+                return;
+            SortedList<int, Changeset> ChangeSets = this.RetrieveChangeSetAfter(LastChangeSetId);
+            foreach (Changeset Set in ChangeSets.Values)
             {
                 this.ChangesetQueue.Enqueue(Set);
             }
@@ -358,6 +361,7 @@ namespace CCNET.TFS.Plugin
         private void OnDequeueEvent(Changeset changeset)
         {
             this.State.LastChangeSetId = changeset.ChangesetId;
+            this.SaveState();
         }
 
         #endregion
