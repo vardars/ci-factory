@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -134,13 +134,6 @@
     </Compile>
     <Compile Include="XmlQuery.vb" />
   </ItemGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|.NET 1.1' ">
-    <OutputPath>bin\.NET 1.1\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|.NET 1.1' ">
-    <OutputPath>bin\.NET 1.1\Debug\</OutputPath>
-    <DebugType>Full</DebugType>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="UpdatenAnt.bat" />
   </ItemGroup>
@@ -151,7 +144,6 @@
     <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="C:\Projects\CI Factory\Current\Build\Packages\VS.NETCompile\MSBuild\Microsoft.Public.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
