@@ -37,14 +37,26 @@ namespace CCNET.TFS.Plugin
         private bool _CleanCopy = false;
         private bool _DeleteWorkspace = false;
         private string _WorkspaceName;
+        private bool _Force = false;
 
         #endregion
 
         #region NetReflectored Properties
 
+        [ReflectorProperty("force", Required = false)]
+        public bool Force
+        {
+            get
+            {
+                return _Force;
+            }
+            set
+            {
+                _Force = value;
+            }
+        }
 
         [ReflectorProperty("autoGetSource", Required = false)]
-
         public bool AutoGetSource
         {
             get
@@ -413,7 +425,7 @@ namespace CCNET.TFS.Plugin
                     GetInfo = new GetRequest(new ItemSpec(ProjectPath, RecursionType.Full), Set.ChangesetId);
                     
                     this.SourceControl.Getting += new GettingEventHandler(OnGet);
-                    if (CleanCopy)
+                    if (CleanCopy || Force)
                     {
                         Log.Debug("Forcing a Get Specific with the options \"get all files\" and \"overwrite read/write files\"");
                         MyWorkspace.Get(GetInfo, GetOptions.GetAll | GetOptions.Overwrite);
