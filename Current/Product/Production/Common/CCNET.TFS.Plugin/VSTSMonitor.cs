@@ -328,10 +328,13 @@ namespace CCNET.TFS.Plugin
 
         #region ChangeSet Queue Management
 
-        private void OnNotifyChangeSetId(int id)
+        private void OnNotifyChangeSetId(int id, string eventXml)
         {
-            Changeset Set = this.SourceControl.GetChangeset(id);
-            this.ChangesetQueue.Enqueue(Set);
+            if (eventXml.Contains(this.ProjectPath))
+            {
+                Changeset Set = this.SourceControl.GetChangeset(id);
+                this.ChangesetQueue.Enqueue(Set);
+            }
         }
 
         private SortedList<int, Changeset> RetrieveChangeSetAfter(int id)

@@ -444,7 +444,19 @@ namespace CCNET.TFS.Plugin
 
         public void LabelSourceControl(IIntegrationResult result)
         {
-            this.PerformLabel(result);
+            if (ApplyLabel && result.Succeeded)
+            {
+                Log.Debug(String.Format("Applying label \"{0}\"", result.Label));
+                VersionControlLabel Label = new VersionControlLabel(this.SourceControl, result.Label, _SourceControl.AuthenticatedUser, this.ProjectPath, "Labeled by CruiseControl.NET");
+
+                Changeset Set = this.ChangesetQueue.GetCurrentIntegrationSet();
+
+                LabelItemSpec[] LabelSpec = new LabelItemSpec[] {  
+                    new LabelItemSpec(new ItemSpec(this.ProjectPath, RecursionType.Full), new ChangesetVersionSpec(Set.ChangesetId), false)
+                };
+
+                this.SourceControl.CreateLabel(Label, LabelSpec, LabelChildOption.Replace);
+            }
             this.ChangesetQueue.EndIntegration();
         }
 
@@ -540,23 +552,6 @@ namespace CCNET.TFS.Plugin
             }
 
             return modifications.ToArray();
-        }
-
-        private void PerformLabel(IIntegrationResult result)
-        {
-            if (ApplyLabel)
-            {
-                Log.Debug(String.Format("Applying label \"{0}\"", result.Label));
-                VersionControlLabel Label = new VersionControlLabel(this.SourceControl, result.Label, _SourceControl.AuthenticatedUser, this.ProjectPath, "Labeled by CruiseControl.NET");
-
-                Changeset Set = this.ChangesetQueue.GetCurrentIntegrationSet();
-
-                LabelItemSpec[] LabelSpec = new LabelItemSpec[] {  
-                    new LabelItemSpec(new ItemSpec(this.ProjectPath, RecursionType.Full), new ChangesetVersionSpec(Set.ChangesetId), false)
-                };
-
-                this.SourceControl.CreateLabel(Label, LabelSpec, LabelChildOption.Replace);
-            }
         }
 
         #endregion

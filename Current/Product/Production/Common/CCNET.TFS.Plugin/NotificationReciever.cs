@@ -5,7 +5,7 @@ using System.ServiceModel;
 
 namespace CCNET.TFS.Plugin
 {
-    public delegate void NotifyChangeSetIdDelegate(int id);
+    public delegate void NotifyChangeSetIdDelegate(int id, string eventXml);
 
     [ServiceBehavior(
         InstanceContextMode = InstanceContextMode.Single,
@@ -56,7 +56,7 @@ namespace CCNET.TFS.Plugin
         public void Notify(string eventXml, string tfsIdentityXml)
         {
             int ChangeSetId = this.GetChangeSetId(eventXml);
-            NotificationReciever.NotifyChangeSetId(ChangeSetId);
+            NotificationReciever.NotifyChangeSetId(ChangeSetId, eventXml);
         }
 
         #endregion
