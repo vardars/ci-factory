@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Target" >
 
-  <include buildfile="VSS.Properties.xml" />
+  <loadtasks assembly="${PackagesDirectory}\VSTSVersionControl\bin\TF.Tasks.dll" />
+
+  <include buildfile="VSTSVersionControl.Properties.xml" />
 
   <property name="Private.TFS.CacheFile" value="CacheFile.xml"/>
   <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>
@@ -17,7 +19,7 @@
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
 
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet" >
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
       <versionspec type="Label" versionspec="${SourceControl.GetFromLabel}"/>
     </tfsget>
@@ -27,15 +29,15 @@
     <call target="Private.SourceControl.EnsureWorkspace"/>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
-    
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
+
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
   </target>
 
   <target name="SourceControl.GetOfThirdPartyDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
   </target>
@@ -49,7 +51,7 @@
     <property name="SourceControl.ShowChangesLabelBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
     <property name="SourceControl.ShowChangesLabelBased.FromLabel" value="${SourceControl.ShowChanges.FromLabel}"/>
     <property name="SourceControl.ShowChangesLabelBased.ToLabel" value="${SourceControl.ShowChanges.ToLabel}"/>
-    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.VSS.ReportDirectory}\ThirdPartyChanges.xml"/>
+    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.TFS.ReportDirectory}\ThirdPartyChanges.xml"/>
 
     <call target="SourceControl.ShowChangesLabelBased"/>
 
@@ -57,7 +59,7 @@
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
     <property name="SourceControl.ShowChangesLabelBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
-    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.VSS.ReportDirectory}\ProductChanges.xml"/>
+    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.TFS.ReportDirectory}\ProductChanges.xml"/>
 
     <call target="SourceControl.ShowChangesLabelBased"/>
   </target>
@@ -95,7 +97,7 @@
 
     <call target="SourceControl.ShowChangesTimeBased"/>
   </target>
-  
+
   <!--
   <property name="SourceControl.ShowChangesTimeBased.Path" value=""/>
   <property name="SourceControl.ShowChangesTimeBased.FromDate" value=""/>
@@ -114,15 +116,15 @@
     <call target="Private.SourceControl.EnsureWorkspace"/>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
-    
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
+
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
   </target>
 
   <target name="SourceControl.GetOfProductDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
   </target>
@@ -135,8 +137,12 @@
     <call target="Private.SourceControl.EnsureWorkspace"/>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
-    
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
+
+    <tfsget verbose="true" 
+          serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" 
+          recursive="true" all="true"
+          workspacename="${TFS.WorkspaceName}" 
+          resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
       <versionspec type="Label" versionspec="${SourceControl.GetFromLabel}"/>
     </tfsget>
@@ -144,7 +150,7 @@
 
   <target name="SourceControl.GetOfBuildDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsget serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.BuildDirectory.GetFileSet" >
+    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.BuildDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
   </target>
@@ -236,7 +242,7 @@
           {
             String server = local.Replace(this.Project.Properties["ProjectsDirectory"], "");
             server = server.Replace(@"\", @"/");
-            server = String.Format(@"$/{0}", local);
+            server = String.Format(@"$/{0}", server);
             return server.Replace(@"//", @"/");
           }
           
@@ -246,14 +252,23 @@
 
   <target name="Private.SourceControl.EnsureWorkspace">
     <ifnot test="${tfs-vc::workspace-exists(TFS.Info, TFS.WorkspaceName)}">
+      <property name="TFS.Workspace.Found" value="false"/>
+      <trycatch>
+        <try>
+          <property name="TFS.WorkspaceName" value="${tfs-vc::get-workspace-name(TFS.Info, ProjectCodeLineDirectory)}"/>
+          <property name="TFS.Workspace.Found" value="true"/>
+        </try>
+        <catch/>
+      </trycatch>
 
-      <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By build ${CCNetProject}" >
-        <tfsserverconnection refid="${TFS.Info}"/>
-        <mappings>
-          <mapping localitem="${ProjectCodeLineDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}"/>
-        </mappings>
-      </tfsmapworkspace>
-
+      <ifnot test="${TFS.Workspace.Found}">
+        <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By build ${CCNetProject}" >
+          <tfsserverconnection refid="${TFS.Info}"/>
+          <mappings>
+            <mapping localitem="${ProjectCodeLineDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}"/>
+          </mappings>
+        </tfsmapworkspace>
+      </ifnot>
     </ifnot>
   </target>
 

@@ -27,7 +27,6 @@ namespace CCNET.TFS.Plugin
         private bool _InIntegration = false ;
         private VersionControlServer _SourceControl;
         private string _ProjectPath;
-        private int _LastChangeSetId;
         private bool _NeedToDequeue = false ;
         
         #endregion
@@ -43,18 +42,6 @@ namespace CCNET.TFS.Plugin
             set
             {
                 _NeedToDequeue = value;
-            }
-        }
-
-        private int LastChangeSetId
-        {
-            get
-            {
-                return _LastChangeSetId;
-            }
-            set
-            {
-                _LastChangeSetId = value;
             }
         }
 
@@ -149,13 +136,9 @@ namespace CCNET.TFS.Plugin
                 else
                 {
                     this.NeedToDequeue = false;
-                    IEnumerable Iterable = this.SourceControl.QueryHistory(this.ProjectPath, VersionSpec.Latest, 0, RecursionType.Full, null, new ChangesetVersionSpec(this.LastChangeSetId), VersionSpec.Latest, int.MaxValue, true, false);
-                    SortedList<int, Changeset> ChangeSets = new SortedList<int, Changeset>();
-                    foreach (Changeset Set in Iterable)
-                    {
-                        ChangeSets.Add(Set.ChangesetId, Set);
-                    }
-                    this.CurrentIntegrationSet = ChangeSets.Values[ChangeSets.Count - 1];
+                    IEnumerable ChangeSets = this.SourceControl.QueryHistory(this.ProjectPath, VersionSpec.Latest, 0, RecursionType.Full, null, null, null, 1, false, false);
+                    foreach (Changeset ChangeSet in ChangeSets)
+                        this.CurrentIntegrationSet = ChangeSet;
                 }
                 this.InIntegration = true;
             }
@@ -165,7 +148,6 @@ namespace CCNET.TFS.Plugin
         {
             if (this.InIntegration && this.CurrentIntegrationSet != null)
             {
-                this.LastChangeSetId = this.CurrentIntegrationSet.ChangesetId;
                 this.CurrentIntegrationSet = null;
                 
                 if (this.NeedToDequeue)

@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 using NAnt.Core;
 using NAnt.Core.Attributes;
 using NAnt.Core.Types;
 
 using Microsoft.TeamFoundation.VersionControl.Client;
-using Microsoft.TeamFoundation.VersionControl.Common;
-using Microsoft.TeamFoundation.Client;
 
 using TF.Tasks.SourceControl.Types;
 using TF.Tasks.SourceControl.Helpers;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
+
     [TaskName("tfsadd")]
     public class TfsAddTask : Task
     {

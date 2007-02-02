@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceControl\Tasks\TfsAddTask.cs" />
+    <Compile Include="SourceControl\Tasks\TfsBlock.cs" />
+    <Compile Include="SourceControl\Tasks\TfsBlockServices.cs" />
     <Compile Include="SourceControl\Tasks\TfsDeleteWorkspace.cs" />
     <Compile Include="SourceControl\Functions\TfsVersionControlFunctions.cs" />
     <Compile Include="SourceControl\Helpers\XmlWriterHelper.cs" />
