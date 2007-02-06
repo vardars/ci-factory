@@ -15,6 +15,55 @@
     </foreach>
   </target>
 
+  <property name="Common.ArtifactFolderName" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
+  <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
+  <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+
+  <property name="Common.ReportDirectory" value="${BuildDirectory}\Reports"/>
+  <property name="Common.TempDirectory" value="${BuildDirectory}\Temp"/>
+  
+  <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
+  <target name="Common.CreatePropertiesFile">
+    
+    <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+    <saveproperties file="${Common.PropertiesFile}" format="CommandLine" >
+      <property name="CCNetBuildCondition"/>
+      <property name="CCNetIntegrationStatus"/>
+      <property name="CCNetLabel"/>
+      <property name="CCNetLastIntegrationStatus"/>
+      <property name="CCNetProject"/>
+      <property name="CCNetBuildDate"/>
+      <property name="CCNetBuildTime"/>
+      <property name="CCNetArtifactDirectory"/>
+      <property name="CCNetWorkingDirectory"/>
+      <property name="ProjectName"/>
+      <property name="ProjectCodeLineName"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
+      <property name="Compile.ConfigName"/>
+      <property name="ArtifactRootDirectory" value="${BuildDirectory}\Installs"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+    </saveproperties>
+  </target>
+
+  <target name="Common.SetUp">
+    <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}" verbose="true"/>
+
+    <delete dir="${Common.ReportDirectory}" if="${directory::exists(Common.ReportDirectory)}"/>
+    <mkdir dir="${Common.ReportDirectory}"/>
+
+    <delete dir="${Common.TempDirectory}" if="${directory::exists(Common.TempDirectory)}"/>
+    <mkdir dir="${Common.TempDirectory}"/>
+
+    <call target="Common.CreatePropertiesFile"/>
+  </target>
+
   <script language="C#" prefix="list">
     <code>
       <![CDATA[                 

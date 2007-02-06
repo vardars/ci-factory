@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="DevEnvSetUp" default="SetUp">
   <target name="SetUp">
+    <foreach item="File" property="TaskAssembly">
+      <in>
+        <items>
+          <include name="Packages\**\*Task*.dll"/>
+        </items>
+      </in>
+      <do>
+        <loadtasks assembly="${TaskAssembly}" />
+      </do>
+    </foreach>
     <loadtasks assembly=".\nant\bin\Common.Functions.dll" />
     <property name="SchemaFile" value=".\NAnt.xsd"/>
     <attrib file="${SchemaFile}" readonly="false"/>

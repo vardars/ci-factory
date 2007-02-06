@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Post Build" default="PostBuildWrapper">
+
+  <loadtasks assembly="nAnt\bin\Common.Functions.dll" />
+
+  <include buildfile="Properties.build.xml"/>
+  <include buildfile="Common.Build.xml" />
+
+  <description>Begin Package Includes</description>
+  <description>End Package Includes</description>
+
+  <target name="PostBuild" >
+    <trycatch>
+      <try>
+        <description>Begin SetUp</description>
+        <call target="SetUps"/>
+        <description>End SetUp</description>
+        
+        <description>Begin Post Build</description>
+        <description>End Post Build</description>
+      </try>
+      <finally>
+
+        <call target="TearDowns"/>
+
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="SetUps" >
+    <description>Begin SetUps</description>
+    <description>End SetUps</description>
+  </target>
+
+  <target name="TearDowns">
+    <description>Begin TearDowns</description>
+    <description>End TearDowns</description>
+  </target>
+
+</project>

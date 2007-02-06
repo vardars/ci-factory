@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="BuildServerSetup" default="Setup">
+
+  <property name="ProjectName" value="%ProjectName%" />
+  <property name="BuildDirectory" value="C:\Projects\${ProjectName}\Current\Build" />
+  <property name="BuildPackagesDirectory" value="${PackagesDirectory}" />
+  <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
+  
+  <target name="Setup" >
+    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Installs" />
+    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}" />
+    <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages" />
+  </target>
+  
+</project>
