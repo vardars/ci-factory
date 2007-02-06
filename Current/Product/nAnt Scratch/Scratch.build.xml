@@ -1,53 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" >
 
-  <loadtasks assembly="..\..\Third Party\nAnt\bin\Common.Functions.dll" />
+  <loadtasks assembly="..\..\Build\nAnt\bin\Common.Functions.dll" />
 
   <target name="test">
-    <delete file="C:\Temp\reportcontent.xml" />
-    <property name="SourceFile" value="C:\Projects\dod.ahlta\Current\Build\server\dod.ahlta team1\Artifacts\buildlogs\log20061103143625Lbuild.Team1-1.0.0.647.xml"/>
-
-    <foreach item="File" property="SourceFile">
-      <in>
-        <items>
-          <include name="C:\Projects\dod.ahlta\Current\Build\server\dod.ahlta team1\Artifacts\buildlogs\*.xml"/>
-        </items>
-      </in>
+    <property name="WorkspaceName" value="BuildTest"/>
+    <tfsblock clean="true">
+      <tfsserverconnection serverurl="http://vsts.chcsii.com:8080"/>
       <do>
-        <echo message="${SourceFile}"/>
-        <property name="report" value="${xsl::get-string-output(SourceFile, 'C:\Temp\StatisticsPublisher.xsl')}" />
-
-        <echo append="true" message="${report}" file="C:\Temp\reportcontent.xml"/>
+        <if test="${tfs-vc::workspace-exists(WorkspaceName)}">
+          <tfsblock workspacename="${WorkspaceName}">
+            <do>
+              <echo message="${tfs-vc::get-latest-changeset-id()}"/>
+              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/JFAgileTest')}"/>
+              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/test.project')}"/>
+              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/BuildTest_CMMI')}"/>
+            </do>
+          </tfsblock>
+        </if>
       </do>
-    </foreach>
+    </tfsblock>
   </target>
 
+  <target name="example">
 
-  <script language="C#" prefix="xsl">
-    <imports >
-      <import namespace="System.Xml"/>
-      <import namespace="System.IO"/>
-      <import namespace="System.Xml.XPath"/>
-      <import namespace="System.Xml.Xsl"/>
-    </imports >
-    <code>
-      <![CDATA[                 
-					
-          [Function("get-string-output")]
-          public static String GetStringOutput(String inFilePath, String xslFilePath)
-          {
-              using(FileStream inputReader = File.OpenRead(inFilePath))
-              {
-                XslTransform transform = new XslTransform();
-                transform.Load(xslFilePath);
-                StringWriter output = new StringWriter();
-                transform.Transform(new XPathDocument(inputReader), null, output);
-                return output.ToString();
-              }
-          }
-          
-			]]>
-    </code>
-  </script>
+    <tfsserverconnection 
+      password=""
+      username=""
+      serverurl=""
+      domain=""
+      id="tfs"/>
+
+    <versionspec
+      type="Changeset, Date, Label, Workspace, Latest, or Null"
+      versionspec=""
+      id="ver"/>
+    
+    <tfsadd
+       localitem=""
+       recursive=""
+       workspacename="">
+      <localitems>
+        <include name=""/>
+      </localitems>
+      <tfsserverconnection refid="tfs"/>
+    </tfsadd>
+
+    <tfsblock
+      clean="true or false"
+      workspacename="">
+      <tfsserverconnection refid="tfs"/>
+      <do>
+        <!--
+        do some stuff in here without having to specify 
+        workspace and or connection info
+        -->
+        <echo message="${tfs-vc::get-latest-changeset-id()}"/>
+        <echo message="${tfs-vc::get-latest-changeset-id-frompath(serverItem)}"/>
+        <echo message="${tfs-vc::label-exists(label, scope)}"/>
+        <echo message="${tfs-vc::workspace-exists(workspaceName)}"/>
+        <echo message="${tfs-vc::get-workspace-name(localItem)}"/>
+        <echo message="${tfs-vc::is-server-path-mapped(serverItem)}"/>
+        <echo message="${tfs-vc::is-local-path-mapped(localItem)}"/>
+        <echo message="${tfs-vc::get-localitem-for-serveritem(serverItem)}"/>
+        <echo message="${tfs-vc::get-serveritem-for-localitem(localItem)}"/>
+        <echo message="${tfs-vc::has-pending-changes()}"/>
+        <echo message="${tfs-vc::has-pending-changes(localItem)}"/>
+        <echo message="${tfs-vc::has-confilcts(pathfilter, recursive)}"/>
+      </do>
+    </tfsblock>
+
+    <tfscheckin
+      comment=""
+      localitem=""
+      recursive=""
+      workspacename=""
+      >
+      <localitems>
+        <include name=""/>
+      </localitems>
+      <tfsserverconnection refid="tfs"/>
+    </tfscheckin>
+
+    <tfscheckout
+      localitem=""
+      recursive=""
+      workspacename=""
+      >
+      <localitems>
+        <include name=""/>
+      </localitems>
+      <tfsserverconnection refid="tfs"/>
+    </tfscheckout>
+
+    <tfsdeleteworkspace
+      workspacename=""
+      >
+      <tfsserverconnection refid="tfs"/>
+    </tfsdeleteworkspace>
+
+    <tfsget
+      all=""
+      localitem=""
+      overwrite=""
+      recursive=""
+      resultfilesetrefid=""
+      serveritem=""
+      workspacename=""
+      >
+      <tfsserverconnection refid="tfs"/>
+      <versionspec refid="ver"/>
+    </tfsget>
+
+    <tfshistory
+      itemspec=""
+      recursive=""
+      reportfile=""
+      >
+      <tfsserverconnection refid=""/>
+      <fromversionspec refid=""/>
+      <toversionspec refid=""/>
+    </tfshistory>
+
+    <tfslabel
+      child=""
+      comment=""
+      delete=""
+      itemspec=""
+      labelname=""
+      recursive=""
+      scope=""
+      >
+      <tfsserverconnection refid=""/>
+      <versionspec refid=""/>
+    </tfslabel>
+
+    <tfsmapworkspace
+      comment=""
+      workspacename=""
+      >
+      <tfsserverconnection refid=""/>
+    </tfsmapworkspace>
+  </target>
+  
+  <!--<target name="test3">
+    <tfsserverconnection id="tfs"
+        serverurl="http://vsts.chcsii.com:8080"/>
+
+    <property name="WorkspaceName" value="BuildTest"/>
+    <property name="LocalItem" value="C:\Projects\BuildTest_CMMI"/>
+
+    --><!--<tfslabel comment="Auto Build" itemspec="$/BuildTest_CMMI/dod.ahlta/Current" labelname="Test4" recursive="true" scope="$/BuildTest_CMMI/dod.ahlta/Current" >
+      <tfsserverconnection refid="tfs"/>
+      <versionspec type="Changeset" versionspec="92"/>
+    </tfslabel>--><!--
+    
+    --><!--<if test="${tfs-vc::workspace-exists('tfs', WorkspaceName)}">
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+
+      <tfsdeleteworkspace workspacename="${WorkspaceName}" >
+        <tfsserverconnection refid="tfs"/>
+      </tfsdeleteworkspace>
+
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+    </if>
+
+    <delete dir="${LocalItem}" failonerror="false"/>
+    <mkdir dir="${LocalItem}" />
+
+    <ifnot test="${tfs-vc::workspace-exists('tfs', WorkspaceName)}">
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+
+      <tfsmapworkspace workspacename="${WorkspaceName}" comment="Created By Script" >
+        <tfsserverconnection refid="tfs"/>
+        <mappings>
+          <mapping localitem="${LocalItem}" serveritem="$/BuildTest_CMMI"/>
+        </mappings>
+      </tfsmapworkspace>
+
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+    </ifnot>
+
+    <tfsget workspacename="${WorkspaceName}" serveritem="$/BuildTest_CMMI/dod.ahlta/Current/Build" recursive="true" >
+      <tfsserverconnection refid="tfs"/>
+    </tfsget>--><!--
+
+    --><!--<fileset id="Files">
+      <include name="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\nAnt\**\*"/>
+    </fileset>
+
+    <tfsadd workspacename="${WorkspaceName}">
+      <tfsserverconnection refid="tfs"/>
+      <localitems refid="Files" />
+    </tfsadd>
+
+    <tfscheckin comment="From Script" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs"/>
+      <localitems refid="Files" />
+    </tfscheckin>--><!--
+
+    --><!--<tfshistory itemspec="$/BuildTest_CMMI/dod.ahlta/Current" recursive="true" reportfile="C:\Temp\TfsHistory.xml" verbose="true">
+      <tfsserverconnection refid="tfs"/>
+      <fromversionspec type="Label" versionspec="Test1"/>
+      <toversionspec type="Null" versionspec=""/>
+    </tfshistory>--><!--
+
+    <tfscheckout localitem="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs">
+    </tfscheckout>
+
+    <echo append="true" file="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" message="Hello World! "/>
+
+    <tfscheckin localitem="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs"/>
+    </tfscheckin>
+    
+  </target>-->
 
 </project>
