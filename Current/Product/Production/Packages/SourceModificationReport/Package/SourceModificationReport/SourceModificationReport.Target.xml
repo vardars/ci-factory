@@ -67,26 +67,7 @@
   </target>
 
   <target name="SourceModificationReport.ConsolidateReports" >
-    <script language="VB">
-      <imports >
-        <import namespace="System.Xml"/>
-      </imports >
-      <code>
-        <![CDATA[
-				Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
-					Dim pd As PropertyDictionary = project.Properties
-					Dim ReadStream As New IO.StreamReader(pd("SourceModificationReport.ReportFile"), System.Text.Encoding.Default)
-					Dim content As String = ReadStream.ReadToEnd
-					ReadStream.Close()
-					Dim WriteStream As New IO.StreamWriter(pd("SourceModificationReport.ReportFile"), False, System.Text.Encoding.Default)
-					WriteStream.Write(content.Replace("utf-16", "utf-8"))
-					WriteStream.Close()
-				End Sub
-			]]>
-      </code>
-    </script>
-
-    <if test="${CCNetIntegrationStatus  != 'Success'}" >
+    <if test="${CCNetLastIntegrationStatus   != 'Success'}" >
       <script language="VB">
         <references>
           <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
@@ -154,10 +135,81 @@
 		/>
   </target>
 
+  <target name="SourceModificationReport.PublishOldSource">
+    <fileset  basedir="${ProductDirectory}" id="ModificationList" />
+
+    <xmlquery 
+      file="${SourceModificationReport.ReportFile}" 
+      id="FileNames" 
+      query="//Modification/FileName"
+    />
+
+    <property name="index" value="0" />
+
+    <loopthrough property="FileName">
+      <items>
+        <xmlquery refid="FileNames" />
+      </items>
+      <do>
+
+        <xmlpeek 
+          file="${SourceModificationReport.ReportFile}" 
+          property="SCPath" 
+          xpath="//Modification/FolderName" 
+          nodeindex="${index}" 
+        />
+
+        <property name="ModificationFilePath" value="${string::replace(SCPath, '$/dod.ahlta/Current/Product/', '')}/${FileName}"/>
+
+        <echo message="Adding ${ModificationFilePath} to modification list."/>
+
+        <function execute="${fileset::include-add('ModificationList', ModificationFilePath)}"/>
+
+        <property name="index" value="${int::parse(index) + 1}" />
+      </do>
+    </loopthrough>
+
+    <mkdir dir="${SourceModificationReport.OldSourcePath}" unless="${directory::exists(SourceModificationReport.OldSourcePath)}"/>
+
+    <copy todir="${SourceModificationReport.OldSourcePath}" verbose="true">
+      <fileset basedir="${ProductDirectory}" refid="ModificationList" />
+    </copy>
+  </target>
+
+  <target name="SourceModificationReport.PublishNewSource">
+    <mkdir dir="${SourceModificationReport.NewSourcePath}" unless="${directory::exists(SourceModificationReport.NewSourcePath)}"/>
+
+    <copy todir="${SourceModificationReport.NewSourcePath}">
+      <fileset refid="ModificationList" />
+    </copy>
+  </target>
+  
   <target name="SourceModificationReport.SetUp">
     <mkdir unless="${directory::exists(SourceModificationReport.ReportDirectory)}" dir="${SourceModificationReport.ReportDirectory}"/>
     <property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
     <call target="Common.DeleteFiles"/>
+    <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
+    <script language="VB" if="${file::exists(SourceModificationReport.ReportFile)}">
+      <imports >
+        <import namespace="System.Xml"/>
+        <import namespace="System.Text.RegularExpressions"/>
+      </imports >
+      <code>
+        <![CDATA[
+				Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
+					Dim pd As PropertyDictionary = project.Properties
+					Dim ReadStream As New IO.StreamReader(pd("SourceModificationReport.ReportFile"), System.Text.Encoding.Default)
+					Dim content As String = ReadStream.ReadToEnd
+					ReadStream.Close()
+          content = content.Replace("utf-16", "utf-8")
+          content = System.Text.RegularExpressions.Regex.Replace(content, "\n+", "", RegexOptions.Multiline)
+					Dim WriteStream As New IO.StreamWriter(pd("SourceModificationReport.ReportFile"), False, System.Text.Encoding.Default)
+					WriteStream.Write(content)
+					WriteStream.Close()
+				End Sub
+			]]>
+      </code>
+    </script>
   </target>
 
   <target name="SourceModificationReport.TearDown">
