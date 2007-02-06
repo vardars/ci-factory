@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Ant.Target">
+
+  <include buildfile="Ant.Properties.xml" />
+
+  <target name="Ant.CompileSource">
+    <exec program="${AntBat}" >
+      <environment refid="${Ant.Environment.RefId}" />
+      <arg line="-buildfile ${AntBuildFileName}" />
+      <arg line="-logger org.apache.tools.ant.XmlLogger" />
+      <arg line="-logfile ${AntBuildLogFile}" />
+      <arg line="-DProductVersion=${CCNetLabel}" />
+    </exec>
+  </target>
+
+  <target name="Ant.SetUp">
+    <delete dir="${AntBuildLogDirectory}" if="${directory::exists(AntBuildLogDirectory)}" verbose="true"/>
+    <mkdir dir="${AntBuildLogDirectory}" verbose="true"/>
+  </target>
+
+  <target name="Ant.TearDown">
+    
+  </target>
+</project>
