@@ -63,6 +63,17 @@
       </merge>
       <xmllogger />
       &email;
+      <nant>
+        <executable>>%BuildDirectory%\nAnt\bin\nant.exe</executable>
+        <baseDirectory>>%BuildDirectory%</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Post.Shim.xml</buildFile>
+        <targetList>
+          <target>PostBuildWrapper</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
     </publishers>
   </project>
 </cruisecontrol>
