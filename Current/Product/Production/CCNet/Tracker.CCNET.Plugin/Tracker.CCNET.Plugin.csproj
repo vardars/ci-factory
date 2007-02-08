@@ -51,7 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tracker.Common\Tracker.Common.csproj">
+    <ProjectReference Include="..\..\Common\Tracker.Common\Tracker.Common.csproj">
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
       <Name>Tracker.Common</Name>
     </ProjectReference>

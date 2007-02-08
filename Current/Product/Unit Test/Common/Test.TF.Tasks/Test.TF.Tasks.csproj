@@ -46,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Production\Common\TF.Tasks\TF.Tasks.csproj">
+    <ProjectReference Include="..\..\..\Production\Nant\TF.Tasks\TF.Tasks.csproj">
       <Project>{2BDCF9AB-466A-4A15-BC57-E9D6E725A3BB}</Project>
       <Name>TF.Tasks</Name>
     </ProjectReference>

@@ -4,22 +4,17 @@
   <loadtasks assembly="..\..\Build\nAnt\bin\Common.Functions.dll" />
 
   <target name="test">
-    <property name="WorkspaceName" value="BuildTest"/>
-    <tfsblock clean="true">
-      <tfsserverconnection serverurl="http://vsts.chcsii.com:8080"/>
-      <do>
-        <if test="${tfs-vc::workspace-exists(WorkspaceName)}">
-          <tfsblock workspacename="${WorkspaceName}">
-            <do>
-              <echo message="${tfs-vc::get-latest-changeset-id()}"/>
-              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/JFAgileTest')}"/>
-              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/test.project')}"/>
-              <echo message="${tfs-vc::get-latest-changeset-id-frompath('$/BuildTest_CMMI')}"/>
-            </do>
-          </tfsblock>
-        </if>
-      </do>
-    </tfsblock>
+    <applyfilter propertyname="Output">
+      <text xml="false"><![CDATA[This is line 1.
+This is line 2.
+This is line 3.
+This is line 4.]]></text>
+      <filterchain>
+        <regexreplace replacment="I replaced lines 2 and 3." pattern="This is line 2\.\r\nThis is line 3\." lines="2" />
+      </filterchain>
+    </applyfilter>
+
+    <echo message="${Output}"/>
   </target>
 
   <target name="example">
