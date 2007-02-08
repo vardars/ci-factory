@@ -7,7 +7,7 @@
     <ProjectGuid>{A690B211-007B-4D30-9E3C-8F35E432C54E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tracker.CCNET.Plugin</RootNamespace>
+    <RootNamespace>CCNET.Tracker.Plugin</RootNamespace>
     <AssemblyName>CCNET.Tracker.Plugin</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

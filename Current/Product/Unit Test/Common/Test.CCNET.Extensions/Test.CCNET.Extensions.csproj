@@ -66,11 +66,11 @@
     <Compile Include="TestTrackerRequired.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Extensions\CCNET.Extensions.csproj">
+    <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Extensions.Plugin\CCNET.Extensions.Plugin.csproj">
       <Project>{160AD2B8-639E-4C91-A050-C14193D7481B}</Project>
       <Name>CCNET.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Production\CCNet\Tracker.CCNET.Plugin\Tracker.CCNET.Plugin.csproj">
+    <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Tracker.Plugin\CCNET.Tracker.Plugin.csproj">
       <Project>{A690B211-007B-4D30-9E3C-8F35E432C54E}</Project>
       <Name>Tracker.CCNET.Plugin</Name>
     </ProjectReference>
