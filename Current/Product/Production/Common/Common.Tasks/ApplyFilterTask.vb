@@ -1,40 +1,28 @@
-Option Explicit On 
-Option Strict On
-
 Imports NAnt.Core
 Imports NAnt.Core.Attributes
-
 Imports System.IO
 Imports System
 
-<TaskName("write")> _
-Public Class WriteTask
+
+
+<TaskName("applyfilter")> _
+Public Class ApplyFilterTask
     Inherits Task
 
-    Private _OutFile As FileInfo
     Private _Text As TextElement
     Private _Filter As Filters.FilterChain
-    Private _Append As Boolean = False
+    Private _OutProperty As String
 
-    <TaskAttributeAttribute("append", Required:=False), BooleanValidator()> _
-    Public Property Append() As Boolean
+    <TaskAttribute("propertyname", Required:=True)> _
+    Public Property OutProperty() As String
         Get
-            Return _Append
+            Return _OutProperty
         End Get
-        Set(ByVal Value As Boolean)
-            _Append = Value
+        Set(ByVal Value As String)
+            _OutProperty = Value
         End Set
     End Property
 
-    <TaskAttributeAttribute("file", Required:=True)> _
-    Public Property OutFile() As FileInfo
-        Get
-            Return _OutFile
-        End Get
-        Set(ByVal Value As FileInfo)
-            _OutFile = Value
-        End Set
-    End Property
 
     <BuildElement("text", Required:=True)> _
     Public Property Text() As TextElement
@@ -46,7 +34,7 @@ Public Class WriteTask
         End Set
     End Property
 
-    <BuildElement("filterchain", Required:=False)> _
+    <BuildElement("filterchain", Required:=True)> _
     Public Property Filter() As Filters.FilterChain
         Get
             Return _Filter
@@ -57,23 +45,15 @@ Public Class WriteTask
     End Property
 
     Protected Overrides Sub ExecuteTask()
-        If Me.Filter Is Nothing OrElse Me.Filter.Filters Is Nothing OrElse Me.Filter.Filters.Count = 0 Then
-            Me.Write()
-        Else
-            Me.WriteWithFilters()
-        End If
+        Me.WriteWithFilters()
     End Sub
 
-    Private Function GetWriter() As StreamWriter
-        If Me.Append Then
-            Return Me.OutFile.AppendText
-        Else
-            Return Me.OutFile.CreateText
-        End If
+    Private Function GetWriter() As TextWriter
+        Return New StringWriter()
     End Function
 
     Private Sub WriteWithFilters()
-        Dim Writer As StreamWriter
+        Dim Writer As TextWriter
         Dim Reader As StringReader
         Dim ChainedReader As Filters.PhysicalTextReader
         Try
@@ -88,6 +68,7 @@ Public Class WriteTask
                 End If
                 Writer.Write(Microsoft.VisualBasic.ChrW(Focus))
             Loop
+            Me.Properties(Me.OutProperty) = Writer.ToString()
         Finally
             If Not Writer Is Nothing Then
                 Writer.Close()
@@ -97,18 +78,6 @@ Public Class WriteTask
             End If
             If Not Reader Is Nothing Then
                 Reader.Close()
-            End If
-        End Try
-    End Sub
-
-    Private Sub Write()
-        Dim Writer As StreamWriter
-        Try
-            Writer = Me.GetWriter
-            Writer.Write(Me.Text.Value)
-        Finally
-            If Not Writer Is Nothing Then
-                Writer.Close()
             End If
         End Try
     End Sub

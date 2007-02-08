@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/01/2007 19:41:19</xs:documentation>
+    <xs:documentation>NAnt schema generated at 02/08/2007 12:00:33</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -202,6 +203,7 @@
   <xs:complexType name="Common.Tasks.CaseElement">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -752,6 +754,21 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="Common.Tasks.TextElement">
+    <xs:attribute name="xml" use="optional" />
+    <xs:attribute name="expand" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Common.Tasks.ApplyFilterTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="text" type="nant:Common.Tasks.TextElement" />
+      <xs:element minOccurs="1" maxOccurs="1" name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
+    </xs:sequence>
+    <xs:attribute name="propertyname" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="NAnt.Core.Types.Option">
     <xs:attribute name="name" use="required" />
     <xs:attribute name="value" use="optional" />
@@ -815,6 +832,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -1013,10 +1031,6 @@
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Common.Tasks.TextElement">
-    <xs:attribute name="xml" use="optional" />
-    <xs:attribute name="expand" use="optional" />
   </xs:complexType>
   <xs:complexType name="Common.Tasks.LargePropertyTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -4102,6 +4116,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -4306,6 +4321,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -4545,6 +4561,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="in" type="nant:NAnt.Core.Tasks.InElement" />
       <xs:element minOccurs="0" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -5045,6 +5062,7 @@
   </xs:complexType>
   <xs:complexType name="Target">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
       <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
       <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
       <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
@@ -5266,6 +5284,7 @@
   <xs:element name="project">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="applyfilter" type="nant:Common.Tasks.ApplyFilterTask" />
         <xs:element name="asyncexec" type="nant:Common.Tasks.AsyncExec" />
         <xs:element name="ifthenelse" type="nant:Common.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:Common.Tasks.LargePropertyTask" />
