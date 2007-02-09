@@ -73,6 +73,76 @@
     
   </target>
 
+  <target name="Versioning.FixUp">
+    <property name="Versioning.FixUp.XPath.AssemblyInfo" value="b:Project/b:ItemGroup[b:Compile[@Include = 'Properties\AssemblyInfo.cs']]"/>
+    <property name="Versioning.FixUp.XPath.ProjectInfo" value="b:Project/b:ItemGroup/b:Compile[contains(@Include,'ProjectInfo.cs')]"/>
+    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[@Include = 'Properties\AssemblyInfo.cs']]/b:Compile"/>
+
+    <largeproperty name="Versioning.FixUp.XPath.Replacment" >
+      <value xml="false" expand="true">
+        <![CDATA[
+        <Compile Include="${ProductDirectory}\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+]]>
+      </value>
+    </largeproperty>
+
+    <foreach item="File" property="File" >
+      <in>
+        <items>
+          <include name="C:\Projects\CI Factory\Current\Product\Production\CCNet\CCNET.Dashboard.Extensions.Plugin\CCNET.Dashboard.Extensions.Plugin.csproj"/>
+        </items>
+      </in>
+      <do>
+        <property name="Versioning.FixUp.ShouldProcess" value="true"/>
+        <trycatch>
+          <try>
+            <xmlpeek 
+              file="${File}"
+              nodeindex="0"
+              property="Trash"
+              xpath="${Versioning.FixUp.XPath.ProjectInfo}"
+              >
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlpeek>
+            <property name="Versioning.FixUp.ShouldProcess" value="false"/>
+          </try>
+          <catch>
+            <echo message="Need to add ProjectInfo to ${File}"/>
+          </catch>
+        </trycatch>
+
+        <if test="${Versioning.FixUp.ShouldProcess}">
+          <property name="Versioning.FixUp.XPath.Items.Return" value="${myxml::get-xml(File, Versioning.FixUp.XPath.Items, 'b', 'http://schemas.microsoft.com/developer/msbuild/2003')}"/>
+          <xmlpoke 
+            file="${File}"
+            value="${Versioning.FixUp.XPath.Replacment}${Versioning.FixUp.XPath.Items.Return}"
+            xpath="${Versioning.FixUp.XPath.AssemblyInfo}"
+          >
+            <namespaces>
+              <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+            </namespaces>
+          </xmlpoke>
+
+          <largeproperty name="AssemblyProduct" >
+            <value xml="false"><![CDATA[\[assembly\: AssemblyProduct\(\".*\"\)]]]></value>
+          </largeproperty>
+
+          <property name="AssemblyInfo" value="${path::get-directory-name(File)}\Properties\AssemblyInfo.cs"/>
+
+          <copy file="${AssemblyInfo}" tofile="${AssemblyInfo}" overwrite="true" >
+            <filterchain>
+              <regexreplace replacment="" pattern="${AssemblyProduct}" lines="1" />
+            </filterchain>
+          </copy>
+        </if>
+      </do>
+    </foreach>
+  </target>
+  
   <target name="Versioning.SetUp">
 
   </target>

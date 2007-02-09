@@ -47,6 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
     <Compile Include="ForceFilters\ProjectForceFilter.cs" />
     <Compile Include="ExclusionFilters.cs" />
     <Compile Include="ForceFilters\UserForceFilter.cs" />

@@ -68,11 +68,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Extensions.Plugin\CCNET.Extensions.Plugin.csproj">
       <Project>{160AD2B8-639E-4C91-A050-C14193D7481B}</Project>
-      <Name>CCNET.Extensions</Name>
+      <Name>CCNET.Extensions.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Tracker.Plugin\CCNET.Tracker.Plugin.csproj">
       <Project>{A690B211-007B-4D30-9E3C-8F35E432C54E}</Project>
-      <Name>Tracker.CCNET.Plugin</Name>
+      <Name>CCNET.Tracker.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Production\Common\Tracker.Common\Tracker.Common.csproj">
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
