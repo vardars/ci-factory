@@ -17,6 +17,7 @@
 //
 
 using NAnt.Core.Attributes;
+using System;
 
 namespace NAnt.Core.Filters {
     /// <summary>
@@ -64,6 +65,16 @@ namespace NAnt.Core.Filters {
         /// for filter initialization.
         /// </summary>
         public virtual void InitializeFilter() {
+        }
+
+        public static char ConvertIntToChar(int value)
+        {
+            return (char)value;
+        }
+
+        public static int ConvertCharToInt(char value)
+        {
+            return (int)value;
         }
 
         #endregion Public Instance Methods

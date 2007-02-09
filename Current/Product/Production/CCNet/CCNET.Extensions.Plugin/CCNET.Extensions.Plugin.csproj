@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -47,24 +47,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\ProjectInfo.cs">
-      <Link>Properties\ProjectInfo.cs</Link>
-    </Compile>
-    <Compile Include="ForceFilters\ProjectForceFilter.cs" />
-    <Compile Include="ExclusionFilters.cs" />
-    <Compile Include="ForceFilters\UserForceFilter.cs" />
-    <Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
-    <Compile Include="InclusionFilters.cs" />
-    <Compile Include="ProjectFilter.cs" />
-    <Compile Include="ProjectFilterList.cs" />
-    <Compile Include="Triggers\ProjectTriggerFilter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XslFileMerge\FilePair.cs" />
-    <Compile Include="XslFileMerge\FilePairList.cs" />
-    <Compile Include="XslFileMerge\XslMerger.cs" />
-    <Compile Include="XslFileMerge\XslMergerTaskResult.cs" />
-    <Compile Include="Zation.cs" />
-  </ItemGroup>
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="ForceFilters\ProjectForceFilter.cs" />
+<Compile Include="ExclusionFilters.cs" />
+<Compile Include="ForceFilters\UserForceFilter.cs" />
+<Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
+<Compile Include="InclusionFilters.cs" />
+<Compile Include="ProjectFilter.cs" />
+<Compile Include="ProjectFilterList.cs" />
+<Compile Include="Triggers\ProjectTriggerFilter.cs" />
+<Compile Include="Properties\AssemblyInfo.cs" />
+<Compile Include="XslFileMerge\FilePair.cs" />
+<Compile Include="XslFileMerge\FilePairList.cs" />
+<Compile Include="XslFileMerge\XslMerger.cs" />
+<Compile Include="XslFileMerge\XslMergerTaskResult.cs" />
+<Compile Include="Zation.cs" />
+</ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|.NET 1.1' ">
     <OutputPath>bin\.NET 1.1\Release\</OutputPath>
   </PropertyGroup>

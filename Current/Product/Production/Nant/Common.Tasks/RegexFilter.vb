@@ -189,7 +189,7 @@ Public Class RegexFilter
     End Sub
 
     Public Function IsEndOfLine(ByVal character As Integer) As Boolean
-        return me.NewLineFinder.IsMatch(Microsoft.VisualBasic.Chr(character).ToString())
+        Return Me.NewLineFinder.IsMatch(Filter.ConvertIntToChar(character).ToString())
     End Function
 
     Public Sub ReplaceIfMatchFound(ByVal line As Line)
@@ -203,7 +203,7 @@ Public Class RegexFilter
             Replaced = Me.PatternFinder.Replace(Canidate.ToString(), Me.Replacment)
             Me.CharQueue = New Queue(Of Integer)
             For Each Character As Char In Replaced
-                Me.CharQueue.Enqueue(Microsoft.VisualBasic.Asc(Character))
+                Me.CharQueue.Enqueue(Filter.ConvertCharToInt(Character))
             Next
             If Me.AtEndOfStream Then
                 Me.CharQueue.Enqueue(-1)
@@ -245,7 +245,7 @@ Public Class Line
 
     Public Sub Append(ByVal Character As Integer)
         If Not Character = -1 Then
-            Me.Builder.Append(Microsoft.VisualBasic.Chr(Character))
+            Me.Builder.Append(Filter.ConvertIntToChar(Character))
         End If
         Me.Characters.Enqueue(Character)
     End Sub

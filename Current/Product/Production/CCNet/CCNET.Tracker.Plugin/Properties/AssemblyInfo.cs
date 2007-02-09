@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -8,8 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Tracker.CCNET.Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NGIT")]
-[assembly: AssemblyProduct("Tracker.CCNET.Plugin")]
 [assembly: AssemblyCopyright("Copyright © NGIT 2006")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -33,3 +31,10 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+
+
+
+
+
+

@@ -8,6 +8,8 @@ using NAnt.Core.Types;
 using NAnt.Core.Attributes;
 using NAnt.Core.Functions;
 
+using Common.Tasks;
+
 namespace Common.Functions
 {
     [FunctionSet("filterchain", "DataTypes")]
@@ -17,6 +19,22 @@ namespace Common.Functions
         public FilterChainFunctions(Project project, PropertyDictionary properties)
             : base(project, properties)
         {
+        }
+
+        [Function("regexreplace-add")]
+        public void AddReplaceString(String refID, String replacment, String pattern, int lines)
+        {
+            if (!this.Project.DataTypeReferences.Contains(refID))
+                throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+            FilterChain RefFilterChain = (FilterChain)this.Project.DataTypeReferences[refID];
+
+            RegexFilter Regex = new RegexFilter();
+            Regex.Lines = lines;
+            Regex.Pattern = pattern;
+            Regex.Replacment = replacment;
+
+            RefFilterChain.Filters.Add(Regex);
         }
 
         [Function("replacestring-count")]

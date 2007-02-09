@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Resources;
 using System.Globalization;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace NAnt.Core.Util {
@@ -204,9 +205,17 @@ namespace NAnt.Core.Util {
         /// </param>
         private static void RegisterAssembly(Assembly assembly) {
             lock (_resourceManagerDictionary) {
+                List<string> Names = new List<string>(assembly.GetManifestResourceNames());
+                string Name = Names.Find(FindStringResourceName);
+                Name = Name.Replace(".resources", "");
                 _resourceManagerDictionary.Add(assembly.GetName().Name,
-                    new ResourceManager(string.Format("{0}.Strings", assembly.GetName().Name), assembly));
+                    new ResourceManager(Name, assembly));
             }
+        }
+
+        public static bool FindStringResourceName(string name)
+        {
+            return name.EndsWith("Strings.resources");
         }
 
         #endregion private methods

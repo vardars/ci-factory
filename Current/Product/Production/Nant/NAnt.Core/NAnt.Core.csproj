@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -15,7 +15,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
-    <DocumentationFile>NAnt.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\NAnt.Core.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -25,14 +25,14 @@
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
-    <DocumentationFile>NAnt.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\NAnt.Core.xml</DocumentationFile>
     <DebugType>pdbonly</DebugType>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -42,7 +42,7 @@
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
@@ -67,471 +67,472 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Attributes\BooleanValidatorAttribute.cs">
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="Properties\AssemblyInfo.cs" />
+<Compile Include="Attributes\BooleanValidatorAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\BuildAttributeAttribute.cs">
+<Compile Include="Attributes\BuildAttributeAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\BuildElementArrayAttribute.cs">
+<Compile Include="Attributes\BuildElementArrayAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\BuildElementAttribute.cs">
+<Compile Include="Attributes\BuildElementAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\BuildElementCollectionAttribute.cs">
+<Compile Include="Attributes\BuildElementCollectionAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\DateTimeValidatorAttribute.cs">
+<Compile Include="Attributes\DateTimeValidatorAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\ElementNameAttribute.cs">
+<Compile Include="Attributes\ElementNameAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\FileSetAttribute.cs">
+<Compile Include="Attributes\FileSetAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\FrameworkConfigurableAttribute.cs">
+<Compile Include="Attributes\FrameworkConfigurableAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\FunctionAttribute.cs">
+<Compile Include="Attributes\FunctionAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\FunctionSetAttribute.cs">
+<Compile Include="Attributes\FunctionSetAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\Int32ValidatorAttribute.cs">
+<Compile Include="Attributes\Int32ValidatorAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\ProgramLocationAttribute.cs">
+<Compile Include="Attributes\ProgramLocationAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\StringValidatorAttribute.cs">
+<Compile Include="Attributes\StringValidatorAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\TaskAttributeAttribute.cs">
+<Compile Include="Attributes\TaskAttributeAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\TaskNameAttribute.cs">
+<Compile Include="Attributes\TaskNameAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Attributes\ValidatorAttribute.cs">
+<Compile Include="Attributes\ValidatorAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BuildException.cs">
+<Compile Include="BuildException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommandLineOptions.cs">
+<Compile Include="CommandLineOptions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConfigurationSection.cs">
+<Compile Include="ConfigurationSection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConsoleDriver.cs">
+<Compile Include="ConsoleDriver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypeBase.cs">
+<Compile Include="DataTypeBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypeBaseBuilder.cs">
+<Compile Include="DataTypeBaseBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypeBaseBuilderCollection.cs">
+<Compile Include="DataTypeBaseBuilderCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataTypeBaseDictionary.cs">
+<Compile Include="DataTypeBaseDictionary.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DirectoryScanner.cs">
+<Compile Include="DirectoryScanner.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Element.cs">
+<Compile Include="Element.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ElementTaskContainer.cs">
+<Compile Include="ElementTaskContainer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExpressionEvalBase.cs">
+<Compile Include="ExpressionEvalBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExpressionEvaluator.cs">
+<Compile Include="ExpressionEvaluator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExpressionParseException.cs">
+<Compile Include="ExpressionParseException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ExpressionTokenizer.cs">
+<Compile Include="ExpressionTokenizer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\ExpandProperties.cs">
+<Compile Include="Filters\ExpandProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\ReplaceString.cs">
+<Compile Include="Filters\ReplaceString.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\ReplaceTokens.cs">
+<Compile Include="Filters\ReplaceTokens.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\ChainableReader.cs">
+<Compile Include="Filters\Support\ChainableReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\Filter.cs">
+<Compile Include="Filters\Support\Filter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\FilterBuilder.cs">
+<Compile Include="Filters\Support\FilterBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\FilterBuilderCollection.cs">
+<Compile Include="Filters\Support\FilterBuilderCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\FilterChain.cs">
+<Compile Include="Filters\Support\FilterChain.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\FilterCollection.cs">
+<Compile Include="Filters\Support\FilterCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\Support\PhysicalTextReader.cs">
+<Compile Include="Filters\Support\PhysicalTextReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Filters\TabsToSpaces.cs">
+<Compile Include="Filters\TabsToSpaces.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FrameworkInfo.cs">
+<Compile Include="FrameworkInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FrameworkInfoDictionary.cs">
+<Compile Include="FrameworkInfoDictionary.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FunctionSetBase.cs">
+<Compile Include="FunctionSetBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\AssemblyFunctions.cs">
+<Compile Include="Functions\AssemblyFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\AssemblyNameFunctions.cs">
+<Compile Include="Functions\AssemblyNameFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\BooleanFunctions.cs">
+<Compile Include="Functions\BooleanFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\ConversionFunctions.cs">
+<Compile Include="Functions\ConversionFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\DateTimeFunctions.cs">
+<Compile Include="Functions\DateTimeFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\DirectoryFunctions.cs">
+<Compile Include="Functions\DirectoryFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\DoubleFunctions.cs">
+<Compile Include="Functions\DoubleFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\EnvironmentFunctions.cs">
+<Compile Include="Functions\EnvironmentFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\FileFunctions.cs">
+<Compile Include="Functions\FileFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\FileVersionInfoFunctions.cs">
+<Compile Include="Functions\FileVersionInfoFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\Int32Functions.cs">
+<Compile Include="Functions\Int32Functions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\Int64Functions.cs">
+<Compile Include="Functions\Int64Functions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\MathFunctions.cs">
+<Compile Include="Functions\MathFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\NAntFunctions.cs">
+<Compile Include="Functions\NAntFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\OperatingSystemFunctions.cs">
+<Compile Include="Functions\OperatingSystemFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\PathFunctions.cs">
+<Compile Include="Functions\PathFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\PkgConfigFunctions.cs">
+<Compile Include="Functions\PkgConfigFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\StringFunctions.cs">
+<Compile Include="Functions\StringFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\TimeSpanFunctions.cs">
+<Compile Include="Functions\TimeSpanFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Functions\VersionFunctions.cs">
+<Compile Include="Functions\VersionFunctions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Location.cs">
+<Compile Include="Location.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LocationMap.cs">
+<Compile Include="LocationMap.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Log.cs">
+<Compile Include="Log.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PathScanner.cs">
+<Compile Include="PathScanner.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PlatformHelper.cs">
+<Compile Include="PlatformHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Project.cs">
+<Compile Include="Project.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ProjectSettingsLoader.cs">
+<Compile Include="ProjectSettingsLoader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PropertyDictionary.cs">
+<Compile Include="PropertyDictionary.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Target.cs">
+<Compile Include="Target.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TargetCollection.cs">
+<Compile Include="TargetCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Task.cs">
+<Compile Include="Task.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TaskBuilder.cs">
+<Compile Include="TaskBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TaskBuilderCollection.cs">
+<Compile Include="TaskBuilderCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TaskContainer.cs">
+<Compile Include="TaskContainer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\AttribTask.cs">
+<Compile Include="Tasks\AttribTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\AvailableTask.cs">
+<Compile Include="Tasks\AvailableTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\CallTask.cs">
+<Compile Include="Tasks\CallTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\CopyTask.cs">
+<Compile Include="Tasks\CopyTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\DeleteTask.cs">
+<Compile Include="Tasks\DeleteTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\DescriptionTask.cs">
+<Compile Include="Tasks\DescriptionTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\EchoTask.cs">
+<Compile Include="Tasks\EchoTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\ExecTask.cs">
+<Compile Include="Tasks\ExecTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\ExternalProgramBase.cs">
+<Compile Include="Tasks\ExternalProgramBase.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\FailTask.cs">
+<Compile Include="Tasks\FailTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\GetTask.cs">
+<Compile Include="Tasks\GetTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\IfTask.cs">
+<Compile Include="Tasks\IfTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\IncludeTask.cs">
+<Compile Include="Tasks\IncludeTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\LoadFileTask.cs">
+<Compile Include="Tasks\LoadFileTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\LoadTasks.cs">
+<Compile Include="Tasks\LoadTasks.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\LoopTask.cs">
+<Compile Include="Tasks\LoopTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\MailTask.cs">
+<Compile Include="Tasks\MailTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\MkDirTask.cs">
+<Compile Include="Tasks\MkDirTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\MoveTask.cs">
+<Compile Include="Tasks\MoveTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\NAntSchemaTask.cs">
+<Compile Include="Tasks\NAntSchemaTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\NAntTask.cs">
+<Compile Include="Tasks\NAntTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\PropertyTask.cs">
+<Compile Include="Tasks\PropertyTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\RegexTask.cs">
+<Compile Include="Tasks\RegexTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\SetEnvTask.cs">
+<Compile Include="Tasks\SetEnvTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\SleepTask.cs">
+<Compile Include="Tasks\SleepTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\StyleTask.cs">
+<Compile Include="Tasks\StyleTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\SysInfo.cs">
+<Compile Include="Tasks\SysInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TouchTask.cs">
+<Compile Include="Tasks\TouchTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\TStampTask.cs">
+<Compile Include="Tasks\TStampTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\UpToDateTask.cs">
+<Compile Include="Tasks\UpToDateTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\XmlPeekTask.cs">
+<Compile Include="Tasks\XmlPeekTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\XmlPokeTask.cs">
+<Compile Include="Tasks\XmlPokeTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TypeFactory.cs">
+<Compile Include="TypeFactory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Argument.cs">
+<Compile Include="Types\Argument.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\ArgumentCollection.cs">
+<Compile Include="Types\ArgumentCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Credential.cs">
+<Compile Include="Types\Credential.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\DirSet.cs">
+<Compile Include="Types\DirSet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\EnvironmentVariable.cs">
+<Compile Include="Types\EnvironmentVariable.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\EnvironmentVariableCollection.cs">
+<Compile Include="Types\EnvironmentVariableCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\FileSet.cs">
+<Compile Include="Types\FileSet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Formatter.cs">
+<Compile Include="Types\Formatter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\FormatterCollection.cs">
+<Compile Include="Types\FormatterCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Option.cs">
+<Compile Include="Types\Option.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\OptionCollection.cs">
+<Compile Include="Types\OptionCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\PathElement.cs">
+<Compile Include="Types\PathElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\PathSet.cs">
+<Compile Include="Types\PathSet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Proxy.cs">
+<Compile Include="Types\Proxy.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\RawXml.cs">
+<Compile Include="Types\RawXml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\Token.cs">
+<Compile Include="Types\Token.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XmlNamespace.cs">
+<Compile Include="Types\XmlNamespace.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XmlNamespaceCollection.cs">
+<Compile Include="Types\XmlNamespaceCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XsltExtensionObject.cs">
+<Compile Include="Types\XsltExtensionObject.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XsltExtensionObjectCollection.cs">
+<Compile Include="Types\XsltExtensionObjectCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XsltParameter.cs">
+<Compile Include="Types\XsltParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Types\XsltParameterCollection.cs">
+<Compile Include="Types\XsltParameterCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\AssemblyResolver.cs">
+<Compile Include="Util\AssemblyResolver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineArgument.cs">
+<Compile Include="Util\CommandLineArgument.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineArgumentAttribute.cs">
+<Compile Include="Util\CommandLineArgumentAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineArgumentCollection.cs">
+<Compile Include="Util\CommandLineArgumentCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineArgumentException.cs">
+<Compile Include="Util\CommandLineArgumentException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineArgumentTypes.cs">
+<Compile Include="Util\CommandLineArgumentTypes.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\CommandLineParser.cs">
+<Compile Include="Util\CommandLineParser.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\DateTimeProvider.cs">
+<Compile Include="Util\DateTimeProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\DefaultCommandLineArgumentAttribute.cs">
+<Compile Include="Util\DefaultCommandLineArgumentAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\FileUtils.cs">
+<Compile Include="Util\FileUtils.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\GacCache.cs">
+<Compile Include="Util\GacCache.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\ReflectionUtils.cs">
+<Compile Include="Util\ReflectionUtils.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\ResourceUtils.cs">
+<Compile Include="Util\ResourceUtils.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\StopWatchStack.cs">
+<Compile Include="Util\StopWatchStack.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Util\StringUtils.cs">
+<Compile Include="Util\StringUtils.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ValidationException.cs">
+<Compile Include="ValidationException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VolumeInfo.cs">
+<Compile Include="VolumeInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="XmlLogger.cs">
+<Compile Include="XmlLogger.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="NAnt.Core.build" />
-    <EmbeddedResource Include="ProjectHelp.xslt" />
-    <EmbeddedResource Include="Strings.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+</ItemGroup>
+  <ItemGroup>
+    <None Include="UpdatenAnt.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

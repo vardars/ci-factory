@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning">
 
-  <loadtasks assembly="Packages\Versioning\bin\UpdateVersion.Tasks.dll" />
+  <loadtasks assembly="${PackagesDirectory}\Versioning\bin\UpdateVersion.Tasks.dll" />
   <include buildfile="Versioning.Properties.xml" />
 
   <!--
@@ -74,32 +74,26 @@
   </target>
 
   <target name="Versioning.FixUp">
-    <property name="Versioning.FixUp.XPath.AssemblyInfo" value="b:Project/b:ItemGroup[b:Compile[@Include = 'Properties\AssemblyInfo.cs']]"/>
-    <property name="Versioning.FixUp.XPath.ProjectInfo" value="b:Project/b:ItemGroup/b:Compile[contains(@Include,'ProjectInfo.cs')]"/>
-    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[@Include = 'Properties\AssemblyInfo.cs']]/b:Compile"/>
 
-    <largeproperty name="Versioning.FixUp.XPath.Replacment" >
-      <value xml="false" expand="true">
-        <![CDATA[
-        <Compile Include="${ProductDirectory}\ProjectInfo.cs">
-          <Link>Properties\ProjectInfo.cs</Link>
-        </Compile>
-]]>
-      </value>
-    </largeproperty>
-
-    <foreach item="File" property="File" >
+    <foreach item="File" property="Versioning.FixUp.ProjectFile" >
       <in>
-        <items>
-          <include name="C:\Projects\CI Factory\Current\Product\Production\CCNet\CCNET.Dashboard.Extensions.Plugin\CCNET.Dashboard.Extensions.Plugin.csproj"/>
-        </items>
+        <items refid="${Versioning.FixUp.ProjectFile.FileSet}" />
       </in>
       <do>
+        <echo message="Checking ${Versioning.FixUp.ProjectFile}"/>
+        <regex input="${Versioning.FixUp.ProjectFile}" pattern=".*\.(?'ext'\w\w)proj$"/>
+        <property name="Versioning.FixUp.ProjectFile.Ext" value="${ext}"/>
+        <property name="Versioning.ProjectInfo" value="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
+        <property name="Versioning.FixUp.XPath.ProjectInfo" value="b:Project/b:ItemGroup/b:Compile[contains(@Include,'ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}')]"/>
+        <property name="Versioning.FixUp.FilterChain.${Versioning.FixUp.ProjectFile.Ext}.Created" value="false" overwrite="false"/>
+
+        <call target="Private.Versioning.FixUp.CreateFilterChain.${Versioning.FixUp.ProjectFile.Ext}" unless="${property::get-value('Versioning.FixUp.FilterChain.' + Versioning.FixUp.ProjectFile.Ext + '.Created')}"/>
+
         <property name="Versioning.FixUp.ShouldProcess" value="true"/>
         <trycatch>
           <try>
             <xmlpeek 
-              file="${File}"
+              file="${Versioning.FixUp.ProjectFile}"
               nodeindex="0"
               property="Trash"
               xpath="${Versioning.FixUp.XPath.ProjectInfo}"
@@ -111,36 +105,107 @@
             <property name="Versioning.FixUp.ShouldProcess" value="false"/>
           </try>
           <catch>
-            <echo message="Need to add ProjectInfo to ${File}"/>
+            <echo message="Need to add ProjectInfo to ${Versioning.FixUp.ProjectFile}"/>
           </catch>
         </trycatch>
 
-        <if test="${Versioning.FixUp.ShouldProcess}">
-          <property name="Versioning.FixUp.XPath.Items.Return" value="${myxml::get-xml(File, Versioning.FixUp.XPath.Items, 'b', 'http://schemas.microsoft.com/developer/msbuild/2003')}"/>
-          <xmlpoke 
-            file="${File}"
-            value="${Versioning.FixUp.XPath.Replacment}${Versioning.FixUp.XPath.Items.Return}"
-            xpath="${Versioning.FixUp.XPath.AssemblyInfo}"
-          >
-            <namespaces>
-              <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
-            </namespaces>
-          </xmlpoke>
+        <call target="Private.Versioning.FixUp.AddProjectInfoToProjectFile" if="${Versioning.FixUp.ShouldProcess}"/>
+        <call target="Private.Versioning.FixUp.CleanUpAssemblyInfoFile" if="${Versioning.FixUp.ShouldProcess}"/>
 
-          <largeproperty name="AssemblyProduct" >
-            <value xml="false"><![CDATA[\[assembly\: AssemblyProduct\(\".*\"\)]]]></value>
-          </largeproperty>
-
-          <property name="AssemblyInfo" value="${path::get-directory-name(File)}\Properties\AssemblyInfo.cs"/>
-
-          <copy file="${AssemblyInfo}" tofile="${AssemblyInfo}" overwrite="true" >
-            <filterchain>
-              <regexreplace replacment="" pattern="${AssemblyProduct}" lines="1" />
-            </filterchain>
-          </copy>
-        </if>
       </do>
     </foreach>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CleanUpAssemblyInfoFile">
+    <property name="Versioning.FixUp.AssemblyInfo.FilePattern" value="${path::get-directory-name(Versioning.FixUp.ProjectFile)}\**\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
+
+    <foreach item="File" property="Versioning.FixUp.AssemblyInfo.File">
+      <in>
+        <items>
+          <include name="${Versioning.FixUp.AssemblyInfo.FilePattern}"/>
+        </items>
+      </in>
+      <do>
+        <echo message="${Versioning.FixUp.AssemblyInfo.File}"/>
+
+        <loadfile property="After" file="${Versioning.FixUp.AssemblyInfo.File}" encoding="utf-8">
+          <filterchain refid="Versioning.FixUp.AssemblyInfo.FilterChain${Versioning.FixUp.ProjectFile.Ext}"/>
+        </loadfile>
+
+        <echo message="${After}" file="${Versioning.FixUp.AssemblyInfo.File}"/>
+      </do>
+    </foreach>
+  </target>
+
+  <target name="Private.Versioning.FixUp.AddProjectInfoToProjectFile" >
+    <property name="Versioning.FixUp.XPath.AssemblyInfo" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]"/>
+    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]/b:Compile"/>
+    
+    <largeproperty name="Versioning.FixUp.XPath.Replacment" >
+      <value xml="false" expand="true">
+        <![CDATA[
+        <Compile Include="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}">
+          <Link>Properties\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}</Link>
+        </Compile>
+]]>
+      </value>
+    </largeproperty>
+    
+    <property name="Versioning.FixUp.XPath.Items.Return" value="${myxml::get-xml(Versioning.FixUp.ProjectFile, Versioning.FixUp.XPath.Items, 'b', 'http://schemas.microsoft.com/developer/msbuild/2003')}"/>
+    <xmlpoke 
+      file="${Versioning.FixUp.ProjectFile}"
+      value="${Versioning.FixUp.XPath.Replacment}${Versioning.FixUp.XPath.Items.Return}"
+      xpath="${Versioning.FixUp.XPath.AssemblyInfo}"
+          >
+      <namespaces>
+        <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+      </namespaces>
+    </xmlpoke>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CreateFilterChain.cs">
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributePrefix" >
+      <value xml="false"><![CDATA[\[assembly\: ]]></value>
+    </largeproperty>
+
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributeSuffix" >
+      <value xml="false"><![CDATA[\(\".*\"\)\]]]></value>
+    </largeproperty>
+
+    <call target="Private.Versioning.FixUp.PopulateFilterChain"/>
+    <property name="Versioning.FixUp.FilterChain.Cs.Created" value="true"/>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CreateFilterChain.vb">
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributePrefix" >
+      <value xml="false"><![CDATA[\<Assembly\: ]]></value>
+    </largeproperty>
+
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributeSuffix" >
+      <value xml="false"><![CDATA[\(\".*\"\)\>]]></value>
+    </largeproperty>
+
+    <call target="Private.Versioning.FixUp.PopulateFilterChain"/>
+    <property name="Versioning.FixUp.FilterChain.vb.Created" value="true"/>
+  </target>
+
+  <target name="Private.Versioning.FixUp.PopulateFilterChain">
+    <regexmatch id="Versioning.ProjectInfo.Regex.FindLines" file="${Versioning.ProjectInfo}" pattern="${Versioning.FixUp.AssemblyInfo.AttributePrefix}"/>
+    <property name="Versioning.FixUp.AssemblyInfo.FilterChainName" value="Versioning.FixUp.AssemblyInfo.FilterChain${Versioning.FixUp.ProjectFile.Ext}"/>
+    <filterchain id="${Versioning.FixUp.AssemblyInfo.FilterChainName}"/>
+    
+    <loopthrough property="Versioning.ProjectInfo.Line" >
+      <items>
+        <regexmatch refid="Versioning.ProjectInfo.Regex.FindLines" />
+      </items>
+      <do>
+        <regex input="${Versioning.ProjectInfo.Line}" pattern="${Versioning.FixUp.AssemblyInfo.AttributePrefix}(?'VersioningFixUpAssemblyInfoAttributeName'\w+)${Versioning.FixUp.AssemblyInfo.AttributeSuffix}"/>
+
+        <property name="Versioning.FixUp.AssemblyInfo.AttributePattern" value="${Versioning.FixUp.AssemblyInfo.AttributePrefix}${VersioningFixUpAssemblyInfoAttributeName}${Versioning.FixUp.AssemblyInfo.AttributeSuffix}"/>
+
+        <function execute="${filterchain::regexreplace-add(Versioning.FixUp.AssemblyInfo.FilterChainName, '', Versioning.FixUp.AssemblyInfo.AttributePattern, 1)}"/>
+      </do>
+    </loopthrough>
   </target>
   
   <target name="Versioning.SetUp">
