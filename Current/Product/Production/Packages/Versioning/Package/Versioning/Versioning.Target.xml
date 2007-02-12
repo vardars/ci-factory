@@ -216,4 +216,48 @@
 
   </target>
 
+  <script language="C#" prefix="myxml">
+    <imports >
+      <import namespace="System.Xml"/>
+      <import namespace="System.Text"/>
+    </imports >
+    <code>
+      <![CDATA[                 
+					
+          [Function("get-xml")]
+        public string GetXmlAsString(string xmlFile, string xPath, string prefix, string uri)
+        {
+            try
+            {
+                XmlDocument xd = new XmlDocument();
+                xd.PreserveWhitespace=true;
+                xd.Load(xmlFile);
+                
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+                namespaceManager.AddNamespace(prefix, uri);
+                
+                StringBuilder builder = new StringBuilder();
+                
+                foreach (XmlNode node in xd.SelectNodes(xPath, namespaceManager))
+                {
+                    builder.Append(node.OuterXml.Trim());
+                    builder.Append(System.Environment.NewLine);
+                }
+
+                return builder.ToString();
+            }
+            catch(NullReferenceException)
+            {
+                throw new BuildException("Couldn't find the node specified by the XPath " + xPath);
+            }
+            catch(Exception err)
+            {
+                throw new BuildException("Error (" + err.Message + ") getting xml of query " + xPath, err);
+            }
+        }
+          
+			]]>
+    </code>
+  </script>
+
 </project>

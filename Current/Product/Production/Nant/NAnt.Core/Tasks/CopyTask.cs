@@ -134,6 +134,7 @@ namespace NAnt.Core.Tasks {
         private FilterChain _filters;
         private Encoding _inputEncoding;
         private Encoding _outputEncoding;
+        private string _NewExt;
 
         #endregion Private Instance Fields
 
@@ -153,6 +154,19 @@ namespace NAnt.Core.Tasks {
         #endregion Public Instance Constructors
 
         #region Public Instance Properties
+
+        [TaskAttribute("newext"), StringValidator(AllowEmpty = false)]
+        public string NewExt
+        {
+            get
+            {
+                return _NewExt;
+            }
+            set
+            {
+                _NewExt = value;
+            }
+        }
 
         /// <summary>
         /// The file to copy.
@@ -393,6 +407,9 @@ namespace NAnt.Core.Tasks {
                             dstFilePath = Path.Combine(ToDirectory.FullName, 
                                 dstRelFilePath);
                         }
+
+                        if (!String.IsNullOrEmpty(this.NewExt))
+                            dstFilePath = Path.ChangeExtension(dstFilePath, this.NewExt);
                         
                         // do the outdated check
                         FileInfo dstInfo = new FileInfo(dstFilePath);
