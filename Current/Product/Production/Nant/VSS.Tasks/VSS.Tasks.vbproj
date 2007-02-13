@@ -78,16 +78,6 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAnt.Contrib.Tasks, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Contrib.Tasks.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NAnt.Core, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="SourceSafe.Interop, Version=5.1.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Third Party\nAnt\bin\SourceSafe.Interop.dll</HintPath>
@@ -113,6 +103,16 @@
     <Compile Include="VSSAddProject.vb">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NAnt.Contrib.Tasks\NAnt.Contrib.Tasks.csproj">
+      <Project>{CFBA0DE3-2B01-4C75-B615-4ACBA502F71C}</Project>
+      <Name>NAnt.Contrib.Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />
