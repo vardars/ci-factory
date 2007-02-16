@@ -168,7 +168,10 @@ namespace CIFactory.NAnt.Filters
 
         public override int Read()
         {
-            return this.GetNextCharacter();
+            int NextCharacter = this.GetNextCharacter();
+            if (NextCharacter == -1)
+                this.AtEndOfStream = false;
+            return NextCharacter;
         }
 
         public void ReadLine()
