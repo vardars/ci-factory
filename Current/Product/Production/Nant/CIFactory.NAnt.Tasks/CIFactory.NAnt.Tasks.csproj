@@ -51,7 +51,7 @@
     <Compile Include="Tasks\TaskContainerCollection.cs" />
     <Compile Include="Types\CaseContainerCollection.cs" />
     <Compile Include="Types\CaseElement.cs" />
-    <Compile Include="Filters\CodeConvertTask.cs" />
+    <Compile Include="Filters\CodeConvertFilter.cs" />
     <Compile Include="Tasks\IfThenTask.cs" />
     <Compile Include="Tasks\LargePropertyTask.cs" />
     <Compile Include="Tasks\LogLevelTask.cs" />
