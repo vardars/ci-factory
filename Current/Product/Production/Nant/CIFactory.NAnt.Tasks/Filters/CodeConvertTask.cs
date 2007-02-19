@@ -10,7 +10,7 @@ using ICSharpCode.NRefactory.Parser;
 using ICSharpCode.NRefactory.PrettyPrinter;
 using ICSharpCode.NRefactory.Visitors;
 
-namespace CIFactory.NAnt.Tasks
+namespace CIFactory.NAnt.Filters
 {
     [ElementName("codeconvert")]
     public class CodeConvert : Filter
