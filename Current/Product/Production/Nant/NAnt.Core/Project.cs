@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Globalization;
@@ -1293,6 +1294,23 @@ namespace NAnt.Core {
 
         #region Internal Instance Methods
 
+        private SubProjectCollection _SubProjects;
+
+        public SubProjectCollection SubProjects
+        {
+            get
+            {
+                if (_SubProjects == null)
+                    _SubProjects = new SubProjectCollection();
+                return _SubProjects;
+            }
+            set
+            {
+                _SubProjects = value;
+            }
+        }
+
+
         /// <summary>
         /// This method is only meant to be used by the <see cref="Project"/> 
         /// class and <see cref="NAnt.Core.Tasks.IncludeTask"/>.
@@ -1300,6 +1318,14 @@ namespace NAnt.Core {
         internal void InitializeProjectDocument(XmlDocument doc) {
             // load line and column number information into position map
             LocationMap.Add(doc);
+
+            SubProject subProject = null;
+            if (doc.DocumentElement.HasAttribute(ProjectNameAttribute))
+            {
+                string subProjectName = doc.DocumentElement.GetAttribute(ProjectNameAttribute);
+                subProject = new SubProject(subProjectName);
+                this.SubProjects.Add(subProject);
+            }
 
             // initialize targets first
             foreach (XmlNode childNode in doc.DocumentElement.ChildNodes) {
@@ -1313,6 +1339,8 @@ namespace NAnt.Core {
                     target.NamespaceManager = NamespaceManager;
                     target.Initialize(childNode);
                     Targets.Add(target);
+                    if (subProject != null)
+                        subProject.Targets.Add(target);
                 }
             }
 

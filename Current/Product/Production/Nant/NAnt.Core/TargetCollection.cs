@@ -19,31 +19,42 @@
 // Scott Hernandez (ScottHernandez@hotmail.com)
 
 using System;
-using System.Collections;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using NAnt.Core.Util;
 
 namespace NAnt.Core {
     [Serializable()]
-    public class TargetCollection : ArrayList {
-        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public virtual int Add(Target t){
+    public class TargetCollection : KeyedCollection<string, Target> 
+    {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        protected override void InsertItem(int index, Target item)
+        {
+            this.ValidateEntry(item);
+            base.InsertItem(index, item);
+        }
+
+        protected override void SetItem(int index, Target item)
+        {
+            this.ValidateEntry(item);
+            base.SetItem(index, item);
+        }
+        private void ValidateEntry(Target item){
             // throw an exception if an attempt is made to add a null target
-            if (t == null) {
+            if (item == null) {
                 throw new BuildException("Null Target!");
             }
 
             logger.Debug(string.Format(
                 CultureInfo.InvariantCulture,
                 ResourceUtils.GetString("String_AddingTarget"), 
-                t.Name));
+                item.Name));
             
             // check for existing target with same name.
-            if (Find(t.Name) == null) {
-                return base.Add(t);
-            } else {
+            if (this.Contains(item.Name)) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                    ResourceUtils.GetString("NA1073"), t.Name));
+                    ResourceUtils.GetString("NA1073"), item.Name));
             }
         }
 
@@ -57,10 +68,8 @@ namespace NAnt.Core {
         /// the given name.
         /// </returns>
         public Target Find(string targetName) {
-            foreach (Target target in this) {
-                if (target.Name == targetName)
-                    return target;
-            }
+            if (this.Contains(targetName))
+                return this[targetName];
             return null;
         }
 
@@ -77,15 +86,10 @@ namespace NAnt.Core {
             string[] targetNames = new string[Count];
 
             for (int i = 0; i < Count; i++) {
-                targetNames[i] = ((Target) this[i]).Name;
+                targetNames[i] = ((Target) this.Items[i]).Name;
             }
 
             return string.Join(separator, targetNames);
-        }
-
-        public override int Add(object value) {
-            // call typed version above.
-            return Add(value as Target);
         }
 
         #region Override implementation of Object
@@ -103,5 +107,10 @@ namespace NAnt.Core {
         }
 
         #endregion Override implementation of Object
+
+        protected override string GetKeyForItem(Target item)
+        {
+            return item.Name;
+        }
     }
 }

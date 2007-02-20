@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Target" >
 
-  <loadtasks assembly="${PackagesDirectory}\VSTSVersionControl\bin\TF.Tasks.dll" />
+  <property name="TFS.TaskAssembly" value="${PackagesDirectory}\VSTSVersionControl\bin\TF.Tasks.dll" overwrite="false"/>
+  <loadtasks assembly="${TFS.TaskAssembly}" if="${file::exists(TFS.TaskAssembly)}" />
 
   <include buildfile="VSTSVersionControl.Properties.xml" />
 

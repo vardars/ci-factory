@@ -293,6 +293,8 @@
     <Compile Include="PropertyDictionary.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SubProject.cs" />
+    <Compile Include="SubProjectCollection.cs" />
     <Compile Include="Target.cs">
       <SubType>Code</SubType>
     </Compile>
