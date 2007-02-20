@@ -1,9 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Ant.Properties">
 
   <property name="AntHome"  value="${PackagesDirectory}\Ant\Ant" />
   <property name="JavaHome" value="${PackagesDirectory}\Ant\Java" />
   <property name="Path" value="${environment::get-variable('PATH')}" />
+
+  <property name="JavaReleaseDirectory" value="${ProductDirectory}\JavaRelease"/>
+  <zipfileset id="Deployment.ZipFileSet" basedir="${JavaReleaseDirectory}">
+    <include name="**\*"/>
+  </zipfileset>
 
   <property name="AntBin"  value="${AntHome}\bin" />
   <property name="AntBat"  value="${AntBin}\ant.bat" />

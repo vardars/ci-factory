@@ -11,6 +11,13 @@
       <arg line="-logfile ${AntBuildLogFile}" />
       <arg line="-DProductVersion=${CCNetLabel}" />
     </exec>
+
+    <property name="Deployment.TargetDir" value="${BuildDirectory}\Installs\${CCNetLabel}" />
+    <property name="Deployment.ZipFileName" value="${ProjectName}Java.zip" />
+    <property name="Deployment.FileWebPath" value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.ZipFileName}" />
+    <property name="Deployment.FileWebName" value="${CCNetLabel} ${Deployment.ZipFileName}" />
+
+    <call target="Deployment.PublishZip" />
   </target>
 
   <target name="Ant.SetUp">
