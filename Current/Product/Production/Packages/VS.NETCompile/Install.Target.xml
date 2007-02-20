@@ -199,7 +199,7 @@
 	</target>
 
   <target name="Install.SetUp">
-    <property name="Install.FilesToDelete" value="${Install.FilesToDeleteAtSetup}"/>
+    <property name="Common.FilesToDelete" value="${Install.FilesToDeleteAtSetup}"/>
     <call target="Common.DeleteFiles"/>
   </target>
 
