@@ -486,9 +486,6 @@ namespace NAnt.Core {
                 return;
             }
 
-            // get info for the current directory
-            DirectoryInfo currentDirectoryInfo = new DirectoryInfo(path);
-
             // check whether directory is on case-sensitive volume
             bool caseSensitive = IsCaseSensitiveFileSystem(path);
             string pathCompare = path;
@@ -555,26 +552,28 @@ namespace NAnt.Core {
                 }
             }
 
-            foreach (DirectoryInfo directoryInfo in currentDirectoryInfo.GetDirectories()) 
+            foreach (string directoryPath in Directory.GetDirectories(path)) 
             {
                 if (recursive) {
                     // scan subfolders if we are running recursively
-                    ScanDirectory(directoryInfo.FullName, true);
+                    ScanDirectory(directoryPath, true);
                 } else {
                     // otherwise just test to see if the subdirectories are included
-                    if (IsPathIncluded(directoryInfo.FullName, caseSensitive, includedPatterns, excludedPatterns)) {
-                        _directoryNames.Add(directoryInfo.FullName);
+                    if (IsPathIncluded(directoryPath, caseSensitive, includedPatterns, excludedPatterns))
+                    {
+                        _directoryNames.Add(directoryPath);
                     }
                 }
             }
 
             // scan files
-            foreach (FileInfo fileInfo in currentDirectoryInfo.GetFiles()) {
-                string filename = Path.Combine(path, fileInfo.Name);
+            foreach (string filePath in Directory.GetFiles(path))
+            {
+                string filename = filePath;
                 if (!caseSensitive)
                     filename = filename.ToLower();
                 if (IsPathIncluded(filename, caseSensitive, includedPatterns, excludedPatterns)) {
-                    _fileNames.Add(Path.Combine(path, fileInfo.Name));
+                    _fileNames.Add(filePath);
                 }
             }
 
