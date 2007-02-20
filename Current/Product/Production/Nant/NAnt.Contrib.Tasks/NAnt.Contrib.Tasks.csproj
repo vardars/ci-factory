@@ -219,6 +219,7 @@
     <Compile Include="Tasks\SourceSafe\CheckoutTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\SourceSafe\StatisTask.cs" />
     <Compile Include="Tasks\SourceSafe\DiffTask.cs">
       <SubType>Code</SubType>
     </Compile>
