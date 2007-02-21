@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Package\Tracker\bin\</OutputPath>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Package\Tracker\bin\</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -62,11 +62,6 @@
     <Compile Include="DataTypes\WriteFieldSet.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="NAnt.Core, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.XML" />
@@ -75,6 +70,10 @@
     <ProjectReference Include="..\..\Common\Tracker.Common\Tracker.Common.csproj">
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
       <Name>Tracker.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,15 +43,17 @@
     <Compile Include="InstallShieldTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="NAnt.Contrib.Tasks, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Contrib.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="NAnt.Core, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NAnt.Contrib.Tasks\NAnt.Contrib.Tasks.csproj">
+      <Project>{CFBA0DE3-2B01-4C75-B615-4ACBA502F71C}</Project>
+      <Name>NAnt.Contrib.Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

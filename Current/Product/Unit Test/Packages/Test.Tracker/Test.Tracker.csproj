@@ -64,9 +64,9 @@
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
       <Name>Tracker.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Production\Packages\Tracker\Tracker.csproj">
+    <ProjectReference Include="..\..\..\Production\Nant\CIFactory.NAnt.Tracker.Tasks\CIFactory.NAnt.Tracker.Tasks.csproj">
       <Project>{D4C8C890-0DF5-4612-AF4F-F82CDE0A2E04}</Project>
-      <Name>Tracker</Name>
+      <Name>CIFactory.NAnt.Tracker.Tasks</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
