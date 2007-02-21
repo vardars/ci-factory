@@ -1,3 +1,11 @@
-copy bin\Debug\CIFactory.NAnt.UnitTest.Tasks.dll "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
-copy bin\Debug\CIFactory.NAnt.UnitTest.Tasks.pdb "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
-nant -buildfile:"C:\Projects\CI Factory\Current\Product\DevEnv\SetupScripts\SetUp.xml"
+:: "$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" $(ProjectName)
+cd %1
+mkdir "NAnt Tests\bin"
+cd "NAnt Tests\bin"
+FOR /F "TOKENS=1 DELIMS=," %%A IN ('cd') DO SET Dest=%%A
+
+cd %2
+copy %3.dll "%Dest%"
+copy %3.pdb "%Dest%"
+cd %1
+nant -buildfile:DevEnv\SetupScripts\SetUp.xml

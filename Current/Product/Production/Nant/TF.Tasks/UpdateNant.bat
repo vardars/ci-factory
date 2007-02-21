@@ -1,3 +1,6 @@
-copy bin\Debug\TF.Tasks.dll "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
-copy bin\Debug\TF.Tasks.pdb "C:\Projects\CI Factory\Current\Third Party\nAnt\bin"
-nant -buildfile:"C:\Projects\CI Factory\Current\Product\DevEnv\SetupScripts\SetUp.xml"
+:: "$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" $(TargetName)
+mkdir %1Production\Packages\VSTSVersionControl\bin
+copy %2%3.dll %1Production\Packages\VSTSVersionControl\bin
+copy %2%3.pdb %1Production\Packages\VSTSVersionControl\bin
+cd %1
+nant -buildfile:DevEnv\SetupScripts\SetUp.xml

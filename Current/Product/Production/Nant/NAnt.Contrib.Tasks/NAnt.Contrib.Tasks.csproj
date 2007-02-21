@@ -19,7 +19,7 @@
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
     <RootNamespace>NAnt.Contrib</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
     <FileUpgradeFlags>
@@ -48,7 +48,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -60,7 +60,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>
     </DocumentationFile>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
     <NoWarn>
@@ -70,8 +70,8 @@
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
-    <DebugType>none</DebugType>
-    <ErrorReport>prompt</ErrorReport>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>none</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CollectionGen">
@@ -80,10 +80,6 @@
     </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
-    </Reference>
-    <Reference Include="NAnt.Core">
-      <Name>NAnt.Core</Name>
-      <HintPath>..\NAnt.Core\bin\Debug\NAnt.Core.dll</HintPath>
     </Reference>
     <Reference Include="NAnt.DotNetTasks">
       <Name>NAnt.DotNetTasks</Name>
@@ -235,6 +231,7 @@
     <Compile Include="Tasks\SourceSafe\UndoCheckoutTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\SourceSafe\VSSAddProject.cs" />
     <Compile Include="Tasks\SqlTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -341,11 +338,16 @@
   <ItemGroup>
     <None Include="UpdatenAnt.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" $(ProjectName)</PostBuildEvent>
   </PropertyGroup>
 </Project>
