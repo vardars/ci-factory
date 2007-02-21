@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning">
 
-  <loadtasks assembly="${PackagesDirectory}\Versioning\bin\UpdateVersion.Tasks.dll" />
   <include buildfile="Versioning.Properties.xml" />
 
   <!--

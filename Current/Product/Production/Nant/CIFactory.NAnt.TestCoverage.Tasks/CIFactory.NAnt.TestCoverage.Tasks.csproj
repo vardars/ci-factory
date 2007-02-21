@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -33,9 +33,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateTestCoverageReport.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="CreateTestCoverageReport.cs" />
+<Compile Include="Properties\AssemblyInfo.cs" />
+</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\TestCoverageRunner\TestCoverageRunner.csproj">
       <Project>{458E6146-3073-4546-A30F-63B122BE4C9F}</Project>

@@ -39,9 +39,12 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InstallShieldTask.cs" />
-  </ItemGroup>
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="Properties\AssemblyInfo.cs" />
+<Compile Include="InstallShieldTask.cs" />
+</ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.XML" />

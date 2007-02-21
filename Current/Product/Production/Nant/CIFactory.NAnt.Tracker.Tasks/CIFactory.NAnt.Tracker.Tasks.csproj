@@ -47,20 +47,23 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasks\BaseTrackerTask.cs" />
-    <Compile Include="DataTypes\ConnectionInformation.cs" />
-    <Compile Include="DataTypes\ReadField.cs" />
-    <Compile Include="DataTypes\ReadFieldSet.cs" />
-    <Compile Include="Tasks\TrackerAddNote.cs" />
-    <Compile Include="Tasks\TrackerChange.cs" />
-    <Compile Include="Tasks\TrackerCreate.cs" />
-    <Compile Include="Tasks\TrackerGetField.cs" />
-    <Compile Include="Tasks\TrackerQuery.cs" />
-    <Compile Include="Tasks\TrackerReport.cs" />
-    <Compile Include="DataTypes\WriteField.cs" />
-    <Compile Include="DataTypes\WriteFieldSet.cs" />
-  </ItemGroup>
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="Properties\AssemblyInfo.cs" />
+<Compile Include="Tasks\BaseTrackerTask.cs" />
+<Compile Include="DataTypes\ConnectionInformation.cs" />
+<Compile Include="DataTypes\ReadField.cs" />
+<Compile Include="DataTypes\ReadFieldSet.cs" />
+<Compile Include="Tasks\TrackerAddNote.cs" />
+<Compile Include="Tasks\TrackerChange.cs" />
+<Compile Include="Tasks\TrackerCreate.cs" />
+<Compile Include="Tasks\TrackerGetField.cs" />
+<Compile Include="Tasks\TrackerQuery.cs" />
+<Compile Include="Tasks\TrackerReport.cs" />
+<Compile Include="DataTypes\WriteField.cs" />
+<Compile Include="DataTypes\WriteFieldSet.cs" />
+</ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
