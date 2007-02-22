@@ -52,6 +52,7 @@
     <Compile Include="Tasks\MultiXslOutput\MultiOutTransfrom.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiXmlTextWriter.cs" />
     <Compile Include="Tasks\MultiXslOutput\OutputState.cs" />
+    <Compile Include="Tasks\Registry\WriteRegistryTask.cs" />
     <Compile Include="Tasks\Versioning\GenerateAssemblyInfoList.cs" />
     <Compile Include="Tasks\ApplyFilterTask.cs" />
     <Compile Include="Tasks\AsyncExec.cs" />
