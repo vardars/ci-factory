@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
   <property name="ProjectName" value="TestProject" />
   <property name="CCNET.ServerPort" value="21236"/>
-  <property name="VSSRootShare" value="C:\Source Safe DataBases"/>
+  <property name="VSS.RootShare" value="C:\Source Safe DataBases"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 

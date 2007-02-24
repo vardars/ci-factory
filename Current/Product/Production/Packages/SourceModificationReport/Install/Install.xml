@@ -10,6 +10,25 @@
       <value xml="false"><![CDATA[<call target="SourceModificationReport.ConsolidateReports" />]]></value>
     </largeproperty>
     <call target="Packages.AddPreBuildActions"/>
+
+    <if test="${SourceModificationReport.ArchiveChangePackage}">
+      <largeproperty name="Packages.AddPreBuildActions.Block">
+        <value xml="false">
+          <![CDATA[<call target="SourceModificationReport.PublishOldSource"/>]]>
+        </value>
+      </largeproperty>
+      <call target="Packages.AddPreBuildActions"/>
+
+      <largeproperty name="Packages.AddCleanUpActions.Block">
+        <value xml="false">
+          <![CDATA[
+          <!--  SourceModificationReport.PublishNewSource should be the last call!  -->
+          <call target="SourceModificationReport.PublishNewSource"/>
+          ]]>
+        </value>
+      </largeproperty>
+      <call target="Packages.AddCleanUpActions"/>
+    </if>
   </target>
 
   <target name="SourceModificationReport.SetAsCurrentPackage">

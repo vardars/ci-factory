@@ -1,20 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="DotNetUnitTest.Install" default="DotNetUnitTest.Install">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSTest.Install" default="MSTest.Install">
 
   <include buildfile="Properties.xml" />
   
-  <target name="DotNetUnitTest.Install">
-    <copy todir="${ThirdPartyDirectory}\MbUnit">
-      <fileset basedir="${SourcePackagesDirectory}\DotNetUnitTest\Install\bin">
-        <include name="**\*" />
-      </fileset>
-    </copy>
+  <target name="MSTest.Install">
 
     <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
       <then>
         <property name="Private.Packages.MainBuild.Replace.To" value=""/>
         <largeproperty name="Private.Packages.MainBuild.Replace.From">
-          <value xml="false"><![CDATA[<include buildfile=".\Packages\DotNetUnitTest\UnitTest.Target.xml" />]]></value>
+          <value xml="false"><![CDATA[<include buildfile=".\Packages\MSTest\UnitTest.Target.xml" />]]></value>
         </largeproperty>
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>
@@ -27,12 +22,12 @@
     </ifthenelse>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\DotNetUnitTest\MBUnitSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\MSTest\MsTestSummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\DotNetUnitTest\MBUnitDetails.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\MSTest\MsTestReport.xsl" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
@@ -42,13 +37,13 @@
     <call target="Packages.AddMergeFiles"/>
   </target>
 
-  <target name="DotNetUnitTest.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="DotNetUnitTest"/>
+  <target name="MSTest.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSTest"/>
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value="UnitTest.Target.xml"/>
     <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
   </target>
 
-  <target name="DotNetUnitTest.ValidateParameters">
+  <target name="MSTest.ValidateParameters">
 
   </target>
   

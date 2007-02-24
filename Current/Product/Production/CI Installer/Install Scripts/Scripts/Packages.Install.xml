@@ -50,6 +50,10 @@
     <value><![CDATA[</files>
       </merge>]]></value>
   </largeproperty>
+  
+  <largeproperty name="Private.Packages.PostBuild.EndTag">
+    <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
+  </largeproperty>
 
   <!-- These are private... -->
 
@@ -97,6 +101,7 @@
     <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
     <property name="Packages.CurrenctPackage.PackageName" value=""/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Main.Build.xml"/>
   </target>
 
   <target name="Packages.Validate.CurrentSetPackage">
@@ -127,6 +132,18 @@
       </fileset>
       <filterchain refid="Common.FilterChain" />
     </copy>
+  </target>
+  
+  <property name="Packages.AddPostBuildActions.Block" value=""/>
+  <target name="Packages.AddPostBuildActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddPostBuildActions.Block}
+  ${Private.Packages.PostBuildActions.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PostBuildActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
   </target>
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
@@ -239,7 +256,7 @@
   <property name="Private.Packages.MainBuild.Replace.To" value=""/>
   <property name="Private.Packages.MainBuild.Replace.From" value=""/>
   <target name="Private.Packages.MainBuild.Replace">
-    <replace file="${BuildDirectory}\Main.Build.xml">
+    <replace file="${Current.BuildFile}">
       <filterchain>
         <replacestring from="${Private.Packages.MainBuild.Replace.From}" to="${Private.Packages.MainBuild.Replace.To}" />
       </filterchain>

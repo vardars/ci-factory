@@ -412,4 +412,37 @@
 
   </target>
 
+  <target name="SourceControl.Repository.Create">
+    <mkdir unless="${directory::exists(VSS.RootShare + '\' + ProjectName)}" dir="${VSS.RootShare}\${ProjectName}"/>
+    <unzip todir="${VSS.RootShare}\${ProjectName}" zipfile="${VSS.TemplateDB}"/>
+  </target>
+
+  <target name="SourceControl.Repository.Load">
+    <vssaddproject
+      dbpath="${Private.VSS.dbpath}"
+      username="${Private.VSS.UserName}"
+      password="${Private.VSS.Password}"
+      path="$/"
+      project="${ProjectName}"
+      comment="Created by Instant CI script"
+    />
+    <vssadd
+      dbpath="${Private.VSS.dbpath}"
+      username="${Private.VSS.UserName}"
+      password="${Private.VSS.Password}"
+      path="$/${ProjectName}"
+      comment="Initial load buy Instant CI script">
+
+      <fileset basedir="${ProjectRootDirectory}">
+        <include name="**/*"/>
+        <exclude name="**/*.scc"/>
+      </fileset>
+
+    </vssadd>
+  </target>
+
+  <target name="SourceControl.Bindings.Create">
+    <fail message="Not yet implemented!"/>
+  </target>
+
 </project>

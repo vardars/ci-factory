@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
 
   <include buildfile="${BuildDirectory}\Common.Build.xml" />
-  <loadtasks assembly="${BuildDirectory}\Packages\DotNetUnitTest\bin\MbUnit.Tasks.dll" />
+  <loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
   
   <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
 	<property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/22/2007 15:47:19</xs:documentation>
+    <xs:documentation>NAnt schema generated at 02/22/2007 17:39:01</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -140,6 +140,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -330,6 +331,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -978,6 +980,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3120,6 +3123,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3563,6 +3567,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3737,6 +3742,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3931,6 +3937,20 @@
     <xs:attribute name="machine" use="optional" />
     <xs:attribute name="action" use="required" />
     <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="MbUnit.Tasks.MbUnitTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="assemblie-paths" type="nant:NAnt.Core.Types.DirSet" />
+    </xs:sequence>
+    <xs:attribute name="report-types" use="optional" />
+    <xs:attribute name="report-filename-format" use="optional" />
+    <xs:attribute name="report-output-directory" use="optional" />
+    <xs:attribute name="halt-on-failure" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4444,6 +4464,7 @@
       <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
       <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
       <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+      <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
       <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
       <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
       <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -4637,6 +4658,7 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
