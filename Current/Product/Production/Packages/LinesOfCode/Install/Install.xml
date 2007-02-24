@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="LinesOfCode.Install" default="LinesOfCode.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="LinesOfCode.Install">
+
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false"><![CDATA[<call target="LinesOfCode.CountCodeLines" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\LinesOfCode\LinesOfCode.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+  </target>
+
+  <target name="LinesOfCode.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="LinesOfCode"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="LinesOfCode.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="LinesOfCode"/>
+  </target>
+
+  <target name="InstallShield.ValidateParameters">
+    
+  </target>
+  
+</project>

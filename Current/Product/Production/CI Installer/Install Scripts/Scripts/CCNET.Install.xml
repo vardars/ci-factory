@@ -55,7 +55,7 @@
       </fileset>
     </copy>
 
-    <mkdir unless="${directory::exists(BuildDirectory + '\Installs')}" dir="${BuildDirectory}\Installs"/>
+    <mkdir unless="${directory::exists(BuildDirectory + '\Artifacts')}" dir="${BuildDirectory}\Artifacts"/>
 
     <call target="Private.CCNET.CreateIISVirtualDirectories"/>
   </target>
@@ -67,7 +67,7 @@
   <target name="Private.CCNET.CreateIISVirtualDirectories">
     <mkiisdir dirpath="${CCNET.DashboardDirectory}" vdirname="${ProjectName}" />
     <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages" />
-    <mkiisdir dirpath="${BuildDirectory}\Installs" vdirname="${ProjectName} Installs" />
+    <mkiisdir dirpath="${BuildDirectory}\Artifacts" vdirname="${ProjectName} Artifacts" />
   </target>
 
   <target name="Private.CCNET.InstallBuildDirectoryFiles">

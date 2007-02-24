@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Install" default="CSDiff.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="CSDiff.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+      <![CDATA[<call target="CSDiff.GenerateHtmlReports"/>]]>
+    </value>
+  </largeproperty>
+  <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="CSDiff.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="CSDiff"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="CSDiff.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="CSDiff"/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+  </target>
+
+  <target name="CSDiff.ValidateParameters">
+
+  </target>
+  
+</project>

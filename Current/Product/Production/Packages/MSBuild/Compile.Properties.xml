@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
   <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
-  <property name="Compile.XmlLogFileName" value="Debug.xml" />
   <property name="Compile.PublishLogFile" value="true" />
-  <property name="Compile.ConfigName" value="debug"/>
-  <property name="Compile.ZipFileName" value="${ProjectName}-Debug-${CCNetLabel}.zip"/>
+  <property name="Compile.ConfigName" value="Debug"/>
+  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" />
+  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip"/>
   <property name="Compile.ToCopyToBin" value="true"  />
   <property name="Compile.ToDeployZip" value="true"  />
-  <property name="Compile.Bin" value="${ProductDirectory}\DebugBin" />
+  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" />
 
   <property name="Compile.Environment" value="Compile.Environment" overwrite="false"/>
   <environment id="Compile.Environment">
-    <variable name="COMSUPPORT" value="N"/>
-    <variable name="BUILDSERVER" value="true"/>
   </environment>
 
   <fileset id="Compile.ToCopy">

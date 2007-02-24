@@ -4,17 +4,14 @@
   <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
 	<property name="Compile.ConfigName" value="debug" overwrite="false"/>
 	<property name="Compile.ToCopyToBin" value="false" overwrite="false" />
-  <property name="Compile.ToConvertLogFile" value="false" overwrite="false" />
   <property name="Compile.ToDeployZip" value="false" overwrite="false" />
   <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
-  <property name="Compile.DevEnv" value="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
 	
   <include buildfile="Compile.Properties.xml" />
 
 	<!--
 	The following properties should be specified in the calling script.
 	
-	<property name="Compile.SolutionFile" value="" />
 	<property name="Compile.Bin" value="" />
 	<property name="Compile.XmlLogFileName" value="" />
 	-->
@@ -24,12 +21,16 @@
     
   <target name="Compile.CompileSource">
     <exec 
-	    program="C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\msbuild.exe"
-	    commandline='"${Compile.SolutionFile}" /t:Build /p:Configuration="${Compile.ConfigName}" /noconsolelogger /verbosity:diagnostic /l:ThoughtWorks.CruiseControl.MsBuild.XmlLogger,"${PackagesDirectory}\VS.NETCompile\bin\ThoughtWorks.CruiseControl.MsBuild.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"'
+	    program="${framework::get-framework-directory('net-2.0')}\msbuild.exe"
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result"
       verbose="true"
     >
+      <arg line='"${Compile.SolutionFile}"' />
+      <arg line='/t:Build' />
+      <arg line='/p:Configuration="${Compile.ConfigName}"' />
+      <arg line='/noconsolelogger' />
+      <arg line='/l:XmlLogger,"${PackagesDirectory}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
       <environment refid="${Compile.Environment}" />
     </exec>
     <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.ArtifactDirectoryPath}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>
@@ -60,9 +61,9 @@
     </zip>
     <property name="Deployment.SourceFileName" value="${Compile.ZipFileName}"/>
     <property name="Deployment.SourceDir"	value="${Compile.Bin}\" />
-    <property name="Deployment.TargetDir"	value="${ArtifactRootDirectory}\${CCNetLabel}" />
+    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
     <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
-    <property name="Deployment.FileWebPath"	value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.TargetFile}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
     <property name="Deployment.FileWebName"	value="${Deployment.TargetFile}" />
 
     <call target="Deployment.PublishFile"/>

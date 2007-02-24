@@ -81,11 +81,8 @@ public class XmlLogger : Logger
                 eventSource.TargetStarted += new TargetStartedEventHandler(eventSource_TargetStartedHandler);
                 eventSource.TargetFinished += new TargetFinishedEventHandler(eventSource_TargetFinishedHandler);
 
-                if (Verbosity != LoggerVerbosity.Normal) // only detailed and diagnostic
-				{
-                    eventSource.TaskStarted += new TaskStartedEventHandler(eventSource_TaskStartedHandler);
-                    eventSource.TaskFinished += new TaskFinishedEventHandler(eventSource_TaskFinishedHandler);
-				}
+                eventSource.TaskStarted += new TaskStartedEventHandler(eventSource_TaskStartedHandler);
+                eventSource.TaskFinished += new TaskFinishedEventHandler(eventSource_TaskFinishedHandler);
 			}
 		}
 	}
@@ -223,7 +220,7 @@ public class XmlLogger : Logger
             SetAttribute(XmlLoggerAttributes.File, file);
         }
 
-		if (elementName == XmlLoggerElements.Build || Verbosity == LoggerVerbosity.Diagnostic)
+		if (elementName == XmlLoggerElements.Build)
         {
             SetAttribute(XmlLoggerAttributes.StartTime, timeStamp);
         }
@@ -236,7 +233,7 @@ public class XmlLogger : Logger
 	{
         // log duration of current stage
 		DateTime startTime = stageDurationStack.Pop();
-		if (stageDurationStack.Count == 0 || Verbosity == LoggerVerbosity.Diagnostic)
+		if (stageDurationStack.Count == 0 )
 		{
 			TimeSpan duration = timeStamp - startTime;
 			xmlWriter.WriteStartElement(XmlLoggerElements.Duration);
@@ -256,9 +253,7 @@ public class XmlLogger : Logger
         SetAttribute(XmlLoggerAttributes.File, file);
         SetAttribute(XmlLoggerAttributes.LineNumber, lineNumber);
         SetAttribute(XmlLoggerAttributes.ColumnNumber, columnNumber);
-
-        if (Verbosity == LoggerVerbosity.Diagnostic)
-            SetAttribute(XmlLoggerAttributes.TimeStamp, timestamp);
+        SetAttribute(XmlLoggerAttributes.TimeStamp, timestamp);
 
          // Escape < and > if this is not a "Properties" message.  This is because in a Properties
          // message, we want the ability to insert legal XML, but otherwise we can get malformed
@@ -284,8 +279,7 @@ public class XmlLogger : Logger
 
 		SetAttribute(XmlLoggerAttributes.Importance, importance);
 
-        if (Verbosity == LoggerVerbosity.Diagnostic)
-			SetAttribute(XmlLoggerAttributes.TimeStamp, timestamp);
+		SetAttribute(XmlLoggerAttributes.TimeStamp, timestamp);
 
         WriteMessage(message, false);
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Deployment" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir="Deployment">
 
+  <property name="Deployment.WebPathRoot" value="/${ProjectName} Artifacts" readonly="true"/>
+  
   <!--
 	The following properties should be specified in the calling script.
   
@@ -29,12 +31,7 @@
   </target>
 
   <target name="Private.Deployment.EchoDeploymentWebPath" >
-    <echo message="/${ProjectName} Installs/${CCNetLabel}" level="Info"/>
-  </target>
-
-  <target name="Private.Deployment.CopyDeplymentToPublicationDir" >
-    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
-    <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
+    <echo message="${Deployment.WebPathRoot}" level="Info"/>
   </target>
 
   <target name="Private.Deployment.EchoDeploymentFileWebName" >
@@ -43,6 +40,11 @@
   
   <target name="Private.Deployment.EchoDeploymentFileWebPath" >
     <echo message="${Deployment.FileWebPath}" level="Info"/>
+  </target>
+
+  <target name="Private.Deployment.CopyDeplymentToPublicationDir" >
+    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
+    <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
   </target>
 
   <target name="Deployment.PublishZip">
