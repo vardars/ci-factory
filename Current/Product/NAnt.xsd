@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/22/2007 17:39:01</xs:documentation>
+    <xs:documentation>NAnt schema generated at 02/24/2007 14:37:52</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -18,13 +18,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -209,13 +210,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -858,13 +860,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1042,6 +1045,15 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.WriteRegistryTask">
+    <xs:attribute name="value" use="required" />
+    <xs:attribute name="key" use="required" />
+    <xs:attribute name="hive" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.LargePropertyTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="1" maxOccurs="1" name="value" type="nant:CIFactory.NAnt.Types.TextElement" />
@@ -1127,10 +1139,9 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.Tasks.WriteRegistryTask">
-    <xs:attribute name="value" use="required" />
-    <xs:attribute name="key" use="required" />
-    <xs:attribute name="hive" use="optional" />
+  <xs:complexType name="CIFactory.NAnt.Tasks.AskTask">
+    <xs:attribute name="answer" use="optional" />
+    <xs:attribute name="question" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -3001,13 +3012,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3445,13 +3457,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3620,13 +3633,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4342,13 +4356,14 @@
       <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
       <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
       <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+      <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
       <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
       <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
       <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
       <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
       <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-      <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+      <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4536,13 +4551,14 @@
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
         <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
         <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
