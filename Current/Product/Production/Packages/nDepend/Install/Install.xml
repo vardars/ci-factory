@@ -27,7 +27,52 @@
   </target>
 
   <target name="nDepend.ValidateParameters">
-    
+    <if test="${Install.Quiet}">
+      <fail message="You have to agree to the license, set nDepend.AcceptLicense to true when Install.Quiet is true." unless="${nDepend.AcceptLicense}"/>
+    </if>
+    <call target="nDepend.Ask.Trial-OSS" unless="${Install.Quiet}"/>
+    <call target="nDepend.Ask.AcceptLicense" unless="${Install.Quiet}"/>
   </target>
-  
+
+  <target name="nDepend.Ask.Trial-OSS">
+    <largeproperty name="nDepend.Ask.Question">
+      <value xml="false">
+        <![CDATA[This is a trial edition of NDepend.
+The current Trial Edition can be used until the end of may 2007.
+Another Trial Edition will be freely available before this date.
+You can use freely NDepend trial edition for non-commercial uses:
+
+    * Trial on commercial projects within a reasonable amount of time (such as 2 weeks).
+    * Academic usage in universities and school for educational and research purposes.
+    * Open-source developers within the scope of their open-source project.
+
+More information can be found at http://www.ndepend.com
+
+Do you wish to continue? Yes/No]]>
+      </value>
+    </largeproperty>
+
+    <ask answer="Answer" question="${nDepend.Ask.Question}"/>
+    <property name="Answer" value="${string::to-lower(Answer)}" />
+    <if test="${string::starts-with(Answer, 'y') == false}">
+      <fail message="Your answer was not in the affirmative." />
+    </if>
+  </target>
+
+  <target name="nDepend.Ask.AcceptLicense">
+    <call target="nDepend.GetLicense"/>
+    <echo message="${License.Content}"/>
+    <ask answer="Answer" question="Do you accept this license? Yes/No"/>
+    <property name="Answer" value="${string::to-lower(Answer)}" />
+    <if test="${string::starts-with(Answer, 'y') == false}">
+      <fail message="Your answer was not in the affirmative." />
+    </if>
+    <echo message="Thanks you for accepting the license."/>
+  </target>
+
+  <target name="nDepend.GetLicense">
+    <property name="License.File" value="${SourcePackagesDirectory}\nDepend\bin\EULA.txt"/>
+    <loadfile file="${License.File}" property="License.Content" />
+  </target>
+
 </project>

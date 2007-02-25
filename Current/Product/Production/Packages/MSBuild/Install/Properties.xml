@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VS.NETCompile.Install.Properties">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSBuild.Install.Properties">
 
   <property name="Compile.DevEnv.vsvars32bat" value="C:\Program Files\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv.vsvars32bat%', Compile.DevEnv.vsvars32bat)}"/>
