@@ -62,9 +62,9 @@
     </zip>
     <property name="Deployment.SourceFileName" value="${Compile.ZipFileName}"/>
     <property name="Deployment.SourceDir"	value="${Compile.Bin}\" />
-    <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
     <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
-    <property name="Deployment.FileWebPath"	value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.TargetFile}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
     <property name="Deployment.FileWebName"	value="${Deployment.TargetFile}" />
 
     <call target="Deployment.PublishFile"/>

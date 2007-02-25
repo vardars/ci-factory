@@ -137,17 +137,7 @@
     <Content Include="Default\Build\server\xsl\modifications.xsl" />
     <Content Include="Default\Build\SetupIIS.xml" />
     <Content Include="Default\Build\UpdatenAntSchema.xml" />
-    <Content Include="Default\Third Party\MbUnit\MbUnit.Core.dll" />
-    <Content Include="Default\Third Party\MbUnit\MbUnit.Framework.1.1.dll" />
-    <Content Include="Default\Third Party\MbUnit\MbUnit.Framework.dll" />
-    <Content Include="Default\Third Party\MbUnit\NGraphviz.dll" />
-    <Content Include="Default\Third Party\MbUnit\NGraphviz.Helpers.dll" />
-    <Content Include="Default\Third Party\MbUnit\NGraphviz.Layout.dll" />
-    <Content Include="Default\Third Party\MbUnit\QuickGraph.Algorithms.dll" />
-    <Content Include="Default\Third Party\MbUnit\QuickGraph.Algorithms.Graphviz.dll" />
-    <Content Include="Default\Third Party\MbUnit\QuickGraph.dll" />
-    <Content Include="Default\Third Party\MbUnit\Refly.dll" />
-    <Content Include="Default\Third Party\MbUnit\TestFu.dll" />
+    <Content Include="Default\Product\Scratch.build.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default\Build\Build.sln.remove" />
@@ -182,6 +172,6 @@
     <None Include="Default\Build\UpdatenAntSchema.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Default\Product\" />
+    <Folder Include="Default\Third Party\" />
   </ItemGroup>
 </Project>

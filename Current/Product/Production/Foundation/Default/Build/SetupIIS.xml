@@ -7,7 +7,7 @@
   <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
   
   <target name="Setup" >
-    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Installs" />
+    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" />
     <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}" />
     <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages" />
   </target>
