@@ -6,6 +6,6 @@
     <ProjectGuid>{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Packages\**\*" />
+    <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
   </ItemGroup>
 </Project>

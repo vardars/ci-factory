@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Install">
 
-  <loadtasks assembly="..\nAnt\bin\Common.Functions.dll" />
-
   <!-- These should be passed on the command line
   <property name="ProjectName" value="" />
   -->

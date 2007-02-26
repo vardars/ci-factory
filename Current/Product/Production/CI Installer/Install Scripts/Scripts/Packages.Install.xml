@@ -125,7 +125,7 @@
     <copy todir="${BuildPackagesDirectory}" >
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
-        <exclude name="${Packages.CopyPackage.PackageName}\Install\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
@@ -136,23 +136,12 @@
         <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
-        <exclude name="${Packages.CopyPackage.PackageName}\Install\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
     </copy>
   </target>
-  
-  <property name="Packages.AddPostBuildActions.Block" value=""/>
-  <target name="Packages.AddPostBuildActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddPostBuildActions.Block}
-  ${Private.Packages.PostBuildActions.EndTag}]]>
-      </value>
-    </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PostBuildActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
-  </target>
+
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
   <target name="Packages.AddMergeFiles">

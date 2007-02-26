@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN.Installer.Properties" >
 
-  <property name="SVN.URI.Root" value="http://localhost/svn/" overwrite="false" />
+  <property name="SVN.URI.Root" value="http://localhost/svn" overwrite="false" />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" overwrite="false" />
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}" overwrite="false" />
   <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/Tags" overwrite="false" />

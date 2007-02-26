@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Post Build" default="PostBuildWrapper">
 
-  <loadtasks assembly="nAnt\bin\Common.Functions.dll" />
-
   <include buildfile="Properties.build.xml"/>
   <include buildfile="Common.Build.xml" />
 

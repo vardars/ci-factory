@@ -11,7 +11,7 @@
         <loadtasks assembly="${TaskAssembly}" />
       </do>
     </foreach>
-    <loadtasks assembly=".\nant\bin\Common.Functions.dll" />
+    
     <property name="SchemaFile" value=".\NAnt.xsd"/>
     <attrib file="${SchemaFile}" readonly="false"/>
     <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd"/>

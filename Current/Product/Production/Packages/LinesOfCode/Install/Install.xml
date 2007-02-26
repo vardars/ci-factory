@@ -22,7 +22,7 @@
     <property name="Packages.CurrenctPackage.PackageName" value="LinesOfCode"/>
   </target>
 
-  <target name="InstallShield.ValidateParameters">
+  <target name="LinesOfCode.ValidateParameters">
     
   </target>
   

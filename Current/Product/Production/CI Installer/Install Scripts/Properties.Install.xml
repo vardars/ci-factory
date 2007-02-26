@@ -2,6 +2,8 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
 
   <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+
+  <property name="Install.Quiet" value="false" />
   
   <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
   <property name="ProjectRootDirectory"     value="${ProjectsDirectory}\${ProjectName}"  overwrite="false"/>
