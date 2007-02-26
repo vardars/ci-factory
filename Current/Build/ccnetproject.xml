@@ -26,7 +26,7 @@
         </allowed>
       </triggeredIntegrationFilter>
     </integrationFilter>
-    <modificationDelaySeconds>120</modificationDelaySeconds>
+    <modificationDelaySeconds>45</modificationDelaySeconds>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
       <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
       <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
@@ -65,7 +65,7 @@
         </blocked>
       </forcedIntegrationFilter>
     </integrationFilter>
-    <modificationDelaySeconds>120</modificationDelaySeconds>
+    <modificationDelaySeconds>45</modificationDelaySeconds>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
