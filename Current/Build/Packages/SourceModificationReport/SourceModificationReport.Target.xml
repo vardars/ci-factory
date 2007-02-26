@@ -67,7 +67,7 @@
   </target>
 
   <target name="SourceModificationReport.ConsolidateReports" >
-    <if test="${CCNetLastIntegrationStatus   != 'Success'}" >
+    <if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
       <script language="VB">
         <references>
           <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
