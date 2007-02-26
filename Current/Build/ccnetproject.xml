@@ -19,6 +19,13 @@
     <triggers>
       <intervalTrigger seconds="90" />
     </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+    </integrationFilter>
     <modificationDelaySeconds>120</modificationDelaySeconds>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
       <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
@@ -44,6 +51,20 @@
     <triggers>
       <intervalTrigger seconds="90" />
     </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="false" />
+        </allowed>
+      </triggeredIntegrationFilter>
+      <forcedIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="false" />
+        </allowed>
+        <blocked>
+        </blocked>
+      </forcedIntegrationFilter>
+    </integrationFilter>
     <modificationDelaySeconds>120</modificationDelaySeconds>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
