@@ -4,7 +4,7 @@
   <property name="ProjectDir" value="${string::replace(DirtyProjectDir, '\remove', '')}"/>
   <property name="TargetDir" value="${string::replace(DirtyTargetDir, '\remove', '')}"/>
   <property name="SolutionDir" value="${string::replace(DirtySolutionDir, '\remove', '')}"/>
-  <property name="DashboardDir" value="${SolutionDir}Production\Foundation\Default\Build\dashboard"/>
+  <property name="DashboardDir" value="${SolutionDir}\Production\Foundation\Default\Build\dashboard"/>
   <property name="BinDir" value="${DashboardDir}\bin"/>
   <property name="TemplatesDir" value="${DashboardDir}\templates"/>
   <property name="ImagesDir" value="${DashboardDir}\images"/>
@@ -17,6 +17,9 @@
     <copy todir="${DashboardDir}">
       <fileset basedir="${TargetDir}">
         <include name="**\*"/>
+        <exclude name="de"/>
+        <exclude name="fr"/>
+        <exclude name="ja"/>
         <exclude name="**\*.dll"/>
         <exclude name="**\*.pbd"/>
       </fileset>
