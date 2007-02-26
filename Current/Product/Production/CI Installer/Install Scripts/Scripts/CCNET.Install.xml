@@ -17,6 +17,7 @@
   <property name="CCNET.ConfigFile" value="${CCNET.DashboardDirectory}\dashboard.config"/>
   <property name="BuildMaster.Name" value="BuildMaster" overwrite="false"/>
   <property name="BuildMaster.Email" value="fake@bogas.com" overwrite="false"/>
+  <property name="CCNET.CreateIISVirtualDirectories" value="false" overwrite="false"/>
 
   <!-- These are private... -->
 
@@ -64,7 +65,7 @@
     <fail unless="${property::exists('CCNET.ServerPort')}" message="Property CCNET.ServerPort was not set on the commandline."/>
   </target>
 
-  <target name="Private.CCNET.CreateIISVirtualDirectories">
+  <target name="Private.CCNET.CreateIISVirtualDirectories" if="${CCNET.CreateIISVirtualDirectories}">
     <mkiisdir dirpath="${CCNET.DashboardDirectory}" vdirname="${ProjectName}" />
     <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages" />
     <mkiisdir dirpath="${BuildDirectory}\Artifacts" vdirname="${ProjectName} Artifacts" />
