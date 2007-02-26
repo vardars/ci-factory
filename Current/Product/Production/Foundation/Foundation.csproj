@@ -47,11 +47,22 @@
   <ItemGroup>
     <Content Include="Default\Build\ccnetproject.xml" />
     <Content Include="Default\Build\Common.Build.xml" />
+    <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\header.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\modifications.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\NAnt.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\NAntTiming.xsl" />
     <Content Include="Default\Build\Main.build.xml" />
     <Content Include="Default\Build\Post.build.xml" />
     <Content Include="Default\Build\Post.Shim.xml" />
     <Content Include="Default\Build\Properties.build.xml" />
     <Content Include="Default\Build\Scratch.build.xml" />
+    <Content Include="Default\Build\server\xsl\compile.xsl" />
+    <Content Include="Default\Build\server\xsl\cruisecontrol.css" />
+    <Content Include="Default\Build\server\xsl\header.xsl" />
+    <Content Include="Default\Build\server\xsl\modifications.xsl" />
+    <Content Include="Default\Build\server\xsl\NAnt.xsl" />
+    <Content Include="Default\Build\server\xsl\NAntTiming.xsl" />
     <Content Include="Default\Build\SetupIIS.xml" />
     <Content Include="Default\Build\UpdatenAntSchema.xml" />
     <Content Include="Default\Product\Scratch.build.xml" />
@@ -64,8 +75,6 @@
     <None Include="Default\Build\UpdatenAntSchema.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Default\Build\dashboard\" />
-    <Folder Include="Default\Build\server\" />
     <Folder Include="Default\Third Party\" />
   </ItemGroup>
 </Project>

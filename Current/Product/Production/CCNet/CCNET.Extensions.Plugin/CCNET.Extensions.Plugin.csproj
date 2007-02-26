@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CCNET.Extensions.Plugin</RootNamespace>
     <AssemblyName>CCNET.Extensions.Plugin</AssemblyName>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,24 +48,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
-          <Link>Properties\ProjectInfo.cs</Link>
-        </Compile>
-<Compile Include="ForceFilters\ProjectForceFilter.cs" />
-<Compile Include="ExclusionFilters.cs" />
-<Compile Include="ForceFilters\UserForceFilter.cs" />
-<Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
-<Compile Include="InclusionFilters.cs" />
-<Compile Include="ProjectFilter.cs" />
-<Compile Include="ProjectFilterList.cs" />
-<Compile Include="Triggers\ProjectTriggerFilter.cs" />
-<Compile Include="Properties\AssemblyInfo.cs" />
-<Compile Include="XslFileMerge\FilePair.cs" />
-<Compile Include="XslFileMerge\FilePairList.cs" />
-<Compile Include="XslFileMerge\XslMerger.cs" />
-<Compile Include="XslFileMerge\XslMergerTaskResult.cs" />
-<Compile Include="Zation.cs" />
-</ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="ForceFilters\ProjectForceFilter.cs" />
+    <Compile Include="ExclusionFilters.cs" />
+    <Compile Include="ForceFilters\UserForceFilter.cs" />
+    <Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
+    <Compile Include="InclusionFilters.cs" />
+    <Compile Include="ProjectFilter.cs" />
+    <Compile Include="ProjectFilterList.cs" />
+    <Compile Include="Triggers\ProjectTriggerFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XslFileMerge\FilePair.cs" />
+    <Compile Include="XslFileMerge\FilePairList.cs" />
+    <Compile Include="XslFileMerge\XslMerger.cs" />
+    <Compile Include="XslFileMerge\XslMergerTaskResult.cs" />
+    <Compile Include="Zation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdateFoundation.bat" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -73,4 +77,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

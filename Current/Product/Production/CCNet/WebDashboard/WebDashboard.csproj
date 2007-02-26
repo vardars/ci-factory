@@ -19,7 +19,7 @@
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
     <RootNamespace>ThoughtWorks.CruiseControl.WebDashboard</RootNamespace>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
     <FileUpgradeFlags>
@@ -148,7 +148,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs">
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuration\DashboardConfigurationLoader.cs">
@@ -529,68 +532,11 @@
     <Compile Include="ServerConnection\UnknownServerException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include="..\xsl\AlternativeNUnitDetails.xsl">
-      <Link>xsl\AlternativeNUnitDetails.xsl</Link>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dashboard.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\xsl\compile.xsl">
-      <Link>xsl\compile.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\fit.xsl">
-      <Link>xsl\fit.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\fxcop-summary.xsl">
-      <Link>xsl\fxcop-summary.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\FxCopReport.xsl">
-      <Link>xsl\FxCopReport.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\header.xsl">
-      <Link>xsl\header.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\modifications.xsl">
-      <Link>xsl\modifications.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\NAntTiming.xsl">
-      <Link>xsl\NAntTiming.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\NCover.xsl">
-      <Link>xsl\NCover.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\NCoverSummary.xsl">
-      <Link>xsl\NCoverSummary.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\tests.xsl">
-      <Link>xsl\tests.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\timing.xsl">
-      <Link>xsl\timing.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\unittests.xsl">
-      <Link>xsl\unittests.xsl</Link>
-    </Content>
-    <Content Include="..\xsl\vil.xsl">
-      <Link>xsl\vil.xsl</Link>
-    </Content>
-    <Content Include="cruisecontrol.css" />
-    <Content Include="default.aspx" />
-    <Content Include="images\arrow_minus_small.gif" />
-    <Content Include="images\arrow_plus_small.gif" />
-    <Content Include="images\bg_blue_stripe.gif" />
-    <Content Include="images\ccnet_logo.gif" />
-    <Content Include="images\ccnet_logo_onwhite.gif" />
-    <Content Include="images\check.jpg" />
-    <Content Include="images\corner_blue_lr.gif" />
-    <Content Include="images\corner_blue_ur.gif" />
-    <Content Include="images\corner_white_ll.gif" />
-    <Content Include="images\corner_white_ul.gif" />
-    <Content Include="images\corner_white_ur.GIF" />
-    <Content Include="images\fxcop-critical-error.gif" />
-    <Content Include="images\fxcop-critical-warning.gif" />
-    <Content Include="images\fxcop-error.gif" />
-    <Content Include="images\fxcop-warning.gif" />
-    <Content Include="images\shim.gif" />
-    <Content Include="images\tw_dev_logo.gif" />
-    <None Include="dashboard.config" />
     <None Include="templates\ActionException.vm" />
     <None Include="templates\AddProject.vm" />
     <None Include="templates\AllBuilds.vm" />
@@ -612,7 +558,35 @@
     <None Include="templates\ServerSideBar.vm" />
     <None Include="templates\SiteTemplate.vm" />
     <None Include="templates\TopMenu.vm" />
-    <None Include="Web.config" />
+    <None Include="UpdateFoundation.bat" />
+    <Content Include="Web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cruisecontrol.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="default.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\arrow_minus_small.gif" />
+    <Content Include="images\arrow_plus_small.gif" />
+    <Content Include="images\bg_blue_stripe.gif" />
+    <Content Include="images\ccnet_logo.gif" />
+    <Content Include="images\ccnet_logo_onwhite.gif" />
+    <Content Include="images\check.jpg" />
+    <Content Include="images\corner_blue_lr.gif" />
+    <Content Include="images\corner_blue_ur.gif" />
+    <Content Include="images\corner_white_ll.gif" />
+    <Content Include="images\corner_white_ul.gif" />
+    <Content Include="images\corner_white_ur.GIF" />
+    <Content Include="images\fxcop-critical-error.gif" />
+    <Content Include="images\fxcop-critical-warning.gif" />
+    <Content Include="images\fxcop-error.gif" />
+    <Content Include="images\fxcop-warning.gif" />
+    <Content Include="images\shim.gif" />
+    <Content Include="images\tw_dev_logo.gif" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\FxCop\" />
@@ -624,7 +598,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

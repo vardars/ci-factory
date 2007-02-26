@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -112,31 +112,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs">
+        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+          <Link>Properties\ProjectInfo.cs</Link>
+        </Compile>
+<Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DecoratedInstance.cs">
+<Compile Include="DecoratedInstance.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DecoratedType.cs">
+<Compile Include="DecoratedType.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ManagableObjectGiver.cs">
+<Compile Include="ManagableObjectGiver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NetReflector\ObjectGiverNetReflectorInstantiator.cs">
+<Compile Include="NetReflector\ObjectGiverNetReflectorInstantiator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ObjectGiver.cs">
+<Compile Include="ObjectGiver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ObjectGiverManager.cs">
+<Compile Include="ObjectGiverManager.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TypeDecoratorable.cs">
+<Compile Include="TypeDecoratorable.cs">
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
+</ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
