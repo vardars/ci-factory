@@ -22,7 +22,7 @@
             </xsl:if>
             
             <xsl:if test="not (/cruisecontrol/build/@error) and not (/cruisecontrol/exception)">
-                <tr><td class="header-title" colspan="2">BUILD SUCCESSFUL</td></tr>
+                <tr><td class="header-title" colspan="2">BUILD SUCCESSFUL <xsl:value-of select="/cruisecontrol/build/@label"/> </td></tr>
             </xsl:if>
 
 			<tr>
@@ -43,6 +43,9 @@
 					<xsl:if test="/cruisecontrol/build/@buildcondition='ForceBuild'">
 						Forced Build
 					</xsl:if>
+          <xsl:if test="/cruisecontrol/build/ForcedBuildInformation/@UserName != ''">
+            By <xsl:value-of select="/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
+          </xsl:if>
 					<xsl:if test="/cruisecontrol/build/@buildcondition='IfModificationExists'">
 						Modifications Detected
 					</xsl:if>

@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
 
-  <loadtasks assembly=".\nant\bin\Common.Functions.dll" />
-
   <include buildfile="Properties.build.xml"/>
   <include buildfile="Common.Build.xml" />
-  <include buildfile=".\Packages\Subversion\SVN.Target.xml" />
-  <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
-  <include buildfile=".\Packages\VS.NETCompile\Compile.Target.xml" />
-  <include buildfile=".\Packages\CoverageEye\CoverageEye.Target.xml" />
-  <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
-  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml"/>
 
-	<target name="Triggered" depends="SetUps" >
+  <description>Begin Package Includes</description>
+  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
+  <include buildfile=".\Packages\Subversion\SVN.Target.xml" />
+  <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
+  <include buildfile=".\Packages\NCover\NCover.Target.xml" />
+  <include buildfile=".\Packages\Simian\Simian.Target.xml" />
+  <include buildfile=".\Packages\nDepend\nDepend.Target.xml" />
+  <include buildfile=".\Packages\LinesOfCode\LinesOfCode.Target.xml" />
+  <include buildfile=".\Packages\Deployment\Deployment.Target.xml" />
+  <description>End Package Includes</description>
+
+  <target name="Triggered" depends="SetUps" >
     <trycatch>
       <try>
         <description>Begin Main Build</description>
-        
+
+        <description>Begin Pre Build Actions</description>
         <call target="SourceModificationReport.ConsolidateReports" />
-		    
-		    <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-		    <call target="SourceControl.CleanGetOfProductDirectory" />
+        <description>End Pre Build Actions</description>
 
-        <property name="Compile.ConfigName" value="Debug|.NET 1.1"/>
-        <property name="Compile.XmlLogFileName" value="Debug.xml" />
-		    <call target="Compile.CompileSource" />
-    		
-		    <call target="UnitTest.RunTests" />
+        <description>Begin Clean Up Actions</description>
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <description>End Clean Up Actions</description>
 
-        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies"/>
-        <property name="Versioning.ProductInformationFile" value="ProjectInfo.vb" />
-        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
-        <property name="Versioning.ProductInformationFile" value="ProjectInfo.cs" />
-        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
-
-        <property name="Compile.ConfigName" value="Release|.NET 1.1"/>
-        <property name="Compile.XmlLogFileName" value="Release.xml" />
+        <description>Begin Compile Actions</description>
         <call target="Compile.CompileSource" />
+        <description>End Compile Actions</description>
 
-        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+        <description>Begin Varification Actions</description>
+        <call target="UnitTest.RunTests" />
+        <description>End Varification Actions</description>
 
-        <property name="Deployment.SourceFileName"  value="CI Factory.zip"/>
-        <property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
-        <property name="Deployment.TargetDir"	      value="${BuildDirectory}\Installs\${CCNetLabel}"/>
-        <property name="Deployment.TargetFile"	    value="CI Factory${CCNetLabel}.zip"/>
-        <property name="Deployment.FileWebPath"	    value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.TargetFile}"/>
-        <property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
+        <description>Begin Post Build Actions</description>
+        <call target="Simian.Run" />
+        <call target="nDepend.Calculate" />
+        <call target="LinesOfCode.CountCodeLines" />
+        <description>End Post Build Actions</description>
 
-        <call target="Deployment.PublishFile"/>
-		    
         <description>End Main Build</description>
       </try>
       <finally>
@@ -57,26 +51,35 @@
 
       </finally>
     </trycatch>
-	</target>
+  </target>
 
-	<target name="SetUps" >
-    <!--<call target="Tracker.SetUp"/>-->
+  <target name="SetUps" >
+    <call target="Common.SetUp" />
+    <description>Begin SetUps</description>
+    <call target="SourceModificationReport.SetUp"/>
     <call target="SourceControl.SetUp"/>
-    <call target="Versioning.SetUp"/>
+    <call target="UnitTest.SetUp"/>
     <call target="Compile.SetUp"/>
     <call target="UnitTest.SetUp"/>
+    <call target="Simian.SetUp"/>
+    <call target="nDepend.SetUp"/>
+    <call target="LinesOfCode.SetUp"/>
     <call target="Deployment.SetUp"/>
-    <call target="SourceModificationReport.SetUp"/>
-	</target>
+    <description>End SetUps</description>
+  </target>
 
   <target name="TearDowns">
-    <!--<call target="Tracker.TearDown"/>-->
+    <description>Begin TearDowns</description>
+    <call target="SourceModificationReport.TearDown"/>
     <call target="SourceControl.TearDown"/>
-    <call target="Versioning.TearDown"/>
+    <call target="UnitTest.TearDown"/>
     <call target="Compile.TearDown"/>
     <call target="UnitTest.TearDown"/>
+    <call target="Simian.TearDown"/>
+    <call target="nDepend.TearDown"/>
+    <call target="LinesOfCode.TearDown"/>
     <call target="Deployment.TearDown"/>
-    <call target="SourceModificationReport.TearDown"/>
+    <description>End TearDowns</description>
   </target>
 
 </project>

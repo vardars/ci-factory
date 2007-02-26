@@ -15,8 +15,7 @@
 
     <xsl:variable name="linecounts" select="/cruisecontrol/build/code-summaries/code-summary/linecount" />
     <xsl:if test="count($linecounts) > 0">
-      <html>
-        <body>
+      
           <xsl:for-each select="$linecounts">
             <div>
               <br>
@@ -36,8 +35,7 @@
               </br>
             </div>
           </xsl:for-each>
-        </body>
-      </html>
+
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
