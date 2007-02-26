@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN.Properties">
 
-  <property name="SVN.URI.Root" value="https://ci-factory.googlecode.com/svn/" overwrite="false" />
-  <property name="SVN.URI.ProjectName" value="https://ci-factory.googlecode.com/svn//CI Factory" overwrite="false" />
-  <property name="SVN.URI.ProjectCodeLine" value="https://ci-factory.googlecode.com/svn//CI Factory/Current" overwrite="false" />
-  <property name="SVN.URI.Tags" value="https://ci-factory.googlecode.com/svn//CI Factory/Tags" overwrite="false" />
+  <property name="SVN.URI.Root" value="https://ci-factory.googlecode.com/svn" overwrite="false" />
+  <property name="SVN.URI.ProjectName" value="https://ci-factory.googlecode.com/svn" overwrite="false" />
+  <property name="SVN.URI.ProjectCodeLine" value="https://ci-factory.googlecode.com/svn/Current" overwrite="false" />
+  <property name="SVN.URI.Tags" value="https://ci-factory.googlecode.com/svn/Tags" overwrite="false" />
   <property name="SVN.Username" value="cifactory"  overwrite="false" />
   <property name="SVN.Password" value="s7d7t2w7"  overwrite="false" />
   <property name="SVN.TemplateDB" value="C:\Tools\CI Factory\Packages\Subversion\Install\Template.zip" overwrite="false" />

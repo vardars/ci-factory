@@ -21,12 +21,12 @@
     </triggers>
     <modificationDelaySeconds>120</modificationDelaySeconds>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-      <trunkUrl>https://ci-factory.googlecode.com/svn//CI Factory/Current/Build</trunkUrl>
+      <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
       <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
       <username>cifactory</username>
       <password>s7d7t2w7</password>
       <webUrlBuilder type="websvn">
-        <url>http://localhost/svn/CI Factory/Current{0}</url>
+        <url>http://ci-factory.googlecode.com/svn/Current{0}</url>
       </webUrlBuilder>
     </sourcecontrol>
     &labeller;
@@ -47,14 +47,14 @@
     <modificationDelaySeconds>120</modificationDelaySeconds>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
-        <trunkUrl>https://ci-factory.googlecode.com/svn//CI Factory/Current</trunkUrl>
+        <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
         <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
         <username>cifactory</username>
         <password>s7d7t2w7</password>
         <webUrlBuilder type="websvn">
-          <url>http://localhost/svn/CI Factory/Current{0}</url>
+          <url>http://ci-factory.googlecode.com/svn/Current{0}</url>
         </webUrlBuilder>
-        <tagBaseUrl>https://ci-factory.googlecode.com/svn//CI Factory/Tags</tagBaseUrl>
+        <tagBaseUrl>https://ci-factory.googlecode.com/svn/Tags</tagBaseUrl>
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
