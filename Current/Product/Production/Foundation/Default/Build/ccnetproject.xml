@@ -61,6 +61,10 @@
         <files>
         </files>
       </merge>
+      <xslmerger>
+        <filepairs>
+        </filepairs>
+      </xslmerger>
       <xmllogger />
       &email;
       <nant>

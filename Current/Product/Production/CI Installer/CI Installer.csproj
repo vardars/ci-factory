@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Install Scripts\run.bat" />
-    <None Include="Install Scripts\Zips\Template.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Install Scripts\Zips\" />
   </ItemGroup>
 </Project>

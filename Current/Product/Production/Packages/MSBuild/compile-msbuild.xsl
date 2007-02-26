@@ -1,58 +1,79 @@
-<?xml version="1.0"?>
-<!DOCTYPE xsl:stylesheet [ <!ENTITY nbsp "&#160;"> ]>
-<xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-    <xsl:output method="html"/>
-    <xsl:template match="/">
-		<xsl:variable name="errors" select="//msbuild//error" />
-		<xsl:variable name="errors.count" select="count($errors)" />
-		<xsl:variable name="warnings" select="//msbuild/warning" />
-		<xsl:variable name="warnings.count" select="count($warnings)" />
-        <xsl:if test="$errors.count > 0">
-            <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-                <tr>
-                    <td class="sectionheader">
-                        Errors (<xsl:value-of select="$errors.count"/>)
-                    </td>
-                </tr>
-                <tr>
-					<td class="section-error">
-						<xsl:apply-templates select="$errors"/>
-					</td>
-				</tr>
-            </table>
-        </xsl:if>
-        <xsl:if test="$warnings.count > 0">
-			<table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-				<tr>
-					<td class="sectionheader">
-						Warnings (<xsl:value-of select="$warnings.count"/>)
-	                </td>
-	            </tr>
-	            <tr>
-					<td class="section-warn">
-						<xsl:apply-templates select="$warnings"/>
-					</td>
-				</tr>
-			</table>
-	    </xsl:if>
-    </xsl:template>
-	
-	<xsl:template match="error">
-		<div style="color:orangered">
-			<xsl:if test="@file != ''" >
-				<xsl:value-of select="@file"/>&nbsp;(<xsl:value-of select="@line"/>,<xsl:value-of select="@column"/>):&nbsp;
-			</xsl:if>
-			error&nbsp;<xsl:value-of select="@code"/>:&nbsp;<xsl:value-of select="text()" />
-		</div>
-	</xsl:template>
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<xsl:template match="warning">
-		<div style="color:gold">
-			<xsl:if test="@file != ''" >
-				<xsl:value-of select="@file"/>&nbsp;(<xsl:value-of select="@line"/>,<xsl:value-of select="@column"/>):&nbsp;
-			</xsl:if>
-			warning&nbsp;<xsl:value-of select="@code"/>:&nbsp;<xsl:value-of select="text()" />
-		</div>
-	</xsl:template>
+  <xsl:output method="html"/>
+
+  <xsl:template match="/">
+
+    <xsl:variable name="TotalProjects" select="//msbuilsummary/projectinfo/counts/@total" />
+    <xsl:variable name="SkippedProjects" select="//msbuilsummary/projectinfo/counts/@skipped" />
+    <xsl:variable name="RecompiledProjects" select="//msbuilsummary/projectinfo/counts/@recompiled" />
+
+    <xsl:if test="$TotalProjects > 0">
+      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <tr>
+          <td class="sectionheader">
+            Projects Rebuilt: (<xsl:value-of select="$RecompiledProjects"/>)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+              Total Projects: <xsl:value-of select="$TotalProjects"/>
+            </p>
+            <p>
+              Projects Skipped: <xsl:value-of select="$SkippedProjects"/>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </xsl:if>
+
+    <xsl:variable name="error.messages" select="//msbuilsummary/errors/error" />
+    <xsl:variable name="error.count" select="count($error.messages)"/>
+    <xsl:variable name="warning.messages" select="//msbuilsummary/warnings/warning" />
+    <xsl:variable name="warning.count" select="count($warning.messages)"/>
+
+    <xsl:if test="$error.count > 0">
+      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <tr>
+          <td class="sectionheader">
+            Compiler Errors: (<xsl:value-of select="$error.count"/>)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <xsl:for-each select="$error.messages" >
+              <pre class="section-error">
+                <xsl:value-of select="text()"/>
+              </pre>
+            </xsl:for-each>
+          </td>
+        </tr>
+      </table>
+    </xsl:if>
+
+    <xsl:if test="$warning.count > 0">
+      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <tr>
+          <td class="sectionheader">
+            Compiler Warnings: (<xsl:value-of select="$warning.count"/>)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <xsl:for-each select="$warning.messages" >
+              <pre class="section-error">
+                <xsl:value-of select="text()"/>
+              </pre>
+            </xsl:for-each>
+          </td>
+        </tr>
+      </table>
+    </xsl:if>
+
+  </xsl:template>
+
+
 </xsl:stylesheet>

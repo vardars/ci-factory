@@ -27,14 +27,18 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="MSBuild Details" actionName="MSBuildDetails" xslFileName="Packages\MSBuild\msbuild.xsl" />]]></value>
+      <value xml="false"><![CDATA[<artifactXslBuildPlugin description="MSBuild Compile Details" actionName="MSBuildCompileDetails" xslFileName="Packages\VS.NETCompile\msbuild.xsl" artifactRootUrl="/dod.ahlta Installs" xmlFileName="MSBuildLog.xml" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\CompileLogs\*.xml</file>]]></value>
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>C:\Projects\dod.ahlta\Current\Build\Packages\VS.NETCompile\MSBuildMerge.xsl</xslfile>
+            <xmlfile>c:\Projects\dod.ahlta\Current\Build\CompileLogs\*.xml</xmlfile>
+          </filepair>]]></value>
     </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="MSBuild.SetAsCurrentPackage">

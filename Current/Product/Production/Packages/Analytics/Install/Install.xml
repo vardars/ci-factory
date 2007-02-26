@@ -10,6 +10,11 @@
     </value>
   </largeproperty>
   <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<artifactXslBuildPlugin description="Analytics Report" actionName="AnalyticsReport" xslFileName="Packages\Analytics\statistics.xsl" artifactRootUrl="/dod.ahlta Installs" xmlFileName="MainAnalyticsReport.xml" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
   </target>
 
   <target name="Analytics.SetAsCurrentPackage">

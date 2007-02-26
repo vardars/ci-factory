@@ -46,9 +46,17 @@
     <value><![CDATA[</buildPlugins>]]></value>
   </largeproperty>
 
+  <largeproperty name="Private.Packages.XslMerger.EndTag">
+    <value>
+      <![CDATA[</filepairs>
+      </xslmerger>]]></value>
+  </largeproperty>
+
   <largeproperty name="Private.Packages.MergeFiles.EndTag">
-    <value><![CDATA[</files>
-      </merge>]]></value>
+    <value>
+      <![CDATA[</files>
+      </merge>]]>
+    </value>
   </largeproperty>
   
   <largeproperty name="Private.Packages.PostBuild.EndTag">
@@ -153,6 +161,18 @@
   ${Private.Packages.MergeFiles.EndTag}]]></value>
     </largeproperty>
     <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.MergeFiles.EndTag}" />
+    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddXslMerger.Block" value=""/>
+  <target name="Packages.AddXslMerger">
+    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddXslMerger.Block}
+  ${Private.Packages.XslMerger.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.XslMerger.EndTag}" />
     <call target="Private.Packages.CCNETProjectConfig.Replace"/>
   </target>
 

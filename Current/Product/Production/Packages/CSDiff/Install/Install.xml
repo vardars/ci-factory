@@ -6,10 +6,15 @@
   <target name="CSDiff.Install">
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
-      <![CDATA[<call target="CSDiff.GenerateHtmlReports"/>]]>
-    </value>
-  </largeproperty>
-  <call target="Packages.AddPostBuildActions"/>
+        <![CDATA[<call target="CSDiff.GenerateHtmlReports"/>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<artifactXslBuildPlugin description="Diff" actionName="DiffReports" xslFileName="Packages\CSDiff\CSDiffReport.xsl" artifactRootUrl="/dod.ahlta Installs" xmlFileName="postbuildlog.xml" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
   </target>
 
   <target name="CSDiff.SetAsCurrentPackage">
