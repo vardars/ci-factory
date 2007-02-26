@@ -9,7 +9,7 @@
         </groups>
       </email>'>
   <!ENTITY labeller '<labeller type="defaultlabeller">
-      <prefix>1.0.0.</prefix>
+      <prefix>0.8.0.</prefix>
     </labeller>'>
 ]>
 <cruisecontrol>
