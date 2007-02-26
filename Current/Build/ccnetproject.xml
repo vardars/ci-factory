@@ -54,7 +54,7 @@
     <integrationFilter>
       <triggeredIntegrationFilter>
         <allowed>
-          <modificationsRequired condition="false" />
+          <modificationsRequired condition="true" />
         </allowed>
       </triggeredIntegrationFilter>
       <forcedIntegrationFilter>
