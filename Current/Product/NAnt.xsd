@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/24/2007 14:37:52</xs:documentation>
+    <xs:documentation>NAnt schema generated at 02/26/2007 12:33:01</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -17,6 +17,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -25,7 +26,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -71,10 +71,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -142,12 +142,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -209,6 +210,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -217,7 +219,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -263,10 +264,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -334,12 +335,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -859,6 +861,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -867,7 +870,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -913,10 +915,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -984,12 +986,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -1014,6 +1017,14 @@
     <xs:attribute name="propertyexists" use="optional" />
     <xs:attribute name="targetexists" use="optional" />
     <xs:attribute name="test" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.AskTask">
+    <xs:attribute name="answer" use="optional" />
+    <xs:attribute name="question" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1134,14 +1145,6 @@
     <xs:attribute name="VersionAttribute" use="required" />
     <xs:attribute name="Version" use="required" />
     <xs:attribute name="File" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.Tasks.AskTask">
-    <xs:attribute name="answer" use="optional" />
-    <xs:attribute name="question" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1963,6 +1966,20 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceSafe.VSSAddProject">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="project" use="required" />
+    <xs:attribute name="dbpath" use="required" />
+    <xs:attribute name="path" use="required" />
+    <xs:attribute name="password" use="optional" />
+    <xs:attribute name="username" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="version" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="NAnt.Contrib.Types.Assembly">
     <xs:attribute name="culture" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -2045,20 +2062,6 @@
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
     <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceSafe.VSSAddProject">
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="project" use="required" />
-    <xs:attribute name="dbpath" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="username" use="optional" />
-    <xs:attribute name="user" use="optional" />
-    <xs:attribute name="version" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -3011,6 +3014,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3019,7 +3023,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3065,10 +3068,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -3136,12 +3139,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -3456,6 +3460,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3464,7 +3469,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3510,10 +3514,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -3581,12 +3585,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -3632,6 +3637,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3640,7 +3646,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3686,10 +3691,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -3757,12 +3762,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -3970,28 +3976,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="p" use="required" />
-    <xs:attribute name="r" use="optional" />
-    <xs:attribute name="standalonebuildexe" use="required" />
-    <xs:attribute name="b" use="optional" />
-    <xs:attribute name="updateproductversion" use="optional" />
-    <xs:attribute name="s" use="optional" />
-    <xs:attribute name="x" use="optional" />
-    <xs:attribute name="w" use="optional" />
-    <xs:attribute name="n" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
@@ -4041,6 +4025,28 @@
     <xs:attribute name="append" use="optional" />
     <xs:attribute name="buildname" use="optional" />
     <xs:attribute name="summarize" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="p" use="required" />
+    <xs:attribute name="r" use="optional" />
+    <xs:attribute name="standalonebuildexe" use="required" />
+    <xs:attribute name="b" use="optional" />
+    <xs:attribute name="updateproductversion" use="optional" />
+    <xs:attribute name="s" use="optional" />
+    <xs:attribute name="x" use="optional" />
+    <xs:attribute name="w" use="optional" />
+    <xs:attribute name="n" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4132,6 +4138,20 @@
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
     <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NDepend.Build.NAntTasks.NDependTask">
+    <xs:attribute name="ProjectFilePath" use="required" />
+    <xs:attribute name="NDependConsoleExePath" use="required" />
+    <xs:attribute name="InDirsDotComaSeparated" use="optional" />
+    <xs:attribute name="OutDir" use="optional" />
+    <xs:attribute name="XslForReport" use="optional" />
+    <xs:attribute name="ViewReport" use="optional" />
+    <xs:attribute name="Silent" use="optional" />
+    <xs:attribute name="EmitVisualNDependBinXml" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4355,6 +4375,7 @@
       <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
       <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
       <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+      <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
       <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
       <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
       <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -4363,7 +4384,6 @@
       <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
       <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-      <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4409,10 +4429,10 @@
       <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
       <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
       <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+      <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
       <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
       <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
       <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-      <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
       <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
       <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
       <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -4480,12 +4500,13 @@
       <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
       <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
       <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-      <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
       <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
       <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+      <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
       <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
       <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
       <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+      <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
       <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
       <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
       <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
@@ -4550,6 +4571,7 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -4558,7 +4580,6 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
-        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4604,10 +4625,10 @@
         <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
         <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
         <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
-        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
         <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
         <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
         <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
@@ -4675,12 +4696,13 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
+        <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
         <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
         <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />

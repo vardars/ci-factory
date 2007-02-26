@@ -558,7 +558,7 @@
     <None Include="templates\ServerSideBar.vm" />
     <None Include="templates\SiteTemplate.vm" />
     <None Include="templates\TopMenu.vm" />
-    <None Include="UpdateFoundation.bat" />
+    <Content Include="UpdateFoundation.Build.xml" />
     <Content Include="Web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -598,6 +598,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>nant -buildfile:"$(ProjectDir)UpdateFoundation.Build.xml" -D:DirtyTargetDir="$(TargetDir)remove" -D:DirtySolutionDir="$(SolutionDir)remove" -D:DirtyProjectDir="$(ProjectDir)remove"</PostBuildEvent>
   </PropertyGroup>
 </Project>

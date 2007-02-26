@@ -43,14 +43,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThoughtWorks.CruiseControl.Core, Version=1.0.0.1251, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\CCNET\ThoughtWorks.CruiseControl.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ThoughtWorks.CruiseControl.Remote, Version=1.0.0.1251, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\CCNET\ThoughtWorks.CruiseControl.Remote.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +65,14 @@
     <ProjectReference Include="..\..\..\Production\CCNet\CCNET.Tracker.Plugin\CCNET.Tracker.Plugin.csproj">
       <Project>{A690B211-007B-4D30-9E3C-8F35E432C54E}</Project>
       <Name>CCNET.Tracker.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Production\CCNet\core\core.csproj">
+      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
+      <Name>core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Production\CCNet\Remote\Remote.csproj">
+      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
+      <Name>Remote</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Production\Common\Tracker.Common\Tracker.Common.csproj">
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
