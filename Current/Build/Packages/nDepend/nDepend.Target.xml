@@ -37,8 +37,8 @@
     </copy>
 
     <exec 
-			program="${nDepend.Console}" 
-			commandline="${nDepend.ConfigurationFile}"
+			program="${path::get-short-path(nDepend.Console)}" 
+			commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
 		/>
   </target>
 
