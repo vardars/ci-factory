@@ -110,7 +110,7 @@
           <target>Triggered</target>
         </targetList>
 
-        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+        <buildTimeoutSeconds>600</buildTimeoutSeconds>
       </nant>
     </tasks>
     <publishers>
