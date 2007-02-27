@@ -40,10 +40,10 @@
         <description>Begin Post Build Actions</description>
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
 
-        <property name="Deployment.SourceFileName"  value="CI Factory.zip"/>
+        <property name="Deployment.SourceFileName"  value="CIFactory.zip"/>
         <property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
         <property name="Deployment.TargetDir"	      value="${ArtifactRootDirectory}\${CCNetLabel}"/>
-        <property name="Deployment.TargetFile"	    value="CI Factory${CCNetLabel}.zip"/>
+        <property name="Deployment.TargetFile"	    value="CI-Factory-${CCNetLabel}.zip"/>
         <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
 
