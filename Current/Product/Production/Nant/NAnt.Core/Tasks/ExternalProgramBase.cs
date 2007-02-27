@@ -156,8 +156,8 @@ namespace NAnt.Core.Tasks {
         /// <value>
         /// The working directory for the application.
         /// </value>
-        public virtual DirectoryInfo BaseDirectory {
-            get { return new DirectoryInfo(Project.BaseDirectory); }
+        public virtual string BaseDirectory {
+            get { return Project.BaseDirectory; }
             set {} // so that it can be overriden.
         }
 
@@ -424,7 +424,7 @@ namespace NAnt.Core.Tasks {
             process.StartInfo.UseShellExecute = this.UseShellExecute;
             // do not start process in new window
             process.StartInfo.CreateNoWindow = this.CreateNoWindow;
-            process.StartInfo.WorkingDirectory = BaseDirectory.FullName;
+            process.StartInfo.WorkingDirectory = BaseDirectory;
 
             // set framework-specific environment variables if executing the 
             // external process using the runtime engine of the currently

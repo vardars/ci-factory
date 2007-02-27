@@ -81,8 +81,8 @@ namespace NAnt.Core.Tasks {
 
         private string _program;
         private string _commandline;
-        private DirectoryInfo _baseDirectory;
-        private DirectoryInfo _workingDirectory;
+        private string _baseDirectory;
+        private string _workingDirectory;
         private FileInfo _output;
         private bool _outputAppend;
         private EnvironmentSet _environmentSet = new EnvironmentSet();
@@ -142,7 +142,7 @@ namespace NAnt.Core.Tasks {
         /// </para>
         /// </remarks>
         [TaskAttribute("workingdir")]
-        public DirectoryInfo WorkingDirectory {
+        public string WorkingDirectory {
             get { 
                 if (_workingDirectory == null) {
                     return base.BaseDirectory;
@@ -209,7 +209,7 @@ namespace NAnt.Core.Tasks {
                     }
                     return FileName;
                 } else {
-                    return Path.GetFullPath(Path.Combine(BaseDirectory.FullName, 
+                    return Path.GetFullPath(Path.Combine(BaseDirectory, 
                         FileName));
                 }
             }
@@ -259,7 +259,7 @@ namespace NAnt.Core.Tasks {
         /// </para>
         /// </remarks>
         [TaskAttribute("basedir")]
-        public override DirectoryInfo BaseDirectory {
+        public override string BaseDirectory {
             get {
                 if (_baseDirectory == null) {
                     return base.BaseDirectory;
@@ -310,7 +310,7 @@ namespace NAnt.Core.Tasks {
             base.PrepareProcess(process);
 
             // set working directory specified by user
-            process.StartInfo.WorkingDirectory = WorkingDirectory.FullName;
+            process.StartInfo.WorkingDirectory = WorkingDirectory;
 
             // set environment variables
             foreach (Option option in EnvironmentSet.Options) {
