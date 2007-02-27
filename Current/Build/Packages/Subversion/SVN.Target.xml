@@ -76,6 +76,43 @@
     <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Product" recursive ="true" destination ="${ProductDirectory}" />
   </target>
 
+  <target name="SourceControl.GetOfThirdPartyDirectory" >
+    <mkdir dir="${ThirdPartyDirectory}" unless="${directory::exists(ThirdPartyDirectory)}"/>
+
+    <trycatch>
+      <try>
+        <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true">
+          <arg line="update" />
+          <arg line="--non-interactive" />
+          <arg line="--username ${SVN.Username}" />
+          <arg line="--password ${SVN.Password}" />
+        </exec>
+      </try>
+      <catch>
+        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Third Party" recursive ="true" destination ="${ThirdPartyDirectory}" />
+      </catch>
+    </trycatch>
+  </target>
+
+  <target name="SourceControl.GetOfProductDirectory" >
+    <mkdir dir="${ProductDirectory}" unless="${directory::exists(ProductDirectory)}"/>
+
+    <trycatch>
+      <try>
+        <exec program="svn" workingdir="${ProductDirectory}" verbose="true">
+          <arg line="update" />
+          <arg line="--non-interactive" />
+          <arg line="--username ${SVN.Username}" />
+          <arg line="--password ${SVN.Password}" />
+        </exec>
+      </try>
+      <catch>
+        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Product" recursive ="true" destination ="${ProductDirectory}" />
+      </catch>
+    </trycatch>
+  </target>
+
+
   <!--
   The following properties should be specified in the calling script.
   
