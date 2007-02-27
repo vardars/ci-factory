@@ -33,7 +33,7 @@
       <username>cifactory</username>
       <password>s7d7t2w7</password>
       <webUrlBuilder type="websvn">
-        <url>http://ci-factory.googlecode.com/svn/Current{0}</url>
+        <url>http://ci-factory.googlecode.com/svn{0}</url>
       </webUrlBuilder>
     </sourcecontrol>
     &labeller;
@@ -73,7 +73,7 @@
         <username>cifactory</username>
         <password>s7d7t2w7</password>
         <webUrlBuilder type="websvn">
-          <url>http://ci-factory.googlecode.com/svn/Current{0}</url>
+          <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
         <tagBaseUrl>https://ci-factory.googlecode.com/svn/Tags</tagBaseUrl>
       </sourceControlProvider>
