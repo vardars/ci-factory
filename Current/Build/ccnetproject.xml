@@ -75,7 +75,7 @@
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
-        <tagBaseUrl>https://ci-factory.googlecode.com/svn/Tags</tagBaseUrl>
+        <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
@@ -125,15 +125,15 @@
       <xslmerger>
         <filepairs>
           <filepair>
-            <xslfile>C:\Projects\dod.ahlta\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>c:\Projects\dod.ahlta\Current\Build\CompileLogs\*.xml</xmlfile>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
       <xmllogger />
       &email;
       <nant>
-        <executable>>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+        <executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
         <baseDirectory>>c:\Projects\CI Factory\Current\Build</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
