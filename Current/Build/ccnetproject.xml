@@ -125,7 +125,7 @@
       <xslmerger>
         <filepairs>
           <filepair>
-            <xslfile>C:\Projects\dod.ahlta\Current\Build\Packages\VS.NETCompile\MSBuildMerge.xsl</xslfile>
+            <xslfile>C:\Projects\dod.ahlta\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
             <xmlfile>c:\Projects\dod.ahlta\Current\Build\CompileLogs\*.xml</xmlfile>
           </filepair>
         </filepairs>
