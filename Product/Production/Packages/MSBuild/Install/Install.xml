@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSBuild.Install" default="MSBuild.Install">
+
+  <include buildfile="Properties.xml" />
+
+  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
+  <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
+  
+  <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2005.sln.remove"/>
+  <property name="Compile.DefaultOpenSolutionBat" value="${SourcePackagesDirectory}\MSBuild\Install\OpenSolution.bat"/>
+  
+  <target name="MSBuild.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Compile.CompileSource" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+    
+    <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
+    
+    <copy tofile="${Compile.OpenSolutionBat}" file="${Compile.DefaultOpenSolutionBat}">
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\MSBuild\compile-msbuild.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<artifactXslBuildPlugin description="MSBuild Compile Details" actionName="MSBuildCompileDetails" xslFileName="Packages\VS.NETCompile\msbuild.xsl" artifactRootUrl="/dod.ahlta Installs" xmlFileName="MSBuildLog.xml" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>C:\Projects\dod.ahlta\Current\Build\Packages\VS.NETCompile\MSBuildMerge.xsl</xslfile>
+            <xmlfile>c:\Projects\dod.ahlta\Current\Build\CompileLogs\*.xml</xmlfile>
+          </filepair>]]></value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="MSBuild.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSBuild"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Compile.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Compile"/>
+  </target>
+
+  <target name="MSBuild.ValidateParameters">
+    
+  </target>
+  
+</project>
