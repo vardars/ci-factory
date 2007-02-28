@@ -21,12 +21,14 @@
         <description>Begin Main Build</description>
 
         <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.PublishOldSource"/>
         <call target="SourceModificationReport.ConsolidateReports" />
         <description>End Pre Build Actions</description>
 
         <description>Begin Clean Up Actions</description>
         <call target="SourceControl.GetOfThirdPartyDirectory" />
         <call target="SourceControl.GetOfProductDirectory" />
+        <call target="SourceModificationReport.PublishNewSource"/>
         <description>End Clean Up Actions</description>
 
         <description>Begin Compile Actions</description>
