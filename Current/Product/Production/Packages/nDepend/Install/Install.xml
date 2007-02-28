@@ -10,14 +10,9 @@
     <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\NDepend.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\nDependReport.xsl" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
-
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\nDepend\NDependMain.xml</file>]]></value>
-    </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="nDepend.SetAsCurrentPackage">

@@ -36,10 +36,25 @@
       <fileset refid="nDepend.DependenciesFileSet" />
     </copy>
 
-    <exec 
-			program="${nDepend.Console}" 
-			commandline="${nDepend.ConfigurationFile}"
+    <exec
+			program="${path::get-short-path(nDepend.Console)}"
+			commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
 		/>
+
+    <property name="Deployment.SourceFileName" value="NDependReport.html" />
+    <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
+    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+    <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" />
+
+    <call target="Deployment.PublishFileSilently"/>
+
+    <copy todir="${Deployment.TargetDir}">
+      <fileset basedir="${nDepend.BuildFolder}">
+        <include name="*.png"/>
+        <include name="*.xml"/>
+      </fileset>
+    </copy>
   </target>
 
   <target name="Private.nDepend.CreateConfiguration">
@@ -71,21 +86,27 @@
       </text>
     </write>
 
+    <strings id="nDepend.AssemblyList" />
+
     <foreach item="File" property="AssemblyPath">
       <in>
         <items refid="nDepend.AssebliesFileSet" />
       </in>
       <do>
-        <write file="${nDepend.ConfigurationFile}" append="true">
-          <text>
-            <![CDATA[
-        <Name Warn="True">%AssemblyName%</Name>
-            ]]>
-          </text>
-          <filterchain>
-            <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
-          </filterchain>
-        </write>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name Warn="True">%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
+            </filterchain>
+          </write>
+        </ifnot>
       </do>
     </foreach>
 
@@ -104,16 +125,20 @@
         <items refid="nDepend.DependenciesFileSet" />
       </in>
       <do>
-        <write file="${nDepend.ConfigurationFile}" append="true">
-          <text>
-            <![CDATA[
-        <Name>%AssemblyName%</Name>
-            ]]>
-          </text>
-          <filterchain>
-            <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
-          </filterchain>
-        </write>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name>%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${AssemblyName}" />
+            </filterchain>
+          </write>
+        </ifnot>
       </do>
     </foreach>
 

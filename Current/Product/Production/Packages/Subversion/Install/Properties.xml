@@ -4,7 +4,7 @@
   <property name="SVN.URI.Root" value="http://localhost/svn" overwrite="false" />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" overwrite="false" />
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}" overwrite="false" />
-  <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/Tags" overwrite="false" />
+  <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" overwrite="false" />
   
   <property name="SVN.WebRepoUrl" value="http://localhost/svn/${ProjectName}" overwrite="false" />
   <property name="SVN.Username" value="Build" overwrite="false" />
@@ -18,7 +18,7 @@
       <largeproperty name="SourceControl.BuildUpdateBlock.WebRepoUrl">
         <value xml="false" expand="true">
           <![CDATA[<webUrlBuilder type="websvn">
-          <url>${SVN.WebRepoUrl}/${ProjectCodeLineName}{0}</url>
+          <url>${SVN.WebRepoUrl}{0}</url>
         </webUrlBuilder>]]>
         </value>
       </largeproperty>

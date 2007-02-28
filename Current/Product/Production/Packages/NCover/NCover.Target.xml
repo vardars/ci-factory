@@ -35,13 +35,10 @@
         <items>
           <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
           <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
-          <exclude name="${UnitTest.TestPath}\**\bin\Dod.CHCSII.Shared.SearchMedcin.Test.dll" />
-          <exclude name="${UnitTest.TestPath}\**\bin\Dod.CHCSII.DataLayer.Mappers.Test.dll" />
-          <exclude name="${UnitTest.TestPath}\**\bin\Dod.Ahlta.PresentationLayer.Results.Test.dll" />
         </items>
       </in>
       <do>
-        <regex pattern="(\\|/)(?'CoverageAssembly'(\w+|\.)+)\.Test\.dll$" input="${TestAssmebly}"/>
+        <regex pattern="(\\|/)Test\.(?'CoverageAssembly'(\w+|\.)+)\.dll$" input="${TestAssmebly}"/>
         <property name="CoverageAssemblyInBin" value="${ProductionDirectory}\**\bin\${CoverageAssembly}.dll"/>
         <property name="CoverageAssemblyInDebug" value="${ProductionDirectory}\**\bin\Debug\${CoverageAssembly}.dll"/>
         <function execute="${fileset::include-add('Coverage.Targets', CoverageAssemblyInBin)}"/>
@@ -53,7 +50,7 @@
       <try>
         <ncover program="C:\Program Files\NCover\NCover.Console.exe"
 						commandLineExe="${BuildDirectory}\nAnt\bin\nant.exe"
-						commandLineArgs='-buildfile:${Coverage.UnitTestPackageInclude} @${Coverage.CommonPropertiesFile} UnitTest.RunTests'
+						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
 						workingDirectory="${Coverage.ReportFolder}"
 						coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
 						copyXsl="false"
@@ -107,6 +104,9 @@
       <property name="ProductionDirectory"/>
       <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
+      <property name="ArtifactRootDirectory" value="${BuildDirectory}\Installs"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
     </saveproperties>
   </target>
 
@@ -122,7 +122,7 @@
     <call target="Private.Coverage.CreatePropertiesFile"/>
     
     <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
-      <arg line="-buildfile:${Coverage.UnitTestPackageInclude}"/>
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.SetUp"/>
     </exec>
@@ -130,7 +130,7 @@
 
   <target name="UnitTest.TearDown">
     <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
-      <arg line="-buildfile:${Coverage.UnitTestPackageInclude}"/>
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.TearDown"/>
     </exec>

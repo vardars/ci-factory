@@ -10,7 +10,7 @@
     <call target="Packages.AddVarificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\NCover\CoverageSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverExplorerSummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
@@ -20,7 +20,7 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\NCover\NCoverExplorerSummary.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\CoverageReports\CoverageReport.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>

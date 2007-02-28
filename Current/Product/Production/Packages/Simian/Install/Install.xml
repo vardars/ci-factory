@@ -20,7 +20,7 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\Simian\SimianReport.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\SimianReport\SimianReport.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>

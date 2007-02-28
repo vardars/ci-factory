@@ -31,7 +31,7 @@
   </ifthenelse>
 
   <target name="Ant.Environment.Set">
-    <environment id="${Ant.EnvironmentRefId}">
+    <environment id="${Ant.Environment.RefId}">
       <variable name="JAVA_HOME" value="${JavaHome}" />
       <variable name="ANT_HOME" value="${AntHome}" />
       <variable name="PATH" path="${Path};${AntBin}" />

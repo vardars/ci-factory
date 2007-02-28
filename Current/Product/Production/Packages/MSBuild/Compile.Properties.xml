@@ -11,6 +11,7 @@
 
   <property name="Compile.Environment" value="Compile.Environment" overwrite="false"/>
   <environment id="Compile.Environment">
+    <variable name="PATH" value="${environment::get-variable('PATH')};${NantExePath}" />
   </environment>
 
   <fileset id="Compile.ToCopy">

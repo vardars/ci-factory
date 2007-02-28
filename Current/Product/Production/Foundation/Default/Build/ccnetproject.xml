@@ -19,6 +19,13 @@
     <triggers>
       <intervalTrigger seconds="90" />
     </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+    </integrationFilter>
     <modificationDelaySeconds>120</modificationDelaySeconds>
     %SourceControl.BuildUpdateBlock%
     &labeller;
@@ -36,6 +43,20 @@
   <triggers>
     <intervalTrigger seconds="90" />
   </triggers>
+  <integrationFilter>
+    <triggeredIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="true" />
+      </allowed>
+    </triggeredIntegrationFilter>
+    <forcedIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="false" />
+      </allowed>
+      <blocked>
+      </blocked>
+    </forcedIntegrationFilter>
+  </integrationFilter>
   <modificationDelaySeconds>120</modificationDelaySeconds>
   %SourceControl.MainBuildBlock%
   &labeller;
@@ -68,8 +89,8 @@
       <xmllogger />
       &email;
       <nant>
-        <executable>>%BuildDirectory%\nAnt\bin\nant.exe</executable>
-        <baseDirectory>>%BuildDirectory%</baseDirectory>
+        <executable>%BuildDirectory%\nAnt\bin\nant.exe</executable>
+        <baseDirectory>%BuildDirectory%</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>

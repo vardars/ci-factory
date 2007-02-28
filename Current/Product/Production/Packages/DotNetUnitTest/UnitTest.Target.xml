@@ -5,7 +5,6 @@
   <loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
   
   <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
-	<property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
 
   <include buildfile="UnitTest.Properties.xml" />
 
