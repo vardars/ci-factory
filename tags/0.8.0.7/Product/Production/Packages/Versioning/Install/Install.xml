@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning.Install" default="Versioning.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Versioning.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Versioning.IncrementBuildNumberOfModifiedAssemblies"/>
+      <call target="Versioning.IncreamentBuildNumberOfProduct"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+  </target>
+
+  <target name="Versioning.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Versioning"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Versioning.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Versioning"/>
+  </target>
+
+  <target name="Versioning.ValidateParameters">
+    
+  </target>
+  
+</project>
