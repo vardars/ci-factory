@@ -10,7 +10,7 @@
   <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
 
   <fileset id="nDepend.AssebliesFileSet" >
-    <include name="${ProductionDirectory}\**\bin\${ProjectName}*.dll"/>
+    <include name="${ProductionDirectory}\**\bin\CIFactory*.dll"/>
   </fileset>
 
   <fileset id="nDepend.DependenciesFileSet" >

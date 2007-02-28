@@ -71,21 +71,27 @@
       </text>
     </write>
 
+    <strings id="nDepend.AssemblyList" />
+    
     <foreach item="File" property="AssemblyPath">
       <in>
         <items refid="nDepend.AssebliesFileSet" />
       </in>
       <do>
-        <write file="${nDepend.ConfigurationFile}" append="true">
-          <text>
-            <![CDATA[
-        <Name Warn="True">%AssemblyName%</Name>
-            ]]>
-          </text>
-          <filterchain>
-            <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
-          </filterchain>
-        </write>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name Warn="True">%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
+            </filterchain>
+          </write>
+        </ifnot>
       </do>
     </foreach>
 
@@ -104,16 +110,20 @@
         <items refid="nDepend.DependenciesFileSet" />
       </in>
       <do>
-        <write file="${nDepend.ConfigurationFile}" append="true">
-          <text>
-            <![CDATA[
-        <Name>%AssemblyName%</Name>
-            ]]>
-          </text>
-          <filterchain>
-            <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
-          </filterchain>
-        </write>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name>%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${AssemblyName}" />
+            </filterchain>
+          </write>
+        </ifnot>
       </do>
     </foreach>
 
