@@ -40,6 +40,21 @@
 			program="${path::get-short-path(nDepend.Console)}" 
 			commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
 		/>
+
+    <property name="Deployment.SourceFileName" value="NDependReport.html" />
+    <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
+    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+    <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" />
+
+    <call target="Deployment.PublishFileSilently"/>
+
+    <copy todir="${Deployment.TargetDir}">
+      <fileset basedir="${nDepend.BuildFolder}">
+        <include name="*.png"/>
+        <include name="*.xml"/>
+      </fileset>
+    </copy>
   </target>
 
   <target name="Private.nDepend.CreateConfiguration">
