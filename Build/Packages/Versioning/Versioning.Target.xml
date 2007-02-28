@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning">
+
+  <loadtasks assembly="Packages\Versioning\bin\UpdateVersion.Tasks.dll" />
+  <include buildfile="Versioning.Properties.xml" />
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+  <property name="Versioning.ProjectInformationFile" value="" />
+  <property name="Versioning.ProjectInformationNewVersion" value="" />
+  
+  -->
+
+  <!-- The following properties are for internal use only -->
+  <property name="Private.Versioning.NewerThanDateTime" value="" />
+  
+  <target name="Versioning.IncrementBuildNumberOfModifiedAssemblies">
+    <mkdir unless="${directory::exists(ProductionDirectory)}" dir="${ProductionDirectory}"/>
+    <call target="SourceModificationReport.GetOldestModificationTime"/>
+    <script language="VB">
+      <code><![CDATA[
+          
+					Public Shared Sub ScriptMain(ByVal project As Project)
+						Dim pd As PropertyDictionary = project.Properties
+						Dim OldestModificationTime As DateTime = DateTime.Parse(pd("SourceModificationReport.OldestModificationTime"))
+						OldestModificationTime.Subtract(New TimeSpan(0, 0, 0, 0, 1))
+            pd("Private.Versioning.NewerThanDateTime") = OldestModificationTime.ToString
+					End Sub
+			    
+			]]></code>
+    </script>
+    
+    <property name="Private.Versioning.Directory" value="${BuildDirectory}\Versioning"/>
+    <mkdir unless="${directory::exists(Private.Versioning.Directory)}" dir="${Private.Versioning.Directory}"/>
+    <property name="Private.Versioning.ListOfAssemblyInfoFiles" value="${Private.Versioning.Directory}\ListOfAssemblyInfoFiles.txt"/>
+
+    <GenerateAssemblyInfoList SearchDirectory="${ProductionDirectory}" DateTime="${Private.Versioning.NewerThanDateTime}" Output="${Private.Versioning.ListOfAssemblyInfoFiles}" SearchPattern="*.vb" />
+    <GenerateAssemblyInfoList SearchDirectory="${ProductionDirectory}" DateTime="${Private.Versioning.NewerThanDateTime}" Output="${Private.Versioning.ListOfAssemblyInfoFiles}" SearchPattern="*.cs" Append="true" />
+
+    <foreach item="File" property="Private.Versioning.AssemblyInfoFile">
+      <in>
+        <items>
+          <includesfile name="${Private.Versioning.ListOfAssemblyInfoFiles}"/>
+        </items>
+      </in>
+      <do>
+        <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+        <call target="SourceControl.CheckOut"/>
+        <IncrementAssemblyVersion File="${Private.Versioning.AssemblyInfoFile}"/>
+        <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+        <call target="SourceControl.CheckIn"/>
+      </do>
+    </foreach>
+
+  </target>
+
+  <target name="Versioning.IncreamentBuildNumberOfProduct">
+    <property name="SourceControl.CheckOut.File" value="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}"/>
+    <call target="SourceControl.CheckOut"/>
+    <UpdateProductVersion File="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}" Version="${Versioning.ProductVersion}" />
+    <property name="SourceControl.CheckIn.File" value="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}"/>
+    <call target="SourceControl.CheckIn"/>
+
+    <foreach item="File" property="ReplaceFile">
+      <in>
+        <items>
+          <include name="${Versioning.ProductInformationFileLocation}\**\${Versioning.ProductInformationFile}"/>
+        </items>
+      </in>
+      <do>
+        <property name="SourceControl.CheckOut.File" value="${ReplaceFile}"/>
+        <call target="SourceControl.CheckOut"/>
+        <copy file="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}" tofile="${ReplaceFile}" />
+        <property name="SourceControl.CheckIn.File" value="${ReplaceFile}"/>
+        <call target="SourceControl.CheckIn"/>
+      </do>
+    </foreach>
+    
+  </target>
+
+  <target name="Versioning.SetUp">
+
+  </target>
+
+  <target name="Versioning.TearDown">
+
+  </target>
+
+</project>
