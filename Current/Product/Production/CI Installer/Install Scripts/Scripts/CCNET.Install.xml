@@ -67,7 +67,7 @@
 
   <target name="Private.CCNET.CreateIISVirtualDirectories" if="${CCNET.CreateIISVirtualDirectories}">
     <mkiisdir dirpath="${CCNET.DashboardDirectory}" vdirname="${ProjectName}" />
-    <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages" />
+    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages" />
     <mkiisdir dirpath="${BuildDirectory}\Artifacts" vdirname="${ProjectName} Artifacts" enabledirbrowsing="true"/>
   </target>
 

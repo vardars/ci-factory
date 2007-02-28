@@ -121,8 +121,8 @@
   <property name="Packages.CopyPackage.PackageName" value=""/>
 
   <target name="Private.Packages.CopyPackage" >
-    <mkdir dir="${BuildPackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
-    <copy todir="${BuildPackagesDirectory}" >
+    <mkdir dir="${PackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
+    <copy todir="${PackagesDirectory}" >
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
@@ -131,7 +131,7 @@
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
       </fileset>
     </copy>
-    <copy todir="${BuildPackagesDirectory}">
+    <copy todir="${PackagesDirectory}">
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
@@ -187,7 +187,8 @@
 
   <target name="Private.Packages.AddInclude">
     <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[<include buildfile=".\Packages\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />
+      <value xml="false" expand="true">
+      <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />
   ${Private.Packages.Include.EndTag}]]></value>
     </largeproperty>
     <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.Include.EndTag}" />

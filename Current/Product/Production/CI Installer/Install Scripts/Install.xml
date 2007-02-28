@@ -44,7 +44,7 @@
     <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
     <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
     <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
-    <mkdir unless="${directory::exists(BuildPackagesDirectory)}"   dir="${BuildPackagesDirectory}"/>
+    <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
   </target>
   
 </project>

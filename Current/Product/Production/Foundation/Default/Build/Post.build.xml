@@ -14,8 +14,8 @@
         <call target="SetUps"/>
         <description>End SetUp</description>
         
-        <description>Begin Post Build</description>
-        <description>End Post Build</description>
+        <description>Begin Post Build Actions</description>
+        <description>End Post Build Actions</description>
       </try>
       <finally>
 

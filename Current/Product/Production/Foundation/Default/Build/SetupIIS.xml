@@ -5,13 +5,12 @@
   <property name="BuildDirectory" value="C:\Projects\${ProjectName}\Current\Build" />
   <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
   <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-  <property name="BuildPackagesDirectory" value="${PackagesDirectory}" />
   <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
   
   <target name="Setup" >
     <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" />
     <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}" />
-    <mkiisdir dirpath="${BuildPackagesDirectory}" vdirname="${ProjectName}/Packages"  enabledirbrowsing="true"/>
+    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages"  enabledirbrowsing="true"/>
   </target>
   
 </project>
