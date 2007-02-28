@@ -117,9 +117,8 @@
       <merge>
         <files>
           <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
-          <file>c:\Projects\CI Factory\Current\Build\NCover\NCoverExplorerSummary.xml</file>
-          <file>c:\Projects\CI Factory\Current\Build\Simian\SimianReport.xml</file>
-          <file>c:\Projects\CI Factory\Current\Build\nDepend\NDependMain.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
         </files>
       </merge>
       <xslmerger>
@@ -134,7 +133,7 @@
       &email;
       <nant>
         <executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
-        <baseDirectory>>c:\Projects\CI Factory\Current\Build</baseDirectory>
+        <baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>
