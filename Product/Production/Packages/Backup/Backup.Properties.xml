@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Backup.Properties">
+  
+  <fileset id="Backup.CCNETFiles">
+    <include name="${CCNetLogFilePath}"/>
+    <include name="${BuildDirectory}\server\${string::replace(CCNetProject, ' ', '')}.state"/>
+  </fileset>
+
+  <fileset id="Backup.PublishFiles">
+    <include name="${BuildDirectory}\Installs\${CCNetLabel}\**"/>
+  </fileset>
+
+  <property name="Backup.BackupRepositoryDirectory" value="\\barrett\CIBackups\${environment::get-machine-name()}\${CCNetProject}"/>
+  
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Tracker.Properties">
+
+  %Tracker.Connection%
+
+  <property name="Tracker.FailForNone" value="%Tracker.FailForNone%" />
+
+  %Tracker.QueryFields%
+  
+  <property name="Tracker.Query" value="%Tracker.Query%" />
+  <property name="Tracker.ReportFile" value="${ProjectName}Trackers.xml" />
+  <property name="Tracker.QueryScrList" value="%Tracker.QueryScrList%"/>
+  <property name="Tracker.DailyScrFile" value="${BuildDirectory}\Tracker Reports\DailySCRList.txt"/>
+
+  %Tracker.ChangeFields%
+  
+  %Tracker.UnitTest%
+
+  <property name="Tracker.NoteTitleForMoveTrackersTo" value="Successfully Built ${CCNetLabel}" />  
+  <property name="Tracker.FilesToDeleteAtSetup" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}" />
+  
+  %Tracker.NewFields%
+</project>
