@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend" >
+
+  <include buildfile="nDepend.Properties.xml" />
+
+  <!--
+	The following properties should be specified in the calling script.
+  
+  <property name="nDepend.Console" value="${BuildDirectory}\Packages\nDepend\bin\NDepend.Console.exe" />
+  <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" />
+  <property name="nDepend.BinFolder" value=""/>
+  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend"/>
+  <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report"/>
+  <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
+  
+  <fileset id="nDepend.AssebliesFileSet" >
+    <include name=""/>
+  </fileset>
+
+  <fileset id="nDepend.DependenciesFileSet" >
+    <include name=""/>
+  </fileset>
+  
+  <property name="nDepend.FilesToDeleteAtSetup" value="${nDepend.BuildFolder}\**\*.*"/>
+  
+  -->
+
+  <target name="nDepend.Calculate" >
+    <call target="Private.nDepend.CreateConfiguration"/>
+
+    <copy todir="${nDepend.AssembliesFolder}" verbose="true">
+      <fileset refid="nDepend.AssebliesFileSet" />
+    </copy>
+
+    <copy todir="${nDepend.AssembliesFolder}" verbose="true">
+      <fileset refid="nDepend.DependenciesFileSet" />
+    </copy>
+
+    <exec 
+			program="${path::get-short-path(nDepend.Console)}" 
+			commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
+		/>
+  </target>
+
+  <target name="Private.nDepend.CreateConfiguration">
+    <write file="${nDepend.ConfigurationFile}" append="false">
+      <text>
+        <![CDATA[<?xml version="1.0"?>
+<NDepend AppName="NDepend V1.2.0">]]>
+      </text>
+    </write>
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+    <Dirs>
+      <Dir>%nDepend.AssembliesFolder%</Dir>
+    </Dirs>
+        ]]>
+      </text>
+      <filterchain>
+        <replacestring from="%nDepend.AssembliesFolder%" to="${nDepend.AssembliesFolder}" />
+      </filterchain>
+    </write>
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+    <Assemblies>
+        ]]>
+      </text>
+    </write>
+
+    <strings id="nDepend.AssemblyList" />
+    
+    <foreach item="File" property="AssemblyPath">
+      <in>
+        <items refid="nDepend.AssebliesFileSet" />
+      </in>
+      <do>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name Warn="True">%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
+            </filterchain>
+          </write>
+        </ifnot>
+      </do>
+    </foreach>
+
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+    </Assemblies>
+    <FrameworkAssemblies>
+        ]]>
+      </text>
+    </write>
+
+    <foreach item="File" property="AssemblyPath">
+      <in>
+        <items refid="nDepend.DependenciesFileSet" />
+      </in>
+      <do>
+        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
+          <write file="${nDepend.ConfigurationFile}" append="true">
+            <text>
+              <![CDATA[
+          <Name>%AssemblyName%</Name>
+              ]]>
+            </text>
+            <filterchain>
+              <replacestring from="%AssemblyName%" to="${AssemblyName}" />
+            </filterchain>
+          </write>
+        </ifnot>
+      </do>
+    </foreach>
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+    </FrameworkAssemblies>
+        ]]>
+      </text>
+    </write>
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+    <WarnFilter WarnNotUsedType="True" WarnNotUsedMember="True" WarnTypeVisibility="True" WarnPropertiesVisibility="True" WarnMethodsVisibility="True" WarnConstructorsVisibility="True" WarnFieldsVisibility="True" WarnEventsVisibility="True" >
+      <DontWarn>WARNING: In the context of this application, the property getter {NDepend.DependenciesContainers.OnMember.NMember.get_ListOfMemberThatIUse()} is never used.</DontWarn>
+      <DontWarn>WARNING: In the context of this application, the property getter {NDepend.DependenciesContainers.OnAssembly.NAssembly.get_ListOfType()} is never used.</DontWarn>
+    </WarnFilter>
+        ]]>
+      </text>
+    </write>
+
+    <write file="${nDepend.ConfigurationFile}" append="true">
+      <text>
+        <![CDATA[
+        </NDepend>
+        ]]>
+      </text>
+    </write>
+  </target>
+
+  <target name="nDepend.SetUp">
+    <mkdir if="${directory::exists(nDepend.BuildFolder) == false}" dir="${nDepend.BuildFolder}"/>
+
+    <property name="Common.FilesToDelete" value="${nDepend.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+
+    <mkdir if="${directory::exists(nDepend.ReportFolder) == false}" dir="${nDepend.ReportFolder}"/>
+    <mkdir if="${directory::exists(nDepend.AssembliesFolder) == false}" dir="${nDepend.AssembliesFolder}"/>
+  </target>
+
+  <target name="nDepend.TearDown">
+
+  </target>
+
+</project>
