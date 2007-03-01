@@ -8,9 +8,9 @@
   
   <property name="Deployment.SourceFileName" value="TraCHIIPI.tar" />
   <property name="Deployment.SourceDir"	value="${ProductionDirectory}\lib" />
-  <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+  <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
   <property name="Deployment.TargetFile"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
-  <property name="Deployment.FileWebPath"	value="/${ProjectName}/Current/Build/Installs/${CCNetLabel}/${DeploymentFileName}" />
+  <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
   <property name="Deployment.FileWebName"	value="${CCNetLabel} ${DeploymentFileName}" />
   
   -->
