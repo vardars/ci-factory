@@ -31,7 +31,7 @@
   </target>
 
   <target name="Private.Deployment.EchoDeploymentWebPath" >
-    <echo message="${Deployment.WebPathRoot}" level="Info"/>
+    <echo message="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" level="Info"/>
   </target>
 
   <target name="Private.Deployment.EchoDeploymentFileWebName" >

@@ -45,7 +45,6 @@
     <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
     <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
     <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
-    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" />
 
     <call target="Deployment.PublishFileSilently"/>
 
