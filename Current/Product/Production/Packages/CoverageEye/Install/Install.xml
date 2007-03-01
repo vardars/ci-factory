@@ -32,7 +32,8 @@
   </target>
 
   <target name="CoverageEye.ValidateParameters">
-
+    <fail unless="${property::exists('Coverage.UnitTestPackageInclude')}" message="Please set the property Coverage.UnitTestPackageInclude"/>
+    <fail unless="${property::exists('Coverage.UnitTestPropertiesInclude')}" message="Please set the property Coverage.UnitTestPropertiesInclude"/>
   </target>
   
 </project>
