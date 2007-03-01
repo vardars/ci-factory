@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Target">
+
+  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Private.Deployment.EchoDeploymentFileWebPath')}"/>
+
+  <include buildfile="CSDiff.Properties.xml" />
+  <property name="CSDiff.ProgramPath" value="${PackagesDirectory}\CSDiff\bin\csdiff.exe"/>
+  <property name="CSDiff.ReportDirectoryName" value="Diffs"/>
+  <property name="CSDiff.ReportFileName" value="DiffReport.htm"/>
+  <property name="CSDiff.ReportDirectoryPath" value="${Common.ArtifactDirectoryPath}\${CSDiff.ReportDirectoryName}"/>
+
+  <target name="CSDiff.GenerateHtmlReports">
+    <exec program="${CSDiff.ProgramPath}" verbose="true">
+      <arg line='"/Oh${CSDiff.ReportDirectoryPath}\${CSDiff.ReportFileName}"' />
+      <arg line="/n"/>
+      <arg line="/q" />
+      <arg line="/d" />
+      <arg line="/rC:02134S:2AH:1" />
+      <arg line='"${SourceModificationReport.OldSourcePath}"' />
+      <arg line='"${SourceModificationReport.NewSourcePath}"' />
+      <arg line='"Old Source"' />
+      <arg line='"New Source"' />
+    </exec>
+
+    <property name="Deployment.FileWebPath"	value="/${ProjectName} Installs/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
+    <call target='Private.Deployment.EchoDeploymentFileWebPath'/>
+  </target>
+
+  <target name="CSDiff.SetUp">
+    <mkdir dir="${CSDiff.ReportDirectoryPath}" unless="${directory::exists(CSDiff.ReportDirectoryPath)}"/>
+  </target>
+
+  <target name="CSDiff.TearDown">
+
+  </target>
+
+</project>
