@@ -23,7 +23,7 @@
       <arg line='"New Source"' />
     </exec>
 
-    <property name="Deployment.FileWebPath"	value="/${ProjectName} Installs/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
     <call target='Private.Deployment.EchoDeploymentFileWebPath'/>
   </target>
 
