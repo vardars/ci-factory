@@ -12,9 +12,9 @@
       <arg line="-DProductVersion=${CCNetLabel}" />
     </exec>
 
-    <property name="Deployment.TargetDir" value="${BuildDirectory}\Installs\${CCNetLabel}" />
+    <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
     <property name="Deployment.ZipFileName" value="${ProjectName}Java.zip" />
-    <property name="Deployment.FileWebPath" value="/${ProjectName} Installs/${CCNetLabel}/${Deployment.ZipFileName}" />
+    <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.ZipFileName}" />
     <property name="Deployment.FileWebName" value="${CCNetLabel} ${Deployment.ZipFileName}" />
 
     <call target="Deployment.PublishZip" />

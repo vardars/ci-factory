@@ -5,8 +5,8 @@
   <property name="Install.MsiSourceFile"        value="${ProjectName}.msi" />
   <property name="Install.MsiSourceDir"        value="${ProductDirectory}\Install\${ProjectName}\Release" />
   <property name="Install.MsiTargetFile"        value="${ProjectName}${CCNetLabel}.msi" />
-  <property name="Install.MsiTargetDir"        value="${BuildDirectory}\Installs\${CCNetLabel}" />
-  <property name="Install.MsiTargetFileWebPath" value="/${ProjectName} Installs/${CCNetLabel}/${ProjectName}${CCNetLabel}.msi" />
+  <property name="Install.MsiTargetDir"        value="${Common.ArtifactDirectoryPath}" />
+  <property name="Install.MsiTargetFileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${ProjectName}${CCNetLabel}.msi" />
   <property name="Install.MsiTargetFileWebName" value="${ProjectName}${CCNetLabel}.msi" />
   <property name="Install.PostWrapBatchFile" value="" />
   <property name="Install.ToConvertLogFile" value="true" />

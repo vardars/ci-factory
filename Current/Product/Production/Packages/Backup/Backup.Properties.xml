@@ -7,9 +7,9 @@
   </fileset>
 
   <fileset id="Backup.PublishFiles">
-    <include name="${BuildDirectory}\Installs\${CCNetLabel}\**"/>
+    <include name="${Common.ArtifactDirectoryPath}\**\*"/>
   </fileset>
 
-  <property name="Backup.BackupRepositoryDirectory" value="\\barrett\CIBackups\${environment::get-machine-name()}\${CCNetProject}"/>
+  <property name="Backup.BackupRepositoryDirectory" value="%Backup.BackupRepositoryDirectory%"/>
   
 </project>

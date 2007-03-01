@@ -100,7 +100,7 @@
 
         <property name="Deployment.SourceFileName" value="${AssemblyReportName}" />
         <property name="Deployment.SourceDir"	value="${Coverage.ReportFolder}" />
-        <property name="Deployment.TargetDir"	value="${BuildDirectory}\Installs\${CCNetLabel}" />
+        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
         <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
         <call target="Deployment.PublishFileSilently"/>
         

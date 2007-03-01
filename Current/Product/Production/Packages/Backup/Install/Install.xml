@@ -20,7 +20,7 @@
   </target>
 
   <target name="Backup.ValidateParameters">
-
+    <fail unless="${property::exists('Backup.BackupRepositoryDirectory')}" message="Please set the property Backup.BackupRepositoryDirectory"/>
   </target>
   
 </project>
