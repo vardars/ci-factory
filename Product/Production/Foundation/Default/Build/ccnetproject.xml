@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cruisecontrol [
+  <!ENTITY email '<email from="%ProjectName%.Build@noreply.com" mailhost="localhost" includeDetails="true">
+        <users>
+          <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
+        </users>
+        <groups>
+          <group name="buildmaster" notification="failed"/>
+        </groups>
+      </email>'>
+  <!ENTITY labeller '<labeller type="defaultlabeller">
+      <prefix>1.0.0.</prefix>
+    </labeller>'>
+]>
+<cruisecontrol>
+  <project name="%ProjectName% Build">
+    <webURL>%CCNET.webURL%</webURL>
+    <state type="state" />
+    <triggers>
+      <intervalTrigger seconds="90" />
+    </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+    </integrationFilter>
+    <modificationDelaySeconds>120</modificationDelaySeconds>
+    %SourceControl.BuildUpdateBlock%
+    &labeller;
+  <tasks>
+    <nullTask/>
+  </tasks>
+  <publishers>
+    <xmllogger />
+    &email;
+  </publishers>
+</project>
+<project name="%ProjectName%">
+  <webURL>%CCNET.webURL%</webURL>
+  <state type="state" />
+  <triggers>
+    <intervalTrigger seconds="90" />
+  </triggers>
+  <integrationFilter>
+    <triggeredIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="true" />
+      </allowed>
+    </triggeredIntegrationFilter>
+    <forcedIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="false" />
+      </allowed>
+      <blocked>
+      </blocked>
+    </forcedIntegrationFilter>
+  </integrationFilter>
+  <modificationDelaySeconds>120</modificationDelaySeconds>
+  %SourceControl.MainBuildBlock%
+  &labeller;
+  <tasks>
+    <modificationWriter>
+        <filename>SourceModificationReport.xml</filename>
+        <path>%BuildDirectory%\SourceModificationReports</path>
+      </modificationWriter>
+      <nant>
+        <executable>%BuildDirectory%\nAnt\bin\nant.exe</executable>
+        <baseDirectory>%BuildDirectory%</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Main.build.xml</buildFile>
+        <targetList>
+          <target>Triggered</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
+    </tasks>
+    <publishers>
+      <merge>
+        <files>
+        </files>
+      </merge>
+      <xslmerger>
+        <filepairs>
+        </filepairs>
+      </xslmerger>
+      <xmllogger />
+      &email;
+      <nant>
+        <executable>%BuildDirectory%\nAnt\bin\nant.exe</executable>
+        <baseDirectory>%BuildDirectory%</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Post.Shim.xml</buildFile>
+        <targetList>
+          <target>PostBuildWrapper</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
+    </publishers>
+  </project>
+</cruisecontrol>
