@@ -27,11 +27,11 @@
 
   <target name="Deployment.PublishFileSilently">
     <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
-    <call target="Private.Deployment.EchoDeploymentWebPath" />
+    <call target="Deployment.EchoDeploymentWebPath" />
   </target>
 
-  <target name="Private.Deployment.EchoDeploymentWebPath" >
-    <echo message="${Deployment.WebPathRoot}" level="Info"/>
+  <target name="Deployment.EchoDeploymentWebPath" >
+    <echo message="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" level="Info"/>
   </target>
 
   <target name="Private.Deployment.EchoDeploymentFileWebName" >
