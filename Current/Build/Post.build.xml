@@ -5,7 +5,6 @@
   <include buildfile="Common.Build.xml" />
 
   <description>Begin Package Includes</description>
-  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
   <include buildfile=".\Packages\CSDiff\CSDiff.Target.xml" />
   <description>End Package Includes</description>
 
