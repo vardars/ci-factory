@@ -51,6 +51,7 @@
     <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Functions\TrackerFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\BaseTrackerTask.cs" />
     <Compile Include="DataTypes\ConnectionInformation.cs" />

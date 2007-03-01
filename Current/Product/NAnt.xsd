@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/27/2007 14:33:54</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/01/2007 17:01:29</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -146,16 +146,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -339,16 +340,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -673,18 +675,6 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
-    <xs:attribute name="dbmsloginmode" use="optional" />
-    <xs:attribute name="dbmspassword" use="optional" />
-    <xs:attribute name="dbmsserver" use="optional" />
-    <xs:attribute name="dbmstype" use="optional" />
-    <xs:attribute name="dbmsusername" use="optional" />
-    <xs:attribute name="projectname" use="optional" />
-    <xs:attribute name="username" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="id" use="optional" />
-    <xs:attribute name="refid" use="optional" />
-  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.ReadField">
     <xs:attribute name="name" use="required" />
   </xs:complexType>
@@ -705,6 +695,18 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="field" type="nant:Tracker.Tasks.WriteField" />
     </xs:sequence>
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
+    <xs:attribute name="dbmsloginmode" use="optional" />
+    <xs:attribute name="dbmspassword" use="optional" />
+    <xs:attribute name="dbmsserver" use="optional" />
+    <xs:attribute name="dbmstype" use="optional" />
+    <xs:attribute name="dbmsusername" use="optional" />
+    <xs:attribute name="projectname" use="optional" />
+    <xs:attribute name="username" use="optional" />
+    <xs:attribute name="password" use="optional" />
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
@@ -990,16 +992,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -3143,16 +3146,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -3589,16 +3593,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -3766,16 +3771,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -4070,44 +4076,23 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.NCoverExplorer.Tasks.Types.CoverageExclusion">
-    <xs:attribute name="type" use="optional" />
-    <xs:attribute name="pattern" use="optional" />
-    <xs:attribute name="enabled" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.NCoverExplorer.Tasks.Types.ModuleThreshold">
-    <xs:attribute name="moduleName" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.NCoverExplorer.Tasks.NCoverExplorerTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="exclusion" type="nant:NAnt.NCoverExplorer.Tasks.Types.CoverageExclusion" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="moduleThreshold" type="nant:NAnt.NCoverExplorer.Tasks.Types.ModuleThreshold" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
+    <xs:attribute name="commandLineArgs" use="optional" />
+    <xs:attribute name="commandLineExe" use="optional" />
+    <xs:attribute name="copyXsl" use="optional" />
+    <xs:attribute name="coverageFile" use="optional" />
+    <xs:attribute name="excludeAttributes" use="optional" />
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="outputDir" use="optional" />
-    <xs:attribute name="failMinimum" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-    <xs:attribute name="projectName" use="optional" />
-    <xs:attribute name="reportType" use="optional" />
-    <xs:attribute name="xmlReportName" use="optional" />
-    <xs:attribute name="htmlReportName" use="optional" />
-    <xs:attribute name="mergeFileName" use="optional" />
-    <xs:attribute name="showExcluded" use="optional" />
+    <xs:attribute name="logFile" use="optional" />
+    <xs:attribute name="logLevel" use="optional" />
+    <xs:attribute name="profileIIS" use="optional" />
+    <xs:attribute name="profileService" use="optional" />
+    <xs:attribute name="version" use="optional" />
+    <xs:attribute name="workingDirectory" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4117,23 +4102,56 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.NCoverExplorer.Tasks.NCoverTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.NUnitProjectTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
+    <xs:attribute name="project" use="optional" />
+    <xs:attribute name="appConfig" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.CoverageExclusion">
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="pattern" use="optional" />
+    <xs:attribute name="isRegex" use="optional" />
+    <xs:attribute name="enabled" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.ModuleThreshold">
+    <xs:attribute name="moduleName" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverExplorerTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="exclusion" type="nant:NCoverExplorer.NAntTasks.Types.CoverageExclusion" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="moduleThreshold" type="nant:NCoverExplorer.NAntTasks.Types.ModuleThreshold" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="version" use="optional" />
-    <xs:attribute name="commandLineExe" use="optional" />
-    <xs:attribute name="commandLineArgs" use="optional" />
-    <xs:attribute name="coverageFile" use="optional" />
-    <xs:attribute name="logLevel" use="optional" />
-    <xs:attribute name="logFile" use="optional" />
-    <xs:attribute name="workingDirectory" use="optional" />
-    <xs:attribute name="copyXsl" use="optional" />
-    <xs:attribute name="excludeAttributes" use="optional" />
-    <xs:attribute name="profileIIS" use="optional" />
-    <xs:attribute name="profileService" use="optional" />
+    <xs:attribute name="failMinimum" use="optional" />
+    <xs:attribute name="htmlReportName" use="optional" />
+    <xs:attribute name="mergeFileName" use="optional" />
+    <xs:attribute name="outputDir" use="optional" />
+    <xs:attribute name="projectName" use="optional" />
+    <xs:attribute name="reportType" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+    <xs:attribute name="showExcluded" use="optional" />
+    <xs:attribute name="xmlReportName" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4170,40 +4188,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerAddNote">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="scrid" use="required" />
-    <xs:attribute name="text" use="required" />
-    <xs:attribute name="title" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerChange">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="scrid" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerCreate">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="newscrid" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerGetField">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
@@ -4211,6 +4195,18 @@
     <xs:attribute name="fieldname" use="required" />
     <xs:attribute name="fieldvalueproperty" use="required" />
     <xs:attribute name="scrid" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerAddNote">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="scrid" use="required" />
+    <xs:attribute name="text" use="required" />
+    <xs:attribute name="title" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4228,6 +4224,17 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerChange">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="scrid" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerReport">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.ReadFieldSet" />
@@ -4235,6 +4242,17 @@
     </xs:sequence>
     <xs:attribute name="ScrIdList" use="required" />
     <xs:attribute name="reportfile" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerCreate">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="newscrid" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4504,16 +4522,17 @@
       <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
       <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
       <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-      <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-      <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+      <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+      <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+      <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
       <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
       <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-      <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-      <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-      <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
       <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+      <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
       <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+      <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
       <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+      <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
       <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
       <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
       <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -4544,9 +4563,9 @@
       <xs:element name="dirset" type="nant:NAnt.Core.Types.DirSet" />
       <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
       <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
-      <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
       <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
       <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
       <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
@@ -4700,16 +4719,17 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncoverexplorer" type="nant:NAnt.NCoverExplorer.Tasks.NCoverExplorerTask" />
-        <xs:element name="ncover" type="nant:NAnt.NCoverExplorer.Tasks.NCoverTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
         <xs:element name="tfsblock" type="nant:TF.Tasks.SourceControl.Tasks.TfsBlock" />
         <xs:element name="tfsdeleteworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsDeleteWorkspace" />
@@ -4740,9 +4760,9 @@
         <xs:element name="dirset" type="nant:NAnt.Core.Types.DirSet" />
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
+        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
         <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
         <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />

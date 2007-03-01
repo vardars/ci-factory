@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Functions\TrackerFunctionsTest.cs" />
     <Compile Include="Stubs\ToolKitStub.cs" />
     <Compile Include="tServerHelper.cs" />
     <Compile Include="Tasks\tTrackerQuery.cs" />

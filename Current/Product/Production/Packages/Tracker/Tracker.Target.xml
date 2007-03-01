@@ -86,27 +86,53 @@
       </trackeraddnote>
     </foreach>
   </target>
-  
-  <target name="Tracker.Queries">
-    
-      <property name="Private.Tracker.Queries.Count" value=""/>
-      <trackerquery
-        countproperty ="Private.Tracker.Queries.Count" 
-        idsproperty ="Tracker.QueryScrList"
-        query="${Tracker.Query}" 
-      >
-        <connectioninformation refid="Tracker.Connection"/>
-      </trackerquery>
 
-      <if test="${Tracker.FailForNone}" >
-        <if test="${string::get-length(Private.Tracker.Queries.Count) == 0}">
-          <fail message="No Trackers put in pending build for this checkin" />
-        </if>
-        <if test="${int::parse(Private.Tracker.Queries.Count) == 0}">
-          <fail message="No Trackers put in pending build for this checkin" />
-        </if>
+  <target name="Tracker.Queries">
+    <property name="Private.Tracker.Queries.Count" value=""/>
+    <trackerquery
+      countproperty ="Private.Tracker.Queries.Count"
+      idsproperty ="Tracker.QueryScrList"
+      query="${Tracker.Query}"
+      >
+      <connectioninformation refid="Tracker.Connection"/>
+    </trackerquery>
+
+    <if test="${Tracker.FailForNone}" >
+      <if test="${string::get-length(Private.Tracker.Queries.Count) == 0}">
+        <fail message="No Trackers put in pending build for this checkin" />
       </if>
-   </target>
+      <if test="${int::parse(Private.Tracker.Queries.Count) == 0}">
+        <fail message="No Trackers put in pending build for this checkin" />
+      </if>
+    </if>
+  </target>
+
+  <target name="Tracker.FromSourceCommitComment">
+    <property name="Tracker.QueryScrList" value=""/>
+    <xmlquery
+      file="${SourceModificationReport.ReportFile}"
+      id="Comments"
+      query="//Modification/Comment"
+    />
+
+    <loopthrough property="Comment">
+      <items>
+        <xmlquery refid="Comments" />
+      </items>
+      <do>
+        <property name="NewScrs" value="${tracker::extract-scr-numbers(Comment)}"/>
+        <if test="${NewScrs != ''}">
+          <property name="Tracker.QueryScrList" value="${Tracker.QueryScrList},${NewScrs}"/>
+        </if>
+      </do>
+    </loopthrough>
+    <if test="${Tracker.QueryScrList != ''}">
+      <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList)}"/>
+    </if>
+    <if test="${Tracker.QueryScrList == '' and bool::parse({Tracker.FailForNone)}">
+      <fail message="No Scrs found in any of the Check-in comments." />
+    </if>
+  </target>
 
   <target name="Tracker.Report">
     <ifnot test="${string::get-length(Tracker.QueryScrList) == 0}">
