@@ -159,7 +159,7 @@
           nodeindex="${index}" 
         />
 
-        <property name="ModificationFilePath" value="${string::replace(SCPath, ${SourceModificationReport.SCProductPath}, '')}/${FileName}"/>
+        <property name="ModificationFilePath" value="${string::replace(SCPath, SourceModificationReport.SCProductPath, '')}/${FileName}"/>
 
         <echo message="Adding ${ModificationFilePath} to modification list."/>
 
