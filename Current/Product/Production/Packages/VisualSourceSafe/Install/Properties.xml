@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSS.Installer">
 
-  <property name="VSS.RootShare" value="\\saturn\Source Safe" overwrite="false"/>
+  <property name="VSS.RootShare" value="C:\Source Safe DataBases" overwrite="false"/>
   <property name="VSS.DBPath" value="${VSS.RootShare}\${ProjectName}\srcsafe.ini" overwrite="false"/>
   <property name="VSS.Username" value="build"  overwrite="false"/>
   <property name="VSS.Password" value="password"  overwrite="false"/>

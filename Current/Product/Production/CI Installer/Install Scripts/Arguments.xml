@@ -2,27 +2,49 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
   <property name="ProjectName" value="TestProject" />
   <property name="CCNET.ServerPort" value="21236"/>
-  <property name="VSS.RootShare" value="C:\Source Safe DataBases"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
+  <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
+  <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
+  <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
+  <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" /><!--makes shure that the case is correct, Tags or tags-->
+
+  <property name="SVN.WebRepoUrl" value="http://${ProjectName}.googlecode.com/svn"/>
+  <property name="SVN.Username" value="Build" />
+  <property name="SVN.Password" value="password" />
+  <property name="SVN.WebVisible" value="true" />
+
+  <property name="SourceModificationReport.SCProductPath" value="/Current/Product"/>
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackageDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackageDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
   <strings id="Packages.InstallList">
     <string value="SourceModificationReport"/>
-    <string value="Tracker"/>
-    <string value="VisualSourceSafe"/>
+    <string value="CSDiff" />
+    <string value="Subversion"/>
     <string value="Versioning"/>
-    <string value="VS.NETCompile"/>
-    <string value="CoverageEye"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
     <string value="DotNetUnitTest"/>
-    <string value="InstallShield"/>
     <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
     
     <string value="Deployment"/>
 
-    <!--<string value="CodeVeilObfuscation"/>
-    <string value="TestCoverage"/>
-    <string value="Subversion"/>
-    <string value="LinesOfCode"/>
-    <string value="Ant"/>-->
+    <!--
+    <string value="VisualSourceSafe"/>
+    <string value="Ant"/>
+    <string value="Analytics" /><- Experiemental - Not fully implemented
+    <string value="Backup" />
+    <string value="VS.NETCompile"/>
+    <string value="MSTest" />
+    <string value="CoverageEye"/>
+    <string value="Tracker"/>
+    <string value="InstallShield"/>
+    <string value="VSTSVersionControl" /><- Experiemental - Not fully implemented
+    -->
   </strings>
 </project>

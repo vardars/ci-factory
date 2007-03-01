@@ -3,8 +3,8 @@
   
   <property name="Coverage.ReportFolder" value="${BuildDirectory}\CoverageReports"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
-  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\MSTest\UnitTest.Target.xml" />
-  <property name="Coverage.UnitTestPropertiesInclude" value="${BuildDirectory}\Packages\MSTest\UnitTest.Properties.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="%Coverage.UnitTestPackageInclude%" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="%Coverage.UnitTestPropertiesInclude%" />
   <property name="Coverage.AssemblyNameFormat" value="${ProjectName}.*.dll"/>
 
   <fileset id="Coverage.Targets" />

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Target">
 
+  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Private.Deployment.EchoDeploymentFileWebPath')}"/>
+
   <include buildfile="CSDiff.Properties.xml" />
   <property name="CSDiff.ProgramPath" value="${PackagesDirectory}\CSDiff\bin\csdiff.exe"/>
   <property name="CSDiff.ReportDirectoryName" value="Diffs"/>
@@ -9,7 +12,7 @@
 
   <target name="CSDiff.GenerateHtmlReports">
     <exec program="${CSDiff.ProgramPath}" verbose="true">
-      <arg line="/Oh${CSDiff.ReportDirectoryPath}\${CSDiff.ReportFileName}" />
+      <arg line='"/Oh${CSDiff.ReportDirectoryPath}\${CSDiff.ReportFileName}"' />
       <arg line="/n"/>
       <arg line="/q" />
       <arg line="/d" />

@@ -15,17 +15,6 @@
       <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="Diff" actionName="DiffReports" xslFileName="Packages\CSDiff\CSDiffReport.xsl" artifactRootUrl="/${ProjectName} Artifacts" xmlFileName="postbuildlog.xml" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
-
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true">
-        <![CDATA[<include buildfile="${PackagesDirectory.Ref}\SourceModificationReport\SourceModificationReport.Target.xml" />
-  <include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]>
-      </value>
-    </largeproperty>
-    <largeproperty name="Private.Packages.MainBuild.Replace.From">
-      <value xml="false"><![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]></value>
-    </largeproperty>
-    <call target="Private.Packages.MainBuild.Replace"/>
   </target>
 
   <target name="CSDiff.SetAsCurrentPackage">
@@ -36,7 +25,9 @@
   </target>
 
   <target name="CSDiff.ValidateParameters">
-
+    <fail unless="${stringlist::contains('Packages.InstallList', 'SourceModificationReport')}" message="Please inlcude the package SourceModificationReport.  The CSDiff package is dependent on it."/>
+    <fail unless="${stringlist::contains('Packages.InstallList', 'Deployment')}" message="Please inlcude the package Deployment.  The CSDiff package is dependent on it."/>
+    <fail unless="${property::exists('SourceModificationReport.SCProductPath')}" message="Property SourceModificationReport.SCProductPath is not set."/>
   </target>
   
 </project>
