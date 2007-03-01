@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.Target" default="test" >
+
+  <include buildfile="Analytics.Properties.xml" />
+
+  <!-- Input Properties
+  <property name="Analytics.XslFilePath" value=""/>
+  <property name="Analytics.XmlReportFileName" value=""/>
+  <property name="Analytics.XmlInputFileName" value=""/>
+  <property name="Analytics.CopyFileSetRefId" value=""/>
+  <property name="Analytics.Append" value=""/>
+  -->
+  <target name="Analytics.CompileReport">
+    <echo message="Processing ${Analytics.BuildLog}"/>
+    <echo message="Analytics.XslFilePath = ${Analytics.XslFilePath}"/>
+    <echo message="Analytics.XmlReportFileName = ${Analytics.XmlReportFileName}"/>
+    <echo message="Analytics.XmlInputFileName = ${Analytics.XmlInputFileName}"/>
+    <echo message="Analytics.CopyFileSetRefId = ${Analytics.CopyFileSetRefId}"/>
+    <echo message="Analytics.Append = ${Analytics.Append}"/>
+
+    <call target="Private.Analytics.GetArtifactFolderName"/>
+
+    <property name="Private.Analytics.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Private.Analytics.ArtifactFolderName}"/>
+    <mkdir dir="${Private.Analytics.ArtifactDirectoryPath}" unless="${directory::exists(Private.Analytics.ArtifactDirectoryPath)}" verbose="true"/>
+
+    <xslmultiout xmlInputFilePath="${Analytics.XmlInputFileName}"
+      xslTransformFilePath="${Analytics.XslFilePath}" 
+      outputFilePath="${ArtifactRootDirectory}\${Analytics.XmlReportFileName}" 
+      append="${Analytics.Append}">
+      <parameters>
+        <parameter name="CCNetLabel" value="${CCNetLabel}"/>
+      </parameters>
+    </xslmultiout>    
+
+    <foreach item="File" property="Analytics.CompileReport.XmlFileToCopy" verbose="true">
+      <in>
+        <items refid="${Analytics.CopyFileSetRefId}" />
+      </in>
+      <do>
+        <echo message="Copying ${Analytics.CompileReport.XmlFileToCopy} to ${Private.Analytics.ArtifactDirectoryPath + '\' + path::get-file-name(Analytics.CompileReport.XmlFileToCopy)}"/>
+        <xmlcopy 
+          inputFilePath="${Analytics.CompileReport.XmlFileToCopy}" 
+          outputDirectoryPath="${Private.Analytics.ArtifactDirectoryPath}" 
+          verbose="True" />
+      </do>
+    </foreach>
+  </target>
+
+  <!-- Input Properties
+  <property name="Analytics.TargetListRefId" value=""/>
+  -->
+  <target name="Analytics.CompileReports">
+    <loopthrough property="Analytics.Target">
+      <items>
+        <strings refid="${Analytics.TargetListRefId}" />
+      </items>
+      <do>
+        <call target="${Analytics.Target}"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <!-- Input Properties
+  <property name="Analytics.TargetListRefId" value=""/>
+  <property name="Analytics.DeleteFileSetRefId" value=""/>
+  -->
+  <target name="Analytics.RecompileReport">
+    <delete>
+      <fileset refid="${Analytics.DeleteFileSetRefId}" />
+    </delete>
+
+    <foreach item="File" property="Analytics.BuildLog">
+      <in>
+        <items>
+          <include name="${BuildDirectory}\server\${CCNetProject}\Artifacts\buildlogs\*.xml"/>
+        </items>
+      </in>
+      <do>
+        <call target="Analytics.CompileReports"/>
+      </do>
+    </foreach>
+    
+  </target>
+
+  <!-- Input Properties
+  <property name="Analytics.BuildLog" value=""/>
+  -->
+  <!-- Return Properties
+  <property name="Private.Analytics.ArtifactFolderName" value=""/>
+  -->
+  <target name="Private.Analytics.GetArtifactFolderName">
+    <regex pattern="^*.log(?'PrivateAnalyticsArtifactFolderName'\d+)[Lbuild\.[\w+|\.|-]+]?\.xml$" input="${Analytics.BuildLog}"/>
+    
+    <property name="Private.Analytics.ArtifactFolderName" value="${PrivateAnalyticsArtifactFolderName}"/>
+    <echo message="The ArtifactFolderName is ${Private.Analytics.ArtifactFolderName}"/>
+  </target>
+
+</project>
