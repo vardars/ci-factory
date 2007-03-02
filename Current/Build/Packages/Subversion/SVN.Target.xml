@@ -84,6 +84,7 @@
         <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
           <arg line="revert" />
           <arg line="--recursive" />
+          <arg line="." />
         </exec>
         <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true">
           <arg line="update" />
@@ -106,6 +107,7 @@
         <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
           <arg line="revert" />
           <arg line="--recursive" />
+          <arg line="." />
         </exec>
         <exec program="svn" workingdir="${ProductDirectory}" verbose="true">
           <arg line="update" />
