@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
+
+  <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
+	<property name="Compile.ConfigName" value="debug" overwrite="false"/>
+	<property name="Compile.ToCopyToBin" value="false" overwrite="false" />
+  <property name="Compile.ToDeployZip" value="false" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+	
+  <include buildfile="Compile.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="Compile.Bin" value="" />
+	<property name="Compile.XmlLogFileName" value="" />
+	-->
+	
+	<!-- The following properties are for internal use only -->
+  <property name="Private.Compile.Result" value="" />
+    
+  <target name="Compile.CompileSource">
+    <exec 
+	    program="${framework::get-framework-directory('net-2.0')}\msbuild.exe"
+	    failonerror="false"
+	    resultproperty="Private.Compile.Result"
+      verbose="true"
+    >
+      <arg line='"${Compile.SolutionFile}"' />
+      <arg line='/t:Clean;Build' />
+      <arg line='/p:Configuration="${Compile.ConfigName}"' />
+      <arg line='/noconsolelogger' />
+      <arg line='/l:XmlLogger,"${PackagesDirectory}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
+      <environment refid="${Compile.Environment}" />
+    </exec>
+    <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.ArtifactDirectoryPath}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>
+    <if test="${int::parse(Private.Compile.Result) != 0}">
+      <fail message='The compilation failed, for details please click the link named "MSBuild Compile Details" on the left.' />
+    </if>
+    <call target="Private.Compile.CopyToWorkingBin" />
+    <call target="Private.Compile.DeployZip" />
+  </target>
+    
+  <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">
+    <attrib readonly="false">
+      <fileset refid="Compile.ToCopy" />
+    </attrib>
+
+    <mkdir if="${directory::exists(Compile.Bin) == false}" dir="${Compile.Bin}"/>
+
+    <copy failonerror="true" overwrite="true" flatten="true" todir="${Compile.Bin}" verbose="true">
+      <fileset refid="Compile.ToCopy" />
+    </copy>
+  </target>
+
+  <target name="Private.Compile.DeployZip" if="${Compile.ToDeployZip}">
+    <zip zipfile="${Compile.Bin}\${Compile.ZipFileName}">
+      <fileset>
+        <include name="${Compile.Bin}/**" />
+      </fileset>
+    </zip>
+    <property name="Deployment.SourceFileName" value="${Compile.ZipFileName}"/>
+    <property name="Deployment.SourceDir"	value="${Compile.Bin}\" />
+    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+    <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+    <property name="Deployment.FileWebName"	value="${Deployment.TargetFile}" />
+
+    <call target="Deployment.PublishFile"/>
+  </target>
+  
+  <target name="Compile.SetUp">
+    <delete dir="${Compile.LogFileDirectory}" if="${directory::exists(Compile.LogFileDirectory)}" />
+    <mkdir dir="${Compile.LogFileDirectory}"/>
+  </target>
+
+  <target name="Compile.TearDown">
+
+  </target>
+
+</project>
