@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Factory Packager" default="Packager.Create">
+
+  <property name="ThirdPartyDirectory" value="C:\Projects\CI Factory\Current\Third Party"/>
+  <property name="ProductDirectory" value="C:\Projects\CI Factory\Current\Product"/>
+  <property name="ZipDirectory" value="${ProductDirectory}\Install\CI Factory\Zip"/>
+
+  <target name="Packager.Create">
+
+    <delete dir="${ZipDirectory}" if="${directory::exists(ZipDirectory)}"/>
+    <mkdir dir="${ZipDirectory}"/>
+
+    <copy todir="${ZipDirectory}" includeemptydirs="true">
+      <fileset basedir="${ProductDirectory}\Production\CI Installer" >
+        <include name="Install Scripts\**\*"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${ZipDirectory}" includeemptydirs="true">
+      <fileset basedir="${ProductDirectory}\Production\Foundation">
+        <include name="Default\**\*"/>
+        <exclude name="Default\Build\nAnt\**\*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${ZipDirectory}\Default\Build\nAnt" includeemptydirs="true" >
+      <fileset basedir="${ThirdPartyDirectory}\nAnt">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+      
+    <copy todir="${ZipDirectory}\nAnt" includeemptydirs="true" >
+      <fileset basedir="${ThirdPartyDirectory}\nAnt">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${ZipDirectory}" includeemptydirs="true">
+      <fileset basedir="${ProductDirectory}\Production">
+        <include name="Packages\**\*"/>
+        <exclude name="Packages\Packages.csproj"/>
+        <exclude name="Packages\obj\**\*"/>
+      </fileset>
+    </copy>
+
+    <zip includeemptydirs="true" zipfile="${ZipDirectory}\CIFactory.zip" >
+      <fileset basedir="${ZipDirectory}">
+        <include name="**\*"/>
+      </fileset>
+    </zip>
+
+  </target>
+  
+</project>
