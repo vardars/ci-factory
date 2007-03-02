@@ -21,59 +21,23 @@
   <property name="SourceControl.ThirdPartyChanged" value=""/>
   -->
   <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
-
-    <trycatch>
-      <try>
-        <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true">
-          <arg line="update" />
-          <arg line="--non-interactive" />
-          <arg line="--username ${SVN.Username}" />
-          <arg line="--password ${SVN.Password}" />
-        </exec>
-      </try>
-      <catch>
-        <if test="${directory::exists(ThirdPartyDirectory)}" >
-          <attrib readonly="false">
-            <fileset>
-              <include name="${ThirdPartyDirectory}\*" />
-            </fileset>
-          </attrib>
-
-          <trycatch>
-            <try>
-              <delete dir="${ThirdPartyDirectory}"/>
-            </try>
-            <catch>
-              <exec program="cmd" commandline='/C "rmdir /S /Q "${ThirdPartyDirectory}""' />
-            </catch>
-          </trycatch>
-        </if>
-        <mkdir dir="${ThirdPartyDirectory}" />
-        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Third Party" recursive ="true" destination ="${ThirdPartyDirectory}" />
-      </catch>
-    </trycatch>
-      
+    <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
+      <arg line="revert" />
+      <arg line="--recursive" />
+      <arg line="--quiet" />
+    </exec>
+    <svncleantree directory="${ThirdPartyDirectory}" recursive="true" if="${directory::exists(ThirdPartyDirectory)}" failonerror="false"/>
+    <call target="SourceControl.GetOfThirdPartyDirectory"/>
   </target>
 
   <target name="SourceControl.CleanGetOfProductDirectory" >
-    <if test="${directory::exists(ProductDirectory)}" >
-      <attrib readonly="false">
-        <fileset>
-          <include name="${ProductDirectory}\*" />
-        </fileset>
-      </attrib>
-
-      <trycatch>
-        <try>
-          <delete dir="${ProductDirectory}"/>
-        </try>
-        <catch>
-          <exec program="cmd" commandline='/C "rmdir /S /Q "${ProductDirectory}""' />
-        </catch>
-      </trycatch>
-    </if>
-    <mkdir dir="${ProductDirectory}" />
-    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Product" recursive ="true" destination ="${ProductDirectory}" />
+    <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
+      <arg line="revert" />
+      <arg line="--recursive" />
+      <arg line="--quiet" />
+    </exec>
+    <svncleantree directory="${ProductDirectory}" recursive="true" if="${directory::exists(ProductDirectory)}" failonerror="false"/>
+    <call target="SourceControl.GetOfProductDirectory"/>
   </target>
 
   <target name="SourceControl.GetOfThirdPartyDirectory" >

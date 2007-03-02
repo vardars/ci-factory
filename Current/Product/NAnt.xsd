@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/01/2007 19:56:06</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/01/2007 23:03:17</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -26,6 +26,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -220,6 +221,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -872,6 +874,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1148,6 +1151,14 @@
     <xs:attribute name="VersionAttribute" use="required" />
     <xs:attribute name="Version" use="required" />
     <xs:attribute name="File" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.SvnCleanTree">
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="directory" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -3026,6 +3037,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3473,6 +3485,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3651,6 +3664,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4402,6 +4416,7 @@
       <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
       <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+      <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4599,6 +4614,7 @@
         <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
