@@ -2,6 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning.Properties">
 
   <property name="Versioning.ProductInformationFileLocation" value="${ProductDirectory}" />
+  <property name="Versioning.ProductInformationFile" value="ProjectInfo.*" />
   <property name="Versioning.ProductVersion" value="${CCNetLabel}" />
 
 </project>

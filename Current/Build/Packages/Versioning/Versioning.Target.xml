@@ -56,27 +56,23 @@
   </target>
 
   <target name="Versioning.IncreamentBuildNumberOfProduct">
-    <property name="SourceControl.CheckOut.File" value="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}"/>
-    <call target="SourceControl.CheckOut"/>
-    <UpdateProductVersion File="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}" Version="${Versioning.ProductVersion}" />
-    <property name="SourceControl.CheckIn.File" value="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}"/>
-    <call target="SourceControl.CheckIn"/>
-
+    
     <foreach item="File" property="ReplaceFile">
       <in>
         <items>
-          <include name="${Versioning.ProductInformationFileLocation}\**\${Versioning.ProductInformationFile}"/>
+          <include name="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}"/>
         </items>
       </in>
       <do>
         <property name="SourceControl.CheckOut.File" value="${ReplaceFile}"/>
         <call target="SourceControl.CheckOut"/>
-        <copy file="${Versioning.ProductInformationFileLocation}\${Versioning.ProductInformationFile}" tofile="${ReplaceFile}" />
+        <UpdateProductVersion File="${ReplaceFile}" Version="${Versioning.ProductVersion}" />
+        <UpdateAssemblyVersion File="${ReplaceFile}" Version="${Versioning.ProductVersion}" VersionAttribute="AssemblyFileVersion" />
         <property name="SourceControl.CheckIn.File" value="${ReplaceFile}"/>
         <call target="SourceControl.CheckIn"/>
       </do>
     </foreach>
-    
+
   </target>
 
   <target name="Versioning.SetUp">
