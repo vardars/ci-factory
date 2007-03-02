@@ -13,7 +13,7 @@
     </labeller>'>
 ]>
 <cruisecontrol>
-  <project name="CI Factory Build">
+  <project name="CI Factory Build Scripts">
     <webURL>http://JFLOWERSXP4/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
