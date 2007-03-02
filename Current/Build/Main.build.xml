@@ -13,6 +13,7 @@
   <include buildfile=".\Packages\nDepend\nDepend.Target.xml" />
   <include buildfile=".\Packages\LinesOfCode\LinesOfCode.Target.xml" />
   <include buildfile=".\Packages\Deployment\Deployment.Target.xml" />
+  <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
   <description>End Package Includes</description>
 
   <target name="Triggered" depends="SetUps" >
@@ -32,6 +33,8 @@
         <description>End Clean Up Actions</description>
 
         <description>Begin Compile Actions</description>
+        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies"/>
+        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
         <call target="Compile.CompileSource" />
         <description>End Compile Actions</description>
 
@@ -70,6 +73,7 @@
     <call target="Common.SetUp" />
     <description>Begin SetUps</description>
     <call target="SourceModificationReport.SetUp"/>
+    <call target="Versioning.SetUp"/>
     <call target="SourceControl.SetUp"/>
     <call target="UnitTest.SetUp"/>
     <call target="Compile.SetUp"/>
@@ -84,6 +88,7 @@
   <target name="TearDowns">
     <description>Begin TearDowns</description>
     <call target="SourceModificationReport.TearDown"/>
+    <call target="Versioning.TearDown"/>
     <call target="SourceControl.TearDown"/>
     <call target="UnitTest.TearDown"/>
     <call target="Compile.TearDown"/>
