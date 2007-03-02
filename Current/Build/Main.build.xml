@@ -62,9 +62,7 @@
         <description>End Main Build</description>
       </try>
       <finally>
-
         <call target="TearDowns"/>
-
       </finally>
     </trycatch>
   </target>
