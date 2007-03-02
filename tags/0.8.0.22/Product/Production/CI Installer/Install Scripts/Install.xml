@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Install">
+  
+  <include buildfile="Arguments.xml"/>
+
+  <filterchain id="Common.FilterChain">
+    <replacestring from="%ProjectName%"  to="${ProjectName}"   />
+    <replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
+
+    <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
+    <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
+    <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
+    <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
+    <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
+    <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
+    <replacestring from="%InstallDirectory%"         to="${InstallDirectory}"  />
+    <replacestring from="%UnitTestDirectory%"        to="${UnitTestDirectory}"  />
+    <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
+  </filterchain>
+  
+  <include buildfile="Scripts\CCNET.Install.xml"/>
+  <include buildfile="Scripts\nAnt.Install.xml"/>
+  <include buildfile="Scripts\BuildVS.Install.xml"/>
+  <include buildfile="Scripts\Packages.Install.xml"/>
+
+  <target name="Install" depends="Private.Install.ValidateParameters">
+    <call target="Private.Install.CreateDirectoryStructure"/>
+    <call target="CCNET.Install"/>
+    <call target="nAnt.Install"/>
+    <call target="BuildVS.Install"/>
+    <call target="Packages.Install"/>
+  </target>
+
+  <target name="Private.Install.ValidateParameters" >
+    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set on the commandline."/>
+    
+    <call target="CCNET.ValidateParameters"/>
+    <call target="nAnt.ValidateParameters"/>
+    <call target="BuildVS.ValidateParameters"/>
+    <call target="Packages.ValidateParameters"/>
+  </target>
+
+  <target name="Private.Install.CreateDirectoryStructure">
+    <mkdir unless="${directory::exists(ProjectsDirectory)}"        dir="${ProjectsDirectory}"/>
+    <mkdir unless="${directory::exists(ProjectRootDirectory)}"     dir="${ProjectRootDirectory}"/>
+    <mkdir unless="${directory::exists(ProjectCodeLineDirectory)}" dir="${ProjectCodeLineDirectory}"/>
+    <mkdir unless="${directory::exists(ProductDirectory)}"         dir="${ProductDirectory}"/>
+    <mkdir unless="${directory::exists(ThirdPartyDirectory)}"      dir="${ThirdPartyDirectory}"/>
+    <mkdir unless="${directory::exists(ProductionDirectory)}"      dir="${ProductionDirectory}"/>
+    <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
+    <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
+    <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
+    <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
+  </target>
+  
+</project>
