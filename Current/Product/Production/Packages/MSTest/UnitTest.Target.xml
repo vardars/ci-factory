@@ -23,8 +23,7 @@
 	<target name="UnitTest.RunTests">
 
     <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}" 
-            runconfig="${UnitTest.RunConfig}" 
-            verbose="true">
+            runconfig="${UnitTest.RunConfig}">
       <testcontainers refid="UnitTest.TestAssemblies" />
     </mstest>
 	</target>

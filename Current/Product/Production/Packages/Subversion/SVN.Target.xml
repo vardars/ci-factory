@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN">
 
+  <loadtasks assembly="${PackagesDirectory}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
+
   <property name="SVN.Debug" value="false" overwrite="false" />
 
   <include buildfile="SVN.Properties.xml" />
@@ -16,54 +18,70 @@
 	
 	-->
 
-  <!-- The following will be set by the target. 
-  
-  <property name="SourceControl.ThirdPartyChanged" value=""/>
-  -->
   <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
-    <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
-      <arg line="revert" />
-      <arg line="--recursive" />
-      <arg line="--quiet" />
-    </exec>
-    <svncleantree directory="${ThirdPartyDirectory}" recursive="true" if="${directory::exists(ThirdPartyDirectory)}" failonerror="false"/>
-    <call target="SourceControl.GetOfThirdPartyDirectory"/>
+    <property name="SourceControl.CleanGetOf" value="${ThirdPartyDirectory}"/>
+    <call target="SourceControl.CleanGetOf"/>
   </target>
 
   <target name="SourceControl.CleanGetOfProductDirectory" >
-    <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
-      <arg line="revert" />
-      <arg line="--recursive" />
-      <arg line="--quiet" />
-    </exec>
-    <svncleantree directory="${ProductDirectory}" recursive="true" if="${directory::exists(ProductDirectory)}" failonerror="false"/>
-    <call target="SourceControl.GetOfProductDirectory"/>
+    <property name="SourceControl.CleanGetOf" value="${ProductDirectory}"/>
+    <call target="SourceControl.CleanGetOf"/>
   </target>
 
   <target name="SourceControl.GetOfThirdPartyDirectory" >
-    <mkdir dir="${ThirdPartyDirectory}" unless="${directory::exists(ThirdPartyDirectory)}"/>
-
-    <trycatch>
-      <try>
-        <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true">
-          <arg line="update" />
-          <arg line="--non-interactive" />
-          <arg line="--username ${SVN.Username}" />
-          <arg line="--password ${SVN.Password}" />
-        </exec>
-      </try>
-      <catch>
-        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Third Party" recursive ="true" destination ="${ThirdPartyDirectory}" />
-      </catch>
-    </trycatch>
+    <property name="SourceControl.GetOf" value="${ThirdPartyDirectory}"/>
+    <call target="SourceControl.GetOf"/>
   </target>
 
   <target name="SourceControl.GetOfProductDirectory" >
-    <mkdir dir="${ProductDirectory}" unless="${directory::exists(ProductDirectory)}"/>
+    <property name="SourceControl.GetOf" value="${ProductDirectory}"/>
+    <call target="SourceControl.GetOf"/>
+  </target>
+  
+  <target name="SourceControl.CleanGetOf" >
+    <trycatch>
+      <try>
+        <exec program="svn" workingdir="${SourceControl.CleanGetOf}" verbose="true" failonerror="false">
+          <arg line="cleanup" />
+        </exec>
+        <exec program="svn" workingdir="${SourceControl.CleanGetOf}" verbose="true" failonerror="false">
+          <arg line="revert" />
+          <arg line="--recursive" />
+          <arg line="." />
+        </exec>
+        <svncleantree directory="${SourceControl.CleanGetOf}" recursive="true" if="${directory::exists(SourceControl.CleanGetOf)}" failonerror="false"/>
+        <property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
+        <call target="SourceControl.GetOf"/>
+      </try>
+      <catch>
+        <if test="${directory::exists(SourceControl.CleanGetOf)}" >
+          <attrib readonly="false">
+            <fileset>
+              <include name="${SourceControl.CleanGetOf}\*" />
+            </fileset>
+          </attrib>
+
+          <trycatch>
+            <try>
+              <delete dir="${SourceControl.CleanGetOf}"/>
+            </try>
+            <catch>
+              <exec program="cmd" commandline='/C "rmdir /S /Q "${SourceControl.CleanGetOf}""' />
+            </catch>
+          </trycatch>
+        </if>
+        <call target="SourceControl.GetOf"/>
+      </catch>
+    </trycatch>
+    
+  </target>
+
+  <target name="SourceControl.GetOf" >
+    <mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
 
     <trycatch>
       <try>
-        <exec program="svn" workingdir="${ProductDirectory}" verbose="true">
+        <exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
           <arg line="update" />
           <arg line="--non-interactive" />
           <arg line="--username ${SVN.Username}" />
@@ -71,9 +89,12 @@
         </exec>
       </try>
       <catch>
-        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectCodeLine}/Product" recursive ="true" destination ="${ProductDirectory}" />
+        <property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+        <property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+        <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
       </catch>
     </trycatch>
+    
   </target>
 
   <!--

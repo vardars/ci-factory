@@ -302,6 +302,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDashboard", "Production\
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.Subversion.Tasks", "Production\Nant\CIFactory.NAnt.Subversion.Tasks\CIFactory.NAnt.Subversion.Tasks.csproj", "{17AD152E-6018-4017-9ECB-A5E3FBF8E584}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
@@ -505,6 +511,12 @@ Global
 		{482EF049-EC0C-4819-B568-75B5F74BDD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{482EF049-EC0C-4819-B568-75B5F74BDD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{482EF049-EC0C-4819-B568-75B5F74BDD5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Build|Any CPU.ActiveCfg = Release|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Build|Any CPU.Build.0 = Release|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -532,6 +544,7 @@ Global
 		{3E2EE397-A00B-4CE3-9E73-8FEC69641E7B} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{A795794B-5076-409A-991B-F5EE9A1555FE} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{D4C8C890-0DF5-4612-AF4F-F82CDE0A2E04} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
+		{17AD152E-6018-4017-9ECB-A5E3FBF8E584} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{A690B211-007B-4D30-9E3C-8F35E432C54E} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{1182F464-05FD-4EED-BDF6-C93CEBA5E529} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{2B14D260-6E25-437A-A8C2-32A0E948D63D} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
