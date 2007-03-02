@@ -53,8 +53,12 @@
         <property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
 
         <call target="Deployment.PublishFile"/>
-        
-        <call target="Simian.Run" />
+
+        <loglevel level="None">
+          <do>
+            <call target="Simian.Run" failonerror="false"/>
+          </do>
+        </loglevel>
         <call target="nDepend.Calculate" />
         <call target="LinesOfCode.CountCodeLines" />
         <description>End Post Build Actions</description>
