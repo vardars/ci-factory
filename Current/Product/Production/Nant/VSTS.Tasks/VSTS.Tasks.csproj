@@ -57,9 +57,9 @@
     <None Include="UpdateNant.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CCNet\core\core.csproj">
-      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
-      <Name>core</Name>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
