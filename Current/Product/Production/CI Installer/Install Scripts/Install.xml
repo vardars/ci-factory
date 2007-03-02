@@ -1,17 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Install">
-
-  <!-- These should be passed on the command line
-  <property name="ProjectName" value="" />
-  -->
-
-  <!-- These can be passed on the command line
-  <property name="ProjectCodeLineName" value="Current"/>
-  -->
-
-  <include buildfile="Arguments.xml"/>
   
-  <include buildfile="Properties.Install.xml"/>
+  <include buildfile="Arguments.xml"/>
+
+  <filterchain id="Common.FilterChain">
+    <replacestring from="%ProjectName%"  to="${ProjectName}"   />
+    <replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
+
+    <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
+    <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
+    <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
+    <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
+    <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
+    <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
+    <replacestring from="%InstallDirectory%"         to="${InstallDirectory}"  />
+    <replacestring from="%UnitTestDirectory%"        to="${UnitTestDirectory}"  />
+    <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
+  </filterchain>
+  
   <include buildfile="Scripts\CCNET.Install.xml"/>
   <include buildfile="Scripts\nAnt.Install.xml"/>
   <include buildfile="Scripts\BuildVS.Install.xml"/>

@@ -14,7 +14,7 @@
       <then>
         <property name="Private.Packages.MainBuild.Replace.To" value=""/>
         <largeproperty name="Private.Packages.MainBuild.Replace.From">
-          <value xml="false"><![CDATA[<include buildfile=".\Packages\DotNetUnitTest\UnitTest.Target.xml" />]]></value>
+          <value xml="false"><![CDATA[<include buildfile="${PackagesDirectory}\DotNetUnitTest\UnitTest.Target.xml" />]]></value>
         </largeproperty>
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>

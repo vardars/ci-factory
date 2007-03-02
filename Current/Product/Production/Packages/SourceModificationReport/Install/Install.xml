@@ -14,7 +14,8 @@
     <if test="${SourceModificationReport.ArchiveChangePackage}">
       <largeproperty name="Packages.AddPreBuildActions.Block">
         <value xml="false">
-          <![CDATA[<call target="SourceModificationReport.PublishOldSource"/>]]>
+          <![CDATA[<!--  SourceModificationReport.PublishOldSource should be the first call!  -->
+          <call target="SourceModificationReport.PublishOldSource"/>]]>
         </value>
       </largeproperty>
       <call target="Packages.AddPreBuildActions"/>

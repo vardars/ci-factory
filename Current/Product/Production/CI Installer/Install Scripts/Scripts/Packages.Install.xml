@@ -125,6 +125,7 @@
     <copy todir="${PackagesDirectory}" >
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
@@ -137,6 +138,7 @@
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
       </fileset>
       <filterchain refid="Common.FilterChain" />
     </copy>

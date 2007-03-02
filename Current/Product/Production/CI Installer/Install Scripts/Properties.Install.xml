@@ -23,20 +23,5 @@
   <property name="SourceProductDirectory" value="${SourceDefaultDirectory}\Product"/>
   <property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
   <property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
-
-  <filterchain id="Common.FilterChain">
-    <replacestring from="%ProjectName%"  to="${ProjectName}"   />
-    <replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
-
-    <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
-    <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
-    <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
-    <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
-    <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
-    <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
-    <replacestring from="%InstallDirectory%"         to="${InstallDirectory}"  />
-    <replacestring from="%UnitTestDirectory%"        to="${UnitTestDirectory}"  />
-    <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
-  </filterchain>
   
 </project>
