@@ -82,6 +82,9 @@
     <trycatch>
       <try>
         <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
+          <arg line="cleanup" />
+        </exec>
+        <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
           <arg line="revert" />
           <arg line="--recursive" />
           <arg line="." />
@@ -104,6 +107,9 @@
 
     <trycatch>
       <try>
+        <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
+          <arg line="cleanup" />
+        </exec>
         <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
           <arg line="revert" />
           <arg line="--recursive" />
