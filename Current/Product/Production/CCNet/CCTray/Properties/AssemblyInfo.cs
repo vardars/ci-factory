@@ -6,5 +6,7 @@ using System.Reflection;
 //
 [assembly : AssemblyTitle("CruiseControl.NET Multi-Project Tray Application")]
 [assembly : AssemblyDescription("")]
-[assembly : AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 

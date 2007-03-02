@@ -6,5 +6,7 @@ using System.Reflection;
 //
 [assembly : AssemblyTitle("CC.NET Console Runner")]
 [assembly : AssemblyDescription("")]
-[assembly : AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 

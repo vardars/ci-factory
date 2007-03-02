@@ -40,10 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Third Party\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="NAnt.Core, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.Core.dll</HintPath>
-    </Reference>
     <Reference Include="QuickGraph, Version=2.21.1.0, Culture=neutral, PublicKeyToken=975e84d0c8d6464d">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Third Party\MbUnit\QuickGraph.dll</HintPath>
@@ -68,6 +64,10 @@
     <ProjectReference Include="..\..\..\Production\Nant\CIFactory.NAnt.Tracker.Tasks\CIFactory.NAnt.Tracker.Tasks.csproj">
       <Project>{D4C8C890-0DF5-4612-AF4F-F82CDE0A2E04}</Project>
       <Name>CIFactory.NAnt.Tracker.Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Production\Nant\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
