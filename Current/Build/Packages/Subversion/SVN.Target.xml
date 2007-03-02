@@ -81,6 +81,11 @@
 
     <trycatch>
       <try>
+        <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true" failonerror="false">
+          <arg line="revert" />
+          <arg line="--recursive" />
+          <arg line="--quiet" />
+        </exec>
         <exec program="svn" workingdir="${ThirdPartyDirectory}" verbose="true">
           <arg line="update" />
           <arg line="--non-interactive" />
@@ -99,6 +104,11 @@
 
     <trycatch>
       <try>
+        <exec program="svn" workingdir="${ProductDirectory}" verbose="true" failonerror="false">
+          <arg line="revert" />
+          <arg line="--recursive" />
+          <arg line="--quiet" />
+        </exec>
         <exec program="svn" workingdir="${ProductDirectory}" verbose="true">
           <arg line="update" />
           <arg line="--non-interactive" />
