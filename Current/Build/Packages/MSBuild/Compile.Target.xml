@@ -27,7 +27,7 @@
       verbose="true"
     >
       <arg line='"${Compile.SolutionFile}"' />
-      <arg line='/t:Clean;Build' />
+      <arg line='/t:Build' />
       <arg line='/p:Configuration="${Compile.ConfigName}"' />
       <arg line='/noconsolelogger' />
       <arg line='/l:XmlLogger,"${PackagesDirectory}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
