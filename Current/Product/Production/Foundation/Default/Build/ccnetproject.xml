@@ -13,7 +13,7 @@
     </labeller>'>
 ]>
 <cruisecontrol>
-  <project name="%ProjectName% Build">
+  <project name="%ProjectName% Build Scripts">
     <webURL>%CCNET.webURL%</webURL>
     <state type="state" />
     <triggers>

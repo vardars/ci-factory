@@ -47,7 +47,7 @@ namespace NAnt.Contrib.Tasks {
     public class ScpTask : ExternalProgramBase {
         private string _program = "scp";
         private string _commandline;
-        private DirectoryInfo _baseDirectory;
+        private string _baseDirectory;
         private string _server = null;
         private string _file = null;
         private string _remotePath = "~";
@@ -162,7 +162,7 @@ namespace NAnt.Contrib.Tasks {
         /// The directory in which the command will be executed.
         /// </summary>
         [TaskAttribute("basedir")]
-        public override DirectoryInfo BaseDirectory {
+        public override string BaseDirectory {
             get {
                 if (_baseDirectory == null) {
                     return base.BaseDirectory;
@@ -174,16 +174,15 @@ namespace NAnt.Contrib.Tasks {
 
         protected override void ExecuteTask() {
             // scp.exe (cygwin version) requires that the source file *not* be fully qualified.
-            FileInfo fileInfo = new FileInfo(Path.Combine(
-                BaseDirectory.FullName, FileName));
+            string FilePath = Path.Combine(BaseDirectory, FileName);
             // use the directory in which the file is located as working directory
-            BaseDirectory = fileInfo.Directory;
+            BaseDirectory = Path.GetDirectoryName(FilePath);
             // pass the file to copy
-            Arguments.Add(new Argument(fileInfo.Name));
+            Arguments.Add(new Argument(FileName));
             // pass credentials and remote filename
             Arguments.Add(new Argument(string.Format(CultureInfo.InvariantCulture, 
                 "{0}@{1}:{2}{3}{4}", UserName, ServerName, RemotePath, ProgramPathSep, 
-                fileInfo.Name)));
+                FileName)));
             // launch the scp executable with the given arguments
             base.ExecuteTask();
         }
