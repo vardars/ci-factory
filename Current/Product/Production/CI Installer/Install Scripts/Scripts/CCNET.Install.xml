@@ -17,6 +17,8 @@
   <property name="CCNET.ConfigFile" value="${CCNET.DashboardDirectory}\dashboard.config"/>
   <property name="BuildMaster.Name" value="BuildMaster" overwrite="false"/>
   <property name="BuildMaster.Email" value="fake@bogas.com" overwrite="false"/>
+  <property name="CCNET.ModificationDelaySeconds" value="120" overwrite="false"/>
+  <property name="CCNET.IntervalTrigger" value="90" overwrite="false"/>
 
   <!-- These are private... -->
 
@@ -37,6 +39,8 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ExeConfigFile%', CCNET.ExeConfigFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerDirectory%', CCNET.ServerDirectory)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerExe%', CCNET.ServerExe)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ModificationDelaySeconds%', CCNET.ModificationDelaySeconds)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.IntervalTrigger%', CCNET.IntervalTrigger)}"  />
   
   <target name="CCNET.Install">
     <call target="Private.CCNET.InstallBuildDirectoryFiles"/>

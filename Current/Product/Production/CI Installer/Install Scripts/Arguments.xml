@@ -3,6 +3,8 @@
   <property name="ProjectName" value="TestProject" />
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerPort" value="21236"/>
+  <property name="CCNET.ModificationDelaySeconds" value="120"/>
+  <property name="CCNET.IntervalTrigger" value="90"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
@@ -50,7 +52,7 @@
   </strings>
 
   <target name="Post.Install">
-    <nant target="SourceControl.Repository.Load" inheritall="false" inheritrefs="false" >
+    <nant target="SourceControl.Repository.Load">
       <buildfiles>
         <include name="${BuildDirectory}\Scatch.Build.xml"/>
         <include name="${PackagesDirectory}\Subversion\SVN.Target.xml"/>
@@ -58,6 +60,9 @@
     </nant>
     
     <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+
+    <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+    <asyncexec program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
   
 </project>
