@@ -15,6 +15,6 @@
   </environment>
 
   <fileset id="Compile.ToCopy">
-    <include name="${ProductionDirectory}\**\bin\Debug\*.*"/>
+    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
   </fileset>
 </project>
