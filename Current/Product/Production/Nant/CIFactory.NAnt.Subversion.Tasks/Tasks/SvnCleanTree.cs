@@ -14,20 +14,35 @@ namespace CIFactory.NAnt.Tasks
     [TaskName("svncleantree")]
     public class SvnCleanTree : Task
     {
+        #region Fields
+
         private SvnClient _Client;
+
         private string _Directory;
+
         private bool _Recurse;
-        
-        [TaskAttribute("recursive"), BooleanValidator()]
-        public bool Recurse
+
+        #endregion
+
+        #region Constructors
+
+        public SvnCleanTree()
+        {
+        }
+
+        #endregion
+
+        #region Properties
+
+        public SvnClient Client
         {
             get
             {
-                return _Recurse;
+                return _Client;
             }
             set
             {
-                _Recurse = value;
+                _Client = value;
             }
         }
 
@@ -44,21 +59,46 @@ namespace CIFactory.NAnt.Tasks
             }
         }
 
-        public SvnClient Client
+        [TaskAttribute("recursive"), BooleanValidator()]
+        public bool Recurse
         {
             get
             {
-                return _Client;
+                return _Recurse;
             }
             set
             {
-                _Client = value;
+                _Recurse = value;
             }
         }
 
-        public SvnCleanTree()
+        #endregion
+
+        #region Public Methods
+
+        public void AddHocTest()
         {
+            this.Directory = @"C:\Projects\CI Factory\Current\Third Party\CCNET";
+            this.ExecuteTask();
         }
+
+        public void Clean(IntPtr baton, SvnPath path, SvnWcStatus2 status)
+        {
+            if (status.TextStatus == SvnWcStatus.Kind.Unversioned || status.TextStatus == SvnWcStatus.Kind.Ignored)
+            {
+                string FullPath = Path.Combine(this.Directory, path.Value);
+                if (File.Exists(FullPath))
+                    File.Delete(FullPath);
+                else if (System.IO.Directory.Exists(FullPath))
+                    That.Computer.FileSystem.DeleteDirectory(FullPath, Microsoft.VisualBasic.FileIO.DeleteDirectoryOption.DeleteAllContents);
+                else
+                    throw new BuildException(string.Format("Something fishy, {0}, does not seem to exist yet an svn status syas it does.", FullPath), this.Location);
+            }
+        }
+
+        #endregion
+
+        #region Protected Methods
 
         protected override void ExecuteTask()
         {
@@ -90,24 +130,7 @@ namespace CIFactory.NAnt.Tasks
 
         }
 
-        public void Clean(IntPtr baton, SvnPath path, SvnWcStatus2 status)
-        {
-            if (status.TextStatus == SvnWcStatus.Kind.Unversioned || status.TextStatus == SvnWcStatus.Kind.Ignored)
-            {
-                string FullPath = Path.Combine(this.Directory, path.Value);
-                if (File.Exists(FullPath))
-                    File.Delete(FullPath);
-                else if (System.IO.Directory.Exists(FullPath))
-                    That.Computer.FileSystem.DeleteDirectory(FullPath, Microsoft.VisualBasic.FileIO.DeleteDirectoryOption.DeleteAllContents);
-                else
-                    throw new BuildException(string.Format("Something fishy, {0}, does not seem to exist yet an svn status syas it does.", FullPath), this.Location);
-            }
-        }
+        #endregion
 
-        public void AddHocTest()
-        {
-            this.Directory = @"C:\Projects\CI Factory\Current\Third Party\CCNET";
-            this.ExecuteTask();
-        }
     }
 }

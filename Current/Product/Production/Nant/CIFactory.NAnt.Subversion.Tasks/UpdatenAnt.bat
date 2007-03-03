@@ -7,6 +7,8 @@ cd %1
 cd ..\Third Party\Svn.Net
 copy *.dll %1Production\Packages\Subversion\bin
 copy *.pdb %1Production\Packages\Subversion\bin
+copy *.dll %2
+copy *.pdb %2
 
 cd %1
 cd ..\Third Party\That

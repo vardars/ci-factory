@@ -25,35 +25,39 @@
   
   -->
 
+  <property name="Private.nDepend.HaveAssemblies" value="false"/>
+
   <target name="nDepend.Calculate" >
     <call target="Private.nDepend.CreateConfiguration"/>
 
-    <copy todir="${nDepend.AssembliesFolder}" verbose="true">
-      <fileset refid="nDepend.AssebliesFileSet" />
-    </copy>
+    <if test="${Private.nDepend.HaveAssemblies}">
+      <copy todir="${nDepend.AssembliesFolder}" verbose="true">
+        <fileset refid="nDepend.AssebliesFileSet" />
+      </copy>
 
-    <copy todir="${nDepend.AssembliesFolder}" verbose="true">
-      <fileset refid="nDepend.DependenciesFileSet" />
-    </copy>
+      <copy todir="${nDepend.AssembliesFolder}" verbose="true">
+        <fileset refid="nDepend.DependenciesFileSet" />
+      </copy>
 
-    <exec
-			program="${path::get-short-path(nDepend.Console)}"
-			commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
-		/>
+      <exec
+			  program="${path::get-short-path(nDepend.Console)}"
+			  commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
+		  />
 
-    <property name="Deployment.SourceFileName" value="NDependReport.html" />
-    <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
-    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
-    <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
+      <property name="Deployment.SourceFileName" value="NDependReport.html" />
+      <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
+      <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+      <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
 
-    <call target="Deployment.PublishFileSilently"/>
+      <call target="Deployment.PublishFileSilently"/>
 
-    <copy todir="${Deployment.TargetDir}">
-      <fileset basedir="${nDepend.BuildFolder}">
-        <include name="*.png"/>
-        <include name="*.xml"/>
-      </fileset>
-    </copy>
+      <copy todir="${Deployment.TargetDir}">
+        <fileset basedir="${nDepend.BuildFolder}">
+          <include name="*.png"/>
+          <include name="*.xml"/>
+        </fileset>
+      </copy>
+    </if>
   </target>
 
   <target name="Private.nDepend.CreateConfiguration">
@@ -94,6 +98,7 @@
       <do>
         <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
         <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+          <property name="Private.nDepend.HaveAssemblies" value="true"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">
             <text>

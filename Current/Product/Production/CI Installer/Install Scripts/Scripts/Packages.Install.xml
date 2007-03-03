@@ -89,12 +89,12 @@
         <strings refid="Packages.InstallList"/>
       </items>
       <do>
-        <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
-        <call target="Private.Packages.CopyPackage"/>
-
         <call target="Packages.Reset.CurrentPackage" />
         <call target="${Private.Packages.Install.PackageName}.SetAsCurrentPackage"/>
         <call target="Packages.Validate.CurrentSetPackage"/>
+
+        <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
+        <call target="Private.Packages.CopyPackage"/>
         
         <call target="Private.Packages.AddInclude" />
         <call target="Private.Packages.AddSetUp" />

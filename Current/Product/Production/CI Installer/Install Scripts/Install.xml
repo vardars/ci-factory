@@ -25,8 +25,8 @@
 
   <target name="Install" depends="Private.Install.ValidateParameters">
     <call target="Private.Install.CreateDirectoryStructure"/>
-    <call target="CCNET.Install"/>
     <call target="nAnt.Install"/>
+    <call target="CCNET.Install"/>
     <call target="BuildVS.Install"/>
     <call target="Packages.Install"/>
   </target>

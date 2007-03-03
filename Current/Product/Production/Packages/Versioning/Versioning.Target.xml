@@ -59,6 +59,7 @@
       <in>
         <items>
           <include name="${Versioning.ProductInformationFileLocation}\**\${Versioning.ProductInformationFile}"/>
+          <exclude name="${Versioning.ProductInformationFileLocation}\**\.svn\**\${Versioning.ProductInformationFile}"/>
         </items>
       </in>
       <do>

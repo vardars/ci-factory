@@ -32,14 +32,14 @@
     </copy>
     
     <copy todir="${TemplatesDir}">
-      <fileset>
-        <include name="${ProjectDir}\templates\**\*"/>
+      <fileset basedir="${ProjectDir}\templates">
+        <include name="**\*"/>
       </fileset>
     </copy>
 
     <copy todir="${ImagesDir}">
-      <fileset>
-        <include name="${ProjectDir}\images\**\*"/>
+      <fileset basedir="${ProjectDir}\images">
+        <include name="**\*"/>
       </fileset>
     </copy>
   </target>

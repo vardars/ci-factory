@@ -50,6 +50,7 @@
     <Compile Include="..\..\..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Functions\SvnFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\SvnCleanTree.cs" />
   </ItemGroup>

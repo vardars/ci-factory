@@ -66,9 +66,7 @@
   </target>
 
   <target name="Private.CCNET.CreateIISVirtualDirectories" if="${CCNET.CreateIISVirtualDirectories}">
-    <mkiisdir dirpath="${CCNET.DashboardDirectory}" vdirname="${ProjectName}" />
-    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages" />
-    <mkiisdir dirpath="${BuildDirectory}\Artifacts" vdirname="${ProjectName} Artifacts" enabledirbrowsing="true"/>
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
   </target>
 
   <target name="Private.CCNET.InstallBuildDirectoryFiles">

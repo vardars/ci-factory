@@ -9,7 +9,7 @@
   <xsl:template match="/">
     <msbuilsummary>
       <errors>
-        <xsl:for-each select="/msbuild//error">
+        <xsl:for-each select="/Build/msbuild//error">
           <error>
             <xsl:if test="@file != ''" >
               <xsl:value-of select="concat(@file,'&nbsp;(', @line, ',', @column, '):&nbsp;')"/>
@@ -19,7 +19,7 @@
         </xsl:for-each>
       </errors>
       <warnings>
-        <xsl:for-each select="/msbuild/warning">
+        <xsl:for-each select="/Build/msbuild//warning">
           <warning>
             <xsl:if test="@file != ''" >
               <xsl:value-of select="concat(@file,'&nbsp;(', @line, ',', @column, '):&nbsp;')"/>
@@ -30,8 +30,8 @@
       </warnings>
       <projectinfo>
         <counts>
-          <xsl:variable name="Total" select="count(/msbuild/project/target/task/target/task/project/target[@name = 'CoreCompile'])"/>
-          <xsl:variable name="Skipped" select="count(/msbuild/project/target/task/target/task/project/target[@name = 'CoreCompile']/message[contains(text(), 'Skipping target')])" />
+          <xsl:variable name="Total" select="count(/Build/msbuild/project/target/task/target/task/project/target[@name = 'CoreCompile'])"/>
+          <xsl:variable name="Skipped" select="count(/Build/msbuild/project/target/task/target/task/project/target[@name = 'CoreCompile']/message[contains(text(), 'Skipping target')])" />
           <xsl:attribute name="total">
             <xsl:value-of select="$Total"/>
           </xsl:attribute>

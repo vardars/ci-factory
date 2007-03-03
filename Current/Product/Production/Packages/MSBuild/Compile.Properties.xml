@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
   <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
   <property name="Compile.PublishLogFile" value="true" />
-  <property name="Compile.ConfigName" value="Debug"/>
+  <property name="Compile.ConfigName" value="Release"/>
   <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" />
   <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip"/>
   <property name="Compile.ToCopyToBin" value="true"  />
@@ -15,14 +15,7 @@
   </environment>
 
   <fileset id="Compile.ToCopy">
-    <include name="${ProductionDirectory}\**\bin\Debug\*.*"/>
+    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
     <include name="${ProductionDirectory}\**\bin\*.*"/>
-    <include name="${ProductionDirectory}\**\*.asmx"/>
-    <include name="${ProductionDirectory}\**\*.aspx"/>
-    <include name="${ProductionDirectory}\**\*.svc"/>
-    <include name="${ProductionDirectory}\DataLayer\DataAccessService\DataLayer.config"/>
-    <include name="${ProductionDirectory}\Lgs\Framework\LGC.config"/>
-    <include name="${ProductionDirectory}\Lgs\SyncManager\TransactionScripts\*.config"/>
-    <exclude name="${ProductionDirectory}\InterfaceLayer\bin\*.*"/>
   </fileset>
 </project>
