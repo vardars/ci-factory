@@ -180,8 +180,24 @@
       <arg line="${ProjectName}"/>
       <arg line="${SVN.URI.ProjectName}"/>
       <arg line="--non-interactive" />
+      <arg line="--non-recursive" />
       <arg line="--username ${SVN.Username}" />
       <arg line="--password ${SVN.Password}" />
+    </exec>
+
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true" >
+      <arg line="add"/>
+      <arg line="* --force" />
+    </exec>
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Initial Load by CI Factory Installer"'/>
     </exec>
   </target>
 

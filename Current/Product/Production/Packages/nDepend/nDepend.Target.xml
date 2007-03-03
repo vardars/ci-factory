@@ -29,6 +29,10 @@
 
   <target name="nDepend.Calculate" >
     <call target="Private.nDepend.CreateConfiguration"/>
+    
+    <ifnot test="${Private.nDepend.HaveAssemblies}">
+      <echo level="Warning" message="No assemblies found to calcuate on for NDepend!"/>
+    </ifnot>
 
     <if test="${Private.nDepend.HaveAssemblies}">
       <copy todir="${nDepend.AssembliesFolder}" verbose="true">

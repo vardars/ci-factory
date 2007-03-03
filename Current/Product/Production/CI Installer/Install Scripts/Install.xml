@@ -29,6 +29,7 @@
     <call target="CCNET.Install"/>
     <call target="BuildVS.Install"/>
     <call target="Packages.Install"/>
+    <call target="Post.Install"/>
   </target>
 
   <target name="Private.Install.ValidateParameters" >

@@ -3,9 +3,6 @@
   <property name="ProjectName" value="TestProject" />
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerPort" value="21236"/>
-
-  <property name="CCNET.CreateIISVirtualDirectories" value="true" />
-  
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
@@ -51,4 +48,16 @@
     <string value="VSTSVersionControl" /><- Experiemental - Not fully implemented
     -->
   </strings>
+
+  <target name="Post.Install">
+    <nant target="SourceControl.Repository.Load" inheritall="false" inheritrefs="false" >
+      <buildfiles>
+        <include name="${BuildDirectory}\Scatch.Build.xml"/>
+        <include name="${PackagesDirectory}\Subversion\SVN.Target.xml"/>
+      </buildfiles>
+    </nant>
+    
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+  
 </project>

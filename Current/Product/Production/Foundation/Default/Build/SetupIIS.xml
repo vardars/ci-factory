@@ -8,9 +8,9 @@
   <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
   
   <target name="Setup" >
-    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" />
-    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}" />
-    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages"  enabledirbrowsing="true"/>
+    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" enabledirbrowsing="true"/>
+    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
+    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages"/>
   </target>
   
 </project>
