@@ -9,11 +9,12 @@
     <loglevel level="None">
       <do>
         <exec workingdir="${path::get-short-path(ProductDirectory)}" program="${Simian.Console}" failonerror="false" >
-          <arg line='"**/*.vb"' />
-          <arg line='"**/*.cs"' />
-          <arg line='"**/*.java"' />
-          <arg line='"**/*.xml"' />
-          <arg line='"**/*.html"' />
+          <arg line='-includes=**/*.vb' />
+          <arg line='-includes=**/*.cs' />
+          <arg line='-includes=**/*.java' />
+          <arg line='-includes=**/*.xml' />
+          <arg line='-includes=**/*.html' />
+          <arg line='-excludes=Production/CIScript/**/*.cs' />
           <arg line='-formatter=xml:${Simian.ReportFilePath}' />
         </exec>
       </do>
