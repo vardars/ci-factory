@@ -10,6 +10,9 @@
     <delete dir="${ZipDirectory}" if="${directory::exists(ZipDirectory)}"/>
     <mkdir dir="${ZipDirectory}"/>
 
+    <copy file="${ProductDirectory}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" />
+    <copy file="${ProductDirectory}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" />
+
     <copy todir="${ZipDirectory}" includeemptydirs="true">
       <fileset basedir="${ProductDirectory}\Production\CI Installer" >
         <include name="Install Scripts\**\*"/>
