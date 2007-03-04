@@ -54,7 +54,6 @@
   <target name="Post.Install">
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${BuildDirectory}\Scatch.Build.xml"/>
         <include name="${PackagesDirectory}\Subversion\SVN.Target.xml"/>
       </buildfiles>
     </nant>
@@ -62,7 +61,7 @@
     <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
 
     <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
-    <asyncexec program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+    <asyncexec workingdir="${BuildDirectory}" program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
   
 </project>
