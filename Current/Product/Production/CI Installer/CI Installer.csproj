@@ -54,7 +54,9 @@
     <Content Include="Install Scripts\Scripts\Packages.Install.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Install Scripts\run.bat" />
+    <None Include="CI Factory.sln.remove" />
+    <None Include="Packages.csproj.remove" />
+    <None Include="run.bat" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Install Scripts\Zips\" />
