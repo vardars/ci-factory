@@ -159,6 +159,17 @@ namespace CIFactory.NAnt.Functions
             RefFileSet.Includes.Remove(name);
         }
 
+        [Function("get-name-at-index")]
+        public string ToString(string refID, int index)
+        {
+
+            if (!this.Project.DataTypeReferences.Contains(refID))
+                throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+            FileSet RefFileSet = (FileSet)this.Project.DataTypeReferences[refID];
+
+            return RefFileSet.FileNames[index];
+        }
         #endregion
 
     }

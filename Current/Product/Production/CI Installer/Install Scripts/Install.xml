@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Install">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Main">
   
   <include buildfile="Arguments.xml"/>
+
+  <property name="Install.Action" value="Install.Project" overwrite="false"/>
 
   <filterchain id="Common.FilterChain">
     <replacestring from="%ProjectName%"  to="${ProjectName}"   />
@@ -23,7 +25,17 @@
   <include buildfile="Scripts\BuildVS.Install.xml"/>
   <include buildfile="Scripts\Packages.Install.xml"/>
 
-  <target name="Install" depends="Private.Install.ValidateParameters">
+  <target name="Main">
+    <call target="${Install.Action}" />
+  </target>
+
+  <target name="Install.Package" >
+    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set."/>
+    <call target="Packages.ValidateParameters"/>
+    <call target="Packages.Install"/>
+  </target>
+
+  <target name="Install.Project" depends="Private.Install.ValidateParameters">
     <call target="Private.Install.CreateDirectoryStructure"/>
     <call target="nAnt.Install"/>
     <call target="CCNET.Install"/>
@@ -33,7 +45,7 @@
   </target>
 
   <target name="Private.Install.ValidateParameters" >
-    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set on the commandline."/>
+    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set."/>
     
     <call target="CCNET.ValidateParameters"/>
     <call target="nAnt.ValidateParameters"/>

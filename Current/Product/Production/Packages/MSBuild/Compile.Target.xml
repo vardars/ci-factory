@@ -68,6 +68,14 @@
 
     <call target="Deployment.PublishFile"/>
   </target>
+
+  <target name="Compile.ShowReport">
+    <style in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" out="${Compile.LogFileDirectory}\Compile.xml" style="${BuildDirectory}\Packages\MSBuild\MSBuildMerge.xsl" />
+    <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\Compile.xml"/>
+    <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSBuild\compile-msbuild.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
   
   <target name="Compile.SetUp">
     <delete dir="${Compile.LogFileDirectory}" if="${directory::exists(Compile.LogFileDirectory)}" />

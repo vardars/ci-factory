@@ -308,6 +308,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.Subversion.T
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Power Tools", "Power Tools", "{A32167E4-D3A2-404A-A9FC-9DCDDD36F6B8}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Power Tools\Ant.Environment.xml = Power Tools\Ant.Environment.xml
+		Power Tools\Build.bat = Power Tools\Build.bat
+		Power Tools\Compile.Environment.xml = Power Tools\Compile.Environment.xml
+		Power Tools\NoUpdateBuild.bat = Power Tools\NoUpdateBuild.bat
+		Power Tools\OpenCommandPrompt.bat = Power Tools\OpenCommandPrompt.bat
+		Power Tools\OpenSolution.bat = Power Tools\OpenSolution.bat
+		Power Tools\OpenSolution.Script.xml = Power Tools\OpenSolution.Script.xml
+		Power Tools\Personal.Build.xml = Power Tools\Personal.Build.xml
+		Power Tools\Test.bat = Power Tools\Test.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU

@@ -9,5 +9,4 @@
   <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${ProjectName}UnitTests"/>
   <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
-  <property name="UnitTest.FilesToDeleteAtSetup" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
 </project>

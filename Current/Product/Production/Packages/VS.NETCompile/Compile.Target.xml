@@ -32,14 +32,22 @@
 	    program="${Compile.DevEnv}"
 	    commandline='"${Compile.SolutionFile}" /build "${Compile.ConfigName}" /out "${Private.Compile.LogFileName}"'
 	    failonerror="false"
-	    resultproperty="Private.Compile.Result"
-    />
+	    resultproperty="Private.Compile.Result" >
+      <environment refid="${Compile.Environment}" />
+    </exec>
     <call target="Private.Compile.ConvertLogToXml" />
     <if test="${int::parse(Private.Compile.Result) != 0}">
 		  <fail message="The compilation failed, check the build log." />
     </if>
     <call target="Private.Compile.CopyToWorkingBin" />
     <call target="Private.Compile.DeployZip" />
+  </target>
+
+  <target name="Compile.ShowReport">
+    <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"/>
+    <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\VS.NETCompile\DevEnvCompileDetails.xsl"/>
+    <call target="Common.ShowReport"/>
   </target>
     
   <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">

@@ -20,11 +20,11 @@ namespace CIFactory.NAnt.Tasks
 
         #region Properties
 
-        [BuildElement("else", Required = false)]
-        public TaskContainer Else
+        [BuildElement("then", Required = true)]
+        public TaskContainer Then
         {
-            get { return _Else; }
-            set { _Else = value; }
+            get { return _Then; }
+            set { _Then = value; }
         }
 
         [BuildElementArray("elseif", Required = false)]
@@ -41,11 +41,11 @@ namespace CIFactory.NAnt.Tasks
             set { _ElseIf = value; }
         }
 
-        [BuildElement("then", Required = true)]
-        public TaskContainer Then
+        [BuildElement("else", Required = false)]
+        public TaskContainer Else
         {
-            get { return _Then; }
-            set { _Then = value; }
+            get { return _Else; }
+            set { _Else = value; }
         }
 
         #endregion

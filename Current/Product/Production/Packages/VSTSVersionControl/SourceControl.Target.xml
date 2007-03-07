@@ -4,7 +4,7 @@
   <property name="TFS.TaskAssembly" value="${PackagesDirectory}\VSTSVersionControl\bin\TF.Tasks.dll" overwrite="false"/>
   <loadtasks assembly="${TFS.TaskAssembly}" if="${file::exists(TFS.TaskAssembly)}" />
 
-  <include buildfile="VSTSVersionControl.Properties.xml" />
+  <include buildfile="SourceControl.Properties.xml" />
 
   <property name="Private.TFS.CacheFile" value="CacheFile.xml"/>
   <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>

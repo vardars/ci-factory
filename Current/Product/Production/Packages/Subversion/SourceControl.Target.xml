@@ -5,7 +5,7 @@
 
   <property name="SVN.Debug" value="false" overwrite="false" />
 
-  <include buildfile="SVN.Properties.xml" />
+  <include buildfile="SourceControl.Properties.xml" />
 
   <property name="Private.SVN.ReportDirectory" value="${BuildDirectory}\SVN" overwrite="false"/>
 
@@ -35,6 +35,11 @@
 
   <target name="SourceControl.GetOfProductDirectory" >
     <property name="SourceControl.GetOf" value="${ProductDirectory}"/>
+    <call target="SourceControl.GetOf"/>
+  </target>
+
+  <target name="SourceControl.GetOfBuildDirectory" >
+    <property name="SourceControl.GetOf" value="${BuildDirectory}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 

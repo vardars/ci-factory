@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
 
-  <include buildfile="${BuildDirectory}\Common.Build.xml" />
   <loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
   
   <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
@@ -26,10 +25,16 @@
 		</mbunit>
 	</target>
 
+  <target name="UnitTest.ShowReport">
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
+    <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitSummary.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
   <target name="UnitTest.SetUp">
-    <mkdir if="${directory::exists(UnitTest.ReportFolder) == false}" dir="${UnitTest.ReportFolder}"/>
-    <property name="Common.FilesToDelete" value="${UnitTest.FilesToDeleteAtSetup}"/>
-    <call target="Common.DeleteFiles"/>
+    <delete dir="${UnitTest.ReportFolder}" if="${directory::exists(UnitTest.ReportFolder)}" />
+    <mkdir dir="${UnitTest.ReportFolder}"/>
   </target>
 
   <target name="UnitTest.TearDown">

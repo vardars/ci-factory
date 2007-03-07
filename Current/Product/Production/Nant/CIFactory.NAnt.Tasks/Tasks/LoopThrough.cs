@@ -20,18 +20,18 @@ namespace CIFactory.NAnt.Tasks
 
         #region Properties
 
-        [BuildElement("do", Required = true)]
-        public TaskContainer Actions
-        {
-            get { return _Actions; }
-            set { _Actions = value; }
-        }
-
         [BuildElement("items", Required = true)]
         public LoopItemContainer Items
         {
             get { return _Items; }
             set { _Items = value; }
+        }
+
+        [BuildElement("do", Required = true)]
+        public TaskContainer Actions
+        {
+            get { return _Actions; }
+            set { _Actions = value; }
         }
 
         [TaskAttribute("property", Required = true)]

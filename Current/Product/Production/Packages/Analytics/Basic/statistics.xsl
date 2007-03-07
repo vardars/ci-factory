@@ -35,7 +35,7 @@
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
     <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
 
-    <xsl:variable name="quietandrecoverytimefile" select="concat('c:\projects\dod.ahlta\current\build\installs\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
+    <xsl:variable name="quietandrecoverytimefile" select="concat('c:\projects\dod.ahlta\current\build\Artifacts\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
     <xsl:variable name="quietandrecoverytimedoc" select="document($quietandrecoverytimefile)"/>
     
 	<style>

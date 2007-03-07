@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Ant.Properties">
 
-  <property name="AntHome"  value="${PackagesDirectory}\Ant\Ant" />
-  <property name="JavaHome" value="${PackagesDirectory}\Ant\Java" />
-  <property name="Path" value="${environment::get-variable('PATH')}" />
+  <property name="AntHome"  value="${PackagesDirectory}\Ant\Ant" overwrite="false"/>
+  <property name="JavaHome" value="${PackagesDirectory}\Ant\Java" overwrite="false"/>
+  <property name="Path" value="${environment::get-variable('PATH')}" overwrite="false"/>
 
-  <property name="JavaReleaseDirectory" value="${ProductDirectory}\JavaRelease"/>
+  <property name="JavaReleaseDirectory" value="${ProductDirectory}\JavaRelease" overwrite="false"/>
   <zipfileset id="Deployment.ZipFileSet" basedir="${JavaReleaseDirectory}">
     <include name="**\*"/>
   </zipfileset>
 
-  <property name="AntBin"  value="${AntHome}\bin" />
-  <property name="AntBat"  value="${AntBin}\ant.bat" />
-  <property name="AntBuildLogDirectory" value="${BuildDirectory}\AntLogs"/>
-  <property name="AntBuildLogFile" value="${AntBuildLogDirectory}\build_log.xml" />
+  <property name="AntBin"  value="${AntHome}\bin" overwrite="false"/>
+  <property name="AntBat"  value="${AntBin}\ant.bat" overwrite="false"/>
+  <property name="AntBuildLogDirectory" value="${BuildDirectory}\AntLogs" overwrite="false"/>
+  <property name="AntBuildLogFile" value="${AntBuildLogDirectory}\build_log.xml" overwrite="false"/>
   <property name="AntResultCode" value="inital" />
   <property name="AntBuildFileName" value="${ProductDirectory}\${ProjectName}.Build.xml" overwrite="false"/>
 
-  <property name="Ant.Environment.ConfigFilePath" value="${ProductDirectory}\Ant.Environment.xml"/>
+  <property name="Ant.Environment.ConfigFilePath" value="${ProductDirectory}\Ant.Environment.xml" overwrite="false"/>
 
   <property name="Ant.Environment.RefId" value="Ant.Environment" overwrite="false"/>
 

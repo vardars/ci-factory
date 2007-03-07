@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
   <property name="ProjectName" value="TestProject" />
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerPort" value="21236"/>

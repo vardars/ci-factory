@@ -3,7 +3,7 @@
 
   <property name="VSS.Debug" value="false" overwrite="false" />
 
-  <include buildfile="VSS.Properties.xml" />
+  <include buildfile="SourceControl.Properties.xml" />
 
   <property name="Private.VSS.CacheFile" value="CacheFile.xml"/>
   <property name="Private.VSS.ReportDirectory" value="${BuildDirectory}\VSS" overwrite="false"/>

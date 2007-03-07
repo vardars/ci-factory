@@ -10,7 +10,6 @@
   </ifnot>
 
   <property name="Analytics.BuildLog" value="${CCNetLogFilePath}"/>
-  <property name="ArtifactRootDirectory" value="${BuildDirectory}\Installs"/>
   
   <fileset id="Analytics.DeleteFileSet">
     <include name="${ArtifactRootDirectory}\SuccessProgressXAxis.xml"/>

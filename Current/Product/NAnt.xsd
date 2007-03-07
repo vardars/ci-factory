@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/02/2007 20:18:22</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/07/2007 13:07:36</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -848,9 +848,9 @@
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.IfThenTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
-      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="1" maxOccurs="1" name="then" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -1095,8 +1095,8 @@
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.LoopThrough">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="1" maxOccurs="1" name="items" type="nant:CIFactory.NAnt.Types.LoopItemContainer" />
+      <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
     </xs:sequence>
     <xs:attribute name="property" use="required" />
     <xs:attribute name="failonerror" use="optional" />

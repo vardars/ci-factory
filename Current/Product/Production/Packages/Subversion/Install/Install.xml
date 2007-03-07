@@ -13,7 +13,7 @@
 
   <target name="Subversion.SetAsCurrentPackage">
     <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Subversion"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SVN.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
     <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
   </target>
 
