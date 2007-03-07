@@ -46,6 +46,13 @@
       </fileset>
     </copy>
 
+    <copy todir="${ZipDirectory}">
+      <fileset basedir="${ProductDirectory}">
+        <include name="Power Tools\**\*"/>
+        <include name="Documentation\**\*"/>
+      </fileset>
+    </copy>
+
     <zip includeemptydirs="true" zipfile="${ZipDirectory}\CIFactory.zip" >
       <fileset basedir="${ZipDirectory}">
         <include name="**\*"/>
