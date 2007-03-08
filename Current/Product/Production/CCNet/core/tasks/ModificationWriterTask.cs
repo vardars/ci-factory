@@ -21,7 +21,7 @@ namespace ThoughtWorks.CruiseControl.Core.tasks
 		public void Run(IIntegrationResult result)
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof (Modification[]));
-			StringWriter writer = new StringWriter();
+			StringWriter writer = new Utf8StringWriter();
 			serializer.Serialize(writer, result.Modifications);
 			fileSystem.Save(ModificationFile(result), writer.ToString());
 		}

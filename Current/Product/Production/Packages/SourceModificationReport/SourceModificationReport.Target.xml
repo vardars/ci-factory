@@ -189,27 +189,6 @@
     <property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
     <call target="Common.DeleteFiles"/>
     <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
-    <script language="VB" if="${file::exists(SourceModificationReport.ReportFile)}">
-      <imports >
-        <import namespace="System.Xml"/>
-        <import namespace="System.Text.RegularExpressions"/>
-      </imports >
-      <code>
-        <![CDATA[
-				Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
-					Dim pd As PropertyDictionary = project.Properties
-					Dim ReadStream As New IO.StreamReader(pd("SourceModificationReport.ReportFile"), System.Text.Encoding.Default)
-					Dim content As String = ReadStream.ReadToEnd
-					ReadStream.Close()
-          content = content.Replace("utf-16", "utf-8")
-          content = System.Text.RegularExpressions.Regex.Replace(content, "\n+", "", RegexOptions.Multiline)
-					Dim WriteStream As New IO.StreamWriter(pd("SourceModificationReport.ReportFile"), False, System.Text.Encoding.Default)
-					WriteStream.Write(content)
-					WriteStream.Close()
-				End Sub
-			]]>
-      </code>
-    </script>
   </target>
 
   <target name="SourceModificationReport.TearDown">
