@@ -1,0 +1,353 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFBA0DE3-2B01-4C75-B615-4ACBA502F71C}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>NAnt.Contrib.Tasks</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NAnt.Contrib</RootNamespace>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>none</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>none</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CollectionGen">
+      <Name>CollectionGen</Name>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\CollectionGen.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Name>mscorlib</Name>
+    </Reference>
+    <Reference Include="NAnt.DotNetTasks">
+      <Name>NAnt.DotNetTasks</Name>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.DotNetTasks.dll</HintPath>
+    </Reference>
+    <Reference Include="NAnt.SourceControlTasks, Version=0.85.1932.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.SourceControlTasks.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceSafe.Interop">
+      <Name>SourceSafe.Interop</Name>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\SourceSafe.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.DirectoryServices">
+      <Name>System.DirectoryServices</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ADSIBaseTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ADSIGetPropertyTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ADSISetPropertyTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\AstyleTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ChecksumTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\CodeStatsTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\COMRegisterTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ConcatTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\DiscoTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\FxCopTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\GacInstallTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\GacTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\GacTaskBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\GacUninstallTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Grep\GrepTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Grep\LineCounter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Grep\Match.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Grep\MatchCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Grep\Pattern.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\HxCompTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\HxRegTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\MgmtClassGenTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\NGenTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\NUnitReportTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\RecordTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\RegasmTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SchemaValidatedTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SchemeType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ScpTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\AddTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\BaseTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\CheckinTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\CheckoutTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\StatisTask.cs" />
+    <Compile Include="Tasks\SourceSafe\DiffTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\GetTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\History.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\LabelTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\UndoCheckoutTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\SourceSafe\VSSAddProject.cs" />
+    <Compile Include="Tasks\SqlTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Svn\AbstractSvnTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Svn\SvnCheckoutTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Svn\SvnTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Svn\SvnUpdateTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TryCatchTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\TypedCollectionTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ValidateXmlTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Vb6Task.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\VersionTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Web\CreateVirtualDirectory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Web\DeleteVirtualDirectory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Web\VirtualDirectoryInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Web\WebBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\WsdlTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\XsdTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\Assembly.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\AssemblySet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\CodeStatsCount.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\CodeStatsCountCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\Filter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\FilterCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\FilterSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\FilterSetCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\GacReference.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\SchemaElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\XmlSchemaReference.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\XmlSchemaReferenceCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\ChecksumHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\FileLogListener.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\FileUtils.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\SqlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\SqlStatementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\SqlStatementList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdatenAnt.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" $(ProjectName)</PostBuildEvent>
+  </PropertyGroup>
+</Project>
