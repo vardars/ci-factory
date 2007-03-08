@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceModificationReport.Install" default="SourceModificationReport.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="SourceModificationReport.Install">
+    <mkdir unless="${directory::exists(BuildDirectory + '\SourceModificationReports')}" dir="${BuildDirectory}\SourceModificationReports"/>
+
+    <largeproperty name="Packages.AddPreBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="SourceModificationReport.ConsolidateReports" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPreBuildActions"/>
+
+    <if test="${SourceModificationReport.ArchiveChangePackage}">
+      <largeproperty name="Packages.AddPreBuildActions.Block">
+        <value xml="false">
+          <![CDATA[<!--  SourceModificationReport.PublishOldSource should be the first call!  -->
+          <call target="SourceModificationReport.PublishOldSource"/>]]>
+        </value>
+      </largeproperty>
+      <call target="Packages.AddPreBuildActions"/>
+
+      <largeproperty name="Packages.AddCleanUpActions.Block">
+        <value xml="false">
+          <![CDATA[
+          <!--  SourceModificationReport.PublishNewSource should be the last call!  -->
+          <call target="SourceModificationReport.PublishNewSource"/>
+          ]]>
+        </value>
+      </largeproperty>
+      <call target="Packages.AddCleanUpActions"/>
+    </if>
+  </target>
+
+  <target name="SourceModificationReport.SetAsCurrentPackage">
+    <ifnot test="${property::exists('SourceModificationReport.SCProductPath')}">
+      <property name="SourceModificationReport.SCProductPath" value="default value - this will fail if Source Publication is bing used"/>
+    </ifnot>
+    <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceModificationReport.SCProductPath%', SourceModificationReport.SCProductPath)}"/>
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="SourceModificationReport"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceModificationReport.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="SourceModificationReport"/>
+  </target>
+
+  <target name="SourceModificationReport.ValidateParameters">
+    
+  </target>
+  
+</project>
