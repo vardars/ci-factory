@@ -5,12 +5,10 @@
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
   <property name="Coverage.UnitTestPackageInclude" value="%Coverage.UnitTestPackageInclude%" />
   <property name="Coverage.UnitTestPropertiesInclude" value="%Coverage.UnitTestPropertiesInclude%" />
-  <property name="Coverage.AssemblyNameFormat" value="${ProjectName}.*.dll"/>
-
-  <fileset id="Coverage.Targets" />
-    <!--<include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
-    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
-  </fileset>-->
+    
+  <fileset id="Coverage.Target.ProjectFiles">
+    <include name="${ProductionDirectory}\**\*.*proj"/>
+  </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
 </project>

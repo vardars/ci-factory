@@ -44,6 +44,7 @@
     <Compile Include="Filters\Line.cs" />
     <Compile Include="Functions\FileSetFunctions.cs" />
     <Compile Include="Functions\FilterChainFunctions.cs" />
+    <Compile Include="Functions\VSProjectFunctions.cs" />
     <Compile Include="Tasks\AskTask.cs" />
     <Compile Include="Tasks\FunctionTask.cs" />
     <Compile Include="Functions\StringListFunctions.cs" />

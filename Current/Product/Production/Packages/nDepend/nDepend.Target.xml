@@ -3,28 +3,8 @@
 
   <include buildfile="nDepend.Properties.xml" />
 
-  <!--
-	The following properties should be specified in the calling script.
+  <fileset id="nDepend.AssembliesFileSet" />
   
-  <property name="nDepend.Console" value="${BuildDirectory}\Packages\nDepend\bin\NDepend.Console.exe" />
-  <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" />
-  <property name="nDepend.BinFolder" value=""/>
-  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend"/>
-  <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report"/>
-  <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
-  
-  <fileset id="nDepend.AssebliesFileSet" >
-    <include name=""/>
-  </fileset>
-
-  <fileset id="nDepend.DependenciesFileSet" >
-    <include name=""/>
-  </fileset>
-  
-  <property name="nDepend.FilesToDeleteAtSetup" value="${nDepend.BuildFolder}\**\*.*"/>
-  
-  -->
-
   <property name="Private.nDepend.HaveAssemblies" value="false"/>
 
   <target name="nDepend.Calculate" >
@@ -36,7 +16,7 @@
 
     <if test="${Private.nDepend.HaveAssemblies}">
       <copy todir="${nDepend.AssembliesFolder}" verbose="true">
-        <fileset refid="nDepend.AssebliesFileSet" />
+        <fileset refid="nDepend.AssembliesFileSet" />
       </copy>
 
       <copy todir="${nDepend.AssembliesFolder}" verbose="true">
@@ -95,14 +75,20 @@
 
     <strings id="nDepend.AssemblyList" />
 
-    <foreach item="File" property="AssemblyPath">
+    <foreach item="File" property="nDepend.Target.ProjectFile.Path">
       <in>
-        <items refid="nDepend.AssebliesFileSet" />
+        <items refid="nDepend.Target.ProjectFiles" />
       </in>
       <do>
-        <property name="AssemblyName" value="${path::get-file-name-without-extension(AssemblyPath)}"/>
+        <property name="AssemblyName" value="${vsproject::get-assemblyname(nDepend.Target.ProjectFile.Path)}"/>
         <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
+          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.dll"/>
+          <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.exe"/>
+          <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name="TargetPDBPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.pdb"/>
+          <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetPDBPath)}"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">
             <text>
@@ -111,7 +97,7 @@
               ]]>
             </text>
             <filterchain>
-              <replacestring from="%AssemblyName%" to="${path::get-file-name-without-extension(AssemblyPath)}" />
+              <replacestring from="%AssemblyName%" to="${AssemblyName}" />
             </filterchain>
           </write>
         </ifnot>

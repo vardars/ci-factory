@@ -21,7 +21,19 @@
 	<!-- The following properties are for internal use only -->
 
 	<target name="UnitTest.RunTests">
+    <fileset id="UnitTest.TestAssemblies" />
 
+    <foreach item="File" property="UnitTest.ProjectFile.Path">
+      <in>
+        <items refid="UnitTest.ProjectFiles" />
+      </in>
+      <do>
+        <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+        <property name="UniTestAssemblyPath" value="${path::get-directory-name(UnitTest.ProjectFile.Path)}\**\${UniTestAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
+      </do>
+    </foreach>
+    
     <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}" 
             runconfig="${UnitTest.RunConfig}">
       <testcontainers refid="UnitTest.TestAssemblies" />

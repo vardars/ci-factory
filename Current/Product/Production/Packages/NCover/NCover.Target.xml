@@ -29,20 +29,16 @@
 
   <target name="UnitTest.RunTests">
     <call target="Private.Coverage.CreatePropertiesFile"/>
+    <fileset id="Coverage.Targets" />
 
-    <foreach item="File" property="TestAssmebly">
+    <foreach item="File" property="Coverage.Target.ProjectFile.Path">
       <in>
-        <items>
-          <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
-          <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
-        </items>
+        <items refid="Coverage.Target.ProjectFiles" />
       </in>
       <do>
-        <regex pattern="(\\|/)Test\.(?'CoverageAssembly'(\w+|\.)+)\.dll$" input="${TestAssmebly}"/>
-        <property name="CoverageAssemblyInBin" value="${ProductionDirectory}\**\bin\${CoverageAssembly}.dll"/>
-        <property name="CoverageAssemblyInDebug" value="${ProductionDirectory}\**\bin\Debug\${CoverageAssembly}.dll"/>
-        <function execute="${fileset::include-add('Coverage.Targets', CoverageAssemblyInBin)}"/>
-        <function execute="${fileset::include-add('Coverage.Targets', CoverageAssemblyInDebug)}"/>
+        <property name="TargetAssemblyName" value="${vsproject::get-assemblyname(Coverage.Target.ProjectFile.Path)}"/>
+        <property name="TargetAssemblyPath" value="${path::get-directory-name(Coverage.Target.ProjectFile.Path)}\**\${TargetAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('Coverage.Targets', Target)}"/>
       </do>
     </foreach>
 
