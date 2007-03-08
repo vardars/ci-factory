@@ -744,6 +744,7 @@
     <Compile Include="util\TimeUnits.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="util\Utf8StringWriter.cs" />
     <Compile Include="util\WildCardPath.cs">
       <SubType>Code</SubType>
     </Compile>
