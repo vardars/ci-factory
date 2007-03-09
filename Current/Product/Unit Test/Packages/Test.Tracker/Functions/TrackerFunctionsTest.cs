@@ -41,6 +41,12 @@ namespace Test.Tracker.Functions
             Assert.AreEqual(expected, Actual);
         }
 
+        [Test]
+        public void ExtractScrNumbersMultiLineCommentTest()
+        {
+            this.ExtractScrNumbersTest(string.Format("scr# 12345{0}scr12346", Environment.NewLine), "12345,12346");
+        }
+
         public void Adhoc()
         {
             this.ExtractScrNumbersTest("scr# 12345, scr12346", "12345,12346");
