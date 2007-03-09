@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
+
+  <loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
+  
+  <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
+
+  <include buildfile="UnitTest.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="UnitTest.TestPath" value=""/>
+	<property name="UnitTest.TestAssemblyFormat" value=""/>
+	<property name="UnitTest.ReportFolder" value=""/>
+	<property name="UnitTest.ReportNameFormat" value=""/>
+	-->
+	
+	<!-- The following properties are for internal use only -->
+
+	<target name="UnitTest.RunTests">
+
+    <fileset id="UnitTest.TestAssemblies" />
+    
+    <foreach item="File" property="UnitTest.ProjectFile.Path">
+      <in>
+        <items refid="UnitTest.ProjectFiles" />
+      </in>
+      <do>
+        <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+        <property name="UniTestAssemblyPath" value="${path::get-directory-name(UnitTest.ProjectFile.Path)}\**bin\**\${UniTestAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
+      </do>
+    </foreach>
+    
+		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
+			<assemblies refid="UnitTest.TestAssemblies" />
+		</mbunit>
+	</target>
+
+  <target name="UnitTest.ShowReport">
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
+    <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitSummary.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <delete dir="${UnitTest.ReportFolder}" if="${directory::exists(UnitTest.ReportFolder)}" />
+    <mkdir dir="${UnitTest.ReportFolder}"/>
+  </target>
+
+  <target name="UnitTest.TearDown">
+
+  </target>
+
+</project>
