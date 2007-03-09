@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Script" >
+  <fileset id="Analytics.MainReport">
+    <include name="${BuildDirectory}\Packages\Analytics\Basic\MainAnalyticsReport.xml"/>
+  </fileset>
+
+  <target name="Analytics.MainReport">
+    <echo message="Generating MainReport"/>
+    <property name="Analytics.XmlInputFileName" value="${Analytics.BuildLog}"/>
+    <property name="Analytics.XslFilePath" value="${BuildDirectory}\Packages\Analytics\Basic\StatisticsPublisher.xsl"/>
+    <property name="Analytics.XmlReportFileName" value="MainAnalyticsReportContent.xml"/>
+    <property name="Analytics.CopyFileSetRefId" value="Analytics.MainReport"/>
+    <property name="Analytics.Append" value="true"/>
+    <call target="Analytics.CompileReport"/>
+  </target>
+</project>
