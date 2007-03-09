@@ -7,7 +7,8 @@
   <property name="Coverage.UnitTestPropertiesInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Properties.xml" />
     
   <fileset id="Coverage.Target.ProjectFiles">
-    <include name="${ProductionDirectory}\**\*.*proj"/>
+    <include name="${ProductionDirectory}\**\CCNet\*.*proj"/>
+    <include name="${ProductionDirectory}\**\NAnt\*.*proj"/>
   </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
