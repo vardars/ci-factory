@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using NAnt.Core;
@@ -7,7 +8,32 @@ using NAnt.Core.Attributes;
 
 namespace CIFactory.NAnt.Functions
 {
-    
+
+    [FunctionSet("file", "IO")]
+    public class FileFunctions : FunctionSetBase
+    {
+        #region Constructors
+
+        public FileFunctions(Project project, PropertyDictionary properties)
+            : base(project, properties)
+        {
+
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        [Function("get-version")]
+        public string GetVersion(string path)
+        {
+            return FileVersionInfo.GetVersionInfo(path).FileVersion;
+        }
+
+        #endregion
+
+    }
+
     [FunctionSet("path", "IO")]
     public class PathFunctions : FunctionSetBase
     {
@@ -20,14 +46,14 @@ namespace CIFactory.NAnt.Functions
 
         #endregion
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError=true)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern uint GetShortPathName(
            [MarshalAs(UnmanagedType.LPTStr)]
            string lpszLongPath,
            [MarshalAs(UnmanagedType.LPTStr)]
            StringBuilder lpszShortPath,
            uint cchBuffer);
-        
+
         [Function("get-short-path")]
         public string GetShortPath(string longName)
         {

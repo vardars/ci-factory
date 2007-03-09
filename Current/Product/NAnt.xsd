@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/08/2007 12:16:33</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/09/2007 12:51:14</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -1029,8 +1029,13 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.AskTask">
-    <xs:attribute name="answer" use="optional" />
-    <xs:attribute name="question" use="optional" />
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="options" type="nant:CIFactory.NAnt.Types.StringList" />
+    </xs:sequence>
+    <xs:attribute name="caption" use="optional" />
+    <xs:attribute name="showdialog" use="optional" />
+    <xs:attribute name="answer" use="required" />
+    <xs:attribute name="question" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />

@@ -41,25 +41,30 @@ You can use freely NDepend trial edition for non-commercial uses:
     * Academic usage in universities and school for educational and research purposes.
     * Open-source developers within the scope of their open-source project.
 
-More information can be found at http://www.ndepend.com
-
-Do you wish to continue? Yes/No]]>
+More information can be found at http://www.ndepend.com]]>
       </value>
     </largeproperty>
 
-    <ask answer="Answer" question="${nDepend.Ask.Question}"/>
-    <property name="Answer" value="${string::to-lower(Answer)}" />
-    <if test="${string::starts-with(Answer, 'y') == false}">
+    <ask answer="Answer" question="${nDepend.Ask.Question}" caption="Do you wish to continue?" >
+      <options>
+        <string value="Yes"/>
+        <string value="No"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'No'}">
       <fail message="Your answer was not in the affirmative." />
     </if>
   </target>
 
   <target name="nDepend.Ask.AcceptLicense">
     <call target="nDepend.GetLicense"/>
-    <echo message="${License.Content}"/>
-    <ask answer="Answer" question="Do you accept this license? Yes/No"/>
-    <property name="Answer" value="${string::to-lower(Answer)}" />
-    <if test="${string::starts-with(Answer, 'y') == false}">
+    <ask answer="Answer" question="${License.Content}" caption="Do you accept this license?">
+      <options>
+        <string value="Yes"/>
+        <string value="No"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'No'}">
       <fail message="Your answer was not in the affirmative." />
     </if>
     <echo message="Thanks you for accepting the license."/>

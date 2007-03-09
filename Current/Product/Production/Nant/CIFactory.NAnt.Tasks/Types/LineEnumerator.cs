@@ -66,7 +66,6 @@ namespace CIFactory.NAnt.Types
                     return Line;
                 }
             }
-            return null;
         }
 
         public bool MoveNext()
@@ -74,8 +73,8 @@ namespace CIFactory.NAnt.Types
             this._Current = this.GetNextLine();
             if (this._Current == null)
             {
-                return false;
                 this.Reader.Close();
+                return false;
             }
             return true;
         }

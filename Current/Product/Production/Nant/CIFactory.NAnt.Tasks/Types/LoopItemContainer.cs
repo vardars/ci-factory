@@ -123,7 +123,7 @@ namespace CIFactory.NAnt.Types
 
             #region Private Methods
 
-            private new Element CreateChildBuildElement(PropertyInfo propInfo, XmlNode xml, PropertyDictionary properties, FrameworkInfo framework)
+            private Element CreateChildBuildElement(PropertyInfo propInfo, XmlNode xml, PropertyDictionary properties, FrameworkInfo framework)
             {
                 MethodInfo getter = null;
                 MethodInfo setter = null;
