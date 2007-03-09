@@ -1,0 +1,367 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
+{ 
+ font-family: Verdana 
+}
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
+{  
+  font-size: 10.0pt; 
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
+BODY, P
+{
+  margin-left:0pt; 
+  margin-right:0pt;
+}
+BODY
+{
+  background: white;
+  margin: 6px;
+  padding: 0px;
+}
+h6 { font-size: 10pt }
+h5 { font-size: 11pt }
+h4 { font-size: 12pt }
+h3 { font-size: 13pt }
+h2 { font-size: 14pt }
+h1 { font-size: 16pt }
+blockquote { padding: 10px; border: 1px #DDDDDD dashed }
+a img {	border: 0; }
+table.zeroBorder {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder th {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder td {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+.hiddenStyle {
+		visibility: hidden; 
+		position: absolute;
+		z-Index: 1;
+		paddingRight: 0;
+		background: white
+	}
+.misspell { background-image: url('/images/misspell.gif'); background-repeat: repeat-x; background-position: bottom }
+@media screen {
+.pb { border-top: 1px dashed #C0C0C0; border-bottom: 1px dashed #C0C0C0 }
+.writely-comment { font-size: 9pt; line-height: 1.4em; padding: 1px; border: 1px dashed #C0C0C0 }
+}
+@media print {
+.pb { border-top: 0px; border-bottom: 0px }
+.writely-comment { display: none }
+}
+@media screen,print {
+.pb { height: 1px }
+}
+</style></head>
+<body revision='dd6cv3jm_09r2s2h:82'>
+<h2>
+  CI Factory Release Notes<br>
+</h2>
+<br>
+<h3>
+  Major Changes
+</h3>
+Custom Branch of CCNet 1.0<br>
+<ul>
+  <li>
+    Complied on .Net 2.0
+  </li>
+  <li>
+    Improved performance.
+  </li>
+  <li>
+    Artifact directory per build.
+  </li>
+  <li>
+    Added Xsl file merger publication task.
+  </li>
+  <li>
+    Added Integration filters.
+  </li>
+  <ul>
+    <li>
+      Added modifications required filter.<br>
+    </li>
+  </ul>
+  <li>
+    Added Force Filters.
+  </li>
+  <ul>
+    <li>
+      Added filter to set rights on who can force a build (Active Directory
+      Based).
+    </li>
+    <li>
+      Added project filter.<br>
+    </li>
+  </ul>
+  <li>
+    Added Artifact Xsl dashboard plugin.
+  </li>
+  <li>
+    Added Artifact directory browser dashboard plugin.
+  </li>
+  <li>
+    Added project trigger filter trigger.
+  </li>
+</ul>
+<br>
+Custom Branch of NAnt and NAnt Contrib<br>
+<ul>
+  <li>
+    Compiled on .Net 2.0
+  </li>
+  <li>
+    Improved performance on filesets.
+  </li>
+  <li>
+    Improved NantSchema generation.
+  </li>
+  <li>
+    Added NewExt attribute to CopyTask, will change the ext of file being
+    copied.
+  </li>
+  <li>
+    Change Exec task to use exactly what is given for the working dir.
+  </li>
+  <li>
+    Change EnvironmentSet to be a DataType.
+  </li>
+  <li>
+    Added useshellexecute, createnowindow, and redirectoutput to
+    ExternalProgramBase.
+  </li>
+  <li>
+    Fixed VSS History - exception on destroyed/purged items.
+  </li>
+</ul>
+<br>
+CI Factory<br>
+<ul>
+  <li>
+    Re-purposed the Installs directory, now named Artifacts.
+  </li>
+  <li>
+    Merged Common.Tasks.dll and Common.Functions.dll in to
+    CIFactory.NAnt.Tasks.dll
+  </li>
+  <li>
+    Added post build script, it runs asynchronously allowing the build result to
+    be published sooner.<br>
+  </li>
+</ul>
+<br>
+<h3>
+  New Features
+</h3>
+New CI Factory NAnt Tasks<br>
+<ul>
+  <li>
+    Code Convert Filter converts between C# and VB.Net.
+  </li>
+  <li>
+    Regex Filter.
+  </li>
+  <li>
+    Task to process xsl with exsl:document - allows multiple output documents.
+  </li>
+  <li>
+    Task Write Registry value.
+  </li>
+  <li>
+    Task to apply filter on a property.
+  </li>
+  <li>
+    Task Ask, to prompt the user.
+  </li>
+  <li>
+    Task AsyncExec - asynchronously execute a process.
+  </li>
+  <li>
+    Task WaitForExit - wait for an AsynExec task to exit.
+  </li>
+  <li>
+    Task LogLevel - set the log level.
+  </li>
+  <li>
+    Task CopyXml - copy an xml doc, docs with DTD file entities are copied are
+    copied as one doc.
+  </li>
+  <li>
+    Task Subversion Clean Tree - deletes all files not in repository,
+    unversioned files, from local workspace.
+  </li>
+  <li>
+    Task MSTest - run MSTests.
+  </li>
+  <li>
+    VSTS Version Control<br>
+  </li>
+  <ul>
+    <li>
+      Task TfsAddTask<br>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsBlock
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsBlockServices
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsCheckinTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsCheckoutTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsDeleteWorkspace
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsGetTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsHistoryTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsLabelTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsMapWorkspace
+    </li>
+    <li>
+      Function tfs-vc::get-latest-changeset-id()
+    </li>
+    <li>
+      Function tfs-vc::get-latest-changeset-id-frompath(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::label-exists(label, scope)
+    </li>
+    <li>
+      Function tfs-vc::workspace-exists(workspaceName)
+    </li>
+    <li>
+      Function tfs-vc::get-workspace-name(localItem)
+    </li>
+    <li>
+      Function tfs-vc::is-server-path-mapped(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::is-local-path-mapped(localItem)
+    </li>
+    <li>
+      Function tfs-vc::get-localitem-for-serveritem(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::get-serveritem-for-localitem(localItem)
+    </li>
+    <li>
+      Function tfs-vc::has-pending-changes()
+    </li>
+    <li>
+      Function tfs-vc::has-pending-changes(localItem)
+    </li>
+    <li>
+      Function tfs-vc::has-confilcts(pathfilter, recursive)<br>
+    </li>
+  </ul>
+  <li>
+    Type RegexMatch for looping through text.
+  </li>
+  <li>
+    Type TargetSet - for looping through.
+  </li>
+  <li>
+    Function svn::is-versioned(path) - identifies if a path is versioned, in the
+    repo.<br>
+  </li>
+</ul>
+<br>
+New Packages<br>
+<ul>
+  <li>
+    Analytics - This package is not fully integrated, it is currently
+    experimental.<br>
+  </li>
+  <li>
+    Ant - Used to build Java.
+  </li>
+  <li>
+    Backup - Will backup the CCNet state file, build log file and Artifact
+    directory to as network share of your specification.<br>
+  </li>
+  <li>
+    CSDiff - Provides visual diffs on the dashboard.
+  </li>
+  <li>
+    LinesOfCode - Reports LOC on the dashboard.
+  </li>
+  <li>
+    MSBuild - Will build a 2005 solution file.
+  </li>
+  <li>
+    MSTest - Will run MSTests.
+  </li>
+  <li>
+    NCover - Will run unit tests under NCover for code covereage stats, uses
+    NCover Explorer too!
+  </li>
+  <li>
+    Simian - Provides duplication stats on the dashboard.
+  </li>
+  <li>
+    VSTS Version Control - The installer is not complete for this just
+    yet.&nbsp; You will need to configure the CCNet project yourself.&nbsp;
+    Otherwise it is complete.
+  </li>
+</ul>
+<br>
+Changed Packages<br>
+<ul>
+  <li>
+    NDepend - upgraded to latest version of NDepend.
+  </li>
+  <li>
+    SourceControlModification - Added publication of source changes to Artifact
+    directory.
+  </li>
+  <li>
+    Subversion - Added use of svncleantree task for improved performance.
+  </li>
+</ul>
+<br>
+There have been so many bug fixes.&nbsp; I did not keep track, shame on me.<br>
+<br>
+<br>
+<br></body>
+</html>
