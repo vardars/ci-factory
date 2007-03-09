@@ -37,7 +37,7 @@
       </in>
       <do>
         <property name="TargetAssemblyName" value="${vsproject::get-assemblyname(Coverage.Target.ProjectFile.Path)}"/>
-        <property name="TargetAssemblyPath" value="${path::get-directory-name(Coverage.Target.ProjectFile.Path)}\**\${TargetAssemblyName}.dll"/>
+        <property name="TargetAssemblyPath" value="${path::get-directory-name(Coverage.Target.ProjectFile.Path)}\**bin\**\${TargetAssemblyName}.dll"/>
         <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}"/>
       </do>
     </foreach>
