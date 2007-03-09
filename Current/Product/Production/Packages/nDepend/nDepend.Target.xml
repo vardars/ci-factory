@@ -83,11 +83,11 @@
         <property name="AssemblyName" value="${vsproject::get-assemblyname(nDepend.Target.ProjectFile.Path)}"/>
         <ifnot test="${stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
-          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.dll"/>
+          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\bin\**\${AssemblyName}.dll"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
-          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.exe"/>
+          <property name="TargetAssemblyPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\bin\**\${AssemblyName}.exe"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
-          <property name="TargetPDBPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\${AssemblyName}.pdb"/>
+          <property name="TargetPDBPath" value="${path::get-directory-name(nDepend.Target.ProjectFile.Path)}\**\bin\**\${AssemblyName}.pdb"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetPDBPath)}"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">

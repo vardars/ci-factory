@@ -29,7 +29,7 @@
       </in>
       <do>
         <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
-        <property name="UniTestAssemblyPath" value="${path::get-directory-name(UnitTest.ProjectFile.Path)}\**\${UniTestAssemblyName}.dll"/>
+        <property name="UniTestAssemblyPath" value="${path::get-directory-name(UnitTest.ProjectFile.Path)}\**\bin\**\${UniTestAssemblyName}.dll"/>
         <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
       </do>
     </foreach>
