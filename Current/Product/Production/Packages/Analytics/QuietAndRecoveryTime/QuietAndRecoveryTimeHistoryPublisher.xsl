@@ -171,14 +171,7 @@
                   <xsl:value-of select="ms:FormatTime($BeginingFailure/statistic[@name='Duration']/text())"/>
                 </xsl:attribute>
                 <xsl:attribute name="status">
-                  <xsl:choose>
-                    <xsl:when test="$BeginingFailure/statistic[@name='BuildErrorMessage' and contains(text(), 'No Trackers')]">
-                      <xsl:value-of select="'NoTrackers'"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="$BeginingFailure/@status"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
+                  <xsl:value-of select="$BeginingFailure/@status"/>
                 </xsl:attribute>
 
                 <xsl:attribute name="day">

@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Script" >
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.BuildTime" >
   <fileset id="Analytics.BuildTimeHistory">
-    <include name="${BuildDirectory}\Packages\Analytics\BuildTime\BuildTimeHistoryChartData.xml"/>
+    <include name="${Analytics.PackageDirectory}\BuildTime\BuildTimeHistoryChartData.xml"/>
   </fileset>
 
   <target name="Analytics.BuildTimeHistory">
@@ -16,8 +16,8 @@
         <include name="${ArtifactRootDirectory}\BuildHistoryXAxis.xml"/>
       </fileset>
     </delete>
-    <property name="Analytics.XmlInputFileName" value="${BuildDirectory}\Packages\Analytics\Basic\MainAnalyticsReport.xml"/>
-    <property name="Analytics.XslFilePath" value="${BuildDirectory}\Packages\Analytics\BuildTime\BuildTimeHistory.xsl"/>
+    <property name="Analytics.XmlInputFileName" value="${Analytics.PackageDirectory}\Basic\MainAnalyticsReport.xml"/>
+    <property name="Analytics.XslFilePath" value="${Analytics.PackageDirectory}\BuildTime\BuildTimeHistory.xsl"/>
     <property name="Analytics.XmlReportFileName" value="BuildHistoryXAxis.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.BuildTimeHistory"/>
     <property name="Analytics.Append" value="false"/>

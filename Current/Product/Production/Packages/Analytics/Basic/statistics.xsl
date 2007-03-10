@@ -35,24 +35,64 @@
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
     <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
 
-    <xsl:variable name="quietandrecoverytimefile" select="concat('c:\projects\dod.ahlta\current\build\Artifacts\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
+    <xsl:variable name="quietandrecoverytimefile" select="concat('..\..\..\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
     <xsl:variable name="quietandrecoverytimedoc" select="document($quietandrecoverytimefile)"/>
-    
-	<style>
-    *.pass{
-    background-color: #33ff99;
+
+    <style>
+      *.pass{
+      background-color: #33ff99;
+      }
+      *.fail{
+      background-color: #ff6600;
+      }
+      *.unknown{
+      background-color: #ffffcc;
+      }
+      *.exception{
+      background-color: #000000;
+      color: #ffffff;
+      }
+      a.dsphead{
+      text-decoration:none;
+      margin-left:1.5em;
+      }
+      a.dsphead:hover{
+      text-decoration:underline;
+      }
+      a.dsphead span.dspchar{
+      font-family:monospace;
+      font-weight:normal;
+      }
+      .dspcont{
+      display:none;
+      margin-left:1.5em;
+      }
+    </style>
+
+
+    <script type="text/javascript">
+      <![CDATA[
+function dsp(loc){
+   if(document.getElementById){
+      var foc = loc.firstChild;
+      foc = loc.firstChild.innerHTML ? loc.firstChild : loc.firstChild.nextSibling;
+      foc.innerHTML = foc.innerHTML == '+ Show Chart' ? '- Hide Chart' : '+ Show Chart';
+      foc = loc.parentNode.nextSibling.style ? loc.parentNode.nextSibling : loc.parentNode.nextSibling.nextSibling;
+      foc.style.display = foc.style.display == 'block' ? 'none' : 'block';
     }
-    *.fail{
-    background-color: #ff6600;
-    }
-    *.unknown{
-    background-color: #ffffcc;
-    }
-    *.exception{
-    background-color: #000000;
-    color: #ffffff;
-    }
-  </style>
+}  
+
+if(!document.getElementById)
+   document.write('<style type="text/css"><!--\n.dspcont{display:block;}\n//--></style>');
+
+      ]]>
+    </script>
+
+    <noscript>
+      <style type="text/css">
+        .dspcont{display:block;}
+      </style>
+    </noscript>
 		<p>
 			Today is
 			<xsl:variable name="day" select="$MostRecentIntegration/@day"/>
@@ -66,36 +106,27 @@
       <xsl:variable name="totalCount" select="count(integration)"/>
 			<xsl:variable name="successCount" select="count(integration[@status='Success'])"/>
       <xsl:variable name="exceptionCount" select="count(integration[@status='Exception'])"/>
-      <xsl:variable name="CompilerBug" select="count(integration[@status='CompilerBug'])" />
-      <xsl:variable name="NoTrackers" select="count(integration/statistic[@name='BuildErrorMessage' and contains(text(), 'No Trackers')])" />
-      <xsl:variable name="failureCount" select="$totalCount - ($successCount + $exceptionCount + $CompilerBug + $NoTrackers)"/>
+      <xsl:variable name="failureCount" select="$totalCount - ($successCount + $exceptionCount)"/>
 
       <xsl:variable name="TotalBuildTime" select="ms:SumTimes(integration/statistic[@name='Duration']/text())" />
-      <xsl:variable name="TotalRecoveryTimeOther"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure']]/@duration)" />
-      <xsl:variable name="TotalRecoveryTimeNoTrackers" select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='NoTrackers']]/@duration)" />
+      <xsl:variable name="TotalRecoveryTime"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure']]/@duration)" />
       
       <xsl:variable name="totalCountForTheLast7Day" select="count(integration[@dayofyear > $dayofyear - 7])"/>
-      <xsl:variable name="successCountForTheLast7Day" select="count(integration[@status='Success' and @dayofyear > $dayofyear - 7])"/>
-      <xsl:variable name="exceptionCountForTheLast7Day" select="count(integration[@status='Exception' and @dayofyear > $dayofyear - 7])"/>
-      <xsl:variable name="CompilerBugForTheLast7Day" select="count(integration[@status='CompilerBug' and @dayofyear > $dayofyear - 7])" />
-      <xsl:variable name="NoTrackersForTheLast7Day" select="count(integration[@dayofyear > $dayofyear - 7]/statistic[@name='BuildErrorMessage' and contains(text(), 'No Trackers')])" />
-      <xsl:variable name="failureCountForTheLast7Day" select="$totalCountForTheLast7Day - ($successCountForTheLast7Day + $exceptionCountForTheLast7Day + $CompilerBugForTheLast7Day + $NoTrackersForTheLast7Day)"/>
+      <xsl:variable name="successCountForTheLast7Day" select="count(integration[@status='Success' and @dayofyear > $dayofyear - 7 and @year = $year])"/>
+      <xsl:variable name="exceptionCountForTheLast7Day" select="count(integration[@status='Exception' and @dayofyear > $dayofyear - 7 and @year = $year])"/>
+      <xsl:variable name="failureCountForTheLast7Day" select="$totalCountForTheLast7Day - ($successCountForTheLast7Day + $exceptionCountForTheLast7Day)"/>
 
-      <xsl:variable name="TotalBuildTimeForTheLast7Day" select="ms:SumTimes(integration[@dayofyear > $dayofyear - 7]/statistic[@name='Duration']/text())" />
-      <xsl:variable name="TotalRecoveryTimeOtherForTheLast7Day"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @dayofyear > $dayofyear - 7]]/@duration)" />
-      <xsl:variable name="TotalRecoveryTimeNoTrackersForTheLast7Day" select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='NoTrackers' and @dayofyear > $dayofyear - 7]]/@duration)" />
+      <xsl:variable name="TotalBuildTimeForTheLast7Day" select="ms:SumTimes(integration[@dayofyear > $dayofyear - 7 and @year = $year]/statistic[@name='Duration']/text())" />
+      <xsl:variable name="TotalRecoveryTimeForTheLast7Day"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @dayofyear > $dayofyear - 7 and @year = $year]]/@duration)" />
       
       <xsl:variable name="totalCountForTheDay" select="count(integration[@day=$day and @month=$month and @year=$year])"/>
 			<xsl:variable name="successCountForTheDay" select="count(integration[@status='Success' and @day=$day and @month=$month and @year=$year])"/>
       <xsl:variable name="exceptionCountForTheDay" select="count(integration[@status='Exception' and @day=$day and @month=$month and @year=$year])"/>
-      <xsl:variable name="CompilerBugForTheDay" select="count(integration[@status='CompilerBug' and @day=$day and @month=$month and @year=$year])" />
-      <xsl:variable name="NoTrackersForTheDay" select="count(integration[@day=$day and @month=$month and @year=$year]/statistic[@name='BuildErrorMessage' and contains(text(), 'No Trackers')])" />
-      <xsl:variable name="failureCountForTheDay" select="$totalCountForTheDay - ($successCountForTheDay + $exceptionCountForTheDay + $CompilerBugForTheDay + $NoTrackersForTheDay)"/>
+      <xsl:variable name="failureCountForTheDay" select="$totalCountForTheDay - ($successCountForTheDay + $exceptionCountForTheDay)"/>
 
       <xsl:variable name="TotalBuildTimeTimeForTheDay" select="ms:SumTimes(integration[@day=$day and @month=$month and @year=$year]/statistic[@name='Duration']/text())" />
-      <xsl:variable name="TotalRecoveryTimeOtherForTheDay"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @day=$day and @month=$month and @year=$year]]/@duration)" />
-      <xsl:variable name="TotalRecoveryTimeNoTrackersForTheDay" select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='NoTrackers' and @day=$day and @month=$month and @year=$year]]/@duration)" />
-			
+      <xsl:variable name="TotalRecoveryTimeForTheDay"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @day=$day and @month=$month and @year=$year]]/@duration)" />
+      
       <table class="section-table" cellpadding="2" cellspacing="0" border="1">
         <tr class="sectionheader">
 					<th>Integration Summary</th>
@@ -120,37 +151,13 @@
 					<td><xsl:value-of select="$successCount"/></td>
 				</tr>
 				<tr>
-					<th align="left">Number of Failed (other)</th>
+					<th align="left">Number of Failed</th>
 					<td><xsl:value-of select="$failureCountForTheDay"/></td>
           <td>
             <xsl:value-of select="$failureCountForTheLast7Day"/>
           </td>
 					<td><xsl:value-of select="$failureCount"/></td>
 				</tr>
-        <tr>
-          <th align="left">Number of Failed (no trackers)</th>
-          <td>
-            <xsl:value-of select="$NoTrackersForTheDay"/>
-          </td>
-          <td>
-            <xsl:value-of select="$NoTrackersForTheLast7Day"/>
-          </td>
-          <td>
-            <xsl:value-of select="$NoTrackers"/>
-          </td>
-        </tr>
-        <tr>
-          <th align="left">Number of Failed (compiler bug)</th>
-          <td>
-            <xsl:value-of select="$CompilerBugForTheDay"/>
-          </td>
-          <td>
-            <xsl:value-of select="$CompilerBugForTheLast7Day"/>
-          </td>
-          <td>
-            <xsl:value-of select="$CompilerBug"/>
-          </td>
-        </tr>
         <tr>
           <th align="left">Number of Exceptions</th>
           <td>
@@ -179,32 +186,17 @@
           </td>
         </tr>
         <tr>
-          <th align="left">Time Spent Recovering from Failed Builds (other)</th>
+          <th align="left">Time Spent Recovering from Failed Builds</th>
           <td>
-            <xsl:value-of select="round($TotalRecoveryTimeOtherForTheDay)"/>
+            <xsl:value-of select="round($TotalRecoveryTimeForTheDay)"/>
             <xsl:value-of select="' mins'"/>
           </td>
           <td>
-            <xsl:value-of select="round($TotalRecoveryTimeOtherForTheLast7Day)"/>
+            <xsl:value-of select="round($TotalRecoveryTimeForTheLast7Day)"/>
             <xsl:value-of select="' mins'"/>
           </td>
           <td>
-            <xsl:value-of select="round($TotalRecoveryTimeOther)"/>
-            <xsl:value-of select="' mins'"/>
-          </td>
-        </tr>
-        <tr>
-          <th align="left">Time Spent Recovering from Failed Builds (no trackers)</th>
-          <td>
-            <xsl:value-of select="round($TotalRecoveryTimeNoTrackersForTheDay)"/>
-            <xsl:value-of select="' mins'"/>
-          </td>
-          <td>
-            <xsl:value-of select="round($TotalRecoveryTimeNoTrackersForTheLast7Day)"/>
-            <xsl:value-of select="' mins'"/>
-          </td>
-          <td>
-            <xsl:value-of select="round($TotalRecoveryTimeNoTrackers)"/>
+            <xsl:value-of select="round($TotalRecoveryTime)"/>
             <xsl:value-of select="' mins'"/>
           </td>
         </tr>
@@ -212,177 +204,120 @@
 		</p>
     <hr/>
 
-    <xsl:variable name="SuccessProgressChartUrl" select="concat('/dod.ahlta/Packages/Analytics/charts.swf?library_path=/dod.ahlta/Packages/Analytics/charts_library&amp;xml_source=/dod.ahlta Installs/', $ArtifactFolderName, '/SuccessProgress.xml')"/>
-    <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-	      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
-	      WIDTH="400" 
-	      HEIGHT="250" 
-	      id="charts" 
-	      ALIGN="">
+    <xsl:variable name="BaseChartUrl" select="concat('/testproject/Packages/Analytics/charts.swf?library_path=/testproject/Packages/Analytics/charts_library&amp;xml_source=/testproject Installs/', $ArtifactFolderName)"/>
 
-      <PARAM NAME="movie" >
-        <xsl:attribute name="value">
-          <xsl:value-of select="$SuccessProgressChartUrl"/>
-        </xsl:attribute>
-      </PARAM>
-      <PARAM NAME="quality" VALUE="high"/>
-      <PARAM NAME="bgcolor" VALUE="#666666"/>
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the total number of builds over all time (Team1 begins in July and Team2 begins in late Sept).
+            The count is not as important as the slope of the line.  You would like to see the yellow line moving up and the other lines flat.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/SuccessProgress.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
 
-      <EMBED
-             quality="high" 
-             bgcolor="#666666"  
-             WIDTH="700" 
-             HEIGHT="350" 
-             NAME="charts" 
-             ALIGN="" 
-             swLiveConnect="true" 
-             TYPE="application/x-shockwave-flash" 
-             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$SuccessProgressChartUrl"/>
-        </xsl:attribute>
-      </EMBED>
-    </OBJECT>
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the last 200 build times.  The yellow line is the total build time.
+            The blue line is the compile time.  The others are shown as area instead of lines.  Generally they are small.
+            There are other parts of the build that are not shown on the chart.  The parts depiced are the ones that have
+            the greatest chance of causing long build times.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/BuildTimeHistoryChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the duration of the last 200 quiet times.  Durations over 120 minutes are excluded.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/QuietTimeHistoryLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the duration of the last 200 recovery times.  Durations over 120 minutes are excluded.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/RecoveryTimeHistoryLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays a trend of unit test counts.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/UnitTestsCountsLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays a trend of dulplicatation.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/Simian.ChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
 
     <br/>
     <hr/>
     
-    <xsl:variable name="BuildTimeHistoryChartDataChartUrl" select="concat('/dod.ahlta/Packages/Analytics/charts.swf?library_path=/dod.ahlta/Packages/Analytics/charts_library&amp;xml_source=/dod.ahlta Installs/', $ArtifactFolderName, '/BuildTimeHistoryChartData.xml')"/>
-    <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-	      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
-	      WIDTH="400" 
-	      HEIGHT="250" 
-	      id="charts" 
-	      ALIGN="">
-
-      <PARAM NAME="movie" >
-        <xsl:attribute name="value">
-          <xsl:value-of select="$BuildTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </PARAM>
-      <PARAM NAME="quality" VALUE="high"/>
-      <PARAM NAME="bgcolor" VALUE="#666666"/>
-
-      <EMBED
-             quality="high" 
-             bgcolor="#666666"  
-             WIDTH="700" 
-             HEIGHT="350" 
-             NAME="charts" 
-             ALIGN="" 
-             swLiveConnect="true" 
-             TYPE="application/x-shockwave-flash" 
-             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$BuildTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </EMBED>
-    </OBJECT>
-
-    <br/>
-    <hr/>
-
-    <xsl:variable name="QuietTimeHistoryChartDataChartUrl" select="concat('/dod.ahlta/Packages/Analytics/charts.swf?library_path=/dod.ahlta/Packages/Analytics/charts_library&amp;xml_source=/dod.ahlta Installs/', $ArtifactFolderName, '/QuietTimeHistoryChartData.xml')"/>
-    <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-	      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
-	      WIDTH="400" 
-	      HEIGHT="250" 
-	      id="charts" 
-	      ALIGN="">
-
-      <PARAM NAME="movie" >
-        <xsl:attribute name="value">
-          <xsl:value-of select="$QuietTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </PARAM>
-      <PARAM NAME="quality" VALUE="high"/>
-      <PARAM NAME="bgcolor" VALUE="#666666"/>
-
-      <EMBED
-             quality="high" 
-             bgcolor="#666666"  
-             WIDTH="700" 
-             HEIGHT="350" 
-             NAME="charts" 
-             ALIGN="" 
-             swLiveConnect="true" 
-             TYPE="application/x-shockwave-flash" 
-             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$QuietTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </EMBED>
-    </OBJECT>
-
-    <br/>
-    <hr/>
-
-    <xsl:variable name="QuietTimeHistoryLineChartDataChartUrl" select="concat('/dod.ahlta/Packages/Analytics/charts.swf?library_path=/dod.ahlta/Packages/Analytics/charts_library&amp;xml_source=/dod.ahlta Installs/', $ArtifactFolderName, '/QuietTimeHistoryLineChartData.xml')"/>
-    <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-	      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
-	      WIDTH="400" 
-	      HEIGHT="250" 
-	      id="charts" 
-	      ALIGN="">
-
-      <PARAM NAME="movie" >
-        <xsl:attribute name="value">
-          <xsl:value-of select="$QuietTimeHistoryLineChartDataChartUrl"/>
-        </xsl:attribute>
-      </PARAM>
-      <PARAM NAME="quality" VALUE="high"/>
-      <PARAM NAME="bgcolor" VALUE="#666666"/>
-
-      <EMBED
-             quality="high" 
-             bgcolor="#666666"  
-             WIDTH="700" 
-             HEIGHT="350" 
-             NAME="charts" 
-             ALIGN="" 
-             swLiveConnect="true" 
-             TYPE="application/x-shockwave-flash" 
-             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$QuietTimeHistoryLineChartDataChartUrl"/>
-        </xsl:attribute>
-      </EMBED>
-    </OBJECT>
-
-    <br/>
-    <hr/>
-
-    <xsl:variable name="RecoveryTimeHistoryChartDataChartUrl" select="concat('/dod.ahlta/Packages/Analytics/charts.swf?library_path=/dod.ahlta/Packages/Analytics/charts_library&amp;xml_source=/dod.ahlta Installs/', $ArtifactFolderName, '/RecoveryTimeHistoryChartData.xml')"/>
-    <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-	      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" 
-	      WIDTH="400" 
-	      HEIGHT="250" 
-	      id="charts" 
-	      ALIGN="">
-
-      <PARAM NAME="movie" >
-        <xsl:attribute name="value">
-          <xsl:value-of select="$RecoveryTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </PARAM>
-      <PARAM NAME="quality" VALUE="high"/>
-      <PARAM NAME="bgcolor" VALUE="#666666"/>
-
-      <EMBED
-             quality="high" 
-             bgcolor="#666666"  
-             WIDTH="700" 
-             HEIGHT="350" 
-             NAME="charts" 
-             ALIGN="" 
-             swLiveConnect="true" 
-             TYPE="application/x-shockwave-flash" 
-             PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$RecoveryTimeHistoryChartDataChartUrl"/>
-        </xsl:attribute>
-      </EMBED>
-    </OBJECT>
     <hr/>
 		<p><pre><strong>Note: </strong>Only builds run with the statistics publisher enabled will appear on this page!</pre></p>
 		<table  class="section-table" cellpadding="2" cellspacing="0" border="1" width="98%">
@@ -427,6 +362,48 @@
 			</xsl:for-each>
 		</table>
 	</xsl:template>
+  
+  <xsl:template name="ShowChart">
+    <xsl:param name="Url" />
+
+    <div>
+      <a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+        <span class="dspchar">+ Show Chart</span>
+      </a>
+    </div>
+    <div class="dspcont">
+      <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+          codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+          WIDTH="400"
+          HEIGHT="250"
+          id="charts"
+          ALIGN="">
+
+        <PARAM NAME="movie" >
+          <xsl:attribute name="value">
+            <xsl:value-of select="$Url"/>
+          </xsl:attribute>
+        </PARAM>
+        <PARAM NAME="quality" VALUE="high"/>
+        <PARAM NAME="bgcolor" VALUE="#666666"/>
+
+        <EMBED
+               quality="high"
+               bgcolor="#666666"
+               WIDTH="700"
+               HEIGHT="350"
+               NAME="charts"
+               ALIGN=""
+               swLiveConnect="true"
+               TYPE="application/x-shockwave-flash"
+               PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+          <xsl:attribute name="src">
+            <xsl:value-of select="$Url"/>
+          </xsl:attribute>
+        </EMBED>
+      </OBJECT>
+    </div>
+  </xsl:template>
 </xsl:stylesheet>
 
   

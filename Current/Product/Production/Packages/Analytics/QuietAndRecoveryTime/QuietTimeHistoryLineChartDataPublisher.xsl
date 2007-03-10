@@ -10,7 +10,7 @@
       <number>
         <xsl:value-of select="position()"/>
       </number>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\QuietTimeHistoryDurations.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\QuietTimeHistoryDurations.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="@duration"/>
         </number>

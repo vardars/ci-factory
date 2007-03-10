@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.Properties">
 
   <ifnot test="${property::exists('CCNetLogFilePath')}">
@@ -10,6 +10,7 @@
   </ifnot>
 
   <property name="Analytics.BuildLog" value="${CCNetLogFilePath}"/>
+  <property name="Analytics.PackageDirectory" value="${PackagesDirectory}\Analytics"/>
   
   <fileset id="Analytics.DeleteFileSet">
     <include name="${ArtifactRootDirectory}\SuccessProgressXAxis.xml"/>

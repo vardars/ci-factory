@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE chart [
-  <!ENTITY XAxis SYSTEM     "..\..\..\Installs\SuccessProgressXAxis.xml">
-  <!ENTITY Success SYSTEM   "..\..\..\Installs\SuccessProgressSuccessful.xml">
-  <!ENTITY Fail SYSTEM      "..\..\..\Installs\SuccessProgressFailed.xml">
-  <!ENTITY Exception SYSTEM "..\..\..\Installs\SuccessProgressException.xml">
+  <!ENTITY XAxis SYSTEM     "..\..\..\Artifacts\SuccessProgressXAxis.xml">
+  <!ENTITY Success SYSTEM   "..\..\..\Artifacts\SuccessProgressSuccessful.xml">
+  <!ENTITY Fail SYSTEM      "..\..\..\Artifacts\SuccessProgressFailed.xml">
+  <!ENTITY Exception SYSTEM "..\..\..\Artifacts\SuccessProgressException.xml">
 ]>
 <chart>
 

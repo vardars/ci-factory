@@ -5,7 +5,6 @@
   xmlns:ms="urn:DateScripts"
   exclude-result-prefixes="ms msxsl">
 
-
   <msxsl:script implements-prefix="ms" language="C#">
     <![CDATA[
     public string FormatDate(string dateTime, string format)
@@ -123,28 +122,15 @@
     ]]>
   </msxsl:script>
 
-  <xsl:param name="CCNetLabel" />
-
   <xsl:output method="html"/>
 
   <xsl:template match="/">
+    
     <integration>
       <xsl:attribute name="build-label">
-        <xsl:value-of select="$CCNetLabel"/>
+        <xsl:value-of select="/cruisecontrol/build/@label"/>
       </xsl:attribute>
-      <xsl:attribute name="status">
-        <xsl:choose>
-          <xsl:when test="/cruisecontrol/exception">
-            <xsl:value-of select="'Exception'"/>
-          </xsl:when>
-          <xsl:when test="/cruisecontrol/build/@error">
-            <xsl:value-of select="'Failure'"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="'Success'"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
+      
       <xsl:attribute name="day">
         <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'dd')"/>
       </xsl:attribute>
@@ -163,18 +149,7 @@
       <xsl:attribute name="hourofday">
         <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, '%H')"/>
       </xsl:attribute>
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'BuildErrorType'"/>
-        <xsl:with-param name="StatisticValue" select="//failure/builderror/type"/>
-      </xsl:call-template>
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'BuildErrorMessage'"/>
-        <xsl:with-param name="StatisticValue" select="//failure/builderror/message"/>
-      </xsl:call-template>
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'StartTime'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@date"/>
-      </xsl:call-template>
+
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'Duration'"/>
         <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildtime"/>
@@ -190,10 +165,6 @@
         <xsl:with-param name="StatisticValue" select="/cruisecontrol/modifications/modification/user[1]"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'submittercount'"/>
-        <xsl:with-param name="StatisticValue" select="count(/cruisecontrol/modifications/modification[not(./user=preceding-sibling::modification/user)])"/>
-      </xsl:call-template>
-      <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'buildcondition'"/>
         <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildcondition"/>
       </xsl:call-template>
@@ -201,32 +172,43 @@
         <xsl:with-param name="StatisticName" select="'forcedby'"/>
         <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
       </xsl:call-template>
+
+      <xsl:variable name="UnitTestsWereExecuted" select="boolean(//task[@name='call']/target[@name='UnitTest.RunTests'])"/>
+      
       <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'modificationcount'"/>
-        <xsl:with-param name="StatisticValue" select="count(/cruisecontrol/modifications/modification)"/>
+        <xsl:with-param name="StatisticName" select="'Executed'"/>
+        <xsl:with-param name="StatisticValue" select="$UnitTestsWereExecuted"/>
+      </xsl:call-template>
+      
+      <xsl:variable name="UnitTestsDuration" select="//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
+
+      <xsl:call-template name="AddStatistic">
+        <xsl:with-param name="StatisticName" select="'UnitTestsDuration'"/>
+        <xsl:with-param name="StatisticValue" select="format-number($UnitTestsDuration div 1000,'##0.00')"/>
       </xsl:call-template>
 
-      <xsl:variable name="CompileTime"            select="//task[@name='call']/target[@name='Compile.CompileSource']/parent::node()/duration/text()"/>
-      <xsl:variable name="ProduceSourceUpdate"    select="//task[@name='call']/target[@name='SourceControl.GetOfProductDirectory']/parent::node()/duration/text()"/>
-      <xsl:variable name="ThirdPartySourceUpdate" select="//task[@name='call']/target[@name='SourceControl.CleanGetOfThirdPartyDirectory']/parent::node()/duration/text()"/>
-      <xsl:variable name="UnitTests"              select="//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
+      <xsl:variable name="mstest.resultnodes" select="//Tests/TestRun/result" />
+      <xsl:variable name="mstest.testcount" select="sum($mstest.resultnodes/totalTestCount)" />
 
       <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'CompileTime'"/>
-        <xsl:with-param name="StatisticValue" select="format-number($CompileTime div 1000,'##0.00')"/>
+        <xsl:with-param name="StatisticName" select="'Total Test Count'"/>
+        <xsl:with-param name="StatisticValue" select="$mstest.testcount"/>
       </xsl:call-template>
+      
+      <xsl:variable name="mstest.executedcount" select="sum($mstest.resultnodes/executedTestCount)" />
+
       <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'ProduceSourceUpdate'"/>
-        <xsl:with-param name="StatisticValue" select="format-number($ProduceSourceUpdate div 1000,'##0.00')"/>
+        <xsl:with-param name="StatisticName" select="'Test Run Count'"/>
+        <xsl:with-param name="StatisticValue" select="$mstest.executedcount"/>
       </xsl:call-template>
+
+      <xsl:variable name="mstest.failurecount" select="$mstest.executedcount - sum($mstest.resultnodes/passedTestCount)" />
+
       <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'ThirdPartySourceUpdate'"/>
-        <xsl:with-param name="StatisticValue" select="format-number($ThirdPartySourceUpdate div 1000,'##0.00')"/>
+        <xsl:with-param name="StatisticName" select="'Test Failure Count'"/>
+        <xsl:with-param name="StatisticValue" select="$mstest.failurecount"/>
       </xsl:call-template>
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'UnitTests'"/>
-        <xsl:with-param name="StatisticValue" select="format-number($UnitTests div 1000,'##0.00')"/>
-      </xsl:call-template>
+
     </integration>
   </xsl:template>
 
@@ -240,6 +222,5 @@
       <xsl:value-of select="$StatisticValue"/>
     </statistic>
   </xsl:template>
-
-
-</xsl:stylesheet> 
+  
+</xsl:stylesheet>

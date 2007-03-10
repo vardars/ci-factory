@@ -23,12 +23,12 @@
       <number>
         <xsl:value-of select="position()"/>
       </number>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\BuildHistoryTotal.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\BuildHistoryTotal.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="ms:FormatTime(statistic[@name='Duration']/text())"/>
         </number>
       </exsl:document>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\BuildHistoryCompile.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\BuildHistoryCompile.xml" fragment="yes" append="yes" >
         <number>
           <xsl:choose>
             <xsl:when test="statistic[@name='CompileTime']/text() = 'NaN'">
@@ -40,7 +40,7 @@
           </xsl:choose>
         </number>
       </exsl:document>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\BuildHistoryProduceSourceUpdate.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\BuildHistoryProduceSourceUpdate.xml" fragment="yes" append="yes" >
         <number>
           <xsl:choose>
             <xsl:when test="statistic[@name='ProduceSourceUpdate']/text() = 'NaN'">
@@ -52,7 +52,7 @@
           </xsl:choose>
         </number>
       </exsl:document>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\BuildHistoryThirdPartySourceUpdate.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\BuildHistoryThirdPartySourceUpdate.xml" fragment="yes" append="yes" >
         <number>
           <xsl:choose>
             <xsl:when test="statistic[@name='ThirdPartySourceUpdate']/text() = 'NaN'">
@@ -64,7 +64,7 @@
           </xsl:choose>
         </number>
       </exsl:document>
-      <exsl:document href="C:\Projects\dod.ahlta\Current\Build\Installs\BuildHistoryUnitTests.xml" fragment="yes" append="yes" >
+      <exsl:document href="..\..\..\Artifacts\BuildHistoryUnitTests.xml" fragment="yes" append="yes" >
         <number>
           <xsl:choose>
             <xsl:when test="statistic[@name='UnitTests']/text() = 'NaN'">
