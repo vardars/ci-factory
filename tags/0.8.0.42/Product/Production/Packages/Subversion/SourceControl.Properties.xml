@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN.Properties">
+
+  <property name="SVN.URI.Root" value="%SVN.URI.Root%" overwrite="false" />
+  <property name="SVN.URI.ProjectName" value="%SVN.URI.ProjectName%" overwrite="false" />
+  <property name="SVN.URI.ProjectCodeLine" value="%SVN.URI.ProjectCodeLine%" overwrite="false" />
+  <property name="SVN.URI.Tags" value="%SVN.URI.Tags%" overwrite="false" />
+  <include buildfile="SourceControl.Credentials.xml"/>
+  <property name="SVN.Credentials.SafeStorage" value="%SVN.Credentials.SafeStorage%" overwrite="false"/>
+  <property name="SVN.TemplateDB" value="%SVN.TemplateDB%" overwrite="false" />
+  <property name="SVN.RootShare" value="%SVN.RootShare%" overwrite="false"/>
+
+</project>
