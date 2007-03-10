@@ -9,6 +9,10 @@
       <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
     </largeproperty>
     <call target="Packages.AddCleanUpActions"/>
+    <saveproperties file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml" format="Include" projectname="SourceControl.Credentials" >
+      <property name="SVN.Username" />
+      <property name="SVN.Password" />
+    </saveproperties>
   </target>
 
   <target name="Subversion.SetAsCurrentPackage">

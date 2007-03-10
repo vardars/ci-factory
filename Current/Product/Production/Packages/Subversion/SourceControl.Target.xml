@@ -197,6 +197,20 @@
       <arg line="* --force" />
     </exec>
 
+    <if test="${SVN.Credentials.SafeStorage}">
+      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="true" >
+        <arg line="revert"/>
+        <arg line="SourceControl.Credentials.xml" />
+      </exec>
+
+      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="true" >
+        <arg line="propset"/>
+        <arg line="svn:ignore"/>
+        <arg line="SourceControl.Credentials.xml" />
+        <arg line="."/>
+      </exec>
+    </if>
+
     <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
       <arg line="commit" />
       <arg line="--non-interactive" />

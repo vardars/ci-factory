@@ -16,6 +16,7 @@
   <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" /><!--makes shure that the case is correct, Tags or tags-->
 
   <property name="SVN.WebRepoUrl" value="http://${ProjectName}.googlecode.com/svn"/>
+  <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
   <property name="SVN.Username" value="Build" />
   <property name="SVN.Password" value="password" />
   <property name="SVN.WebVisible" value="true" />

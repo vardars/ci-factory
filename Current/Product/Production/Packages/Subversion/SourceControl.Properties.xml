@@ -5,8 +5,8 @@
   <property name="SVN.URI.ProjectName" value="%SVN.URI.ProjectName%" overwrite="false" />
   <property name="SVN.URI.ProjectCodeLine" value="%SVN.URI.ProjectCodeLine%" overwrite="false" />
   <property name="SVN.URI.Tags" value="%SVN.URI.Tags%" overwrite="false" />
-  <property name="SVN.Username" value="%SVN.Username%"  overwrite="false" />
-  <property name="SVN.Password" value="%SVN.Password%"  overwrite="false" />
+  <include buildfile="SourceControl.Credentials.xml"/>
+  <property name="SVN.Credentials.SafeStorage" value="%SVN.Credentials.SafeStorage%" overwrite="false"/>
   <property name="SVN.TemplateDB" value="%SVN.TemplateDB%" overwrite="false" />
   <property name="SVN.RootShare" value="%SVN.RootShare%" overwrite="false"/>
 

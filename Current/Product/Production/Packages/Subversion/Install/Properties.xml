@@ -7,6 +7,7 @@
   <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" overwrite="false" />
   
   <property name="SVN.WebRepoUrl" value="http://localhost/svn/${ProjectName}" overwrite="false" />
+  <property name="SVN.Credentials.SafeStorage" value="false" overwrite="false"/>
   <property name="SVN.Username" value="Build" overwrite="false" />
   <property name="SVN.Password" value="password" overwrite="false" />
   <property name="SVN.WebVisible" value="true" overwrite="false"/>
@@ -85,8 +86,7 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.URI.ProjectCodeLine%', SVN.URI.ProjectCodeLine)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.URI.Tags%', SVN.URI.Tags)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.WebRepoUrl%', SVN.WebRepoUrl)}" />
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.Username%', SVN.Username)}" />
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.Password%', SVN.Password)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.TemplateDB%', SVN.TemplateDB)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.RootShare%', SVN.RootShare)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.Credentials.SafeStorage%', SVN.Credentials.SafeStorage)}"/>
 </project>
