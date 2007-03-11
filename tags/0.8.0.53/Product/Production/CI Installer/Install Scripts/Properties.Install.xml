@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
+
+  <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+
+  <property name="Install.Quiet" value="false" />
+  
+  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="ProjectRootDirectory"     value="${ProjectsDirectory}\${ProjectName}"  overwrite="false"/>
+  <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" overwrite="false"/>
+  <property name="ProductDirectory"         value="${ProjectRootDirectory}\${ProjectCodeLineName}\Product"  overwrite="false"/>
+  <property name="ThirdPartyDirectory"      value="${ProjectRootDirectory}\${ProjectCodeLineName}\Third Party"  overwrite="false"/>
+  <property name="ProductionDirectory"      value="${ProductDirectory}\Production"  overwrite="false"/>
+  <property name="InstallDirectory"         value="${ProductDirectory}\Install"  overwrite="false"/>
+  <property name="UnitTestDirectory"        value="${ProductDirectory}\Unit Test"  overwrite="false"/>
+  <property name="BuildDirectory"           value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\Build"  overwrite="false"/>
+  <property name="PackagesDirectory"        value="${BuildDirectory}\Packages"  overwrite="false"/>
+  <property name="PackagesDirectory.Ref"    value="${string::replace('${PackagesDirectory}/', '/', '')}" />
+
+  <property name="SourceRoot" value="${path::get-full-path('..')}"/>
+  <property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
+  <property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
+  <property name="SourceProductDirectory" value="${SourceDefaultDirectory}\Product"/>
+  <property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
+  <property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
+  
+</project>
