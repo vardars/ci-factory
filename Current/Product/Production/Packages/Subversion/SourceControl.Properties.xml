@@ -5,7 +5,7 @@
   <property name="SVN.URI.ProjectName" value="%SVN.URI.ProjectName%" overwrite="false" />
   <property name="SVN.URI.ProjectCodeLine" value="%SVN.URI.ProjectCodeLine%" overwrite="false" />
   <property name="SVN.URI.Tags" value="%SVN.URI.Tags%" overwrite="false" />
-  <ifthenelse test="${file::exists(${PackagesDirectory} + '\Subversion\SourceControl.Credentials.xml')}">
+  <ifthenelse test="${file::exists(PackagesDirectory + '\Subversion\SourceControl.Credentials.xml')}">
     <then>
       <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml" />
     </then>

@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\Build" >
 
-  <property name="CCNetLabel" value="Dev"/>
-  <property name="CCNetProject" value="%ProjectName%"/>
-  <property name="Compile.ConfigName" value="Release"/>
-  <include buildfile="Properties.build.xml"/>
-  <include buildfile="Common.Build.xml" />
-  <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
-  <include buildfile=".\Packages\VS.NETCompile\Compile.Target.xml" />
+  
+    <property name="CCNetBuildCondition" value="ForceBuild "/>
+    <property name="CCNetIntegrationStatus" value="Success"/>
+    <property name="CCNetLastIntegrationStatus" value="Success"/>
+    <property name="CCNetBuildDate" value="2006-09-12"/>
+    <property name="CCNetBuildTime" value="11:10:00"/>
+    <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+    <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+    
+    <property name="CCNetLabel" value="1.0.0.2"/>
+    <property name="CCNetProject" value="TestProject"/>
+    <property name="CCNetLogFilePath" value=""/>
+  
+    <include buildfile="Properties.Build.xml"/>
+    <include buildfile="Common.Build.xml" />
+  
+    <property name="Compile.ConfigName" value="debug"/>
+    
+    <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
+  <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
   
   <target name="test">
     <property name="Compile.ConfigName" value="release"/>
