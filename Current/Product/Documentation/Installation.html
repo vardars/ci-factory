@@ -65,7 +65,7 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_1g55x6q:46'>
+<body revision='dd6cv3jm_1g55x6q:50'>
 <h3>
   Installation
 </h3>
@@ -97,7 +97,7 @@ table.zeroBorder td {
 </table>
 <p>
   <br>
-  <img src="Installation_images/dd6cv3jm_5dkhhs3.png" style="HEIGHT:256px; WIDTH:554px"><br>
+  <img src="Installation_images/dd6cv3jm_19hmqvkz.png" style="HEIGHT:245px; WIDTH:538px"><br>
 </p>
 <p>
   Figure 1
@@ -114,7 +114,7 @@ table.zeroBorder td {
 <div>
   <div>
     <div style="BACKGROUND:white none repeat scroll 0% 50%; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial; FONT-FAMILY:Courier New; FONT-SIZE:10pt; COLOR:black">
-      <div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+      <div style="BACKGROUND:#f2f2f2 none repeat scroll 0%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
           </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
@@ -124,6 +124,19 @@ table.zeroBorder td {
           <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>
           </span><span style=COLOR:red>xmlns</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>http://nant.sf.net/schemas/nant.xsd</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Arguments</span>"<span style=COLOR:blue>&gt;</span>
+        </p>
+        <p style=MARGIN:0px>
+          <span style=COLOR:blue>&nbsp;
+          &lt;!--</span><span style=COLOR:green>Use Install.Package to install
+          one or more Packages to an existing CI Factory
+          Project.</span><span style=COLOR:blue>--&gt;</span>
+        </p>
+        <p style=MARGIN:0px>
+          <span style=COLOR:blue>&nbsp;
+          &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+          </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Install.Action</span>"<span style=COLOR:blue>
+          </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Install.Project</span>"<span style=COLOR:blue>
+          /&gt;</span>
         </p>
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp;
@@ -197,8 +210,8 @@ table.zeroBorder td {
           &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
           </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>SVN.URI.Tags</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${SVN.URI.ProjectName}/tags</span>"<span style=COLOR:blue>
-          /&gt;&lt;!--</span><span style=COLOR:green>makes sure that the case is
-          correct, Tags or tags</span><span style=COLOR:blue>--&gt;</span>
+          /&gt;&lt;!--</span><span style=COLOR:green>makes shure that the case
+          is correct, Tags or tags</span><span style=COLOR:blue>--&gt;</span>
         </p>
         <p style=MARGIN:0px>
           &nbsp;
@@ -208,6 +221,15 @@ table.zeroBorder td {
           &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
           </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>SVN.WebRepoUrl</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>http://${ProjectName}.googlecode.com/svn</span>"<span style=COLOR:blue>/&gt;</span>
+        </p>
+        <p style=MARGIN:0px>
+          <span style=COLOR:blue>&nbsp;
+          &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+          </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>SVN.Credentials.SafeStorage</span>"<span style=COLOR:blue>
+          </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>/&gt;&lt;!--</span><span style=COLOR:green>Set
+          to true if you do not want the build users credentials stored in the
+          repository for ?anyone? to
+          see.</span><span style=COLOR:blue>--&gt;</span>
         </p>
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp;
@@ -401,12 +423,7 @@ table.zeroBorder td {
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
           &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
-          </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${BuildDirectory}\Scatch.Build.xml</span>"<span style=COLOR:blue>/&gt;</span>
-        </p>
-        <p style=MARGIN:0px>
-          <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
-          &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
-          </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${PackagesDirectory}\Subversion\SVN.Target.xml</span>"<span style=COLOR:blue>/&gt;</span>
+          </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${PackagesDirectory}\Subversion\SourceControl.Target.xml</span>"<span style=COLOR:blue>/&gt;</span>
         </p>
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
@@ -443,6 +460,7 @@ table.zeroBorder td {
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp; &nbsp;
           &lt;</span><span style=COLOR:#a31515>asyncexec</span><span style=COLOR:blue>
+          </span><span style=COLOR:red>workingdir</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${BuildDirectory}</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>program</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${BuildVS.OpenSolutionBat}</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>createnowindow</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>
           </span><span style=COLOR:red>redirectoutput</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>
@@ -908,11 +926,6 @@ Figure 5<br>
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp; &nbsp;
           &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
-          </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>UnitTest.SetUp</span>"<span style=COLOR:blue>/&gt;</span>
-        </p>
-        <p style=MARGIN:0px>
-          <span style=COLOR:blue>&nbsp; &nbsp;
-          &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
           </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>nDepend.SetUp</span>"<span style=COLOR:blue>/&gt;</span>
         </p>
         <p style=MARGIN:0px>
@@ -971,11 +984,6 @@ Figure 5<br>
           <span style=COLOR:blue>&nbsp; &nbsp;
           &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
           </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.TearDown</span>"<span style=COLOR:blue>/&gt;</span>
-        </p>
-        <p style=MARGIN:0px>
-          <span style=COLOR:blue>&nbsp; &nbsp;
-          &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
-          </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>UnitTest.TearDown</span>"<span style=COLOR:blue>/&gt;</span>
         </p>
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&nbsp; &nbsp;
