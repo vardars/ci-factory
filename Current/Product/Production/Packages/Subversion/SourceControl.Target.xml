@@ -78,8 +78,6 @@
             <exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
               <arg line="update" />
               <arg line="--non-interactive" />
-              <arg line="--username ${SVN.Username}" />
-              <arg line="--password ${SVN.Password}" />
             </exec>
           </try>
           <catch>
@@ -218,6 +216,9 @@
       <arg line="--password ${SVN.Password}" />
       <arg line='-m "Initial Load by CI Factory Installer"'/>
     </exec>
+
+    <delete dir='${ProjectRootDirectory}\.svn' includeemptydirs='true' />
+    <delete dir='${ProjectRootDirectory}\tags' includeemptydirs='true' />
   </target>
 
   <target name="SourceControl.Bindings.Create">
