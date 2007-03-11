@@ -57,7 +57,7 @@
   <target name="Post.Install">
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${PackagesDirectory}\Subversion\SVN.Target.xml"/>
+        <include name="${PackagesDirectory}\Subversion\SourceControl.Target.xml"/>
       </buildfiles>
     </nant>
     
