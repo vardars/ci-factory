@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Tracker.Install" default="Tracker.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Tracker.Install">
+    <largeproperty name="Packages.AddPreBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="Tracker.Queries" />
+      <call target="Tracker.AddToDailyList"/>
+      <call target="Tracker.Report"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddPreBuildActions"/>
+    
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="Tracker.MoveTrackersTo"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Tracker\Tracker.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\Tracker Reports\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="Tracker.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Tracker"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Tracker.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Tracker"/>
+  </target>
+
+  <target name="Tracker.ValidateParameters">
+    
+  </target>
+  
+</project>
