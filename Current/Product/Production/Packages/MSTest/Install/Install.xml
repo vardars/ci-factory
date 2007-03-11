@@ -41,6 +41,7 @@
     <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSTest"/>
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value="UnitTest.Target.xml"/>
     <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
+    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
   </target>
 
   <target name="MSTest.ValidateParameters">

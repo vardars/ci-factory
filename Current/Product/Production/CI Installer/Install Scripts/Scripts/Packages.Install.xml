@@ -4,6 +4,7 @@
   <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
   <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
   <property name="Packages.CurrenctPackage.PackageName" value=""/>
+  <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
 
   <largeproperty name="Private.Packages.PreBuildActions.EndTag">
     <value xml="false"><![CDATA[<description>End Pre Build Actions</description>]]></value>
@@ -96,9 +97,9 @@
         <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
         <call target="Private.Packages.CopyPackage"/>
         
-        <call target="Private.Packages.AddInclude" />
-        <call target="Private.Packages.AddSetUp" />
-        <call target="Private.Packages.AddTearDown" />
+        <call target="Private.Packages.AddInclude" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
 
         <call target="${Private.Packages.Install.PackageName}.Install"/>
       </do>
@@ -110,6 +111,7 @@
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
     <property name="Packages.CurrenctPackage.PackageName" value=""/>
     <property name="Current.BuildFile" value="${BuildDirectory}\Main.Build.xml"/>
+    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
   </target>
 
   <target name="Packages.Validate.CurrentSetPackage">
