@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VS.NETCompile.Install" default="VS.NETCompile.Install">
+
+  <include buildfile="Properties.xml" />
+
+  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
+  <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
+  <property name="Compile.ScratchFile" value="${ProductDirectory}\Scratch.build.xml"/>
+  
+  <property name="Compile.Default2003SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2003.sln.remove"/>
+  <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2005.sln.remove"/>
+  <property name="Compile.DefaultOpenSolutionBat" value="${SourcePackagesDirectory}\VS.NETCompile\Install\OpenSolution.bat"/>
+  <property name="Compile.DefaultScratchFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\Scratch.build.xml"/>
+  
+  <target name="VS.NETCompile.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Compile.CompileSource" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+    <ifthenelse test="${Compile.DevEnv.Version == '2003'}">
+      <then>
+        <copy file="${Compile.Default2003SolutionFile}" tofile="${Compile.SolutionFile}"/>
+      </then>
+      <elseif if="${Compile.DevEnv.Version == '2005'}">
+        <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
+      </elseif>
+      <else>
+        <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
+      </else>
+    </ifthenelse>
+    <copy tofile="${Compile.OpenSolutionBat}" file="${Compile.DefaultOpenSolutionBat}">
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description=".NET Compile Details" actionName="DevEnvCompileDetails" xslFileName="Packages\VS.NETCompile\DevEnvCompileDetails.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\CompileLogs\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="VS.NETCompile.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VS.NETCompile"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Compile.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Compile"/>
+  </target>
+
+  <target name="VS.NETCompile.ValidateParameters">
+    <ifthenelse test="${Compile.DevEnv.Version == '2003'}">
+      <then></then>
+      <elseif if="${Compile.DevEnv.Version == '2005'}"></elseif>
+      <else>
+        <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
+      </else>
+    </ifthenelse>
+  </target>
+  
+</project>
