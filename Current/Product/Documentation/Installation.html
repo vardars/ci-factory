@@ -1,19 +1,19 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
-{ 
- font-family: Verdana 
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
+{
+ font-family: Verdana
 }
-BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
-{  
-  font-size: 10.0pt; 
-  margin-top:0pt;  
-  margin-bottom:0pt;  
-} 
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
+{
+  font-size: 10.0pt;
+  margin-top:0pt;
+  margin-bottom:0pt;
+}
 BODY, P
 {
-  margin-left:0pt; 
+  margin-left:0pt;
   margin-right:0pt;
 }
 BODY
@@ -46,7 +46,7 @@ table.zeroBorder td {
 	border-color: gray gray gray gray;
 }
 .hiddenStyle {
-		visibility: hidden; 
+		visibility: hidden;
 		position: absolute;
 		z-Index: 1;
 		paddingRight: 0;
@@ -65,7 +65,7 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_1g55x6q:50'>
+<body revision='dd6cv3jm_1g55x6q:62'>
 <h3>
   Installation
 </h3>
@@ -114,7 +114,7 @@ table.zeroBorder td {
 <div>
   <div>
     <div style="BACKGROUND:white none repeat scroll 0% 50%; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial; FONT-FAMILY:Courier New; FONT-SIZE:10pt; COLOR:black">
-      <div style="BACKGROUND:#f2f2f2 none repeat scroll 0%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+      <div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
         <p style=MARGIN:0px>
           <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
           </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
@@ -1037,7 +1037,7 @@ Figure 5<br>
 </p>
 <br>
 <p>
-  The build server should already be running. In the furture you can start the
+  The build server should already be running. In the future you can start the
   server by executing the batch file
   C:\Projects\TestProject\Current\Build\CCNETServer.Bat. This will create a dos
   window with a non-informative title. If the host machine will be hosting
@@ -1071,6 +1071,13 @@ Figure 5<br>
   </tbody>
 </table>
 <p>
+  There are some new additions to CI Factory that will help will converting an
+  existing project.&nbsp; Please take a look at the Build Master section of the
+  <a href="Power Tools.html" target=blank_ title="Power Tools">Power
+  Tools</a> document.
+</p>
+<br>
+<p>
   If you are going to bind the solution to source control then now is the best
   time while there are no projects in the solution yet. If you have existing
   projects that you would like to add copy them to either the Unit Test
@@ -1102,7 +1109,7 @@ Figure 5<br>
   Add the existing projects as you normally would, commit to source control, and
   wait for the build result(the commit just triggered a build). If you are going
   to add new project make sure that you add it to the Production directory if it
-  is deployable code or to Unit Test if it is unit test code. If you look back
+  is deploy-able code or to Unit Test if it is unit test code. If you look back
   at the main build file you will see a call to
   Versioning.IncreamentBuildNumberOfProduct. This will update all projectinfo
   files. You can have one in every project if you like but I prefer to have one
@@ -1228,8 +1235,27 @@ Figure 5<br>
 <p>
   This section is about adding a package to and existing build server not
   authoring a new package. Instruction on authoring a new package can be found
-  <a href=http://docs.google.com/View?docid=dd6cv3jm_11fmt93s title=here>here</a>.
-  A package should be placed in the directory
+  <a href="Packages.html" title=here>here</a>.
+  There are two ways to add a package; manually and with a script.&nbsp; First
+  lest look at the scripted approach.
+</p>
+<p>
+  <br>
+</p>
+Open the Arguments.xml file and notice the property at the top of the file:
+Install.Action.&nbsp; It's default value is Install.Project, change this to
+Install.Package.&nbsp; Now adjust the strings list to include the Package(s)
+that you would like to install and execute the run.bat file.&nbsp; This will add
+the Package(s) to the local Project.&nbsp; It will not add the Package to source
+control.&nbsp; Please open the build script solution and review the changes
+made.&nbsp; When you are ready add the new Package(s) to source control and
+commit the additions and modifications.<br>
+<p>
+  <br>
+</p>
+<p>
+  From here on describes how to manually install a package.&nbsp; A package
+  should be placed in the directory
   C:\Projects\&lt;projectname&gt;\Current\Build\Packages. A package can
   integrate into CI Factory in several ways. In most cases it will supply a
   targets file &lt;packagename&gt;.Target.xml that will need to be included in
@@ -1608,7 +1634,7 @@ Figure 5<br>
 </p>
 <p>
   You should review the properties file to insure that the values set are
-  desired. The properites file for packages are found in the same folder as the
+  desired. The properties file for packages are found in the same folder as the
   target file named in the follow format, &lt;packagename&gt;.Properites.xml.
   The package may produce output that needs to be merged into the CCNET build
   log. If so edit C:\&lt;projectname&gt;\Current\Build\ccnetproject.xml adding
