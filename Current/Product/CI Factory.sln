@@ -322,6 +322,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Power Tools", "Power Tools"
 		Power Tools\OpenSolution.bat = Power Tools\OpenSolution.bat
 		Power Tools\OpenSolution.Script.xml = Power Tools\OpenSolution.Script.xml
 		Power Tools\Personal.Build.xml = Power Tools\Personal.Build.xml
+		Power Tools\Scratch.Lib.xml = Power Tools\Scratch.Lib.xml
 		Power Tools\Test.bat = Power Tools\Test.bat
 	EndProjectSection
 EndProject

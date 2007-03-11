@@ -1100,10 +1100,10 @@ namespace NAnt.Core {
                             }
                         }
 
-                        object instance = Activator.CreateInstance(
+                        collection = Activator.CreateInstance(
                             propertyInfo.PropertyType, BindingFlags.Public | BindingFlags.Instance, 
                             null, null, CultureInfo.InvariantCulture);
-                        propertyInfo.SetValue(Element, instance, 
+                        propertyInfo.SetValue(Element, collection, 
                             BindingFlags.Default, null, null, CultureInfo.InvariantCulture);
                     }
 
