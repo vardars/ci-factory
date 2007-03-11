@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
+  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
+  <property name="Compile.PublishLogFile" value="true" />
+  <property name="Compile.ConfigName" value="Release"/>
+  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" />
+  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip"/>
+  <property name="Compile.ToCopyToBin" value="false"  />
+  <property name="Compile.ToDeployZip" value="false"  />
+  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" />
+
+  <property name="Compile.Environment" value="Compile.Environment" overwrite="false"/>
+  <environment id="Compile.Environment">
+    <variable name="PATH" value="${environment::get-variable('PATH')};${NantExePath}" />
+  </environment>
+
+  <fileset id="Compile.ToCopy">
+    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
+  </fileset>
+</project>
