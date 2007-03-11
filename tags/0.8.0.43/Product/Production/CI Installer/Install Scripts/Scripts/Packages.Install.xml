@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PackagesInstaller" >
+
+  <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
+  <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
+  <property name="Packages.CurrenctPackage.PackageName" value=""/>
+
+  <largeproperty name="Private.Packages.PreBuildActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Pre Build Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.CleanUpActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Clean Up Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.CompileActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Compile Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.VarificationActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Varification Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.PostBuildActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Post Build Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.TearDown.EndTag">
+    <value xml="false"><![CDATA[<description>End TearDowns</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.SetUp.EndTag">
+    <value xml="false"><![CDATA[<description>End SetUps</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.Include.EndTag">
+    <value xml="false"><![CDATA[<description>End Package Includes</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.buildReportBuildPlugin.EndTag">
+    <value><![CDATA[</xslFileNames>
+			</buildReportBuildPlugin>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.buildPlugins.EndTag">
+    <value><![CDATA[</buildPlugins>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.XslMerger.EndTag">
+    <value>
+      <![CDATA[</filepairs>
+      </xslmerger>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.MergeFiles.EndTag">
+    <value>
+      <![CDATA[</files>
+      </merge>]]>
+    </value>
+  </largeproperty>
+  
+  <largeproperty name="Private.Packages.PostBuild.EndTag">
+    <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
+  </largeproperty>
+
+  <!-- These are private... -->
+
+  <loopthrough property="Private.Packages.Install.PackageName">
+    <items>
+      <strings refid="Packages.InstallList"/>
+    </items>
+    <do>
+      <property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
+      <echo message="${InstallScript}" />
+      <ifthenelse  test="${file::exists(InstallScript)}">
+        <then>
+          <include buildfile="${InstallScript}" />
+        </then>
+        <else>
+          <fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
+        </else>
+      </ifthenelse>
+    </do>
+  </loopthrough>
+
+  <target name="Packages.Install" >
+    <loopthrough property="Private.Packages.Install.PackageName">
+      <items>
+        <strings refid="Packages.InstallList"/>
+      </items>
+      <do>
+        <call target="Packages.Reset.CurrentPackage" />
+        <call target="${Private.Packages.Install.PackageName}.SetAsCurrentPackage"/>
+        <call target="Packages.Validate.CurrentSetPackage"/>
+
+        <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
+        <call target="Private.Packages.CopyPackage"/>
+        
+        <call target="Private.Packages.AddInclude" />
+        <call target="Private.Packages.AddSetUp" />
+        <call target="Private.Packages.AddTearDown" />
+
+        <call target="${Private.Packages.Install.PackageName}.Install"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <target name="Packages.Reset.CurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
+    <property name="Packages.CurrenctPackage.PackageName" value=""/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Main.Build.xml"/>
+  </target>
+
+  <target name="Packages.Validate.CurrentSetPackage">
+    <fail if="${Packages.CurrenctPackage.PackageDirectoryName == ''}" message="PackageDirectoryName was not set as the current package."/>
+    <fail if="${Packages.CurrenctPackage.PackageTargetFileName == ''}" message="PackageTargetFileName was not set as the current package."/>
+    <fail if="${Packages.CurrenctPackage.PackageName == ''}" message="PackageName was not set as the current package."/>
+  </target>
+
+  <property name="Packages.CopyPackage.PackageName" value=""/>
+
+  <target name="Private.Packages.CopyPackage" >
+    <mkdir dir="${PackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
+    <copy todir="${PackagesDirectory}" >
+      <fileset basedir="${SourcePackagesDirectory}">
+        <include name="${Packages.CopyPackage.PackageName}\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
+      </fileset>
+    </copy>
+    <copy todir="${PackagesDirectory}">
+      <fileset basedir="${SourcePackagesDirectory}">
+        <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
+        <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
+        <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
+      </fileset>
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+  </target>
+
+
+  <property name="Packages.AddMergeFiles.Block" value=""/>
+  <target name="Packages.AddMergeFiles">
+    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddMergeFiles.Block}
+  ${Private.Packages.MergeFiles.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.MergeFiles.EndTag}" />
+    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddXslMerger.Block" value=""/>
+  <target name="Packages.AddXslMerger">
+    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddXslMerger.Block}
+  ${Private.Packages.XslMerger.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.XslMerger.EndTag}" />
+    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
+  <target name="Packages.AddbuildReportBuildPlugin">
+    <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
+  ${Private.Packages.buildReportBuildPlugin.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildReportBuildPlugin.EndTag}" />
+    <call target="Private.Packages.DashboardConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddbuildPlugins.Block" value=""/>
+  <target name="Packages.AddbuildPlugins">
+    <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddbuildPlugins.Block}
+  ${Private.Packages.buildPlugins.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildPlugins.EndTag}" />
+    <call target="Private.Packages.DashboardConfig.Replace"/>
+  </target>
+
+  <target name="Private.Packages.AddInclude">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true">
+      <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />
+  ${Private.Packages.Include.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.Include.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <target name="Private.Packages.AddSetUp">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp"/>
+  ${Private.Packages.SetUp.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.SetUp.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <target name="Private.Packages.AddTearDown">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown"/>
+  ${Private.Packages.TearDown.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.TearDown.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Packages.AddPreBuildActions.Block" value=""/>
+  <target name="Packages.AddPreBuildActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddPreBuildActions.Block}
+  ${Private.Packages.PreBuildActions.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PreBuildActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Packages.AddCleanUpActions.Block" value=""/>
+  <target name="Packages.AddCleanUpActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddCleanUpActions.Block}
+  ${Private.Packages.CleanUpActions.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.CleanUpActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Packages.AddCompileActions.Block" value=""/>
+  <target name="Packages.AddCompileActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddCompileActions.Block}
+  ${Private.Packages.CompileActions.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.CompileActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Packages.AddVarificationActions.Block" value=""/>
+  <target name="Packages.AddVarificationActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddVarificationActions.Block}
+  ${Private.Packages.VarificationActions.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.VarificationActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Packages.AddPostBuildActions.Block" value=""/>
+  <target name="Packages.AddPostBuildActions">
+    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+      <value xml="false" expand="true"><![CDATA[${Packages.AddPostBuildActions.Block}
+  ${Private.Packages.PostBuildActions.EndTag}]]></value>
+    </largeproperty>
+    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PostBuildActions.EndTag}" />
+    <call target="Private.Packages.MainBuild.Replace"/>
+  </target>
+
+  <property name="Private.Packages.MainBuild.Replace.To" value=""/>
+  <property name="Private.Packages.MainBuild.Replace.From" value=""/>
+  <target name="Private.Packages.MainBuild.Replace">
+    <replace file="${Current.BuildFile}">
+      <filterchain>
+        <replacestring from="${Private.Packages.MainBuild.Replace.From}" to="${Private.Packages.MainBuild.Replace.To}" />
+      </filterchain>
+    </replace>
+  </target>
+
+  <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
+  <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>
+  <target name="Private.Packages.DashboardConfig.Replace">
+    <replace file="${BuildDirectory}\dashboard\dashboard.config">
+      <filterchain>
+        <replacestring from="${Private.Packages.DashboardConfig.Replace.From}" to="${Private.Packages.DashboardConfig.Replace.To}" />
+      </filterchain>
+    </replace>
+  </target>
+
+  <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
+  <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
+  <target name="Private.Packages.CCNETProjectConfig.Replace">
+    <replace file="${BuildDirectory}\ccnetproject.xml">
+      <filterchain>
+        <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />
+      </filterchain>
+    </replace>
+  </target>
+
+  <target name="Packages.ValidateParameters">
+    <loopthrough property="Private.Packages.Install.PackageName">
+      <items>
+        <strings refid="Packages.InstallList"/>
+      </items>
+      <do>
+        <call target="${Private.Packages.Install.PackageName}.ValidateParameters"/>
+      </do>
+    </loopthrough>
+  </target>
+
+</project>
