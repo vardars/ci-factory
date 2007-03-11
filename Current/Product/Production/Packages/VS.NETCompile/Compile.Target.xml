@@ -2,10 +2,6 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
 
   <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
-	<property name="Compile.ConfigName" value="debug" overwrite="false"/>
-	<property name="Compile.ToCopyToBin" value="false" overwrite="false" />
-  <property name="Compile.ToConvertLogFile" value="false" overwrite="false" />
-  <property name="Compile.ToDeployZip" value="false" overwrite="false" />
   <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
   <property name="Compile.DevEnv" value="%Compile.DevEnv%" overwrite="false"/>
 	
