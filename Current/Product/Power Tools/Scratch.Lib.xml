@@ -241,7 +241,7 @@
         <echo message="******************************************************"/>
         <echo message="Looking at ${ProjectFile.Path}"/>
 
-        <property name="Index" value="0"/>
+        <property name="Index" value="1"/>
 
         <loopthrough property="Hint.Path">
           <items>
@@ -263,7 +263,7 @@
                   <echo message="will be changed to:"/>
                   <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
                   <!--xmlpoke it-->
-                  <xmlpoke file="${ProjectFile.Path}" xpath ="b:Project/b:ItemGroup/b:Reference/b:HintPath" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
                     <namespaces>
                       <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
                     </namespaces>
