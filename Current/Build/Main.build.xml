@@ -6,7 +6,7 @@
 
   <description>Begin Package Includes</description>
   <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
-  <include buildfile=".\Packages\Subversion\SVN.Target.xml" />
+  <include buildfile=".\Packages\Subversion\SourceControl.Target.xml" />
   <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
   <include buildfile=".\Packages\NCover\NCover.Target.xml" />
   <include buildfile=".\Packages\Simian\Simian.Target.xml" />
