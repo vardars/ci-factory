@@ -31,7 +31,7 @@
       <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
       <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
       <username>cifactory</username>
-      <password>s7d7t2w7</password>
+      <password>d4h6h4g6</password>
       <webUrlBuilder type="websvn">
         <url>http://ci-factory.googlecode.com/svn{0}</url>
       </webUrlBuilder>
@@ -71,7 +71,7 @@
         <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
         <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
         <username>cifactory</username>
-        <password>s7d7t2w7</password>
+        <password>d4h6h4g6</password>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
