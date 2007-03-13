@@ -326,6 +326,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Power Tools", "Power Tools"
 		Power Tools\Test.bat = Power Tools\Test.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCNet.Server.Aggregator", "Production\CCNet\CCNet.Server.Aggregator\CCNet.Server.Aggregator.csproj", "{5E25814B-D344-43E4-B213-4E1B35D52B1F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
@@ -535,6 +541,12 @@ Global
 		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17AD152E-6018-4017-9ECB-A5E3FBF8E584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Build|Any CPU.ActiveCfg = Release|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Build|Any CPU.Build.0 = Release|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -574,6 +586,7 @@ Global
 		{F8113DB9-6C47-4FD1-8A01-655FCF151747} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{E14EE67D-C24E-4088-B01B-35B742E99E85} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{482EF049-EC0C-4819-B568-75B5F74BDD5B} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
+		{5E25814B-D344-43E4-B213-4E1B35D52B1F} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{250A92D8-81E8-4373-902B-88B0E2ECE2EC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{67735BE3-3708-4DCD-84E9-7D9BD3F45EAC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{9A667DA2-A419-4014-91B0-5967FE567DB7} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}

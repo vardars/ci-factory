@@ -7,48 +7,66 @@ using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
-	public class CruiseServerFactory : ICruiseServerFactory
-	{
-		private static readonly string RemotingConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-		private static bool WatchConfigFile
-		{
-			get
-			{
-				string value = ConfigurationSettings.AppSettings["WatchConfigFile"];
-				return value == null || StringUtil.EqualsIngnoreCase(value, Boolean.TrueString);
-			}
-		}
+    public class CruiseServerFactory : ICruiseServerFactory
+    {
+        #region Readonly
 
-		private ICruiseServer CreateLocal(string configFile)
-		{
-			return new CruiseServer(
-				NewConfigurationService(configFile),
-				new ProjectIntegratorListFactory(),
-				new NetReflectorProjectSerializer());
-		}
+        private static readonly string RemotingConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
 
-		private IConfigurationService NewConfigurationService(string configFile)
-		{
-			IConfigurationService service = new FileConfigurationService(
-				new DefaultConfigurationFileLoader(),
-				new DefaultConfigurationFileSaver(
-					new NetReflectorProjectSerializer()), 
-				new FileInfo(configFile));
+        #endregion
 
-			if (WatchConfigFile)
-				service = new FileWatcherConfigurationService(service, new FileChangedWatcher(configFile));
-			
-			return new CachingConfigurationService(service);
-		}
+        #region Properties
 
-		private ICruiseServer CreateRemote(string configFile)
-		{
-			return new RemoteCruiseServer(CreateLocal(configFile), RemotingConfigurationFile);
-		}
+        private static bool WatchConfigFile
+        {
+            get
+            {
+                string value = ConfigurationSettings.AppSettings["WatchConfigFile"];
+                return value == null || StringUtil.EqualsIngnoreCase(value, Boolean.TrueString);
+            }
+        }
 
-		public ICruiseServer Create(bool remote, string configFile)
-		{
-			return (remote) ? CreateRemote(configFile) : CreateLocal(configFile);
-		}
-	}
+        #endregion
+
+        #region Public Methods
+
+        public ICruiseServer Create(bool remote, string configFile)
+        {
+            return (remote) ? CreateRemote(configFile) : CreateLocal(configFile);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private ICruiseServer CreateLocal(string configFile)
+        {
+            return new CruiseServer(
+                NewConfigurationService(configFile),
+                new ProjectIntegratorListFactory(),
+                new NetReflectorProjectSerializer());
+        }
+
+        private ICruiseServer CreateRemote(string configFile)
+        {
+            return new RemoteCruiseServer(CreateLocal(configFile), RemotingConfigurationFile);
+        }
+
+        private IConfigurationService NewConfigurationService(string configFile)
+        {
+            IConfigurationService service = new FileConfigurationService(
+                new DefaultConfigurationFileLoader(),
+                new DefaultConfigurationFileSaver(
+                    new NetReflectorProjectSerializer()),
+                new FileInfo(configFile));
+
+            if (WatchConfigFile)
+                service = new FileWatcherConfigurationService(service, new FileChangedWatcher(configFile));
+
+            return new CachingConfigurationService(service);
+        }
+
+        #endregion
+
+    }
 }

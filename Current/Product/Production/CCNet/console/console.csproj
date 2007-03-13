@@ -118,7 +118,6 @@
     <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
-    <None Include="ConsoleContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -11,350 +11,376 @@ using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
-	public class CruiseServer : ICruiseServer
-	{
-		private readonly IProjectSerializer projectSerializer;
-		private readonly IProjectIntegratorListFactory projectIntegratorListFactory;
-		private readonly IConfigurationService configurationService;
-		private readonly ICruiseManager manager;
-		private readonly ManualResetEvent monitor = new ManualResetEvent(true);
+    public class CruiseServer : ICruiseServer
+    {
+        #region Fields
 
-		private IProjectIntegratorList projectIntegrators;
-		private bool disposed;
+        private readonly IConfigurationService configurationService;
 
-		public CruiseServer(IConfigurationService configurationService, IProjectIntegratorListFactory projectIntegratorListFactory, IProjectSerializer projectSerializer)
-		{
-			this.configurationService = configurationService;
-			this.configurationService.AddConfigurationUpdateHandler(new ConfigurationUpdateHandler(Restart));
-			this.projectIntegratorListFactory = projectIntegratorListFactory;
+        private bool disposed;
 
-			// ToDo - get rid of manager, maybe
-			manager = new CruiseManager(this);
+        private readonly ICruiseManager manager;
 
-			// By default, no integrators are running
-			this.projectSerializer = projectSerializer;
+        private readonly ManualResetEvent monitor = new ManualResetEvent(true);
 
-			CreateIntegrators();
-		}
+        private readonly IProjectIntegratorListFactory projectIntegratorListFactory;
 
-		public void Start()
-		{
-			Log.Info("Starting CruiseControl.NET Server");
-			monitor.Reset();
-			StartIntegrators();
-		}
+        private IProjectIntegratorList projectIntegrators;
 
-		/// <summary>
-		/// Stop all integrators, waiting until each integrator has completely stopped, before releasing any threads blocked by WaitForExit. 
-		/// </summary>
-		public void Stop()
-		{
-			Log.Info("Stopping CruiseControl.NET Server");
-			StopIntegrators();
-			monitor.Set();
-		}
+        private readonly IProjectSerializer projectSerializer;
 
-		/// <summary>
-		/// Abort all integrators, waiting until each integrator has completely stopped, before releasing any threads blocked by WaitForExit. 
-		/// </summary>
-		public void Abort()
-		{
-			Log.Info("Aborting CruiseControl.NET Server");
-			AbortIntegrators();
-			monitor.Set();
-		}
+        #endregion
 
-		/// <summary>
-		/// Restart server by stopping all integrators, creating a new set of integrators from Configuration and then starting them.
-		/// </summary>
-		public void Restart()
-		{
-			Log.Info("Configuration changed: Restarting CruiseControl.NET Server ");
+        #region Constructors
 
-			StopIntegrators();
-			CreateIntegrators();
-			StartIntegrators();
-		}
+        public CruiseServer(IConfigurationService configurationService, IProjectIntegratorListFactory projectIntegratorListFactory, IProjectSerializer projectSerializer)
+        {
+            this.configurationService = configurationService;
+            this.configurationService.AddConfigurationUpdateHandler(new ConfigurationUpdateHandler(Restart));
+            this.projectIntegratorListFactory = projectIntegratorListFactory;
 
-		/// <summary>
-		/// Block thread until all integrators to have been stopped or aborted.
-		/// </summary>
-		public void WaitForExit()
-		{
-			monitor.WaitOne();
-		}
+            // ToDo - get rid of manager, maybe
+            manager = new CruiseManager(this);
 
-		private void StartIntegrators()
-		{
-			foreach (IProjectIntegrator integrator in projectIntegrators)
-			{
-				integrator.Start();
-			}
-		}
+            // By default, no integrators are running
+            this.projectSerializer = projectSerializer;
 
-		private void CreateIntegrators()
-		{
-			IConfiguration configuration = configurationService.Load();
-			projectIntegrators = projectIntegratorListFactory.CreateProjectIntegrators(configuration.Projects);
+            CreateIntegrators();
+        }
 
-			if (projectIntegrators.Count == 0)
-			{
-				Log.Info("No projects found");
-			}
-		}
+        #endregion
 
-		private void StopIntegrators()
-		{
-			foreach (IProjectIntegrator integrator in projectIntegrators)
-			{
-				integrator.Stop();
-			}
-			WaitForIntegratorsToExit();
-		}
+        #region Properties
 
-		private void AbortIntegrators()
-		{
-			foreach (IProjectIntegrator integrator in projectIntegrators)
-			{
-				integrator.Abort();
-			}
-			WaitForIntegratorsToExit();
-		}
+        public ICruiseManager CruiseManager
+        {
+            get { return manager; }
+        }
 
-		private void WaitForIntegratorsToExit()
-		{
-			foreach (IProjectIntegrator integrator in projectIntegrators)
-			{
-				integrator.WaitForExit();
-			}
-		}
+        #endregion
 
-		public ICruiseManager CruiseManager
-		{
-			get { return manager; }
-		}
+        #region Public Methods
 
-		public ProjectStatus[] GetProjectStatus()
-		{
-			ArrayList projectStatusList = new ArrayList();
-			foreach (IProjectIntegrator integrator in projectIntegrators)
-			{
-				Project project = (Project) integrator.Project;
-				projectStatusList.Add(new ProjectStatus(integrator.State,
-				                                        project.LatestBuildStatus,
-				                                        project.CurrentActivity,
-				                                        project.Name,
-				                                        project.WebURL,
-				                                        project.LastIntegrationResult.StartTime,
-				                                        project.LastIntegrationResult.Label,
-														project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
-				                                        integrator.Trigger.NextBuild));
-			}
+        /// <summary>
+        /// Abort all integrators, waiting until each integrator has completely stopped, before releasing any threads blocked by WaitForExit. 
+        /// </summary>
+        public void Abort()
+        {
+            Log.Info("Aborting CruiseControl.NET Server");
+            AbortIntegrators();
+            monitor.Set();
+        }
 
-			return (ProjectStatus[]) projectStatusList.ToArray(typeof (ProjectStatus));
-		}
+        // ToDo - test
+        public void AddProject(string serializedProject)
+        {
+            Log.Info("Adding project - " + serializedProject);
+            try
+            {
+                IConfiguration configuration = configurationService.Load();
+                Project project = projectSerializer.Deserialize(serializedProject);
+                configuration.AddProject(project);
+                project.Initialize();
+                configurationService.Save(configuration);
+            }
+            catch (ApplicationException e)
+            {
+                Log.Warning(e);
+                throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
+            }
+        }
 
-		public bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
-		{
-			return GetIntegrator(projectName).ForceBuild(clientInfo);
-		}
+        // ToDo - test
+        // ToDo - when we decide how to handle configuration changes, do more here (like stopping/waiting for project, returning asynchronously, etc.)
+        public void DeleteProject(string projectName, bool purgeWorkingDirectory, bool purgeArtifactDirectory, bool purgeSourceControlEnvironment)
+        {
+            Log.Info("Deleting project - " + projectName);
+            try
+            {
+                IConfiguration configuration = configurationService.Load();
+                configuration.Projects[projectName].Purge(purgeWorkingDirectory, purgeArtifactDirectory, purgeSourceControlEnvironment);
+                configuration.DeleteProject(projectName);
+                configurationService.Save(configuration);
+            }
+            catch (Exception e)
+            {
+                Log.Warning(e);
+                throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
+            }
+        }
 
-		public void WaitForExit(string projectName)
-		{
-			GetIntegrator(projectName).WaitForExit();
-		}
+        public bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
+        {
+            return GetIntegrator(projectName).ForceBuild(clientInfo);
+        }
 
-		public string GetLatestBuildName(string projectName)
-		{
-			string[] buildNames = GetBuildNames(projectName);
-			if (buildNames.Length > 0)
-			{
-				return buildNames[0];
-			}
-			else
-			{
-				return string.Empty;
-			}
-		}
+        public string[] GetBuildNames(string projectName)
+        {
+            // TODO - this is a hack - I'll tidy it up later - promise! :) MR
+            foreach (IProjectIntegrator projectIntegrator in projectIntegrators)
+            {
+                if (projectIntegrator.Name == projectName)
+                {
+                    foreach (ITask publisher in ((Project)projectIntegrator.Project).Publishers)
+                    {
+                        if (publisher is XmlLogPublisher)
+                        {
+                            string logDirectory = ((XmlLogPublisher)publisher).LogDirectory(projectIntegrator.Project.ArtifactDirectory);
+                            if (!Directory.Exists(logDirectory))
+                            {
+                                Log.Warning("Log Directory [ " + logDirectory + " ] does not exist. Are you sure any builds have completed?");
+                                return new string[0];
+                            }
+                            string[] logFileNames = LogFileUtil.GetLogFileNames(logDirectory);
+                            Array.Reverse(logFileNames);
+                            return logFileNames;
+                        }
+                    }
+                    throw new CruiseControlException("Unable to find Log Publisher for project so can't find log file");
+                }
+            }
 
-		public string[] GetBuildNames(string projectName)
-		{
-			// TODO - this is a hack - I'll tidy it up later - promise! :) MR
-			foreach (IProjectIntegrator projectIntegrator in projectIntegrators)
-			{
-				if (projectIntegrator.Name == projectName)
-				{
-					foreach (ITask publisher in ((Project) projectIntegrator.Project).Publishers)
-					{
-						if (publisher is XmlLogPublisher)
-						{
-							string logDirectory = ((XmlLogPublisher) publisher).LogDirectory(projectIntegrator.Project.ArtifactDirectory);
-							if (! Directory.Exists(logDirectory))
-							{
-								Log.Warning("Log Directory [ " + logDirectory + " ] does not exist. Are you sure any builds have completed?");
-								return new string[0];
-							}
-							string[] logFileNames = LogFileUtil.GetLogFileNames(logDirectory);
-							Array.Reverse(logFileNames);
-							return logFileNames;
-						}
-					}
-					throw new CruiseControlException("Unable to find Log Publisher for project so can't find log file");
-				}
-			}
+            throw new NoSuchProjectException(projectName);
+        }
 
-			throw new NoSuchProjectException(projectName);
-		}
+        public ExternalLink[] GetExternalLinks(string projectName)
+        {
+            return GetIntegrator(projectName).Project.ExternalLinks;
+        }
 
-		public string[] GetMostRecentBuildNames(string projectName, int buildCount)
-		{
-			// TODO - this is a hack - I'll tidy it up later - promise! :) MR
-			string[] buildNames = GetBuildNames(projectName);
-			ArrayList buildNamesToReturn = new ArrayList();
-			for (int i = 0; i < ((buildCount < buildNames.Length) ? buildCount : buildNames.Length); i++)
-			{
-				buildNamesToReturn.Add(buildNames[i]);
-			}
-			return (string[]) buildNamesToReturn.ToArray(typeof (string));
-		}
+        public string GetLatestBuildName(string projectName)
+        {
+            string[] buildNames = GetBuildNames(projectName);
+            if (buildNames.Length > 0)
+            {
+                return buildNames[0];
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
 
-		public string GetLog(string projectName, string buildName)
-		{
-			// TODO - this is a hack - I'll tidy it up later - promise! :) MR
-			foreach (IProjectIntegrator projectIntegrator in projectIntegrators)
-			{
-				if (projectIntegrator.Name == projectName)
-				{
-					foreach (ITask publisher in ((Project) projectIntegrator.Project).Publishers)
-					{
-						if (publisher is XmlLogPublisher)
-						{
-							string logDirectory = ((XmlLogPublisher) publisher).LogDirectory(projectIntegrator.Project.ArtifactDirectory);
-							if (! Directory.Exists(logDirectory))
-							{
-								Log.Warning("Log Directory [ " + logDirectory + " ] does not exist. Are you sure any builds have completed?");
-								return "";
-							}
-							using (StreamReader sr = new StreamReader(Path.Combine(logDirectory, buildName)))
-							{
-								return sr.ReadToEnd();
-							}
-						}
-					}
-					throw new CruiseControlException("Unable to find Log Publisher for project so can't find log file");
-				}
-			}
+        public string GetLog(string projectName, string buildName)
+        {
+            // TODO - this is a hack - I'll tidy it up later - promise! :) MR
+            foreach (IProjectIntegrator projectIntegrator in projectIntegrators)
+            {
+                if (projectIntegrator.Name == projectName)
+                {
+                    foreach (ITask publisher in ((Project)projectIntegrator.Project).Publishers)
+                    {
+                        if (publisher is XmlLogPublisher)
+                        {
+                            string logDirectory = ((XmlLogPublisher)publisher).LogDirectory(projectIntegrator.Project.ArtifactDirectory);
+                            if (!Directory.Exists(logDirectory))
+                            {
+                                Log.Warning("Log Directory [ " + logDirectory + " ] does not exist. Are you sure any builds have completed?");
+                                return "";
+                            }
+                            using (StreamReader sr = new StreamReader(Path.Combine(logDirectory, buildName)))
+                            {
+                                return sr.ReadToEnd();
+                            }
+                        }
+                    }
+                    throw new CruiseControlException("Unable to find Log Publisher for project so can't find log file");
+                }
+            }
 
-			throw new NoSuchProjectException(projectName);
-		}
+            throw new NoSuchProjectException(projectName);
+        }
 
-		// ToDo - test
-		public string GetServerLog()
-		{
-			return new ServerLogFileReader().Read();
-		}
+        public string[] GetMostRecentBuildNames(string projectName, int buildCount)
+        {
+            // TODO - this is a hack - I'll tidy it up later - promise! :) MR
+            string[] buildNames = GetBuildNames(projectName);
+            ArrayList buildNamesToReturn = new ArrayList();
+            for (int i = 0; i < ((buildCount < buildNames.Length) ? buildCount : buildNames.Length); i++)
+            {
+                buildNamesToReturn.Add(buildNames[i]);
+            }
+            return (string[])buildNamesToReturn.ToArray(typeof(string));
+        }
 
-		// ToDo - test
-		public void AddProject(string serializedProject)
-		{
-			Log.Info("Adding project - " + serializedProject);
-			try
-			{
-				IConfiguration configuration = configurationService.Load();
-				Project project = projectSerializer.Deserialize(serializedProject);
-				configuration.AddProject(project);
-				project.Initialize();
-				configurationService.Save(configuration);
-			}
-			catch (ApplicationException e)
-			{
-				Log.Warning(e);
-				throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
-			}
-		}
+        // ToDo - this done TDD
+        public string GetProject(string name)
+        {
+            Log.Info("Getting project - " + name);
+            return new NetReflectorProjectSerializer().Serialize((Project)configurationService.Load().Projects[name]);
+        }
 
-		// ToDo - test
-		// ToDo - when we decide how to handle configuration changes, do more here (like stopping/waiting for project, returning asynchronously, etc.)
-		public void DeleteProject(string projectName, bool purgeWorkingDirectory, bool purgeArtifactDirectory, bool purgeSourceControlEnvironment)
-		{
-			Log.Info("Deleting project - " + projectName);
-			try
-			{
-				IConfiguration configuration = configurationService.Load();
-				configuration.Projects[projectName].Purge(purgeWorkingDirectory, purgeArtifactDirectory, purgeSourceControlEnvironment);
-				configuration.DeleteProject(projectName);
-				configurationService.Save(configuration);
-			}
-			catch (Exception e)
-			{
-				Log.Warning(e);
-				throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
-			}
-		}
+        public ProjectStatus[] GetProjectStatus()
+        {
+            ArrayList projectStatusList = new ArrayList();
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                Project project = (Project)integrator.Project;
+                projectStatusList.Add(new ProjectStatus(integrator.State,
+                                                        project.LatestBuildStatus,
+                                                        project.CurrentActivity,
+                                                        project.Name,
+                                                        project.WebURL,
+                                                        project.LastIntegrationResult.StartTime,
+                                                        project.LastIntegrationResult.Label,
+                                                        project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
+                                                        integrator.Trigger.NextBuild));
+            }
 
-		// ToDo - this done TDD
-		public string GetProject(string name)
-		{
-			Log.Info("Getting project - " + name);
-			return new NetReflectorProjectSerializer().Serialize((Project) configurationService.Load().Projects[name]);
-		}
+            return (ProjectStatus[])projectStatusList.ToArray(typeof(ProjectStatus));
+        }
 
-		public string GetVersion()
-		{
-			Log.Info("Returning version number");
-			try
-			{
-				return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-			}
-			catch (ApplicationException e)
-			{
-				Log.Warning(e);
-				throw new CruiseControlException("Failed to get project version . Exception was - " + e.Message);
-			}
-		}
+        // ToDo - test
+        public string GetServerLog()
+        {
+            return new ServerLogFileReader().Read();
+        }
 
-		// ToDo - this done TDD
-		// ToDo - really delete working dir? What if SCM hasn't changed?
-		public void UpdateProject(string projectName, string serializedProject)
-		{
-			Log.Info("Updating project - " + projectName);
-			try
-			{
-				IConfiguration configuration = configurationService.Load();
-				configuration.Projects[projectName].Purge(true, false, true);
-				configuration.DeleteProject(projectName);
-				Project project = projectSerializer.Deserialize(serializedProject);
-				configuration.AddProject(project);
-				project.Initialize();
-				configurationService.Save(configuration);
-			}
-			catch (ApplicationException e)
-			{
-				Log.Warning(e);
-				throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
-			}
-		}
+        public string GetVersion()
+        {
+            Log.Info("Returning version number");
+            try
+            {
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+            catch (ApplicationException e)
+            {
+                Log.Warning(e);
+                throw new CruiseControlException("Failed to get project version . Exception was - " + e.Message);
+            }
+        }
 
-		public ExternalLink[] GetExternalLinks(string projectName)
-		{
-			return GetIntegrator(projectName).Project.ExternalLinks;
-		}
+        /// <summary>
+        /// Restart server by stopping all integrators, creating a new set of integrators from Configuration and then starting them.
+        /// </summary>
+        public void Restart()
+        {
+            Log.Info("Configuration changed: Restarting CruiseControl.NET Server ");
 
-		private IProjectIntegrator GetIntegrator(string projectName)
-		{
-			IProjectIntegrator integrator = projectIntegrators[projectName];
-			if (integrator == null)
-			{
-				throw new CruiseControlException("Specified project does not exist: " + projectName);
-			}
-			return integrator;
-		}
+            StopIntegrators();
+            CreateIntegrators();
+            StartIntegrators();
+        }
 
-		void IDisposable.Dispose()
-		{
-			if (disposed) return;
-				disposed = true;
-			Abort();
-		}
-	}
+        public void Start()
+        {
+            Log.Info("Starting CruiseControl.NET Server");
+            monitor.Reset();
+            StartIntegrators();
+        }
+
+        /// <summary>
+        /// Stop all integrators, waiting until each integrator has completely stopped, before releasing any threads blocked by WaitForExit. 
+        /// </summary>
+        public void Stop()
+        {
+            Log.Info("Stopping CruiseControl.NET Server");
+            StopIntegrators();
+            monitor.Set();
+        }
+
+        // ToDo - this done TDD
+        // ToDo - really delete working dir? What if SCM hasn't changed?
+        public void UpdateProject(string projectName, string serializedProject)
+        {
+            Log.Info("Updating project - " + projectName);
+            try
+            {
+                IConfiguration configuration = configurationService.Load();
+                configuration.Projects[projectName].Purge(true, false, true);
+                configuration.DeleteProject(projectName);
+                Project project = projectSerializer.Deserialize(serializedProject);
+                configuration.AddProject(project);
+                project.Initialize();
+                configurationService.Save(configuration);
+            }
+            catch (ApplicationException e)
+            {
+                Log.Warning(e);
+                throw new CruiseControlException("Failed to add project. Exception was - " + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Block thread until all integrators to have been stopped or aborted.
+        /// </summary>
+        public void WaitForExit()
+        {
+            monitor.WaitOne();
+        }
+
+        public void WaitForExit(string projectName)
+        {
+            GetIntegrator(projectName).WaitForExit();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void AbortIntegrators()
+        {
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                integrator.Abort();
+            }
+            WaitForIntegratorsToExit();
+        }
+
+        private void CreateIntegrators()
+        {
+            IConfiguration configuration = configurationService.Load();
+            projectIntegrators = projectIntegratorListFactory.CreateProjectIntegrators(configuration.Projects);
+
+            if (projectIntegrators.Count == 0)
+            {
+                Log.Info("No projects found");
+            }
+        }
+
+        private IProjectIntegrator GetIntegrator(string projectName)
+        {
+            IProjectIntegrator integrator = projectIntegrators[projectName];
+            if (integrator == null)
+            {
+                throw new CruiseControlException("Specified project does not exist: " + projectName);
+            }
+            return integrator;
+        }
+
+        void IDisposable.Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
+            Abort();
+        }
+
+        private void StartIntegrators()
+        {
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                integrator.Start();
+            }
+        }
+
+        private void StopIntegrators()
+        {
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                integrator.Stop();
+            }
+            WaitForIntegratorsToExit();
+        }
+
+        private void WaitForIntegratorsToExit()
+        {
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                integrator.WaitForExit();
+            }
+        }
+
+        #endregion
+
+    }
 }
