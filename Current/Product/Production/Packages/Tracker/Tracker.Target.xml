@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Tracker">
 
-  <loadtasks assembly="Packages\Tracker\bin\Tracker.Tasks.dll" />
+  <loadtasks assembly="${PackagesDirectory}\Tracker\bin\CIFactory.NAnt.Tracker.Tasks.dll" />
   
   <property name="Tracker.FilesToDeleteAtSetup" value="" overwrite="false"/>
 	<property name="Tracker.Debug" value="false" overwrite="false"/>
@@ -12,49 +12,10 @@
   <include buildfile="${Tracker.DailyScrFile}" if="${file::exists(Tracker.DailyScrFile)}" failonerror="false"/>
   <property name="Tracker.DailyScrList" value="" overwrite="false"/>
 
-  <!--
-  The following properties should be specified in the calling script.
-
-  <trackerconnectionproperty name="Tracker.Connection">
-    <connectioninformation
-		  username=""
-		  password=""
-		  dbmsserver=""
-		  dbmstype=""
-		  dbmsname=""
-		  dbmsloginmode=""
-		  dbmsusername=""
-		  dbmspassword=""
-		  projectname=""
-      />
-  </trackerconnectionproperty>
-
-  <trackerfieldproperty name="Tracker.QueryFields" >
-    <readfields>
-      <field name=""/>
-    </readfields>
-  </trackerfieldproperty>
-  
-  <property name="Tracker.Query" value="" />
-  <property name="Tracker.ReportFile" value="" />
-  <property name="Tracker.QueryScrList" value=""/>
-
-  <trackerfieldproperty name="Tracker.ChangeFields" >
-    <writefields>
-      <field name="" value=""/>
-    </writefields>
-  </trackerfieldproperty>
-  
-  <property name="Tracker.NoteTitleForMoveTrackersTo" value="" />
-  
-  <property name="Tracker.FilesToDeleteAtSetup" value="" />
-  
-  -->
-  
   <!-- The following properties are for internal use only -->
   <property name="Private.Tracker.NoteForMoveTrackersTo" value="" overwrite="false" />
   
-  <target name="Tracker.MoveTrackersTo">
+  <target name="Tracker.MoveTrackersTo" unless="${string::get-length(Tracker.QueryScrList) == 0}">
 
     <call target="Private.Tracker.ConstructTrackerNote"/>
 
@@ -127,20 +88,19 @@
       </do>
     </loopthrough>
     <if test="${Tracker.QueryScrList != ''}">
-      <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList)}"/>
+      <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList) - 1)}"/>
     </if>
-    <if test="${Tracker.QueryScrList == '' and bool::parse({Tracker.FailForNone)}">
+    <echo message="List = '${Tracker.QueryScrList}'."/>
+    <if test="${Tracker.QueryScrList == '' and bool::parse(Tracker.FailForNone)}">
       <fail message="No Scrs found in any of the Check-in comments." />
     </if>
   </target>
 
-  <target name="Tracker.Report">
-    <ifnot test="${string::get-length(Tracker.QueryScrList) == 0}">
-      <trackerreport reportfile="${Tracker.ReportDirectory}\${Tracker.ReportFile}" ScrIdList="${Tracker.QueryScrList}">
-        <connectioninformation refid="Tracker.Connection"/>
-        <trackerfields refid="Tracker.QueryFields" />
-      </trackerreport>
-    </ifnot>
+  <target name="Tracker.Report" unless="${string::get-length(Tracker.QueryScrList) == 0}">
+    <trackerreport reportfile="${Tracker.ReportDirectory}\${Tracker.ReportFile}" ScrIdList="${Tracker.QueryScrList}">
+      <connectioninformation refid="Tracker.Connection"/>
+      <trackerfields refid="Tracker.QueryFields" />
+    </trackerreport>
   </target>
 
   <target name="Private.Tracker.ConstructTrackerNote" >
