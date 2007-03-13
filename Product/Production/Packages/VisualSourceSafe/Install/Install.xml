@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VisualSourceSafe.Installer" default="VisualSourceSafe.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="VisualSourceSafe.Install">
+    <largeproperty name="Packages.AddCleanUpActions.Block">
+      <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+      <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCleanUpActions"/>
+  </target>
+
+  <target name="VisualSourceSafe.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VisualSourceSafe"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+  </target>
+
+  <target name="VisualSourceSafe.ValidateParameters">
+    
+  </target>
+
+</project>
