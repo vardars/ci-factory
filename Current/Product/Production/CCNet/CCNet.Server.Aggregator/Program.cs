@@ -22,12 +22,18 @@ namespace CCNet.Server.Aggregator
         private static string GetSettingsFilename()
         {
             string oldFashionedSettingsFilename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "settings.xml");
+            if (File.Exists(oldFashionedSettingsFilename))
+                return oldFashionedSettingsFilename;
+
+            string OtherFilename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "cctray-settings.xml");
+            if (File.Exists(OtherFilename))
+                return OtherFilename;
+
             string newSettingsFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "cctray-settings.xml");
+            if (File.Exists(newSettingsFilename))
+                return newSettingsFilename;
 
-            if (File.Exists(oldFashionedSettingsFilename) && !File.Exists(newSettingsFilename))
-                File.Copy(oldFashionedSettingsFilename, newSettingsFilename);
-
-            return newSettingsFilename;
+            throw new FileNotFoundException(string.Format("Could not find '{0}', '{1}', or '{2}'.", oldFashionedSettingsFilename, newSettingsFilename, OtherFilename));
         }
     }
 }

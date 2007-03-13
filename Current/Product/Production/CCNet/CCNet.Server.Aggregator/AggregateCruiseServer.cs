@@ -91,7 +91,10 @@ namespace CCNet.Server.Aggregator
         public void GrabProjects()
         {
 	            foreach (ThoughtWorks.CruiseControl.CCTrayLib.Configuration.Project ProjectConfig in this.Configuration.Projects)
+                {
                     Projects.Add(ProjectConfig.ProjectName, this.CruiseManagerFactory.GetCruiseManager(ProjectConfig.ServerUrl));
+                    Log.Info(string.Format("Connecting to project {0} on {1}.", ProjectConfig.ProjectName, ProjectConfig.ServerUrl));
+                }
         }
 
         private void ReadConfigurationFile(string configFileName)
@@ -143,21 +146,25 @@ namespace CCNet.Server.Aggregator
 
         public bool  ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
         {
+            Log.Debug(string.Format("Forcing {0}.", projectName));
             return this.Projects[projectName].ForceBuild(projectName, clientInfo);
         }
 
         public string[]  GetBuildNames(string projectName)
         {
+            Log.Debug(string.Format("Get build names for {0}", projectName));
             return this.Projects[projectName].GetBuildNames(projectName);
         }
 
         public ExternalLink[]  GetExternalLinks(string projectName)
         {
+            Log.Debug(string.Format("Get external links for {0}", projectName));
             return this.Projects[projectName].GetExternalLinks(projectName);
         }
 
         public string  GetProject(string name)
         {
+            Log.Debug(string.Format("Get project configuration for {0}", name));
             return this.Projects[name].GetProject(name);
         }
 
@@ -167,9 +174,9 @@ namespace CCNet.Server.Aggregator
 
             foreach (KeyValuePair<string, ICruiseManager> Pair in this.Projects)
             {
+                Log.Debug(string.Format("Get status for {0}", Pair.Key));
                 Stati.Add(new List<ProjectStatus>(Pair.Value.GetProjectStatus()).Find(FindStatus(Pair.Key)));
             }
-
             return Stati.ToArray();
         }
 
