@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties"  overwrite="false">
+  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln"  overwrite="false"/>
+  <property name="Compile.ToConvertLogFile" value="true" overwrite="false" />
+  <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false" />
+  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false"/>
+  <property name="Compile.ToCopyToBin" value="true"   overwrite="false"/>
+  <property name="Compile.ToDeployZip" value="true"   overwrite="false"/>
+  <property name="Compile.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\*.xml" overwrite="false" />
+  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false" />
+
+  <fileset id="Compile.ToCopy">
+    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
+    <include name="${ProductionDirectory}\**\bin\*.*"/>
+  </fileset>
+
+  <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Compile.Environment.xml" overwrite="false"/>
+
+  <property name="Compile.Environment.RefId" value="Ant.Environment" overwrite="false"/>
+
+  <ifthenelse test="${file::exists(Compile.Environment.ConfigFilePath)}">
+    <then>
+      <include buildfile="${Compile.Environment.ConfigFilePath}"/>
+    </then>
+    <else>
+      <call target="Compile.Environment.Set"/>
+    </else>
+  </ifthenelse>
+
+  <target name="Compile.Environment.Set">
+    <property name="Compile.Environment.Path" value="${environment::get-variable('SystemRoot')}\system32;${environment::get-variable('SystemRoot')};${environment::get-variable('SystemRoot')}\System32\Wbem" />
+    <environment id="${Compile.Environment.RefId}">
+      <variable name="PATH" value="${Compile.Environment.Path};${NantBinPath}" />
+    </environment>
+  </target>
+</project>
