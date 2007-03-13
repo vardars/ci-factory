@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="InstallShield.Properties">
+  <property name="InstallShield.Msi" value="false"/>
+  <property name="InstallShield.InstallScript" value="false"/>
+  <property name="InstallShield.IsmFile" value="${ProjectName}.ism"/>
+  <property name="InstallShield.Msi.CreateSetupExe" value="true"/>
+  <property name="InstallShield.Guid" value="{2A3EF80F-2571-476A-BE44-431ABE54B96A}"/>
+  <property name="InstallShield.Msi.MergeModuleSearchPaths" value="C:\Program Files\Installshield 11 StandaloneBuild\Modules\i386,C:\Program Files\Installshield 11 StandaloneBuild\Objects,C:\Program Files\Installshield 11 StandaloneBuild\Modules\i386\Japanese,C:\Program Files\Installshield 11 StandaloneBuild\Modules\i386\German,C:\Program Files\Common Files\Merge Modules"/>
+
+  <!--Set the below as an argument-->
+  <!--<property name="InstallShield.InstallScript.Release" value="Release"/>-->
+</project>
