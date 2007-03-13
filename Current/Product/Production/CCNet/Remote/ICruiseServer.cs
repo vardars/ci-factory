@@ -33,7 +33,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// Gets information about the last build status, current activity and project name.
 		/// for all projects on a cruise server
 		/// </summary>
-		ProjectStatus [] GetProjectStatus();
+        ProjectStatus[] GetProjectStatus();
+        ProjectStatus GetProjectStatus(string projectName);
 
 		bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo);
 

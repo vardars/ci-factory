@@ -168,16 +168,17 @@ namespace CCNet.Server.Aggregator
             return this.Projects[name].GetProject(name);
         }
 
-        public ProjectStatus[]  GetProjectStatus()
+        public ProjectStatus GetProjectStatus(string projectName)
         {
-            List<ProjectStatus> Stati = new List<ProjectStatus>();
+            Log.Debug(string.Format("Get project status for {0}", projectName));
 
-            foreach (KeyValuePair<string, ICruiseManager> Pair in this.Projects)
+            try
             {
-                Log.Debug(string.Format("Get status for {0}", Pair.Key));
-                Stati.Add(new List<ProjectStatus>(Pair.Value.GetProjectStatus()).Find(FindStatus(Pair.Key)));
+                return this.Projects[projectName].GetProjectStatus(projectName);
             }
-            return Stati.ToArray();
+            catch{}
+
+            return new List<ProjectStatus>(this.Projects[projectName].GetProjectStatus()).Find(FindStatus(projectName));
         }
 
         Predicate<ProjectStatus> FindStatus(string projectName)
@@ -188,6 +189,11 @@ namespace CCNet.Server.Aggregator
         #endregion
         
         #region Not Going To Implement
+
+        public ProjectStatus[] GetProjectStatus()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
 
         public void  Abort()
         {

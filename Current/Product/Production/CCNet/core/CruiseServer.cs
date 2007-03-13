@@ -230,6 +230,21 @@ namespace ThoughtWorks.CruiseControl.Core
             return (ProjectStatus[])projectStatusList.ToArray(typeof(ProjectStatus));
         }
 
+        public ProjectStatus GetProjectStatus(string projectName)
+        {
+            IProjectIntegrator integrator = projectIntegrators[projectName];
+            Project project = (Project)integrator.Project;
+            return new ProjectStatus(integrator.State,
+                project.LatestBuildStatus,
+                project.CurrentActivity,
+                project.Name,
+                project.WebURL,
+                project.LastIntegrationResult.StartTime,
+                project.LastIntegrationResult.Label,
+                project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
+                integrator.Trigger.NextBuild);
+        }
+
         // ToDo - test
         public string GetServerLog()
         {

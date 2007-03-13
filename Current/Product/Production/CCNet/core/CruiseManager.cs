@@ -20,7 +20,12 @@ namespace ThoughtWorks.CruiseControl.Core
 		public ProjectStatus[] GetProjectStatus()
 		{
 			return cruiseServer.GetProjectStatus();
-		}
+        }
+
+        public ProjectStatus GetProjectStatus(string projectName)
+        {
+            return cruiseServer.GetProjectStatus(projectName);
+        }
 
 		public bool ForceBuild(string project)
 		{

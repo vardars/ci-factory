@@ -80,13 +80,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 		{
 			get
 			{
-				ProjectStatus[] statuses = manager.GetProjectStatus();
-				foreach (ProjectStatus status in statuses)
-				{
-					if (status.Name == ProjectName)
-						return status;
-				}
-				throw new ApplicationException("Project '" + projectName + "' not found on server");
+                return manager.GetProjectStatus(ProjectName);
 			}
 		}
 
