@@ -9,6 +9,7 @@ using NAnt.Core.Util;
 using NAnt.Core.Types;
 using NAnt.Core.Functions;
 using NAnt.Core.Attributes;
+using CIFactory.NAnt.Types;
 
 namespace CIFactory.NAnt.Tracker.Functions
 {
@@ -48,9 +49,13 @@ namespace CIFactory.NAnt.Tracker.Functions
         }
 
         [Function("extract-scr-numbers")]
-        public string ExtractScrNumbers(string comment)
+        public void ExtractScrNumbers(String refID, string comment)
         {
-            StringCollection ScrList = new StringCollection();
+
+            if (!this.Project.DataTypeReferences.Contains(refID))
+                throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+            StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
 
             foreach (Regex Pattern in this.Patterns)
             {
@@ -60,24 +65,12 @@ namespace CIFactory.NAnt.Tracker.Functions
                     {
                         foreach (Capture Captured in Matched.Groups["scr"].Captures)
                         {
-                            if (!ScrList.Contains(Captured.Value))
-                                ScrList.Add(Captured.Value);
+                            if (!RefStringList.StringItems.Contains(Captured.Value))
+                                RefStringList.StringItems.Add(Captured.Value, new StringItem(Captured.Value));
                         }
                     }
                 }
             }
-
-            if (ScrList.Count == 0)
-                return string.Empty;
-
-            StringBuilder Builder = new StringBuilder();
-            Builder.Append(ScrList[0]);
-            for (int i = 1; i < ScrList.Count; ++i)
-            {
-                Builder.Append(",");
-                Builder.Append(ScrList[i]);
-            }
-            return Builder.ToString();
         }
     }
 }

@@ -69,24 +69,23 @@
   </target>
 
   <target name="Tracker.FromSourceCommitComment">
-    <property name="Tracker.QueryScrList" value=""/>
     <xmlquery
       file="${SourceModificationReport.ReportFile}"
       id="Comments"
       query="//Modification/Comment"
     />
 
+    <strings id="Scrs" />
+
     <loopthrough property="Comment">
       <items>
         <xmlquery refid="Comments" />
       </items>
       <do>
-        <property name="NewScrs" value="${tracker::extract-scr-numbers(Comment)}"/>
-        <if test="${NewScrs != ''}">
-          <property name="Tracker.QueryScrList" value="${Tracker.QueryScrList},${NewScrs}"/>
-        </if>
+        <function execute="${tracker::extract-scr-numbers('Scrs', Comment)}"/>
       </do>
     </loopthrough>
+    <property name="Tracker.QueryScrList" value="${stringlist::flatten('Scrs')}"/>
     <if test="${Tracker.QueryScrList != ''}">
       <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList) - 1)}"/>
     </if>

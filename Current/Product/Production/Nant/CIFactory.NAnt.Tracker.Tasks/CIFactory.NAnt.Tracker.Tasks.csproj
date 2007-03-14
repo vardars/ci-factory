@@ -76,6 +76,10 @@
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
       <Name>Tracker.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CIFactory.NAnt.Tasks\CIFactory.NAnt.Tasks.csproj">
+      <Project>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</Project>
+      <Name>CIFactory.NAnt.Tasks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
       <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
       <Name>NAnt.Core</Name>

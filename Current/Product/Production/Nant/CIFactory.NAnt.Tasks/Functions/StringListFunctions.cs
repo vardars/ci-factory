@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using NAnt.Core;
 using NAnt.Core.Attributes;
 using CIFactory.NAnt.Types;
@@ -88,6 +89,29 @@ namespace CIFactory.NAnt.Functions
 
             StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
             RefStringList.StringItems.ReverseSort();
+        }
+        
+        [Function("flatten")]
+        public string Flatten(String refID)
+        {
+            if (!this.Project.DataTypeReferences.Contains(refID))
+                throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+            StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
+
+            if (RefStringList.StringItems.Count == 0)
+                return string.Empty;
+
+
+
+            StringBuilder Builder = new StringBuilder();
+            Builder.Append(RefStringList.StringItems.Values[0]);
+            for (int i = 1; i < RefStringList.StringItems.Count; ++i)
+            {
+                Builder.Append(",");
+                Builder.Append(RefStringList.StringItems.Values[i]);
+            }
+            return Builder.ToString();
         }
 
         #endregion
