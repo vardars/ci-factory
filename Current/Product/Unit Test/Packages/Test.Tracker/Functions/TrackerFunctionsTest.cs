@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MbUnit.Framework;
 using CIFactory.NAnt.Tracker.Functions;
+using CIFactory.NAnt.Types;
 
 namespace Test.Tracker.Functions
 {
@@ -36,9 +37,14 @@ namespace Test.Tracker.Functions
         [Row("# 12345, scr12346,12347 ,23456, I did something.. and look in scr 1 for this and scr 2 for that", "12345,12346")]
         public void ExtractScrNumbersTest(string comment, string expected)
         {
+            StringList List = new StringList();
             TrackerFunctions TestSubject = new TrackerFunctions();
-            string Actual = TestSubject.ExtractScrNumbers(comment);
-            Assert.AreEqual(expected, Actual);
+            TestSubject.GetScrNumbers(comment, List);
+            string[] ExpectedList = expected.Split(',');
+            foreach (string Item in List.StringItems.Values)
+            {
+                Assert.In(Item, ExpectedList);
+            }
         }
 
         [Test]

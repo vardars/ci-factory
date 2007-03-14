@@ -57,6 +57,11 @@ namespace CIFactory.NAnt.Tracker.Functions
 
             StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
 
+            this.GetScrNumbers(comment, RefStringList);
+        }
+
+        public void GetScrNumbers(string comment, StringList RefStringList)
+        {
             foreach (Regex Pattern in this.Patterns)
             {
                 if (Pattern.IsMatch(comment))
