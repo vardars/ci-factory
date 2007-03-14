@@ -552,12 +552,12 @@
     <Compile Include="sourcecontrol\UserFilter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="sourcecontrol\Vault.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="sourcecontrol\Vault3.cs" />
+    <Compile Include="sourcecontrol\Vault317.cs" />
     <Compile Include="sourcecontrol\VaultHistoryParser.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="sourcecontrol\VaultVersionChecker.cs" />
     <Compile Include="sourcecontrol\ViewCVSUrlBuilder.cs">
       <SubType>Code</SubType>
     </Compile>

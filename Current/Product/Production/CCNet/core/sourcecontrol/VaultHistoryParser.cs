@@ -1,14 +1,23 @@
 using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
-using System.Text.RegularExpressions;
+using System.Text;
 using System.Xml;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {
 	public class VaultHistoryParser : IHistoryParser
 	{
-		private readonly Regex MatchVaultElements = new Regex("<vault>(?:.|\n)*</vault>", RegexOptions.IgnoreCase);
+		private CultureInfo culture;
+
+		public VaultHistoryParser() : this(CultureInfo.CurrentCulture)
+		{}
+
+		public VaultHistoryParser(CultureInfo culture)
+		{
+			this.culture = culture;
+		}
 
 		public Modification[] Parse(TextReader history, DateTime from, DateTime to)
 		{
@@ -18,11 +27,6 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			XmlNode parent = xml.SelectSingleNode("/vault/history");
 			foreach (XmlNode node in parent.ChildNodes)
 			{
-				// the history command in the vault clc does not support a from or
-				// to date, (as of 2.0.0), so we have to filter these ourselves
-				//
-				// as per discussion on vault-list with jeff clausius on 4/20/2004 this should be fixed in the next
-				// release of their clc at which point we can change this
 				if (EntryWithinRange(node, from, to))
 				{
 					Modification modification = GetModification(node);
@@ -45,17 +49,12 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private string ExtractXmlFromHistory(TextReader history)
 		{
 			string output = history.ReadToEnd();
-			string value = MatchVaultElements.Match(output).Value;
-			if (value.Length == 0)
-			{
-				throw new CruiseControlException(string.Format("The output does not contain the expected <vault> element: {0}", output));
-			}
-			return value;
+			return Vault3.ExtractXmlFromOutput(output);
 		}
 
 		private bool EntryWithinRange(XmlNode node, DateTime from, DateTime to)
 		{
-			DateTime date = DateTime.Parse(node.Attributes["date"].InnerText);
+			DateTime date = DateTime.Parse(node.Attributes["date"].InnerText, culture);
 			return (date > from && date < to);
 		}
 
@@ -63,8 +62,24 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			string folderName = null;
 			string fileName = null;
-			string name = node.Attributes["name"].InnerText;
-			int index = name.LastIndexOf("/");
+			StringBuilder nameBuilder = new StringBuilder(255);
+			ushort modTypeID = ushort.Parse(node.Attributes["type"].Value);
+			int index;
+			
+			nameBuilder.Append(node.Attributes["name"].InnerText);
+			
+			switch ( modTypeID )
+			{
+				case 10: // add or delete, name attribute contains only the folder
+				case 80:
+					index = node.Attributes["actionString"].InnerText.LastIndexOf(' ');
+					nameBuilder.Append('/');
+					nameBuilder.Append(node.Attributes["actionString"].InnerText.Substring(index).Trim());
+					break;
+			}
+			
+			string name = nameBuilder.ToString();
+			index = name.LastIndexOf('/');
 			if (index == -1)
 			{
 				folderName = name;
@@ -74,7 +89,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 				folderName = name.Substring(0, index);
 				fileName = name.Substring(index + 1, name.Length - index - 1);
 			}
-			DateTime date = DateTime.Parse(node.Attributes["date"].InnerText);
+			DateTime date = DateTime.Parse(node.Attributes["date"].InnerText, culture);
 			Modification modification = new Modification();
 			modification.FileName = fileName;
 			modification.FolderName = folderName;

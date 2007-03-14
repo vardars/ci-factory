@@ -6,212 +6,249 @@ using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {
-	[ReflectorType("vss")]
-	public class Vss : ProcessSourceControl
-	{
-		public const string DefaultProject = "$/";
-		public const string SS_DIR_KEY = "SSDIR";
-		public const string SS_REGISTRY_PATH = @"Software\\Microsoft\\SourceSafe";
-		public const string SS_REGISTRY_KEY = "SCCServerPath";
-		public const string SS_EXE = "ss.exe";
-		private const string RecursiveCommandLineOption = "-R";
+    [ReflectorType("vss")]
+    public class Vss : ProcessSourceControl
+    {
+        #region Constants
 
-		private IRegistry registry;
-		private string ssDir;
-		private string executable;
-		private string tempLabel;
-		private IVssLocale locale;
+        public const string DefaultProject = "$/";
 
-		public Vss() : this(new VssLocale(CultureInfo.CurrentCulture))
-		{}
+        private const string RecursiveCommandLineOption = "-R";
 
-		private Vss(IVssLocale locale) : this(locale, new VssHistoryParser(locale), new ProcessExecutor(), new Registry())
-		{}
+        public const string SS_DIR_KEY = "SSDIR";
 
-		public Vss(IVssLocale locale, IHistoryParser historyParser, ProcessExecutor executor, IRegistry registry) : base(historyParser, executor)
-		{
-			this.registry = registry;
-			this.locale = locale;
-		}
+        public const string SS_EXE = "ss.exe";
 
-		[ReflectorProperty("executable", Required = false)]
-		public string Executable
-		{
-			get
-			{
-				if (executable == null)
-					executable = GetExecutableFromRegistry();
-				return executable;
-			}
-			set { executable = value; }
-		}
+        public const string SS_REGISTRY_KEY = "SCCServerPath";
 
-		[ReflectorProperty("project", Required = false)]
-		public string Project = DefaultProject;
+        public const string SS_REGISTRY_PATH = @"Software\\Microsoft\\SourceSafe";
 
-		[ReflectorProperty("username", Required = false)]
-		public string Username;
+        #endregion
 
-		[ReflectorProperty("password", Required = false)]
-		public string Password;
+        #region Fields
 
-		[ReflectorProperty("ssdir", Required = false)]
-		public string SsDir
-		{
-			get { return ssDir; }
-			set { ssDir = StringUtil.StripQuotes(value); }
-		}
+        /// <summary>
+        /// Gets or sets whether this repository should be labeled.
+        /// </summary>
+        [ReflectorProperty("applyLabel", Required = false)]
+        public bool ApplyLabel = false;
 
-		/// <summary>
-		/// Gets or sets whether this repository should be labeled.
-		/// </summary>
-		[ReflectorProperty("applyLabel", Required = false)]
-		public bool ApplyLabel = false;
+        [ReflectorProperty("autoGetSource", Required = false)]
+        public bool AutoGetSource = false;
 
-		[ReflectorProperty("autoGetSource", Required = false)]
-		public bool AutoGetSource = false;
+        [ReflectorProperty("cleanCopy", Required = false)]
+        public bool CleanCopy = true;
 
-		[ReflectorProperty("workingDirectory", Required = false)]
-		public string WorkingDirectory;
+        private string executable;
 
-		[ReflectorProperty("culture", Required = false)]
-		public string Culture
-		{
-			get { return locale.CultureName; }
-			set { locale.CultureName = value; }
-		}
+        private IVssLocale locale;
 
-		[ReflectorProperty("cleanCopy", Required = false)]
-		public bool CleanCopy = true;
+        [ReflectorProperty("password", Required = false)]
+        public string Password;
 
-		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
-		{
-			return GetModifications(CreateHistoryProcessInfo(from, to), from.StartTime, to.StartTime);
-		}
+        [ReflectorProperty("project", Required = false)]
+        public string Project = DefaultProject;
 
-		public override void LabelSourceControl(IIntegrationResult result)
-		{
-			if (! ApplyLabel) return;
+        private IRegistry registry;
 
-			Execute(NewProcessInfoWith(LabelProcessInfoArgs(result), result));
-			tempLabel = null;
-		}
+        private string ssDir;
 
-		public override void GetSource(IIntegrationResult result)
-		{
-			CreateTemporaryLabel(result);
+        private string tempLabel;
 
-			if (! AutoGetSource) return;
+        [ReflectorProperty("username", Required = false)]
+        public string Username;
 
-			Log.Info("Getting source from VSS");
-			Execute(NewProcessInfoWith(GetSourceArgs(result), result));
-		}
+        [ReflectorProperty("workingDirectory", Required = false)]
+        public string WorkingDirectory;
 
-		private string GetSourceArgs(IIntegrationResult result)
-		{
-			ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
-			builder.AddArgument("get", Project);
-			builder.AddArgument(RecursiveCommandLineOption);
-			if (ApplyLabel)
-			{
-				builder.AddArgument("-VL" + tempLabel);
-			}
-			else
-			{
-				builder.AddArgument("-Vd" + locale.FormatCommandDate(result.StartTime));
-			}
-			AppendUsernameAndPassword(builder);
-			builder.AppendArgument("-I-N -W -GF- -GTM");
-			builder.AppendIf(CleanCopy, "-GWR");
-			return builder.ToString();
-		}
+        #endregion
 
-		private ProcessInfo CreateHistoryProcessInfo(IIntegrationResult from, IIntegrationResult to)
-		{
-			return NewProcessInfoWith(HistoryProcessInfoArgs(from.StartTime, to.StartTime), to);
-		}
+        #region Constructors
 
-		private string HistoryProcessInfoArgs(DateTime from, DateTime to)
-		{
-			ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
-			builder.AddArgument("history", Project);
-			builder.AddArgument(RecursiveCommandLineOption);
-			builder.AddArgument(string.Format("-Vd{0}~{1}", locale.FormatCommandDate(to), locale.FormatCommandDate(from)));
-			AppendUsernameAndPassword(builder);
-			builder.AddArgument("-I-Y");
-			return builder.ToString();
-		}
+        public Vss(IVssLocale locale, IHistoryParser historyParser, ProcessExecutor executor, IRegistry registry)
+            : base(historyParser, executor)
+        {
+            this.registry = registry;
+            this.locale = locale;
+        }
 
-		private void CreateTemporaryLabel(IIntegrationResult result)
-		{
-			if (ApplyLabel)
-			{
-				tempLabel = CreateTemporaryLabelName(result.StartTime);
-				LabelSourceControlWith(tempLabel, result);
-				result.AddIntegrationProperty("CCNetVSSTempLabel", tempLabel);
-			}
-		}
+        private Vss(IVssLocale locale)
+            : this(locale, new VssHistoryParser(locale), new ProcessExecutor(), new Registry())
+        { }
 
-		private void LabelSourceControlWith(string label, IIntegrationResult result)
-		{
-			Execute(NewProcessInfoWith(LabelProcessInfoArgs(label, null), result));
-		}
+        public Vss()
+            : this(new VssLocale(CultureInfo.CurrentCulture))
+        { }
 
-		private string LabelProcessInfoArgs(IIntegrationResult result)
-		{
-			if (result.Succeeded)
-			{
-				return LabelProcessInfoArgs(result.Label, tempLabel);
-			}
-			else
-			{
-				return DeleteLabelProcessInfoArgs();
-			}
-		}
+        #endregion
 
-		private string DeleteLabelProcessInfoArgs()
-		{
-			return LabelProcessInfoArgs(string.Empty, tempLabel);
-		}
+        #region Properties
 
-		private string LabelProcessInfoArgs(string label, string oldLabel)
-		{
-			ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
-			builder.AddArgument("label", Project);
-			builder.AddArgument("-L" + label);
-			builder.AddArgument("-VL", "", oldLabel); // only append argument if old label is specified
-			AppendUsernameAndPassword(builder);
-			builder.AddArgument("-I-Y");
-			return builder.ToString();
-		}
+        [ReflectorProperty("culture", Required = false)]
+        public string Culture
+        {
+            get { return locale.CultureName; }
+            set { locale.CultureName = value; }
+        }
 
-		private string CreateTemporaryLabelName(DateTime time)
-		{
-			return "CCNETUNVERIFIED" + time.ToString("MMddyyyyHHmmss");
-		}
+        [ReflectorProperty("executable", Required = false)]
+        public string Executable
+        {
+            get
+            {
+                if (executable == null)
+                    executable = GetExecutableFromRegistry();
+                return executable;
+            }
+            set { executable = value; }
+        }
 
-		private string GetExecutableFromRegistry()
-		{
-			string comServerPath = registry.GetExpectedLocalMachineSubKeyValue(SS_REGISTRY_PATH, SS_REGISTRY_KEY);
-			return Path.Combine(Path.GetDirectoryName(comServerPath), SS_EXE);
-		}
+        [ReflectorProperty("ssdir", Required = false)]
+        public string SsDir
+        {
+            get { return ssDir; }
+            set { ssDir = StringUtil.StripQuotes(value); }
+        }
 
-		private ProcessInfo NewProcessInfoWith(string args, IIntegrationResult result)
-		{
-			string workingDirectory = result.BaseFromWorkingDirectory(WorkingDirectory);
-			if (! Directory.Exists(workingDirectory)) Directory.CreateDirectory(workingDirectory);
+        #endregion
 
-			ProcessInfo processInfo = new ProcessInfo(Executable, args, workingDirectory);
-			if (SsDir != null)
-			{
-				processInfo.EnvironmentVariables[SS_DIR_KEY] = SsDir;
-			}
-			return processInfo;
-		}
+        #region Public Methods
 
-		private void AppendUsernameAndPassword(ProcessArgumentBuilder builder)
-		{
-			builder.AppendIf(! StringUtil.IsBlank(Username), string.Format("-Y{0},{1}", Username, Password));
-		}
-	}
+        public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
+        {
+            return GetModifications(CreateHistoryProcessInfo(from, to), from.StartTime, to.StartTime);
+        }
+
+        public override void GetSource(IIntegrationResult result)
+        {
+            CreateTemporaryLabel(result);
+
+            if (!AutoGetSource) return;
+
+            Log.Info("Getting source from VSS");
+            Execute(NewProcessInfoWith(GetSourceArgs(result), result));
+        }
+
+        public override void LabelSourceControl(IIntegrationResult result)
+        {
+            if (!ApplyLabel) return;
+
+            Execute(NewProcessInfoWith(LabelProcessInfoArgs(result), result));
+            tempLabel = null;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void AppendUsernameAndPassword(ProcessArgumentBuilder builder)
+        {
+            builder.AppendIf(!StringUtil.IsBlank(Username), string.Format("-Y{0},{1}", Username, Password));
+        }
+
+        private ProcessInfo CreateHistoryProcessInfo(IIntegrationResult from, IIntegrationResult to)
+        {
+            return NewProcessInfoWith(HistoryProcessInfoArgs(from.StartTime, to.StartTime), to);
+        }
+
+        private void CreateTemporaryLabel(IIntegrationResult result)
+        {
+            if (ApplyLabel)
+            {
+                tempLabel = CreateTemporaryLabelName(result.StartTime);
+                LabelSourceControlWith(tempLabel, result);
+                result.AddIntegrationProperty("CCNetVSSTempLabel", tempLabel);
+            }
+        }
+
+        private string CreateTemporaryLabelName(DateTime time)
+        {
+            return "CCNETUNVERIFIED" + time.ToString("MMddyyyyHHmmss");
+        }
+
+        private string DeleteLabelProcessInfoArgs()
+        {
+            return LabelProcessInfoArgs(string.Empty, tempLabel);
+        }
+
+        private string GetExecutableFromRegistry()
+        {
+            string comServerPath = registry.GetExpectedLocalMachineSubKeyValue(SS_REGISTRY_PATH, SS_REGISTRY_KEY);
+            return Path.Combine(Path.GetDirectoryName(comServerPath), SS_EXE);
+        }
+
+        private string GetSourceArgs(IIntegrationResult result)
+        {
+            ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
+            builder.AddArgument("get", Project);
+            builder.AddArgument(RecursiveCommandLineOption);
+            if (ApplyLabel)
+            {
+                builder.AddArgument("-VL" + tempLabel);
+            }
+            else
+            {
+                builder.AddArgument("-Vd" + locale.FormatCommandDate(result.StartTime));
+            }
+            AppendUsernameAndPassword(builder);
+            builder.AppendArgument("-I-N -W -GF- -GTM");
+            builder.AppendIf(CleanCopy, "-GWR");
+            return builder.ToString();
+        }
+
+        private string HistoryProcessInfoArgs(DateTime from, DateTime to)
+        {
+            ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
+            builder.AddArgument("history", Project);
+            builder.AddArgument(RecursiveCommandLineOption);
+            builder.AddArgument(string.Format("-Vd{0}~{1}", locale.FormatCommandDate(to), locale.FormatCommandDate(from)));
+            AppendUsernameAndPassword(builder);
+            builder.AddArgument("-I-Y");
+            return builder.ToString();
+        }
+
+        private string LabelProcessInfoArgs(IIntegrationResult result)
+        {
+            if (result.Succeeded)
+            {
+                return LabelProcessInfoArgs(result.Label, tempLabel);
+            }
+            else
+            {
+                return DeleteLabelProcessInfoArgs();
+            }
+        }
+
+        private string LabelProcessInfoArgs(string label, string oldLabel)
+        {
+            ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
+            builder.AddArgument("label", Project);
+            builder.AddArgument("-L" + label);
+            builder.AddArgument("-VL", "", oldLabel); // only append argument if old label is specified
+            AppendUsernameAndPassword(builder);
+            builder.AddArgument("-I-Y");
+            return builder.ToString();
+        }
+
+        private void LabelSourceControlWith(string label, IIntegrationResult result)
+        {
+            Execute(NewProcessInfoWith(LabelProcessInfoArgs(label, null), result));
+        }
+
+        private ProcessInfo NewProcessInfoWith(string args, IIntegrationResult result)
+        {
+            string workingDirectory = result.BaseFromWorkingDirectory(WorkingDirectory);
+            if (!Directory.Exists(workingDirectory)) Directory.CreateDirectory(workingDirectory);
+
+            ProcessInfo processInfo = new ProcessInfo(Executable, args, workingDirectory);
+            if (SsDir != null)
+            {
+                processInfo.EnvironmentVariables[SS_DIR_KEY] = SsDir;
+            }
+            return processInfo;
+        }
+
+        #endregion
+
+    }
 }
