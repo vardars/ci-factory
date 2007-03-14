@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Installer" default="Install">
+
+  <include buildfile="Properties.xml" />
+
+  <target name="Vault.Install">
+    <largeproperty name="Packages.AddCleanUpActions.Block">
+      <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+      <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCleanUpActions"/>
+  </target>
+
+  <target name="Subversion.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Vault"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+  </target>
+
+  <target name="Subversion.ValidateParameters">
+
+  </target>
+  
+</project>
