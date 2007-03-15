@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Tracker">
+
+  <loadtasks assembly="${PackagesDirectory}\Tracker\bin\CIFactory.NAnt.Tracker.Tasks.dll" />
+  
+  <property name="Tracker.FilesToDeleteAtSetup" value="" overwrite="false"/>
+	<property name="Tracker.Debug" value="false" overwrite="false"/>
+	<property name="Tracker.FailForNone" value="false" overwrite="false" />
+  <property name="Tracker.ReportDirectory" value="${BuildDirectory}\Tracker Reports" />
+  <property name="Tracker.ReportFile.Path" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}"/>
+  
+  <include buildfile="Tracker.Properties.xml" />
+  <include buildfile="${Tracker.DailyScrFile}" if="${file::exists(Tracker.DailyScrFile)}" failonerror="false"/>
+  <property name="Tracker.DailyScrList" value="" overwrite="false"/>
+
+  <!-- The following properties are for internal use only -->
+  <property name="Private.Tracker.NoteForMoveTrackersTo" value="" overwrite="false" />
+  <strings id="Tracker.Scrs" />
+  
+  <target name="Tracker.MoveTrackersTo" unless="${string::get-length(Tracker.QueryScrList) == 0}">
+
+    <call target="Private.Tracker.ConstructTrackerNote"/>
+
+    <foreach item="String" in="${Tracker.QueryScrList}" delim="," property="Private.Tracker.MoveTrackersTo.foreach.Id">
+
+      <trackergetfield scrid="${Private.Tracker.MoveTrackersTo.foreach.Id}" fieldname="Submit Type" fieldvalueproperty="Private.Tracker.MoveTrackersTo.foreach.SubmitType">
+        <connectioninformation refid="Tracker.Connection"/>
+      </trackergetfield>
+
+      <if test="${Private.Tracker.MoveTrackersTo.foreach.SubmitType == 'Unit Test'}">
+        <trackerchange scrid="${Private.Tracker.MoveTrackersTo.foreach.Id}">
+          <trackerfields refid="Tracker.UnitTest" />
+          <connectioninformation refid="Tracker.Connection"/>
+        </trackerchange>
+      </if>
+      <ifnot test="${Private.Tracker.MoveTrackersTo.foreach.SubmitType == 'Unit Test'}">
+        <trackerchange scrid="${Private.Tracker.MoveTrackersTo.foreach.Id}">
+          <trackerfields refid="Tracker.ChangeFields" />
+          <connectioninformation refid="Tracker.Connection"/>
+        </trackerchange>
+      </ifnot>
+      
+      <trackeraddnote
+        title="${Tracker.NoteTitleForMoveTrackersTo}" 
+        text="${Private.Tracker.NoteForMoveTrackersTo}" 
+        scrid="${Private.Tracker.MoveTrackersTo.foreach.Id}" 
+      >
+        <connectioninformation refid="Tracker.Connection"/>
+      </trackeraddnote>
+    </foreach>
+  </target>
+
+  <target name="Tracker.Queries">
+    <property name="Private.Tracker.Queries.Count" value=""/>
+    <trackerquery
+      countproperty ="Private.Tracker.Queries.Count"
+      idsproperty ="Tracker.QueryScrList"
+      query="${Tracker.Query}"
+      >
+      <connectioninformation refid="Tracker.Connection"/>
+    </trackerquery>
+
+    <if test="${Tracker.FailForNone}" >
+      <if test="${string::get-length(Private.Tracker.Queries.Count) == 0}">
+        <fail message="No Trackers put in pending build for this checkin" />
+      </if>
+      <if test="${int::parse(Private.Tracker.Queries.Count) == 0}">
+        <fail message="No Trackers put in pending build for this checkin" />
+      </if>
+    </if>
+  </target>
+
+  <target name="Tracker.FromSourceCommitComment">
+    <xmlquery
+      file="${SourceModificationReport.ReportFile}"
+      id="Comments"
+      query="//Modification/Comment"
+    />
+
+    <loopthrough property="Comment">
+      <items>
+        <xmlquery refid="Comments" />
+      </items>
+      <do>
+        <function execute="${tracker::extract-scr-numbers('Tracker.Scrs', Comment)}"/>
+      </do>
+    </loopthrough>
+    <property name="Tracker.QueryScrList" value="${stringlist::flatten('Tracker.Scrs')}"/>
+    <if test="${Tracker.QueryScrList != ''}">
+      <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList) - 1)}"/>
+    </if>
+    <echo message="List = '${Tracker.QueryScrList}'."/>
+    <if test="${Tracker.QueryScrList == '' and bool::parse(Tracker.FailForNone)}">
+      <fail message="No Scrs found in any of the Check-in comments." />
+    </if>
+  </target>
+
+  <target name="Tracker.Report" unless="${string::get-length(Tracker.QueryScrList) == 0}">
+    <trackerreport reportfile="${Tracker.ReportFile.Path}" ScrIdList="${Tracker.QueryScrList}">
+      <connectioninformation refid="Tracker.Connection"/>
+      <trackerfields refid="Tracker.QueryFields" />
+    </trackerreport>
+  </target>
+
+  <target name="Private.Tracker.ConstructTrackerNote" >
+    <property name="Private.Tracker.ModificationTextReport" value="${Tracker.ReportDirectory}\ModificationTextReport.txt" />
+    <style style="Packages\Tracker\ModificationsText.xsl" in="${SourceModificationReport.ReportFile}" out="${Private.Tracker.ModificationTextReport}" />
+
+    <property name="Private.Tracker.ModificationList" value="" />
+    <loadfile file="${Private.Tracker.ModificationTextReport}" property="ModificationList" />
+
+    <loadfile file="Packages\Tracker\TrackerNote.txt" property="Private.Tracker.NoteForMoveTrackersTo">
+      <filterchain>
+        <replacestring from="%Modifications%" to="${ModificationList}" />
+      </filterchain>
+    </loadfile>
+
+  </target>
+
+  <target name="Tracker.CreateTracker">
+    <trackercreate newscrid="Private.Tracker.NewScrId" >
+      <trackerfields refid="Tracker.NewFields" />
+      <connectioninformation refid="Tracker.Connection"/>
+    </trackercreate>
+  </target>
+
+  <target name="Tracker.AddToDailyList">
+    <property name="Private.Tracker.ScrList1" value="${Tracker.DailyScrList}"/>
+    <property name="Private.Tracker.ScrList2" value="${Tracker.QueryScrList}"/>
+    <call target="Private.Tracker.MergeScrLists"/>
+    <property name="Tracker.DailyScrList" value="${Private.Tracker.MergedScrList}"/>
+
+    <saveproperties format="Include" file="${Tracker.DailyScrFile}">
+      <property name="Tracker.DailyScrList"/>
+    </saveproperties>
+  </target>
+
+  
+  <!-- Arguements to Private.Tracker.MergedScrList
+  <property name="Private.Tracker.ScrList1" value=""/>
+  <property name="Private.Tracker.ScrList2" value=""/>
+  -->
+  <!-- Return from Private.Tracker.MergedScrList-->
+  <property name="Private.Tracker.MergedScrList" value=""/>
+  
+  <target name="Private.Tracker.MergeScrLists">
+    <property name="Private.Tracker.MergeScrLists.ScrList" value="${list::create('Private.Tracker.MergeScrLists.ScrList')}"/>
+    <foreach item="String" in="${Private.Tracker.ScrList1}" delim="," property="Private.Tracker.MergeScrLists.ScrId">
+      <ifnot test="${list::contains(Private.Tracker.MergeScrLists.ScrList, Private.Tracker.MergeScrLists.ScrId)}">
+        <property name="nothing" value="${list::add(Private.Tracker.MergeScrLists.ScrList, Private.Tracker.MergeScrLists.ScrId)}"/>
+      </ifnot>
+    </foreach>
+    <foreach item="String" in="${Private.Tracker.ScrList2}" delim="," property="Private.Tracker.MergeScrLists.ScrId">
+      <ifnot test="${list::contains(Private.Tracker.MergeScrLists.ScrList, Private.Tracker.MergeScrLists.ScrId)}">
+        <property name="nothing" value="${list::add(Private.Tracker.MergeScrLists.ScrList, Private.Tracker.MergeScrLists.ScrId)}"/>
+      </ifnot>
+    </foreach>
+    <property name="Private.Tracker.MergedScrList" value="${list::flatten(Private.Tracker.MergeScrLists.ScrList)}"/>
+  </target>
+
+  <target name="Tracker.ClearDailyList">
+    <saveproperties format="Include" file="${Tracker.DailyScrFile}">
+      <property name="Tracker.DailyScrList" value=""/>
+    </saveproperties>
+  </target>
+
+  <target name="Tracker.SetUp">
+    <if test="${CCNetLastIntegrationStatus != 'Success'and file::exists(Tracker.ReportFile.Path)}">
+      <loopthrough property="Scr">
+        <items>
+          <xmlquery file="${Tracker.ReportFile.Path}" query="//TrackerQuery/Tracker/ID"/>
+        </items>
+        <do>
+          <function execute="${stringlist::add('Tracker.Scrs', ID)}"/>
+        </do>
+      </loopthrough>
+    </if>
+    <mkdir unless="${directory::exists(Tracker.ReportDirectory)}" dir="${Tracker.ReportDirectory}"/>
+    <property name="Common.FilesToDelete" value="${Tracker.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+  </target>
+
+  <target name="Tracker.TearDown">
+
+  </target>
+
+</project>
