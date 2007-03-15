@@ -7,6 +7,7 @@
 	<property name="Tracker.Debug" value="false" overwrite="false"/>
 	<property name="Tracker.FailForNone" value="false" overwrite="false" />
   <property name="Tracker.ReportDirectory" value="${BuildDirectory}\Tracker Reports" />
+  <property name="Tracker.ReportFile.Path" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}"/>
   
   <include buildfile="Tracker.Properties.xml" />
   <include buildfile="${Tracker.DailyScrFile}" if="${file::exists(Tracker.DailyScrFile)}" failonerror="false"/>
@@ -14,6 +15,7 @@
 
   <!-- The following properties are for internal use only -->
   <property name="Private.Tracker.NoteForMoveTrackersTo" value="" overwrite="false" />
+  <strings id="Tracker.Scrs" />
   
   <target name="Tracker.MoveTrackersTo" unless="${string::get-length(Tracker.QueryScrList) == 0}">
 
@@ -75,17 +77,15 @@
       query="//Modification/Comment"
     />
 
-    <strings id="Scrs" />
-
     <loopthrough property="Comment">
       <items>
         <xmlquery refid="Comments" />
       </items>
       <do>
-        <function execute="${tracker::extract-scr-numbers('Scrs', Comment)}"/>
+        <function execute="${tracker::extract-scr-numbers('Tracker.Scrs', Comment)}"/>
       </do>
     </loopthrough>
-    <property name="Tracker.QueryScrList" value="${stringlist::flatten('Scrs')}"/>
+    <property name="Tracker.QueryScrList" value="${stringlist::flatten('Tracker.Scrs')}"/>
     <if test="${Tracker.QueryScrList != ''}">
       <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList) - 1)}"/>
     </if>
@@ -96,7 +96,7 @@
   </target>
 
   <target name="Tracker.Report" unless="${string::get-length(Tracker.QueryScrList) == 0}">
-    <trackerreport reportfile="${Tracker.ReportDirectory}\${Tracker.ReportFile}" ScrIdList="${Tracker.QueryScrList}">
+    <trackerreport reportfile="${Tracker.ReportFile.Path}" ScrIdList="${Tracker.QueryScrList}">
       <connectioninformation refid="Tracker.Connection"/>
       <trackerfields refid="Tracker.QueryFields" />
     </trackerreport>
@@ -165,6 +165,16 @@
   </target>
 
   <target name="Tracker.SetUp">
+    <if test="${CCNetLastIntegrationStatus != 'Success'and file::exists(Tracker.ReportFile.Path)}">
+      <loopthrough property="Scr">
+        <items>
+          <xmlquery file="${Tracker.ReportFile.Path}" query="//TrackerQuery/Tracker/ID"/>
+        </items>
+        <do>
+          <function execute="${stringlist::add('Tracker.Scrs', ID)}"/>
+        </do>
+      </loopthrough>
+    </if>
     <mkdir unless="${directory::exists(Tracker.ReportDirectory)}" dir="${Tracker.ReportDirectory}"/>
     <property name="Common.FilesToDelete" value="${Tracker.FilesToDeleteAtSetup}"/>
     <call target="Common.DeleteFiles"/>
