@@ -80,6 +80,7 @@
     <publishers>
       <merge>
         <files>
+          <file>%BuildDirectory%\Reports\*.xml</file>
         </files>
       </merge>
       <xslmerger>
