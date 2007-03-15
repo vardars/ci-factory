@@ -321,7 +321,16 @@ namespace NAnt.Core {
         /// </value>
         public Level Threshold {
             get { return _threshold; }
-            set { _threshold = value; }
+            set { 
+                _threshold = value; 
+                foreach (IBuildListener Listener in this.BuildListeners)
+                {
+                    if (typeof(IBuildLogger).IsAssignableFrom(Listener.GetType()))
+                    {
+                        ((IBuildLogger)Listener).Threshold = value;
+                    }
+                }
+            }
         }
 
         /// <summary>

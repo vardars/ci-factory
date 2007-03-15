@@ -98,6 +98,8 @@ namespace NAnt.Core {
                     Location.UnknownLocation);
             }
 
+            this.Project.Log(Level.Verbose, "Property '{0}' set to '{1}' was '{2}'", propertyName, newValue, oldValue);
+
             base.OnSet(key, oldValue, newValue);
         }
 

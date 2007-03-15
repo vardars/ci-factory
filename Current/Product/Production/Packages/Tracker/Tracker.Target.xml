@@ -5,11 +5,10 @@
   
   <property name="Tracker.FilesToDeleteAtSetup" value="" overwrite="false"/>
 	<property name="Tracker.Debug" value="false" overwrite="false"/>
-	<property name="Tracker.FailForNone" value="false" overwrite="false" />
   <property name="Tracker.ReportDirectory" value="${BuildDirectory}\Tracker Reports" />
-  <property name="Tracker.ReportFile.Path" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}"/>
   
   <include buildfile="Tracker.Properties.xml" />
+  <property name="Tracker.ReportFile.Path" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}"/>
   <include buildfile="${Tracker.DailyScrFile}" if="${file::exists(Tracker.DailyScrFile)}" failonerror="false"/>
   <property name="Tracker.DailyScrList" value="" overwrite="false"/>
 
@@ -77,21 +76,20 @@
       query="//Modification/Comment"
     />
 
+    <property name="Tracker.ChangesPresent" value="false"/>
     <loopthrough property="Comment">
       <items>
         <xmlquery refid="Comments" />
       </items>
       <do>
+        <property name="Tracker.ChangesPresent" value="true"/>
         <function execute="${tracker::extract-scr-numbers('Tracker.Scrs', Comment)}"/>
       </do>
     </loopthrough>
     <property name="Tracker.QueryScrList" value="${stringlist::flatten('Tracker.Scrs')}"/>
-    <if test="${Tracker.QueryScrList != ''}">
-      <property name="Tracker.QueryScrList" value="${string::substring(Tracker.QueryScrList, 1, string::get-length(Tracker.QueryScrList) - 1)}"/>
-    </if>
     <echo message="List = '${Tracker.QueryScrList}'."/>
     <if test="${Tracker.QueryScrList == '' and bool::parse(Tracker.FailForNone)}">
-      <fail message="No Scrs found in any of the Check-in comments." />
+      <fail message="No Scrs found in any of the Check-in comments." if="${CCNetBuildCondition != 'ForceBuild' and bool::parse(Tracker.ChangesPresent)}" />
     </if>
   </target>
 
@@ -165,16 +163,6 @@
   </target>
 
   <target name="Tracker.SetUp">
-    <if test="${CCNetLastIntegrationStatus != 'Success'and file::exists(Tracker.ReportFile.Path)}">
-      <loopthrough property="Scr">
-        <items>
-          <xmlquery file="${Tracker.ReportFile.Path}" query="//TrackerQuery/Tracker/ID"/>
-        </items>
-        <do>
-          <function execute="${stringlist::add('Tracker.Scrs', ID)}"/>
-        </do>
-      </loopthrough>
-    </if>
     <mkdir unless="${directory::exists(Tracker.ReportDirectory)}" dir="${Tracker.ReportDirectory}"/>
     <property name="Common.FilesToDelete" value="${Tracker.FilesToDeleteAtSetup}"/>
     <call target="Common.DeleteFiles"/>
