@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Installer" default="Install">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CVS.Installer" default="Install">
 
   <include buildfile="Properties.xml" />
 
-  <target name="Vault.Install">
+  <target name="CVS.Install">
     <largeproperty name="Packages.AddCleanUpActions.Block">
       <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
       <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
@@ -11,13 +11,13 @@
     <call target="Packages.AddCleanUpActions"/>
   </target>
 
-  <target name="Vault.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Vault"/>
+  <target name="CVS.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="CVS"/>
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
     <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
   </target>
 
-  <target name="Vault.ValidateParameters">
+  <target name="CVS.ValidateParameters">
 
   </target>
   

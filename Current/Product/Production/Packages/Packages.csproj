@@ -813,6 +813,10 @@
     <Content Include="MSBuild\Install\Install.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CVS\Install\Install.xml" />
+    <Content Include="CVS\Install\Properties.xml" />
+    <Content Include="CVS\SourceControl.Properties.xml" />
+    <Content Include="CVS\SourceControl.Target.xml" />
     <Content Include="MSBuild\Install\OpenSolution.bat" />
     <Content Include="MSBuild\Install\Properties.xml" />
     <Content Include="Simian\Install\Install.xml" />
