@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="InstallShield">
+
+  <loadtasks assembly="Packages\InstallShield\bin\InstallShield.Tasks.dll"/>
+
+  <include buildfile="InstallShield.Properties.xml"/>
+
+  <property name="Private.InstallDirectory" value="${ProjectRootDirectory}\Current\Product\Install" />
+
+  <target name="InstallShield.SetUp">
+    
+  </target>
+
+  <target name="InstallShield.TearDown">
+    
+  </target>
+
+  <target name="InstallShield.BuildSetup">
+    <if test="${InstallShield.Msi}">
+      <call target="InstallShield.BuildMsi" />
+    </if>
+    <if test="${InstallShield.InstallScript}">
+      <call target="InstallShield.BuildInstallScript" />
+    </if>
+  </target>
+
+  <target name="InstallShield.BuildMsi">
+    <buildinstallshieldmsi
+		    p="${Private.InstallDirectory}\${ProjectName}\${InstallShield.IsmFile}"
+		    standalonebuildexe="${InstallShield.Guid}"
+		    o="${InstallShield.Msi.MergeModuleSearchPaths}"
+		    e="${InstallShield.Msi.CreateSetupExe}"
+	  />
+  </target>
+
+  <target name="InstallShield.BuildInstallScript">
+    <if propertyexists="InstallShield.BuildConfigurations">
+      <foreach item="String" in="${InstallShield.BuildConfigurations}" delim="," property="BuildConfig">
+        <buildinstallscript
+			    p="${Private.InstallDirectory}\${ProjectName}\${InstallShield.IsmFile}"
+			    standalonebuildexe="${InstallShield.Guid}"
+          r="${BuildConfig}"
+			  />
+      </foreach>
+    </if>
+    <ifnot propertyexists="InstallShield.BuildConfigurations">
+      <buildinstallscript
+			    p="${Private.InstallDirectory}\${ProjectName}\${InstallShield.IsmFile}"
+			    standalonebuildexe="${InstallShield.Guid}"
+  	    />
+    </ifnot>
+  </target>
+</project>
