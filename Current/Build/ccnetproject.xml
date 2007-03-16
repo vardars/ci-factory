@@ -30,8 +30,6 @@
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
       <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
       <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
-      <username>cifactory</username>
-      <password>d4h6h4g6</password>
       <webUrlBuilder type="websvn">
         <url>http://ci-factory.googlecode.com/svn{0}</url>
       </webUrlBuilder>
@@ -70,8 +68,6 @@
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
         <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
-        <username>cifactory</username>
-        <password>d4h6h4g6</password>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
