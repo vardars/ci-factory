@@ -36,14 +36,27 @@
       <property name="SourceControl.MainBuildBlock.WebRepoUrl" value=""/>
     </else>
   </ifthenelse>
+
+  <ifthenelse test="${SVN.Credentials.SafeStorage}">
+    <then>
+      <property name="SourceControl.CCNet.Credentials" value=""/>
+    </then>
+    <else>
+      <largeproperty name="SourceControl.CCNet.Credentials">
+        <value xml="false" expand="true">
+          <![CDATA[<username>${SVN.Username}</username>
+        <password>${SVN.Password}</password>]]>
+        </value>
+      </largeproperty>
+    </else>
+  </ifthenelse>
   
   <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
           <![CDATA[<sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
         <trunkUrl>${SVN.URI.ProjectCodeLine}/Build</trunkUrl>
         <workingDirectory>${BuildDirectory}</workingDirectory>
-        <username>${SVN.Username}</username>
-        <password>${SVN.Password}</password>
+        ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
       </sourcecontrol>]]></value>
     </largeproperty>
@@ -54,8 +67,7 @@
         <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
           <trunkUrl>${SVN.URI.ProjectCodeLine}</trunkUrl>
           <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
-          <username>${SVN.Username}</username>
-          <password>${SVN.Password}</password>
+          ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
           <tagBaseUrl>${SVN.URI.Tags}</tagBaseUrl>
         </sourceControlProvider>
