@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp">
+
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+      ]]>
+    </code>
+  </script>
+  <property name="CCNetProject" value="${directory::name('..\..\')}"/>
+  <include buildfile="..\Build\Properties.Build.xml"/>
+
+  <target name="SetUp">
+    <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\AssemblyPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.AddIn.dll"/>
+    <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application" value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+  </target>
+  
+</project>
