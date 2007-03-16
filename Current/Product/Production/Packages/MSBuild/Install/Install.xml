@@ -34,7 +34,7 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>${PackagesDirectory\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xslfile>${PackagesDirectory}\MSBuild\MSBuildMerge.xsl</xslfile>
             <xmlfile>${Compile.LogFileDirectory}\*.xml</xmlfile>
           </filepair>]]></value>
     </largeproperty>

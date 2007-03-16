@@ -10,7 +10,7 @@
 
   <include buildfile="${Private.VSS.ReportDirectory}\${Private.VSS.CacheFile}" if="${file::exists(Private.VSS.ReportDirectory + '\' + Private.VSS.CacheFile)}" failonerror="false"/>
   
-  <if test="${property::exists('CCNetBuildDate' and property::exists('CCNetBuildTime')}">
+  <if test="${property::exists('CCNetBuildDate') and property::exists('CCNetBuildTime')}">
     <property name="VSS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
   </if>
   
@@ -424,17 +424,17 @@
 
   <target name="SourceControl.Repository.Load">
     <vssaddproject
-      dbpath="${Private.VSS.dbpath}"
-      username="${Private.VSS.UserName}"
-      password="${Private.VSS.Password}"
+      dbpath="${VSS.DBPath}"
+      username="${VSS.Username}"
+      password="${VSS.Password}"
       path="$/"
       project="${ProjectName}"
       comment="Created by Instant CI script"
     />
     <vssadd
-      dbpath="${Private.VSS.dbpath}"
-      username="${Private.VSS.UserName}"
-      password="${Private.VSS.Password}"
+      dbpath="${VSS.DBPath}"
+      username="${VSS.Username}"
+      password="${VSS.Password}"
       path="$/${ProjectName}"
       comment="Initial load buy Instant CI script">
 
