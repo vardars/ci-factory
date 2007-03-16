@@ -27,7 +27,6 @@
   <target name="CSDiff.ValidateParameters">
     <fail unless="${stringlist::contains('Packages.InstallList', 'SourceModificationReport')}" message="Please inlcude the package SourceModificationReport.  The CSDiff package is dependent on it."/>
     <fail unless="${stringlist::contains('Packages.InstallList', 'Deployment')}" message="Please inlcude the package Deployment.  The CSDiff package is dependent on it."/>
-    <fail unless="${property::exists('SourceModificationReport.SCProductPath')}" message="Property SourceModificationReport.SCProductPath is not set."/>
   </target>
   
 </project>

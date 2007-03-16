@@ -33,10 +33,6 @@
   </target>
 
   <target name="SourceModificationReport.SetAsCurrentPackage">
-    <ifnot test="${property::exists('SourceModificationReport.SCProductPath')}">
-      <property name="SourceModificationReport.SCProductPath" value="default value - this will fail if Source Publication is bing used"/>
-    </ifnot>
-    <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceModificationReport.SCProductPath%', SourceModificationReport.SCProductPath)}"/>
     <property name="Packages.CurrenctPackage.PackageDirectoryName" value="SourceModificationReport"/>
     <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceModificationReport.Target.xml"/>
     <property name="Packages.CurrenctPackage.PackageName" value="SourceModificationReport"/>

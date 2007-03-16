@@ -21,8 +21,6 @@
   <property name="SVN.Password" value="password" />
   <property name="SVN.WebVisible" value="true" />
 
-  <property name="SourceModificationReport.SCProductPath" value="/${ProjectCodeLineName}/Product/"/>
-
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
 

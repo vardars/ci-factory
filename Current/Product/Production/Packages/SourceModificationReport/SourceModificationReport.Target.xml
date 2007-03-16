@@ -154,12 +154,13 @@
 
         <xmlpeek 
           file="${SourceModificationReport.ReportFile}" 
-          property="SCPath" 
+          property="DirtySCPath" 
           xpath="//Modification/FolderName" 
           nodeindex="${index}" 
         />
 
-        <property name="ModificationFilePath" value="${string::replace(SCPath, SourceModificationReport.SCProductPath, '')}/${FileName}"/>
+        <regex input="${DirtySCPath}" pattern=".*(/|\\)Product(/|\\)(?'CleanSCPath'.*)"/>
+        <property name="ModificationFilePath" value="${CleanSCPath}/${FileName}"/>
 
         <echo message="Adding ${ModificationFilePath} to modification list."/>
 
