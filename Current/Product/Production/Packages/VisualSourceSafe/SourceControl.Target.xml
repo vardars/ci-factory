@@ -9,11 +9,16 @@
   <property name="Private.VSS.ReportDirectory" value="${BuildDirectory}\VSS" overwrite="false"/>
 
   <include buildfile="${Private.VSS.ReportDirectory}\${Private.VSS.CacheFile}" if="${file::exists(Private.VSS.ReportDirectory + '\' + Private.VSS.CacheFile)}" failonerror="false"/>
-  <property name="VSS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
-
-  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
-  <property name="VSS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
-
+  
+  <if test="${property::exists('CCNetBuildDate' and property::exists('CCNetBuildTime')}">
+    <property name="VSS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
+  </if>
+  
+  <if test="${property::exists('CCNetLabel')}">
+    <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
+    <property name="VSS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
+  </if>
+  
   <!--
 	The following properties should be specified in the calling script.
 	
