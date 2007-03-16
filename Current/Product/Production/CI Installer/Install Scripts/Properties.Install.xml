@@ -15,6 +15,7 @@
   <property name="UnitTestDirectory"        value="${ProductDirectory}\Unit Test"  overwrite="false"/>
   <property name="BuildDirectory"           value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\Build"  overwrite="false"/>
   <property name="PackagesDirectory"        value="${BuildDirectory}\Packages"  overwrite="false"/>
+  
   <property name="PackagesDirectory.Ref"    value="${string::replace('${PackagesDirectory}/', '/', '')}" />
 
   <property name="SourceRoot" value="${path::get-full-path('..')}"/>

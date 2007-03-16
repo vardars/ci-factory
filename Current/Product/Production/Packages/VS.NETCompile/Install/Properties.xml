@@ -13,7 +13,9 @@
       <property name="Compile.DevEnv" value="C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
   </switch>
-  
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv%', Compile.DevEnv)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv.vsvars32bat%', Compile.DevEnv.vsvars32bat)}"/>
   

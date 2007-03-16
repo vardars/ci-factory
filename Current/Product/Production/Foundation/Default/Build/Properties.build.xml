@@ -2,8 +2,8 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
 
   <property name="ProjectName" value="${CCNetProject}" />
-  <property name="ProjectCodeLineName" value="Current" />
-  <property name="ProjectsDirectory" value="c:\Projects" />
+  <property name="ProjectCodeLineName" value="%ProjectCodeLineName%" />
+  <property name="ProjectsDirectory" value="%ProjectsDirectory%" />
   <property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}" />
   <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
   <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />

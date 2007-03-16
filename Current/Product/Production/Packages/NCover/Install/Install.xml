@@ -40,7 +40,6 @@
   </target>
 
   <target name="NCover.InsureNCoverInstallation" >
-    <property name="NCoverConsolePath" value="C:\Program Files\NCover\NCover.Console.exe"/>
     <call target="NCover.InsureNCoverInstallation.Exists"/>
     <call target="NCover.InsureNCoverInstallation.Version"/>
     <call target="NCover.Install.NCover" if="${NCover.Install.IsNeeded}"/>
@@ -57,32 +56,32 @@
     <exec program="MsiExec.exe" commandline='/i "${NCover.Install.TempDir}\NCover.msi"' />
   </target>
 
-  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCoverConsolePath)}">
+  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCover.ExePath)}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
-        <![CDATA[The file ${NCoverConsolePath} could not be found.
+        <![CDATA[The file ${NCover.ExePath} could not be found.
 The NCover package needs NCover version 1.5.5 Beta.
 
 More information on NCover can be found at http://www.ncover.org]]>
-      </value>
-    </largeproperty>
-    <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
-      <options>
-        <string value="Install NCover"/>
-        <string value="Don't Install NCover"/>
-        <string value="Quit"/>
-      </options>
-    </ask>
-    <if test="${Answer == 'Quit'}">
-      <fail message="Your answer was was to quit." />
-    </if>
-    <property name="NCover.Install.IsNeeded" value="true"/>
-  </target>
+    </value>
+  </largeproperty>
+  <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
+    <options>
+      <string value="Install NCover"/>
+      <string value="Don't Install NCover"/>
+      <string value="Quit"/>
+    </options>
+  </ask>
+  <if test="${Answer == 'Quit'}">
+    <fail message="Your answer was was to quit." />
+  </if>
+  <property name="NCover.Install.IsNeeded" value="true"/>
+</target>
 
-  <target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCoverConsolePath) == '1.5.5'}">
+<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == '1.5.5'}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
-        <![CDATA[The version of NCover found, ${file::get-version(NCoverConsolePath)}, is not supported.
+        <![CDATA[The version of NCover found, ${file::get-version(NCover.ExePath)}, is not supported.
 The NCover package needs NCover version 1.5.5 Beta.
 
 More information on NCover can be found at http://www.ncover.org]]>

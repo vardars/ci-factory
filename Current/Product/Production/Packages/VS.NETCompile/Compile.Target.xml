@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
 
-  <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
-  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="%Compile.LogFileDirectory%" overwrite="false" />
   <property name="Compile.DevEnv" value="%Compile.DevEnv%" overwrite="false"/>
 	
   <include buildfile="Compile.Properties.xml" />
-
-	<!--
-	The following properties should be specified in the calling script.
-	
-	<property name="Compile.SolutionFile" value="" />
-	<property name="Compile.Bin" value="" />
-	<property name="Compile.XmlLogFileName" value="" />
-  <property name="Compile.FilesToDeleteAtSetup" value="" />
-	-->
 	
 	<!-- The following properties are for internal use only -->
   <property name="Private.Compile.Pattern" value="" />
@@ -134,9 +124,8 @@
 	</target>
 
   <target name="Compile.SetUp">
-    <mkdir if="${directory::exists(Compile.LogFileDirectory) == false}" dir="${Compile.LogFileDirectory}"/>
-    <property name="Common.FilesToDelete" value="${Compile.FilesToDeleteAtSetup}"/>
-    <call target="Common.DeleteFiles"/>
+    <delete dir="${Compile.LogFileDirectory}" if="${directory::exists(Compile.LogFileDirectory)}" />
+    <mkdir dir="${Compile.LogFileDirectory}"/>
   </target>
 
   <target name="Compile.TearDown">

@@ -7,7 +7,6 @@
   <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false"/>
   <property name="Compile.ToCopyToBin" value="true"   overwrite="false"/>
   <property name="Compile.ToDeployZip" value="true"   overwrite="false"/>
-  <property name="Compile.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\*.xml" overwrite="false" />
   <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false" />
 
   <fileset id="Compile.ToCopy">

@@ -44,8 +44,8 @@
 
     <trycatch>
       <try>
-        <ncover program="C:\Program Files\NCover\NCover.Console.exe"
-						commandLineExe="${BuildDirectory}\nAnt\bin\nant.exe"
+        <ncover program="${NCover.ExePath}"
+						commandLineExe="${NantExePath}"
 						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
 						workingDirectory="${Coverage.ReportFolder}"
 						coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
