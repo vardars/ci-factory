@@ -16,7 +16,7 @@
           <project>$/${ProjectName}/${ProjectCodeLineName}</project>
           <username>${VSS.Username}</username>
           <password>${VSS.Password}</password>
-          <ssdir>${VSS.RootShare}\${ProjectName}</ssdir>
+          <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
           <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
         </sourceControlProvider >
         <exclusionFilters>
@@ -46,7 +46,7 @@
         <project>$/${ProjectName}/${ProjectCodeLineName}/Build</project>
         <username>${VSS.Username}</username>
         <password>${VSS.Password}</password>
-        <ssdir>${VSS.RootShare}\${ProjectName}</ssdir>
+        <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
         <workingDirectory>${BuildDirectory}</workingDirectory>
       </sourcecontrol>]]></value>
   </largeproperty>
