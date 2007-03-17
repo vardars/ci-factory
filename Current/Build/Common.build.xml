@@ -70,9 +70,9 @@
   <property name="Common.ShowReport.HtmlFile" value=""/>
   <property name="Common.ShowReport.XslFile" value=""/>
   -->
-  <target name="Common.ShowReport">
-    <style in="${Common.ShowReport.XmlFile}" out="${Common.ShowReport.HtmlFile}" style="${Common.ShowReport.XslFile}"/>
-    <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+      <target name="Common.ShowReport">
+        <style in="${Common.ShowReport.XmlFile}" out="${Common.ShowReport.HtmlFile}" style="${Common.ShowReport.XslFile}"/>
+        <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
 
   <script language="C#" prefix="list">

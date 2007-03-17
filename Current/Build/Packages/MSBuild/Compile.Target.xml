@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
 
-  <property name="Compile.FilesToDeleteAtSetup" value="" overwrite="false"/>
-	<property name="Compile.ConfigName" value="debug" overwrite="false"/>
-	<property name="Compile.ToCopyToBin" value="false" overwrite="false" />
-  <property name="Compile.ToDeployZip" value="false" overwrite="false" />
   <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
-	
+
   <include buildfile="Compile.Properties.xml" />
 
-	<!--
+  <!--
 	The following properties should be specified in the calling script.
 	
 	<property name="Compile.Bin" value="" />
 	<property name="Compile.XmlLogFileName" value="" />
 	-->
-	
-	<!-- The following properties are for internal use only -->
+
+  <!-- The following properties are for internal use only -->
   <property name="Private.Compile.Result" value="" />
-    
+
   <target name="Compile.CompileSource">
-    <exec 
+    <exec
 	    program="${framework::get-framework-directory('net-2.0')}\msbuild.exe"
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result"
@@ -31,7 +27,7 @@
       <arg line='/p:Configuration="${Compile.ConfigName}"' />
       <arg line='/noconsolelogger' />
       <arg line='/l:XmlLogger,"${PackagesDirectory}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
-      <environment refid="${Compile.Environment}" />
+      <environment refid="${Compile.Environment.RefId}" />
     </exec>
     <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.ArtifactDirectoryPath}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>
     <if test="${int::parse(Private.Compile.Result) != 0}">
@@ -40,7 +36,7 @@
     <call target="Private.Compile.CopyToWorkingBin" />
     <call target="Private.Compile.DeployZip" />
   </target>
-    
+
   <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">
     <attrib readonly="false">
       <fileset refid="Compile.ToCopy" />
@@ -68,7 +64,15 @@
 
     <call target="Deployment.PublishFile"/>
   </target>
-  
+
+  <target name="Compile.ShowReport" if="${file::exists(Compile.LogFileDirectory + '\' + Compile.XmlLogFileName)}">
+    <style in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" out="${Compile.LogFileDirectory}\Compile.xml" style="${BuildDirectory}\Packages\MSBuild\MSBuildMerge.xsl" />
+    <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\Compile.xml"/>
+    <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSBuild\compile-msbuild.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
   <target name="Compile.SetUp">
     <delete dir="${Compile.LogFileDirectory}" if="${directory::exists(Compile.LogFileDirectory)}" />
     <mkdir dir="${Compile.LogFileDirectory}"/>

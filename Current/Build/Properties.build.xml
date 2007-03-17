@@ -11,7 +11,8 @@
   <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
   <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
   <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-  <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+  <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+  <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
   <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
   
 </project>
