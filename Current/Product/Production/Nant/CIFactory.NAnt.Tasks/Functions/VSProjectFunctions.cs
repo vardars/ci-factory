@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -18,6 +19,11 @@ namespace CIFactory.NAnt.Functions
         {
         }
 
+        public VSProjectFunctions()
+            : base(null, null)
+        {
+        }
+
         #endregion
 
         [Function("get-assemblyname")]
@@ -34,5 +40,26 @@ namespace CIFactory.NAnt.Functions
             Node = xd.SelectSingleNode("//b:AssemblyName", namespaceManager);
             return Node.InnerText;
         }
+
+        [Function("get-output-directory")]
+        public string GetOutputDirectory(string projectFilePath, string config)
+        {
+            XmlDocument xd = new XmlDocument();
+            xd.PreserveWhitespace = true;
+            xd.Load(projectFilePath);
+
+            XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+            namespaceManager.AddNamespace("b", @"http://schemas.microsoft.com/developer/msbuild/2003");
+
+            XmlNode Node = null;
+            Node = xd.SelectSingleNode(string.Format("//b:PropertyGroup[contains(@Condition, {0})]/b:OutputPath", config), namespaceManager);
+            string OutputValue = Node.InnerText;
+            
+            if (Path.IsPathRooted(OutputValue))
+                return OutputValue;
+
+            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(projectFilePath), OutputValue));
+        }
+
     }
 }
