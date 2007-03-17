@@ -41,6 +41,21 @@ namespace CIFactory.NAnt.Tasks
 
         #region Public Instance Properties
 
+        private RegistryValueKind _Kind;
+
+        [TaskAttribute("kind")]
+        public RegistryValueKind Kind
+        {
+            get
+            {
+                return _Kind;
+            }
+            set
+            {
+                _Kind = value;
+            }
+        }
+
         /// <summary>
         /// Value to be stored in the Registry.
         /// </summary>
@@ -131,7 +146,12 @@ namespace CIFactory.NAnt.Tasks
 
                         if (newKey != null)
                         {
-                            newKey.SetValue(_regKeyValueName, _regKeyValue);
+                            if (this.Kind == RegistryValueKind.DWord)
+                                newKey.SetValue(_regKeyValueName, int.Parse(_regKeyValue), this.Kind);
+                            else if (this.Kind == RegistryValueKind.Binary)
+                                throw new BuildException("Binary is not yet supported.", this.Location);
+                            else
+                                newKey.SetValue(_regKeyValueName, _regKeyValue, this.Kind);
 
                             string infoMessage = string.Format(CultureInfo.InvariantCulture,
                                 "{0}{1} set to {2}.",

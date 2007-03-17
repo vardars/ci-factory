@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/16/2007 20:07:48</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/16/2007 21:10:05</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -1068,6 +1068,7 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.WriteRegistryTask">
+    <xs:attribute name="kind" use="optional" />
     <xs:attribute name="value" use="required" />
     <xs:attribute name="key" use="required" />
     <xs:attribute name="hive" use="optional" />
