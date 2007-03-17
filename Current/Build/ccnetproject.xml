@@ -2,10 +2,10 @@
 <!DOCTYPE cruisecontrol [
   <!ENTITY email '<email from="CI Factory.Build@noreply.com" mailhost="localhost" includeDetails="true">
         <users>
-          <user name="BuildMaster" group="buildmaster" address="jay.flowers@gmail.com.com"/>
+          <user name="BuildMaster" group="buildmaster" address="jay.flowers@gmail.com"/>
         </users>
         <groups>
-          <group name="buildmaster" notification="failed"/>
+          <group name="buildmaster" notification="always"/>
         </groups>
       </email>'>
   <!ENTITY labeller '<labeller type="defaultlabeller">
