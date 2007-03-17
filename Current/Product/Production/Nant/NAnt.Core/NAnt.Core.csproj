@@ -314,6 +314,7 @@
     <Compile Include="TaskContainer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\AbstractSourceControlTask.cs" />
     <Compile Include="Tasks\AttribTask.cs">
       <SubType>Code</SubType>
     </Compile>

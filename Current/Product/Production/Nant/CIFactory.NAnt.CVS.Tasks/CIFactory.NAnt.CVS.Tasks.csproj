@@ -47,7 +47,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\AbstractCvsTask.cs" />
-    <Compile Include="Tasks\AbstractSourceControlTask.cs" />
     <Compile Include="Tasks\ChangeLogTask.cs" />
     <Compile Include="Tasks\CheckoutTask.cs" />
     <Compile Include="Tasks\CvsPass.cs" />

@@ -85,10 +85,6 @@
       <Name>NAnt.DotNetTasks</Name>
       <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.DotNetTasks.dll</HintPath>
     </Reference>
-    <Reference Include="NAnt.SourceControlTasks, Version=0.85.1932.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Third Party\nAnt\bin\NAnt.SourceControlTasks.dll</HintPath>
-    </Reference>
     <Reference Include="SourceSafe.Interop">
       <Name>SourceSafe.Interop</Name>
       <HintPath>..\..\..\..\Third Party\nAnt\bin\SourceSafe.Interop.dll</HintPath>
