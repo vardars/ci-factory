@@ -3,6 +3,7 @@
   <property name="UnitTest.TestPath" value="${ProductDirectory}\Unit Test"/>
   <fileset id="UnitTest.ProjectFiles">
     <include name="${UnitTest.TestPath}\**\*.*proj"/>
+    <exclude name="${UnitTest.TestPath}\**\TestAssistance.NAnt.*proj"/>
   </fileset>
   <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${ProjectName}UnitTests"/>
