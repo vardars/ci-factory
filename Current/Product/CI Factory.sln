@@ -246,6 +246,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAnt Tests", "NAnt Tests", 
 	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		NAnt Tests\TestRunner.Build.xml = NAnt Tests\TestRunner.Build.xml
+		NAnt Tests\TestRunner.Common.xml = NAnt Tests\TestRunner.Common.xml
+		NAnt Tests\TestRunner.Properties.xml = NAnt Tests\TestRunner.Properties.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E462DBA7-A4A4-4219-B565-B055BD01606B}"
@@ -354,6 +356,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAssistance.NAnt", "Unit
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VisualSourceSafeTests", "VisualSourceSafeTests", "{FB86D8BF-7B96-4273-AD16-C8CCD1E63D7F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		NAnt Tests\VisualSourceSafeTests\InstallationTest.xml = NAnt Tests\VisualSourceSafeTests\InstallationTest.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install Resources", "Install Resources", "{34BD0ABC-A056-421F-B44C-C4E6EB3F0750}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		NAnt Tests\VisualSourceSafeTests\Install Resources\DefaultArguments.xml = NAnt Tests\VisualSourceSafeTests\Install Resources\DefaultArguments.xml
 	EndProjectSection
 EndProject
 Global
@@ -634,8 +654,10 @@ Global
 		{67735BE3-3708-4DCD-84E9-7D9BD3F45EAC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{9A667DA2-A419-4014-91B0-5967FE567DB7} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{CFA044EE-2C9C-4BB0-B6E8-7F3CB1BFF0EC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
+		{FB86D8BF-7B96-4273-AD16-C8CCD1E63D7F} = {7A743EB9-F3EE-4DF0-80F6-387329D65639}
 		{D4B4CE7F-3D05-4F3E-BDA3-059BCAFB7E40} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{EE6F9B28-5BE3-4058-86A7-110FBB6DA81A} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
+		{34BD0ABC-A056-421F-B44C-C4E6EB3F0750} = {FB86D8BF-7B96-4273-AD16-C8CCD1E63D7F}
 	EndGlobalSection
 EndGlobal

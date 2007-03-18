@@ -5,6 +5,7 @@
       <in>
         <items>
           <include name="..\..\Production\Packages\**\*Task*.dll"/>
+          <include name="..\..\NAnt Tests\bin\*Task*.dll"/>
         </items>
       </in>
       <do>

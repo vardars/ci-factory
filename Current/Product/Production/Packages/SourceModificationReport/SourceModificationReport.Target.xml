@@ -159,12 +159,17 @@
           nodeindex="${index}" 
         />
 
-        <regex input="${DirtySCPath}" pattern=".*(/|\\)Product(/|\\)(?'CleanSCPath'.*)"/>
-        <property name="ModificationFilePath" value="${CleanSCPath}/${FileName}"/>
+        <trycatch>
+          <try>
+            <regex input="${DirtySCPath}" pattern=".*(/|\\)Product(/|\\)(?'CleanSCPath'.*)"/>
+            <property name="ModificationFilePath" value="${CleanSCPath}/${FileName}"/>
 
-        <echo message="Adding ${ModificationFilePath} to modification list."/>
+            <echo message="Adding ${ModificationFilePath} to modification list."/>
 
-        <function execute="${fileset::include-add('ModificationList', ModificationFilePath)}"/>
+            <function execute="${fileset::include-add('ModificationList', ModificationFilePath)}"/>
+          </try>
+          <catch/>
+        </trycatch>
 
         <property name="index" value="${int::parse(index) + 1}" />
       </do>

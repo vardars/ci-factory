@@ -75,7 +75,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
 
                 try
                 {
-                    this.TryRun(FixtureSetUp, FixtureProject);
+                    this.TryRun(string.Format("{0}.{1}", FixtureProject.ProjectName, FixtureSetUp), FixtureProject);
 
                     foreach (Target FixtureTarget in FixtureProject.Targets)
                     {
@@ -84,7 +84,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
                             try
                             {
                                 TestCount++;
-                                this.TryRun(SetUpName, FixtureProject);
+                                this.TryRun(string.Format("{0}.{1}", FixtureProject.ProjectName, SetUpName), FixtureProject);
                                 FixtureTarget.Execute();
                                 TestPassingCount++;
                             }
@@ -98,14 +98,14 @@ namespace CIFactory.NAnt.UnitTest.Tasks
                             }
                             finally
                             {
-                                this.TryRun(TearDownName, FixtureProject);
+                                this.TryRun(string.Format("{0}.{1}", FixtureProject.ProjectName, TearDownName), FixtureProject);
                             }
                         }
                     }
                 }
                 finally
                 {
-                    this.TryRun(FixtureTearDown, FixtureProject);
+                    this.TryRun(string.Format("{0}.{1}", FixtureProject.ProjectName, FixtureTearDown), FixtureProject);
                 }
             }
 

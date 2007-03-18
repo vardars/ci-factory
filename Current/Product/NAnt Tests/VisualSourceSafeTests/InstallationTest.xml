@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VisualSourceSafe.InstallationTest" default="VisualSourceSafe.InstallationTest.RunAllTests">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="..\bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="..\TestRunner.Properties.xml"/>
+    <include buildfile="..\TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="VisualSourceSafe.InstallationTest.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="VisualSourceSafe.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.FixtureSetUp">
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="VSSTestProject"/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists('C:\Projects\VSSTestProject')}" failonerror="false"/>
+    <delete dir="C:\Projects\VSSTestProject" if="${directory::exists('C:\Projects\VSSTestProject')}"/>
+    <assertequal actual="${directory::exists('C:\Projects\VSSTestProject')}" expected="False" message="Was not able to delete C:\Projects\VSSTestProject."/>
+
+    <copy file="Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.FixtureTearDown">
+    <echo message="FixtureTearDown"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.SetUp">
+    <echo message="SetUp"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.TearDown">
+    <echo message="TearDown"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.DefaultInstallTest">
+<echo message="Test"/>
+  </target>
+  
+</project>
