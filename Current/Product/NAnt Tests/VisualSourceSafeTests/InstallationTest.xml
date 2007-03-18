@@ -80,8 +80,8 @@
   <target name="VisualSourceSafe.InstallationTest.DefaultInstallTest">
     <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
     <sleep seconds="5"/>
-    <waitfor condition="${ccnet::get-project-build-status(serverurl, projectname) == 'Success'}" timeout="300" pollinginterval="10"/>
-    <assertequal actual="${ccnet::get-project-build-status(serverurl, projectname)" expected="Success" message="Expected build to be successful."/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10"/>
+    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
   </target>
   
 </project>
