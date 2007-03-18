@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VisualSourceSafe.InstallationTest" default="VisualSourceSafe.InstallationTest.RunAllTests">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="..\bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="..\TestRunner.Properties.xml"/>
+    <include buildfile="..\TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="VisualSourceSafe.InstallationTest.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="VisualSourceSafe.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <property name="ProjectName" value="VSSTestProject"/>
+  <property name="ProjectRoot" value="C:\Projects\${ProjectName}"/>
+
+  <property name="VSS.RootShare" value="C:\Source Safe DataBases" />
+  <property name="VSS.DBPath" value="${VSS.RootShare}\${ProjectName}\srcsafe.ini" />
+  <property name="VSS.Username" value="build" />
+  <property name="VSS.Password" value="password"  />
+
+  <target name="VisualSourceSafe.InstallationTest.FixtureSetUp">
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRoot)}" failonerror="false"/>
+    <delete dir="${ProjectRoot}" if="${directory::exists(ProjectRoot)}"/>
+    <assertequal actual="${directory::exists(ProjectRoot)}" expected="False" message="Was not able to delete ${ProjectRoot}."/>
+
+    <property name="TestVSS.DBDirectory" value="path::get-directory-name(VSS.DBPath)"/>
+    <delete dir="${TestVSS.DBDirectory}" if="${directory::exists(TestVSS.DBDirectory)}"/>
+    <assertequal actual="${directory::exists(TestVSS.DBDirectory)}" expected="False" message="Was not able to delete ${TestVSS.DBDirectory}."/>
+
+    <copy file="Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.FixtureTearDown">
+    <echo message="FixtureTearDown"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.SetUp">
+    <echo message="SetUp"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.TearDown">
+    <echo message="TearDown"/>
+  </target>
+
+  <target name="VisualSourceSafe.InstallationTest.DefaultInstallTest">
+    <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    
+  </target>
+  
+</project>
