@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Dashboard" default="publish">
+
+  <property name="ProjectDir" value="${string::replace(DirtyProjectDir, '\remove', '')}"/>
+  <property name="TargetDir" value="${string::replace(DirtyTargetDir, '\remove', '')}"/>
+  <property name="SolutionDir" value="${string::replace(DirtySolutionDir, '\remove', '')}"/>
+  <property name="DashboardDir" value="${SolutionDir}\Production\Foundation\Default\Build\dashboard"/>
+  <property name="BinDir" value="${DashboardDir}\bin"/>
+  <property name="TemplatesDir" value="${DashboardDir}\templates"/>
+  <property name="ImagesDir" value="${DashboardDir}\images"/>
+
+  <target name="publish">
+    <mkdir dir="${BinDir}" unless="${directory::exists(BinDir)}"/>
+    <mkdir dir="${TemplatesDir}" unless="${directory::exists(TemplatesDir)}"/>
+    <mkdir dir="${ImagesDir}" unless="${directory::exists(ImagesDir)}"/>
+
+    <copy todir="${DashboardDir}">
+      <fileset basedir="${TargetDir}">
+        <include name="**\*"/>
+        <exclude name="de"/>
+        <exclude name="fr"/>
+        <exclude name="ja"/>
+        <exclude name="**\*.dll"/>
+        <exclude name="**\*.pbd"/>
+      </fileset>
+    </copy>
+    <copy todir="${BinDir}">
+      <fileset basedir="${TargetDir}">
+        <include name="**\*.dll"/>
+        <include name="**\*.pbd"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${TemplatesDir}">
+      <fileset basedir="${ProjectDir}\templates">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${ImagesDir}">
+      <fileset basedir="${ProjectDir}\images">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <!--:: "$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"
+cd %2
+xcopy * %1Production\Foundation\Default\Build\dashboard /S /Y
+
+mkdir %1Production\Foundation\Default\Build\dashboard\templates
+xcopy ..\..\templates %1Production\Foundation\Default\Build\dashboard\templates /S /Y
+
+mkdir %1Production\Foundation\Default\Build\dashboard\images
+xcopy ..\..\images %1Production\Foundation\Default\Build\dashboard\images /S /Y
+
+mkdir %1Production\Foundation\Default\Build\dashboard\bin
+move /Y %1Production\Foundation\Default\Build\dashboard\*.dll %1Production\Foundation\Default\Build\dashboard\bin
+move /Y %1Production\Foundation\Default\Build\dashboard\*.pdb %1Production\Foundation\Default\Build\dashboard\bin
+move /Y %1Production\Foundation\Default\Build\dashboard\de %1Production\Foundation\Default\Build\dashboard\bin
+move /Y %1Production\Foundation\Default\Build\dashboard\fr %1Production\Foundation\Default\Build\dashboard\bin
+move /Y %1Production\Foundation\Default\Build\dashboard\ja %1Production\Foundation\Default\Build\dashboard\bin
+-->
+</project>
