@@ -1,0 +1,495 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
+{ 
+ font-family: Verdana 
+}
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
+{  
+  font-size: 10.0pt; 
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
+BODY, P
+{
+  margin-left:0pt; 
+  margin-right:0pt;
+}
+BODY
+{
+  background: white;
+  margin: 6px;
+  padding: 0px;
+}
+h6 { font-size: 10pt }
+h5 { font-size: 11pt }
+h4 { font-size: 12pt }
+h3 { font-size: 13pt }
+h2 { font-size: 14pt }
+h1 { font-size: 16pt }
+blockquote { padding: 10px; border: 1px #DDDDDD dashed }
+a img {	border: 0; }
+table.zeroBorder {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder th {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder td {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+.hiddenStyle {
+		visibility: hidden; 
+		position: absolute;
+		z-Index: 1;
+		paddingRight: 0;
+		background: white
+	}
+.misspell { background-image: url('/images/misspell.gif'); background-repeat: repeat-x; background-position: bottom }
+@media screen {
+.pb { border-top: 1px dashed #C0C0C0; border-bottom: 1px dashed #C0C0C0 }
+.writely-comment { font-size: 9pt; line-height: 1.4em; padding: 1px; border: 1px dashed #C0C0C0 }
+}
+@media print {
+.pb { border-top: 0px; border-bottom: 0px }
+.writely-comment { display: none }
+}
+@media screen,print {
+.pb { height: 1px }
+}
+</style></head>
+<body revision='dd6cv3jm_17d7j672:114'>
+<h1>
+  Power Tools
+</h1>
+<br>
+This is a collection of tools, some new and some are improvements to existing
+tools.&nbsp; Some are geared toward the developer and some to the build
+master.&nbsp; You should be able to drop them in the Product directory (don't
+for get to add the new ones into source control).<br>
+<br>
+<img src="Power Tools_images/dd6cv3jm_20g7mwsg.png" style="HEIGHT:263px; WIDTH:538px"><br>
+<br>
+<img src="Power Tools_images/dd6cv3jm_22hg565g.png" style="HEIGHT:308px; WIDTH:544px"><br>
+<h2>
+  Build Masters
+</h2>
+There are two items for you.&nbsp; One is a NAnt script and the other is a link
+to a tool written by someone else.&nbsp; Gaston Milano's CoolCommands is a
+Visual Studio add-in.&nbsp; It has many cool features.&nbsp; We are interested
+in one, maybe two, of them.&nbsp; We are absolutely interested in the command
+“Add Projects From Folder”.&nbsp; It makes adding a multitude of existing
+project to a solution a very easy affair.&nbsp; After you have copied all your
+projects to the correct location follow these steps:<br>
+<br>
+<ol>
+  <li>
+    Right Click on a folder in the solution explorer and select the menu item
+    "Add Projects From Folder..."
+  </li>
+  <ul>
+    <li>
+      <img src="Power Tools_images/dd6cv3jm_23drkxk9.png" style="HEIGHT:386px; WIDTH:282px">
+    </li>
+  </ul>
+  <li>
+    Browse to the Product directory and click OK.
+  </li>
+  <ul>
+    <li>
+      <img src="Power Tools_images/dd6cv3jm_242j5653.png" style="HEIGHT:430px; WIDTH:378px">
+    </li>
+  </ul>
+  <li>
+    Review the projects found, make correction if needed, and click OK.
+  </li>
+  <ul>
+    <li>
+      <img src="Power Tools_images/dd6cv3jm_25fh3f6z.png" style="HEIGHT:408px; WIDTH:422px">
+    </li>
+  </ul>
+</ol>
+<br>
+Thanks Gaston for such a great tool!<br>
+<br>
+The NAnt script is Scratch.Lib.xml.&nbsp; There is a little bit of history here
+and I will expect you to do your homework.&nbsp; So please read this short blog
+post first:
+<a href=http://jayflowers.com/WordPress/?p=49 target=blank_ title="NAnt Scratch">NAnt
+Scratch</a>.&nbsp; I am moving forward in this document as if you have added
+NAnt to your external tools and mapped a key command to execute it (I use
+Ctrl+Alt+N).<br>
+<br>
+interested in Execute the batch file C:\Projects\&lt;Project Name&gt;\&lt;Code
+Line Name&gt;\Product\OpenSolution.bat.&nbsp; It will make you life a little
+easier if you add the file Scratch.Lib.xml to the solution.&nbsp; You can easily
+do this by dragging and dropping it from Explorer to the Solution
+Explorer.&nbsp; Open it up and take note of the targets it provides.&nbsp; We
+will be immediately interested in FixUpThirdPartyRefs.&nbsp; Open
+Scratch.Build.xml and create an new target.&nbsp; You might not get any
+intellisense.<br>
+<br>
+<img src="Power Tools_images/dd6cv3jm_26gxhvt7.png" style="HEIGHT:212px; WIDTH:282px"><br>
+<br>
+If your in this boat go to the properties window for the document.&nbsp; Click
+the Schemas entry and notice the ellipsis.&nbsp; Click it and this window will
+appear:<br>
+<br>
+<img src="Power Tools_images/dd6cv3jm_27d5cmbc.png" style="HEIGHT:423px; WIDTH:399px"><br>
+<br>
+Click the add button and browse to and open C:\Projects\&lt;Project
+Name&gt;\&lt;Code Line Name&gt;\Build\NAnt.xsd.&nbsp; Click OK.&nbsp; Now you
+should have intellisense.<br>
+<br>
+The target should be named test as that is the default target for
+Scratch.Build.xml.&nbsp; In this target make a call to the target
+FixUpThirdPartyRefs.&nbsp; Oh yea, you need to add the include for
+Scratch.Lib.xml file too.<br>
+<br>
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black">
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>encoding</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>utf-8</span>"<span style=COLOR:blue>?&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xmlns</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>http://nant.sf.net/schemas/nant.xsd</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>scratch</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>default</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>test</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>basedir</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>..\Build</span>"<span style=COLOR:blue>
+    &gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetBuildCondition</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>ForceBuild
+    </span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetIntegrationStatus</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Success</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetLastIntegrationStatus</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Success</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetBuildDate</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>2006-09-12</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetBuildTime</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>11:10:00</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetArtifactDirectory</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>C:\Temp\CCNetArtifactDirectory</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetWorkingDirectory</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>C:\Temp\CCNetWorkingDirectory</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetLabel</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0.0.2</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetProject</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>TestProject</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>CCNetLogFilePath</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>""<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Properties.Build.xml</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Common.Build.xml</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.ConfigName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>debug</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>.\Packages\Deployment\Deployment.Target.xml</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>.\Packages\MSBuild\Compile.Target.xml</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">include</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">buildfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">..\Product\Scratch.Lib.xml</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">name</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">test</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">call</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">FixUpThirdPartyRefs</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;/</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>test<span style=BACKGROUND-COLOR:#ffff66>-createzip</span></span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.ConfigName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>release</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.Bin</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${ProductDirectory}\ReleaseBin</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.ToCopyToBin</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>true</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.ToDeployZip</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>true</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.ZipFileName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Doubler.zip</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>delete</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>fileset</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${Compile.Bin}\*.*</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>fileset</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>delete</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Private.Compile.CopyToWorkingBin</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Private.Compile.DeployZip</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>&gt;</span>
+  </p>
+</div>
+<br>
+<br>
+You are ready to run it (Ctrl+Alt+N).&nbsp; You might want to review what the
+target does before you execute it.&nbsp; It is designed to replace all Hint
+paths found for all references that exist in the Third Party directory.&nbsp;
+Another way to say it is: it will fix any references that you have copied to the
+Third Party directory.<br>
+<br>
+So between Gaston's CoolCommands and the FixUpThirdPartyRefs target you should
+be in business with most any existing project in no time at all.<br>
+<br>
+There are a few more targets in the Scratch.Lib.xml file:<br>
+<ul>
+  <li>
+    FixProjectBindings<br>
+  </li>
+  <ul>
+    <li>
+      This target is designed to fix all the project binding to source
+      control.&nbsp; Note that this assumes that the solution is under source
+      control too.<br>
+    </li>
+  </ul>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>FixSolutionBindings
+  </li>
+  <ul>
+    <li>
+      This target is designed to fix all the binding information in the solution
+      for the projects.<br>
+    </li>
+  </ul>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>ConvertVBToCSharp
+  </li>
+  <ul>
+    <li>
+      Will convert VB.Net to C#.<br>
+    </li>
+  </ul>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>FixUpProjectInfo
+  </li>
+  <ul>
+    <li>
+      Will add a link to each project that does not already have one for the
+      ProjectInfo file.&nbsp; It will also make sure that there are no conflicts
+      between the AssemblyInfo and ProjectInfo.<br>
+    </li>
+  </ul>
+</ul>
+<br>
+To be clear you can use the Scratch.Lib.xml from either the Build directory or
+Product directory, your choice.<br>
+<h2>
+  Developers
+</h2>
+<h3>
+  Build.bat
+</h3>
+This script accepts parameters: Build, Rebuild, Compile, Recompile, and
+Test.&nbsp; The default parameter is Build, meaning that it can be called with
+passing anything.&nbsp; The first thing this script does regardless of the
+parameter is perform an update from source control.&nbsp; It will update the
+Build, Product, and Third Party directories.<br>
+<br>
+Build calls Compile and Test.<br>
+Rebuild calls Recompile and Test.<br>
+Compile calls the Compile.CompileSource target and Ant.Build if Ant is part of
+the CI Factory project.<br>
+Recompile deletes all the bin and obj directories then calls Compile.<br>
+Test calls the Unit Test package's target UnitTest.RunTests.<br>
+<br>
+<h3>
+  NoUpdateBuild.bat
+</h3>
+This script is identical to the Build.bat script except that it does not perform
+and update from source control.<br>
+<h3>
+  Test.bat
+</h3>
+This script will run all the unit tests.<br>
+<h3>
+  Personal.Build.xml
+</h3>
+This is the glue between the previous three batch files and the Packages in the
+Build Directory.<br>
+<h3>
+  Compile.Environment.xml/Ant.Environment.xml
+</h3>
+<h3>
+</h3>
+<p>
+  These files allows you to override the default environment variables for use
+  during the compilation of the build.&nbsp; It provides several advantages, the
+  main one being that environment variables car version controlled.<br>
+</p>
+<h3>
+  OpenCommandPrompt.bat
+</h3>
+This script will open a command prompt with all it's environment variables set
+as defined in the *.Environment.xml or with the defaults.&nbsp; NAnt, and Ant if
+it is part of your Project, are in the path so you can more easily use these
+tools.
+<h3>
+  OpenSolution.bat
+</h3>
+This file exists in the main distrobusion of CI Factory.&nbsp; The Power Tools
+version calls the OpenSolution.Script.xml.<br>
+<h3>
+  OpenSolution.Script.xml
+</h3>
+This file is useful if you are a user of TestDriven.Net.&nbsp; It will set your
+Registry values for TD.Net to the installation of MbUnit in the Third Party
+directory.&nbsp; This allows you to work with multiple versions of MbUnit.<br></body>
+</html>
