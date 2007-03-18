@@ -285,6 +285,15 @@ namespace ThoughtWorks.CruiseControl.Core
         }
 
         /// <summary>
+        /// Start integrator for specified project. 
+        /// </summary>
+        public void Start(string project)
+        {
+            IProjectIntegrator integrator = GetIntegrator(project);
+            integrator.Start();
+        }
+
+        /// <summary>
         /// Stop all integrators, waiting until each integrator has completely stopped, before releasing any threads blocked by WaitForExit. 
         /// </summary>
         public void Stop()
@@ -292,6 +301,16 @@ namespace ThoughtWorks.CruiseControl.Core
             Log.Info("Stopping CruiseControl.NET Server");
             StopIntegrators();
             monitor.Set();
+        }
+
+
+        /// <summary>
+        /// Stop integrator for specified project. 
+        /// </summary>
+        public void Stop(string project)
+        {
+            IProjectIntegrator integrator = GetIntegrator(project);
+            integrator.Stop();
         }
 
         // ToDo - this done TDD

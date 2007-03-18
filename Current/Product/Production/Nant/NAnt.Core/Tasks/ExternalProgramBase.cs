@@ -79,6 +79,21 @@ namespace NAnt.Core.Tasks {
 
         #region Public Instance Properties
 
+        private string _Pid;
+
+        [TaskAttribute("pid")]
+        public string Pid
+        {
+            get
+            {
+                return _Pid;
+            }
+            set
+            {
+                _Pid = value;
+            }
+        }
+
         /// <summary>
         /// The name of the executable that should be used to launch the 
         /// external program.
@@ -461,6 +476,7 @@ namespace NAnt.Core.Tasks {
                 Log(Level.Verbose, msg);
 
                 p.Start();
+                Properties[this.Pid] = p.Id.ToString();
                 return p;
             } catch (Exception ex) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture, 

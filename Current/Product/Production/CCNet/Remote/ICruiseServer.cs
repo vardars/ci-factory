@@ -14,6 +14,10 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
 		void Stop();
 
+
+        void Stop(string projectName);
+        void Start(string projectName);
+
 		/// <summary>
 		/// Terminates the CruiseControl.NET server immediately, stopping all started projects
 		/// </summary>

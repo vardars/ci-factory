@@ -29,6 +29,30 @@ using NAnt.Core.Tasks;
 using NAnt.Core.Types;
 
 namespace NAnt.Core {
+
+    public class BreakTask : Task
+    {
+
+        private static bool _Break;
+
+        public static bool Break
+        {
+            get
+            {
+                return _Break;
+            }
+            set
+            {
+                _Break = value;
+            }
+        }
+
+        protected override void ExecuteTask()
+        {
+            Break = true;
+        }
+    }
+
     /// <summary>
     /// Executes embedded tasks in the order in which they are defined.
     /// </summary>
@@ -38,6 +62,7 @@ namespace NAnt.Core {
         private StringCollection _subXMLElements;
 
         #endregion Private Instance Fields
+
 
         #region Override implementation of Element
 
@@ -83,6 +108,7 @@ namespace NAnt.Core {
         }
 
         protected override void ExecuteTask() {
+            BreakTask.Break = false;
             ExecuteChildTasks();
         }
 
@@ -114,6 +140,10 @@ namespace NAnt.Core {
                 if (task != null) {
                     task.Parent = this;
                     task.Execute();
+                }
+                if (BreakTask.Break)
+                {
+                    break;
                 }
             }
         }

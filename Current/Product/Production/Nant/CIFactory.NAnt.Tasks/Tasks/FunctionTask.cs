@@ -4,6 +4,7 @@ using NAnt.Core.Attributes;
 
 namespace CIFactory.NAnt.Tasks
 {
+
     [TaskName("function")]
     public class FunctionTask : Task
     {

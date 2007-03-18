@@ -126,6 +126,16 @@ namespace ThoughtWorks.CruiseControl.Core
             _server.Stop();
         }
 
+        public void Start(string projectName)
+        {
+            _server.Start(projectName);
+        }
+
+        public void Stop(string projectName)
+        {
+            _server.Stop(projectName);
+        }
+
         public void UpdateProject(string projectName, string serializedProject)
         {
             _server.UpdateProject(projectName, serializedProject);

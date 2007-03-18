@@ -376,6 +376,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install Resources", "Instal
 		NAnt Tests\VisualSourceSafeTests\Install Resources\DefaultArguments.xml = NAnt Tests\VisualSourceSafeTests\Install Resources\DefaultArguments.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.CCNet.Tasks", "Production\Nant\CIFactory.NAnt.CCNet.Tasks\CIFactory.NAnt.CCNet.Tasks.csproj", "{2E281FB3-FD8A-452D-830A-247ABB71CD1F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
@@ -609,6 +615,12 @@ Global
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Build|Any CPU.ActiveCfg = Release|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Build|Any CPU.Build.0 = Release|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -638,6 +650,7 @@ Global
 		{D4C8C890-0DF5-4612-AF4F-F82CDE0A2E04} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{17AD152E-6018-4017-9ECB-A5E3FBF8E584} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{37086C06-4C88-4C58-A7C8-029D0B87B5BA} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
+		{2E281FB3-FD8A-452D-830A-247ABB71CD1F} = {488D2D2C-3260-4C98-8DA2-4BB2024D2387}
 		{A690B211-007B-4D30-9E3C-8F35E432C54E} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{1182F464-05FD-4EED-BDF6-C93CEBA5E529} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{2B14D260-6E25-437A-A8C2-32A0E948D63D} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}

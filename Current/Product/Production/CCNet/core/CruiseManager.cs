@@ -109,5 +109,25 @@ namespace ThoughtWorks.CruiseControl.Core
 		{
 			return cruiseServer.GetVersion();
 		}
+
+        public void Stop()
+        {
+            cruiseServer.Stop();
+        }
+
+        public void Start()
+        {
+            cruiseServer.Start();
+        }
+
+        public void Stop(string projectName)
+        {
+            cruiseServer.Stop(projectName);
+        }
+
+        public void Start(string projectName)
+        {
+            cruiseServer.Start(projectName);
+        }
 	}
 }

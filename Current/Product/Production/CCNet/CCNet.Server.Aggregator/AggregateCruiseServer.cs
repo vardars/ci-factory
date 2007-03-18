@@ -268,5 +268,20 @@ namespace CCNet.Server.Aggregator
         }
         
         #endregion
+
+        #region ICruiseServer Members
+
+
+        public void Stop(string projectName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public void Start(string projectName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }
