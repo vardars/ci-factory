@@ -75,6 +75,7 @@
     <Compile Include="Tasks\Versioning\UpdateProductVersion.cs" />
     <Compile Include="Tasks\Versioning\VersionCalculator.cs" />
     <Compile Include="Tasks\Versioning\VersionUpdater.cs" />
+    <Compile Include="Tasks\WaitForTask.cs" />
     <Compile Include="Tasks\WhileTask.cs" />
     <Compile Include="Tasks\XmlCopy.cs" />
     <Compile Include="Types\CaseContainerCollection.cs" />

@@ -39,6 +39,8 @@
     </Compile>
     <Compile Include="Functions\CCNetFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\CCNetStartTask.cs" />
+    <Compile Include="Tasks\CCNetStopTask.cs" />
     <Compile Include="Tasks\LaunchCruiseControlBuildTask.cs" />
   </ItemGroup>
   <ItemGroup>
