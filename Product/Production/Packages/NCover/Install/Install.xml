@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCover.Install" default="NCover.Install">
+
+  <include buildfile="Properties.xml" />
+
+  <property name="NCover.Install.IsNeeded" value="false"/>
+  
+  <target name="NCover.Install">
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverExplorerSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverExplorer.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\CoverageReports\CoverageReport.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="NCover.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="NCover"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="NCover.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
+  </target>
+
+  <target name="NCover.ValidateParameters">
+    <fail unless="${property::exists('Coverage.UnitTestPackageInclude')}" message="Please set the property Coverage.UnitTestPackageInclude"/>
+    <fail unless="${property::exists('Coverage.UnitTestPropertiesInclude')}" message="Please set the property Coverage.UnitTestPropertiesInclude"/>
+    <call target="NCover.InsureNCoverInstallation"/>
+  </target>
+
+  <target name="NCover.InsureNCoverInstallation" >
+    <call target="NCover.InsureNCoverInstallation.Exists"/>
+    <call target="NCover.InsureNCoverInstallation.Version"/>
+    <call target="NCover.Install.NCover" if="${NCover.Install.IsNeeded}"/>
+  </target>
+
+  <target name="NCover.Install.NCover">
+    <property name="NCover.Install.TempDir" value="${SourcePackagesDirectory}\NCover\Install\Temp"/>
+    <mkdir dir="${NCover.Install.TempDir}" unless="${directory::exists(NCover.Install.TempDir)}"/>
+    <get src="http://ncover.org/SITE/files/549/download.aspx"
+         dest="${NCover.Install.TempDir}\NCover.zip"
+         verbose="true">
+    </get>
+    <unzip todir="${NCover.Install.TempDir}" zipfile="${NCover.Install.TempDir}\NCover.zip"/>
+    <exec program="MsiExec.exe" commandline='/i "${NCover.Install.TempDir}\NCover.msi"' />
+  </target>
+
+  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCover.ExePath)}">
+    <largeproperty name="NCover.Ask.Question">
+      <value xml="false" expand="true">
+        <![CDATA[The file ${NCover.ExePath} could not be found.
+The NCover package needs NCover version 1.5.5 Beta.
+
+More information on NCover can be found at http://www.ncover.org]]>
+    </value>
+  </largeproperty>
+  <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
+    <options>
+      <string value="Install NCover"/>
+      <string value="Don't Install NCover"/>
+      <string value="Quit"/>
+    </options>
+  </ask>
+  <if test="${Answer == 'Quit'}">
+    <fail message="Your answer was was to quit." />
+  </if>
+  <property name="NCover.Install.IsNeeded" value="true"/>
+</target>
+
+<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == '1.5.5'}">
+    <largeproperty name="NCover.Ask.Question">
+      <value xml="false" expand="true">
+        <![CDATA[The version of NCover found, ${file::get-version(NCover.ExePath)}, is not supported.
+The NCover package needs NCover version 1.5.5 Beta.
+
+More information on NCover can be found at http://www.ncover.org]]>
+      </value>
+    </largeproperty>
+    <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
+      <options>
+        <string value="Install NCover"/>
+        <string value="Don't Install NCover"/>
+        <string value="Quit"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'Quit'}">
+      <fail message="Your answer was was to quit." />
+    </if>
+    <property name="NCover.Install.IsNeeded" value="true"/>
+  </target>
+
+</project>
