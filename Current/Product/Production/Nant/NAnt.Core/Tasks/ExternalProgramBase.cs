@@ -476,7 +476,8 @@ namespace NAnt.Core.Tasks {
                 Log(Level.Verbose, msg);
 
                 p.Start();
-                Properties[this.Pid] = p.Id.ToString();
+                if (!String.IsNullOrEmpty(this.Pid))
+                    Properties[this.Pid] = p.Id.ToString();
                 return p;
             } catch (Exception ex) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture, 

@@ -49,7 +49,7 @@ namespace CIFactory.NAnt.Tasks
             {
                 TimeSpan elapsed = DateTime.Now - startTime;
                 if (elapsed >= timeout)
-                    throw new BuildException("Timed-out");
+                    throw new BuildException("Timed-out", this.Location);
                 Thread.Sleep(PollingInterval * 1000);
 
                 if (bool.Parse(this.Project.ExpandProperties(this.Condition, this.Location)))

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/18/2007 11:13:15</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/18/2007 13:00:30</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -30,6 +30,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -207,9 +208,9 @@
   <xs:complexType name="CIFactory.NAnt.Types.CaseElement">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -231,6 +232,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -750,6 +752,16 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask">
+    <xs:attribute name="pollinginterval" use="optional" />
+    <xs:attribute name="projectname" use="required" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="timeoutinseconds" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStopTask">
     <xs:attribute name="projectname" use="optional" />
     <xs:attribute name="serverurl" use="required" />
@@ -761,16 +773,6 @@
   <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStartTask">
     <xs:attribute name="projectname" use="required" />
     <xs:attribute name="serverurl" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask">
-    <xs:attribute name="pollinginterval" use="optional" />
-    <xs:attribute name="projectname" use="required" />
-    <xs:attribute name="serverurl" use="required" />
-    <xs:attribute name="timeoutinseconds" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -892,9 +894,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -916,6 +918,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1212,6 +1215,15 @@
       <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
     </xs:sequence>
     <xs:attribute name="condition" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.WaitForTask">
+    <xs:attribute name="condition" use="required" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="pollinginterval" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -2867,9 +2879,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="in" type="nant:NAnt.Core.Tasks.InElement" />
       <xs:element minOccurs="0" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -2891,6 +2903,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3322,9 +3335,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -3346,6 +3359,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -3507,9 +3521,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -3531,6 +3545,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4544,9 +4559,9 @@
   </xs:complexType>
   <xs:complexType name="Target">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
       <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
       <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-      <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
       <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
       <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
       <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -4568,6 +4583,7 @@
       <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
       <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+      <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4748,9 +4764,9 @@
   <xs:element name="project">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
         <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
@@ -4772,6 +4788,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
