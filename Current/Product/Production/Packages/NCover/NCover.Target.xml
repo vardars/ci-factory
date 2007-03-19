@@ -55,7 +55,7 @@
         </ncover>
       </try>
       <catch property="failure">
-        <echo message="At least one test failed: ${failure}"/>
+        <fail message="At least one test failed: ${failure}"/>
       </catch>
       <finally>
         <call target="Private.Coverage.NCoverExplorer" />
