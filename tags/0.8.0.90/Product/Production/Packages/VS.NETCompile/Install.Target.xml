@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Install" xmlns="http://nant.sf.net/schemas/nant.xsd">
+
+  <property name="Install.FilesToDeleteAtSetup" value="" overwrite="false"/>
+  <property name="Install.ConfigName" value="debug" overwrite="false"/>
+	<property name="Install.ToCopyToBin" value="false" overwrite="false" />
+	<property name="Install.ToCopyDlls" value="false" overwrite="false" />
+  <property name="Install.ToCopyExes" value="false" overwrite="false" />
+	<property name="Install.ToCopyPdbs" value="false" overwrite="false" />
+  <property name="Install.ToCopyConfigs" value="false" overwrite="false" />
+  <property name="Install.ToConvertLogFile" value="false" overwrite="false" />
+	
+	<include buildfile="Compile.Target.xml" />
+  <include buildfile="..\Deployment\Deployment.Target.xml"/>
+  <include buildfile="Install.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="Install.MsiSourceFile"        value="" />
+  <property name="Install.MsiSourceDir"        value="" />
+	<property name="Install.MsiTargetFile"        value="" />
+  <property name="Install.MsiTargetDir"        value="" />
+	<property name="Install.MsiTargetFileWebPath" value="" />
+	<property name="Install.MsiTargetFileWebName" value="" />
+	<property name="Install.PostWrapBatchFile"    value="" />
+	<property name="Install.SolutionFile"         value="" />
+	<property name="Install.Bin"                  value="" />
+	<property name="Install.XmlLogFileName"       value="" />
+	-->
+	
+	<!-- The following properties are for internal use only -->
+	<property name="Private.Install.Buffer.Compile.ConfigName" value="debug"/>
+	<property name="Private.Install.Buffer.Compile.ToCopyToBin" value="false" />
+	<property name="Private.Install.Buffer.Compile.ToCopyDlls" value="false" />
+	<property name="Private.Install.Buffer.Compile.ToCopyExes" value="false" />
+	<property name="Private.Install.Buffer.Compile.ToCopyPdbs" value="false" />
+	<property name="Private.Install.Buffer.Compile.ToCopyConfigs" value="false" />
+	<property name="Private.Install.Buffer.Compile.ToConvertLogFile" value="false" />
+	<property name="Private.Install.Buffer.Compile.SolutionFile" value="" />
+	<property name="Private.Install.Buffer.Compile.Bin" value="" />
+	<property name="Private.Install.Buffer.Compile.XmlLogFileName" value="" />
+  <property name="Private.Install.Buffer.MsiSourceFile"        value="" />
+  <property name="Private.Install.Buffer.MsiSourceDir"        value="" />
+  <property name="Private.Install.Buffer.MsiTargetFile"        value="" />
+  <property name="Private.Install.Buffer.MsiTargetDir"        value="" />
+  <property name="Private.Install.Buffer.MsiTargetFileWebPath" value="" />
+  <property name="Private.Install.Buffer.MsiTargetFileWebName" value="" />
+
+	<target name="Private.Install.ExecutePostWrap" if="${file::exists(Install.PostWrapBatchFile)}">
+		<exec program="${Install.PostWrapBatchFile}" workingdir="${path::get-directory-name(Install.PostWrapBatchFile)}" />
+	</target>
+
+	<target name="Install.CreateSetup">
+		<call target="Private.Install.Setup" />
+		<call target="Compile.CompileSource" />
+		<call target="Private.Install.ExecutePostWrap" />
+
+    <call target="Deployment.PublishFile"/>
+    <call target="Private.Install.Teardown" />
+  </target>
+
+  <target name="Private.Install.Setup">
+		<property name="Private.Install.Buffer.Compile.ConfigName"			  value="${Compile.ConfigName}"/>
+		<property name="Private.Install.Buffer.Compile.ToCopyToBin"			  value="${Compile.ToCopyToBin}" />
+		<property name="Private.Install.Buffer.Compile.ToCopyDlls"			  value="${Compile.ToCopyDlls}" />
+		<property name="Private.Install.Buffer.Compile.ToCopyExes"			  value="${Compile.ToCopyExes}" />
+		<property name="Private.Install.Buffer.Compile.ToCopyPdbs"			  value="${Compile.ToCopyPdbs}" />
+		<property name="Private.Install.Buffer.Compile.ToCopyConfigs"		  value="${Compile.ToCopyConfigs}" />
+		<property name="Private.Install.Buffer.Compile.ToConvertLogFile"	value="${Compile.ToConvertLogFile}" />
+
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.SourceFileName')}" >
+          <property name="Private.Install.Buffer.MsiSourceFile"             value="${Deployment.SourceFileName}" />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.SourceDir')}">
+          <property name="Private.Install.Buffer.MsiSourceDir"              value="${Deployment.SourceDir}"	     />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.TargetFile')}">
+          <property name="Private.Install.Buffer.MsiTargetFile"             value="${Deployment.TargetFile}"	     />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.TargetDir')}">
+          <property name="Private.Install.Buffer.MsiTargetDir"              value="${Deployment.TargetDir}"	   />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.FileWebPath')}">
+          <property name="Private.Install.Buffer.MsiTargetFileWebPath"      value="${Deployment.FileWebPath}"	   />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Deployment.FileWebName')}">
+          <property name="Private.Install.Buffer.MsiTargetFileWebName"      value="${Deployment.FileWebName}"	   />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${property::exists('Compile.SolutionFile')}">
+          <property name="Private.Install.Buffer.Compile.SolutionFile"		value="${Compile.SolutionFile}" />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${Private.Install.Buffer.Compile.ToCopyToBin}" >
+          <property name="Private.Install.Buffer.Compile.Bin"					value="${Compile.Bin}" />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${Private.Install.Buffer.Compile.ToConvertLogFile}" >
+          <property name="Private.Install.Buffer.Compile.XmlLogFileName"		value="${Compile.XmlLogFileName}" />
+        </if>
+      </try>
+    </trycatch>
+
+    <property name="Compile.ConfigName"			    value="${Install.ConfigName}"/>
+    <property name="Compile.ToCopyToBin"		    value="${Install.ToCopyToBin}" />
+    <property name="Compile.ToCopyDlls"			    value="${Install.ToCopyDlls}" />
+    <property name="Compile.ToCopyExes"			    value="${Install.ToCopyExes}" />
+    <property name="Compile.ToCopyPdbs"			    value="${Install.ToCopyPdbs}" />
+    <property name="Compile.ToCopyConfigs"		  value="${Install.ToCopyConfigs}" />
+    <property name="Compile.ToConvertLogFile"	  value="${Install.ToConvertLogFile}" />
+    <property name="Compile.SolutionFile"		    value="${Install.SolutionFile}" />
+
+    <property name="Deployment.SourceFileName"  value="${Install.MsiSourceFile}"/>
+    <property name="Deployment.SourceDir"	      value="${Install.MsiSourceDir}"/>
+    <property name="Deployment.TargetDir"	      value="${Install.MsiTargetDir}"/>
+    <property name="Deployment.TargetFile"	    value="${Install.MsiTargetFile}"/>
+    <property name="Deployment.FileWebPath"	    value="${Install.MsiTargetFileWebPath}"/>
+    <property name="Deployment.FileWebName"	    value="${Install.MsiTargetFileWebName}"/>
+
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${Install.ToCopyToBin}" >
+          <property name="Compile.Bin"				value="${Install.Bin}" />
+        </if>
+      </try>
+    </trycatch>
+    <trycatch>
+      <try failonerror="false" >
+        <if test="${Install.ToConvertLogFile}" >
+          <property name="Compile.XmlLogFileName"		value="${Install.XmlLogFileName}" />
+        </if>
+      </try>
+    </trycatch>
+  </target>
+
+  <target name="Private.Install.Teardown">
+    <property name="Compile.ConfigName"			value="${Private.Install.Buffer.Compile.ConfigName}"/>
+    <property name="Compile.ToCopyToBin"		value="${Private.Install.Buffer.Compile.ToCopyToBin}" />
+    <property name="Compile.ToCopyDlls"			value="${Private.Install.Buffer.Compile.ToCopyDlls}" />
+    <property name="Compile.ToCopyExes"			value="${Private.Install.Buffer.Compile.ToCopyExes}" />
+    <property name="Compile.ToCopyPdbs"			value="${Private.Install.Buffer.Compile.ToCopyPdbs}" />
+    <property name="Compile.ToCopyConfigs"		value="${Private.Install.Buffer.Compile.ToCopyConfigs}" />
+    <property name="Compile.ToConvertLogFile"	value="${Private.Install.Buffer.Compile.ToConvertLogFile}" />
+    <property name="Compile.SolutionFile"		value="${Private.Install.Buffer.Compile.SolutionFile}" />
+
+    <property name="Deployment.SourceFileName" value="${Private.Install.Buffer.MsiSourceFile}"/>
+    <property name="Deployment.SourceDir"	    value="${Private.Install.Buffer.MsiSourceDir}"/>
+    <property name="Deployment.TargetDir"	    value="${Private.Install.Buffer.MsiTargetFile}"/>
+    <property name="Deployment.TargetFile"	    value="${Private.Install.Buffer.MsiTargetDir}"/>
+    <property name="Deployment.FileWebPath"	  value="${Private.Install.Buffer.MsiTargetFileWebPath}"/>
+    <property name="Deployment.FileWebName"	  value="${Private.Install.Buffer.MsiTargetFileWebName}"/>
+		
+		<trycatch>
+			<try failonerror="false" >
+				<if test="${Private.Install.Buffer.Compile.ToCopyToBin}" >
+					<property name="Compile.Bin"				value="${Private.Install.Buffer.Compile.Bin}" />
+				</if>
+			</try>
+		</trycatch>
+		<trycatch>
+			<try failonerror="false" >
+				<if test="${Private.Install.Buffer.Compile.ToConvertLogFile}" >
+					<property name="Compile.XmlLogFileName"		value="${Private.Install.Buffer.Compile.XmlLogFileName}" />
+				</if>
+			</try>
+		</trycatch>
+	</target>
+
+  <target name="Install.SetUp">
+    <property name="Common.FilesToDelete" value="${Install.FilesToDeleteAtSetup}"/>
+    <call target="Common.DeleteFiles"/>
+  </target>
+
+  <target name="Install.TearDown">
+
+  </target>
+
+</project>
