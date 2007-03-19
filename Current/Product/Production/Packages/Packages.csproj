@@ -6,7 +6,7 @@
     <ProjectGuid>{B2CA917D-0D0F-481F-B700-F9D85FC77DC6}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\..\..\..\..\Temp\</OutputPath>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Analytics\Analytics.Properties.xml" />

@@ -134,10 +134,39 @@
   </target>
 
   <target name="Recompile">
+    <fileset id="ProjectFiles">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="ProjectFiles" />
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Cleaning ${ProjectFile.Path}"/>
+
+        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj}"/>
+        <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
+
+        <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
+        <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
+          <fileset basedir="${Output.Path}">
+            <include name="**\*"/>
+            <exclude name="**\*.vshost.exe"/>
+          </fileset>
+        </delete>
+      </do>
+    </foreach>
     <delete>
-      <fileset>
-        <include name="${ProductDirectory}\**\bin\*"/>
-        <include name="${ProductDirectory}\**\obj\*"/>
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\dashboard">
+        <include name="**\*"/>
+        <exclude name="xsl\**\*"/>
+      </fileset>
+    </delete>
+    <delete>
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\server">
+        <include name="**\*"/>
+        <exclude name="xsl\**\*"/>
       </fileset>
     </delete>
     <call target="Compile"/>
