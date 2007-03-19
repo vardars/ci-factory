@@ -65,9 +65,9 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_11fmt93s:106'>
+<body revision='dd6cv3jm_11fmt93s:108'>
 <h2>
-  Packages
+  How to Create Packages
 </h2>
 CI Factory packages generally consist of a NAnt script and Xslt for producing
 dashboard reports.&nbsp; They are contained in a directory located in
@@ -75,7 +75,7 @@ C:\Projects\&lt;Project Name&gt;\&lt;Code Line
 Name&gt;\Build\Packages\&lt;Package Name&gt;.&nbsp; Lets take a look at the
 Package MSBuild to get an idea of all the moving parts.<br>
 <br>
-<img src="Packages_images/dd6cv3jm_12fdz577.jpg" style="HEIGHT:238px; WIDTH:481px"><img src="Packages_images/dd6cv3jm_13c5b4zc.jpg" style="HEIGHT:238px; WIDTH:481px"><br>
+<img src="How to Create Packages_images/dd6cv3jm_12fdz577.jpg" style="HEIGHT:238px; WIDTH:481px"><img src="How to Create Packages_images/dd6cv3jm_13c5b4zc.jpg" style="HEIGHT:238px; WIDTH:481px"><br>
 <br>
 There is always a Something.Targets.xml file and most times a
 Something.Properties.xml file.&nbsp; The properties files is the ONE that a user
@@ -229,7 +229,7 @@ Also see the links on the left menu: <span style=BACKGROUND-COLOR:#ff6666>NAnt
 Output </span>and <span style=BACKGROUND-COLOR:#ff99ff>MsBuild Compile
 Details</span>.<br>
 <br>
-<img src="Packages_images/dd6cv3jm_14gw5h3c.jpg" style="HEIGHT:840px; WIDTH:963px"><br>
+<img src="How to Create Packages_images/dd6cv3jm_14gw5h3c.jpg" style="HEIGHT:840px; WIDTH:963px"><br>
 <br>
 To produce these reports there also needs to be Xml in either the build log or a
 file in the <span style=BACKGROUND-COLOR:#ff99ff>Artifact
@@ -328,7 +328,7 @@ Post.Build.xml are your to main possibilities; both follow the same
 format.&nbsp; See the highlights in the Main.Build.xml file below (... denotes a
 collapsed region).<br>
 <br>
-<div style="BACKGROUND:#f2f2f2 none repeat scroll 0%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
   <p style=MARGIN:0px>
     <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
     </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>

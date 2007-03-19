@@ -65,7 +65,7 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_17d7j672:114'>
+<body revision='dd6cv3jm_17d7j672:122'>
 <h1>
   Power Tools
 </h1>
@@ -73,7 +73,8 @@ table.zeroBorder td {
 This is a collection of tools, some new and some are improvements to existing
 tools.&nbsp; Some are geared toward the developer and some to the build
 master.&nbsp; You should be able to drop them in the Product directory (don't
-for get to add the new ones into source control).<br>
+for get to add the new ones into source control).&nbsp; Note the CCNet Server
+Aggregator zip is not shown nor is it a drop in tool, see below.<br>
 <br>
 <img src="Power Tools_images/dd6cv3jm_20g7mwsg.png" style="HEIGHT:263px; WIDTH:538px"><br>
 <br>
@@ -424,13 +425,52 @@ There are a few more targets in the Scratch.Lib.xml file:<br>
     <li>
       Will add a link to each project that does not already have one for the
       ProjectInfo file.&nbsp; It will also make sure that there are no conflicts
-      between the AssemblyInfo and ProjectInfo.<br>
+      between the AssemblyInfo and ProjectInfo.
+    </li>
+  </ul>
+  <li>
+    FixUpProjectOutputDir
+  </li>
+  <ul>
+    <li>
+      Will change the project output directories to a common directory or
+      individual directories; CommonBin or bin\&lt;config&gt;.<br>
     </li>
   </ul>
 </ul>
 <br>
 To be clear you can use the Scratch.Lib.xml from either the Build directory or
 Product directory, your choice.<br>
+<br>
+<p>
+  The CCNet Server Aggregator is the newest bit.&nbsp; Phil Haack and gang over
+  on the SubText project have braught it to my attention that having multiple
+  CCNet server can be an administration burden as far as CCTray is
+  concerned.&nbsp; They pointed out that multiple holes in the firewall would
+  have to be opened to support CI Factory on all their branches and
+  projects.&nbsp; It my work we have seen how it is difficult to remember and
+  communicate all the different server names and ports.&nbsp; The&nbsp;Oberon
+  project is on the server BuildMonkey at port 23465.&nbsp; The UberThing
+  project is on BuildLemur at port 23451.&nbsp; It does not take long for you go
+  cross-eyed.&nbsp; Luckily a solution was really easy to code up.
+</p>
+<p>
+  It will be bundled in the Power Tools of the next CI Factory release.&nbsp;
+  Until then you can down load it from
+  <a href=http://jayflowers.com/BlogFiles/CCNet.Server.Aggregator.zip>here</a>.
+</p>
+<p>
+  You need to know these&nbsp;things to configure it.&nbsp; One it&nbsp;has an
+  app.config file with remoting information, just like the CCNet server (default
+  port&nbsp;is 12345).&nbsp; It also uses the same config file as CCTray:
+  cctray-settings.xml or settings.xml.&nbsp; So you can use CCTray to configure
+  what it will relay/aggregate.&nbsp; It will look for the config file first in
+  the same directory as itself and second in current users Application Data
+  folder.&nbsp; It is dirt simple or cheap.&nbsp; It is a console app and to
+  shut it down hit enter.&nbsp; It is just sitting there listen with a
+  Console.ReadLine();.
+</p>
+<br>
 <h2>
   Developers
 </h2>

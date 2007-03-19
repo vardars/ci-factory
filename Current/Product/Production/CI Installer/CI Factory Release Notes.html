@@ -65,10 +65,70 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_09r2s2h:102'>
+<body revision='dd6cv3jm_09r2s2h:120'>
 <h1>
-  CI Factory Release Notes<br>
+  CI Factory Release Notes
 </h1>
+<h2>
+  Beta 0.8.0.89<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=29&amp;can=6&amp;q=&amp;sort=-status>CCNet
+Server Aggregator</a> - Issue# 29<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=13&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>VS.Net
+Project Output Getter</a> - Issue# 13
+<h3>
+  Fixes
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=5&amp;can=6&amp;q=&amp;sort=-status>Tracker
+Package - Task Load</a> - Issue# 5<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=6&amp;can=6&amp;q=&amp;sort=-status>Tracker
+Package - Scr # Extraction</a> - Issue# 6<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=26&amp;can=6&amp;q=&amp;sort=-status>CSDiff
+Registry Entries</a> - Issue# 26<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=28&amp;can=6&amp;q=&amp;sort=-status>Meta
+Root Violations</a> - Issue# 28<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=31&amp;can=6&amp;q=&amp;sort=-status>VSS
+exe path</a> - Issue# 31<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=32&amp;can=6&amp;q=&amp;sort=-status>VSS
+CCNet not using VSS.DBPath</a> - Issue# 32<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=21&amp;can=1&amp;q=&amp;sort=id%20-status>Svn
+Passowrd</a> - Issue# 21<br>
+<h3>
+  Informal Changes<br>
+</h3>
+Added the beginnings of the Vault Package.<br>
+Update CCNet to the latest Vault source block.<br>
+Added the beginnings of the CVS Package.<br>
+Add the beginnings of the FinalBuilder Package.<br>
+NAnt - property assignment is logged for log level verbose.<br>
+Fix vss create and load repo.<br>
+Added scripts to the build solution file name to be more clear what it's purpose
+is.<br>
+Replace the property SourceModificationReport.SCProductPath in favor of a regex.<br>
+Added FixUpProjectOutputDir to Scratch.Lib.xml.<br>
+Added new Function vsproject::get-output-directory(projectFilePath, config).<br>
+Use the new function to better configure targets for the Packages
+DotNetUnitTest, MSTest, NCover, and nDepend.<br>
+Added new NAnt project for interacting with CCNet servers.&nbsp; Includes
+Thibaut Barrère's launchccnetbuild task from
+http://confluence.public.thoughtworks.org/display/CCNET/How+to+force+a+CCNet+build+from+a+NAnt+script,
+ccnetstop task, ccnetstart task, and several functions for getting status info
+on a project.<br>
+Added a while task.<br>
+Added a break task that should work in any task container.<br>
+Added a pid result property to exec related tasks.<br>
+Added stop and start methods to ICruiseManager, ICruiseServer and their
+implementations.<br>
+Added the waitfor task.<br>
+Added new function process::isrunning(pid)<br>
+Added CCNet Server Aggregator zip to the Power Tools.<br>
+Removed some extra files showing up in the Dashboard.<br>
 <h2>
   Beta 0.8.0.54
 </h2>
