@@ -19,7 +19,7 @@
 	    commandline='"${Compile.SolutionFile}" /build "${Compile.ConfigName}" /out "${Private.Compile.LogFileName}"'
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result" >
-      <environment refid="${Compile.Environment}" />
+      <environment refid="${Compile.Environment.RefId}" />
     </exec>
     <call target="Private.Compile.ConvertLogToXml" />
     <if test="${int::parse(Private.Compile.Result) != 0}">
