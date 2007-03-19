@@ -21,7 +21,7 @@
         <exclude name="fr"/>
         <exclude name="ja"/>
         <exclude name="**\*.dll"/>
-        <exclude name="**\*.pbd"/>
+        <exclude name="**\*.pdb"/>
       </fileset>
     </copy>
     <copy todir="${BinDir}">

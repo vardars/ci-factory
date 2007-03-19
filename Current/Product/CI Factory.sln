@@ -382,6 +382,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.CCNet.Tasks"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubversionTests", "SubversionTests", "{7C9DFE43-708A-4E7C-9FBC-4B2A44444017}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		NAnt Tests\SubversionTests\InstallationTest.xml = NAnt Tests\SubversionTests\InstallationTest.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Install Resources", "Install Resources", "{FCA83946-CE59-4169-B94D-6EAF499BA1BD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		NAnt Tests\SubversionTests\Install Resources\DefaultArguments.xml = NAnt Tests\SubversionTests\Install Resources\DefaultArguments.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
@@ -668,9 +686,11 @@ Global
 		{9A667DA2-A419-4014-91B0-5967FE567DB7} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{CFA044EE-2C9C-4BB0-B6E8-7F3CB1BFF0EC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{FB86D8BF-7B96-4273-AD16-C8CCD1E63D7F} = {7A743EB9-F3EE-4DF0-80F6-387329D65639}
+		{7C9DFE43-708A-4E7C-9FBC-4B2A44444017} = {7A743EB9-F3EE-4DF0-80F6-387329D65639}
 		{D4B4CE7F-3D05-4F3E-BDA3-059BCAFB7E40} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{EE6F9B28-5BE3-4058-86A7-110FBB6DA81A} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{34BD0ABC-A056-421F-B44C-C4E6EB3F0750} = {FB86D8BF-7B96-4273-AD16-C8CCD1E63D7F}
+		{FCA83946-CE59-4169-B94D-6EAF499BA1BD} = {7C9DFE43-708A-4E7C-9FBC-4B2A44444017}
 	EndGlobalSection
 EndGlobal

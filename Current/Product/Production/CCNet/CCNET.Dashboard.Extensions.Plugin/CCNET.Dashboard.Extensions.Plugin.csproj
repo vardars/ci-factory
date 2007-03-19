@@ -74,6 +74,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat"  "$(SolutionDir)" "$(TargetDir)" "$(TargetName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

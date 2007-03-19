@@ -10,6 +10,7 @@
     <RootNamespace>CCNet.Server.Aggregator</RootNamespace>
     <AssemblyName>CCNet.Server.Aggregator</AssemblyName>
     <StartupObject>CCNet.Server.Aggregator.Program</StartupObject>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,9 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="CreateZip.Build.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -70,4 +74,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>nant -buildfile:"$(ProjectDir)CreateZip.Build.xml" -D:DirtyTargetDir="$(TargetDir)remove" -D:DirtySolutionDir="$(SolutionDir)remove"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
