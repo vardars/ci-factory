@@ -2,7 +2,7 @@
 <project name="Install" xmlns="http://nant.sf.net/schemas/nant.xsd">
 
   <property name="Install.FilesToDeleteAtSetup" value="" overwrite="false"/>
-  <property name="Install.ConfigName" value="debug" overwrite="false"/>
+  <property name="Install.ConfigName" value="Debug" overwrite="false"/>
 	<property name="Install.ToCopyToBin" value="false" overwrite="false" />
 	<property name="Install.ToCopyDlls" value="false" overwrite="false" />
   <property name="Install.ToCopyExes" value="false" overwrite="false" />
@@ -30,7 +30,7 @@
 	-->
 	
 	<!-- The following properties are for internal use only -->
-	<property name="Private.Install.Buffer.Compile.ConfigName" value="debug"/>
+	<property name="Private.Install.Buffer.Compile.ConfigName" value="Debug"/>
 	<property name="Private.Install.Buffer.Compile.ToCopyToBin" value="false" />
 	<property name="Private.Install.Buffer.Compile.ToCopyDlls" value="false" />
 	<property name="Private.Install.Buffer.Compile.ToCopyExes" value="false" />

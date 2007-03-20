@@ -10,13 +10,13 @@
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
   
   <property name="CCNetLabel" value="1.0.0.2"/>
-  <property name="CCNetProject" value="TestProject"/>
+  <property name="CCNetProject" value="%ProjectName%"/>
   <property name="CCNetLogFilePath" value=""/>
   
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
   
-  <property name="Compile.ConfigName" value="debug"/>
+  <property name="Compile.ConfigName" value="Debug"/>
   
   <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
   <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />

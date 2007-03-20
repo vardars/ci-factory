@@ -79,7 +79,7 @@
   </target>
 
   <target name="Private.Coverage.CreatePropertiesFile">
-    <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+    <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
     <saveproperties file="${Coverage.CommonPropertiesFile}" format="CommandLine" >
       <property name="CCNetBuildCondition"/>
       <property name="CCNetIntegrationStatus"/>

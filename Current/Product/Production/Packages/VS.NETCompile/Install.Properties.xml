@@ -11,7 +11,7 @@
   <property name="Install.PostWrapBatchFile" value="" />
   <property name="Install.ToConvertLogFile" value="true" />
   <property name="Install.XmlLogFileName" value="Release.xml" />
-  <property name="Install.ConfigName" value="release"/>
+  <property name="Install.ConfigName" value="Release"/>
   <property name="Install.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\${Install.XmlLogFileName}" />
 
 </project>

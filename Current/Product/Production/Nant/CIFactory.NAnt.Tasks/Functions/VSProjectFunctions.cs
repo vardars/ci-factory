@@ -52,13 +52,20 @@ namespace CIFactory.NAnt.Functions
             namespaceManager.AddNamespace("b", @"http://schemas.microsoft.com/developer/msbuild/2003");
 
             XmlNode Node = null;
-            Node = xd.SelectSingleNode(string.Format("//b:PropertyGroup[contains(@Condition, {0})]/b:OutputPath", config), namespaceManager);
+            Node = xd.SelectSingleNode(string.Format("//b:PropertyGroup[contains(@Condition, '{0}')]/b:OutputPath", config), namespaceManager);
             string OutputValue = Node.InnerText;
+            OutputValue = OutputValue.TrimEnd(@"\".ToCharArray());
             
             if (Path.IsPathRooted(OutputValue))
-                return OutputValue;
+                return Path.GetFullPath(OutputValue);
 
             return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(projectFilePath), OutputValue));
+        }
+
+        public void Adhoctest()
+        {
+            string Dir = this.GetOutputDirectory(@"c:\Projects\dasblogce\Current\Product\Production\Lesnikowski.Pawel.Mail.Pop3\Lesnikowski.Pawel.Mail.Pop3.csproj", "Release");
+            System.Diagnostics.Debug.WriteLine(Dir);
         }
 
     }
