@@ -27,7 +27,7 @@
     <copy todir="${BinDir}">
       <fileset basedir="${TargetDir}">
         <include name="**\*.dll"/>
-        <include name="**\*.pbd"/>
+        <include name="**\*.pdb"/>
       </fileset>
     </copy>
     

@@ -143,7 +143,7 @@
         <echo message="******************************************************"/>
         <echo message="Cleaning ${ProjectFile.Path}"/>
 
-        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj}"/>
+        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj"/>
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
         <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>

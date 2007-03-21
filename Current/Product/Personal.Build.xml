@@ -145,16 +145,22 @@
         <echo message="******************************************************"/>
         <echo message="Cleaning ${ProjectFile.Path}"/>
 
-        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj}"/>
+        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj"/>
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
-        <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-        <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
-          <fileset basedir="${Output.Path}">
-            <include name="**\*"/>
-            <exclude name="**\*.vshost.exe"/>
-          </fileset>
-        </delete>
+        <trycatch>
+          <try>
+            <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
+            <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
+              <fileset basedir="${Output.Path}">
+                <include name="**\*"/>
+                <exclude name="**\*.vshost.exe"/>
+              </fileset>
+            </delete>
+          </try>
+          <catch/>
+        </trycatch>
+        
       </do>
     </foreach>
     <delete>

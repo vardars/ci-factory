@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Subversion.InstallationTest" default="Subversion.InstallationTest.RunAllTests">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Subversion.InstallationTest" default="Subversion.InstallationTest.RunAllTests" basedir="..\">
 
   <ifnot test="${task::exists('testrunner')}">
-    <loadtasks assembly="..\bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
-    <include buildfile="..\TestRunner.Properties.xml"/>
-    <include buildfile="..\TestRunner.Common.xml"/>
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
   </ifnot>
   
   <target name="Subversion.InstallationTest.RunAllTests">
@@ -47,7 +47,7 @@
     <exec program="svn" commandline='list ${SVN.URI.ProjectName}' resultproperty='SVN.Delete.Result' failonerror='false' />
     <assertequal actual="${SVN.Delete.Result}" expected="1" message="Was not able to delete ${SVN.URI.ProjectName}."/>
 
-    <copy file="Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <copy file="SubversionTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
 
     <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>

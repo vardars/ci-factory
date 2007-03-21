@@ -84,6 +84,8 @@ namespace CIFactory.NAnt.Tasks
 
         public void Clean(IntPtr baton, SvnPath path, SvnWcStatus2 status)
         {
+            if (status == null) throw new ArgumentNullException("status");
+
             if (status.TextStatus == SvnWcStatus.Kind.Unversioned || status.TextStatus == SvnWcStatus.Kind.Ignored)
             {
                 string FullPath = Path.Combine(this.Directory, path.Value);
@@ -125,7 +127,8 @@ namespace CIFactory.NAnt.Tasks
             }
             finally
             {
-                this.Client.Pool.Destroy();
+                if (this.Client != null)
+                    this.Client.Pool.Destroy();
             }
 
         }

@@ -52,7 +52,8 @@
   <target name="Private.Compile.DeployZip" if="${Compile.ToDeployZip}">
     <zip zipfile="${Compile.Bin}\${Compile.ZipFileName}">
       <fileset>
-        <include name="${Compile.Bin}/**" />
+		  <exclude name="${Compile.Bin}/${Compile.ZipFileName}" />
+		  <include name="${Compile.Bin}/**" />
       </fileset>
     </zip>
     <property name="Deployment.SourceFileName" value="${Compile.ZipFileName}"/>
