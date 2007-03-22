@@ -1,0 +1,609 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
+{ 
+ font-family: Verdana 
+}
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
+{  
+  font-size: 10.0pt; 
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
+BODY, P
+{
+  margin-left:0pt; 
+  margin-right:0pt;
+}
+BODY
+{
+  background: white;
+  margin: 6px;
+  padding: 0px;
+}
+h6 { font-size: 10pt }
+h5 { font-size: 11pt }
+h4 { font-size: 12pt }
+h3 { font-size: 13pt }
+h2 { font-size: 14pt }
+h1 { font-size: 16pt }
+blockquote { padding: 10px; border: 1px #DDDDDD dashed }
+a img {	border: 0; }
+table.zeroBorder {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder th {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+table.zeroBorder td {
+	border-width: 1px 1px 1px 1px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+.hiddenStyle {
+		visibility: hidden; 
+		position: absolute;
+		z-Index: 1;
+		paddingRight: 0;
+		background: white
+	}
+.misspell { background-image: url('/images/misspell.gif'); background-repeat: repeat-x; background-position: bottom }
+@media screen {
+.pb { border-top: 1px dashed #C0C0C0; border-bottom: 1px dashed #C0C0C0 }
+.writely-comment { font-size: 9pt; line-height: 1.4em; padding: 1px; border: 1px dashed #C0C0C0 }
+}
+@media print {
+.pb { border-top: 0px; border-bottom: 0px }
+.writely-comment { display: none }
+}
+@media screen,print {
+.pb { height: 1px }
+}
+</style></head>
+<body revision='dd6cv3jm_11fmt93s:108'>
+<h2>
+  How to Create Packages
+</h2>
+CI Factory packages generally consist of a NAnt script and Xslt for producing
+dashboard reports.&nbsp; They are contained in a directory located in
+C:\Projects\&lt;Project Name&gt;\&lt;Code Line
+Name&gt;\Build\Packages\&lt;Package Name&gt;.&nbsp; Lets take a look at the
+Package MSBuild to get an idea of all the moving parts.<br>
+<br>
+<img src="How to Create Packages_images/dd6cv3jm_12fdz577.jpg" style="HEIGHT:238px; WIDTH:481px"><img src="How to Create Packages_images/dd6cv3jm_13c5b4zc.jpg" style="HEIGHT:238px; WIDTH:481px"><br>
+<br>
+There is always a Something.Targets.xml file and most times a
+Something.Properties.xml file.&nbsp; The properties files is the ONE that a user
+could edit to alter the behavior of the Package.&nbsp; It is preferred that a
+user not have to edit the target file.&nbsp; You may have noticed that I did not
+refer to the files like &lt;Package Name&gt;.Target.xml and &lt;Package
+Name&gt;.Properties.xml.&nbsp; This is because CI Factory makes use of
+indirection to increase flexibility.&nbsp; This allows several packages to use
+the name Compile.Target.xml.&nbsp; This in itself does not do much, the file
+naming is used to signal that the package contains shared target and property
+names; similar to polymorphism.&nbsp; The VS.NETCompile package also contains a
+file named Compile.Target.xml.<br>
+<br>
+The bin directory contains the MSBuild Xml logger.&nbsp; Other packages that
+have resources that are specific to that package have bin folders too.&nbsp;
+Some of the packages have NAnt task assemblies in a bin folder.&nbsp; They are
+loaded with the task loadtasks.<br>
+<br>
+There are several Xslt files in the MSBuild package.&nbsp; Two are for
+generating html in the CCNet dashboard.&nbsp; The other is used in a CCNet
+server Xsl merger publisher task.&nbsp; Currently there are three types of
+dashboard Xsl plugins: <span style=BACKGROUND-COLOR:#ffcc00>one</span> for the
+main build report (processing the build log),
+<span style=BACKGROUND-COLOR:#ff6666>one</span> for creating dedicated build
+reports (again processing the build log), and
+<span style=BACKGROUND-COLOR:#ff99ff>one</span> more for creating dedicated
+build reports (processing any file in the Artifact directory).&nbsp; See the
+dashboard.config bellow.<br>
+<br>
+<br>
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>encoding</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>utf-8</span>"<span style=COLOR:blue>
+    ?&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>dashboard</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>remoteServices</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>servers</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>server</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>TestProject</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>url</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>tcp://localhost:21236/CruiseManager.rem</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>servers</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>remoteServices</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>plugins</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>buildPlugins</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>buildReportBuildPlugin</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>xslFileNames</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>xsl\header.xsl<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>xsl\modifications.xsl<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>xsl\compile.xsl<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>xslFile</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffcc00>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xslFile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span><span style=BACKGROUND-COLOR:#ffcc00>Packages\MSBuild\compile-msbuild.xsl</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&lt;/</span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xslFile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>xslFileNames</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>buildReportBuildPlugin</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>buildLogBuildPlugin</span><span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ff6666>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ff6666">xslReportBuildPlugin</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff6666">description</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">=</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">NAnt
+    Output</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff6666">actionName</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">=</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">NAntOutputBuildReport</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff6666">xslFileName</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">=</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">xsl\Nant.xsl</span><span style=BACKGROUND-COLOR:#ff6666>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff6666">
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ff99ff>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ff99ff">artifactXslBuildPlugin</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff99ff">description</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">=</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">MSBuild
+    Compile
+    Details</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff99ff">actionName</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">=</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">MSBuildCompileDetails</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff99ff">xslFileName</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">=</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">Packages\MSBuild\msbuild.xsl</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff99ff">artifactRootUrl</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">=</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">/TestProject
+    Artifacts</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ff99ff">xmlFileName</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">=</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">MSBuildLog.xml</span><span style=BACKGROUND-COLOR:#ff99ff>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ff99ff">
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>buildPlugins</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>plugins</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>dashboard</span><span style=COLOR:blue>&gt;</span>
+  </p>
+</div>
+<br>
+See in the screen shot below The section named
+<span style=BACKGROUND-COLOR:#ffcc00>Compiler Warnings</span>.&nbsp; It is
+generated by <span style=BACKGROUND-COLOR:#ffcc00>compile-msbuild.xsl</span>.<br>
+Also see the links on the left menu: <span style=BACKGROUND-COLOR:#ff6666>NAnt
+Output </span>and <span style=BACKGROUND-COLOR:#ff99ff>MsBuild Compile
+Details</span>.<br>
+<br>
+<img src="How to Create Packages_images/dd6cv3jm_14gw5h3c.jpg" style="HEIGHT:840px; WIDTH:963px"><br>
+<br>
+To produce these reports there also needs to be Xml in either the build log or a
+file in the <span style=BACKGROUND-COLOR:#ff99ff>Artifact
+directory</span>.&nbsp; To get xml into the build log you have at least 3 means
+at your disposal; the <span style=BACKGROUND-COLOR:#ff6666>echo</span> task in
+the NAnt script, the <span style=BACKGROUND-COLOR:#99ffff>xml file merger</span>
+publication task, and the <span style=BACKGROUND-COLOR:#ffcc00>xsl file
+merger</span> publication task. See the snippet taken from the publishers
+section of the CCNet project file.<br>
+<br>
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>merge</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>files</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#99ffff>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#99ffff">file</span><span style="COLOR:blue; BACKGROUND-COLOR:#99ffff">&gt;</span><span style=BACKGROUND-COLOR:#99ffff>c:\Projects\TestProject\Current\Build\SimianReport\SimianReport.xml</span><span style="COLOR:blue; BACKGROUND-COLOR:#99ffff">&lt;/</span><span style="COLOR:#a31515; BACKGROUND-COLOR:#99ffff">file</span><span style="COLOR:blue; BACKGROUND-COLOR:#99ffff">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>files</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>merge</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>xslmerger</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>filepairs</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>filepair</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffcc00>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xslfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span><span style=BACKGROUND-COLOR:#ffcc00>C:\Projects\TestProject\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&lt;/</span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xslfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffcc00>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xmlfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span><span style=BACKGROUND-COLOR:#ffcc00>c:\Projects\TestProject\Current\Build\CompileLogs\*.xml</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&lt;/</span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffcc00">xmlfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffcc00">&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>filepair</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>filepairs</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>xslmerger</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>xmllogger</span><span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+</div>
+<br>
+To publish a file to the Artifact directory you can do one of two things: write
+the file directly to Artifact directory or copy it there.&nbsp; The
+<span style=BACKGROUND-COLOR:#ff99ff>Deployment Package</span> has serveral
+targets to help you publish to the Artifact directory.&nbsp; Some of them have
+the added bonus of having a download link created for them in the Deployment
+File(s) section of the main build report (it uses the
+<span style=BACKGROUND-COLOR:#ff6666>echo</span> means to communicate the href
+info to the xsl).&nbsp; If you wish to handle publishing a file yourself the
+following <span style=BACKGROUND-COLOR:#ff99ff>properties</span> will be of
+interest to you:<br>
+<ul>
+  <li>
+    ArtifactRootDirectory =
+    C:\Projects\${ProjectName}\${ProjectCodeLineName}\Build\Artifacts
+  </li>
+  <li>
+    Common.ArtifactFolderName = a number - yyyymmddhhmmss<br>
+  </li>
+  <li>
+    Common.ArtifactDirectoryPath =
+    ${ArtifactRootDirectory}\${Common.ArtifactFolderName}
+  </li>
+  <li>
+    Deployment.WebPathRoot = /${ProjectName} Artifacts
+  </li>
+</ul>
+<br>
+To have anything at all to merge, publish, or echo we need to have a target in
+the Something.Target.xml file executed.&nbsp; The Main.Build.xml and
+Post.Build.xml are your to main possibilities; both follow the same
+format.&nbsp; See the highlights in the Main.Build.xml file below (... denotes a
+collapsed region).<br>
+<br>
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>encoding</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>utf-8</span>"<span style=COLOR:blue>?&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xmlns</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>http://nant.sf.net/schemas/nant.xsd</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Main
+    Build</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>default</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Triggered</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Properties.build.xml</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Common.Build.xml</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Package
+    Includes<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">include</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">buildfile</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">${PackagesDirectory}\MSBuild\Compile.Target.xml</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Package
+    Includes<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Triggered</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>depends</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>SetUps</span>"<span style=COLOR:blue>
+    &gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>trycatch</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>try</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Main
+    Build<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Pre Build
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span><span style=COLOR:blue></span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Pre Build
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Clean Up
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span><span style=COLOR:blue></span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Clean Up
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Compile
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">call</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">Compile.CompileSource</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Compile
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Varification
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span><span style=COLOR:blue></span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Varification
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    Post Build
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span><span style=COLOR:blue></span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Post Build
+    Actions<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    Main
+    Build<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>try</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>finally</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>TearDowns</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>finally</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>trycatch</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>SetUps</span>"<span style=COLOR:blue>
+    &gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Common.SetUp</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    SetUps<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">call</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">Compile.SetUp</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    SetUps<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>TearDowns</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>Begin
+    TearDowns<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; ...</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    <span style=BACKGROUND-COLOR:#ffff66>&lt;</span></span><span style="COLOR:#a31515; BACKGROUND-COLOR:#ffff66">call</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">
+    </span><span style="COLOR:red; BACKGROUND-COLOR:#ffff66">target</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">=</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">Compile.TearDown</span><span style=BACKGROUND-COLOR:#ffff66>"</span><span style="COLOR:blue; BACKGROUND-COLOR:#ffff66">/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>End
+    TearDowns<span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>description</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>&gt;</span>
+  </p>
+</div>
+<br>
+<br></body>
+</html>
