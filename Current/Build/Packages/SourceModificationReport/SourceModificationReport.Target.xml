@@ -23,7 +23,7 @@
   <target name="SourceModificationReport.GetOldestModificationTime">
     <script language="VB">
       <references>
-        <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
+        <include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
       </references>
       <imports >
         <import namespace="System.Xml"/>
@@ -70,7 +70,7 @@
     <if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
       <script language="VB">
         <references>
-          <include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Core.dll" />
+          <include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
         </references>
         <imports >
           <import namespace="System.Xml"/>
