@@ -194,6 +194,8 @@
         <call target="UnitTest.TearDown"/>
       </finally>
     </trycatch>
+
+    <nant buildfile="${ProductDirectory}\NAnt Tests\TestRunner.Build.xml" inheritall="false" inheritrefs="false" />
   </target>
 
   <target name="Ant.Build">

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
   <property name="UnitTest.TestPath" value="${ProductDirectory}\Unit Test"/>
+  <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll"/>
+  
   <fileset id="UnitTest.ProjectFiles">
     <include name="${UnitTest.TestPath}\**\*.*proj"/>
   </fileset>
   <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportFile" value="${ProjectName}UnitTests.xml"/>
-  <property name="UnitTest.FilesToDeleteAtSetup" value="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"/>
 </project>

@@ -6,12 +6,16 @@
   <include buildfile="TestRunner.Common.xml"/>
   
   <include buildfile="VisualSourceSafeTests\InstallationTest.xml"/>
+  <include buildfile="SubversionTests\InstallationTest.xml"/>
+  <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
   
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
     <testrunner>
       <fixtures>
         <string value="VisualSourceSafe.InstallationTest"/>
+        <string value="Subversion.InstallationTest"/>
+        <string value="VS.NETCompile.InstallationTest"/>
       </fixtures>
     </testrunner>
   </target>

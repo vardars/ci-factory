@@ -4,6 +4,7 @@
   <include buildfile="Properties.xml" />
 
   <property name="NCover.Install.IsNeeded" value="false"/>
+  <property name="NCover.Version" value="1.5.7"/>
   
   <target name="NCover.Install">
     <largeproperty name="Packages.AddVarificationActions.Block">
@@ -60,7 +61,7 @@
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The file ${NCover.ExePath} could not be found.
-The NCover package needs NCover version 1.5.5 Beta.
+The NCover package needs NCover version ${NCover.Version} Beta.
 
 More information on NCover can be found at http://www.ncover.org]]>
     </value>
@@ -78,11 +79,11 @@ More information on NCover can be found at http://www.ncover.org]]>
   <property name="NCover.Install.IsNeeded" value="true"/>
 </target>
 
-<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == '1.5.5'}">
+<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == NCover.Version}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The version of NCover found, ${file::get-version(NCover.ExePath)}, is not supported.
-The NCover package needs NCover version 1.5.5 Beta.
+The NCover package needs NCover version ${NCover.Version} Beta.
 
 More information on NCover can be found at http://www.ncover.org]]>
       </value>

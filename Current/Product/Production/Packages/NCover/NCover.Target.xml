@@ -36,6 +36,7 @@
         <items refid="Coverage.Target.ProjectFiles" />
       </in>
       <do>
+        <echo message="Looking for assembly output in ${Coverage.Target.ProjectFile.Path}."/>
         <property name="TargetAssemblyName" value="${vsproject::get-assemblyname(Coverage.Target.ProjectFile.Path)}"/>
         <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(Coverage.Target.ProjectFile.Path, Compile.ConfigName)}\${TargetAssemblyName}.dll"/>
         <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}"/>

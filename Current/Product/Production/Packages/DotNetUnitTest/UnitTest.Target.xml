@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
 
-  <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
-
+  <fileset id="UnitTest.TestAssemblies" />
+  
   <include buildfile="UnitTest.Properties.xml" />
 
 	<target name="UnitTest.LoadTasks">
@@ -21,8 +21,6 @@
 	<!-- The following properties are for internal use only -->
 
 	<target name="UnitTest.RunTests" depends="UnitTest.LoadTasks">
-
-    <fileset id="UnitTest.TestAssemblies" />
     
     <foreach item="File" property="UnitTest.ProjectFile.Path">
       <in>
@@ -34,11 +32,22 @@
         <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
       </do>
     </foreach>
+
+    <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+      <call target="UnitTest.FindTestAssebmlies"/>
+    </if>
     
 		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
 			<assemblies refid="UnitTest.TestAssemblies" />
 		</mbunit>
 	</target>
+
+  <target name="UnitTest.FindTestAssebmlies">
+    <fileset id="UnitTest.TestAssemblies" >
+      <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+    </fileset>
+  </target>
 
   <target name="UnitTest.ShowReport">
     <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>

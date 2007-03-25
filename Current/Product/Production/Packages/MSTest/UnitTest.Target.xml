@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
 
-  <include buildfile="${BuildDirectory}\Common.Build.xml" unless="${target::exists('Common.DeleteFiles')}" />
   <loadtasks assembly="${BuildDirectory}\Packages\MSTest\bin\VSTS.Tasks.dll" />
+  <fileset id="UnitTest.TestAssemblies" />
   
-  <property name="UnitTest.FilesToDeleteAtSetup" value="" overwrite="false"/>
   <property name="UnitTest.RunConfig" value="${ProductDirectory}\localtestrun.testrunconfig" overwrite="false"/>
 
   <include buildfile="UnitTest.Properties.xml" />
@@ -21,7 +20,6 @@
 	<!-- The following properties are for internal use only -->
 
 	<target name="UnitTest.RunTests">
-    <fileset id="UnitTest.TestAssemblies" />
 
     <foreach item="File" property="UnitTest.ProjectFile.Path">
       <in>
@@ -33,12 +31,23 @@
         <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
       </do>
     </foreach>
+
+    <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+      <call target="UnitTest.FindTestAssebmlies"/>
+    </if>
     
     <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}" 
             runconfig="${UnitTest.RunConfig}">
       <testcontainers refid="UnitTest.TestAssemblies" />
     </mstest>
 	</target>
+
+  <target name="UnitTest.FindTestAssebmlies">
+    <fileset id="UnitTest.TestAssemblies" >
+      <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+    </fileset>
+  </target>
 
   <target name="UnitTest.ShowReport">
     <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"/>
