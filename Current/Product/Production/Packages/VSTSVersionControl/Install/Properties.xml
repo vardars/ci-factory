@@ -1,13 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Installer.Properties">
 
-  <property name="TFS.Listener.Port" value="4567" overwrite="false"/>
-  <property name="TFS.BuildScripts.Listener.Port" value="4568" overwrite="false"/>
+  <!--
+  Properties that can optionally be set:
   <property name="TFS.Domain" value="" overwrite="false"/>
   <property name="TFS.Username" value="" overwrite="false"/>
   <property name="TFS.Password" value="" overwrite="false"/>
+  
+  Properties that must be set:
   <property name="TFS.ServerUrl" value="" overwrite="false"/>
+  -->
+  
+  <property name="TFS.Listener.Port" value="4567" overwrite="false"/>
+  <property name="TFS.BuildScripts.Listener.Port" value="4568" overwrite="false"/>
   <property name="TFS.WorkspaceName" value="${ProjectName}WorkSpace" overwrite="false"/>
+
+  <ifthenelse test="${property::exists('TFS.Domain') and property::exists('TFS.Username') and property::exists('TFS.Password')}">
+    <then>
+      <largeproperty name="TFS.ServerConnection">
+        <value xml="false" expand="true">
+          <![CDATA[<tfsserverconnection domain="%TFS.Domain%" password="%TFS.Password%" username="%TFS.Username%" serverurl="%TFS.ServerUrl%" id="tfsinfo"/>]]>
+        </value>
+      </largeproperty>
+    </then>
+    <else>
+      <largeproperty name="TFS.ServerConnection">
+        <value xml="false" expand="true">
+          <![CDATA[<tfsserverconnection serverurl="%TFS.ServerUrl%" id="tfsinfo"/>]]>
+        </value>
+      </largeproperty>
+    </else>
+  </ifthenelse>
+  
   
   <largeproperty name="SourceControl.MainBuildBlock">
     <value xml="false" expand="true">
@@ -67,5 +91,6 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.Password%', TFS.Password)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerUrl%', TFS.ServerUrl)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.WorkspaceName%', TFS.WorkspaceName)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerConnection%', TFS.ServerConnection)}"/>
 
 </project>

@@ -36,7 +36,7 @@
   </target>
 
   <target name="VSTSVersionControl.ValidateParameters">
-    
+    <fail unless="${property::exists('TFS.ServerUrl')}" message="Please set the property TFS.ServerUrl"/>
   </target>
 
 </project>

@@ -62,7 +62,7 @@
     </copy>
 
     <zip includeemptydirs="true" zipfile="${ZipDirectory}\CIFactory.zip" >
-      <fileset basedir="${ZipDirectory}">
+      <fileset basedir="${ZipDirectory}" defaultexcludes="false">
         <include name="**\*"/>
       </fileset>
     </zip>
