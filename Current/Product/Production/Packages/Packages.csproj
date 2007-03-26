@@ -834,6 +834,9 @@
     <Content Include="Vault\SourceControl.Target.xml" />
     <Content Include="VisualSourceSafe\SourceControl.Properties.xml" />
     <Content Include="VisualSourceSafe\SourceControl.Target.xml" />
+    <Content Include="VS.NETCompile\Compile.xsl" />
+    <Content Include="VSTSVersionControl\Install\Install.xml" />
+    <Content Include="VSTSVersionControl\Install\Properties.xml" />
     <Content Include="VSTSVersionControl\SourceControl.Properties.xml" />
     <Content Include="VSTSVersionControl\SourceControl.Target.xml" />
     <Content Include="Wix\Install\Install.xml" />
