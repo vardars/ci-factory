@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="VS.NETTestProject" />
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerPort" value="21247"/>
+  <property name="CCNET.ModificationDelaySeconds" value="60"/>
+  <property name="CCNET.IntervalTrigger" value="30"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+
+  <largeproperty name="SourceControl.MainBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
+    </value>
+  </largeproperty>
+
+  <filterchain id="Common.FilterChain" />
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <property name="Install.Quiet" value="true"/>
+  <property name="Simian.AcceptLicense" value="true"/>
+  <property name="nDepend.AcceptLicense" value="true"/>
+
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="VS.NETCompile" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+    <string value="Deployment"/>
+  </strings>
+
+  <target name="Post.Install">
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+  
+</project>
