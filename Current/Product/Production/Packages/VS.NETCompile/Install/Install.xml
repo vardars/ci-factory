@@ -32,6 +32,11 @@
       <filterchain refid="Common.FilterChain" />
     </copy>
 
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\VS.NETCompile\Compile.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
     <largeproperty name="Packages.AddbuildPlugins.Block">
       <value xml="false"><![CDATA[<xslReportBuildPlugin description=".NET Compile Details" actionName="DevEnvCompileDetails" xslFileName="Packages\VS.NETCompile\DevEnvCompileDetails.xsl" />]]></value>
     </largeproperty>
