@@ -3,5 +3,5 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyProduct("CI Factory")]
-[assembly: AssemblyInformationalVersion("0.8.0.103")]
+[assembly: AssemblyInformationalVersion("0.8.0.104")]
 [assembly: AssemblyCompany("http://www.cifactory.org")]
