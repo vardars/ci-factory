@@ -42,10 +42,15 @@
     </copy>
 
     <copy todir="${ZipDirectory}" includeemptydirs="true">
-      <fileset basedir="${ProductDirectory}\Production">
+      <fileset basedir="${ProductDirectory}\Production" defaultexcludes="false">
         <include name="Packages\**\*"/>
         <exclude name="Packages\Packages.csproj"/>
+        <exclude name="Packages\obj"/>
         <exclude name="Packages\obj\**\*"/>
+        <exclude name="Packages\bin"/>
+        <exclude name="Packages\bin\**\*"/>
+        <exclude name="Packages\**\.svn"/>
+        <exclude name="Packages\**\.svn\**\*"/>
       </fileset>
     </copy>
 
