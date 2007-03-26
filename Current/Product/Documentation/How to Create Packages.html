@@ -65,7 +65,7 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_11fmt93s:108'>
+<body revision='dd6cv3jm_11fmt93s:152'>
 <h2>
   How to Create Packages
 </h2>
@@ -605,5 +605,293 @@ collapsed region).<br>
   </p>
 </div>
 <br>
-<br></body>
+<br>
+Beyond reporting you will be interested in knowing the properties defined in the
+file Properties.Build.xml and Common.Build.xml located in the Build
+directory.&nbsp; These properties will help you write a robust Package.<br>
+<br>
+To get your Package installed into a Factory you have two options.&nbsp; You can
+write and installer or you can have users perform a manual deployment.&nbsp;
+Writing and installer is not that much work.&nbsp; In your package create a
+directory named Install.&nbsp; in it create at least these two file: Install.xml
+and Properties.xml&nbsp; Here is an example Install.xml:<br>
+<br>
+<div style="BACKGROUND:#f2f2f2 none repeat scroll 0% 50%; FONT-FAMILY:Consolas; FONT-SIZE:12pt; COLOR:black; -moz-background-clip:-moz-initial; -moz-background-origin:-moz-initial; -moz-background-inline-policy:-moz-initial">
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;?</span><span style=COLOR:#a31515>xml</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>version</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>1.0</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>encoding</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>utf-8</span>"<span style=COLOR:blue>
+    ?&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xmlns</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>http://nant.sf.net/schemas/nant.xsd</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>MSBuild.Install</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>default</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>MSBuild.Install</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>include</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>buildfile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Properties.xml</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.SolutionFile</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${ProductDirectory}\${ProjectName}.sln</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.OpenSolutionBat</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${ProductDirectory}\OpenSolution.bat</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.Default2005SolutionFile</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${SourcePackagesDirectory}\MSBuild\Install\2005.sln.remove</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.DefaultOpenSolutionBat</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${SourcePackagesDirectory}\MSBuild\Install\OpenSolution.bat</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style="COLOR:blue; BACKGROUND-COLOR:#ffff33">MSBuild.Install</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style="COLOR:blue; BACKGROUND-COLOR:#66ffff">Packages.AddCompileActions.Block</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xml</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>&gt;&lt;![CDATA[</span><span style=COLOR:gray>&lt;call
+    target="Compile.CompileSource"
+    /&gt;</span><span style=COLOR:blue>]]&gt;&lt;/</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style="COLOR:blue; BACKGROUND-COLOR:#66ffff">Packages.AddCompileActions</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>copy</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>file</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${Compile.Default2005SolutionFile}</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>tofile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${Compile.SolutionFile}</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>copy</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>tofile</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${Compile.OpenSolutionBat}</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>file</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>${Compile.DefaultOpenSolutionBat}</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>filterchain</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>refid</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Common.FilterChain</span>"<span style=COLOR:blue>
+    /&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>copy</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddbuildReportBuildPlugin.Block</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xml</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>&gt;&lt;![CDATA[</span><span style=COLOR:gray>&lt;xslFile&gt;Packages\MSBuild\compile-msbuild.xsl&lt;/xslFile&gt;</span><span style=COLOR:blue>]]&gt;&lt;/</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddbuildReportBuildPlugin</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddbuildPlugins.Block</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>xml</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>false</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>expand</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>true</span>"<span style=COLOR:blue>&gt;&lt;![CDATA[</span><span style=COLOR:gray>&lt;artifactXslBuildPlugin
+    description="MSBuild Compile Details" actionName="MSBuildCompileDetails"
+    xslFileName="Packages\MSBuild\msbuild.xsl" artifactRootUrl="/${ProjectName}
+    Artifacts" xmlFileName="MSBuildLog.xml"
+    /&gt;</span><span style=COLOR:blue>]]&gt;&lt;/</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddbuildPlugins</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddXslMerger.Block</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>expand</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>true</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;![CDATA[</span><span style=COLOR:gray>&lt;filepair&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:gray>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;xslfile&gt;${PackagesDirectory}\MSBuild\MSBuildMerge.xsl&lt;/xslfile&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:gray>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;xmlfile&gt;${Compile.LogFileDirectory}\*.xml&lt;/xmlfile&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:gray>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &lt;/filepair&gt;</span><span style=COLOR:blue>]]&gt;&lt;/</span><span style=COLOR:#a31515>value</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;/</span><span style=COLOR:#a31515>largeproperty</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>call</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>target</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.AddXslMerger</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style="COLOR:blue; BACKGROUND-COLOR:#ffff33">MSBuild.SetAsCurrentPackage</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.CurrenctPackage.PackageDirectoryName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>MSBuild</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.CurrenctPackage.PackageTargetFileName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile.Target.xml</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp; &nbsp;
+    &lt;</span><span style=COLOR:#a31515>property</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Packages.CurrenctPackage.PackageName</span>"<span style=COLOR:blue>
+    </span><span style=COLOR:red>value</span><span style=COLOR:blue>=</span>"<span style=COLOR:blue>Compile</span>"<span style=COLOR:blue>/&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>
+    </span><span style=COLOR:red>name</span><span style=COLOR:blue>=</span>"<span style="COLOR:blue; BACKGROUND-COLOR:#ffff33">MSBuild.ValidateParameters</span>"<span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&nbsp;
+    &lt;/</span><span style=COLOR:#a31515>target</span><span style=COLOR:blue>&gt;</span>
+  </p>
+  <p style=MARGIN:0px>
+    &nbsp;
+  </p>
+  <p style=MARGIN:0px>
+    <span style=COLOR:blue>&lt;/</span><span style=COLOR:#a31515>project</span><span style=COLOR:blue>&gt;</span>
+  </p>
+</div>
+<br>
+Notice there are three targets defined, they are required: &lt;package
+name&gt;.Install, &lt;package name&gt;.SetAsCurrentPackage, and &lt;package
+name&gt;.ValidateParameters.&nbsp; If your package has values that must be set
+by a user then you should validate they they where set in the validate
+parameters target.&nbsp; In the SetAsCurrentPackage target you need to set at
+least the properties listed above:
+Packages.CurrenctPackage.PackageDirectoryName,
+Packages.CurrenctPackage.PackageTargetFileName, and
+Packages.CurrenctPackage.PackageName.&nbsp; If your package is one that is not
+invoked by the Main.Build.xml file then you need to set the value of the
+Current.BuildFile property to the correct build file (e.g.
+Post.Build.xml).&nbsp; In the Install target you can call on helper targets
+defined in the script Properties.Install.xml located in the Install scripts
+directory.&nbsp; These helper targets allow you to add to the ccnetproject.xml,
+dashboard.config, and build files (e.g. Main.Build.xml).&nbsp; The targets
+follow a naming convention: Packages.&lt;Section to Add to&gt;.&nbsp; There is a
+companion property following the format: Packages.&lt;Section to Add
+to&gt;.Block.&nbsp; Notice for example the first lines in the Install target.
+The property
+<span style=BACKGROUND-COLOR:#66ffff>Packages.AddCompileActions.Block</span>
+companion target
+<span style=BACKGROUND-COLOR:#66ffff>Packages.AddCompileActions</span>.&nbsp;
+The base scripts will add the include, &lt;package name&gt;.SetUp, and
+&lt;package name&gt;.TearDown to the current build script.&nbsp; Your installer
+does not need to add them.&nbsp;<br></body>
 </html>

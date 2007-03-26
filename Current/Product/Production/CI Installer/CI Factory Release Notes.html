@@ -1,19 +1,19 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
-{
- font-family: Verdana
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
+{ 
+ font-family: Verdana 
 }
-BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
-{
-  font-size: 10.0pt;
-  margin-top:0pt;
-  margin-bottom:0pt;
-}
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
+{  
+  font-size: 10.0pt; 
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
 BODY, P
 {
-  margin-left:0pt;
+  margin-left:0pt; 
   margin-right:0pt;
 }
 BODY
@@ -46,7 +46,7 @@ table.zeroBorder td {
 	border-color: gray gray gray gray;
 }
 .hiddenStyle {
-		visibility: hidden;
+		visibility: hidden; 
 		position: absolute;
 		z-Index: 1;
 		paddingRight: 0;
@@ -65,12 +65,54 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_09r2s2h:120'>
+<body revision='dd6cv3jm_09r2s2h:134'>
 <h1>
   CI Factory Release Notes
 </h1>
+<br>
 <h2>
-  Beta 0.8.0.89<br>
+  Beta 0.8.0.100<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=34&amp;can=1&amp;q=>Add
+Wix</a> Package - Issue# 34 - from Justin Santa Barbara<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=35&amp;can=1&amp;q=>Add
+Xenocode Package</a> - Issue# 35 - from Justin Santa Barbara<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=20&amp;can=2&amp;q=>NAnt/CCNet
+Documentation</a> - Issue# 20<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=13&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>VS.Net
+Project Output Getter</a> - Issue# 13<br>
+<h3>
+  Informal Changes
+</h3>
+Added integration test for VS.NETCompile Package.<br>
+Moved all integration tests into a new dummy C# project, easier to manage.<br>
+Added integration tests to the personal build test.<br>
+Added new task ccnetforce, for the VS.NETCompile integration test.<br>
+Adjust the SourceModificationsReport package to the inclusion of CCNet libs in
+the NAnt bin dir.<br>
+Added backup means to identify test assemblies.<br>
+Positioned to integrate with next release of NCover.<br>
+Add xsl compile report for main build report VS.NETCompile.<br>
+Add recompile scripts for Analytics from dod.ahlta - not done.<br>
+Added the Thresholds Package from dod.ahlta - not done.<br>
+Apply patch from Justin Santa Barbara;<br>
+&nbsp;&nbsp;&nbsp; 1)Don’t dispose a null pointer in SvnCleanTree<br>
+&nbsp;&nbsp;&nbsp; 2)Don’t try to load MbUnit.tasks too early, in case we
+haven’t yet fetched it from svn (it’s in the Third Party directory).<br>
+&nbsp;&nbsp;&nbsp; 3)Invert the try/catch logic in SourceControl.Target.xml, so
+that it treats a failure as a need to checkout<br>
+&nbsp;&nbsp;&nbsp; 4)Exclude the ZIP file from building the ZIP file from
+MSBuild (I was getting errors as it was trying to include itself into the ZIP)<br>
+Fix env ref. VS.NETCompile<br>
+<br>
+<h2>
+  Beta 0.8.0.90<br>
 </h2>
 <h3>
   New
