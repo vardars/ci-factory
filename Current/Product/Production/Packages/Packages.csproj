@@ -836,5 +836,13 @@
     <Content Include="VisualSourceSafe\SourceControl.Target.xml" />
     <Content Include="VSTSVersionControl\SourceControl.Properties.xml" />
     <Content Include="VSTSVersionControl\SourceControl.Target.xml" />
+    <Content Include="Wix\Install\Install.xml" />
+    <Content Include="Wix\Install\Properties.xml" />
+    <Content Include="Wix\Wix.Properties.xml" />
+    <Content Include="Wix\Wix.Target.xml" />
+    <Content Include="XenocodePostbuild\Install\Install.xml" />
+    <Content Include="XenocodePostbuild\Install\Properties.xml" />
+    <Content Include="XenocodePostbuild\XenocodePostbuild.Properties.xml" />
+    <Content Include="XenocodePostbuild\XenocodePostbuild.Target.xml" />
   </ItemGroup>
 </Project>
