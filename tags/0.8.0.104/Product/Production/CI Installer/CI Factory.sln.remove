@@ -1,0 +1,12 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages", "Packages.csproj", "{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+	EndGlobalSection
+EndGlobal
