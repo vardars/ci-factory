@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSS.Installer">
+
+  <property name="VSS.RootShare" value="C:\Source Safe DataBases" overwrite="false"/>
+  <property name="VSS.DBPath" value="${VSS.RootShare}\${ProjectName}\srcsafe.ini" overwrite="false"/>
+  <property name="VSS.Username" value="build"  overwrite="false"/>
+  <property name="VSS.Password" value="password"  overwrite="false"/>
+  <property name="VSS.TemplateDB" value="C:\Tools\CI Factory\Packages\VisualSourceSafe\Install\Template.zip" overwrite="false"/>
+  <property name="VSS.ExePath" value="C:\Program Files\Microsoft Visual Studio\VSS\win32\SS.EXE" overwrite="false"/>
+  
+  <largeproperty name="SourceControl.MainBuildBlock">
+    <value xml="false" expand="true">
+          <![CDATA[<sourcecontrol type="filtered">
+        <sourceControlProvider  type="vss" applyLabel="true">
+          <executable>${VSS.ExePath}</executable>
+          <project>$/${ProjectName}/${ProjectCodeLineName}</project>
+          <username>${VSS.Username}</username>
+          <password>${VSS.Password}</password>
+          <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
+          <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
+        </sourceControlProvider >
+        <exclusionFilters>
+          <pathFilter>
+            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+          </pathFilter>
+        </exclusionFilters>
+      </sourcecontrol>]]></value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol  type="vss" applyLabel="false" autoGetSource="true" >
+        <executable>${VSS.ExePath}</executable>
+        <project>$/${ProjectName}/${ProjectCodeLineName}/Build</project>
+        <username>${VSS.Username}</username>
+        <password>${VSS.Password}</password>
+        <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
+        <workingDirectory>${BuildDirectory}</workingDirectory>
+      </sourcecontrol>]]></value>
+  </largeproperty>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%VSS.RootShare%', VSS.RootShare)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%VSS.DBPath%', VSS.DBPath)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%VSS.Username%', VSS.Username)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%VSS.Password%', VSS.Password)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%VSS.TemplateDB%', VSS.TemplateDB)}"/>
+
+</project>
