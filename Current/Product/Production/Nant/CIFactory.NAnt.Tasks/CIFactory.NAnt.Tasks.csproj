@@ -44,8 +44,12 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="Filters\Line.cs" />
+    <Compile Include="Functions\EnvVarFunctions.cs" />
+    <Compile Include="Functions\FileFunctions.cs" />
     <Compile Include="Functions\FileSetFunctions.cs" />
     <Compile Include="Functions\FilterChainFunctions.cs" />
+    <Compile Include="Functions\PathFunctions.cs" />
+    <Compile Include="Functions\ProcessFunctions.cs" />
     <Compile Include="Functions\VSProjectFunctions.cs" />
     <Compile Include="Tasks\AskTask.cs" />
     <Compile Include="Tasks\Ask\AskQuestion.cs">

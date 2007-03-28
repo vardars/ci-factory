@@ -148,6 +148,10 @@ namespace NAnt.Core.Types {
         /// </summary>
         public string Value {
             get { return _value; }
+            set
+            {
+            	_value = value;
+            }
         }
 
         /// <summary>
