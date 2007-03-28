@@ -335,4 +335,56 @@
     </foreach>
   </target>
 
+  <target name="SetProjectOutputDirectory">
+    <property name="OutputDirectory" value="${ProductDirectory}\CommonBin" overwrite="false"/>
+    <property name="Switch" value="Per" overwrite="false"/><!--Common-->
+    
+    <fileset id="Subjects">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+    
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="Subjects" />
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Setting output directory for ${ProjectFile.Path}"/>
+
+        <property name="Index" value="1"/>
+
+        <loopthrough property="notused">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:PropertyGroup/b:OutputPath">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+
+            <if test="${Switch == 'Per'}">
+              <xmlpeek file="${ProjectFile.Path}" property="Config" xpath="(b:Project/b:PropertyGroup/@Condition)[${Index}]">
+                <namespaces>
+                  <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                </namespaces>
+              </xmlpeek>
+              <regex input="${Config}" pattern="\= \'(?'Config'\w+)\|"/>
+              <property name="OutputDirectory" value="bin\${Config}\"/>
+            </if>
+
+            <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:PropertyGroup/b:OutputPath)[${Index}]" value="${OutputDirectory}">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlpoke>
+
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+
+      </do>
+    </foreach>
+  </target>
+
 </project>
