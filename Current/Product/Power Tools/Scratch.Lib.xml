@@ -167,7 +167,7 @@
   -->
   <target name="FixSolutionBindings">
     <property name="ShouldFix" value="false" overwrite="false"/>
-    
+
     <loadfile encoding="utf-8" file="${SolutionFile.Path}" property="SolutionFile.Contents" >
       <filterchain>
         <regexreplace replacment="$+." pattern="(SccLocalPath\d+\s+=\s+).*" lines="1" />
@@ -337,12 +337,13 @@
 
   <target name="SetProjectOutputDirectory">
     <property name="OutputDirectory" value="${ProductDirectory}\CommonBin" overwrite="false"/>
-    <property name="Switch" value="Per" overwrite="false"/><!--Common-->
-    
+    <property name="Switch" value="Per" overwrite="false"/>
+    <!--Common-->
+
     <fileset id="Subjects">
       <include name="${ProductDirectory}\**\*.*proj"/>
     </fileset>
-    
+
     <foreach item="File" property="ProjectFile.Path">
       <in>
         <items refid="Subjects" />
@@ -385,6 +386,73 @@
 
       </do>
     </foreach>
+  </target>
+
+  <target name="SwitchToMuchBetterUnit">
+    <property name="MbUnit.Framework.RefPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.Framework.dll"/>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items>
+          <include name="${ProductDirectory}\Unit Test\**\*.*proj"/>
+        </items>
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Looking at ${ProjectFile.Path}"/>
+
+        <property name="Index" value="1"/>
+        <property name="UsesNUnit" value="false"/>
+
+        <loopthrough property="Hint.Path">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/b:HintPath">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+
+            <if test="${string::ends-with(string::to-lower(Hint.Path), 'nunit.framework.dll')}">
+              <echo message="Looks like we have a match."/>
+
+              <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${MbUnit.Framework.RefPath}">
+                <namespaces>
+                  <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                </namespaces>
+              </xmlpoke>
+
+              <property name="UsesNUnit" value="true"/>
+            </if>
+
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+
+        <if test="${UsesNUnit}">
+          <foreach item="File" property="Source.File.Path">
+            <in>
+              <items basedir="${path::get-directory-name(ProjectFile.Path)}">
+                <include name="**\*.cs"/>
+                <include name="**\*.vb"/>
+              </items>
+            </in>
+            <do>
+              <loadfile encoding="utf-8" file="${Source.File.Path}" property="Source.File.Content">
+                <filterchain>
+                  <regexreplace replacment="MbUnit" pattern="NUnit" lines="1" />
+                </filterchain>
+              </loadfile>
+
+              <echo file="${Source.File.Path}" message="${Source.File.Content}"/>
+            </do>
+          </foreach>
+        </if>
+
+      </do>
+    </foreach>
+
   </target>
 
 </project>
