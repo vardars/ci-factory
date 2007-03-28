@@ -826,6 +826,10 @@
     <Content Include="MSBuild\Install\Properties.xml" />
     <Content Include="Simian\Install\Install.xml" />
     <Content Include="Simian\Install\Properties.xml" />
+    <Content Include="StarTeam\Install\Install.xml" />
+    <Content Include="StarTeam\Install\Properties.xml" />
+    <Content Include="StarTeam\SourceControl.Properties.xml" />
+    <Content Include="StarTeam\SourceControl.Target.xml" />
     <Content Include="Subversion\SourceControl.Properties.xml" />
     <Content Include="Subversion\SourceControl.Target.xml" />
     <Content Include="Vault\Install\Install.xml" />
