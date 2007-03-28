@@ -26,7 +26,15 @@ namespace NAnt.Core.Types {
     {
         protected override string GetKeyForItem(EnvironmentVariable item)
         {
-            return item.Name;
+            return item.VariableName;
+        }
+
+        public void Add(EnvironmentVariable item)
+        {
+            if (this.Contains(item.VariableName))
+                base.Dictionary[item.VariableName] = item;
+            else
+                base.Add(item);
         }
     }
 }
