@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Properties" >
+
+  <property name="TFS.Info" value="tfsinfo" overwrite="false"/>
+  %TFS.ServerConnection%
+
+  <property name="TFS.WorkspaceName" value="%TFS.WorkspaceName%"/>
+  <property name="TFS.LabelScope" value="$/${ProjectName}/${ProjectCodeLineName}"/>
+</project>

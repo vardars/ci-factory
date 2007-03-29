@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Deployment.Install" default="Deployment.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Deployment.Install">
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Deployment\deployment.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+  </target>
+
+  <target name="Deployment.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Deployment"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Deployment.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Deployment"/>
+  </target>
+
+  <target name="Deployment.ValidateParameters">
+
+  </target>
+  
+</project>

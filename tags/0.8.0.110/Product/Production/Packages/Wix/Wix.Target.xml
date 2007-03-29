@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Wix">
+
+	<include buildfile="Wix.Properties.xml"/>
+
+	<property name="Private.InstallDirectory" value="${ProjectRootDirectory}\Current\Product\Install" />
+
+	<target name="Wix.SetUp">
+
+	</target>
+
+	<target name="Wix.TearDown">
+
+	</target>
+
+	<target name="Wix.BuildSetup">
+		<call target="Wix.BuildMsi" />
+	</target>
+
+	<target name="Wix.BuildMsi">
+		<foreach item="File" property="Wix.ProjectFile.Path">
+			<in>
+				<items refid="Wix.ProjectFiles" />
+			</in>
+			<do>
+				<property name="Wix.Name" value="${path::get-file-name-without-extension(Wix.ProjectFile.Path)}" />
+				<property name="Wix.OutputDir" value="${Common.ArtifactDirectoryPath}" />
+
+				<echo message="Running candle.exe -out ${Private.InstallDirectory}\${ProjectName}\${path::get-file-name-without-extension(Wix.ProjectFile.Path)}.wixobj ${Wix.ProjectFile.Path}" />
+
+				<mkdir dir="${Common.TempDirectory}\Wix\" />
+
+				<exec program="candle.exe"  basedir="${Wix.BinDir}" verbose="true">
+					<arg value="-out" />
+					<arg value="${Common.TempDirectory}\Wix\${Wix.Name}.wixobj" />
+					<arg value="${Wix.ProjectFile.Path}" />
+				</exec>
+
+				<exec program="light.exe"  basedir="${Wix.BinDir}" verbose="true">
+					<!-- Base directory -->
+					<arg value="-b" />
+					<arg value="${ProjectCodeLineDirectory}" />
+					<!-- Source -->
+					<arg value="${Common.TempDirectory}\Wix\${Wix.Name}.wixobj" />
+					<!-- UI Library-->
+					<arg value="${Wix.BinDir}\WixUI.wixlib" />
+					<!-- Localization -->
+					<arg value="-loc" />
+					<arg value="${Wix.BinDir}\WixUI_en-us.wxl" />
+					<!-- Output file -->
+					<arg value="-out" />
+					<arg value="${Wix.OutputDir}\${Wix.Name}.msi" />
+				</exec>
+
+        <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Wix.Name}.msi" />
+        <property name="Deployment.FileWebName"	value="${CCNetLabel} ${Wix.Name}.msi" />
+        <call target="Deployment.PublishLink" />
+			</do>
+		</foreach>
+	</target>
+</project>

@@ -1,0 +1,322 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8043AD9-0F30-4366-A263-E2FC0D6A57A9}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ThoughtWorks.CruiseControl.CCTrayLib</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ThoughtWorks.CruiseControl.CCTrayLib</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NetReflector">
+      <Name>NetReflector</Name>
+      <HintPath>..\..\..\..\Third Party\CCNET\NetReflector.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\core\core.csproj">
+      <Name>core</Name>
+      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\Remote\Remote.csproj">
+      <Name>Remote</Name>
+      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Audio.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BuildOccurredEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BuildTransition.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CCTimeFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\AudioFiles.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\BalloonMessages.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\BuildTransitionNotification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\CaptionAndMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\CCTrayMultiConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\ICCTrayMultiConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\Icons.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\PersistentConfiguration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\Project.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Configuration\TrayIconDoubleClickAction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DateTimeProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ErrorLevel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IconNotFoundException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AggregatingProjectMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\BuildDurationTracker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CruiseProjectManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CruiseProjectManagerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ICruiseProjectManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ICruiseProjectManagerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\IPollable.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\IProjectMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ISingleProjectDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MonitorBuildOccurredEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MonitorPolledEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Poller.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ProjectMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ProjectState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NotifyInfoFlags.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\AddProjects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\AudioPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\BuildTransitionSoundPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\CCTrayMultiSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\ConfigurableBalloonMessageProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\ConfigurableProjectStateIconProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\DetailStringProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\IAudioPlayer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\IBalloonMessageProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\IDetailStringProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\IIconProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\IProjectStateIconProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainFormController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\NativeMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\NotifyIconEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Presentation\ProjectConfigurationListViewItemAdaptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\ProjectStateIconAdaptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\ProjectStatusListViewItemAdaptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\ResourceProjectStateIconProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\SelectAudioFileController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\SynchronizedProjectMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Presentation\TrayIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServerConnection\ICruiseManagerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServerConnection\RemoteCruiseManagerFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatusIcon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Gray.ico" />
+    <EmbeddedResource Include="Green.ico" />
+    <EmbeddedResource Include="Presentation\AddProjects.resx">
+      <DependentUpon>AddProjects.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\CCTrayMultiSettingsForm.resx">
+      <DependentUpon>CCTrayMultiSettingsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\NotifyIconEx.resx">
+      <DependentUpon>NotifyIconEx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\TrayIcon.resx">
+      <DependentUpon>TrayIcon.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Red.ico" />
+    <EmbeddedResource Include="Yellow.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
