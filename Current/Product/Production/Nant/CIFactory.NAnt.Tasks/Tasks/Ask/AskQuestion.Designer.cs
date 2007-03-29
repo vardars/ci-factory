@@ -61,6 +61,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.splitContainer1.Size = new System.Drawing.Size(603, 360);
             this.splitContainer1.SplitterDistance = 225;
             this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.TabStop = false;
             // 
             // textBox1
             // 
@@ -76,6 +77,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(603, 225);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TabStop = false;
             // 
             // groupBox1
             // 
@@ -100,7 +102,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton6.Location = new System.Drawing.Point(284, 80);
             this.radioButton6.Name = "radioButton6";
             this.radioButton6.Size = new System.Drawing.Size(85, 17);
-            this.radioButton6.TabIndex = 5;
+            this.radioButton6.TabIndex = 7;
             this.radioButton6.TabStop = true;
             this.radioButton6.Text = "radioButton6";
             this.radioButton6.UseVisualStyleBackColor = true;
@@ -113,7 +115,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.button1.Location = new System.Drawing.Point(451, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 40);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 8;
             this.button1.Text = "Choose";
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -123,7 +125,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton5.Location = new System.Drawing.Point(284, 56);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(85, 17);
-            this.radioButton5.TabIndex = 4;
+            this.radioButton5.TabIndex = 6;
             this.radioButton5.TabStop = true;
             this.radioButton5.Text = "radioButton5";
             this.radioButton5.UseVisualStyleBackColor = true;
@@ -135,7 +137,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton4.Location = new System.Drawing.Point(284, 29);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(85, 17);
-            this.radioButton4.TabIndex = 3;
+            this.radioButton4.TabIndex = 5;
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "radioButton4";
             this.radioButton4.UseVisualStyleBackColor = true;
@@ -147,7 +149,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton3.Location = new System.Drawing.Point(43, 80);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(85, 17);
-            this.radioButton3.TabIndex = 2;
+            this.radioButton3.TabIndex = 4;
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "radioButton3";
             this.radioButton3.UseVisualStyleBackColor = true;
@@ -159,7 +161,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton2.Location = new System.Drawing.Point(43, 56);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabIndex = 3;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "radioButton2";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -171,7 +173,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.radioButton1.Location = new System.Drawing.Point(43, 29);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(85, 17);
-            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabIndex = 2;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "radioButton1";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -179,6 +181,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             // 
             // AskQuestion
             // 
+            this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 360);
