@@ -4,6 +4,7 @@ using ThoughtWorks.CruiseControl.Core.Reporting.Dashboard.Navigation;
 using ThoughtWorks.CruiseControl.Remote;
 using ThoughtWorks.CruiseControl.WebDashboard.Plugins.ProjectReport;
 using ThoughtWorks.CruiseControl.WebDashboard.ServerConnection;
+using ThoughtWorks.CruiseControl.WebDashboard.Plugins.BuildReport;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 {
@@ -18,32 +19,47 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.linkFactory = linkFactory;
 		}
 
-		public ProjectGridRow[] GenerateProjectGridRows(ProjectStatusOnServer[] statusList, string forceBuildActionName,
-			ProjectGridSortColumn sortColumn, bool sortIsAscending)
-		{
-			ArrayList rows = new ArrayList();
-			foreach (ProjectStatusOnServer statusOnServer in statusList)
-			{
-				ProjectStatus status = statusOnServer.ProjectStatus;
-				IServerSpecifier serverSpecifier = statusOnServer.ServerSpecifier;
-				string projectName = status.Name;
-				rows.Add(
-					new ProjectGridRow(
-						projectName, statusOnServer.ServerSpecifier.ServerName, status.BuildStatus.ToString(), 
-						CalculateHtmlColor(status.BuildStatus), 
-						status.LastBuildDate, 
-						(status.LastBuildLabel != null ? status.LastBuildLabel : "no build available") , 
-						status.Status.ToString(), 
-						status.Activity.ToString(), 
-						urlBuilder.BuildFormName(forceBuildActionName),
-						linkFactory.CreateProjectLink(new DefaultProjectSpecifier(serverSpecifier, projectName), ProjectReportProjectPlugin.ACTION_NAME).Url
-					));
-			}
+        public ProjectGridRow[] GenerateProjectGridRows(IFarmService farmService, ProjectStatusOnServer[] statusList, string forceBuildActionName,
+            ProjectGridSortColumn sortColumn, bool sortIsAscending)
+        {
+            ArrayList rows = new ArrayList();
+            foreach (ProjectStatusOnServer statusOnServer in statusList)
+            {
+                ProjectStatus status = statusOnServer.ProjectStatus;
+                IServerSpecifier serverSpecifier = statusOnServer.ServerSpecifier;
+                string projectName = status.Name;
+                IProjectSpecifier projectSpecifier = new DefaultProjectSpecifier(serverSpecifier, projectName);
+                string projectLink = linkFactory.CreateProjectLink(projectSpecifier, ProjectReportProjectPlugin.ACTION_NAME).Url;
+                
+                IBuildSpecifier[] buildSpecifiers = farmService.GetMostRecentBuildSpecifiers(projectSpecifier, 1);
+                string mostRecentBuildUrl;
+                if (buildSpecifiers.Length == 1)
+                {
+                    mostRecentBuildUrl = linkFactory.CreateProjectLink(projectSpecifier, LatestBuildReportProjectPlugin.ACTION_NAME).Url;
+                }
+                else
+                {
+                    mostRecentBuildUrl = projectLink;
+                }
 
-			rows.Sort(GetComparer(sortColumn, sortIsAscending));
+                rows.Add(
+                    new ProjectGridRow(
+                        projectName, statusOnServer.ServerSpecifier.ServerName, status.BuildStatus.ToString(),
+                        CalculateHtmlColor(status.BuildStatus),
+                        status.LastBuildDate,
+                        (status.LastBuildLabel != null ? status.LastBuildLabel : "no build available"),
+                        status.Status.ToString(),
+                        status.Activity.ToString(),
+                        urlBuilder.BuildFormName(forceBuildActionName),
+                        projectLink,
+                        mostRecentBuildUrl
+                    ));
+            }
 
-			return (ProjectGridRow[]) rows.ToArray(typeof (ProjectGridRow));
-		}
+            rows.Sort(GetComparer(sortColumn, sortIsAscending));
+
+            return (ProjectGridRow[])rows.ToArray(typeof(ProjectGridRow));
+        }
 
 		private string CalculateHtmlColor(IntegrationStatus status)
 		{
