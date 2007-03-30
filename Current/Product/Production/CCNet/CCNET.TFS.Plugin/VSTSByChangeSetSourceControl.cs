@@ -105,13 +105,13 @@ namespace CCNET.TFS.Plugin
             {
                 if (_WorkspaceName == null)
                 {
-                    _WorkspaceName = "CCNET";
+                    _WorkspaceName = string.Format("CCNET-{0}", Environment.MachineName);
                 }
                 return _WorkspaceName;
             }
             set
             {
-                _WorkspaceName = value;
+                _WorkspaceName = string.Format(value, Environment.MachineName);
             }
         }
 

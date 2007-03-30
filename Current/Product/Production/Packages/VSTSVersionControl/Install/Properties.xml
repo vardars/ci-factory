@@ -13,7 +13,8 @@
   
   <property name="TFS.Listener.Port" value="4567" overwrite="false"/>
   <property name="TFS.BuildScripts.Listener.Port" value="4568" overwrite="false"/>
-  <property name="TFS.WorkspaceName" value="${ProjectName}WorkSpace" overwrite="false"/>
+  <property name="TFS.WorkspaceNameBase" value="${ProjectName}WorkSpace" overwrite="false"/>
+  <property name="TFS.WorkspaceName" value="${TFS.WorkspaceNameBase}-${environment::get-machine-name()}" overwrite="false"/>
 
   <ifthenelse test="${property::exists('TFS.Domain') and property::exists('TFS.Username') and property::exists('TFS.Password')}">
     <then>
@@ -35,8 +36,8 @@
       </largeproperty>
     </else>
   </ifthenelse>
-  
-  
+
+
   <largeproperty name="SourceControl.MainBuildBlock">
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol type="filtered">
@@ -48,7 +49,7 @@
         statefilepath="${BuildDirectory}\server\${ProjectName}.tfs.state.xml"
         project="$/${ProjectName}/${ProjectCodeLineName}"
         server="${TFS.ServerUrl}"
-        workspace="${TFS.WorkspaceName}"
+        workspace="${TFS.WorkspaceNameBase}-{0}"
         />
       <exclusionFilters>
         <pathFilter>
