@@ -42,7 +42,7 @@
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol type="filtered">
       <sourceControlProvider  
-        type="vsts" 
+        type="vstsbychangesetSourceControl" 
         applyLabel="true" 
         autoGetSource="false"
         port="${TFS.Listener.Port}"
@@ -85,14 +85,14 @@
       project="$/${ProjectName}/${ProjectCodeLineName}/Build"
       server="${TFS.ServerUrl}"
       workingDirectory="${BuildDirectory}"
-      workspace="${TFS.WorkspaceName}"
+      workspace="${TFS.WorkspaceNameBase}-{0}"
       />]]></value>
   </largeproperty>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerUrl%', TFS.ServerUrl)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.WorkspaceName%', TFS.WorkspaceName)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.WorkspaceNameBase%', TFS.WorkspaceNameBase)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerConnection%', TFS.ServerConnection)}"/>
 
 </project>
