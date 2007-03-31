@@ -12,6 +12,7 @@ using Microsoft.TeamFoundation.VersionControl.Common;
 using Microsoft.TeamFoundation.Client;
 
 using TF.Tasks.SourceControl.Types;
+using TF.Tasks.SourceControl.Helpers;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
@@ -89,7 +90,20 @@ namespace TF.Tasks.SourceControl.Tasks
 
         protected override void ExecuteTask()
         {
-            this.ServerConnection.SourceControl.CreateWorkspace(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, this.Comment, this.Mappings.GetMappings());
+            Workspace[] Workspaces = this.ServerConnection.SourceControl.QueryWorkspaces(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, Workstation.Current.Name);
+            if (Workspaces.Length == 0)
+            {
+                this.ServerConnection.SourceControl.CreateWorkspace(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, this.Comment, this.Mappings.GetMappings());
+            }
+            else
+            {
+                WorkspaceAssistant Helper = new WorkspaceAssistant();
+                Workspace MyWorkspace = Helper.GetWorkspaceByName(this.WorkspaceName, this.ServerConnection.SourceControl);
+                foreach (WorkingFolder Map in this.Mappings.GetMappings())
+                {
+                    MyWorkspace.Map(Map.ServerItem, Map.LocalItem);
+                }
+            }
         }
 
         #endregion

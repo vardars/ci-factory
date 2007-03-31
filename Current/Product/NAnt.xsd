@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/27/2007 21:55:18</xs:documentation>
+    <xs:documentation>NAnt schema generated at 03/30/2007 14:59:26</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -139,14 +139,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -156,19 +156,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -214,10 +214,10 @@
   <xs:complexType name="CIFactory.NAnt.Types.CaseElement">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -347,14 +347,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -364,19 +364,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -703,6 +703,18 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
+    <xs:attribute name="dbmsloginmode" use="optional" />
+    <xs:attribute name="dbmspassword" use="optional" />
+    <xs:attribute name="dbmsserver" use="optional" />
+    <xs:attribute name="dbmstype" use="optional" />
+    <xs:attribute name="dbmsusername" use="optional" />
+    <xs:attribute name="projectname" use="optional" />
+    <xs:attribute name="username" use="optional" />
+    <xs:attribute name="password" use="optional" />
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.ReadField">
     <xs:attribute name="name" use="required" />
   </xs:complexType>
@@ -723,18 +735,6 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="field" type="nant:Tracker.Tasks.WriteField" />
     </xs:sequence>
-    <xs:attribute name="id" use="optional" />
-    <xs:attribute name="refid" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
-    <xs:attribute name="dbmsloginmode" use="optional" />
-    <xs:attribute name="dbmspassword" use="optional" />
-    <xs:attribute name="dbmsserver" use="optional" />
-    <xs:attribute name="dbmstype" use="optional" />
-    <xs:attribute name="dbmsusername" use="optional" />
-    <xs:attribute name="projectname" use="optional" />
-    <xs:attribute name="username" use="optional" />
-    <xs:attribute name="password" use="optional" />
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
@@ -764,19 +764,12 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStopTask">
-    <xs:attribute name="projectname" use="optional" />
-    <xs:attribute name="serverurl" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask">
-    <xs:attribute name="pollinginterval" use="optional" />
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetForceTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="ccnetplugins" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
     <xs:attribute name="projectname" use="required" />
     <xs:attribute name="serverurl" use="required" />
-    <xs:attribute name="timeoutinseconds" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -790,12 +783,19 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetForceTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="ccnetplugins" type="nant:NAnt.Core.Types.FileSet" />
-    </xs:sequence>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStopTask">
+    <xs:attribute name="projectname" use="optional" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask">
+    <xs:attribute name="pollinginterval" use="optional" />
     <xs:attribute name="projectname" use="required" />
     <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="timeoutinseconds" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -936,10 +936,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -1069,14 +1069,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -1086,19 +1086,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -2908,10 +2908,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="in" type="nant:NAnt.Core.Tasks.InElement" />
       <xs:element minOccurs="0" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -3041,14 +3041,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3058,19 +3058,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -3370,10 +3370,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -3503,14 +3503,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3520,19 +3520,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -3562,10 +3562,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -3695,14 +3695,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -3712,19 +3712,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -3914,21 +3914,17 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.ExportTask">
+  <xs:complexType name="NAnt.SourceControl.Tasks.ChangeLogTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
-    <xs:attribute name="no-shortening" use="optional" />
-    <xs:attribute name="force-head" use="optional" />
-    <xs:attribute name="recursive" use="optional" />
-    <xs:attribute name="revision" use="optional" />
-    <xs:attribute name="date" use="optional" />
-    <xs:attribute name="overridedir" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
+    <xs:attribute name="xmlfile" use="required" />
+    <xs:attribute name="start" use="required" />
+    <xs:attribute name="end" use="required" />
     <xs:attribute name="cvsroot" use="optional" />
+    <xs:attribute name="cvsfullpath" use="optional" />
     <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
     <xs:attribute name="cvsrsh" use="optional" />
     <xs:attribute name="quiet" use="optional" />
     <xs:attribute name="reallyquiet" use="optional" />
@@ -3983,18 +3979,56 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.UpdateTask">
+  <xs:complexType name="NAnt.SourceControl.Tasks.CvsPass">
+    <xs:attribute name="password" use="required" />
+    <xs:attribute name="passfile" use="optional" />
+    <xs:attribute name="cvsroot" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.SourceControl.Tasks.CvsTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
-    <xs:attribute name="builddirs" use="optional" />
-    <xs:attribute name="pruneempty" use="optional" />
-    <xs:attribute name="overwritelocal" use="optional" />
+    <xs:attribute name="command" use="required" />
+    <xs:attribute name="cvsfullpath" use="optional" />
+    <xs:attribute name="cvsroot" use="optional" />
+    <xs:attribute name="module" use="optional" />
+    <xs:attribute name="usesharpcvslib" use="optional" />
+    <xs:attribute name="cvsrsh" use="optional" />
+    <xs:attribute name="quiet" use="optional" />
+    <xs:attribute name="reallyquiet" use="optional" />
+    <xs:attribute name="readonly" use="optional" />
+    <xs:attribute name="readwrite" use="optional" />
+    <xs:attribute name="compressionlevel" use="optional" />
+    <xs:attribute name="destination" use="optional" />
+    <xs:attribute name="password" use="optional" />
+    <xs:attribute name="passfile" use="optional" />
+    <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.SourceControl.Tasks.ExportTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="no-shortening" use="optional" />
+    <xs:attribute name="force-head" use="optional" />
     <xs:attribute name="recursive" use="optional" />
     <xs:attribute name="revision" use="optional" />
-    <xs:attribute name="sticky-tag" use="optional" />
     <xs:attribute name="date" use="optional" />
+    <xs:attribute name="overridedir" use="optional" />
     <xs:attribute name="cvsfullpath" use="optional" />
     <xs:attribute name="cvsroot" use="optional" />
     <xs:attribute name="module" use="optional" />
@@ -4091,56 +4125,22 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.CvsTask">
+  <xs:complexType name="NAnt.SourceControl.Tasks.UpdateTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
-    <xs:attribute name="command" use="required" />
+    <xs:attribute name="builddirs" use="optional" />
+    <xs:attribute name="pruneempty" use="optional" />
+    <xs:attribute name="overwritelocal" use="optional" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="revision" use="optional" />
+    <xs:attribute name="sticky-tag" use="optional" />
+    <xs:attribute name="date" use="optional" />
     <xs:attribute name="cvsfullpath" use="optional" />
     <xs:attribute name="cvsroot" use="optional" />
     <xs:attribute name="module" use="optional" />
     <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="pid" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.CvsPass">
-    <xs:attribute name="password" use="required" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.ChangeLogTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="xmlfile" use="required" />
-    <xs:attribute name="start" use="required" />
-    <xs:attribute name="end" use="required" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="module" use="optional" />
     <xs:attribute name="cvsrsh" use="optional" />
     <xs:attribute name="quiet" use="optional" />
     <xs:attribute name="reallyquiet" use="optional" />
@@ -4373,6 +4373,31 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel">
+    <xs:attribute name="versionfile" use="optional" />
+    <xs:attribute name="incrementmajor" use="optional" />
+    <xs:attribute name="incrementminor" use="optional" />
+    <xs:attribute name="incrementbuild" use="optional" />
+    <xs:attribute name="majorversion" use="optional" />
+    <xs:attribute name="minorversion" use="optional" />
+    <xs:attribute name="buildversion" use="optional" />
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="buildlabel" use="optional" />
+    <xs:attribute name="revisionlabel" use="optional" />
+    <xs:attribute name="description" use="optional" />
+    <xs:attribute name="timestamp" use="optional" />
+    <xs:attribute name="servername" use="optional" />
+    <xs:attribute name="serverport" use="optional" />
+    <xs:attribute name="projectname" use="optional" />
+    <xs:attribute name="viewname" use="optional" />
+    <xs:attribute name="username" use="optional" />
+    <xs:attribute name="password" use="optional" />
+    <xs:attribute name="url" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin">
     <xs:attribute name="comment" use="optional" />
     <xs:attribute name="adduncontrolled" use="optional" />
@@ -4395,38 +4420,16 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamList">
+  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout">
+    <xs:attribute name="createworkingdirs" use="optional" />
+    <xs:attribute name="deleteuncontrolled" use="optional" />
+    <xs:attribute name="locktype" use="optional" />
     <xs:attribute name="rootstarteamfolder" use="required" />
     <xs:attribute name="includes" use="optional" />
     <xs:attribute name="excludes" use="optional" />
     <xs:attribute name="recursive" use="optional" />
     <xs:attribute name="forced" use="optional" />
     <xs:attribute name="label" use="optional" />
-    <xs:attribute name="servername" use="optional" />
-    <xs:attribute name="serverport" use="optional" />
-    <xs:attribute name="projectname" use="optional" />
-    <xs:attribute name="viewname" use="optional" />
-    <xs:attribute name="username" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="url" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel">
-    <xs:attribute name="versionfile" use="optional" />
-    <xs:attribute name="incrementmajor" use="optional" />
-    <xs:attribute name="incrementminor" use="optional" />
-    <xs:attribute name="incrementbuild" use="optional" />
-    <xs:attribute name="majorversion" use="optional" />
-    <xs:attribute name="minorversion" use="optional" />
-    <xs:attribute name="buildversion" use="optional" />
-    <xs:attribute name="label" use="required" />
-    <xs:attribute name="buildlabel" use="optional" />
-    <xs:attribute name="revisionlabel" use="optional" />
-    <xs:attribute name="description" use="optional" />
-    <xs:attribute name="timestamp" use="optional" />
     <xs:attribute name="servername" use="optional" />
     <xs:attribute name="serverport" use="optional" />
     <xs:attribute name="projectname" use="optional" />
@@ -4457,10 +4460,7 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout">
-    <xs:attribute name="createworkingdirs" use="optional" />
-    <xs:attribute name="deleteuncontrolled" use="optional" />
-    <xs:attribute name="locktype" use="optional" />
+  <xs:complexType name="NAnt.Contrib.Tasks.StarTeam.StarTeamList">
     <xs:attribute name="rootstarteamfolder" use="required" />
     <xs:attribute name="includes" use="optional" />
     <xs:attribute name="excludes" use="optional" />
@@ -4500,18 +4500,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerGetField">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="fieldname" use="required" />
-    <xs:attribute name="fieldvalueproperty" use="required" />
-    <xs:attribute name="scrid" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerAddNote">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
@@ -4519,6 +4507,40 @@
     <xs:attribute name="scrid" use="required" />
     <xs:attribute name="text" use="required" />
     <xs:attribute name="title" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerChange">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="scrid" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerCreate">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="newscrid" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.TrackerGetField">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="fieldname" use="required" />
+    <xs:attribute name="fieldvalueproperty" use="required" />
+    <xs:attribute name="scrid" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4536,17 +4558,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerChange">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="scrid" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerReport">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.ReadFieldSet" />
@@ -4554,17 +4565,6 @@
     </xs:sequence>
     <xs:attribute name="ScrIdList" use="required" />
     <xs:attribute name="reportfile" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.TrackerCreate">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="trackerfields" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
-    </xs:sequence>
-    <xs:attribute name="newscrid" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -4712,10 +4712,10 @@
   </xs:complexType>
   <xs:complexType name="Target">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+      <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
       <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
       <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-      <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-      <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
       <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
       <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
       <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -4845,14 +4845,14 @@
       <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
       <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
       <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-      <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+      <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
       <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-      <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+      <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+      <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+      <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
       <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
       <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-      <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-      <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-      <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+      <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
       <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
       <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
       <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -4862,19 +4862,19 @@
       <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
       <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
       <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-      <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-      <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
       <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-      <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+      <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
       <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+      <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+      <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
       <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-      <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
       <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-      <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
       <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-      <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
       <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+      <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+      <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+      <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
       <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
       <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
       <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -4907,9 +4907,9 @@
       <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
       <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
       <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+      <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
       <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
       <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
       <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
@@ -4923,10 +4923,10 @@
   <xs:element name="project">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
-        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
-        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
         <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
         <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
@@ -5056,14 +5056,14 @@
         <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
+        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
         <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
+        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
+        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
+        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
         <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
         <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
+        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
         <xs:element name="buildinstallshieldmsi" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallShieldMsi" />
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
@@ -5073,19 +5073,19 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
-        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
-        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
-        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
         <xs:element name="stcheckout" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckout" />
+        <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
+        <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
-        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
-        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
-        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
+        <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
+        <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
+        <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
         <xs:element name="tfslabel" type="nant:TF.Tasks.SourceControl.Tasks.TfsLabelTask" />
         <xs:element name="tfsget" type="nant:TF.Tasks.SourceControl.Tasks.TfsGetTask" />
         <xs:element name="tfsmapworkspace" type="nant:TF.Tasks.SourceControl.Tasks.TfsMapWorkspace" />
@@ -5118,9 +5118,9 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
         <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
         <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />

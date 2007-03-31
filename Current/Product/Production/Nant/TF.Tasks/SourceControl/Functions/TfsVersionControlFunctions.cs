@@ -67,17 +67,17 @@ namespace TF.Tasks.SourceControl.Functions
         }
 
         [Function("workspace-exists")]
-        public bool WorkspaceExists(string workspaceName)
+        public bool WorkspaceExists(string connectionRefId, string workspaceName)
         {
-            TfsServerConnection ServerConnection = this.GetServerConnection();
+            TfsServerConnection ServerConnection = this.GetServerConnection(connectionRefId);
             bool Result = WorkspaceExists(workspaceName, ServerConnection);
             return Result;
         }
 
         [Function("workspace-exists")]
-        public bool WorkspaceExists(string connectionRefId, string workspaceName)
+        public bool WorkspaceExists(string workspaceName)
         {
-            TfsServerConnection ServerConnection = this.GetServerConnection(connectionRefId);
+            TfsServerConnection ServerConnection = this.GetServerConnection();
             bool Result = WorkspaceExists(workspaceName, ServerConnection);
             return Result;
         }

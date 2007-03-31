@@ -17,6 +17,12 @@
   
   <target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
 
@@ -28,6 +34,12 @@
 
   <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
 
@@ -38,6 +50,12 @@
 
   <target name="SourceControl.GetOfThirdPartyDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
@@ -115,6 +133,12 @@
 
   <target name="SourceControl.CleanGetOfProductDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
 
@@ -125,6 +149,12 @@
 
   <target name="SourceControl.GetOfProductDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
@@ -136,6 +166,12 @@
 
   <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
     <call target="Private.SourceControl.DeleteDirectory"/>
 
@@ -151,6 +187,12 @@
 
   <target name="SourceControl.GetOfBuildDirectory" >
     <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${BuildDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
     <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.BuildDirectory.GetFileSet" >
       <tfsserverconnection refid="${TFS.Info}"/>
     </tfsget>
