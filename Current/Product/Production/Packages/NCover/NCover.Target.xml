@@ -42,6 +42,13 @@
         <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}"/>
       </do>
     </foreach>
+    
+    <setenv>
+      <environment>
+        <variable name="Cor_Enable_Profiling" value="1" />
+        <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
+      </environment>
+    </setenv>
 
     <trycatch>
       <try>

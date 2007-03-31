@@ -36,8 +36,9 @@
       <call target="UnitTest.FindTestAssebmlies"/>
     </if>
     
-    <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}" 
-            runconfig="${UnitTest.RunConfig}">
+    <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"
+            runconfig="${UnitTest.RunConfig}"
+            noisolation="false">
       <testcontainers refid="UnitTest.TestAssemblies" />
     </mstest>
 	</target>
