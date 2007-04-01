@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alertss.Target">
+
+  <property name="Alertss.BuildLog" value="${CCNetLogFilePath}" overwrite="false"/>
+  
+  <trycatch>
+    <try>
+      <xmlpeek 
+        file="${Alertss.BuildLog}" 
+        xpath="//modification/user" 
+        property="Alertss.Developer.Name" 
+        nodeindex="0" 
+      />
+    </try>
+    <catch property="Exception">
+      <echo level="Error" message="${Exception}"/>
+      <ifthenelse test="${CCNetBuildCondition == 'ForceBuild' and property::exists('CCNetForcedBy')}">
+        <then>
+          <property name="Alertss.Developer.Name" value="${CCNetForcedBy}"/>
+        </then>
+        <else>
+          <property name="Alertss.Developer.Name" value="Unknown"/>
+        </else>
+      </ifthenelse>
+    </catch>
+  </trycatch>
+
+  <trycatch>
+    <try>
+      <xmlpeek 
+        file="${BuildDirectory}\${environment::get-machine-name()}-ccnetproject.xml" 
+        xpath="//email/users/user[@name = '${Alertss.Developer.Name}']/@address" 
+        property="Alertss.Developer.Email" 
+        nodeindex="0" 
+      />
+    </try>
+    <catch property="Exception">
+      <echo level="Error" message="${Exception}"/>
+      <property name="Alertss.Developer.Email" value="UnknownDeveloper@chcsii.com"/>
+    </catch>
+  </trycatch>
+
+  <include buildfile="Alertss.Properties.xml" />
+
+  <!-- Input Properties
+  <property name="Alertss.TargetListRefId" value=""/>
+  -->
+  <target name="Alertss.Run">
+    <loopthrough property="Alertss.Target">
+      <items>
+        <strings refid="${Alertss.TargetListRefId}" />
+      </items>
+      <do>
+        <call target="${Alertss.Target}" failonerror="false"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <!-- Parameters
+  <property name="Alertss.SendMessage.Content" value="" />
+  <property name="Alertss.SendMessage.ToList" value="" />
+  <property name="Alertss.SendMessage.Subject" value="" />
+  -->
+
+  <target name="Alertss.SendMessage">
+    <mail 
+			from="dod.ahlta.Build@noreply.com" 
+			tolist="${Alertss.SendMessage.ToList}"
+      cclist="${Alertss.SendMessage.CCList}"
+			subject="${Alertss.SendMessage.Subject}" 
+			mailhost="127.0.0.1"
+			format="Html"
+			message="${Alertss.SendMessage.Content}"
+		/>
+  </target>
+  
+  <target name="Alertss.SetUp">
+    
+  </target>
+
+  <target name="Alertss.TearDown">
+
+  </target>
+  
+</project>

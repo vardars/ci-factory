@@ -1,61 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.ChangePackageSize.Scripts">
 
-  <property name="Threshold.ChangePackageSize.ExceedsPositiveLineCountDifference" value="20"/>
-  <property name="Threshold.ChangePackageSize.ExceedsNegativeLineCountDifference" value="20"/>
-  <property name="Threshold.ChangePackageSize.ExceedsFileCount" value="4"/>
+  <property name="Alerts.ChangePackageSize.ExceedsPositiveLineCountDifference" value="20"/>
+  <property name="Alerts.ChangePackageSize.ExceedsNegativeLineCountDifference" value="20"/>
+  <property name="Alerts.ChangePackageSize.ExceedsFileCount" value="4"/>
 
-  <property name="Threshold.ChangePackageSize.PreviousPropertiesFilePath" value="${PackagesDirectory}\Thresholds\ChangePackageSize\Previous.Properties.xml"/>
-  <include buildfile="${Threshold.ChangePackageSize.PreviousPropertiesFilePath}" if="${file::exists(Threshold.ChangePackageSize.PreviousPropertiesFilePath)}"/>
+  <property name="Alerts.ChangePackageSize.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\ChangePackageSize\Previous.Properties.xml"/>
+  <include buildfile="${Alerts.ChangePackageSize.PreviousPropertiesFilePath}" if="${file::exists(Alerts.ChangePackageSize.PreviousPropertiesFilePath)}"/>
 
   <!-- Begin Previous Properties -->
-  <property name="Threshold.ChangePackageSize.Previous.LineCount" value="NaN" overwrite="false"/>
+  <property name="Alerts.ChangePackageSize.Previous.LineCount" value="NaN" overwrite="false"/>
   <!-- End Previous Properties -->
 
-  <target name="Threshold.ChangePackageSize">
-    <call target="Private.Threshold.ChangePackageSize.GetLineCount"/>
-    <call target="Private.Threshold.ChangePackageSize.GetFileCount"/>
+  <target name="Alerts.ChangePackageSize">
+    <call target="Private.Alerts.ChangePackageSize.GetLineCount"/>
+    <call target="Private.Alerts.ChangePackageSize.GetFileCount"/>
     
-    <property name="Thresholds.SendMessage.ToList" value="${Thresholds.Developer.Email}" />
-    <property name="Thresholds.SendMessage.CCList" value="${Thresholds.Message.CCList}" />
+    <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
+    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
 
-    <ifnot test="${Threshold.ChangePackageSize.Previous.LineCount == 'NaN'}">
+    <ifnot test="${Alerts.ChangePackageSize.Previous.LineCount == 'NaN'}">
 
-      <property name="Threshold.ChangePackageSize.LineCountDifference" value="${int::parse(Threshold.ChangePackageSize.LineCount) - int::parse(Threshold.ChangePackageSize.Previous.LineCount)}"/>
+      <property name="Alerts.ChangePackageSize.LineCountDifference" value="${int::parse(Alerts.ChangePackageSize.LineCount) - int::parse(Alerts.ChangePackageSize.Previous.LineCount)}"/>
 
-      <ifthenelse test="${int::parse(Threshold.ChangePackageSize.LineCountDifference) > 0}">
+      <ifthenelse test="${int::parse(Alerts.ChangePackageSize.LineCountDifference) > 0}">
         <then>
-          <if test="${int::parse(Threshold.ChangePackageSize.LineCountDifference) >= int::parse(Threshold.ChangePackageSize.ExceedsPositiveLineCountDifference)}">
-            <call target="Private.Threshold.ChangePackageSize.GenerateWarning"/>
-            <call target="Thresholds.SendMessage"/>
+          <if test="${int::parse(Alerts.ChangePackageSize.LineCountDifference) >= int::parse(Alerts.ChangePackageSize.ExceedsPositiveLineCountDifference)}">
+            <call target="Private.Alerts.ChangePackageSize.GenerateWarning"/>
+            <call target="Alertss.SendMessage"/>
           </if>
         </then>
-        <elseif if="${0 > int::parse(Threshold.ChangePackageSize.LineCountDifference)}">
-          <if test="${(int::parse(Threshold.ChangePackageSize.LineCountDifference) * -1) >= int::parse(Threshold.ChangePackageSize.ExceedsNegativeLineCountDifference)}">
-            <call target="Private.Threshold.ChangePackageSize.GenerateThankYou"/>
-            <call target="Thresholds.SendMessage"/>
+        <elseif if="${0 > int::parse(Alerts.ChangePackageSize.LineCountDifference)}">
+          <if test="${(int::parse(Alerts.ChangePackageSize.LineCountDifference) * -1) >= int::parse(Alerts.ChangePackageSize.ExceedsNegativeLineCountDifference)}">
+            <call target="Private.Alerts.ChangePackageSize.GenerateThankYou"/>
+            <call target="Alertss.SendMessage"/>
           </if>
         </elseif>
       </ifthenelse>
     </ifnot>
 
-    <ifthenelse test="${int::parse(Threshold.ChangePackageSize.FileCount) > int::parse(Threshold.ChangePackageSize.ExceedsFileCount)}">
+    <ifthenelse test="${int::parse(Alerts.ChangePackageSize.FileCount) > int::parse(Alerts.ChangePackageSize.ExceedsFileCount)}">
       <then>
-        <call target="Private.Threshold.ChangePackageSize.GenerateWarning"/>
-        <call target="Thresholds.SendMessage"/>
+        <call target="Private.Alerts.ChangePackageSize.GenerateWarning"/>
+        <call target="Alertss.SendMessage"/>
       </then>
     </ifthenelse>
 
-    <saveproperties file="${Threshold.ChangePackageSize.PreviousPropertiesFilePath}" format="Include">
-      <property name="Threshold.ChangePackageSize.Previous.LineCount" value="${Threshold.ChangePackageSize.LineCount}"/>
+    <saveproperties file="${Alerts.ChangePackageSize.PreviousPropertiesFilePath}" format="Include">
+      <property name="Alerts.ChangePackageSize.Previous.LineCount" value="${Alerts.ChangePackageSize.LineCount}"/>
     </saveproperties>
   </target>
 
-  <target name="Private.Threshold.ChangePackageSize.GetLineCount">
-    <property name="Threshold.ChangePackageSize.LineCount" value="0"/>
+  <target name="Private.Alerts.ChangePackageSize.GetLineCount">
+    <property name="Alerts.ChangePackageSize.LineCount" value="0"/>
 
     <xmlquery 
-      file="${Thresholds.BuildLog}" 
+      file="${Alertss.BuildLog}" 
       query="//code-summaries/code-summary/linecount/@label" 
       id="LanguageLineCounts" 
     />
@@ -66,34 +66,34 @@
       </items>
       <do>
         <xmlpeek 
-          file="${Thresholds.BuildLog}" 
+          file="${Alertss.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@totalLineCount" 
           property="totalLineCount"
         />
 
         <xmlpeek 
-          file="${Thresholds.BuildLog}" 
+          file="${Alertss.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@emptyLineCount" 
           property="emptyLineCount"
         />
 
         <xmlpeek 
-          file="${Thresholds.BuildLog}" 
+          file="${Alertss.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@commentLineCount" 
           property="commentLineCount"
         />
 
-        <property name="Threshold.ChangePackageSize.LineCount" value="${int::parse(Threshold.ChangePackageSize.LineCount) + int::parse(totalLineCount) - int::parse(emptyLineCount) - int::parse(commentLineCount)}"/>
+        <property name="Alerts.ChangePackageSize.LineCount" value="${int::parse(Alerts.ChangePackageSize.LineCount) + int::parse(totalLineCount) - int::parse(emptyLineCount) - int::parse(commentLineCount)}"/>
 
       </do>
     </loopthrough>
   </target>
   
-  <target name="Private.Threshold.ChangePackageSize.GetFileCount">
-    <property name="Threshold.ChangePackageSize.FileCount" value="0"/>
+  <target name="Private.Alerts.ChangePackageSize.GetFileCount">
+    <property name="Alerts.ChangePackageSize.FileCount" value="0"/>
 
     <xmlquery 
-      file="${Thresholds.BuildLog}" 
+      file="${Alertss.BuildLog}" 
       query="//modifications/modification/filename" 
       id="ModificationList"
     />
@@ -103,15 +103,15 @@
         <xmlquery refid="ModificationList"/>
       </items>
       <do>
-        <property name="Threshold.ChangePackageSize.FileCount" value="${int::parse(Threshold.ChangePackageSize.FileCount) + 1}"/>
+        <property name="Alerts.ChangePackageSize.FileCount" value="${int::parse(Alerts.ChangePackageSize.FileCount) + 1}"/>
       </do>
     </loopthrough>
   </target>
 
-  <target name="Private.Threshold.ChangePackageSize.GenerateThankYou">
-    <property name="Thresholds.SendMessage.Subject" value="${CCNetLabel}: Thanks For Reducing the Lines of Code" />
+  <target name="Private.Alerts.ChangePackageSize.GenerateThankYou">
+    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Thanks For Reducing the Lines of Code" />
 
-    <largeproperty name="Thresholds.SendMessage.Content">
+    <largeproperty name="Alertss.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -122,8 +122,8 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Thresholds.Developer.Name},</p>
-            <p>Thank you for reducing the number of lines of code from ${Threshold.ChangePackageSize.Previous.LineCount} to ${Threshold.ChangePackageSize.LineCount}.</p>
+            <p>${Alertss.Developer.Name},</p>
+            <p>Thank you for reducing the number of lines of code from ${Alerts.ChangePackageSize.Previous.LineCount} to ${Alerts.ChangePackageSize.LineCount}.</p>
             <br/>
             <p>Cheers,</p>
             <p>Your pal, the build server.</p>
@@ -133,10 +133,10 @@
     </largeproperty>
   </target>
 
-  <target name="Private.Threshold.ChangePackageSize.GenerateWarning">
-    <property name="Thresholds.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Submit Such a Large Change Package?" />
+  <target name="Private.Alerts.ChangePackageSize.GenerateWarning">
+    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Submit Such a Large Change Package?" />
 
-    <largeproperty name="Thresholds.SendMessage.Content">
+    <largeproperty name="Alertss.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -147,14 +147,14 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Thresholds.Developer.Name},</p>
+            <p>${Alertss.Developer.Name},</p>
             <p>
               Please take note that you submited a larger change package than is recommended.
-              The number of lines added was atleast ${Threshold.ChangePackageSize.LineCountDifference}
-              and the number of files affected was ${Threshold.ChangePackageSize.FileCount}.
+              The number of lines added was atleast ${Alerts.ChangePackageSize.LineCountDifference}
+              and the number of files affected was ${Alerts.ChangePackageSize.FileCount}.
             </p>
             <p>
-              The threshold is ${Threshold.ChangePackageSize.ExceedsPositiveLineCountDifference} lines and/or ${Threshold.ChangePackageSize.ExceedsFileCount} files.
+              The Alerts is ${Alerts.ChangePackageSize.ExceedsPositiveLineCountDifference} lines and/or ${Alerts.ChangePackageSize.ExceedsFileCount} files.
             </p>
             <br/>
             <p>Cheers,</p>

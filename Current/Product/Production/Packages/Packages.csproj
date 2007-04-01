@@ -813,6 +813,13 @@
     <Content Include="MSBuild\Install\Install.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Alerts\Alerts.Properties.xml" />
+    <Content Include="Alerts\Alerts.Target.xml" />
+    <Content Include="Alerts\ChangePackageSize\ChangePackageSize.Script.xml" />
+    <Content Include="Alerts\Install\Install.xml" />
+    <Content Include="Alerts\Install\Properties.xml" />
+    <Content Include="Alerts\Tracker\Tracker.Script.xml" />
+    <Content Include="Alerts\UnitTests\UnitTests.Script.xml" />
     <Content Include="Analytics\Install\Other\RecompileAnalytics.xml" />
     <Content Include="Analytics\Simian\Simian.ChartData.Publisher.xsl" />
     <Content Include="Analytics\Simian\Simian.ChartData.xml" />

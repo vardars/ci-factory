@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
-  <property name="Threshold.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Thresholds\UnitTests\Previous.Properties.xml"/>
-  <ifthenelse test="${file::exists(Threshold.UnitTests.PreviousPropertiesFilePath)}">
+  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alertss\UnitTests\Previous.Properties.xml"/>
+  <ifthenelse test="${file::exists(Alerts.UnitTests.PreviousPropertiesFilePath)}">
     <then>
-      <include buildfile="${Threshold.UnitTests.PreviousPropertiesFilePath}" />
+      <include buildfile="${Alerts.UnitTests.PreviousPropertiesFilePath}" />
     </then>
     <else>
-      <echo level="Warning" message="File Does Not Exist: ${Threshold.UnitTests.PreviousPropertiesFilePath}"/>
+      <echo level="Warning" message="File Does Not Exist: ${Alerts.UnitTests.PreviousPropertiesFilePath}"/>
     </else>
   </ifthenelse>
   
 
   <!-- Begin Previous Properties -->
-  <property name="Threshold.UnitTests.Previous.Count" value="NaN" overwrite="false"/>
+  <property name="Alerts.UnitTests.Previous.Count" value="NaN" overwrite="false"/>
   <!-- End Previous Properties -->
 
-  <target name="Threshold.UnitTests">
+  <target name="Alerts.UnitTests">
 
     <xmlpeek 
-      file="${Thresholds.BuildLog}" 
+      file="${Alertss.BuildLog}" 
       xpath="//Tests/TestRun/result/totalTestCount" 
-      property="Threshold.UnitTests.Count"
+      property="Alerts.UnitTests.Count"
       nodeindex="0"
     />
 
     <xmlquery id="ProjectPaths"
-      file="${Thresholds.BuildLog}" 
+      file="${Alertss.BuildLog}" 
       query="//modification/project" 
     />
 
@@ -45,36 +45,36 @@
       </do>
     </loopthrough>
 
-    <echo message="Unit Test Count is ${Threshold.UnitTests.Count}"/>
+    <echo message="Unit Test Count is ${Alerts.UnitTests.Count}"/>
 
-    <property name="Thresholds.SendMessage.ToList" value="${Thresholds.Developer.Email}" />
-    <property name="Thresholds.SendMessage.CCList" value="${Thresholds.Message.CCList};jason_ray@CHCSII.com" />
+    <property name="Alertss.SendMessage.ToList" value="${Alertss.Developer.Email}" />
+    <property name="Alertss.SendMessage.CCList" value="${Alertss.Message.CCList};jason_ray@CHCSII.com" />
 
-    <echo message="Previous Unit Test Count is ${Threshold.UnitTests.Previous.Count}"/>
+    <echo message="Previous Unit Test Count is ${Alerts.UnitTests.Previous.Count}"/>
 
-    <if test="${Threshold.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true}">
-      <ifthenelse test="${Threshold.UnitTests.Count > Threshold.UnitTests.Previous.Count}">
+    <if test="${Alerts.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true}">
+      <ifthenelse test="${Alerts.UnitTests.Count > Alerts.UnitTests.Previous.Count}">
         <then>
-          <call target="Threshold.UnitTests.GenerateThankYou"/>
-          <call target="Thresholds.SendMessage"/>
+          <call target="Alerts.UnitTests.GenerateThankYou"/>
+          <call target="Alertss.SendMessage"/>
         </then>
-        <elseif if="${Threshold.UnitTests.Previous.Count > Threshold.UnitTests.Count}">
-          <call target="Threshold.UnitTests.GenerateWarning"/>
-          <call target="Thresholds.SendMessage"/>
+        <elseif if="${Alerts.UnitTests.Previous.Count > Alerts.UnitTests.Count}">
+          <call target="Alerts.UnitTests.GenerateWarning"/>
+          <call target="Alertss.SendMessage"/>
         </elseif>
       </ifthenelse>
     </if>
 
-    <saveproperties file="${Threshold.UnitTests.PreviousPropertiesFilePath}" format="Include">
-      <property name="Threshold.UnitTests.Previous.Count" value="${Threshold.UnitTests.Count}"/>
+    <saveproperties file="${Alerts.UnitTests.PreviousPropertiesFilePath}" format="Include">
+      <property name="Alerts.UnitTests.Previous.Count" value="${Alerts.UnitTests.Count}"/>
     </saveproperties>
 
   </target>
 
-  <target name="Threshold.UnitTests.GenerateThankYou">
-    <property name="Thresholds.SendMessage.Subject" value="${CCNetLabel}: Thanks For Adding More Unit Tests" />
+  <target name="Alerts.UnitTests.GenerateThankYou">
+    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Thanks For Adding More Unit Tests" />
 
-    <largeproperty name="Thresholds.SendMessage.Content">
+    <largeproperty name="Alertss.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -85,8 +85,8 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Thresholds.Developer.Name},</p>
-            <p>Thank you for increasing the number of unit tests from ${Threshold.UnitTests.Previous.Count} to ${Threshold.UnitTests.Count}.</p>
+            <p>${Alertss.Developer.Name},</p>
+            <p>Thank you for increasing the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
             <br/>
             <p>Cheers,</p>
             <p>Your pal, the build server.</p>
@@ -96,10 +96,10 @@
     </largeproperty>
   </target>
 
-  <target name="Threshold.UnitTests.GenerateWarning">
-    <property name="Thresholds.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
+  <target name="Alerts.UnitTests.GenerateWarning">
+    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
 
-    <largeproperty name="Thresholds.SendMessage.Content">
+    <largeproperty name="Alertss.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -110,8 +110,8 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Thresholds.Developer.Name},</p>
-            <p>Please take note that you have reduced the number of unit tests from ${Threshold.UnitTests.Previous.Count} to ${Threshold.UnitTests.Count}.</p>
+            <p>${Alertss.Developer.Name},</p>
+            <p>Please take note that you have reduced the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
             <br/>
             <p>Cheers,</p>
             <p>Your pal, the build server.</p>
