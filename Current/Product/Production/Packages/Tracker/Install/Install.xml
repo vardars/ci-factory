@@ -25,6 +25,24 @@
       <value expand="true"><![CDATA[<file>${BuildDirectory}\Tracker Reports\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
+
+    <copy todir="${BuildDirectory}\server">
+      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${BuildDirectory}\dashboard\bin">
+      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </copy>
+
+    <zip append="true" zipfile="${BuildDirectory}\dashboard\cctray\cctray.zip" >
+      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </zip>
   </target>
 
   <target name="Tracker.SetAsCurrentPackage">
