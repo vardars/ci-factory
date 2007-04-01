@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
+
+  <loadtasks assembly="${BuildDirectory}\Packages\MSTest\bin\VSTS.Tasks.dll" />
+  <fileset id="UnitTest.TestAssemblies" />
+  
+  <property name="UnitTest.RunConfig" value="${ProductDirectory}\localtestrun.testrunconfig" overwrite="false"/>
+
+  <include buildfile="UnitTest.Properties.xml" />
+
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="UnitTest.TestPath" value=""/>
+	<property name="UnitTest.TestAssemblyFormat" value=""/>
+	<property name="UnitTest.ReportFolder" value=""/>
+	<property name="UnitTest.ReportFile" value=""/>
+	-->
+	
+	<!-- The following properties are for internal use only -->
+
+	<target name="UnitTest.RunTests">
+
+    <foreach item="File" property="UnitTest.ProjectFile.Path">
+      <in>
+        <items refid="UnitTest.ProjectFiles" />
+      </in>
+      <do>
+        <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+        <property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}"/>
+      </do>
+    </foreach>
+
+    <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+      <call target="UnitTest.FindTestAssebmlies"/>
+    </if>
+    
+    <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"
+            runconfig="${UnitTest.RunConfig}"
+            noisolation="false">
+      <testcontainers refid="UnitTest.TestAssemblies" />
+    </mstest>
+	</target>
+
+  <target name="UnitTest.FindTestAssebmlies">
+    <fileset id="UnitTest.TestAssemblies" >
+      <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+    </fileset>
+  </target>
+
+  <target name="UnitTest.ShowReport">
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"/>
+    <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSTest\MsTestSummary.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <mkdir unless="${directory::exists(UnitTest.ReportFolder)}" dir="${UnitTest.ReportFolder}"/>
+    <delete>
+      <fileset>
+        <include name="${UnitTest.ReportFolder}\**\*"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="UnitTest.TearDown">
+
+  </target>
+
+  <target name="UnitTest.Main">
+    <trycatch>
+      <try>
+        <call target="UnitTest.SetUp"/>
+        <call target="UnitTest.RunTests"/>
+      </try>
+      <finally>
+        <call target="UnitTest.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+
+
+</project>
