@@ -20,7 +20,6 @@
   
   <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
   <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
-  <include buildfile=".\Packages\CoverageEye\CoverageEye.Target.xml" />
 
   <target name="test">
 

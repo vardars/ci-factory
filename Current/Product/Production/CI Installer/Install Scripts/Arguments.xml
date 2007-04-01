@@ -35,20 +35,21 @@
     <string value="nDepend"/>
     <string value="Simian" />
     <string value="LinesOfCode"/>
-    
+    <string value="Analytics" />
+    <string value="Alerts" />
+
     <string value="Deployment"/>
 
     <!--
     <string value="VisualSourceSafe"/>
     <string value="Ant"/>
-    <string value="Analytics" /><- Experiemental - Not fully implemented
     <string value="Backup" />
     <string value="VS.NETCompile"/>
     <string value="MSTest" />
     <string value="CoverageEye"/>
     <string value="Tracker"/>
     <string value="InstallShield"/>
-    <string value="VSTSVersionControl" /><- Experiemental - Not fully implemented
+    <string value="VSTSVersionControl" />
     -->
   </strings>
 
