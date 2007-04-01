@@ -22,25 +22,25 @@
       <xsl:value-of select="concat('All ', count($All), '/', count(/quiettimes/recoverytime))"/>
     </string>
 
-    <exsl:document href="..\..\..\Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
+    <exsl:document href="Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
       <string>
         <xsl:value-of select="'max'"/>
       </string>
     </exsl:document>
 
-    <exsl:document href="..\..\..\Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
+    <exsl:document href="Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
       <string>
         <xsl:value-of select="'min'"/>
       </string>
     </exsl:document>
 
-    <exsl:document href="..\..\..\Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
+    <exsl:document href="Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
       <string>
         <xsl:value-of select="'open'"/>
       </string>
     </exsl:document>
 
-    <exsl:document href="..\..\..\Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
+    <exsl:document href="Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
       <string>
         <xsl:value-of select="'close'"/>
       </string>
@@ -50,28 +50,28 @@
       <xsl:sort select="@duration" order="descending" data-type="number"/>
       <xsl:choose>
         <xsl:when test="position() = 1">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = last()">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($Last20) div 4)">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($Last20) div 4) * 3">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
@@ -84,28 +84,28 @@
       <xsl:sort select="@duration" order="descending" data-type="number"/>
       <xsl:choose>
         <xsl:when test="position() = 1">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = last()">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($Last200) div 4)">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($Last200) div 4) * 3">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
@@ -118,28 +118,28 @@
       <xsl:sort select="@duration" order="descending" data-type="number"/>
       <xsl:choose>
         <xsl:when test="position() = 1">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMaxHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = last()">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeMinHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($All) div 4)">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeOpenHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>
           </exsl:document>
         </xsl:when>
         <xsl:when test="position() = round(count($All) div 4) * 3">
-          <exsl:document href="..\..\..\Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
+          <exsl:document href="Artifacts\RecoveryTimeCloseHistoryDurations.xml" fragment="yes" append="yes">
             <number>
               <xsl:value-of select="@duration"/>
             </number>

@@ -274,6 +274,56 @@
             <property name="Index" value="${int::parse(Index) + 1}"/>
           </do>
         </loopthrough>
+
+        <property name="Index" value="1"/>
+        
+        <loopthrough property="IncludeName">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/@Include">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+            <loopthrough property="ThirdPartyComponent.Path">
+              <items>
+                <strings refid="ThirdPartyComponents" />
+              </items>
+              <do>
+                <property name="ThirdPartyComponent.Name" value="${path::get-file-name-without-extension(ThirdPartyComponent.Path)}"/>
+                <if test="${string::starts-with(IncludeName, ThirdPartyComponent.Name)}">
+                  <echo message="Looks like we have a match:"/>
+                  <echo message="    ${IncludeName}"/>
+                  <echo message="will be changed to:"/>
+                  <echo message="    ${ThirdPartyComponent.Name}"/>
+                  <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+                  <!--xmlpoke it-->
+
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/@Include)[${Index}]" value="${ThirdPartyComponent.Name}">
+                    <namespaces>
+                      <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                    </namespaces>
+                  </xmlpoke>
+                  
+                  <largeproperty name="Reference.Info" >
+                    <value xml="false" expand="true">
+                      <![CDATA[<Name>${ThirdPartyComponent.Name}</Name>
+  <HintPath>${ThirdPartyDirectory}\${ThirdPartyComponent.Path}</HintPath>]]>
+                    </value>
+                  </largeproperty>
+                  
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference)[${Index}]" value="${Reference.Info}">
+                    <namespaces>
+                      <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                    </namespaces>
+                  </xmlpoke>
+                </if>
+              </do>
+            </loopthrough>
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
       </do>
     </foreach>
   </target>

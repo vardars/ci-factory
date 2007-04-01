@@ -168,6 +168,7 @@ namespace UpdateVersion.Tasks
             if (Node == null)
             {
                 Log(Level.Warning, "Could not find an AssemblyInfo file in the project file: {0}.", projectFilePath);
+                return;
             }
 
             string AssemblyInfoPartialPath = Node.InnerText;

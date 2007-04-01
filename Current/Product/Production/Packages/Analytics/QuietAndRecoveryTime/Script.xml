@@ -87,4 +87,32 @@
     <property name="Analytics.Append" value="false"/>
     <call target="Analytics.CompileReport"/>
   </target>
+
+  <fileset id="Analytics.RecoveryTimeHistoryLineChartData">
+    <include name="${Analytics.PackageDirectory}\QuietAndRecoveryTime\RecoveryTimeHistoryLineChartData.xml"/>
+  </fileset>
+
+  <target name="Analytics.RecoveryTimeHistoryLineChartData">
+    <echo message="Generating RecoveryTimeHistoryLineChartData"/>
+    <delete>
+      <fileset>
+        <include name="${ArtifactRootDirectory}\RecoveryTimeHistoryLineXAxis.xml"/>
+        <include name="${ArtifactRootDirectory}\RecoveryTimeHistoryDurations.xml"/>
+      </fileset>
+    </delete>
+    <property name="Analytics.XmlInputFileName" value="${Analytics.PackageDirectory}\QuietAndRecoveryTime\QuietAndRecoveryTimeHistory.xml"/>
+    <property name="Analytics.XslFilePath" value="${Analytics.PackageDirectory}\QuietAndRecoveryTime\RecoveryTimeHistoryLineChartDataPublisher.xsl"/>
+    <property name="Analytics.XmlReportFileName" value="RecoveryTimeHistoryLineXAxis.xml"/>
+    <property name="Analytics.CopyFileSetRefId" value="Analytics.RecoveryTimeHistoryLineChartData"/>
+    <property name="Analytics.Append" value="false"/>
+
+    <property name="Analytics.RecoveryTimeHistoryLineChartData.Data" value=""/>
+    <xmlpeek property="Analytics.RecoveryTimeHistoryLineChartData.Data"
+      file="${Analytics.PackageDirectory}\QuietAndRecoveryTime\QuietAndRecoveryTimeHistory.xml"
+      nodeindex="0"
+      xpath="/quiettimes/recoverytime[position() > last()-200 and 121 > @duration and (between/build[@possition = 1]/@hourofday > 7) and (18 > between/build[@possition = 2]/@hourofday)]"
+      failonerror="False"/>
+
+    <call if="${Analytics.RecoveryTimeHistoryLineChartData.Data != ''}" target="Analytics.CompileReport"/>
+  </target>
 </project>

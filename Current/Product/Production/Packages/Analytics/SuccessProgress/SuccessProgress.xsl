@@ -14,17 +14,17 @@
     <number>
       <xsl:value-of select="$BuildAttemptCount"/>
     </number>
-    <exsl:document href="..\..\..\Artifacts\SuccessProgressSuccessful.xml" fragment="yes" append="yes" >
+    <exsl:document href="Artifacts\SuccessProgressSuccessful.xml" fragment="yes" append="yes" >
       <number>
         <xsl:value-of select="$SuccessfulBuildCount"/>
       </number>
     </exsl:document>
-    <exsl:document href="..\..\..\Artifacts\SuccessProgressFailed.xml" fragment="yes" append="yes" >
+    <exsl:document href="Artifacts\SuccessProgressFailed.xml" fragment="yes" append="yes" >
       <number>
         <xsl:value-of select="$FailedBuildCount"/>
       </number>
     </exsl:document>
-    <exsl:document href="..\..\..\Artifacts\SuccessProgressException.xml" fragment="yes" append="yes" >
+    <exsl:document href="Artifacts\SuccessProgressException.xml" fragment="yes" append="yes" >
       <number>
         <xsl:value-of select="$ExceptionBuildCount"/>
       </number>

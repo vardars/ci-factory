@@ -30,9 +30,8 @@
     <string value="Analytics.SuccessProgressReport"/>
     <string value="Analytics.BuildTimeHistory"/>
     <string value="Analytics.QuietAndRecoveryTimeHistory"/>
-    <string value="Analytics.QuietTimeHistoryChartData"/>
     <string value="Analytics.QuietTimeHistoryLineChartData"/>
-    <string value="Analytics.RecoveryTimeHistoryChartData"/>
+    <string value="Analytics.RecoveryTimeHistoryLineChartData"/>
     <string value="Analytics.UnitTests"/>
     <string value="Analytics.UnitTestsCountsLineChartData"/>
   </strings>

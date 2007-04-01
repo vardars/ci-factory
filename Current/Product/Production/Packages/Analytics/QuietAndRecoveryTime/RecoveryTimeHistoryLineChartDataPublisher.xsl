@@ -6,11 +6,11 @@
   <xsl:output method="html"/>
 
   <xsl:template match="/">
-    <xsl:for-each select="/quiettimes/quiettime[position() > last()-200 and 121 > @duration and (between/build[@possition = 1]/@hourofday > 7) and (18 > between/build[@possition = 2]/@hourofday)]">
+    <xsl:for-each select="/quiettimes/recoverytime[position() > last()-200 and 121 > @duration and (between/build[@possition = 1]/@hourofday > 7) and (18 > between/build[@possition = 2]/@hourofday)]">
       <number>
         <xsl:value-of select="position()"/>
       </number>
-      <exsl:document href="Artifacts\QuietTimeHistoryDurations.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\RecoveryTimeHistoryDurations.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="@duration"/>
         </number>

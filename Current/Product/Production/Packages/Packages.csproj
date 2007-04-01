@@ -813,6 +813,7 @@
     <Content Include="MSBuild\Install\Install.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Analytics\Install\Other\RecompileAnalytics.xml" />
     <Content Include="Analytics\Simian\Simian.ChartData.Publisher.xsl" />
     <Content Include="Analytics\Simian\Simian.ChartData.xml" />
     <Content Include="Analytics\Simian\Simian.Publisher.xsl" />
@@ -861,5 +862,8 @@
     <Content Include="XenocodePostbuild\Install\Properties.xml" />
     <Content Include="XenocodePostbuild\XenocodePostbuild.Properties.xml" />
     <Content Include="XenocodePostbuild\XenocodePostbuild.Target.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Analytics\Install\Other\RecompileAnalytics.bat" />
   </ItemGroup>
 </Project>

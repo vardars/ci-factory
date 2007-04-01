@@ -71,10 +71,26 @@
         </items>
       </in>
       <do>
+        <regex input="${Analytics.BuildLog}" pattern="log\d+Lbuild\.(?'CCNetLabel'.*)\.xml$" failonerror="false"/>
+
+        <regex pattern="^*.log(?'PrivateAnalyticsArtifactFolderName'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
+        <property name="Common.ArtifactFolderName" value="${PrivateAnalyticsArtifactFolderName}"/>
+        <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
+        <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+        <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}"/>
+        
         <call target="Analytics.CompileReports"/>
       </do>
     </foreach>
     
   </target>
 
+  <target name="Analytics.SetUp">
+    
+  </target>
+
+  <target name="Analytics.TearDown">
+
+  </target>
+  
 </project>

@@ -17,22 +17,22 @@
       <number>
         <xsl:value-of select="position()"/>
       </number>
-      <exsl:document href="..\..\..\Artifacts\UnitTestsCountsHistoryTotal.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\UnitTestsCountsHistoryTotal.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$Total"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\UnitTestsCountsHistoryPassed.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\UnitTestsCountsHistoryPassed.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$Passed"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\UnitTestsCountsHistoryIgnored.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\UnitTestsCountsHistoryIgnored.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$Ignored"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\UnitTestsCountsHistoryFailed.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\UnitTestsCountsHistoryFailed.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$Failed"/>
         </number>
