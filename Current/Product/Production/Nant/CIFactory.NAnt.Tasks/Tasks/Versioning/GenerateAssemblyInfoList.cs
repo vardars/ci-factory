@@ -1,154 +1,197 @@
 using System;
+using System.Xml;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using NAnt.Core;
+using NAnt.Core.Types;
 using NAnt.Core.Attributes;
 using NAnt.Core.Tasks;
 
 namespace UpdateVersion.Tasks
 {
-	[TaskName("GenerateAssemblyInfoList")]
-	public class GenerateAssemblyInfoList : Task
-	{
+    [TaskName("GenerateAssemblyInfoList")]
+    public class GenerateAssemblyInfoList : Task
+    {
 
-		private string _SearchPattern;
-		private DirectoryInfo _SearchDirectory;
-		private bool _Append = false;
-		private DateTime _DateTime;
-		private FileInfo _OutputFile;
+        public const string VBASSEMBLYINFO = "AssemblyInfo.vb";
+        public const string CSASSEMBLYINFO = "AssemblyInfo.cs";
 
-		[TaskAttribute("SearchDirectory", Required=true)]
-		public DirectoryInfo SearchDirectory
-		{
-			set
-			{
-				this._SearchDirectory = value;
-			}
-			get
-			{
-				return this._SearchDirectory;
-			}
-		}
+        #region Fields
 
-		[TaskAttribute("SearchPattern", Required=true)]
-		public string SearchPattern
-		{
-			set
-			{
-				this._SearchPattern = value;
-			}
-			get
-			{
-				return this._SearchPattern;
-			}
-		}
+        private FileSet _AssemblyInfoFileSet;
 
-		[TaskAttribute("Append", Required=false)]
-		public bool Append
-		{
-			set
-			{
-				this._Append = value;
-			}
-			get
-			{
-				return this._Append;
-			}
-		}
+        private FileSet _Changeset;
 
-		[TaskAttribute("Output", Required=true)]
-		public FileInfo OutputFile
-		{
-			set
-			{
-				this._OutputFile = value;
-			}
-			get
-			{
-				return this._OutputFile;
-			}
-		}
+        private List<String> _ProcessedPaths;
 
-		[TaskAttribute("DateTime", Required=true)]
-		public string SetNewerThanDateTime
-		{
-			set
-			{
-				this._DateTime = DateTime.Parse(value);
-			}
-		}
+        private string _RootDirectory;
 
-		public DateTime NewerThanDateTime
-		{
-			get
-			{
-				return this._DateTime;
-			}
-		}
+        #endregion
 
-		protected override void ExecuteTask()
-		{
-			FileInfo[] List;
-			List =	this.GetAssemblyInfoList(this.SearchDirectory);
-			this.WriteToFile(List);
-		}
+        #region Properties
 
-		public FileInfo[] GetAssemblyInfoList(DirectoryInfo directory)
-		{
-			ArrayList AssemblyInfoList = new ArrayList();
-			foreach  (FileInfo FileInforamation in directory.GetFiles(this.SearchPattern)) 
-			{
-				if ((FileInforamation.LastWriteTime.CompareTo(this.NewerThanDateTime) > 0) & !FileInforamation.Name.StartsWith("AssemblyInfo"))
-				{
-					foreach (FileInfo AsmFileInforamation in directory.GetFiles("AssemblyInfo.*")) 
-					{
-						AssemblyInfoList.Add(AsmFileInforamation);
-					}
-					break;
-				}
-			}
-			
-			
-			foreach (DirectoryInfo SubDirectoryInfo in directory.GetDirectories())
-			{
-				AssemblyInfoList.AddRange(this.GetAssemblyInfoList(SubDirectoryInfo));
-			}
-			return (FileInfo[]) AssemblyInfoList.ToArray(typeof(FileInfo));
-		}
+        [TaskAttribute("rootdirectory", Required = true)]
+        public string RootDirectory
+        {
+        	get 
+        	{
+        		return _RootDirectory; 
+        	}
+        	set
+        	{
+        		_RootDirectory = value;
+        	}
+        }
 
-		public void WriteToFile(FileInfo[] fileList)
-		{
-			using(StreamWriter Writer = this.GetStream())
-			{
-				foreach (FileInfo FileInformation in fileList)
-				{
-					Writer.WriteLine(FileInformation.FullName);
-				}
-			}
-		}
+        [BuildElement("assemblyinfoset", Required = true)]
+        public FileSet AssemblyInfoFileSet
+        {
+            get
+            {
+                return _AssemblyInfoFileSet;
+            }
+            set
+            {
+                _AssemblyInfoFileSet = value;
+            }
+        }
 
-		public StreamWriter GetStream()
-		{
-			if (this.Append)
-			{
-				return this.OutputFile.AppendText();
-			} 
-			else 
-			{
-				return this.OutputFile.CreateText();
-			}
-		}
+        [BuildElement("changeset", Required = true)]
+        public FileSet Changeset
+        {
+            set
+            {
+                this._Changeset = value;
+            }
+            get
+            {
+                return this._Changeset;
+            }
+        }
 
-		public void test()
-		{
-			this.Append = true;
-			this.SearchPattern = "*.vb";
-			this.SearchDirectory = new DirectoryInfo("C:\\Projects\\Test CI\\Current\\Product\\Production");
-			this._OutputFile = new FileInfo("C:\\temp\\AsmList.txt");
-			this._DateTime = DateTime.Now;
-			this._DateTime = this._DateTime.Subtract(new TimeSpan(100,0,0,0));
-			this.ExecuteTask();
-		}
+        public List<String> ProcessedPaths
+        {
+            get
+            {
+                if (_ProcessedPaths == null)
+                    _ProcessedPaths = new List<string>();
+                return _ProcessedPaths;
+            }
+            set
+            {
+                _ProcessedPaths = value;
+            }
+        }
 
-	}
+        #endregion
+
+        #region Public Methods
+
+        public void ProcessChangeset()
+        {
+            foreach (string ChangedFilePath in this.Changeset.FileNames)
+            {
+                this.ProcessPath(Path.GetDirectoryName(ChangedFilePath));
+            }
+        }
+
+        public void ProcessPath(string directoryPath)
+        {
+        	if (this.ProcessedPaths.Contains(directoryPath))
+                return;
+
+            this.ProcessedPaths.Add(directoryPath);
+
+            if (File.Exists(Path.Combine(directoryPath, VBASSEMBLYINFO)))
+            {
+                this.AssemblyInfoFileSet.Includes.Add(Path.Combine(directoryPath, VBASSEMBLYINFO));
+                return;
+            }
+
+            if (File.Exists(Path.Combine(directoryPath, CSASSEMBLYINFO)))
+            {
+                this.AssemblyInfoFileSet.Includes.Add(Path.Combine(directoryPath, CSASSEMBLYINFO));
+                return;
+            }
+
+            string[] ProjectFiles = Directory.GetFiles(directoryPath, "*.*proj", SearchOption.TopDirectoryOnly);
+
+            if (ProjectFiles.Length == 0)
+            {
+                if (this.RootDirectory.ToLower() == directoryPath.ToLower())
+                    return;
+
+            	this.ProcessPath(Directory.GetParent(directoryPath).FullName);
+                return;
+            }
+
+            this.ProcessProjectFile(ProjectFiles[0]);
+        }
+
+        public void ProcessProjectFile(string projectFilePath)
+        {
+            Log(Level.Info, "Looking in project file for assemblyinfo location: {0}", projectFilePath);
+
+            string FileExt = Path.GetExtension(projectFilePath);
+
+            switch (FileExt.ToLower())
+            {
+                case ".csproj":
+                    FileExt = ".cs";
+                    break;
+                case ".vbproj":
+                    FileExt = ".vb";
+                    break;
+            }
+
+            XmlDocument xd = new XmlDocument();
+            xd.PreserveWhitespace = true;
+            xd.Load(projectFilePath);
+
+            string NameSpaceFor2005 = @"http://schemas.microsoft.com/developer/msbuild/2003";
+            bool Is2005 = xd.DocumentElement.HasAttribute("xmlns");
+
+            XmlNode Node = null;
+            if (Is2005)
+            {
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+                namespaceManager.AddNamespace("b", NameSpaceFor2005);
+
+                Node = xd.SelectSingleNode(string.Format("b:Project/b:ItemGroup/b:Compile[contains(@Include,'AssemblyInfo{0}')]/@Include", FileExt), namespaceManager);
+            }
+            else
+            {
+                Node = xd.SelectSingleNode(string.Format("//File[contains(@RelPath, 'AssemblyInfo{0}')]/@RelPath", FileExt));
+            }
+
+            if (Node == null)
+            {
+                Log(Level.Warning, "Could not find an AssemblyInfo file in the project file: {0}.", projectFilePath);
+            }
+
+            string AssemblyInfoPartialPath = Node.InnerText;
+            string AssemblyInfoFullPath = Path.Combine(Path.GetDirectoryName(projectFilePath), AssemblyInfoPartialPath);
+            this.AssemblyInfoFileSet.Includes.Add(AssemblyInfoFullPath);
+        }
+
+        #endregion
+
+        public void AdHocTest()
+        {
+            string ProjectFilePath = @"c:\Projects\VersioningTestProject\Current\Product\Production\2003-abnormal\Test.csproj";
+            this.ProcessProjectFile(ProjectFilePath);
+            Console.WriteLine(this.AssemblyInfoFileSet.Includes[0]);
+        }
+
+        #region Protected Methods
+
+        protected override void ExecuteTask()
+        {
+            this.ProcessChangeset();
+        }
+
+        #endregion
+
+    }
 }

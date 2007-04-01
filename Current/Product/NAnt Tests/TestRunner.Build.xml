@@ -8,6 +8,7 @@
   <include buildfile="VisualSourceSafeTests\InstallationTest.xml"/>
   <include buildfile="SubversionTests\InstallationTest.xml"/>
   <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
+  <include buildfile="VersioningTests\InstallationTest.xml"/>
   
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
@@ -16,6 +17,7 @@
         <string value="VisualSourceSafe.InstallationTest"/>
         <string value="Subversion.InstallationTest"/>
         <string value="VS.NETCompile.InstallationTest"/>
+        <string value="Versioning.InstallationTest"/>
       </fixtures>
     </testrunner>
   </target>
@@ -27,6 +29,11 @@
       <fileset basedir="C:\Projects\CI Factory\Current\Product\Install\CI Factory\Zip">
         <include name="**\*"/>
         <exclude name="CIFactory.zip"/>
+      </fileset>
+    </copy>
+    <copy todir="${Deployment.Directory.Path}\Packages">
+      <fileset basedir="Stubs">
+        <include name="**\*"/>
       </fileset>
     </copy>
   </target>

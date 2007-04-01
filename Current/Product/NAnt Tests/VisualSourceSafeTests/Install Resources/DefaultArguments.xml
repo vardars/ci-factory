@@ -10,6 +10,8 @@
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
+  <property name="NCover.Version" value="1.5.7" overwrite="false"/>
+  
   <property name="VSS.RootShare" value="C:\Source Safe DataBases" />
   <property name="VSS.DBPath" value="${VSS.RootShare}\${ProjectName}\srcsafe.ini" />
   <property name="VSS.Username" value="build" />

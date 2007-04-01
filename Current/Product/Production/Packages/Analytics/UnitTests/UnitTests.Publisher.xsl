@@ -187,27 +187,68 @@
         <xsl:with-param name="StatisticValue" select="format-number($UnitTestsDuration div 1000,'##0.00')"/>
       </xsl:call-template>
 
-      <xsl:variable name="mstest.resultnodes" select="//Tests/TestRun/result" />
-      <xsl:variable name="mstest.testcount" select="sum($mstest.resultnodes/totalTestCount)" />
+      <!--Are we runnign MbUnit?-->
+      <xsl:if test="//report-result/counter">
 
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'Total Test Count'"/>
-        <xsl:with-param name="StatisticValue" select="$mstest.testcount"/>
-      </xsl:call-template>
-      
-      <xsl:variable name="mstest.executedcount" select="sum($mstest.resultnodes/executedTestCount)" />
+        <xsl:variable name="mbunit.result.list" select="//report-result/counter"/>
+        <xsl:variable name="mbunit.assertcount" select="sum($mbunit.result.list/@assert-count)"/>
+        <xsl:variable name="mbunit.executedcount" select="sum($mbunit.result.list/@run-count)"/>
+        <xsl:variable name="mbunit.failurecount" select="sum($mbunit.result.list/@failure-count)"/>
+        <xsl:variable name="mbunit.notrun" select="sum($mbunit.result.list/@skip-count)"/>
 
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'Test Run Count'"/>
-        <xsl:with-param name="StatisticValue" select="$mstest.executedcount"/>
-      </xsl:call-template>
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Total Test Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mbunit.executedcount + $mbunit.notrun"/>
+        </xsl:call-template>
 
-      <xsl:variable name="mstest.failurecount" select="$mstest.executedcount - sum($mstest.resultnodes/passedTestCount)" />
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Run Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mbunit.executedcount"/>
+        </xsl:call-template>
 
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'Test Failure Count'"/>
-        <xsl:with-param name="StatisticValue" select="$mstest.failurecount"/>
-      </xsl:call-template>
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Failure Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mbunit.failurecount"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Assertion Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mbunit.assertcount"/>
+        </xsl:call-template>
+        
+      </xsl:if>
+
+      <!--Are we running MSTest?-->
+      <xsl:if test="//Tests/TestRun/result">
+
+        <xsl:variable name="mstest.resultnodes" select="//Tests/TestRun/result" />
+        <xsl:variable name="mstest.testcount" select="sum($mstest.resultnodes/totalTestCount)" />
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Total Test Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mstest.testcount"/>
+        </xsl:call-template>
+        
+        <xsl:variable name="mstest.executedcount" select="sum($mstest.resultnodes/executedTestCount)" />
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Run Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mstest.executedcount"/>
+        </xsl:call-template>
+
+        <xsl:variable name="mstest.failurecount" select="$mstest.executedcount - sum($mstest.resultnodes/passedTestCount)" />
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Failure Count'"/>
+          <xsl:with-param name="StatisticValue" select="$mstest.failurecount"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Assertion Count'"/>
+          <xsl:with-param name="StatisticValue" select="0"/>
+        </xsl:call-template>
+
+      </xsl:if>
 
     </integration>
   </xsl:template>

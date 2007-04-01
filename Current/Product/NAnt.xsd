@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/30/2007 14:59:26</xs:documentation>
+    <xs:documentation>NAnt schema generated at 04/01/2007 00:37:47</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -822,11 +822,11 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="UpdateVersion.Tasks.GenerateAssemblyInfoList">
-    <xs:attribute name="SearchDirectory" use="required" />
-    <xs:attribute name="SearchPattern" use="required" />
-    <xs:attribute name="Append" use="optional" />
-    <xs:attribute name="Output" use="required" />
-    <xs:attribute name="DateTime" use="required" />
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="assemblyinfoset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="1" maxOccurs="1" name="changeset" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
+    <xs:attribute name="rootdirectory" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />

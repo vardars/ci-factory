@@ -813,6 +813,16 @@
     <Content Include="MSBuild\Install\Install.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Analytics\Simian\Simian.ChartData.Publisher.xsl" />
+    <Content Include="Analytics\Simian\Simian.ChartData.xml" />
+    <Content Include="Analytics\Simian\Simian.Publisher.xsl" />
+    <Content Include="Analytics\Simian\Simian.Script.xml" />
+    <Content Include="Analytics\Simian\Simian.Statistics.xml" />
+    <Content Include="Analytics\UnitTests\UnitTests.Publisher.xsl" />
+    <Content Include="Analytics\UnitTests\UnitTests.Script.xml" />
+    <Content Include="Analytics\UnitTests\UnitTests.Statistics.xml" />
+    <Content Include="Analytics\UnitTests\UnitTestsCountsLineChartData.Publisher.xsl" />
+    <Content Include="Analytics\UnitTests\UnitTestsCountsLineChartData.xml" />
     <Content Include="CVS\Install\Install.xml" />
     <Content Include="CVS\Install\Properties.xml" />
     <Content Include="CVS\SourceControl.Properties.xml" />

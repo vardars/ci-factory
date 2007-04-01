@@ -9,11 +9,17 @@
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Stubs\SourceControlStub\Install\Install.xml" />
+    <Content Include="Stubs\SourceControlStub\Install\Properties.xml" />
     <Content Include="SubversionTests\Install Resources\DefaultArguments.xml" />
     <Content Include="SubversionTests\InstallationTest.xml" />
     <Content Include="TestRunner.Build.xml" />
     <Content Include="TestRunner.Common.xml" />
     <Content Include="TestRunner.Properties.xml" />
+    <Content Include="Stubs\SourceControlStub\SourceControl.Target.xml" />
+    <Content Include="VersioningTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VersioningTests\InstallationTest.xml" />
+    <Content Include="VersioningTests\SourceModificationReports\SourceModificationReport.xml" />
     <Content Include="VisualSourceSafeTests\Install Resources\DefaultArguments.xml" />
     <Content Include="VisualSourceSafeTests\InstallationTest.xml" />
     <Content Include="VS.NETCompileTests\Install Resources\DefaultArguments.xml" />

@@ -12,22 +12,7 @@
 
   <property name="NCover.Version" value="1.5.7" overwrite="false"/>
   
-  <largeproperty name="SourceControl.MainBuildBlock">
-    <value xml="false" expand="true">
-      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
-    </value>
-  </largeproperty>
-
-  <largeproperty name="SourceControl.BuildUpdateBlock">
-    <value xml="false" expand="true">
-      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
-    </value>
-  </largeproperty>
-
-  <filterchain id="Common.FilterChain" />
-
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  
 
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
@@ -46,6 +31,7 @@
     <string value="Simian" />
     <string value="LinesOfCode"/>
     <string value="Deployment"/>
+    <string value="SourceControlStub"/>
   </strings>
 
   <target name="Post.Install">

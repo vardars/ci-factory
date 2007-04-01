@@ -10,6 +10,8 @@
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
+  <property name="NCover.Version" value="1.5.7" overwrite="false"/>
+  
   <property name="SVN.URI.Root" value="http://localhost:81/svn"  />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" /><!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
