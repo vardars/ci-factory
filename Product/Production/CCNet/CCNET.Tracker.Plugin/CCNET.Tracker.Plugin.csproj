@@ -1,0 +1,77 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A690B211-007B-4D30-9E3C-8F35E432C54E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CCNET.Tracker.Plugin</RootNamespace>
+    <AssemblyName>CCNET.Tracker.Plugin</AssemblyName>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NetReflector, Version=1.0.0.102, Culture=neutral, PublicKeyToken=2f4dd8b32acbcd8e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\CCNET\NetReflector.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="IntegrationFilters\ConnectionInformation.cs" />
+    <Compile Include="IntegrationFilters\Query.cs" />
+    <Compile Include="IntegrationFilters\TrackerRequired.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Tracker.Common\Tracker.Common.csproj">
+      <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
+      <Name>Tracker.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\core\core.csproj">
+      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
+      <Name>core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Remote\Remote.csproj">
+      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
+      <Name>Remote</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdatePackage.bat" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)UpdatePackage.bat" "$(SolutionDir)" "$(TargetDir)" "$(TargetName)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
