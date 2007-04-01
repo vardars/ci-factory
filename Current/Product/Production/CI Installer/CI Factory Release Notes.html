@@ -1,19 +1,19 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
-{
- font-family: Verdana
+<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
+{ 
+ font-family: Verdana 
 }
-BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT
-{
-  font-size: 10.0pt;
-  margin-top:0pt;
-  margin-bottom:0pt;
-}
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
+{  
+  font-size: 10.0pt; 
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
 BODY, P
 {
-  margin-left:0pt;
+  margin-left:0pt; 
   margin-right:0pt;
 }
 BODY
@@ -46,7 +46,7 @@ table.zeroBorder td {
 	border-color: gray gray gray gray;
 }
 .hiddenStyle {
-		visibility: hidden;
+		visibility: hidden; 
 		position: absolute;
 		z-Index: 1;
 		paddingRight: 0;
@@ -65,11 +65,66 @@ table.zeroBorder td {
 .pb { height: 1px }
 }
 </style></head>
-<body revision='dd6cv3jm_09r2s2h:134'>
+<body revision='dd6cv3jm_09r2s2h:148'>
 <h1>
   CI Factory Release Notes
 </h1>
 <br>
+<h2>
+  Beta 0.8.0.121<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=22&amp;can=1&amp;q=&amp;sort=-status>Analytics
+Pacakge</a> - Issue# 22<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=38&amp;can=1&amp;q=&amp;sort=-status>Add
+Installer to VSTSVersionControl Package</a> - Issue# 38<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=39&amp;can=1&amp;q=&amp;sort=-status>CCNet
+Dashboard Latest Build Link</a> - Issue# 39<br>
+<h3>
+  Fixes
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=42&amp;can=1&amp;q=&amp;sort=-status>Assembly
+Version VS 2005</a> - Issue# 42<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=41&amp;can=1&amp;q=&amp;sort=-status>Fix
+NCover and MSTest App.config</a> - Issue# 41<br>
+<h3>
+  Informal Changes
+</h3>
+Add Developer.List for email in support of the Alerts Package<br>
+Get correct version showing on the dashboard<br>
+Add some branding<br>
+Set NCover version expected to 1.5.5<br>
+Include the Alerts Package and the Analytics Package in the default Arguments
+Packages<br>
+Finished renaming Threshold Package to Alerts Package.<br>
+Fixed Tracker Installer - Added CCNet plugin to Server, Dashboard, and
+CCTray.zip<br>
+Improved FixThirdPartyRefs in Scratch.Lib.xml - Will fix refs without hint paths
+now.<br>
+Fixed GenerateAssemblyInfoList - Forgot the exit when the node is null.<br>
+Fixed Analytics Package - Ready for Validation and prime time!<br>
+Added support for MbUnit to Analytics Package.<br>
+Change behavior of tfsmapworkspace task, if the workspace exists it will add to
+the mappings.<br>
+Added behavior to Get* targets in VSTS Source Control Package, will ensure the
+mapping for the directory to be gotten exists.<br>
+Move VSTS Source Control Tests to the NAnt Tests directory, will need to rename.<br>
+VSTS Workspace Make machine name dynamic<br>
+Make TFS workspace names include the machine name<br>
+Ask task Get Tab Stop stuff set right<br>
+Added function envvar::change-var<br>
+Add the shell of the StarTeam Package.<br>
+Add the StarTeam tasks from NAnt Contrib in CIFactory.NAnt.StarTeam.Tasks.<br>
+Added SwitchToMuchBetterUnit to Scratch.Lib.xml<br>
+Add SetProjectOutputDirectory to Scratch.Lib.xml<br>
+Get CVS Package to show in the Zip, alter zipfileset.<br>
+Check for TFS Server Url.<br>
+Make UserName Password and Domain optional, TFS.<br>
 <h2>
   Beta 0.8.0.101<br>
 </h2>

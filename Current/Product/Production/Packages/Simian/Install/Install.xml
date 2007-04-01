@@ -52,8 +52,8 @@ More information can be found at http://www.redhillconsulting.com.au/products/si
 
     <ask answer="Answer" question="${Simian.Ask.Question}" caption="Do you wish to continue?" >
       <options>
-        <string value="Yes"/>
         <string value="No"/>
+        <string value="Yes"/>
       </options>
     </ask>
     <if test="${Answer == 'No'}">
@@ -65,8 +65,8 @@ More information can be found at http://www.redhillconsulting.com.au/products/si
     <call target="Simian.GetLicense"/>
     <ask answer="Answer" question="${License.Content}" caption="Do you accept this license?">
       <options>
-        <string value="Yes"/>
         <string value="No"/>
+        <string value="Yes"/>
       </options>
     </ask>
     <if test="${Answer == 'No'}">

@@ -4,7 +4,6 @@
   <include buildfile="Properties.xml" />
 
   <property name="NCover.Install.IsNeeded" value="false" overwrite="false"/>
-  <property name="NCover.Version" value="1.5.6" overwrite="false"/>
   
   <target name="NCover.Install">
     <largeproperty name="Packages.AddVarificationActions.Block">
@@ -76,7 +75,7 @@ More information on NCover can be found at http://www.ncover.org]]>
   <if test="${Answer == 'Quit'}">
     <fail message="Your answer was was to quit." />
   </if>
-  <property name="NCover.Install.IsNeeded" value="true"/>
+  <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
 </target>
 
 <target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == NCover.Version}">
@@ -98,7 +97,7 @@ More information on NCover can be found at http://www.ncover.org]]>
     <if test="${Answer == 'Quit'}">
       <fail message="Your answer was was to quit." />
     </if>
-    <property name="NCover.Install.IsNeeded" value="true"/>
+    <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
   </target>
 
 </project>

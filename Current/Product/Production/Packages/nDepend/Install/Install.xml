@@ -47,8 +47,8 @@ More information can be found at http://www.ndepend.com]]>
 
     <ask answer="Answer" question="${nDepend.Ask.Question}" caption="Do you wish to continue?" >
       <options>
-        <string value="Yes"/>
         <string value="No"/>
+        <string value="Yes"/>
       </options>
     </ask>
     <if test="${Answer == 'No'}">
@@ -60,8 +60,8 @@ More information can be found at http://www.ndepend.com]]>
     <call target="nDepend.GetLicense"/>
     <ask answer="Answer" question="${License.Content}" caption="Do you accept this license?">
       <options>
-        <string value="Yes"/>
         <string value="No"/>
+        <string value="Yes"/>
       </options>
     </ask>
     <if test="${Answer == 'No'}">
