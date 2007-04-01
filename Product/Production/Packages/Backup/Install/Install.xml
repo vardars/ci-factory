@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Backup.Install" default="Backup.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Backup.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+      <![CDATA[<call target="Backup.CopyCCNETFiles" />
+      <call target="Backup.CopyPublishedFiles"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="Backup.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Backup"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Backup.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Backup"/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+  </target>
+
+  <target name="Backup.ValidateParameters">
+    <fail unless="${property::exists('Backup.BackupRepositoryDirectory')}" message="Please set the property Backup.BackupRepositoryDirectory"/>
+  </target>
+  
+</project>
