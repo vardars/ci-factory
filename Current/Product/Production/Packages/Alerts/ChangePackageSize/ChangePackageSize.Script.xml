@@ -27,13 +27,13 @@
         <then>
           <if test="${int::parse(Alerts.ChangePackageSize.LineCountDifference) >= int::parse(Alerts.ChangePackageSize.ExceedsPositiveLineCountDifference)}">
             <call target="Private.Alerts.ChangePackageSize.GenerateWarning"/>
-            <call target="Alertss.SendMessage"/>
+            <call target="Alerts.SendMessage"/>
           </if>
         </then>
         <elseif if="${0 > int::parse(Alerts.ChangePackageSize.LineCountDifference)}">
           <if test="${(int::parse(Alerts.ChangePackageSize.LineCountDifference) * -1) >= int::parse(Alerts.ChangePackageSize.ExceedsNegativeLineCountDifference)}">
             <call target="Private.Alerts.ChangePackageSize.GenerateThankYou"/>
-            <call target="Alertss.SendMessage"/>
+            <call target="Alerts.SendMessage"/>
           </if>
         </elseif>
       </ifthenelse>
@@ -42,7 +42,7 @@
     <ifthenelse test="${int::parse(Alerts.ChangePackageSize.FileCount) > int::parse(Alerts.ChangePackageSize.ExceedsFileCount)}">
       <then>
         <call target="Private.Alerts.ChangePackageSize.GenerateWarning"/>
-        <call target="Alertss.SendMessage"/>
+        <call target="Alerts.SendMessage"/>
       </then>
     </ifthenelse>
 
@@ -55,7 +55,7 @@
     <property name="Alerts.ChangePackageSize.LineCount" value="0"/>
 
     <xmlquery 
-      file="${Alertss.BuildLog}" 
+      file="${Alerts.BuildLog}" 
       query="//code-summaries/code-summary/linecount/@label" 
       id="LanguageLineCounts" 
     />
@@ -66,19 +66,19 @@
       </items>
       <do>
         <xmlpeek 
-          file="${Alertss.BuildLog}" 
+          file="${Alerts.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@totalLineCount" 
           property="totalLineCount"
         />
 
         <xmlpeek 
-          file="${Alertss.BuildLog}" 
+          file="${Alerts.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@emptyLineCount" 
           property="emptyLineCount"
         />
 
         <xmlpeek 
-          file="${Alertss.BuildLog}" 
+          file="${Alerts.BuildLog}" 
           xpath="//code-summaries/code-summary/linecount[@label = '${LanguageLabel}']/@commentLineCount" 
           property="commentLineCount"
         />
@@ -93,7 +93,7 @@
     <property name="Alerts.ChangePackageSize.FileCount" value="0"/>
 
     <xmlquery 
-      file="${Alertss.BuildLog}" 
+      file="${Alerts.BuildLog}" 
       query="//modifications/modification/filename" 
       id="ModificationList"
     />
@@ -109,9 +109,9 @@
   </target>
 
   <target name="Private.Alerts.ChangePackageSize.GenerateThankYou">
-    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Thanks For Reducing the Lines of Code" />
+    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Thanks For Reducing the Lines of Code" />
 
-    <largeproperty name="Alertss.SendMessage.Content">
+    <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -122,7 +122,7 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Alertss.Developer.Name},</p>
+            <p>${Alerts.Developer.Name},</p>
             <p>Thank you for reducing the number of lines of code from ${Alerts.ChangePackageSize.Previous.LineCount} to ${Alerts.ChangePackageSize.LineCount}.</p>
             <br/>
             <p>Cheers,</p>
@@ -134,9 +134,9 @@
   </target>
 
   <target name="Private.Alerts.ChangePackageSize.GenerateWarning">
-    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Submit Such a Large Change Package?" />
+    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Submit Such a Large Change Package?" />
 
-    <largeproperty name="Alertss.SendMessage.Content">
+    <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -147,7 +147,7 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Alertss.Developer.Name},</p>
+            <p>${Alerts.Developer.Name},</p>
             <p>
               Please take note that you submited a larger change package than is recommended.
               The number of lines added was atleast ${Alerts.ChangePackageSize.LineCountDifference}

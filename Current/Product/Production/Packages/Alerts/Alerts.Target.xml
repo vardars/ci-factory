@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alertss.Target">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Target">
 
-  <property name="Alertss.BuildLog" value="${CCNetLogFilePath}" overwrite="false"/>
+  <property name="Alerts.BuildLog" value="${CCNetLogFilePath}" overwrite="false"/>
   
   <trycatch>
     <try>
       <xmlpeek 
-        file="${Alertss.BuildLog}" 
+        file="${Alerts.BuildLog}" 
         xpath="//modification/user" 
-        property="Alertss.Developer.Name" 
+        property="Alerts.Developer.Name" 
         nodeindex="0" 
       />
     </try>
@@ -16,10 +16,10 @@
       <echo level="Error" message="${Exception}"/>
       <ifthenelse test="${CCNetBuildCondition == 'ForceBuild' and property::exists('CCNetForcedBy')}">
         <then>
-          <property name="Alertss.Developer.Name" value="${CCNetForcedBy}"/>
+          <property name="Alerts.Developer.Name" value="${CCNetForcedBy}"/>
         </then>
         <else>
-          <property name="Alertss.Developer.Name" value="Unknown"/>
+          <property name="Alerts.Developer.Name" value="Unknown"/>
         </else>
       </ifthenelse>
     </catch>
@@ -29,56 +29,56 @@
     <try>
       <xmlpeek 
         file="${BuildDirectory}\${environment::get-machine-name()}-ccnetproject.xml" 
-        xpath="//email/users/user[@name = '${Alertss.Developer.Name}']/@address" 
-        property="Alertss.Developer.Email" 
+        xpath="//email/users/user[@name = '${Alerts.Developer.Name}']/@address" 
+        property="Alerts.Developer.Email" 
         nodeindex="0" 
       />
     </try>
     <catch property="Exception">
       <echo level="Error" message="${Exception}"/>
-      <property name="Alertss.Developer.Email" value="UnknownDeveloper@chcsii.com"/>
+      <property name="Alerts.Developer.Email" value="UnknownDeveloper@chcsii.com"/>
     </catch>
   </trycatch>
 
-  <include buildfile="Alertss.Properties.xml" />
+  <include buildfile="Alerts.Properties.xml" />
 
   <!-- Input Properties
-  <property name="Alertss.TargetListRefId" value=""/>
+  <property name="Alerts.TargetListRefId" value=""/>
   -->
-  <target name="Alertss.Run">
-    <loopthrough property="Alertss.Target">
+  <target name="Alerts.Run">
+    <loopthrough property="Alerts.Target">
       <items>
-        <strings refid="${Alertss.TargetListRefId}" />
+        <strings refid="${Alerts.TargetListRefId}" />
       </items>
       <do>
-        <call target="${Alertss.Target}" failonerror="false"/>
+        <call target="${Alerts.Target}" failonerror="false"/>
       </do>
     </loopthrough>
   </target>
 
   <!-- Parameters
-  <property name="Alertss.SendMessage.Content" value="" />
-  <property name="Alertss.SendMessage.ToList" value="" />
-  <property name="Alertss.SendMessage.Subject" value="" />
+  <property name="Alerts.SendMessage.Content" value="" />
+  <property name="Alerts.SendMessage.ToList" value="" />
+  <property name="Alerts.SendMessage.Subject" value="" />
   -->
 
-  <target name="Alertss.SendMessage">
+  <target name="Alerts.SendMessage">
     <mail 
 			from="dod.ahlta.Build@noreply.com" 
-			tolist="${Alertss.SendMessage.ToList}"
-      cclist="${Alertss.SendMessage.CCList}"
-			subject="${Alertss.SendMessage.Subject}" 
+			tolist="${Alerts.SendMessage.ToList}"
+      cclist="${Alerts.SendMessage.CCList}"
+			subject="${Alerts.SendMessage.Subject}" 
 			mailhost="127.0.0.1"
 			format="Html"
-			message="${Alertss.SendMessage.Content}"
+			message="${Alerts.SendMessage.Content}"
 		/>
   </target>
   
-  <target name="Alertss.SetUp">
+  <target name="Alerts.SetUp">
     
   </target>
 
-  <target name="Alertss.TearDown">
+  <target name="Alerts.TearDown">
 
   </target>
   

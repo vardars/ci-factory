@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Tracker.Scripts">
 
-  <target name="Alerts.Tracker" unless="${Alertss.Developer.Name == 'Unknown'}">
+  <target name="Alerts.Tracker" unless="${Alerts.Developer.Name == 'Unknown'}">
 
     <!--
     1. One or more trackers with a note but the last note was not authored by the code submitter
@@ -9,11 +9,11 @@
     -->
 
     <property name="NoNoteFound" value="False"/>
-    <regex input="${Alertss.Developer.Name}" pattern="\w(?'ModifiedDevName'\w+)"/>
+    <regex input="${Alerts.Developer.Name}" pattern="\w(?'ModifiedDevName'\w+)"/>
     <property name="TrackersWithOutNotes" value=""/>
 
     <xmlquery 
-      file="${Alertss.BuildLog}" 
+      file="${Alerts.BuildLog}" 
       query="//TrackerQuery/Tracker/ID" 
       id="Trackers" 
     />
@@ -29,7 +29,7 @@
         <trycatch>
           <try>
             <xmlpeek 
-              file="${Alertss.BuildLog}" 
+              file="${Alerts.BuildLog}" 
               xpath="//TrackerQuery/Tracker[ID/text() = '${Tracker}']/LastNote" 
               property="Note"
             />
@@ -55,14 +55,14 @@
           </switch>
 
           <switch value="${string::to-lower(NoteAuthor)}">
-            <case value="${string::to-lower(Alertss.Developer.Name)}" break="true">
-              <echo message="The author and the developer are the same person (Author=${NoteAuthor}, Developer=${Alertss.Developer.Name})."/>
+            <case value="${string::to-lower(Alerts.Developer.Name)}" break="true">
+              <echo message="The author and the developer are the same person (Author=${NoteAuthor}, Developer=${Alerts.Developer.Name})."/>
             </case>
             <case value="${string::to-lower(ModifiedDevName)}" break="true">
               <echo message="The author and the developer are the same person (Author=${NoteAuthor}, Developer=${ModifiedDevName})."/>
             </case>
             <default>
-              <echo message="The author and the developer are different people (Author=${NoteAuthor}, Developer=${Alertss.Developer.Name})."/>
+              <echo message="The author and the developer are different people (Author=${NoteAuthor}, Developer=${Alerts.Developer.Name})."/>
               <property name="NoNoteOnThisTracker" value="True"/>
               <property name="NoNoteFound" value="True"/>
             </default>
@@ -83,19 +83,19 @@
       </do>
     </loopthrough>
 
-    <property name="Alertss.SendMessage.ToList" value="${Alertss.Developer.Email}" />
-    <property name="Alertss.SendMessage.CCList" value="${Alertss.Message.CCList}" />
+    <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
+    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
 
     <if test="${NoNoteFound}">
       <call target="Alerts.Tracker.GenerateWarning"/>
-      <call target="Alertss.SendMessage"/>
+      <call target="Alerts.SendMessage"/>
     </if>
   </target>
 
   <target name="Alerts.Tracker.GenerateWarning">
-    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Did you add a note?" />
+    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Did you add a note?" />
 
-    <largeproperty name="Alertss.SendMessage.Content">
+    <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -106,7 +106,7 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
             
-            <p>${Alertss.Developer.Name},</p>
+            <p>${Alerts.Developer.Name},</p>
             <p>
               When the build server picked up your tracker(s), it found that you had not written the last note.
               If the build server has made a mistake, please ignore.  Otherwise, please remember to go back and add

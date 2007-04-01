@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
-  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alertss\UnitTests\Previous.Properties.xml"/>
+  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\UnitTests\Previous.Properties.xml"/>
   <ifthenelse test="${file::exists(Alerts.UnitTests.PreviousPropertiesFilePath)}">
     <then>
       <include buildfile="${Alerts.UnitTests.PreviousPropertiesFilePath}" />
@@ -19,14 +19,14 @@
   <target name="Alerts.UnitTests">
 
     <xmlpeek 
-      file="${Alertss.BuildLog}" 
+      file="${Alerts.BuildLog}" 
       xpath="//Tests/TestRun/result/totalTestCount" 
       property="Alerts.UnitTests.Count"
       nodeindex="0"
     />
 
     <xmlquery id="ProjectPaths"
-      file="${Alertss.BuildLog}" 
+      file="${Alerts.BuildLog}" 
       query="//modification/project" 
     />
 
@@ -47,8 +47,8 @@
 
     <echo message="Unit Test Count is ${Alerts.UnitTests.Count}"/>
 
-    <property name="Alertss.SendMessage.ToList" value="${Alertss.Developer.Email}" />
-    <property name="Alertss.SendMessage.CCList" value="${Alertss.Message.CCList};jason_ray@CHCSII.com" />
+    <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
+    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList};jason_ray@CHCSII.com" />
 
     <echo message="Previous Unit Test Count is ${Alerts.UnitTests.Previous.Count}"/>
 
@@ -56,11 +56,11 @@
       <ifthenelse test="${Alerts.UnitTests.Count > Alerts.UnitTests.Previous.Count}">
         <then>
           <call target="Alerts.UnitTests.GenerateThankYou"/>
-          <call target="Alertss.SendMessage"/>
+          <call target="Alerts.SendMessage"/>
         </then>
         <elseif if="${Alerts.UnitTests.Previous.Count > Alerts.UnitTests.Count}">
           <call target="Alerts.UnitTests.GenerateWarning"/>
-          <call target="Alertss.SendMessage"/>
+          <call target="Alerts.SendMessage"/>
         </elseif>
       </ifthenelse>
     </if>
@@ -72,9 +72,9 @@
   </target>
 
   <target name="Alerts.UnitTests.GenerateThankYou">
-    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Thanks For Adding More Unit Tests" />
+    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Thanks For Adding More Unit Tests" />
 
-    <largeproperty name="Alertss.SendMessage.Content">
+    <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -85,7 +85,7 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Alertss.Developer.Name},</p>
+            <p>${Alerts.Developer.Name},</p>
             <p>Thank you for increasing the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
             <br/>
             <p>Cheers,</p>
@@ -97,9 +97,9 @@
   </target>
 
   <target name="Alerts.UnitTests.GenerateWarning">
-    <property name="Alertss.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
+    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
 
-    <largeproperty name="Alertss.SendMessage.Content">
+    <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
         <html>
           <head>
@@ -110,7 +110,7 @@
               <a href="${UrlToThisBuild}">${CCNetLabel}</a>
             </p>
 
-            <p>${Alertss.Developer.Name},</p>
+            <p>${Alerts.Developer.Name},</p>
             <p>Please take note that you have reduced the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
             <br/>
             <p>Cheers,</p>
