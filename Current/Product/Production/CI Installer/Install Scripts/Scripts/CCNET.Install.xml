@@ -17,6 +17,7 @@
   <property name="CCNET.ConfigFile" value="${CCNET.DashboardDirectory}\dashboard.config"/>
   <property name="BuildMaster.Name" value="BuildMaster" overwrite="false"/>
   <property name="BuildMaster.Email" value="fake@bogas.com" overwrite="false"/>
+  <property name="Developer.List" value="" overwrite="false"/>
   <property name="CCNET.ModificationDelaySeconds" value="120" overwrite="false"/>
   <property name="CCNET.IntervalTrigger" value="90" overwrite="false"/>
 
@@ -30,6 +31,7 @@
   <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceBuildDirectory}\dashboard"/>
   <property name="Private.CCNET.DefaultConfigFile" value="${Private.CCNET.DefaultDashboardDirectory}\dashboard.config"/>
 
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Name%', BuildMaster.Name)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Email%', BuildMaster.Email)}"        />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerPort%', CCNET.ServerPort)}"/>

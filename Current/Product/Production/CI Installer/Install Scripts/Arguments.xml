@@ -9,7 +9,12 @@
   <property name="CCNET.IntervalTrigger" value="90"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
-
+  <largeproperty name="Developer.List">
+    <value expand="true" xml="true">
+      <user name="bill.smith" address="bill.smith@gmail.com"/>
+    </value>
+  </largeproperty>
+  
   <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>

@@ -3,6 +3,7 @@
   <!ENTITY email '<email from="%ProjectName%.Build@noreply.com" mailhost="localhost" includeDetails="true">
         <users>
           <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
+          %Developer.List%
         </users>
         <groups>
           <group name="buildmaster" notification="failed"/>
