@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTests.Scripts">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
   <property name="Threshold.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Thresholds\UnitTests\Previous.Properties.xml"/>
   <ifthenelse test="${file::exists(Threshold.UnitTests.PreviousPropertiesFilePath)}">

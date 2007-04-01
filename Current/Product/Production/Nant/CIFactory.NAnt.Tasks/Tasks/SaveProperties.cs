@@ -27,7 +27,7 @@ namespace CIFactory.NAnt.Tasks
 
         private FileFormat _Format;
 
-        private string _ProjectName = "Bogas";
+        private string _ProjectName;
 
         private SaveProperty[] _PropertyList;
 
@@ -101,7 +101,10 @@ namespace CIFactory.NAnt.Tasks
             {
                 Writer = this.GetWriter();
                 Writer.WriteLine("<?xml version='1.0' encoding='utf-8' ?>");
-                Writer.WriteLine(string.Format("<project xmlns='http://nant.sf.net/schemas/nant.xsd'  name='{0}'>", this.ProjectName));
+                if (string.IsNullOrEmpty(this.ProjectName))
+                    Writer.WriteLine("<project xmlns='http://nant.sf.net/schemas/nant.xsd'>");
+                else
+                    Writer.WriteLine(string.Format("<project xmlns='http://nant.sf.net/schemas/nant.xsd'  name='{0}'>", this.ProjectName));
                 foreach (SaveProperty Property in this.PropertyList)
                 {
                     Writer.WriteLine(string.Format("<property name='{0}' value='{1}' />", Property.PropertyName, Property.PropertyValue));

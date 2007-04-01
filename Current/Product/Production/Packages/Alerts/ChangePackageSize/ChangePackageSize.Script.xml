@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="ChangePackageSize.Scripts">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.ChangePackageSize.Scripts">
 
   <property name="Threshold.ChangePackageSize.ExceedsPositiveLineCountDifference" value="20"/>
   <property name="Threshold.ChangePackageSize.ExceedsNegativeLineCountDifference" value="20"/>
