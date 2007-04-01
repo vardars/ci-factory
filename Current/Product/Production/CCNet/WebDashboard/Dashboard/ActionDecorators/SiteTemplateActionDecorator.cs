@@ -2,6 +2,7 @@ using System.Collections;
 using ObjectWizard;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC.View;
+using System.Reflection;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.ActionDecorators
 {
@@ -43,7 +44,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.ActionDecorators
 			System.Reflection.Assembly assembly;
 			
 			assembly = System.Reflection.Assembly.GetExecutingAssembly();
-			return assembly.GetName().Version.ToString();
+            return ((AssemblyInformationalVersionAttribute)assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), true)[0]).InformationalVersion;
 		}
 	}
 }
