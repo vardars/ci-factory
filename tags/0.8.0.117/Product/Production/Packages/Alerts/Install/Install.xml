@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Install" default="Alerts.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Alerts.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+      <![CDATA[<call target="Alerts.Run" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="Alerts.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Alerts"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Alerts.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Alerts"/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+  </target>
+
+  <target name="Alerts.ValidateParameters">
+    
+  </target>
+  
+</project>
