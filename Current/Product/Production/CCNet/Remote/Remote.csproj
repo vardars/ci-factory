@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -48,7 +48,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
+    <ErrorReport>none</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -60,7 +60,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>
     </DocumentationFile>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
     <NoWarn>
@@ -70,8 +70,8 @@
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
-    <DebugType>none</DebugType>
-    <ErrorReport>prompt</ErrorReport>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>none</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NetReflector">
@@ -89,61 +89,61 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-        <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
-          <Link>Properties\ProjectInfo.cs</Link>
-        </Compile>
-<Compile Include="Properties\AssemblyInfo.cs">
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="BuildCondition.cs">
+    <Compile Include="BuildCondition.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="CruiseControlException.cs">
+    <Compile Include="CruiseControlException.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="CruiseControlStatus.cs">
+    <Compile Include="CruiseControlStatus.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ExternalLink.cs">
+    <Compile Include="ExternalLink.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ForceFilterClientInfo.cs">
+    <Compile Include="ForceFilterClientInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ICruiseManager.cs">
+    <Compile Include="ICruiseManager.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ICruiseServer.cs">
+    <Compile Include="ICruiseServer.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="IntegrationStatus.cs">
+    <Compile Include="IntegrationStatus.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="IRemotingService.cs">
+    <Compile Include="IRemotingService.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ITrigger.cs">
+    <Compile Include="ITrigger.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="NoSuchProjectException.cs">
+    <Compile Include="NoSuchProjectException.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ProjectActivity.cs">
+    <Compile Include="ProjectActivity.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ProjectConfiguration.cs">
+    <Compile Include="ProjectConfiguration.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ProjectIntegratorState.cs">
+    <Compile Include="ProjectIntegratorState.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="ProjectStatus.cs">
+    <Compile Include="ProjectStatus.cs">
       <SubType>Code</SubType>
     </Compile>
-<Compile Include="RemotingServiceAdapter.cs">
+    <Compile Include="RemotingServiceAdapter.cs">
       <SubType>Code</SubType>
     </Compile>
-</ItemGroup>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
