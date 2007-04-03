@@ -11,7 +11,7 @@
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
   <largeproperty name="Developer.List">
     <value expand="true" xml="true">
-      <user name="bill.smith" address="bill.smith@gmail.com"/>
+      <user name="bill.smith" group="developer"  address="bill.smith@gmail.com"/>
     </value>
   </largeproperty>
   
