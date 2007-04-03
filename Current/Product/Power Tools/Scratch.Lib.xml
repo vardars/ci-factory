@@ -328,17 +328,14 @@
     </foreach>
   </target>
 
-  <!--
-  <property name="OutputDirectory" value="${ProductDirectory}\CommonBin" />
-  <property name="Switch" value="Common" overwrite="false"/> <-Common or Per->
-  -->
-  <target name="FixUpProjectOutputDir">
+  <!--<property name="Config.Value" value="Debug"/>
+  <property name="Config.Property.Name" value="ErrorReport"/>
+  <property name="Config.Property.Value" value="none"/>-->
+  <target name="SetConfigPropertyValue">
+
     <fileset id="Subjects">
-      <include name="${ProductionDirectory}\**\*.*proj"/>
+      <include name="${ProductDirectory}\**\*.*proj"/>
     </fileset>
-    <attrib readonly="false">
-      <fileset refid="Subjects" />
-    </attrib>
 
     <foreach item="File" property="ProjectFile.Path">
       <in>
@@ -346,40 +343,16 @@
       </in>
       <do>
         <echo message="******************************************************"/>
-        <echo message="Fixing ${ProjectFile.Path}"/>
+        <echo message="Setting ${Config.Property.Name} for config ${Config.Value} in ${ProjectFile.Path}"/>
 
-        <property name="Index" value="1"/>
-
-        <loopthrough property="Hint.Path">
-          <items>
-            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:PropertyGroup/b:OutputPath">
-              <namespaces>
-                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
-              </namespaces>
-            </xmlquery>
-          </items>
-          <do>
-
-            <if test="${Switch == 'Per'}">
-              <xmlpeek file="${ProjectFile.Path}" property="Config" xpath="(b:Project/b:PropertyGroup/@Condition)[${Index}]">
-                <namespaces>
-                  <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
-                </namespaces>
-              </xmlpeek>
-              <regex input="${Config}" pattern="\= \'(?'Config'\w+)\|"/>
-              <property name="OutputDirectory" value="bin\${Config}\"/>
-            </if>
-
-            <!--xmlpoke it-->
-            <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:PropertyGroup/b:OutputPath)[${Index}]" value="${OutputDirectory}">
-              <namespaces>
-                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
-              </namespaces>
-            </xmlpoke>
-
-            <property name="Index" value="${int::parse(Index) + 1}"/>
-          </do>
-        </loopthrough>
+        <xmlpoke
+            file="${ProjectFile.Path}"
+            xpath ="b:Project/b:PropertyGroup[contains(@Condition, '${Config.Value}')]/b:${Config.Property.Name}"
+            value="${Config.Property.Value}">
+          <namespaces>
+            <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+          </namespaces>
+        </xmlpoke>
 
       </do>
     </foreach>

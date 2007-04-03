@@ -16,6 +16,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 			watcher.Path = new FileInfo(filename).DirectoryName;
 			watcher.Changed += new FileSystemEventHandler(HandleFileChanged);
 			watcher.Renamed += new RenamedEventHandler(HandleFileChanged);
+            watcher.Created += new FileSystemEventHandler(HandleFileChanged);
 
 			timer = new Timer(500);
 			timer.AutoReset = false;
