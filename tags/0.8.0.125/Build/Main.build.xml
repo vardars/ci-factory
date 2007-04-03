@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
+
+  <include buildfile="Properties.build.xml"/>
+  <include buildfile="Common.Build.xml" />
+
+  <description>Begin Package Includes</description>
+  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
+  <include buildfile=".\Packages\Subversion\SourceControl.Target.xml" />
+  <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
+  <include buildfile=".\Packages\NCover\NCover.Target.xml" />
+  <include buildfile=".\Packages\Simian\Simian.Target.xml" />
+  <include buildfile=".\Packages\nDepend\nDepend.Target.xml" />
+  <include buildfile=".\Packages\LinesOfCode\LinesOfCode.Target.xml" />
+  <include buildfile=".\Packages\Deployment\Deployment.Target.xml" />
+  <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
+  <description>End Package Includes</description>
+
+  <target name="Triggered" depends="SetUps" >
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.PublishOldSource"/>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <call target="SourceModificationReport.PublishNewSource"/>
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies"/>
+        <call target="Versioning.IncreamentBuildNumberOfProduct"/>
+        <call target="Compile.CompileSource" />
+        <description>End Compile Actions</description>
+
+        <description>Begin Varification Actions</description>
+        <call target="UnitTest.RunTests" />
+        <description>End Varification Actions</description>
+
+        <description>Begin Post Build Actions</description>
+        <call target="NAnt.CreateDocumentation"/>
+        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+
+        <property name="Deployment.SourceFileName"  value="CIFactory.zip"/>
+        <property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
+        <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+        <property name="Deployment.TargetFile"	    value="CI-Factory-${CCNetLabel}.zip"/>
+        <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+        <property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
+
+        <call target="Deployment.PublishFile"/>
+
+        <loglevel level="None">
+          <do>
+            <call target="Simian.Run" failonerror="false"/>
+          </do>
+        </loglevel>
+        <call target="nDepend.Calculate" />
+        <call target="LinesOfCode.CountCodeLines" />
+        <description>End Post Build Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="NAnt.CreateDocumentation">
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+    <property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
+    <!--<property name="" value=""/>
+    <property name="" value=""/>-->
+
+    <uptodate property="Help.IsUpToDate">
+      <targetfiles>
+        <include name="${NAntDocumentationDirectory}/*.html" />
+      </targetfiles>
+      <sourcefiles basedir="${ThirdPartyDirectory}/nAnt/bin">
+        <include name="NAnt.Core.dll" />
+        <include name="*Task*.dll" />
+        <include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
+        <include name="NDoc.Documenter.*.dll" />
+      </sourcefiles>
+    </uptodate>
+    <ifnot test="${Help.IsUpToDate}">
+      <ndoc>
+        <assemblies basedir="${ThirdPartyDirectory}/nAnt/bin">
+          <include name="NAnt.Core.dll" />
+          <include name="*Task*.dll" />
+          <include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
+        </assemblies>
+        <documenters>
+          <documenter name="NAnt">
+            <property name="OutputDirectory" value="${NAntDocumentationDirectory}" />
+            <property name="SdkDocVersion" value="SDK_v1_1" />
+            <property name="SdkLinksOnWeb" value="true" />
+            <property name="NAntBaseUri" value="../" />
+            <property name="NamespaceFilter" value="" />
+            <property name="ProductName" value="CI Factory" />
+            <property name="ProductVersion" value="${CCNetLabel}" />
+            <property name="ProductUrl" value="http://cifactory.org" />
+            <property name="Preliminary" value="true" />
+            <property name="DocumentAttributes" value="True" />
+            <property name="IncludeAssemblyVersion" value="false" />
+            <property name="ShowMissingParams" value="True" />
+            <property name="ShowMissingReturns" value="True" />
+            <property name="ShowMissingValues" value="True" />
+          </documenter>
+        </documenters>
+      </ndoc>
+    </ifnot>
+  </target>
+
+  <target name="SetUps" >
+    <call target="Common.SetUp" />
+    <description>Begin SetUps</description>
+    <call target="SourceModificationReport.SetUp"/>
+    <call target="Versioning.SetUp"/>
+    <call target="SourceControl.SetUp"/>
+    <call target="UnitTest.SetUp"/>
+    <call target="Compile.SetUp"/>
+    <call target="UnitTest.SetUp"/>
+    <call target="Simian.SetUp"/>
+    <call target="nDepend.SetUp"/>
+    <call target="LinesOfCode.SetUp"/>
+    <call target="Deployment.SetUp"/>
+    <description>End SetUps</description>
+  </target>
+
+  <target name="TearDowns">
+    <description>Begin TearDowns</description>
+    <call target="SourceModificationReport.TearDown"/>
+    <call target="Versioning.TearDown"/>
+    <call target="SourceControl.TearDown"/>
+    <call target="UnitTest.TearDown"/>
+    <call target="Compile.TearDown"/>
+    <call target="UnitTest.TearDown"/>
+    <call target="Simian.TearDown"/>
+    <call target="nDepend.TearDown"/>
+    <call target="LinesOfCode.TearDown"/>
+    <call target="Deployment.TearDown"/>
+    <description>End TearDowns</description>
+  </target>
+
+</project>

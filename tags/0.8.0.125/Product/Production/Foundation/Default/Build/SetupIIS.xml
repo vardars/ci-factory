@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="BuildServerSetup" default="Setup">
+
+  <property name="ProjectName" value="%ProjectName%" />
+  <property name="BuildDirectory" value="%ProjectsDirectory%\${ProjectName}\Current\Build" />
+  <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+  <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+  <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
+  
+  <target name="Setup" >
+    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" enabledirbrowsing="true"/>
+    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
+    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages"/>
+    <exec program="${framework::get-framework-directory('net-2.0')}\aspnet_regiis.exe" commandline="-s W3SVC/1/ROOT/${ProjectName}" />
+  </target>
+  
+</project>
