@@ -193,6 +193,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "AskQuestion";
+            this.TopMost = true;
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
