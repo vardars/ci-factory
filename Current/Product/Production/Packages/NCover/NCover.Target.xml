@@ -42,6 +42,10 @@
         <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}"/>
       </do>
     </foreach>
+
+    <if test="${fileset::file-count('Coverage.Targets') == 0}">
+      <call target="Coverage.FindTargetAssebmlies"/>
+    </if>
     
     <setenv>
       <environment>
@@ -69,6 +73,13 @@
         <call target="Private.Coverage.NCoverExplorer" />
       </finally>
     </trycatch>
+  </target>
+
+  <target name="Coverage.FindTargetAssebmlies">
+    <fileset id="Coverage.Targets" >
+      <include name="${ProductionDirectory}\**\bin\${Coverage.TargetAssemblyFormat}" />
+      <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
+    </fileset>
   </target>
 
   <target name="Private.Coverage.NCoverExplorer">

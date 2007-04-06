@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.ServiceModel;
+using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace CCNET.TFS.Plugin
 {
@@ -56,6 +57,7 @@ namespace CCNET.TFS.Plugin
         public void Notify(string eventXml, string tfsIdentityXml)
         {
             int ChangeSetId = this.GetChangeSetId(eventXml);
+            Log.Debug(string.Format("Recieved notification from TFS server for changeset {0}.", ChangeSetId));
             NotificationReciever.NotifyChangeSetId(ChangeSetId, eventXml);
         }
 

@@ -9,6 +9,16 @@
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="NCoverTests\NCoverTests.xml" />
+    <Content Include="NCoverTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="NCoverTests\Resources\MbUnitProject.dll" />
+    <Content Include="NCoverTests\Resources\MbUnitProject.pdb" />
+    <Content Include="NCoverTests\Resources\Module.dll" />
+    <Content Include="NCoverTests\Resources\Module.pdb" />
+    <Content Include="NCoverTests\Resources\MSTestProject.dll" />
+    <Content Include="NCoverTests\Resources\MSTestProject.pdb" />
+    <Content Include="NCoverTests\Resources\NUnitProject.dll" />
+    <Content Include="NCoverTests\Resources\NUnitProject.pdb" />
     <Content Include="Stubs\SourceControlStub\Install\Install.xml" />
     <Content Include="Stubs\SourceControlStub\Install\Properties.xml" />
     <Content Include="SubversionTests\Install Resources\DefaultArguments.xml" />

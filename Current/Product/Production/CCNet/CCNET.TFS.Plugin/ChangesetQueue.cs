@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.TeamFoundation.VersionControl.Client;
+using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace CCNET.TFS.Plugin
 {
@@ -167,6 +168,7 @@ namespace CCNET.TFS.Plugin
             lock (this._Sync)
             {
                 Changeset Item = this.MyQueue.Dequeue();
+                Log.Debug(string.Format("Done with Changeset {0}.", Item.ChangesetId));
                 if (this.DequeueEvent != null)
                     this.DequeueEvent(Item);
                 return Item;
@@ -186,10 +188,22 @@ namespace CCNET.TFS.Plugin
         {
             lock (this._Sync)
             {
-                this.MyQueue.Enqueue(set);
-                if (this.EnqueueEvent != null)
-                    this.EnqueueEvent(set);
+                if (!this.Contains(set))
+                {
+                    Log.Debug(string.Format("Starting on Changeset {0}.", set.ChangesetId));
+                    this.MyQueue.Enqueue(set);
+                    if (this.EnqueueEvent != null)
+                        this.EnqueueEvent(set);
+                }
             }
+        }
+
+        public bool Contains(Changeset set)
+        {
+            foreach (Changeset Canidate in this.MyQueue)
+                if (Canidate.ChangesetId == set.ChangesetId)
+                    return true;
+            return false;
         }
 
         #endregion

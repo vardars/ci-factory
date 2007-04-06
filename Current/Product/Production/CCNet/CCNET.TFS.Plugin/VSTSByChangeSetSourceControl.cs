@@ -559,7 +559,7 @@ namespace CCNET.TFS.Plugin
                     modification.FileName = string.Empty;
                     modification.FolderName = item.ServerItem;
                 }
-
+                Log.Debug(modification.ToString());
                 modifications.Add(modification);
             }
 

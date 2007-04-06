@@ -357,7 +357,8 @@ namespace CCNET.TFS.Plugin
             SortedList<int, Changeset> ChangeSets = this.RetrieveChangeSetAfter(LastChangeSetId);
             foreach (Changeset Set in ChangeSets.Values)
             {
-                this.ChangesetQueue.Enqueue(Set);
+                if (LastChangeSetId != Set.ChangesetId)
+                    this.ChangesetQueue.Enqueue(Set);
             }
         }
 

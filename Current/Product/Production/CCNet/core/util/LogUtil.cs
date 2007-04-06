@@ -91,7 +91,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 			Debug
 		}
 
-		private static TraceSwitch CruiseControlSwitch = new CruiseControlTraceSwitch();
+		public static TraceSwitch CruiseControlSwitch = new CruiseControlTraceSwitch();
 
 		private class CruiseControlTraceSwitch : TraceSwitch
 		{

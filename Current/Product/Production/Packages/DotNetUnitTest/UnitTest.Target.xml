@@ -36,11 +36,36 @@
     <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
       <call target="UnitTest.FindTestAssebmlies"/>
     </if>
+
+    <call target="MbUnit.EnsureDependencies"/>
     
 		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
 			<assemblies refid="UnitTest.TestAssemblies" />
 		</mbunit>
 	</target>
+
+  <target name="MbUnit.EnsureDependencies">
+    <foreach item="File" property="UnitTest.Target.Path">
+      <in>
+        <items refid="UnitTest.TestAssemblies" />
+      </in>
+      <do>
+        <property name="UnitTest.Target.Directory" value="${path::get-directory-name(UnitTest.Target.Path)}"/>
+        <property name="MbUnit.InTarget.Path" value="${UnitTest.Target.Directory}\MbUnit.Framework.dll"/>
+        <ifnot test="${file::exists(MbUnit.InTarget.Path)}">
+          <copy todir="${UnitTest.Target.Directory}">
+            <fileset basedir="${ThirdPartyDirectory}\MbUnit">
+              <include name="MbUnit.Framework.dll"/>
+              <include name="QuickGraph.Algorithms.dll"/>
+              <include name="QuickGraph.dll"/>
+              <include name="Refly.dll"/>
+              <include name="TestFu.dll"/>
+            </fileset>
+          </copy>
+        </ifnot>
+      </do>
+    </foreach>
+  </target>
 
   <target name="UnitTest.FindTestAssebmlies">
     <fileset id="UnitTest.TestAssemblies" >
