@@ -330,7 +330,7 @@ namespace CCNET.TFS.Plugin
 
         private void OnNotifyChangeSetId(int id, string eventXml)
         {
-            if (eventXml.Contains(this.ProjectPath))
+            if (eventXml.IndexOf(this.ProjectPath, StringComparison.CurrentCultureIgnoreCase) > -1)
             {
                 Changeset Set = this.SourceControl.GetChangeset(id);
                 this.ChangesetQueue.Enqueue(Set);
