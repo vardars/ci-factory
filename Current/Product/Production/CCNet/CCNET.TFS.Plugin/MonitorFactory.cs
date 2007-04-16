@@ -19,12 +19,28 @@ namespace CCNET.TFS.Plugin
 
         public static VSTSMonitor GetMonitor(TeamFoundationServer server, string stateFilePath, string projectPath, int port)
         {
-            if (Monitors.ContainsKey(projectPath))
-                return Monitors[projectPath];
+            VSTSMonitor Monitor = null;
 
-            VSTSMonitor Monitor = new VSTSMonitor(server, stateFilePath, projectPath, port);
-            Monitors.Add(projectPath, Monitor);
-            return Monitor;
+            try
+                {
+
+                    lock (typeof(MonitorFactory))
+                    {
+                        if (Monitors.ContainsKey(projectPath))
+                            return Monitors[projectPath];
+
+                        Monitor = new VSTSMonitor(server, stateFilePath, projectPath, port);
+                        Monitors.Add(projectPath, Monitor);
+                    }
+
+                }
+            catch (System.Exception ex)
+                {
+                    ThoughtWorks.CruiseControl.Core.Util.Log.Error(ex);
+                    throw;
+                }
+
+                return Monitor;
         }
     }
 
