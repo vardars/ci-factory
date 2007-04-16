@@ -7,6 +7,8 @@ namespace CCNET.TFS.Plugin
 
     public class MonitorFactory
     {
+        private readonly static object SyncLock = new object();
+
         private static Dictionary<string, VSTSMonitor> _Monitors = new Dictionary<string, VSTSMonitor>();
 
         private static Dictionary<string, VSTSMonitor> Monitors
@@ -22,25 +24,25 @@ namespace CCNET.TFS.Plugin
             VSTSMonitor Monitor = null;
 
             try
+            {
+
+                lock (SyncLock)
                 {
+                    if (Monitors.ContainsKey(projectPath))
+                        return Monitors[projectPath];
 
-                    lock (typeof(MonitorFactory))
-                    {
-                        if (Monitors.ContainsKey(projectPath))
-                            return Monitors[projectPath];
-
-                        Monitor = new VSTSMonitor(server, stateFilePath, projectPath, port);
-                        Monitors.Add(projectPath, Monitor);
-                    }
-
+                    Monitor = new VSTSMonitor(server, stateFilePath, projectPath, port);
+                    Monitors.Add(projectPath, Monitor);
                 }
+
+            }
             catch (System.Exception ex)
-                {
-                    ThoughtWorks.CruiseControl.Core.Util.Log.Error(ex);
-                    throw;
-                }
+            {
+                ThoughtWorks.CruiseControl.Core.Util.Log.Error(ex);
+                throw;
+            }
 
-                return Monitor;
+            return Monitor;
         }
     }
 
