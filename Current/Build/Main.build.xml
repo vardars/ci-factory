@@ -10,7 +10,8 @@
   <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
   <include buildfile=".\Packages\NCover\NCover.Target.xml" />
   <include buildfile=".\Packages\Simian\Simian.Target.xml" />
-  <include buildfile=".\Packages\nDepend\nDepend.Target.xml" />
+  <include buildfile=".\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <!--<include buildfile=".\Packages\nDepend\nDepend.Target.xml" />-->
   <include buildfile=".\Packages\LinesOfCode\LinesOfCode.Target.xml" />
   <include buildfile=".\Packages\Deployment\Deployment.Target.xml" />
   <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
