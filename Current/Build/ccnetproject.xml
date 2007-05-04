@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE cruisecontrol [
-  <!ENTITY email '<email from="CI Factory.Build@noreply.com" mailhost="localhost" includeDetails="true">
+  <!ENTITY email '<email from="CIFactory.Build@noreply.com" mailhost="localhost" includeDetails="true">
         <users>
           <user name="BuildMaster" group="buildmaster" address="jay.flowers@gmail.com"/>
         </users>
