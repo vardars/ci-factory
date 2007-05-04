@@ -65,7 +65,7 @@
     </integrationFilter>
     <modificationDelaySeconds>45</modificationDelaySeconds>
     <sourcecontrol type="filtered">
-      <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
+      <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
         <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
         <webUrlBuilder type="websvn">
