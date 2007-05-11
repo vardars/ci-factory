@@ -247,11 +247,11 @@ namespace CCNET.Extensions.ForceFilters
 
         public void Test()
         {
-            this.UserName = "Build1";
-            this.Password = "AUTO_build1";
-            this.DomainName = "chcsii";
+            this.UserName = "";
+            this.Password = "";
+            this.DomainName = "";
             ForceFilterClientInfo info = this.GetClientInfo();
-            if (((UserInformation)info).Name != "jflowers")
+            if (((UserInformation)info).Name != "")
                 throw new Exception();
         }
     }
