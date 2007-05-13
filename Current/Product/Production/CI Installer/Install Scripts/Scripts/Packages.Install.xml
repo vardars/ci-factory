@@ -39,8 +39,10 @@
   </largeproperty>
 
   <largeproperty name="Private.Packages.buildReportBuildPlugin.EndTag">
-    <value><![CDATA[</xslFileNames>
-			</buildReportBuildPlugin>]]></value>
+    <value>
+      <![CDATA[</xslFileNames>
+      </buildReportBuildPlugin>]]>
+    </value>
   </largeproperty>
 
   <largeproperty name="Private.Packages.buildPlugins.EndTag">
@@ -50,7 +52,8 @@
   <largeproperty name="Private.Packages.XslMerger.EndTag">
     <value>
       <![CDATA[</filepairs>
-      </xslmerger>]]></value>
+      </xslmerger>]]>
+    </value>
   </largeproperty>
 
   <largeproperty name="Private.Packages.MergeFiles.EndTag">
@@ -59,7 +62,7 @@
       </merge>]]>
     </value>
   </largeproperty>
-  
+
   <largeproperty name="Private.Packages.PostBuild.EndTag">
     <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
   </largeproperty>
@@ -96,7 +99,7 @@
 
         <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
         <call target="Private.Packages.CopyPackage"/>
-        
+
         <call target="Private.Packages.AddInclude" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
         <call target="Private.Packages.AddSetUp" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
         <call target="Private.Packages.AddTearDown" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
@@ -150,8 +153,10 @@
   <property name="Packages.AddMergeFiles.Block" value=""/>
   <target name="Packages.AddMergeFiles">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddMergeFiles.Block}
-  ${Private.Packages.MergeFiles.EndTag}]]></value>
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddMergeFiles.Block}
+  ${Private.Packages.MergeFiles.EndTag}]]>
+      </value>
     </largeproperty>
     <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.MergeFiles.EndTag}" />
     <call target="Private.Packages.CCNETProjectConfig.Replace"/>
@@ -172,8 +177,10 @@
   <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
   <target name="Packages.AddbuildReportBuildPlugin">
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
-  ${Private.Packages.buildReportBuildPlugin.EndTag}]]></value>
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
+  ${Private.Packages.buildReportBuildPlugin.EndTag}]]>
+      </value>
     </largeproperty>
     <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildReportBuildPlugin.EndTag}" />
     <call target="Private.Packages.DashboardConfig.Replace"/>
@@ -182,89 +189,122 @@
   <property name="Packages.AddbuildPlugins.Block" value=""/>
   <target name="Packages.AddbuildPlugins">
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddbuildPlugins.Block}
-  ${Private.Packages.buildPlugins.EndTag}]]></value>
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddbuildPlugins.Block}
+  ${Private.Packages.buildPlugins.EndTag}]]>
+      </value>
     </largeproperty>
     <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildPlugins.EndTag}" />
     <call target="Private.Packages.DashboardConfig.Replace"/>
   </target>
 
+
   <target name="Private.Packages.AddInclude">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
-      <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />
-  ${Private.Packages.Include.EndTag}]]></value>
+        <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.Include.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.Include.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
+
 
   <target name="Private.Packages.AddSetUp">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp"/>
-  ${Private.Packages.SetUp.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.SetUp.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='SetUps']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='SetUps']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.SetUp']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddXml"/>
   </target>
 
+
   <target name="Private.Packages.AddTearDown">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown"/>
-  ${Private.Packages.TearDown.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown" />]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.TearDown.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='TearDowns']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='TearDowns']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.TearDown']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddXml"/>
   </target>
+
 
   <property name="Packages.AddPreBuildActions.Block" value=""/>
   <target name="Packages.AddPreBuildActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddPreBuildActions.Block}
-  ${Private.Packages.PreBuildActions.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddPreBuildActions.Block}]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PreBuildActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PreBuildActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
   <property name="Packages.AddCleanUpActions.Block" value=""/>
   <target name="Packages.AddCleanUpActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddCleanUpActions.Block}
-  ${Private.Packages.CleanUpActions.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddCleanUpActions.Block}]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.CleanUpActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CleanUpActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
   <property name="Packages.AddCompileActions.Block" value=""/>
   <target name="Packages.AddCompileActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddCompileActions.Block}
-  ${Private.Packages.CompileActions.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddCompileActions.Block}]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.CompileActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CompileActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
   <property name="Packages.AddVarificationActions.Block" value=""/>
   <target name="Packages.AddVarificationActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddVarificationActions.Block}
-  ${Private.Packages.VarificationActions.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddVarificationActions.Block}]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.VarificationActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.VarificationActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
   <property name="Packages.AddPostBuildActions.Block" value=""/>
   <target name="Packages.AddPostBuildActions">
-    <largeproperty name="Private.Packages.MainBuild.Replace.To">
-      <value xml="false" expand="true"><![CDATA[${Packages.AddPostBuildActions.Block}
-  ${Private.Packages.PostBuildActions.EndTag}]]></value>
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddPostBuildActions.Block}]]>
+      </value>
     </largeproperty>
-    <property name="Private.Packages.MainBuild.Replace.From" value="${Private.Packages.PostBuildActions.EndTag}" />
-    <call target="Private.Packages.MainBuild.Replace"/>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PostBuildActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
   <property name="Private.Packages.MainBuild.Replace.To" value=""/>
@@ -276,6 +316,162 @@
       </filterchain>
     </replace>
   </target>
+
+  <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value=""/>
+  <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value=""/>
+  <property name="Private.Packages.MainBuild.SmartAddXml.NewText" value=""/>
+  <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value=""/>
+  <target name="Private.Packages.MainBuild.SmartAddXml">
+    <script language="C#">
+      <imports >
+        <import namespace="System.Xml"/>
+        <import namespace="NAnt.Core.Types" />
+      </imports >
+      <code>
+        <![CDATA[
+public static void ScriptMain(NAnt.Core.Project project)
+{
+  string buildFile = project.Properties["Current.BuildFile"];
+
+  XmlDocument buildXmlDoc = new XmlDocument();
+  buildXmlDoc.Load(buildFile);
+  XmlNamespaceManager namespaces = new XmlNamespaceManager(buildXmlDoc.NameTable);
+  namespaces.AddNamespace("nant", "http://nant.sf.net/schemas/nant.xsd");
+
+  string sectionXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToXPath"];
+  string newText = project.Properties["Private.Packages.MainBuild.SmartAddXml.NewText"];
+  string ifNotXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.IfNotXPath"];
+  string toFrontString = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToFront"];
+
+  if (String.IsNullOrEmpty(sectionXPath))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.ToXPath");
+  if (String.IsNullOrEmpty(newText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.NewText");
+
+  bool toFront = "true".Equals(toFrontString);
+
+  XmlNode sectionNode = buildXmlDoc.SelectSingleNode(sectionXPath, namespaces);
+  if (sectionNode == null)
+    throw new ApplicationException("No node matched xpath (did you forget the nant: namespace?): " + sectionXPath);
+
+
+  bool add = true;
+
+  if (!String.IsNullOrEmpty(ifNotXPath))
+  {
+    if (buildXmlDoc.SelectSingleNode(ifNotXPath, namespaces) != null)
+    {
+      add = false;
+    }
+  }
+
+  if (add)
+  {
+    string nodeText;
+    if (toFront)
+    {
+      nodeText = newText + sectionNode.InnerXml;
+    }
+    else
+    {
+      nodeText = sectionNode.InnerXml + newText;
+    }
+
+    sectionNode.InnerXml = nodeText;
+
+    buildXmlDoc.PreserveWhitespace = false;
+    buildXmlDoc.Save(buildFile);
+  }
+}
+        ]]>
+      </code>
+    </script>
+  </target>
+
+  <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value=""/>
+  <property name="Private.Packages.MainBuild.SmartAddString.NewText" value=""/>
+  <target name="Private.Packages.MainBuild.SmartAddString">
+    <script language="C#">
+      <imports >
+        <import namespace="System.Xml"/>
+        <import namespace="NAnt.Core.Types" />
+      </imports >
+      <code>
+        <![CDATA[
+public static void ScriptMain(NAnt.Core.Project project)
+{
+  string buildFile = project.Properties["Current.BuildFile"];
+
+
+  string beforeText = project.Properties["Private.Packages.MainBuild.SmartAddString.BeforeText"];
+  if (String.IsNullOrEmpty(beforeText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddString.BeforeText");
+  string newText = project.Properties["Private.Packages.MainBuild.SmartAddString.NewText"];
+  if (String.IsNullOrEmpty(newText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddString.NewText");
+
+  string documentOuterText = File.ReadAllText(buildFile);
+
+  // We normalize white space
+  documentOuterText = Normalize(documentOuterText);
+  newText = Normalize(newText);
+
+  // Don't add the same text repeatedly
+  if (documentOuterText.IndexOf(newText) == -1)
+  {    
+    //Console.WriteLine(newText);
+    //Console.WriteLine(documentOuterText);
+
+    XmlDocument buildXmlDoc = new XmlDocument();
+    buildXmlDoc.Load(buildFile);
+    XmlNamespaceManager namespaces = new XmlNamespaceManager(buildXmlDoc.NameTable);
+    namespaces.AddNamespace("nant", "http://nant.sf.net/schemas/nant.xsd");
+
+    string documentOuterXml = buildXmlDoc.OuterXml;
+
+    documentOuterXml = Normalize(documentOuterXml);
+    beforeText = Normalize(beforeText);
+
+    int beforeTextIndex = documentOuterXml.IndexOf(beforeText);
+    if (beforeTextIndex < 0)
+      throw new ApplicationException("Text not found: " + beforeText);
+
+
+    documentOuterXml = documentOuterXml.Substring(0, beforeTextIndex) + newText + documentOuterXml.Substring(beforeTextIndex);
+
+    buildXmlDoc.LoadXml( documentOuterXml);
+
+
+    buildXmlDoc.PreserveWhitespace = false;
+    buildXmlDoc.Save(buildFile);
+  }
+
+
+}
+
+static string Normalize(string input)
+{
+  // We normalize white space
+  input = input.Replace('\r', ' ');
+  input = input.Replace('\n', ' ');
+  input = input.Replace('\t', ' ');
+  while (true)
+  {
+    int oldLength = input.Length;
+    input = input.Replace("  ", " ");
+    if (input.Length == oldLength) break;
+  }
+
+  // Normalize the space at the end of self-closing attributes
+  input = input.Replace("\"/>", "\" />");
+
+  return input;
+}
+        ]]>
+      </code>
+    </script>
+  </target>
+
 
   <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
   <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>

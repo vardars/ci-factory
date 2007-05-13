@@ -42,12 +42,14 @@ namespace CIFactory.NAnt.Functions
 
                 XmlNode Node = null;
                 Node = xd.SelectSingleNode("//b:AssemblyName", namespaceManager);
+                if (Node == null) return null;
                 return Node.InnerText;
             }
             else
             {
                 XmlNode Node = null;
                 Node = xd.SelectSingleNode("//Settings/@AssemblyName");
+                if (Node == null) return null;
                 return Node.InnerText;
             }
         }
@@ -69,6 +71,7 @@ namespace CIFactory.NAnt.Functions
 
                 XmlNode Node = null;
                 Node = xd.SelectSingleNode(string.Format("//b:PropertyGroup[contains(@Condition, '{0}')]/b:OutputPath", config), namespaceManager);
+                if (Node == null) return null;
                 OutputValue = Node.InnerText;
                 OutputValue = OutputValue.TrimEnd(@"\".ToCharArray());
             }
@@ -76,6 +79,7 @@ namespace CIFactory.NAnt.Functions
             {
                 XmlNode Node = null;
                 Node = xd.SelectSingleNode(string.Format("//Config[@Name = '{0}']/@OutputPath", config));
+                if (Node == null) return null;
                 OutputValue = Node.InnerText;
                 OutputValue = OutputValue.TrimEnd(@"\".ToCharArray());
             }

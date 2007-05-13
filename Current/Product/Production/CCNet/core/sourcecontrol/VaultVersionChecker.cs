@@ -58,7 +58,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol {
 		[ReflectorProperty("historyArgs", Required=false)]
 		public string HistoryArgs = DefaultHistoryArgs;
 
-        [ReflectorProperty("timeout", InstanceType = typeof(Timeout))]
+        [ReflectorProperty("timeout", InstanceType = typeof(Timeout), Required=false)]
 		public Timeout Timeout
 		{
 			get

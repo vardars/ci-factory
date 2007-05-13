@@ -6,6 +6,7 @@ using System.Text;
 using NAnt.Core;
 using NAnt.Core.Types;
 using NAnt.Core.Attributes;
+using System.IO;
 
 namespace CIFactory.NAnt.Functions
 {
@@ -28,6 +29,9 @@ namespace CIFactory.NAnt.Functions
         [Function("get-version")]
         public string GetVersion(string path)
         {
+            if (!File.Exists(path))
+                throw new FileNotFoundException("path", path, string.Format("File not found: {0}", path));
+
             return FileVersionInfo.GetVersionInfo(path).FileVersion;
         }
 
