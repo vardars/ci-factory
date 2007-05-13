@@ -30,7 +30,7 @@ namespace CIFactory.NAnt.Functions
         public string GetVersion(string path)
         {
             if (!File.Exists(path))
-                throw new FileNotFoundException("path", path, string.Format("File not found: {0}", path));
+                throw new FileNotFoundException(string.Format("File not found: {0}", path), path);
 
             return FileVersionInfo.GetVersionInfo(path).FileVersion;
         }
