@@ -10,7 +10,7 @@
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
-  <property name="NCover.Version" value="1.5.7" overwrite="false"/>
+  <property name="NCover.Version" value="1.5.8" overwrite="false"/>
 
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />

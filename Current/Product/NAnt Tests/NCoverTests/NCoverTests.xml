@@ -101,7 +101,7 @@
     
   </target>
 
-  <target name="NCoverTests.MbUnit.Test">
+  <target name="NCoverTests.MbUnit.Ignore">
 
     <copy todir="${ProductDirectory}\Unit Test\Test.Project\bin\Debug">
       <fileset basedir="NCoverTests\Resources">

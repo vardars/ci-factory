@@ -19,7 +19,7 @@
 
     <fileset id="AssemblyInfoSet" />
     
-    <GenerateAssemblyInfoList rootdirectory="${ProductionDirectory}">
+    <GenerateAssemblyInfoList rootdirectory="${ProductDirectory}">
       <assemblyinfoset refid="AssemblyInfoSet" />
       <changeset refid="SourceModificationReport.ModificationList" />
     </GenerateAssemblyInfoList>
