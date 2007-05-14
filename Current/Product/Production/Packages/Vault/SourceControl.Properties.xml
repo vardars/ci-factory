@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Properties">
-
-
+  
   <property name="Vault.Username" value="%Vault.Username%" overwrite="false" />
   <property name="Vault.Password" value="%Vault.Password%" overwrite="false" />
-
+  <property name="Vault.URI" value="%Vault.URI%" overwrite="false" />
+  <property name="Vault.Repository" value="%Vault.Repository%" overwrite="false" />
 </project>
