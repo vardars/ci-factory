@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
   <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\UnitTests\Previous.Properties.xml"/>
@@ -18,12 +18,31 @@
 
   <target name="Alerts.UnitTests">
 
-    <xmlpeek 
-      file="${Alerts.BuildLog}" 
-      xpath="//Tests/TestRun/result/totalTestCount" 
-      property="Alerts.UnitTests.Count"
-      nodeindex="0"
-    />
+		<property name="Alerts.UnitTests.Count" value="notset"/>
+
+		<switch value="true">
+			<case value="${directory::exists(PackagesDirectory + 'MSTest')}" break="true">
+				<xmlpeek
+					file="${Alerts.BuildLog}"
+					xpath="//Tests/TestRun/result/totalTestCount"
+					property="Alerts.UnitTests.Count"
+					nodeindex="0"
+					failonerror="false"
+				/>			 
+			</case>
+			<case value="${directory::exists(PackagesDirectory + 'DotNetUnitTest')}" break="true">
+				<xmlpeek
+					file="${Alerts.BuildLog}"
+					xpath="sum(//report-result/counter/@run-count)"
+					property="Alerts.UnitTests.Count"
+					nodeindex="0"
+					failonerror="false"
+				/>
+			</case>
+			<default>
+				<property name="Alerts.UnitTests.Count" value="0"/>		
+			</default>
+		</switch>
 
     <xmlquery id="ProjectPaths"
       file="${Alerts.BuildLog}" 
@@ -38,7 +57,7 @@
       </items>
       <do>
         <property name="Found" value=""/>
-        <regex input="${ProjectPath}" pattern="(?'Found'^\$/dod\.ahlta/Current/Product/Unit Test).*" options="IgnoreCase" failonerror="false"/>
+        <regex input="${ProjectPath}" pattern="(?'Found'/${ProjectCodeLineName}/Product/Unit Test).*" options="IgnoreCase" failonerror="false"/>
         <if test="${Found != ''}">
           <property name="AreChangesFromThisBuild" value="True"/>
         </if>
@@ -48,7 +67,7 @@
     <echo message="Unit Test Count is ${Alerts.UnitTests.Count}"/>
 
     <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
-    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList};jason_ray@CHCSII.com" />
+    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
 
     <echo message="Previous Unit Test Count is ${Alerts.UnitTests.Previous.Count}"/>
 

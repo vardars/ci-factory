@@ -48,12 +48,12 @@
   <target name="NCover.Install.NCover">
     <property name="NCover.Install.TempDir" value="${SourcePackagesDirectory}\NCover\Install\Temp"/>
     <mkdir dir="${NCover.Install.TempDir}" unless="${directory::exists(NCover.Install.TempDir)}"/>
-    <get src="http://ncover.org/SITE/files/549/download.aspx"
+    <get src="http://ncover.org/SITE/files/1173/download.aspx"
          dest="${NCover.Install.TempDir}\NCover.zip"
          verbose="true">
     </get>
     <unzip todir="${NCover.Install.TempDir}" zipfile="${NCover.Install.TempDir}\NCover.zip"/>
-    <exec program="MsiExec.exe" commandline='/i "${NCover.Install.TempDir}\NCover.msi"' />
+    <exec program="MsiExec.exe" commandline='/i "${NCover.Install.TempDir}\NCover-1.5.8.msi"' />
   </target>
 
   <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCover.ExePath)}">

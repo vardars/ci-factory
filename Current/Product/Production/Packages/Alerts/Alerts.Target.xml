@@ -28,7 +28,7 @@
   <trycatch>
     <try>
       <xmlpeek 
-        file="${BuildDirectory}\${environment::get-machine-name()}-ccnetproject.xml" 
+        file="${BuildDirectory}\ccnetproject.xml" 
         xpath="//email/users/user[@name = '${Alerts.Developer.Name}']/@address" 
         property="Alerts.Developer.Email" 
         nodeindex="0" 
@@ -36,7 +36,7 @@
     </try>
     <catch property="Exception">
       <echo level="Error" message="${Exception}"/>
-      <property name="Alerts.Developer.Email" value="UnknownDeveloper@chcsii.com"/>
+      <property name="Alerts.Developer.Email" value="UnknownDeveloper@blackhole.com"/>
     </catch>
   </trycatch>
 
@@ -64,7 +64,7 @@
 
   <target name="Alerts.SendMessage">
     <mail 
-			from="dod.ahlta.Build@noreply.com" 
+			from="${CCNetProject}.Build@noreply.com" 
 			tolist="${Alerts.SendMessage.ToList}"
       cclist="${Alerts.SendMessage.CCList}"
 			subject="${Alerts.SendMessage.Subject}" 

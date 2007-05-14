@@ -48,12 +48,6 @@
 
           <echo message="The author of the note is ${NoteAuthor}."/>
 
-          <switch value="${NoteAuthor}">
-            <case value="johnflowers" break="true">
-              <property name="NoteAuthor" value="Joflowers"/>
-            </case>
-          </switch>
-
           <switch value="${string::to-lower(NoteAuthor)}">
             <case value="${string::to-lower(Alerts.Developer.Name)}" break="true">
               <echo message="The author and the developer are the same person (Author=${NoteAuthor}, Developer=${Alerts.Developer.Name})."/>
@@ -116,7 +110,6 @@
             <p>Cheers,</p>
             <p>Your pal, the build server.</p>
             <br/>
-            <!--<p>P.S. Starting January 15, the build servers will fail the build if there is no note attached to the SCR. This note will need a body, as well; empty notes will fail the build.</p>-->
           </body>
         </html>
       </value>
