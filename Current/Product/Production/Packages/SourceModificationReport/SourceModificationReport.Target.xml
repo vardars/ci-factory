@@ -196,7 +196,7 @@ Hashtable alreadyAdded = new Hashtable();
 	if (alreadyAdded.Contains(modificationFilePath)) continue;
 	   
 	alreadyAdded.Add(modificationFilePath, null);
-	Project.Log(Level.Info, "Adding {0} to modification list.", modificationFilePath);
+	project.Log(Level.Info, "Adding {0} to modification list.", modificationFilePath);
 			modificationList.Includes.Add(modificationFilePath);
 			
 		}			  
