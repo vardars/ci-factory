@@ -192,6 +192,7 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.Name = "AskQuestion";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AskQuestion";
             this.TopMost = true;
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -69,20 +69,22 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 		/// </summary>
 		/// <param name="transform"></param>
 		/// <param name="xslFileName"></param>
-		private void LoadStylesheet(XslTransform transform, string xslFileName)
-		{
-			try
-			{
-				transform.Load(xslFileName);
-			}
-			catch (FileNotFoundException)
-			{
-				throw new CruiseControlException("XSL stylesheet file not found: " + xslFileName);
-			}
-			catch (XmlException ex)
-			{
-				throw new CruiseControlException("Bad XML in stylesheet: " + ex.Message);
-			}
-		}
+        private void LoadStylesheet(XslTransform transform, string xslFileName)
+        {
+            string XslFilePath = String.Empty;
+            try
+            {
+                XslFilePath = Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.Location), xslFileName);
+                transform.Load(XslFilePath);
+            }
+            catch (FileNotFoundException)
+            {
+                throw new CruiseControlException("XSL stylesheet file not found: " + xslFileName);
+            }
+            catch (XmlException ex)
+            {
+                throw new CruiseControlException("Bad XML in stylesheet: " + ex.Message);
+            }
+        }
 	}
 }

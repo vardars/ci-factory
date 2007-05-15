@@ -1,12 +1,30 @@
 using System.IO;
 using System.Text;
 using System.Xml.XPath;
+using System;
 
 namespace ThoughtWorks.CruiseControl.Core.Publishers
 {
 	public class HtmlDetailsMessageBuilder : IMessageBuilder
 	{
-		private const string HtmlCSSFile = @"xsl\cruisecontrol.css";
+        private string _HtmlCSSFile;
+
+        public string HtmlCSSFile
+        {
+            get 
+            {
+                if (String.IsNullOrEmpty(_HtmlCSSFile))
+                    _HtmlCSSFile = Path.Combine(
+                        Path.GetDirectoryName(this.GetType().Assembly.Location), 
+                        @"xsl\cruisecontrol.css");
+                return _HtmlCSSFile; 
+            }
+            set
+            {
+                _HtmlCSSFile = value;
+            }
+        }
+
 		private string _htmlCss;
 
 		public string BuildMessage(IIntegrationResult result)
