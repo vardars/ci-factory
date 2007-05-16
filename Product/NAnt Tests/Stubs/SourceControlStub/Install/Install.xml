@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceControlStub.Installer" default="Install">
+
+  <include buildfile="Properties.xml" />
+
+  <target name="SourceControlStub.Install">
+    
+  </target>
+
+  <target name="SourceControlStub.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="SourceControlStub"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+  </target>
+
+  <target name="SourceControlStub.ValidateParameters">
+
+  </target>
+  
+</project>
