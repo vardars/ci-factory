@@ -1,74 +1,107 @@
-<html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-<style>BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT 
-{ 
- font-family: Verdana 
+
+<style>
+BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, TITLE, TD, OPTION, SELECT {
+ font-family: Verdana;
+ 
 }
-BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT  
-{  
-  font-size: 10.0pt; 
+
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT {  
+  font-size: 10.0pt;
   margin-top:0pt;  
   margin-bottom:0pt;  
 } 
-BODY, P
-{
+
+BODY, P {
   margin-left:0pt; 
   margin-right:0pt;
 }
-BODY
-{
+
+BODY {
+  line-height: ;
   background: white;
   margin: 6px;
   padding: 0px;
 }
+
 h6 { font-size: 10pt }
 h5 { font-size: 11pt }
 h4 { font-size: 12pt }
 h3 { font-size: 13pt }
 h2 { font-size: 14pt }
 h1 { font-size: 16pt }
-blockquote { padding: 10px; border: 1px #DDDDDD dashed }
-a img {	border: 0; }
-table.zeroBorder {
-	border-width: 1px 1px 1px 1px;
-	border-style: dotted dotted dotted dotted;
-	border-color: gray gray gray gray;
-}
-table.zeroBorder th {
-	border-width: 1px 1px 1px 1px;
-	border-style: dotted dotted dotted dotted;
-	border-color: gray gray gray gray;
-}
-table.zeroBorder td {
-	border-width: 1px 1px 1px 1px;
-	border-style: dotted dotted dotted dotted;
-	border-color: gray gray gray gray;
-}
-.hiddenStyle {
-		visibility: hidden; 
-		position: absolute;
-		z-Index: 1;
-		paddingRight: 0;
-		background: white
-	}
-.misspell { background-image: url('/images/misspell.gif'); background-repeat: repeat-x; background-position: bottom }
-@media screen {
-.pb { border-top: 1px dashed #C0C0C0; border-bottom: 1px dashed #C0C0C0 }
-.writely-comment { font-size: 9pt; line-height: 1.4em; padding: 1px; border: 1px dashed #C0C0C0 }
-}
-@media print {
-.pb { border-top: 0px; border-bottom: 0px }
-.writely-comment { display: none }
-}
-@media screen,print {
-.pb { height: 1px }
-}
-</style></head>
-<body revision='dd6cv3jm_09r2s2h:148'>
+
+blockquote {padding: 10px; border: 1px #DDDDDD dashed }
+
+a img {border: 0}
+
+</style>
+
+
+
+
+</head>
+
+
+<body revision="dd6cv3jm_09r2s2h:165">
+
 <h1>
   CI Factory Release Notes
 </h1>
+<h2>
+  Beta 0.8.0.140
+</h2>
+<h3>
+  New
+</h3>
+Vault Package - Ready for use, Many thanks to Ibrahim Folarin<br>
+CCService - Added to the Power Tools<br>
+CCNet Documentation - Added to the Documentation folder<br>
+<h3>
+  Improvements
+</h3>
+Alerts Package - Added support for the DotNetUnitTest Package (MbUnit/NUnit) -
+this will alert you to changes in the unit test count<br>
+<p>
+  Tim Bassett -&nbsp;ask task will always be on top and centered.
+</p>
+<h3>
+  Fixes
+</h3>
+Tim Bassett fixed a&nbsp;race condition in the CCNet TFS source control block.
+<p>
+  Set all CI Factory assemblies action on error to no prompt - If there is an
+  unhandled exception you wont be prompted to send a report, this is supposed to
+  be fully automated right?&nbsp;
+</p>
+<p>
+  Fixed ccnet config file watcher for TFS source control block<br>
+</p>
+<p>
+  Added check to TFS source control block to handle duplicate notifications.
+</p>
+<p>
+  Tim Bassett made TFS source control block paths case insensitive .
+</p>
+<p>
+  Update to NCover 1.5.8
+</p>
+<p>
+  Fixed some issues with the SourceModification CreateModificationList - e.g.
+  Files in Product caused issues.
+</p>
+<p>
+  Added support to the VSTSSourceControl Package to get only the triggering
+  ChangeSet - This should have been there from the get go.
+</p>
+<p>
+  Justin Santa Barbara - added logic to better handle projects without
+  assemblies NAnt functions for vsprojects.
+</p>
+<p>
+  Removed project specific email address from Alerts Package<br>
+</p>
 <br>
 <h2>
   Beta 0.8.0.121<br>
