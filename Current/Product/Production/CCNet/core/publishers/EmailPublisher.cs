@@ -40,6 +40,20 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
             set { messageBuilder = value; }
         }
 
+		private string _DashboardServerName;
+		[ReflectorProperty("dashboardServerName")] 
+		public string DashboardServerName
+		{
+			get
+			{
+				return _DashboardServerName;
+			}
+			set
+			{
+				_DashboardServerName = value;
+			}
+		}
+
         /// <summary>
         /// The host name of the mail server.  This field is required to send email notifications.
         /// </summary>
@@ -104,6 +118,7 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
             if (result.Status == IntegrationStatus.Unknown)
                 return;
 
+			result.AddIntegrationProperty("CCNetDashboardServerName", this.DashboardServerName);
         	EmailMessage  emailMessage = new EmailMessage(result, this); 
             string to = emailMessage.Recipients;
             string subject = emailMessage.Subject;
