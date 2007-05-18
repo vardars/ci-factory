@@ -6,8 +6,8 @@
   <target name="Backup.Install">
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
-      <![CDATA[<call target="Backup.CopyCCNETFiles" />
-      <call target="Backup.CopyPublishedFiles"/>]]></value>
+      <![CDATA[<call target="Backup.CopyCCNETFiles" failonerror="false"/>
+      <call target="Backup.CopyPublishedFiles" failonerror="false"/>]]></value>
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
   </target>

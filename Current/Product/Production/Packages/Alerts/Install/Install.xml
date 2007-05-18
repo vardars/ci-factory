@@ -6,7 +6,7 @@
   <target name="Alerts.Install">
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
-      <![CDATA[<call target="Alerts.Run" />]]></value>
+      <![CDATA[<call target="Alerts.Run" failonerror="false"/>]]></value>
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
   </target>

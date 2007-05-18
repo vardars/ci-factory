@@ -6,7 +6,7 @@
   <target name="CSDiff.Install">
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
-        <![CDATA[<call target="CSDiff.GenerateHtmlReports"/>]]>
+        <![CDATA[<call target="CSDiff.GenerateHtmlReports" failonerror="false"/>]]>
       </value>
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
