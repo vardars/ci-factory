@@ -218,14 +218,14 @@
       <arg line='-m "Initial Load by CI Factory Installer"'/>
     </exec>
 
-		<switch value='${environment::variable-exists("SVN_ASP_DOT_NET_HACK")}'>
-			<case value='True' break='true'>
-				<property name='SvnDirName' value='_svn'/>
-			</case>
-			<case value='False' break='true'>
-				<property name='SvnDirName' value='.svn'/>
-			</case>
-			</switch>
+	  <switch value="${environment::variable-exists('SVN_ASP_DOT_NET_HACK')}">
+		  <case value='True' break='true'>
+			  <property name='SvnDirName' value='_svn'/>
+		  </case>
+		  <case value='False' break='true'>
+			  <property name='SvnDirName' value='.svn'/>
+		  </case>
+	  </switch>
 		
     <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
     <delete dir='${ProjectRootDirectory}\tags' includeemptydirs='true' />
