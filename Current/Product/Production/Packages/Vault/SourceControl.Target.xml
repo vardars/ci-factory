@@ -34,6 +34,7 @@
 	<target name="SourceControl.CleanGetOf" >
 		<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
 		<call target="Private.SourceControl.DeleteLocal.Directory" />
+		<property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
 		<call target="SourceControl.GetOf" />
 	</target>
 
@@ -78,7 +79,8 @@
 			username="${Vault.Username}"
 			password="${Vault.Password}"
 			repository="${Vault.Repository}"
-			path="${sourcecontrol::convertlocaltoserver(SourceControl.CheckOut.File)}"/>
+			path="${sourcecontrol::convertlocaltoserver(SourceControl.CheckOut.File)}"
+			comment="Checkout by CI Script"/>
 	</target>
 
 	<!--
@@ -91,7 +93,8 @@
 			username="${Vault.Username}"
 			password="${Vault.Password}"
 			repository="${Vault.Repository}"
-			path="${sourcecontrol::convertlocaltoserver(SourceControl.CheckIn.File)}"/>
+			path="${sourcecontrol::convertlocaltoserver(SourceControl.CheckIn.File)}"
+			diskfile="${SourceControl.CheckIn.File}"/>
 	</target>
 
 	<script language="C#" prefix="sourcecontrol">
@@ -127,17 +130,42 @@
 		/>
 	</target>
 
-	<target name="SourceControl.Repository.Load">
-
-		<vaultaddfile url="${Vault.URI}"
+	<target name="Private.SourceControl.AddLocalDirectory">
+		<vaultcreatefolder url="${Vault.Host}"
 		 username="${Vault.Username}"
 		 password="${Vault.Password}"
 		 repository="${Vault.Repository}"
-		 path="$/">
-			<fileset>
-				<include name="${ProjectRootDirectory}\**\*" />
+		 path="${sourcecontrol::convertlocaltoserver(Private.SourceControl.AddLocalDirectory)}"
+		 comment="Initial load by Instant CI script" />
+
+		<vaultaddfile url="${Vault.Host}"
+		 username="${Vault.Username}"
+		 password="${Vault.Password}"
+		 repository="${Vault.Repository}"
+		 path="${sourcecontrol::convertlocaltoserver(Private.SourceControl.AddLocalDirectory)}"
+		 comment="Initial load by Instant CI script">
+			<fileset basedir="${Private.SourceControl.AddLocalDirectory}">
+				<include name="*.*"  />
 			</fileset>
 		</vaultaddfile>
+	</target>
+
+	<target name="Private.SourceControl.AddLocalDirectories">
+		<foreach item="Folder" in="${Private.SourceControl.AddLocalDirectories}" property="Private.SourceControl.AddLocalDirectory" >
+			<call target="Private.SourceControl.AddLocalDirectory" unless="${string::contains(Private.SourceControl.AddLocalDirectory,'_sgbak')}" />
+			<property name="Private.SourceControl.AddLocalDirectories" value="${Private.SourceControl.AddLocalDirectory}"  />
+			<call target="Private.SourceControl.AddLocalDirectories" />
+		</foreach>
+	</target>
+
+	<target name="SourceControl.Repository.Load">
+		<vaultaddrepo url="${Vault.Host}"
+			username="${Vault.Username}"
+			password="${Vault.Password}"
+			repository="${Vault.Repository}"/>
+
+		<property name="Private.SourceControl.AddLocalDirectories" value="${ProjectRootDirectory}" />
+		<call target="Private.SourceControl.AddLocalDirectories" />
 	</target>
 
 	<target name="SourceControl.Bindings.Create">
