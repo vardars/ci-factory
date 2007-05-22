@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Simian.Target">
 
   <include buildfile="Simian.Properties.xml" />
@@ -11,9 +11,6 @@
         <exec workingdir="${path::get-short-path(ProductDirectory)}" program="${Simian.Console}" failonerror="false" >
           <arg line='"**/*.vb"' />
           <arg line='"**/*.cs"' />
-          <arg line='"**/*.java"' />
-          <arg line='"**/*.xml"' />
-          <arg line='"**/*.html"' />
           <arg line='-formatter=xml:${Simian.ReportFilePath}' />
         </exec>
       </do>
