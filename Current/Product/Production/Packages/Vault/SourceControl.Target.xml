@@ -32,7 +32,7 @@
 	</target>
 
 	<target name="SourceControl.CleanGetOf" >
-		<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+		<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.CleanGetOf}"/>
 		<call target="Private.SourceControl.DeleteLocal.Directory" />
 		<property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
 		<call target="SourceControl.GetOf" />
