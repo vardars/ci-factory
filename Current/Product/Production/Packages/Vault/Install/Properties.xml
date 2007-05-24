@@ -32,19 +32,19 @@
         </sourceControlProvider>
         <exclusionFilters>
           <pathFilter>
-            <pattern>**/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+            <pattern>**/Product/**/AssemblyInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+            <pattern>**/Product/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+            <pattern>**/Product/**/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/${ProjectCodeLineName}/Build/*.*</pattern>
+            <pattern>**/Build/*.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/${ProjectCodeLineName}/Build/**/*.*</pattern>
+            <pattern>**/Build/**/*.*</pattern>
           </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>
