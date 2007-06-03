@@ -68,21 +68,17 @@ To the maximum extent permitted by applicable law, in no event shall SMACCHIA.CO
 
 Developer End User understands that the SOFTWARE PRODUCT(S) may produce inaccurate results because of a failure or fault within the SOFTWARE PRODUCT(S) or failure by Developer End User to properly use and or deploy the SOFTWARE PRODUCT(S). Developer End User assumes full and sole responsibility for any use of the SOFTWARE PRODUCT(S), and bears the entire risk for failures or faults within the SOFTWARE PRODUCT(S). You agree that regardless of the cause of failure or fault or the form of any claim, YOUR SOLE REMEDY AND SMACCHIA.COM'S SOLE OBLIGATION SHALL BE GOVERNED BY THIS AGREEMENT AND IN NO EVENT SHALL SMACCHIA.COM'S LIABILITY EXCEED THE PRICE PAID TO SMACCHIA.COM FOR THE SOFTWARE PRODUCT(S). This Limited Warranty is void if failure of the SOFTWARE PRODUCT(S) has resulted from accident, abuse, alteration, unauthorized use or misapplication of the SOFTWARE PRODUCT(S). 
 
-13. INDEMNIFICATION. 
-
-You hereby agree to indemnify SMACCHIA.COM and its officers, directors, employees, agents, and representatives from each and every demand, claim, loss, liability, or damage of any kind, including actual attorneys fees, whether in tort or contract, that it or any of them may incur by reason of, or arising out of, any claim which is made by any third party with respect to any breach or violation of this Agreement by you or any claims based on the Applications and the SOFTWARE PRODUCT(S) included herein. 
-
-14. SUPPORT SERVICES. 
+13. SUPPORT SERVICES. 
 
 SMACCHIA.COM may provide you with support services related to the SOFTWARE PRODUCT(S) ("Support Services"). Use of Support Services is governed by SMACCHIA.COM policies and programs described in the user manual, in "on line" documentation and/or other SMACCHIA.COM provided materials. Any supplemental SOFTWARE PRODUCT(S) provided to you as part of the Support Services shall be considered part of the SOFTWARE PRODUCT(S) and subject to the terms and conditions of this EULA. With respect to technical information you provide to SMACCHIA.COM as part of the Support Services, SMACCHIA.COM may use such information for its business purposes, including for SOFTWARE PRODUCT(s) support and development. SMACCHIA.COM will not utilize such technical information in a form that personally identifies you. 
 
-15. TAX. 
+14. TAX. 
 
 All prices for SOFTWARE PRODUCT(S) on the NDepend website are shown without any indirect taxes. Unless stipulated separately by this Agreement, SMACCHIA.COM SARL, shall not charge the Developer End User any taxes excluding the value added tax (V.A.T.). Where applicable, SMACCHIA.COM SARL, shall charge any Developer End User residing in the European Union (European Economic Community), the value added tax under the legislation of the France. The value added tax sum shall be added to the final invoice sum issued by SMACCHIA.COM SARL at the moment of purchase and shall be considered obligatory for any EU resident user. 
 
 Except in the above cases, the Developer End User shall independently pay all taxes and duties, including value added taxes, sales taxes, and any other taxes or duties as required by any jurisdiction or country of their residence as a result of this licence which is granted to the Developer End User to use any of the Image(s), according to this Agreement
 
-16. MISCELLANEOUS. 
+15. MISCELLANEOUS. 
 
 This EULA shall be construed, interpreted and governed by the laws of France. This EULA gives you specific legal rights; you may have others that from country to country.
 
