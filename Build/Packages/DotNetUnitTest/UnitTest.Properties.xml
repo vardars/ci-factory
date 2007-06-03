@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
+  <property name="UnitTest.TestPath" value="${ProductDirectory}\Unit Test"/>
+  <fileset id="UnitTest.ProjectFiles">
+    <include name="${UnitTest.TestPath}\**\*.*proj"/>
+    <exclude name="${UnitTest.TestPath}\**\TestAssistance.NAnt.*proj"/>
+  </fileset>
+  <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
+  <property name="UnitTest.ReportNameFormat" value="${ProjectName}UnitTests"/>
+  <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
+</project>

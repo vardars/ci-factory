@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="StarTeam.Installer.Properties" >
+
+
+  <property name="StarTeam.Username" value="Build" overwrite="false" />
+  <property name="StarTeam.Password" value="password" overwrite="false" />
+
+  <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol  type="starteam" applyLabel="false" autoGetSource="true" >
+        
+      </sourcecontrol>]]>
+  </value>
+</largeproperty>
+
+<largeproperty name="SourceControl.MainBuildBlock">
+  <value xml="false" expand="true">
+    <![CDATA[<sourcecontrol type="filtered">
+        <sourceControlProvider  type="starteam" applyLabel="true" autoGetSource="false" >
+          
+        </sourceControlProvider>
+        <exclusionFilters>
+          <pathFilter>
+            <pattern>**/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/${ProjectCodeLineName}/Build/*.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/${ProjectCodeLineName}/Build/**/*.*</pattern>
+          </pathFilter>
+        </exclusionFilters>
+      </sourcecontrol>]]>
+    </value>
+  </largeproperty>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%StarTeam.Username%', StarTeam.Username)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%StarTeam.Password%', StarTeam.Password)}" />
+</project>
