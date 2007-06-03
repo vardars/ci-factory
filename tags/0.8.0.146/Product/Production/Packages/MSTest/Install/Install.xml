@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSTest.Install" default="MSTest.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="MSTest.Install">
+
+    <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
+      <then>
+        <property name="Private.Packages.MainBuild.Replace.To" value=""/>
+        <largeproperty name="Private.Packages.MainBuild.Replace.From">
+          <value xml="false"><![CDATA[<include buildfile="${PackagesDirectory}\Packages\MSTest\UnitTest.Target.xml" />]]></value>
+        </largeproperty>
+        <call target="Private.Packages.MainBuild.Replace"/>  
+      </then>
+      <else>
+        <largeproperty name="Packages.AddVarificationActions.Block">
+          <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
+        </largeproperty>
+        <call target="Packages.AddVarificationActions"/>
+      </else>
+    </ifthenelse>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\MSTest\MsTestSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\MSTest\MsTestReport.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\Unit Test Reports\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="MSTest.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSTest"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="UnitTest.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
+    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+  </target>
+
+  <target name="MSTest.ValidateParameters">
+
+  </target>
+  
+</project>
