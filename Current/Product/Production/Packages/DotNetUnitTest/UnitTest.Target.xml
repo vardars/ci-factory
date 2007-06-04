@@ -38,10 +38,15 @@
     </if>
 
     <call target="MbUnit.EnsureDependencies"/>
+
+		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
+		<function execute="${directory::setcurrentdirectory(ProductDirectory + '\CommonBin')}"/>
     
 		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
 			<assemblies refid="UnitTest.TestAssemblies" />
 		</mbunit>
+
+		<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
 	</target>
 
   <target name="MbUnit.EnsureDependencies">
@@ -89,5 +94,27 @@
   <target name="UnitTest.TearDown">
 
   </target>
+
+	<script language="C#" prefix="directory" >
+		<imports>
+			<import namespace="System.IO" />
+		</imports>
+
+		<code>
+			<![CDATA[
+         [Function("getcurrentdirectory")]
+         public static string GetCurrentDirectory()
+         {
+                 return Directory.GetCurrentDirectory();
+         }
+		 
+		 [Function("setcurrentdirectory")]
+         public static void SetCurrentDirectory(string path)
+         {
+                 Directory.SetCurrentDirectory(path);
+         }
+      ]]>
+		</code>
+	</script>
 
 </project>
