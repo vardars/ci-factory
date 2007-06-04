@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CIFactory.TestRunner.Common">
+
+  <!--<property name="TestRunner.DeleteIISVirDirs.ProjectName" value=""/>-->
+  <target name="TestRunner.DeleteIISVirDirs">
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}/Packages"/>
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}"/>
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName} Artifacts"/>
+  </target>
+  
+</project>
