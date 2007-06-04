@@ -110,7 +110,7 @@ namespace VSTS.Tasks
         }
 
         protected override void ExecuteTask()
-        {
+		{
             Boolean Result = false;
             this.SubvertConsoleOutput();
             try
@@ -124,10 +124,10 @@ namespace VSTS.Tasks
 
                 TestExecutor.Add(new ResultsOutputCommand(this.ResultsFile));
 
-                if (!String.IsNullOrEmpty(this.RunConfig))
+				if (!String.IsNullOrEmpty(this.RunConfig) && System.IO.File.Exists(this.RunConfig))
                     TestExecutor.Add(new RunConfigCommand(this.RunConfig));
 
-                if (!String.IsNullOrEmpty(this.TestMetaData))
+				if (!String.IsNullOrEmpty(this.TestMetaData) && System.IO.File.Exists(this.TestMetaData))
                     TestExecutor.Add(new TestMetaDataCommand(this.TestMetaData));
 
                 if (this.NoIsolation)

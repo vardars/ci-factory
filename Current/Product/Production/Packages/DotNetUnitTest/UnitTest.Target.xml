@@ -41,8 +41,8 @@
 
 		<if test="${fileset::file-count('UnitTest.TestAssemblies') != 0}">
 			<property name="UnitTest.Assembly" value="${fileset::get-name-at-index('UnitTest.TestAssemblies', 0)}"/>
-			<property name="UnitTest.BinDirectory" value="${path:get-directory-name(UnitTest.Assembly)}" />
-			<function execute="${directory::setcurrentdirectory(ProductDirectory + '\CommonBin')}"/>
+			<property name="UnitTest.BinDirectory" value="${path::get-directory-name(UnitTest.Assembly)}" />
+			<function execute="${directory::setcurrentdirectory(UnitTest.BinDirectory)}"/>
 		</if>
 		
     <call target="MbUnit.EnsureDependencies"/>
