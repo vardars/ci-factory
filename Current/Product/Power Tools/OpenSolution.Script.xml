@@ -22,6 +22,7 @@
   <target name="SetUp">
     <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\AssemblyPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.AddIn.dll"/>
     <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application" value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+		<writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Version" value="${file::get-version(ThirdPartyDirectory + '\MbUnit\MbUnit.AddIn.dll')}"/>
   </target>
   
 </project>
