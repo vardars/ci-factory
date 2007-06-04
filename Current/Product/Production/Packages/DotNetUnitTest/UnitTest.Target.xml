@@ -21,7 +21,9 @@
 	<!-- The following properties are for internal use only -->
 
 	<target name="UnitTest.RunTests" depends="UnitTest.LoadTasks">
-    
+
+		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
+		
     <foreach item="File" property="UnitTest.ProjectFile.Path">
       <in>
         <items refid="UnitTest.ProjectFiles" />
@@ -37,16 +39,25 @@
       <call target="UnitTest.FindTestAssebmlies"/>
     </if>
 
+		<if test="${fileset::file-count('UnitTest.TestAssemblies') != 0}">
+			<property name="UnitTest.Assembly" value="${fileset::get-name-at-index('UnitTest.TestAssemblies', 0)}"/>
+			<property name="UnitTest.BinDirectory" value="${path:get-directory-name(UnitTest.Assembly)}" />
+			<function execute="${directory::setcurrentdirectory(ProductDirectory + '\CommonBin')}"/>
+		</if>
+		
     <call target="MbUnit.EnsureDependencies"/>
 
-		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
-		<function execute="${directory::setcurrentdirectory(ProductDirectory + '\CommonBin')}"/>
-    
-		<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
-			<assemblies refid="UnitTest.TestAssemblies" />
-		</mbunit>
-
-		<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
+		<trycatch>
+			<try>
+				<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
+					<assemblies refid="UnitTest.TestAssemblies" />
+				</mbunit>
+			</try>
+			<finally>
+				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
+			</finally>
+		</trycatch>
+		
 	</target>
 
   <target name="MbUnit.EnsureDependencies">
