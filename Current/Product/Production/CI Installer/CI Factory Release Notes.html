@@ -4,17 +4,17 @@
 <style>
 BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, TITLE, TD, OPTION, SELECT {
  font-family: Verdana;
-
+ 
 }
 
-BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT {
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT {  
   font-size: 10.0pt;
-  margin-top:0pt;
-  margin-bottom:0pt;
-}
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
 
 BODY, P {
-  margin-left:0pt;
+  margin-left:0pt; 
   margin-right:0pt;
 }
 
@@ -44,11 +44,22 @@ a img {border: 0}
 </head>
 
 
-<body revision="dd6cv3jm_09r2s2h:165">
+<body revision="dd6cv3jm_09r2s2h:174">
 
 <h1>
   CI Factory Release Notes
 </h1>
+<h2>
+  RC 0.8.0.153
+</h2>
+<h3>
+  Improvements
+</h3>
+<pre>Update to MbUnit 2.4 RTM</pre>
+<h3>
+  Fixes
+</h3>
+<pre>Added new task tfsqueryalertsubscriptions to get a list of alert subscriptions<br>Fixed CCNet Email Publisher Link to Build Report<br>Fixed Simian target files<br>Fixed Vault Source Control Filter<br>Fixed Dashboard Build Report Configuration<br>Fixed cctray.zip, included plugins<br>Set working dir to the ProductDirectory when executing MSBuild<br>Set current directory to the bin directory of the unit test project for MbUnit<br>Fix MSTest check to see if the test run config exists<br><br></pre>
 <h2>
   Beta 0.8.0.143
 </h2>
