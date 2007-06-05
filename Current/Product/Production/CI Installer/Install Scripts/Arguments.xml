@@ -54,6 +54,7 @@
     <string value="CoverageEye"/>
     <string value="Tracker"/>
     <string value="InstallShield"/>
+		<string value="Vault"/>
     <string value="VSTSVersionControl" />
     -->
   </strings>
