@@ -3,7 +3,7 @@
 
 	<include buildfile="Wix.Properties.xml"/>
 
-	<property name="Private.InstallDirectory" value="${ProjectRootDirectory}\Current\Product\Install" />
+	<property name="Private.InstallDirectory" value="${ProductDirectory}\Install" />
 
 	<target name="Wix.SetUp">
 

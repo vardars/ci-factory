@@ -5,7 +5,7 @@
 
   <include buildfile="InstallShield.Properties.xml"/>
 
-  <property name="Private.InstallDirectory" value="${ProjectRootDirectory}\Current\Product\Install" />
+  <property name="Private.InstallDirectory" value="${ProductDirectory}\Install" />
 
   <target name="InstallShield.SetUp">
     

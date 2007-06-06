@@ -3,7 +3,7 @@
 
 	<include buildfile="XenocodePostbuild.Properties.xml"/>
 
-	<property name="Private.InstallDirectory" value="${ProjectRootDirectory}\Current\Product\Install" />
+	<property name="Private.InstallDirectory" value="${ProductDirectory}\Install" />
 
 	<target name="XenocodePostbuild.SetUp">
 
@@ -50,7 +50,7 @@
 					<!-- C:\projects\${ProjectName} -> ProjectRoot\Current -->
 					<!-- Are others needed? -->
 					<arg value="/pathmap" />
-					<arg value="C:\projects\${ProjectName}\" />
+					<arg value="${ProjectDirectory}\" />
 					<arg value="${ProjectCodeLineDirectory}\" />
 				</exec>
 
