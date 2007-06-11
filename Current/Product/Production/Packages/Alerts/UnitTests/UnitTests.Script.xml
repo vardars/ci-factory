@@ -71,7 +71,7 @@
 
     <echo message="Previous Unit Test Count is ${Alerts.UnitTests.Previous.Count}"/>
 
-    <if test="${Alerts.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true}">
+    <if test="${Alerts.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true and Alerts.UnitTests.Count != 'notset'}">
       <ifthenelse test="${Alerts.UnitTests.Count > Alerts.UnitTests.Previous.Count}">
         <then>
           <call target="Alerts.UnitTests.GenerateThankYou"/>
