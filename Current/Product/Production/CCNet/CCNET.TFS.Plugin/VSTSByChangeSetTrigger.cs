@@ -260,8 +260,7 @@ namespace CCNET.TFS.Plugin
 
             if (this.ChangesetQueue.Count > 0)
             {
-                this.ChangesetQueue.BeginIntegration();
-                Log.Debug(String.Format("Triggered by changeset {0}.", this.ChangesetQueue.GetCurrentIntegrationSet().ChangesetId));
+                Log.Debug(String.Format("Triggered by changeset {0}.", this.ChangesetQueue.Peek().ChangesetId));
                 return BuildCondition.IfModificationExists;
             }
 

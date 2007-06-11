@@ -175,7 +175,7 @@ namespace CCNET.TFS.Plugin
             }
         }
 
-        private Changeset Peek()
+        public Changeset Peek()
         {
             lock (this._Sync)
             {
