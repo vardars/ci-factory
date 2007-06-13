@@ -84,7 +84,7 @@
       </ifthenelse>
     </if>
 
-    <saveproperties file="${Alerts.UnitTests.PreviousPropertiesFilePath}" format="Include">
+    <saveproperties file="${Alerts.UnitTests.PreviousPropertiesFilePath}" format="Include" unless="Alerts.UnitTests.Count == 'notset'}">
       <property name="Alerts.UnitTests.Previous.Count" value="${Alerts.UnitTests.Count}"/>
     </saveproperties>
 
