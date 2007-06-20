@@ -16,7 +16,7 @@
 
   <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Compile.Environment.xml" overwrite="false"/>
 
-  <property name="Compile.Environment.RefId" value="Ant.Environment" overwrite="false"/>
+  <property name="Compile.Environment.RefId" value="MSBuild.Environment" overwrite="false"/>
 
   <ifthenelse test="${file::exists(Compile.Environment.ConfigFilePath)}">
     <then>
