@@ -49,5 +49,14 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 
 			return BuildCondition;
 		}
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+		}
+
+		#endregion
 	}
 }

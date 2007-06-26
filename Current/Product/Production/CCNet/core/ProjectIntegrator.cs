@@ -255,6 +255,10 @@ namespace ThoughtWorks.CruiseControl.Core
 				// notify the schedule whether the build was successful or not
 				_trigger.IntegrationCompleted();
 			}
+			else
+			{
+				_trigger.IntegrationNotRun();
+			}
 		}
 
 		private bool ShouldRunIntegration()

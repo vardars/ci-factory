@@ -90,5 +90,15 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 			trigger.BuildCondition = BuildCondition.ForceBuild;
 			return trigger;
 		}
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+			this.InnerTrigger.IntegrationNotRun();
+		}
+
+		#endregion
 	}
 }

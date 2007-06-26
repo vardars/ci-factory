@@ -112,5 +112,15 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 				}
 			}
 		}
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+			this.InnerTrigger.IntegrationNotRun();
+		}
+
+		#endregion
 	}
 }

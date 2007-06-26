@@ -158,6 +158,16 @@ namespace CCNET.TFS.Plugin
             }
         }
 
+		public void CancleIntegration()
+		{
+			if (this.InIntegration && this.CurrentIntegrationSet != null)
+			{
+				this.CurrentIntegrationSet = null;
+				this.NeedToDequeue = false;
+				this.InIntegration = false;
+			}
+		}
+
         public Changeset GetCurrentIntegrationSet()
         {
             return this.CurrentIntegrationSet;

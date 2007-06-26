@@ -28,6 +28,7 @@ namespace CCNET.TFS.Plugin
         private string _StateFilePath;
         private int _Port;
         private ChangesetQueue _ChangesetQueue;
+		private bool _InIntegration = false;
 
         #endregion
 
@@ -144,6 +145,18 @@ namespace CCNET.TFS.Plugin
 
         #region Properties
 
+		public bool InIntegration
+		{
+			get
+			{
+				return _InIntegration;
+			}
+			set
+			{
+				_InIntegration = value;
+			}
+		}
+
         public VSTSMonitor Monitor
         {
             get
@@ -245,6 +258,7 @@ namespace CCNET.TFS.Plugin
 
         public void IntegrationCompleted()
         {
+			this.InIntegration = false;
             this.ChangesetQueue.EndIntegration();
         }
 
@@ -258,8 +272,10 @@ namespace CCNET.TFS.Plugin
             if (this.Monitor.Status != MonitorStatus.Subscribed)
                 this.Monitor.Subscribe();
 
-            if (this.ChangesetQueue.Count > 0)
+            if (this.ChangesetQueue.Count > 0 && !this.InIntegration)
             {
+				this.InIntegration = true;
+				this.ChangesetQueue.BeginIntegration();
                 Log.Debug(String.Format("Triggered by changeset {0}.", this.ChangesetQueue.Peek().ChangesetId));
                 return BuildCondition.IfModificationExists;
             }
@@ -268,6 +284,17 @@ namespace CCNET.TFS.Plugin
         }
 
         #endregion
-    }
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+			this.InIntegration = false;
+			this.ChangesetQueue.CancleIntegration();
+		}
+
+		#endregion
+	}
 
 }

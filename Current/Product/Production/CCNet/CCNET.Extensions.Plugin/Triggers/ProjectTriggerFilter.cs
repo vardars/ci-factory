@@ -63,24 +63,34 @@ namespace CCNET.Extensions.Triggers
             }
         }
 
-        public BuildCondition ShouldRunIntegration()
-        {
-            if (this.InnerTrigger.ShouldRunIntegration() == BuildCondition.NoBuild)
-                return BuildCondition.NoBuild;
+		public BuildCondition ShouldRunIntegration()
+		{
+			BuildCondition ShouldRun = this.InnerTrigger.ShouldRunIntegration();
+			if (ShouldRun == BuildCondition.NoBuild)
+				return BuildCondition.NoBuild;
 
-            foreach (ProjectFilter Project in this.ProjectFilters)
-            {
-                if (!Project.IsAllowed())
-                {
-                    this.InnerTrigger.IntegrationCompleted();
-                    return BuildCondition.NoBuild;
-                }
-            }
-            
-            return this.InnerTrigger.ShouldRunIntegration();
-        }
+			foreach (ProjectFilter Project in this.ProjectFilters)
+			{
+				if (!Project.IsAllowed())
+				{
+					return BuildCondition.NoBuild;
+				}
+			}
+
+			return ShouldRun;
+		}
         
 #endregion
 
-    }
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+			this.InnerTrigger.IntegrationNotRun();
+		}
+
+		#endregion
+	}
 }

@@ -26,6 +26,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
 		void IntegrationCompleted();
 
+		void IntegrationNotRun();
+
 		/// <summary>
 		/// Returns the time of the next build.
 		/// </summary>

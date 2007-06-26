@@ -65,5 +65,18 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 			}
 		}
 
+
+		#region ITrigger Members
+
+
+		public void IntegrationNotRun()
+		{
+			foreach (ITrigger trigger in triggers)
+			{
+				trigger.IntegrationNotRun();
+			}
+		}
+
+		#endregion
 	}
 }
