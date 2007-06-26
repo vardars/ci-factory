@@ -79,6 +79,93 @@ namespace TestDoubles
             }
         }
         
+        public virtual void IntegrationNotRun()
+        {
+            this.Recordings.IntegrationNotRunRecording.Called = true;
+            if ((this.Recordings.IntegrationNotRunRecording.ExceptionToThrow != null))
+            {
+                throw this.Recordings.IntegrationNotRunRecording.ExceptionToThrow;
+            }
+        }
+        
+        public class IntegrationNotRunRecordingRecordings
+        {
+            
+            private bool _called;
+            
+            private System.Exception _exceptionToThrow;
+            
+            public virtual bool Called
+            {
+                get
+                {
+                    return this._called;
+                }
+                set
+                {
+                    this._called = value;
+                }
+            }
+            
+            public virtual System.Exception ExceptionToThrow
+            {
+                get
+                {
+                    return this._exceptionToThrow;
+                }
+                set
+                {
+                    this._exceptionToThrow = value;
+                }
+            }
+        }
+        
+        public class ShouldRunIntegrationRecordingRecordings
+        {
+            
+            private bool _called;
+            
+            private BuildCondition _returnValue;
+            
+            private System.Exception _exceptionToThrow;
+            
+            public virtual bool Called
+            {
+                get
+                {
+                    return this._called;
+                }
+                set
+                {
+                    this._called = value;
+                }
+            }
+            
+            public virtual System.Exception ExceptionToThrow
+            {
+                get
+                {
+                    return this._exceptionToThrow;
+                }
+                set
+                {
+                    this._exceptionToThrow = value;
+                }
+            }
+            
+            public virtual BuildCondition ReturnValue
+            {
+                get
+                {
+                    return this._returnValue;
+                }
+                set
+                {
+                    this._returnValue = value;
+                }
+            }
+        }
+        
         public class ITriggerRecordings
         {
             
@@ -87,6 +174,8 @@ namespace TestDoubles
             private NewRecordingRecordings _newRecording;
             
             private IntegrationCompletedRecordingRecordings _integrationCompletedRecording;
+            
+            private IntegrationNotRunRecordingRecordings _integrationNotRunRecording;
             
             public virtual NewRecordingRecordings NewRecording
             {
@@ -135,50 +224,20 @@ namespace TestDoubles
                     this._integrationCompletedRecording = value;
                 }
             }
-        }
-        
-        public class ShouldRunIntegrationRecordingRecordings
-        {
             
-            private bool _called;
-            
-            private BuildCondition _returnValue;
-            
-            private System.Exception _exceptionToThrow;
-            
-            public virtual bool Called
+            public virtual IntegrationNotRunRecordingRecordings IntegrationNotRunRecording
             {
                 get
                 {
-                    return this._called;
+                    if ((this._integrationNotRunRecording == null))
+                    {
+                        this._integrationNotRunRecording = new IntegrationNotRunRecordingRecordings();
+                    }
+                    return this._integrationNotRunRecording;
                 }
                 set
                 {
-                    this._called = value;
-                }
-            }
-            
-            public virtual System.Exception ExceptionToThrow
-            {
-                get
-                {
-                    return this._exceptionToThrow;
-                }
-                set
-                {
-                    this._exceptionToThrow = value;
-                }
-            }
-            
-            public virtual BuildCondition ReturnValue
-            {
-                get
-                {
-                    return this._returnValue;
-                }
-                set
-                {
-                    this._returnValue = value;
+                    this._integrationNotRunRecording = value;
                 }
             }
         }
