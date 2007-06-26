@@ -9,7 +9,7 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 	{
 		public enum NotificationType
 		{
-			Always, Change, Failed
+			Always, Change, Failed, Success
 		}
 
 		private string _name;

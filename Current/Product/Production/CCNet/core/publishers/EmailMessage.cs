@@ -26,6 +26,7 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 				IDictionary recipients = new SortedList();
 				AddRecipients(recipients, EmailGroup.NotificationType.Always);
 				AddModifiers(recipients);
+                AddForcer(recipients);
 
 				if (BuildStateChanged(result))
 				{
@@ -35,7 +36,12 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 				if (this.result.Status == IntegrationStatus.Failure)
 				{
 					AddRecipients(recipients, EmailGroup.NotificationType.Failed);
-				}
+                }
+
+                if (this.result.Status == IntegrationStatus.Success)
+                {
+                    AddRecipients(recipients, EmailGroup.NotificationType.Success);
+                }
 
 				StringBuilder buffer = new StringBuilder();
 				foreach (string key in recipients.Keys)
@@ -46,6 +52,20 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 				return buffer.ToString();
 			}
 		}
+
+        private void AddForcer(IDictionary recipients)
+        {
+            if (result.IntegrationProperties.Contains("CCNetForcedBy"))
+            {
+                string username = result.IntegrationProperties["CCNetForcedBy"];
+                EmailUser user = GetEmailUser(username);
+                if (user != null)
+                {
+                    recipients[user.Address] = user;
+                }
+            }
+
+        }
 
 		private void AddModifiers(IDictionary recipients)
 		{
