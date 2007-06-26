@@ -57,7 +57,7 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
         {
             if (result.IntegrationProperties.Contains("CCNetForcedBy"))
             {
-                string username = result.IntegrationProperties["CCNetForcedBy"];
+                string username = (string)result.IntegrationProperties["CCNetForcedBy"];
                 EmailUser user = GetEmailUser(username);
                 if (user != null)
                 {
