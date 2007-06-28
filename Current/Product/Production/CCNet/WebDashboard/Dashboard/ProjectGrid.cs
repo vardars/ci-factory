@@ -5,6 +5,7 @@ using ThoughtWorks.CruiseControl.Remote;
 using ThoughtWorks.CruiseControl.WebDashboard.Plugins.ProjectReport;
 using ThoughtWorks.CruiseControl.WebDashboard.ServerConnection;
 using ThoughtWorks.CruiseControl.WebDashboard.Plugins.BuildReport;
+using System.Text.RegularExpressions;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 {
@@ -29,13 +30,16 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                 IServerSpecifier serverSpecifier = statusOnServer.ServerSpecifier;
                 string projectName = status.Name;
                 IProjectSpecifier projectSpecifier = new DefaultProjectSpecifier(serverSpecifier, projectName);
-                string projectLink = linkFactory.CreateProjectLink(projectSpecifier, ProjectReportProjectPlugin.ACTION_NAME).Url;
+
+				string baseUrl = Regex.Replace(statusOnServer.ProjectStatus.WebURL, @"default\.aspx\?.*", "");
+
+                string projectLink = baseUrl + linkFactory.CreateProjectLink(projectSpecifier, ProjectReportProjectPlugin.ACTION_NAME).Url;
                 
                 IBuildSpecifier[] buildSpecifiers = farmService.GetMostRecentBuildSpecifiers(projectSpecifier, 1);
                 string mostRecentBuildUrl;
                 if (buildSpecifiers.Length == 1)
                 {
-                    mostRecentBuildUrl = linkFactory.CreateProjectLink(projectSpecifier, LatestBuildReportProjectPlugin.ACTION_NAME).Url;
+					mostRecentBuildUrl = baseUrl + linkFactory.CreateProjectLink(projectSpecifier, LatestBuildReportProjectPlugin.ACTION_NAME).Url;
                 }
                 else
                 {

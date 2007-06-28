@@ -4,6 +4,7 @@ using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Triggers
 {
+	[ReflectorType("multipleTriggers")]
 	public class MultipleTrigger : ITrigger
 	{
 		private ITrigger[] triggers;
