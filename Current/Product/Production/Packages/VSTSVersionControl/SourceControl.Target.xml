@@ -30,6 +30,8 @@
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
+		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
 		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet" >
 			<tfsserverconnection refid="${TFS.Info}"/>
 			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
@@ -48,6 +50,8 @@
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
+
+		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
 		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
 			<tfsserverconnection refid="${TFS.Info}"/>
@@ -215,6 +219,8 @@
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
+		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
 		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
 			<tfsserverconnection refid="${TFS.Info}"/>
 			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
@@ -233,6 +239,8 @@
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
+
+		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
 		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet">
 			<tfsserverconnection refid="${TFS.Info}"/>
