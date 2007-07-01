@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceModificationReport">
 
-  <include buildfile="SourceModificationReport.Properties.xml" />
-  <property name="SourceModificationReport.ReportDirectory" value="${BuildDirectory}\SourceModificationReports" overwrite="false"/>
-  <property name="SourceModificationReport.ReportFile" value="${SourceModificationReport.ReportDirectory}\SourceModificationReport.xml" overwrite="false"/>
-  <property name="SourceModificationReport.FilesToDeleteAtSetup" value="" overwrite="false"/>
+	<include buildfile="SourceModificationReport.Properties.xml" />
+	<property name="SourceModificationReport.ReportDirectory" value="${BuildDirectory}\SourceModificationReports" overwrite="false"/>
+	<property name="SourceModificationReport.ReportFile" value="${SourceModificationReport.ReportDirectory}\SourceModificationReport.xml" overwrite="false"/>
+	<property name="SourceModificationReport.FilesToDeleteAtSetup" value="" overwrite="false"/>
 
-  <!--
+	<!--
   The following properties should be specified in the calling script.
   
   <property name="SourceModificationReportDirectory" value="${BuildDirectory}\SourceModificationReports" />
   -->
 
-  <!-- The following properties are for internal use only -->
-  <property name="Private.SourceModificationReport.OldSourceModificationReportFile" value="${SourceModificationReport.ReportDirectory}\OldSourceModificationReport.xml" />
+	<!-- The following properties are for internal use only -->
+	<property name="Private.SourceModificationReport.OldSourceModificationReportFile" value="${SourceModificationReport.ReportDirectory}\OldSourceModificationReport.xml" />
 
-  <!-- The following properties are outputs -->
-  <property name="SourceModificationReport.OldestModificationTime" value=""/>
+	<!-- The following properties are outputs -->
+	<property name="SourceModificationReport.OldestModificationTime" value=""/>
 
-  <!-- ************* Targets ************* -->
+	<!-- ************* Targets ************* -->
 
-  <target name="SourceModificationReport.GetOldestModificationTime">
-    <script language="VB">
-      <references>
-        <include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
-      </references>
-      <imports >
-        <import namespace="System.Xml"/>
-      </imports >
-      <code><![CDATA[
+	<target name="SourceModificationReport.GetOldestModificationTime">
+		<script language="VB">
+			<references>
+				<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+			</references>
+			<imports >
+				<import namespace="System.Xml"/>
+			</imports >
+			<code>
+				<![CDATA[
 
 					Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
 						Dim pd As PropertyDictionary = project.Properties
@@ -62,21 +63,22 @@
 						End Try
 					End Function
 				
-      ]]></code>
-    </script>
-  </target>
+      ]]>
+			</code>
+		</script>
+	</target>
 
-  <target name="SourceModificationReport.ConsolidateReports" >
-    <if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
-      <script language="VB">
-        <references>
-          <include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
-        </references>
-        <imports >
-          <import namespace="System.Xml"/>
-        </imports >
-        <code>
-          <![CDATA[
+	<target name="SourceModificationReport.ConsolidateReports" >
+		<if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
+			<script language="VB">
+				<references>
+					<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+				</references>
+				<imports >
+					<import namespace="System.Xml"/>
+				</imports >
+				<code>
+					<![CDATA[
 
 					Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
 						Dim pd As PropertyDictionary = project.Properties
@@ -125,74 +127,85 @@
 							End Try
 					End Sub
 				]]>
-          </code>
-        </script>
-      </if>
-      <copy 
-        file="${SourceModificationReport.ReportFile}"
-			tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
-			verbose="true"
+				</code>
+			</script>
+		</if>
+		<copy
+		  file="${SourceModificationReport.ReportFile}"
+			  tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
+			  verbose="true"
 		/>
-  </target>
+	</target>
 
-  <target name="SourceModificationReport.PublishOldSource">
-    <fileset  basedir="${ProductDirectory}" id="ModificationList" />
+	<target name="SourceModificationReport.PublishOldSource">
+		<mkdir dir="${SourceModificationReport.OldSourcePath}" unless="${directory::exists(SourceModificationReport.OldSourcePath)}"/>
 
-    <xmlquery 
-      file="${SourceModificationReport.ReportFile}" 
-      id="FileNames" 
+		<copy todir="${SourceModificationReport.OldSourcePath}" verbose="true">
+			<fileset basedir="${ProductDirectory}" refid="SourceModificationReport.ModificationList" />
+		</copy>
+	</target>
+
+	<target name="SourceModificationReport.PublishNewSource">
+		<mkdir dir="${SourceModificationReport.NewSourcePath}" unless="${directory::exists(SourceModificationReport.NewSourcePath)}"/>
+
+		<copy todir="${SourceModificationReport.NewSourcePath}">
+			<fileset refid="SourceModificationReport.ModificationList" />
+		</copy>
+	</target>
+
+	<target name="SourceModificationReport.CreateModificationList">
+		<fileset  basedir="${ProductDirectory}" id="SourceModificationReport.ModificationList" />
+
+		<xmlquery
+		  file="${SourceModificationReport.ReportFile}"
+      id="FileNames"
       query="//Modification/FileName"
     />
 
-    <property name="index" value="0" />
+		<property name="index" value="0" />
 
-    <loopthrough property="FileName">
-      <items>
-        <xmlquery refid="FileNames" />
-      </items>
-      <do>
+		<loopthrough property="FileName">
+			<items>
+				<xmlquery refid="FileNames" />
+			</items>
+			<do>
 
-        <xmlpeek 
-          file="${SourceModificationReport.ReportFile}" 
-          property="SCPath" 
-          xpath="//Modification/FolderName" 
-          nodeindex="${index}" 
+				<xmlpeek
+				  file="${SourceModificationReport.ReportFile}"
+				  property="DirtySCPath"
+				  xpath="//Modification/FolderName"
+				  nodeindex="${index}"
         />
 
-        <property name="ModificationFilePath" value="${string::replace(SCPath, SourceModificationReport.SCProductPath, '')}/${FileName}"/>
+				<trycatch>
+					<try>
+						<regex input="${DirtySCPath}" pattern=".*${ProjectCodeLineName}(/|\\)Product(/|\\|)(?'CleanSCPath'.*)"/>
+						<property name="PartialModificationFilePath" value="${path::combine(CleanSCPath, FileName)}"/>
+						<property name="ModificationFilePath" value="${path::combine(ProductDirectory, PartialModificationFilePath)}"/>
 
-        <echo message="Adding ${ModificationFilePath} to modification list."/>
+						<echo message="Adding ${ModificationFilePath} to modification list."/>
 
-        <function execute="${fileset::include-add('ModificationList', ModificationFilePath)}"/>
+						<function execute="${fileset::include-add('SourceModificationReport.ModificationList', ModificationFilePath)}"/>
+					</try>
+					<catch/>
+				</trycatch>
 
-        <property name="index" value="${int::parse(index) + 1}" />
-      </do>
-    </loopthrough>
+				<property name="index" value="${int::parse(index) + 1}" />
+			</do>
+		</loopthrough>
+	</target>
 
-    <mkdir dir="${SourceModificationReport.OldSourcePath}" unless="${directory::exists(SourceModificationReport.OldSourcePath)}"/>
+	<target name="SourceModificationReport.SetUp">
+		<mkdir unless="${directory::exists(SourceModificationReport.ReportDirectory)}" dir="${SourceModificationReport.ReportDirectory}"/>
+		<property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
+		<call target="Common.DeleteFiles"/>
+		<copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
 
-    <copy todir="${SourceModificationReport.OldSourcePath}" verbose="true">
-      <fileset basedir="${ProductDirectory}" refid="ModificationList" />
-    </copy>
-  </target>
+		<call target="SourceModificationReport.CreateModificationList"/>
+	</target>
 
-  <target name="SourceModificationReport.PublishNewSource">
-    <mkdir dir="${SourceModificationReport.NewSourcePath}" unless="${directory::exists(SourceModificationReport.NewSourcePath)}"/>
+	<target name="SourceModificationReport.TearDown">
 
-    <copy todir="${SourceModificationReport.NewSourcePath}">
-      <fileset refid="ModificationList" />
-    </copy>
-  </target>
-  
-  <target name="SourceModificationReport.SetUp">
-    <mkdir unless="${directory::exists(SourceModificationReport.ReportDirectory)}" dir="${SourceModificationReport.ReportDirectory}"/>
-    <property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
-    <call target="Common.DeleteFiles"/>
-    <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
-  </target>
+	</target>
 
-  <target name="SourceModificationReport.TearDown">
-
-  </target>
-  
 </project>
