@@ -49,10 +49,14 @@
 			</font>
 		</td>
 		<td align="Center">
-			<font color="Black">$projectGridRow.LastBuildDate</font>
+			<font color="Black">
+        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildDate</a>
+      </font>
 		</td>
 		<td align="Center">
-			<font color="Black">$projectGridRow.LastBuildLabel</font>
+			<font color="Black">
+        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildLabel</a>
+      </font>
 		</td>
 		<td align="Center">
 			<font color="Black">$projectGridRow.Status</font>
