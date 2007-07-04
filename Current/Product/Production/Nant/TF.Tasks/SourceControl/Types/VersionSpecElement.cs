@@ -34,7 +34,7 @@ namespace TF.Tasks.SourceControl.Types
 
         #region Properties
 
-        [TaskAttribute("type", Required = true)]
+        [TaskAttribute("type", Required = false)]
         public VersionSpecType VersionSpecType
         {
             get
@@ -47,7 +47,7 @@ namespace TF.Tasks.SourceControl.Types
             }
         }
 
-        [TaskAttribute("versionspec", Required = true)]
+        [TaskAttribute("versionspec", Required = false)]
         public string VersionSpecString
         {
             get

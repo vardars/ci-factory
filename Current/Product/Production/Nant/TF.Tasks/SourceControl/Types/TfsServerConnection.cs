@@ -69,7 +69,7 @@ namespace TF.Tasks.SourceControl.Types
             }
         }
 
-        [TaskAttribute("serverurl", Required = true)]
+        [TaskAttribute("serverurl", Required = false)]
         public string ServerUrl
         {
             get

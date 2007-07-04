@@ -56,8 +56,15 @@ namespace TF.Tasks.SourceControl.Tasks
             {
                 if (_ResultFileSet == null)
                 {
-                    _ResultFileSet = new FileSet();
-                    _ResultFileSet.RefID = this.ResultFileSetRefId;
+                    if (!String.IsNullOrEmpty(this.ResultFileSetRefId) && this.Project.DataTypeReferences.Contains(this.ResultFileSetRefId))
+                    {
+                        _ResultFileSet = (FileSet)this.Project.DataTypeReferences[this.ResultFileSetRefId];
+                    }
+                    else
+                    {
+                        _ResultFileSet = new FileSet();
+                        _ResultFileSet.RefID = this.ResultFileSetRefId;
+                    }
                 }
                 return _ResultFileSet;
             }

@@ -16,99 +16,65 @@
   <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
 
 	<target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
-		<call target="Private.SourceControl.EnsureWorkspace"/>
-		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<mappings>
-				<mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
-			</mappings>
-		</tfsmapworkspace>
-		<property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
-		<call target="Private.SourceControl.DeleteDirectory"/>
-
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
 		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
-		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet" >
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
-		</tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
 	<target name="SourceControl.GetFromChangeSetThirdPartyDirectory" >
-		<call target="Private.SourceControl.EnsureWorkspace"/>
-		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<mappings>
-				<mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
-			</mappings>
-		</tfsmapworkspace>
-
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
 		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
-		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
-		</tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.Update"/>
 	</target>
-	
-  <target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
-    <call target="Private.SourceControl.DeleteDirectory"/>
 
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet" >
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <versionspec type="Label" versionspec="${SourceControl.GetFromLabel}"/>
-    </tfsget>
-  </target>
+	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
 
-  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ThirdPartyDirectory}"/>
-    <call target="Private.SourceControl.DeleteDirectory"/>
+		<property name="SourceControl.Update.versionspec" value="SourceControl.CleanGetFromLabel"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Label" versionspec="${SourceControl.GetFromLabel}"/>
 
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
-      <tfsserverconnection refid="${TFS.Info}"/>
-    </tfsget>
-  </target>
-	
-  <target name="SourceControl.GetOfThirdPartyDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ThirdPartyDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ThirdPartyDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ThirdPartyDirectory.GetFileSet">
-      <tfsserverconnection refid="${TFS.Info}"/>
-    </tfsget>
-  </target>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
 
-  <!--<property name="SourceControl.ShowChanges.FromLabel" value=""/>
+	<target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<!--<property name="SourceControl.ShowChanges.FromLabel" value=""/>
   <property name="SourceControl.ShowChanges.ToLabel" value=""/>-->
-  <target name="SourceControl.ShowChangesBetweenLabelsBuild">
-    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+	<target name="SourceControl.ShowChangesBetweenLabelsBuild">
+		<property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
     <property name="SourceControl.ShowChangesLabelBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
@@ -176,76 +142,49 @@
   </target>
 
   <target name="SourceControl.CleanGetOfProductDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
-    <call target="Private.SourceControl.DeleteDirectory"/>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
 
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
-      <tfsserverconnection refid="${TFS.Info}"/>
-    </tfsget>
-  </target>
-
-  <target name="SourceControl.GetOfProductDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
-      <tfsserverconnection refid="${TFS.Info}"/>
-    </tfsget>
-  </target>
+	<target name="SourceControl.GetOfProductDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
 
 	<target name="SourceControl.CleanGetFromChangeSetProductDirectory" >
-		<call target="Private.SourceControl.EnsureWorkspace"/>
-		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<mappings>
-				<mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
-			</mappings>
-		</tfsmapworkspace>
-		<property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
-		<call target="Private.SourceControl.DeleteDirectory"/>
-
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
 		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
-		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" all="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
-		</tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
 	<target name="SourceControl.GetFromChangeSetProductDirectory" >
-		<call target="Private.SourceControl.EnsureWorkspace"/>
-		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<mappings>
-				<mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
-			</mappings>
-		</tfsmapworkspace>
-
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
 
 		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
 
-		<tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.ProductDirectory.GetFileSet">
-			<tfsserverconnection refid="${TFS.Info}"/>
-			<versionspec type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
-		</tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+		
+		<call target="Private.SourceControl.Update"/>
 	</target>
 
 	<!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
@@ -253,39 +192,61 @@
   -->
 
   <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${ProductDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <property name="Private.SourceControl.DeleteDirectory.Directory" value="${ProductDirectory}"/>
-    <call target="Private.SourceControl.DeleteDirectory"/>
-
-    <tfsget verbose="true" 
-          serveritem="${sourcecontrol::convertlocaltoserver(ProductDirectory)}" 
-          recursive="true" all="true"
-          workspacename="${TFS.WorkspaceName}" 
-          resultfilesetrefid="TFS.ProductDirectory.GetFileSet" >
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <versionspec type="Label" versionspec="${SourceControl.GetFromLabel}"/>
-    </tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+		
+		<property name="SourceControl.Update.versionspec" value="SourceControl.CleanGetFromLabel"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Label" versionspec="${SourceControl.GetFromLabel}"/>
+		
+		<call target="Private.SourceControl.CleanUpdate"/>
   </target>
 
   <target name="SourceControl.GetOfBuildDirectory" >
-    <call target="Private.SourceControl.EnsureWorkspace"/>
-    <tfsmapworkspace workspacename="${TFS.WorkspaceName}">
-      <tfsserverconnection refid="${TFS.Info}"/>
-      <mappings>
-        <mapping localitem="${BuildDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}"/>
-      </mappings>
-    </tfsmapworkspace>
-    <tfsget verbose="true" serveritem="${sourcecontrol::convertlocaltoserver(BuildDirectory)}" recursive="true" workspacename="${TFS.WorkspaceName}" resultfilesetrefid="TFS.BuildDirectory.GetFileSet" >
-      <tfsserverconnection refid="${TFS.Info}"/>
-    </tfsget>
+		<property name="Private.SourceControl.Update.LocalPath" value="${BuildDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
   </target>
-  
+
+
+	<target name="Private.SourceControl.CleanUpdate">
+		<property name="Private.SourceControl.DeleteDirectory.Directory" value="${Private.SourceControl.Update.LocalPath}"/>
+		<call target="Private.SourceControl.DeleteDirectory"/>
+
+		<call target="Private.SourceControl.Update"/>
+	 </target>
+
+	<!--
+  <property name="Private.SourceControl.Update.LocalPath" value=""/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+	<property name="SourceControl.Update.versionspec" value=""/>
+	 <property name="SourceControl.Update.All" value="true"/>
+	 -->
+
+	<target name="Private.SourceControl.Update">
+		<call target="Private.SourceControl.EnsureWorkspace"/>
+		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+			<tfsserverconnection refid="${TFS.Info}"/>
+			<mappings>
+				<mapping localitem="${Private.SourceControl.Update.LocalPath}" serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"/>
+			</mappings>
+		</tfsmapworkspace>
+		
+		<ifnot test="${property::exists('SourceControl.Update.versionspec') or SourceControl.Update.versionspec == ''}">
+			<property name="SourceControl.Update.versionspec" value="SourceControl.Update.versionspec"/>
+		</ifnot>
+		
+		<tfsget verbose="true" 
+						serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}" 
+						recursive="true"
+						all="${SourceControl.Update.All}" 
+						overwrite="${SourceControl.Update.ReplaceWritableFiles}"
+						workspacename="${TFS.WorkspaceName}" >
+			<tfsserverconnection refid="${TFS.Info}"/>
+			<versionspec refid="${SourceControl.Update.versionspec}" />
+		</tfsget>
+	 </target>
+	
   <!-- Params for SourceControl.Relabel
   <property name="SourceControl.Relabel.OldLabel" value=""/>
   <property name="SourceControl.Relabel.NewLabel" value=""/>
