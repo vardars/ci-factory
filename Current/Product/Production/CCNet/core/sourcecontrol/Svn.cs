@@ -3,6 +3,8 @@ using System.Globalization;
 using System.IO;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
+using System.Text;
+using ThoughtWorks.CruiseControl.Core.Config;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {
@@ -71,10 +73,45 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public override void GetSource(IIntegrationResult result)
 		{
-			if (AutoGetSource)
+			if (! AutoGetSource) return;
+
+			if (DoesSvnDirectoryExist(result))
 			{
-				Execute(NewGetSourceProcessInfo(result));
+				UpdateSource(result);
 			}
+			else
+			{
+				CheckoutSource(result);
+			}
+		}
+
+		private void CheckoutSource(IIntegrationResult result)
+		{
+			if (StringUtil.IsBlank(TrunkUrl))
+				throw new ConfigurationException("<trunkurl> configuration element must be specified in order to automatically checkout source from SVN.");
+			Execute(NewCheckoutProcessInfo(result));
+		}
+
+		private ProcessInfo NewCheckoutProcessInfo(IIntegrationResult result)
+		{
+			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
+			buffer.AddArgument("checkout");
+			buffer.AddArgument(TrunkUrl);
+			buffer.AddArgument(result.BaseFromWorkingDirectory(WorkingDirectory));
+			AppendCommonSwitches(buffer);
+			return NewProcessInfo(buffer.ToString(), result);
+		}
+
+		private void UpdateSource(IIntegrationResult result)
+		{
+			Execute(NewGetSourceProcessInfo(result));
+		}
+
+		private bool DoesSvnDirectoryExist(IIntegrationResult result)
+		{
+			string svnDirectory = Path.Combine(result.BaseFromWorkingDirectory(WorkingDirectory), ".svn");
+			string underscoreSvnDirectory = Path.Combine(result.BaseFromWorkingDirectory(WorkingDirectory), "_svn");
+            return Directory.Exists(svnDirectory) || Directory.Exists(underscoreSvnDirectory);
 		}
 
 		private ProcessInfo NewGetSourceProcessInfo(IIntegrationResult result)
@@ -92,7 +129,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
 			buffer.AppendArgument("copy");
 			buffer.AppendArgument(TagMessage(result.Label));
-			buffer.AppendArgument(TagSource(result.LastChangeNumber));
+			buffer.AppendArgument(TagSource(result));
 			buffer.AppendArgument(TagDestination(result.Label));
 			AppendRevision(buffer, result.LastChangeNumber);
 			AppendCommonSwitches(buffer);
@@ -111,38 +148,31 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			return NewProcessInfo(buffer.ToString(), to);
 		}
 
-		private string TagMessage(string label)
+		private static string TagMessage(string label)
 		{
 			return string.Format("-m \"CCNET build {0}\"", label);
 		}
 
-		private string TagSource(int revision)
+		private string TagSource(IIntegrationResult result)
 		{
-			string trunkUrl = TrunkUrl;
-			if (revision == 0)
+			if (result.LastChangeNumber == 0)
 			{
-				trunkUrl = WorkingDirectory.TrimEnd(Path.DirectorySeparatorChar);
+				return result.BaseFromWorkingDirectory(WorkingDirectory).TrimEnd(Path.DirectorySeparatorChar);
 			}
-			return SurroundInQuotesIfContainsSpace(trunkUrl);
+			return TrunkUrl;
 		}
 
 		private string TagDestination(string label)
 		{
-			return SurroundInQuotesIfContainsSpace(string.Format("{0}/{1}", TagBaseUrl, label));
+			return string.Format("{0}/{1}", TagBaseUrl, label);
 		}
 
 		private void AppendCommonSwitches(ProcessArgumentBuilder buffer)
 		{
-			buffer.AppendArgument("--username {0}", SurroundInQuotesIfContainsSpace(Username));
-			buffer.AppendArgument("--password {0}", SurroundInQuotesIfContainsSpace(Password));
+			buffer.AppendArgument("--username", Username);
+			buffer.AppendArgument("--password", Password);
 			buffer.AppendArgument("--non-interactive");
-		}
-
-		private string SurroundInQuotesIfContainsSpace(string value)
-		{
-			if (! StringUtil.IsBlank(value) && value.IndexOf(' ') >= 0)
-				return string.Format(@"""{0}""", value);
-			return value;
+			buffer.AppendArgument("--no-auth-cache");
 		}
 
 		private void AppendRevision(ProcessArgumentBuilder buffer, int revision)
@@ -152,7 +182,9 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private ProcessInfo NewProcessInfo(string args, IIntegrationResult result)
 		{
-			return new ProcessInfo(Executable, args, result.BaseFromWorkingDirectory(WorkingDirectory));
+		    ProcessInfo processInfo = new ProcessInfo(Executable, args, result.BaseFromWorkingDirectory(WorkingDirectory));
+		    processInfo.StreamEncoding = Encoding.UTF8;
+		    return processInfo;
 		}
 	}
 }

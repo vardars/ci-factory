@@ -1,6 +1,7 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace ThoughtWorks.CruiseControl.Core.Util
 {
@@ -82,7 +83,20 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 			set { timeout = (value == InfiniteTimeout) ? 0x7fffffff : value; }
 		}
 
-		public Process CreateProcess()
+	    public Encoding StreamEncoding
+	    {
+	        get
+	        {
+	            return startInfo.StandardOutputEncoding;
+	        }
+	        set
+	        {
+	             startInfo.StandardOutputEncoding = value;
+	             startInfo.StandardErrorEncoding = value;
+	        }
+	    }
+
+	    public Process CreateProcess()
 		{
 			if (! StringUtil.IsBlank(WorkingDirectory) && ! Directory.Exists(WorkingDirectory)) throw new DirectoryNotFoundException("Directory does not exist: " + WorkingDirectory);
 
