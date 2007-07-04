@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Target" >
+
+  <property name="TFS.TaskAssembly" value="${PackagesDirectory}\VSTSVersionControl\bin\TF.Tasks.dll" overwrite="false"/>
+  <loadtasks assembly="${TFS.TaskAssembly}" if="${file::exists(TFS.TaskAssembly)}" />
+
+  <include buildfile="SourceControl.Properties.xml" />
+
+  <property name="Private.TFS.CacheFile" value="CacheFile.xml"/>
+  <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>
+
+  <include buildfile="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}" if="${file::exists(Private.TFS.ReportDirectory + '\' + Private.TFS.CacheFile)}" failonerror="false"/>
+  <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
+
+  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
+  <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
+
+	<target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
+			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
+		</if>
+
+		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetFromChangeSetThirdPartyDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
+			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
+		</if>
+
+		<echo message="Getting ${ThirdPartyDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.CleanGetFromLabel"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Label" versionspec="${SourceControl.GetFromLabel}"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<!--<property name="SourceControl.ShowChanges.FromLabel" value=""/>
+  <property name="SourceControl.ShowChanges.ToLabel" value=""/>-->
+	<target name="SourceControl.ShowChangesBetweenLabelsBuild">
+		<property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesLabelBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesLabelBased.FromLabel" value="${SourceControl.ShowChanges.FromLabel}"/>
+    <property name="SourceControl.ShowChangesLabelBased.ToLabel" value="${SourceControl.ShowChanges.ToLabel}"/>
+    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.TFS.ReportDirectory}\ThirdPartyChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesLabelBased"/>
+
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesLabelBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesLabelBased.Output" value="${Private.TFS.ReportDirectory}\ProductChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesLabelBased"/>
+  </target>
+
+  <!--
+  <property name="SourceControl.ShowChangesLabelBased.Path" value=""/>
+  <property name="SourceControl.ShowChangesLabelBased.FromLabel" value=""/>
+  <property name="SourceControl.ShowChangesLabelBased.ToLabel" value=""/>
+  <property name="SourceControl.ShowChangesLabelBased.Output" value=""/>
+  -->
+  <target name="SourceControl.ShowChangesLabelBased">
+    <tfshistory itemspec="${SourceControl.ShowChangesLabelBased.Path}" recursive="true" reportfile="${SourceControl.ShowChangesLabelBased.Output}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <fromversionspec type="Label" versionspec="${SourceControl.ShowChangesLabelBased.FromLabel}"/>
+      <toversionspec type="Label" versionspec="${SourceControl.ShowChangesLabelBased.ToLabel}"/>
+    </tfshistory>
+  </target>
+
+  <target name="SourceControl.ShowChangesSinceLastBuild">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ThirdPartyDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.FromDate" value="${TFS.LastBuildTime}"/>
+    <property name="SourceControl.ShowChangesTimeBased.ToDate" value="${datetime::now()}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.TFS.ReportDirectory}\ThirdPartyChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesTimeBased"/>
+
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProductDirectory}"/>
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="SourceControl.ShowChangesTimeBased.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="SourceControl.ShowChangesTimeBased.Output" value="${Private.TFS.ReportDirectory}\ProductChanges.xml"/>
+
+    <call target="SourceControl.ShowChangesTimeBased"/>
+  </target>
+
+  <!--
+  <property name="SourceControl.ShowChangesTimeBased.Path" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.FromDate" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.ToDate" value=""/>
+  <property name="SourceControl.ShowChangesTimeBased.Output" value=""/>
+  -->
+  <target name="SourceControl.ShowChangesTimeBased">
+    <tfshistory itemspec="${SourceControl.ShowChangesTimeBased.Path}" recursive="true" reportfile="${SourceControl.ShowChangesTimeBased.Output}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <fromversionspec type="Date" versionspec="${SourceControl.ShowChangesTimeBased.FromDate}"/>
+      <toversionspec type="Date" versionspec="${SourceControl.ShowChangesTimeBased.ToDate}"/>
+    </tfshistory>
+  </target>
+
+  <target name="SourceControl.CleanGetOfProductDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfProductDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<target name="SourceControl.CleanGetFromChangeSetProductDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
+			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
+		</if>
+
+		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetFromChangeSetProductDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
+			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
+		</if>
+
+		<echo message="Getting ${ProductDirectory} from changeset ${SourceControl.GetFromChangeSet}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.versionspec" value="SourceControl.GetFromChangeSet"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Changeset" versionspec="${SourceControl.GetFromChangeSet}"/>
+		
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
+  <property name="SourceControl.GetFromLabel" value=""/>
+  -->
+
+  <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+		
+		<property name="SourceControl.Update.versionspec" value="SourceControl.CleanGetFromLabel"/>
+		<versionspec id="${SourceControl.Update.versionspec}" type="Label" versionspec="${SourceControl.GetFromLabel}"/>
+		
+		<call target="Private.SourceControl.CleanUpdate"/>
+  </target>
+
+  <target name="SourceControl.GetOfBuildDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${BuildDirectory}"/>
+		<property name="SourceControl.Update.versionspec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+  </target>
+
+
+	<target name="Private.SourceControl.CleanUpdate">
+		<property name="Private.SourceControl.DeleteDirectory.Directory" value="${Private.SourceControl.Update.LocalPath}"/>
+		<call target="Private.SourceControl.DeleteDirectory"/>
+
+		<call target="Private.SourceControl.Update"/>
+	 </target>
+
+	<!--
+  <property name="Private.SourceControl.Update.LocalPath" value=""/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+	<property name="SourceControl.Update.versionspec" value=""/>
+	 <property name="SourceControl.Update.All" value="true"/>
+	 -->
+
+	<target name="Private.SourceControl.Update">
+		<call target="Private.SourceControl.EnsureWorkspace"/>
+		<tfsmapworkspace workspacename="${TFS.WorkspaceName}">
+			<tfsserverconnection refid="${TFS.Info}"/>
+			<mappings>
+				<mapping localitem="${Private.SourceControl.Update.LocalPath}" serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"/>
+			</mappings>
+		</tfsmapworkspace>
+		
+		<ifnot test="${property::exists('SourceControl.Update.versionspec') or SourceControl.Update.versionspec == ''}">
+			<property name="SourceControl.Update.versionspec" value="SourceControl.Update.versionspec"/>
+		</ifnot>
+		
+		<tfsget verbose="true" 
+						serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}" 
+						recursive="true"
+						all="${SourceControl.Update.All}" 
+						overwrite="${SourceControl.Update.ReplaceWritableFiles}"
+						workspacename="${TFS.WorkspaceName}" >
+			<tfsserverconnection refid="${TFS.Info}"/>
+			<versionspec refid="${SourceControl.Update.versionspec}" />
+		</tfsget>
+	 </target>
+	
+  <!-- Params for SourceControl.Relabel
+  <property name="SourceControl.Relabel.OldLabel" value=""/>
+  <property name="SourceControl.Relabel.NewLabel" value=""/>
+  <property name="SourceControl.Relabel.Path" value=""/>
+  -->
+  <target name="SourceControl.Relabel">
+    <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfslabel 
+          comment="Relabeled by Build ${ProjectName}, was ${SourceControl.Relabel.OldLabel}"
+          itemspec="${SourceControl.Relabel.Path}" 
+          labelname="${SourceControl.Relabel.NewLabel}"
+          recursive="true" 
+          scope="${TFS.LabelScope}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <versionspec type="Label" versionspec="${SourceControl.Relabel.OldLabel}"/>
+    </tfslabel>
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckOut">
+    <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfscheckout localitem="${SourceControl.CheckOut.File}" workspacename="${TFS.WorkspaceName}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+    </tfscheckout>
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckIn">
+    <call target="Private.SourceControl.EnsureWorkspace"/>
+    <tfscheckin localitem="${SourceControl.CheckIn.File}" workspacename="${TFS.WorkspaceName}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+    </tfscheckin>
+  </target>
+
+  <!-- Needed for Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value=""/>
+  -->
+  <!-- Returned by Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value=""/>
+  -->
+  <target name="Private.SourceControl.ConvertLocalPathToPath">
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.LocalPath, ProjectsDirectory, '')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '\', '/')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="$/${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '//', '/')}"/>
+  </target>
+  
+  <!-- Needed for Private.SourceControl.DeleteDirectory
+  <property name="Private.SourceControl.DeleteDirectory.Directory" value=""/>
+  -->
+
+  <target name="Private.SourceControl.DeleteDirectory">
+    <if test="${directory::exists(Private.SourceControl.DeleteDirectory.Directory)}" >
+      <attrib readonly="false">
+        <fileset>
+          <include name="${Private.SourceControl.DeleteDirectory.Directory}\*" />
+        </fileset>
+      </attrib>
+
+      <trycatch>
+        <try>
+          <delete dir="${Private.SourceControl.DeleteDirectory.Directory}"/>
+        </try>
+        <catch>
+          <exec program="cmd" commandline='/C "rmdir /S /Q "${Private.SourceControl.DeleteDirectory.Directory}""' />
+        </catch>
+      </trycatch>
+    </if>
+  </target>
+  
+  <script language="C#" prefix="sourcecontrol">
+    <code>
+      <![CDATA[                 
+					
+          [Function("convertlocaltoserver")]
+					public string ConvertLocalToServer(string local)
+          {
+            String server = local.Replace(this.Project.Properties["ProjectsDirectory"], "");
+            server = server.Replace(@"\", @"/");
+            server = String.Format(@"$/{0}", server);
+            return server.Replace(@"//", @"/");
+          }
+          
+			]]>
+    </code>
+  </script>
+
+  <target name="Private.SourceControl.EnsureWorkspace">
+    <ifnot test="${tfs-vc::workspace-exists(TFS.Info, TFS.WorkspaceName)}">
+      <property name="TFS.Workspace.Found" value="false"/>
+      <trycatch>
+        <try>
+          <property name="TFS.WorkspaceName" value="${tfs-vc::get-workspace-name(TFS.Info, ProjectCodeLineDirectory)}"/>
+          <property name="TFS.Workspace.Found" value="true"/>
+        </try>
+        <catch/>
+      </trycatch>
+
+      <ifnot test="${TFS.Workspace.Found}">
+        <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By build ${CCNetProject}" >
+          <tfsserverconnection refid="${TFS.Info}"/>
+          <mappings>
+            <mapping localitem="${ProjectCodeLineDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}"/>
+          </mappings>
+        </tfsmapworkspace>
+      </ifnot>
+    </ifnot>
+  </target>
+
+  <target name="SourceControl.SetUp">
+    <mkdir dir="${Private.TFS.ReportDirectory}" unless="${directory::exists(Private.TFS.ReportDirectory)}" />
+    <delete>
+      <fileset>
+        <include name="${Private.TFS.ReportDirectory}\*.*"/>
+        <exclude name="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}"/>
+      </fileset>
+    </delete>
+
+    <saveproperties format="Include" file="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}">
+      <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}"/>
+    </saveproperties>
+  </target>
+
+  <target name="SourceControl.TearDown">
+
+  </target>
+  
+</project>
