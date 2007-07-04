@@ -32,10 +32,23 @@ namespace TF.Tasks.SourceControl.Tasks
         private WorkspaceAssistant _WorkspaceHelper;
         private string _ResultFileSetRefId;
         private FileSet _ResultFileSet;
+		private bool _Failed = false;
 
         #endregion
 
         #region Properties
+
+		public bool Failed
+		{
+			get
+			{
+				return _Failed;
+			}
+			set
+			{
+				_Failed = value;
+			}
+		}
 
         public FileSet ResultFileSet
         {
@@ -233,16 +246,25 @@ namespace TF.Tasks.SourceControl.Tasks
             }
 
             this.ServerConnection.SourceControl.Getting -= new GettingEventHandler(OnGet);
+			if (this.Failed)
+				throw new BuildException("Failed to get from TFS version control successfully!");
         }
 
         #endregion
 
-        private void OnGet(object sender, GettingEventArgs e)
-        {
-            if (!String.IsNullOrEmpty(this.ResultFileSetRefId))
-                this.ResultFileSet.Includes.Add(e.TargetLocalItem);
+		private void OnGet(object sender, GettingEventArgs e)
+		{
+			if (!String.IsNullOrEmpty(this.ResultFileSetRefId))
+				this.ResultFileSet.Includes.Add(e.TargetLocalItem);
 
-            Log(Level.Verbose, "Status: '{0}',  ChangeType: '{1}', TargetLocalItem: '{2}' ServerItem: '{3}' Version: '{4}'", e.Status.ToString(), e.ChangeType.ToString(), e.TargetLocalItem, e.ServerItem, e.Version);
-        }
+			Level LogLevel = Level.Verbose;
+			if (e.Status != OperationStatus.Replacing && e.Status != OperationStatus.Deleting)
+			{
+				LogLevel = Level.Error;
+				this.Failed = true;
+			}
+
+			Log(LogLevel, "Status: '{0}',  ChangeType: '{1}', TargetLocalItem: '{2}' ServerItem: '{3}' Version: '{4}'", e.Status.ToString(), e.ChangeType.ToString(), e.TargetLocalItem, e.ServerItem, e.Version);
+		}
     }
 }
