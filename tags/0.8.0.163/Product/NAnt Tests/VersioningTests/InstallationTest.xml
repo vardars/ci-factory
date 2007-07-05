@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning.InstallationTest" default="Versioning.InstallationTest.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="Versioning.InstallationTest.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="Versioning.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="Versioning.InstallationTest.SetProperties" >
+    <property name="ProjectName" value="VersioningTestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+  </target>
+
+  <target name="Versioning.InstallationTest.FixtureSetUp">
+    <call target="Versioning.InstallationTest.SetProperties"/>
+    
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <copy file="VersioningTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />    
+  </target>
+
+  <target name="Versioning.InstallationTest.FixtureTearDown">
+    
+  </target>
+
+  <target name="Versioning.InstallationTest.SetUp">
+    
+  </target>
+
+  <target name="Versioning.InstallationTest.TearDown">
+    
+  </target>
+
+  <target name="Versioning.InstallationTest.DefaultInstallTest">
+    <copy todir="${ProductDirectory}" overwrite="true" verbose="true">
+      <fileset basedir="VersioningTests\Test Product">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <copy file="VersioningTests\SourceModificationReports\SourceModificationReport.xml" todir="${BuildDirectory}\SourceModificationReports" />
+
+    <nant buildfile="${BuildDirectory}\Main.Build.xml" inheritall="false" inheritrefs="false" target="Triggered" >
+      <properties>
+        <property name="CCNetBuildCondition" value="ForceBuild "/>
+        <property name="CCNetIntegrationStatus" value="Success"/>
+        <property name="CCNetLastIntegrationStatus" value="Success"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+        <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+        <property name="CCNetLabel" value="1.0.0.2"/>
+        <property name="CCNetProject" value="${ProjectName}"/>
+        <property name="CCNetLogFilePath" value=""/>
+      </properties>
+    </nant>
+
+    <foreach item="File" property="AssemblyInfo.Path">
+      <in>
+        <items>
+          <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
+          <exclude name="${ProductDirectory}\**\NotThis\**\AssemblyInfo.*"/>
+          <exclude name="${ProductDirectory}\**\NorThis\**\AssemblyInfo.*"/>
+        </items>
+      </in>
+      <do>
+        <loadfile encoding="utf-8" file="${AssemblyInfo.Path}" property="AssemblyInfo.Content" />
+        <regex input="${AssemblyInfo.Content}" pattern="\[assembly\: AssemblyVersion\(\&quot;(?'ActualVersion'\d+\.\d+\.\d+\.\d+)\&quot;\)\]"/>
+        <assertequal actual="${ActualVersion}" expected="1.0.0.1" message="Expected to have incremented the version on ${AssemblyInfo.Path}."/>
+      </do>
+    </foreach>
+  </target>
+  
+</project>
