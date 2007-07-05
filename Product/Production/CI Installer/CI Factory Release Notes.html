@@ -1,0 +1,671 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+
+<style>
+BODY, P, DIV, H1, H2, H3, H4, H5, H6, ADDRESS, OL, UL, TITLE, TD, OPTION, SELECT {
+ font-family: Verdana;
+ 
+}
+
+BODY, P, DIV, ADDRESS, OL, UL, LI, TITLE, TD, OPTION, SELECT {  
+  font-size: 10.0pt;
+  margin-top:0pt;  
+  margin-bottom:0pt;  
+} 
+
+BODY, P {
+  margin-left:0pt; 
+  margin-right:0pt;
+}
+
+BODY {
+  line-height: ;
+
+  margin: 6px;
+  padding: 0px;
+}
+
+h6 { font-size: 10pt }
+h5 { font-size: 11pt }
+h4 { font-size: 12pt }
+h3 { font-size: 13pt }
+h2 { font-size: 14pt }
+h1 { font-size: 16pt }
+
+blockquote {padding: 10px; border: 1px #DDDDDD dashed }
+
+a img {border: 0}
+
+</style>
+
+
+
+
+</head>
+
+
+<body revision="dd6cv3jm_09r2s2h:181">
+
+<h1>
+  CI Factory Release Notes
+</h1>
+<h2>
+  Final 0.8.0.163
+</h2>
+<h3>
+  Improvements
+</h3>
+Add echo of what change set is being gotten for getting from a change set<br>
+Make multiTriggers available to use in ccnet config<br>
+Concatenate base url derived from ccnet projects weburl property to the
+default.aspx link in the project grid<br>
+Removed required attribute on tfs datatypes, no error lines when using refid<br>
+Made Tfs Get reuse existing refid for fileset of gotten files<br>
+Refactored TFS Package<br>
+Added the option to overwrite in Tfs Package<br>
+Add Success to email group notification type for ccnet email publication<br>
+Integrated email publication with force user knowledge through check for
+integration property CCNetForcedBy<br>
+<br>
+<h3>
+  Fixes
+</h3>
+Merge with CCNet Trunk to get fix for Claudio<br>
+Fail in Tfs Get task if unable to get successfully<br>
+Fix async part of Post Build Shim<br>
+Fix - Account for distinction between blocked and filtered integrations<br>
+Fix - remove the nant xmlns from the value when xml is set to true<br>
+Fix lost build when a trigger filter blocks<br>
+Fix unit test alert for broken builds<br>
+Fix Current and other Path hard coding<br>
+<br>
+<h2>
+  RC 0.8.0.153
+</h2>
+<h3>
+  Improvements
+</h3>
+<pre>Update to MbUnit 2.4 RTM</pre>
+<h3>
+  Fixes
+</h3>
+<pre>Added new task tfsqueryalertsubscriptions to get a list of alert subscriptions<br>Fixed CCNet Email Publisher Link to Build Report<br>Fixed Simian target files<br>Fixed Vault Source Control Filter<br>Fixed Dashboard Build Report Configuration<br>Fixed cctray.zip, included plugins<br>Set working dir to the ProductDirectory when executing MSBuild<br>Set current directory to the bin directory of the unit test project for MbUnit<br>Fix MSTest check to see if the test run config exists<br><br></pre>
+<h2>
+  Beta 0.8.0.143
+</h2>
+<h3>
+  New
+</h3>
+Vault Package - Ready for use, Many thanks to Ibrahim Folarin<br>
+CCService - Added to the Power Tools<br>
+CCNet Documentation - Added to the Documentation folder<br>
+<h3>
+  Improvements
+</h3>
+Alerts Package - Added support for the DotNetUnitTest Package (MbUnit/NUnit) -
+this will alert you to changes in the unit test count<br>
+<p>
+  Tim Bassett -&nbsp;ask task will always be on top and centered.
+</p>
+<h3>
+  Fixes
+</h3>
+Tim Bassett fixed a&nbsp;race condition in the CCNet TFS source control block.
+<p>
+  Set all CI Factory assemblies action on error to no prompt - If there is an
+  unhandled exception you wont be prompted to send a report, this is supposed to
+  be fully automated right?&nbsp;
+</p>
+<p>
+  Fixed ccnet config file watcher for TFS source control block<br>
+</p>
+<p>
+  Added check to TFS source control block to handle duplicate notifications.
+</p>
+<p>
+  Tim Bassett made TFS source control block paths case insensitive .
+</p>
+<p>
+  Update to NCover 1.5.8
+</p>
+<p>
+  Fixed some issues with the SourceModification CreateModificationList - e.g.
+  Files in Product caused issues.
+</p>
+<p>
+  Added support to the VSTSSourceControl Package to get only the triggering
+  ChangeSet - This should have been there from the get go.
+</p>
+<p>
+  Justin Santa Barbara - added logic to better handle projects without
+  assemblies NAnt functions for vsprojects.
+</p>
+<p>
+  Removed project specific email address from Alerts Package<br>
+</p>
+<br>
+<h2>
+  Beta 0.8.0.121<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=22&amp;can=1&amp;q=&amp;sort=-status>Analytics
+Pacakge</a> - Issue# 22<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=38&amp;can=1&amp;q=&amp;sort=-status>Add
+Installer to VSTSVersionControl Package</a> - Issue# 38<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=39&amp;can=1&amp;q=&amp;sort=-status>CCNet
+Dashboard Latest Build Link</a> - Issue# 39<br>
+<h3>
+  Fixes
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=42&amp;can=1&amp;q=&amp;sort=-status>Assembly
+Version VS 2005</a> - Issue# 42<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=41&amp;can=1&amp;q=&amp;sort=-status>Fix
+NCover and MSTest App.config</a> - Issue# 41<br>
+<h3>
+  Informal Changes
+</h3>
+Add Developer.List for email in support of the Alerts Package<br>
+Get correct version showing on the dashboard<br>
+Add some branding<br>
+Set NCover version expected to 1.5.5<br>
+Include the Alerts Package and the Analytics Package in the default Arguments
+Packages<br>
+Finished renaming Threshold Package to Alerts Package.<br>
+Fixed Tracker Installer - Added CCNet plugin to Server, Dashboard, and
+CCTray.zip<br>
+Improved FixThirdPartyRefs in Scratch.Lib.xml - Will fix refs without hint paths
+now.<br>
+Fixed GenerateAssemblyInfoList - Forgot the exit when the node is null.<br>
+Fixed Analytics Package - Ready for Validation and prime time!<br>
+Added support for MbUnit to Analytics Package.<br>
+Change behavior of tfsmapworkspace task, if the workspace exists it will add to
+the mappings.<br>
+Added behavior to Get* targets in VSTS Source Control Package, will ensure the
+mapping for the directory to be gotten exists.<br>
+Move VSTS Source Control Tests to the NAnt Tests directory, will need to rename.<br>
+VSTS Workspace Make machine name dynamic<br>
+Make TFS workspace names include the machine name<br>
+Ask task Get Tab Stop stuff set right<br>
+Added function envvar::change-var<br>
+Add the shell of the StarTeam Package.<br>
+Add the StarTeam tasks from NAnt Contrib in CIFactory.NAnt.StarTeam.Tasks.<br>
+Added SwitchToMuchBetterUnit to Scratch.Lib.xml<br>
+Add SetProjectOutputDirectory to Scratch.Lib.xml<br>
+Get CVS Package to show in the Zip, alter zipfileset.<br>
+Check for TFS Server Url.<br>
+Make UserName Password and Domain optional, TFS.<br>
+<h2>
+  Beta 0.8.0.101<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=34&amp;can=1&amp;q=>Add
+Wix</a> Package - Issue# 34 - from Justin Santa Barbara<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=35&amp;can=1&amp;q=>Add
+Xenocode Package</a> - Issue# 35 - from Justin Santa Barbara<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=20&amp;can=2&amp;q=>NAnt/CCNet
+Documentation</a> - Issue# 20<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=13&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>VS.Net
+Project Output Getter</a> - Issue# 13<br>
+<h3>
+  Informal Changes
+</h3>
+Added integration test for VS.NETCompile Package.<br>
+Moved all integration tests into a new dummy C# project, easier to manage.<br>
+Added integration tests to the personal build test.<br>
+Added new task ccnetforce, for the VS.NETCompile integration test.<br>
+Adjust the SourceModificationsReport package to the inclusion of CCNet libs in
+the NAnt bin dir.<br>
+Added backup means to identify test assemblies.<br>
+Positioned to integrate with next release of NCover.<br>
+Add xsl compile report for main build report VS.NETCompile.<br>
+Add recompile scripts for Analytics from dod.ahlta - not done.<br>
+Added the Thresholds Package from dod.ahlta - not done.<br>
+Apply patch from Justin Santa Barbara;<br>
+&nbsp;&nbsp;&nbsp; 1)Don’t dispose a null pointer in SvnCleanTree<br>
+&nbsp;&nbsp;&nbsp; 2)Don’t try to load MbUnit.tasks too early, in case we
+haven’t yet fetched it from svn (it’s in the Third Party directory).<br>
+&nbsp;&nbsp;&nbsp; 3)Invert the try/catch logic in SourceControl.Target.xml, so
+that it treats a failure as a need to checkout<br>
+&nbsp;&nbsp;&nbsp; 4)Exclude the ZIP file from building the ZIP file from
+MSBuild (I was getting errors as it was trying to include itself into the ZIP)<br>
+Fix env ref. VS.NETCompile<br>
+<br>
+<h2>
+  Beta 0.8.0.89<br>
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=29&amp;can=6&amp;q=&amp;sort=-status>CCNet
+Server Aggregator</a> - Issue# 29<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=13&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>VS.Net
+Project Output Getter</a> - Issue# 13
+<h3>
+  Fixes
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=5&amp;can=6&amp;q=&amp;sort=-status>Tracker
+Package - Task Load</a> - Issue# 5<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=6&amp;can=6&amp;q=&amp;sort=-status>Tracker
+Package - Scr # Extraction</a> - Issue# 6<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=26&amp;can=6&amp;q=&amp;sort=-status>CSDiff
+Registry Entries</a> - Issue# 26<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=28&amp;can=6&amp;q=&amp;sort=-status>Meta
+Root Violations</a> - Issue# 28<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=31&amp;can=6&amp;q=&amp;sort=-status>VSS
+exe path</a> - Issue# 31<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=32&amp;can=6&amp;q=&amp;sort=-status>VSS
+CCNet not using VSS.DBPath</a> - Issue# 32<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=21&amp;can=1&amp;q=&amp;sort=id%20-status>Svn
+Passowrd</a> - Issue# 21<br>
+<h3>
+  Informal Changes<br>
+</h3>
+Added the beginnings of the Vault Package.<br>
+Update CCNet to the latest Vault source block.<br>
+Added the beginnings of the CVS Package.<br>
+Add the beginnings of the FinalBuilder Package.<br>
+NAnt - property assignment is logged for log level verbose.<br>
+Fix vss create and load repo.<br>
+Added scripts to the build solution file name to be more clear what it's purpose
+is.<br>
+Replace the property SourceModificationReport.SCProductPath in favor of a regex.<br>
+Added FixUpProjectOutputDir to Scratch.Lib.xml.<br>
+Added new Function vsproject::get-output-directory(projectFilePath, config).<br>
+Use the new function to better configure targets for the Packages
+DotNetUnitTest, MSTest, NCover, and nDepend.<br>
+Added new NAnt project for interacting with CCNet servers.&nbsp; Includes
+Thibaut Barrère's launchccnetbuild task from
+http://confluence.public.thoughtworks.org/display/CCNET/How+to+force+a+CCNet+build+from+a+NAnt+script,
+ccnetstop task, ccnetstart task, and several functions for getting status info
+on a project.<br>
+Added a while task.<br>
+Added a break task that should work in any task container.<br>
+Added a pid result property to exec related tasks.<br>
+Added stop and start methods to ICruiseManager, ICruiseServer and their
+implementations.<br>
+Added the waitfor task.<br>
+Added new function process::isrunning(pid)<br>
+Added CCNet Server Aggregator zip to the Power Tools.<br>
+Removed some extra files showing up in the Dashboard.<br>
+<h2>
+  Beta 0.8.0.54
+</h2>
+<h3>
+  New
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=8&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>Personal
+Power Tools</a> - Issue# 8<br>
+<ul>
+  <li>
+    Ant.Environment.xml
+  </li>
+</ul>
+<ul>
+  <li>
+    Build.bat<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>Compile.Environment.xml<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>NoUpdateBuild.bat
+  </li>
+  <li>
+    OpenCommandPrompt.bat<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>OpenSolution.bat<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>OpenSolution.Script.xml<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>Personal.Build.xml<span style=FONT-FAMILY:monospace></span>
+  </li>
+  <li>
+    <span style=FONT-FAMILY:monospace></span>Test.bat
+  </li>
+  <li>
+    Scratch.Lib.xml<br>
+  </li>
+</ul>
+<br>
+<h3>
+  Improvements
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=10&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>NCover
+Package - Insure NCover Exists</a> - Issue# 10<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=13&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>VS.Net
+Project Output Getter</a> - Issue# 13<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=21&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>Svn
+Passowrd</a> - Issue# 21<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=27&amp;can=1&amp;q=milestone:Beta-Release>Package
+Installer</a> - Issue# 27<br>
+<h3>
+  Fixes
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=9&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>Source
+Control Packages - Rename</a> - Issue# 9<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=16&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>CSDiff
+Pacakge - Not Showing Unit Test Changes</a> - Issue# 16<br>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=17&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>Configure
+the Dashbaord to be ASP.NET 2.0</a> - Issue# 17<br>
+<br>
+<h3>
+  Tasks
+</h3>
+<a href=http://code.google.com/p/ci-factory/issues/detail?id=12&amp;can=1&amp;q=milestone:Beta-Release&amp;sort=status>Include
+Documentation in Zip</a> - Issue# 12<br>
+<br>
+<br>
+<h2>
+  Beta 0.8.0.27
+</h2>
+<h3>
+  Major Changes
+</h3>
+Custom Branch of CCNet 1.0<br>
+<ul>
+  <li>
+    Complied on .Net 2.0
+  </li>
+  <li>
+    Improved performance.
+  </li>
+  <li>
+    Artifact directory per build.
+  </li>
+  <li>
+    Added Xsl file merger publication task.
+  </li>
+  <li>
+    Added Integration filters.
+  </li>
+  <ul>
+    <li>
+      Added modifications required filter.<br>
+    </li>
+  </ul>
+  <li>
+    Added Force Filters.
+  </li>
+  <ul>
+    <li>
+      Added filter to set rights on who can force a build (Active Directory
+      Based).
+    </li>
+    <li>
+      Added project filter.<br>
+    </li>
+  </ul>
+  <li>
+    Added Artifact Xsl dashboard plugin.
+  </li>
+  <li>
+    Added Artifact directory browser dashboard plugin.
+  </li>
+  <li>
+    Added project trigger filter trigger.
+  </li>
+</ul>
+<br>
+Custom Branch of NAnt and NAnt Contrib<br>
+<ul>
+  <li>
+    Compiled on .Net 2.0
+  </li>
+  <li>
+    Improved performance on filesets.
+  </li>
+  <li>
+    Improved NantSchema generation.
+  </li>
+  <li>
+    Added NewExt attribute to CopyTask, will change the ext of file being
+    copied.
+  </li>
+  <li>
+    Change Exec task to use exactly what is given for the working dir.
+  </li>
+  <li>
+    Change EnvironmentSet to be a DataType.
+  </li>
+  <li>
+    Added useshellexecute, createnowindow, and redirectoutput to
+    ExternalProgramBase.
+  </li>
+  <li>
+    Fixed VSS History - exception on destroyed/purged items.
+  </li>
+</ul>
+<br>
+CI Factory<br>
+<ul>
+  <li>
+    Re-purposed the Installs directory, now named Artifacts.
+  </li>
+  <li>
+    Merged Common.Tasks.dll and Common.Functions.dll in to
+    CIFactory.NAnt.Tasks.dll
+  </li>
+  <li>
+    Added post build script, it runs asynchronously allowing the build result to
+    be published sooner.<br>
+  </li>
+</ul>
+<br>
+<h3>
+  New Features
+</h3>
+New CI Factory NAnt Tasks<br>
+<ul>
+  <li>
+    Code Convert Filter converts between C# and VB.Net.
+  </li>
+  <li>
+    Regex Filter.
+  </li>
+  <li>
+    Task to process xsl with exsl:document - allows multiple output documents.
+  </li>
+  <li>
+    Task Write Registry value.
+  </li>
+  <li>
+    Task to apply filter on a property.
+  </li>
+  <li>
+    Task Ask, to prompt the user.
+  </li>
+  <li>
+    Task AsyncExec - asynchronously execute a process.
+  </li>
+  <li>
+    Task WaitForExit - wait for an AsynExec task to exit.
+  </li>
+  <li>
+    Task LogLevel - set the log level.
+  </li>
+  <li>
+    Task CopyXml - copy an xml doc, docs with DTD file entities are copied are
+    copied as one doc.
+  </li>
+  <li>
+    Task Subversion Clean Tree - deletes all files not in repository,
+    unversioned files, from local workspace.
+  </li>
+  <li>
+    Task MSTest - run MSTests.
+  </li>
+  <li>
+    VSTS Version Control<br>
+  </li>
+  <ul>
+    <li>
+      Task TfsAddTask<br>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsBlock
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsBlockServices
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsCheckinTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsCheckoutTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsDeleteWorkspace
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsGetTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsHistoryTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsLabelTask
+    </li>
+  </ul>
+  <ul>
+    <li>
+      Task TfsMapWorkspace
+    </li>
+    <li>
+      Function tfs-vc::get-latest-changeset-id()
+    </li>
+    <li>
+      Function tfs-vc::get-latest-changeset-id-frompath(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::label-exists(label, scope)
+    </li>
+    <li>
+      Function tfs-vc::workspace-exists(workspaceName)
+    </li>
+    <li>
+      Function tfs-vc::get-workspace-name(localItem)
+    </li>
+    <li>
+      Function tfs-vc::is-server-path-mapped(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::is-local-path-mapped(localItem)
+    </li>
+    <li>
+      Function tfs-vc::get-localitem-for-serveritem(serverItem)
+    </li>
+    <li>
+      Function tfs-vc::get-serveritem-for-localitem(localItem)
+    </li>
+    <li>
+      Function tfs-vc::has-pending-changes()
+    </li>
+    <li>
+      Function tfs-vc::has-pending-changes(localItem)
+    </li>
+    <li>
+      Function tfs-vc::has-confilcts(pathfilter, recursive)<br>
+    </li>
+  </ul>
+  <li>
+    Type RegexMatch for looping through text.
+  </li>
+  <li>
+    Type TargetSet - for looping through.
+  </li>
+  <li>
+    Function svn::is-versioned(path) - identifies if a path is versioned, in the
+    repo.<br>
+  </li>
+</ul>
+<br>
+New Packages<br>
+<ul>
+  <li>
+    Analytics - This package is not fully integrated, it is currently
+    experimental.<br>
+  </li>
+  <li>
+    Ant - Used to build Java.
+  </li>
+  <li>
+    Backup - Will backup the CCNet state file, build log file and Artifact
+    directory to as network share of your specification.<br>
+  </li>
+  <li>
+    CSDiff - Provides visual diffs on the dashboard.
+  </li>
+  <li>
+    LinesOfCode - Reports LOC on the dashboard.
+  </li>
+  <li>
+    MSBuild - Will build a 2005 solution file.
+  </li>
+  <li>
+    MSTest - Will run MSTests.
+  </li>
+  <li>
+    NCover - Will run unit tests under NCover for code covereage stats, uses
+    NCover Explorer too!
+  </li>
+  <li>
+    Simian - Provides duplication stats on the dashboard.
+  </li>
+  <li>
+    VSTS Version Control - The installer is not complete for this just
+    yet.&nbsp; You will need to configure the CCNet project yourself.&nbsp;
+    Otherwise it is complete.
+  </li>
+</ul>
+<br>
+Changed Packages<br>
+<ul>
+  <li>
+    NDepend - upgraded to latest version of NDepend.
+  </li>
+  <li>
+    SourceControlModification - Added publication of source changes to Artifact
+    directory.
+  </li>
+  <li>
+    Subversion - Added use of svncleantree task for improved performance.
+  </li>
+</ul>
+<br>
+There have been so many bug fixes.&nbsp; I did not keep track, shame on me.<br>
+<br>
+<br>
+<br></body>
+</html>
