@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,7 @@ using NAnt.Core;
 using NAnt.Core.Attributes;
 using NAnt.Core.Types;
 
+using Microsoft.TeamFoundation.VersionControl.Controls;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.VersionControl.Common;
 using Microsoft.TeamFoundation.Client;
@@ -18,6 +20,15 @@ namespace TF.Tasks.SourceControl.Tasks
     [TaskName("tfsget")]
     public class TfsGetTask : Task
     {
+
+		private static Assembly ControlsAssembly = 
+			Assembly.LoadFile(@"C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Controls.dll");
+		private static Type DialogResolveType = 
+			ControlsAssembly.GetType("Microsoft.TeamFoundation.VersionControl.Controls.DialogResolve");
+		private static MethodInfo ResolveConflictsMethod = DialogResolveType.GetMethod("ResolveConflicts",
+					BindingFlags.NonPublic | BindingFlags.Static, null, new Type[2] { typeof(Workspace), typeof(string[]) }, null);
+		private static PropertyInfo UnresolvedConflictCountProperty = 
+			DialogResolveType.GetProperty("UnresolvedConflictCount", BindingFlags.Instance | BindingFlags.NonPublic);
 
         #region Fields
 
@@ -33,10 +44,26 @@ namespace TF.Tasks.SourceControl.Tasks
         private string _ResultFileSetRefId;
         private FileSet _ResultFileSet;
 		private bool _Failed = false;
+		private bool _IsInteractive = false;
+		private List<string> _ListOfFilesGotten;
 
         #endregion
 
         #region Properties
+
+		public List<string> ListOfFilesGotten
+		{
+			get
+			{
+				if (_ListOfFilesGotten == null)
+					_ListOfFilesGotten = new List<string>();
+				return _ListOfFilesGotten;
+			}
+			set
+			{
+				_ListOfFilesGotten = value;
+			}
+		}
 
 		public bool Failed
 		{
@@ -87,6 +114,19 @@ namespace TF.Tasks.SourceControl.Tasks
                 _WorkspaceHelper = value;
             }
         }
+
+		[TaskAttribute("isinteractive", Required = false)]
+		public bool IsInteractive
+		{
+			get
+			{
+				return _IsInteractive;
+			}
+			set
+			{
+				_IsInteractive = value;
+			}
+		}
 
         [TaskAttribute("resultfilesetrefid", Required = false)]
         public string ResultFileSetRefId
@@ -229,33 +269,52 @@ namespace TF.Tasks.SourceControl.Tasks
             return Options;
         }
 
-        protected override void ExecuteTask()
-        {
-            //TODO: Adding the alternet use of a fileset instead of the LocalItem property
-            Workspace MyWorkspace = this.WorkspaceHelper.GetWorkspace(this.WorkspaceName, this.LocalItem, this.ServerConnection);
+		protected override void ExecuteTask()
+		{
+			//TODO: Adding the alternet use of a fileset instead of the LocalItem property
+			Workspace MyWorkspace = this.WorkspaceHelper.GetWorkspace(this.WorkspaceName, this.LocalItem, this.ServerConnection);
 
-            GetOptions Options = this.GetGetOptions();
+			GetOptions Options = this.GetGetOptions();
 
-            this.ServerConnection.SourceControl.Getting += new GettingEventHandler(OnGet);
+			this.ServerConnection.SourceControl.Getting += new GettingEventHandler(OnGet);
 
-            if (!String.IsNullOrEmpty(this.ServerItem))
-            {
-                RecursionType Recursion = RecursionType.None;
-                if (this.Recursive)
-                    Recursion = RecursionType.Full;
+			GetStatus Status = null;
 
-                GetRequest GetReq = new GetRequest(new ItemSpec(this.ServerItem, Recursion), this.VersionSpec.GetVersionSpec());
-                MyWorkspace.Get(GetReq, Options);
-            }
-            else
-            {
-                MyWorkspace.Get(this.VersionSpec.GetVersionSpec(), Options);
-            }
+			if (!String.IsNullOrEmpty(this.ServerItem))
+			{
+				RecursionType Recursion = RecursionType.None;
+				if (this.Recursive)
+					Recursion = RecursionType.Full;
 
-            this.ServerConnection.SourceControl.Getting -= new GettingEventHandler(OnGet);
+				GetRequest GetReq = new GetRequest(new ItemSpec(this.ServerItem, Recursion), this.VersionSpec.GetVersionSpec());
+				Status = MyWorkspace.Get(GetReq, Options);
+			}
+			else
+			{
+				Status = MyWorkspace.Get(this.VersionSpec.GetVersionSpec(), Options);
+			}
+
+			this.ServerConnection.SourceControl.Getting -= new GettingEventHandler(OnGet);
+
+			if (this.IsInteractive && (Status.NumConflicts > 0 || Status.HaveResolvableWarnings))
+			{
+				Object ResolveObject = ResolveConflictsMethod.Invoke(null, new object[] { MyWorkspace, this.ListOfFilesGotten.ToArray() });
+				int unresolvedConflictCount = (int)UnresolvedConflictCountProperty.GetValue(ResolveObject, null);
+				if (unresolvedConflictCount == 0)
+				{
+					this.Failed = false;
+					this.Log(Level.Verbose, "All conflicts have been resolved.");
+				}
+				else
+				{
+					this.Log(Level.Error, "{0} conflict(s) have not been resolved!", unresolvedConflictCount);
+				}
+			}
+
+
 			if (this.Failed)
 				throw new BuildException("Failed to get from TFS version control successfully!");
-        }
+		}
 
         #endregion
 
@@ -263,9 +322,10 @@ namespace TF.Tasks.SourceControl.Tasks
 		{
 			if (!String.IsNullOrEmpty(this.ResultFileSetRefId))
 				this.ResultFileSet.Includes.Add(e.TargetLocalItem);
+			this.ListOfFilesGotten.Add(e.TargetLocalItem);
 
 			Level LogLevel = Level.Verbose;
-			if (e.Status != OperationStatus.Replacing && e.Status != OperationStatus.Deleting)
+			if (e.Status != OperationStatus.Replacing && e.Status != OperationStatus.Deleting && e.Status != OperationStatus.Getting)
 			{
 				LogLevel = Level.Error;
 				this.Failed = true;
