@@ -8,6 +8,7 @@
   <property name="TFS.LabelScope" value="$/${ProjectName}/${ProjectCodeLineName}"/>
 	
 	<property name="SourceControl.Update.ReplaceWritableFiles" value="True" overwrite="false"/>
+	<property name="SourceControl.Update.Interactive" value="false" overwrite="false"/>
 
 	<versionspec id="SourceControl.Update.versionspec" type="Latest" versionspec=""/>
 </project>

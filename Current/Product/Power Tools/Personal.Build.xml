@@ -87,6 +87,7 @@
     <property name="SourceControl.Update.FileTimeStamp" value="Current"/>
     <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
     <property name="SourceControl.Update.MakeWritable" value="False"/>
+		<property name="SourceControl.Update.Interactive" value="True"/>
     <call target="SourceControl.GetOfBuildDirectory"/>
     <call target="SourceControl.GetOfThirdPartyDirectory" />
     <call target="SourceControl.GetOfProductDirectory" />

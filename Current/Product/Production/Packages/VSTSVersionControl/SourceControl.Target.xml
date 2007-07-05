@@ -237,8 +237,8 @@
 		</ifnot>
 		
 		<tfsget verbose="true" 
-						serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}" 
-						recursive="true"
+						serveritem="${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"
+						recursive="true" isinteractive="SourceControl.Update.Interactive"
 						all="${SourceControl.Update.All}" 
 						overwrite="${SourceControl.Update.ReplaceWritableFiles}"
 						workspacename="${TFS.WorkspaceName}" >
