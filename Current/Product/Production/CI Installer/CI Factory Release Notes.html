@@ -20,7 +20,7 @@ BODY, P {
 
 BODY {
   line-height: ;
-  background: white;
+
   margin: 6px;
   padding: 0px;
 }
@@ -44,11 +44,41 @@ a img {border: 0}
 </head>
 
 
-<body revision="dd6cv3jm_09r2s2h:174">
+<body revision="dd6cv3jm_09r2s2h:181">
 
 <h1>
   CI Factory Release Notes
 </h1>
+<h2>
+  Final 0.8.0.163
+</h2>
+<h3>
+  Improvements
+</h3>
+Add echo of what change set is being gotten for getting from a change set<br>
+Make multiTriggers available to use in ccnet config<br>
+Concatenate base url derived from ccnet projects weburl property to the
+default.aspx link in the project grid<br>
+Removed required attribute on tfs datatypes, no error lines when using refid<br>
+Made Tfs Get reuse existing refid for fileset of gotten files<br>
+Refactored TFS Package<br>
+Added the option to overwrite in Tfs Package<br>
+Add Success to email group notification type for ccnet email publication<br>
+Integrated email publication with force user knowledge through check for
+integration property CCNetForcedBy<br>
+<br>
+<h3>
+  Fixes
+</h3>
+Merge with CCNet Trunk to get fix for Claudio<br>
+Fail in Tfs Get task if unable to get successfully<br>
+Fix async part of Post Build Shim<br>
+Fix - Account for distinction between blocked and filtered integrations<br>
+Fix - remove the nant xmlns from the value when xml is set to true<br>
+Fix lost build when a trigger filter blocks<br>
+Fix unit test alert for broken builds<br>
+Fix Current and other Path hard coding<br>
+<br>
 <h2>
   RC 0.8.0.153
 </h2>
