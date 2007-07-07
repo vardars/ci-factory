@@ -12,9 +12,9 @@
         <xsl:for-each select="/Build/msbuild//error">
           <error>
             <xsl:if test="@file != ''" >
-              <xsl:value-of select="concat(@file,'&nbsp;(', @line, ',', @column, '):&nbsp;')"/>
+              <xsl:value-of select="concat(@file,' (', @line, ',', @column, '): ')"/>
             </xsl:if>
-            <xsl:value-of select="concat('error&nbsp;', @code, ':&nbsp;', text())" />
+            <xsl:value-of select="concat('error ', @code, ': ', text())" />
           </error>
         </xsl:for-each>
       </errors>
@@ -22,9 +22,9 @@
         <xsl:for-each select="/Build/msbuild//warning">
           <warning>
             <xsl:if test="@file != ''" >
-              <xsl:value-of select="concat(@file,'&nbsp;(', @line, ',', @column, '):&nbsp;')"/>
+              <xsl:value-of select="concat(@file,' (', @line, ',', @column, '): ')"/>
             </xsl:if>
-            <xsl:value-of select="concat('warning&nbsp;', @code, ':&nbsp;', text())" />
+            <xsl:value-of select="concat('warning ', @code, ': ', text())" />
           </warning>
         </xsl:for-each>
       </warnings>

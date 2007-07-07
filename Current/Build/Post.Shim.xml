@@ -22,7 +22,7 @@
           </else>
         </ifthenelse>
 
-        <asyncexec waitforexit="false" program="${NantExePath}" failonerror="false">
+        <asyncexec waitforexit="false" program="${NantExePath}" failonerror="false" useshellexecute="true" createnowindow="true" redirectoutput="false" >
           <arg line="-buildfile:Post.Build.xml"/>
           <arg line='-logger:NAnt.Core.XmlLogger' />
           <arg line='-logfile:"${Common.ArtifactDirectoryPath}\postbuildlog.xml"' />

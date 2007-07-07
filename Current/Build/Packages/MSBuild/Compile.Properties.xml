@@ -15,7 +15,7 @@
 
   <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Compile.Environment.xml" overwrite="false"/>
 
-  <property name="Compile.Environment.RefId" value="Ant.Environment" overwrite="false"/>
+  <property name="Compile.Environment.RefId" value="MSBuild.Environment" overwrite="false"/>
 
   <ifthenelse test="${file::exists(Compile.Environment.ConfigFilePath)}">
     <then>
@@ -29,7 +29,7 @@
   <target name="Compile.Environment.Set">
     <property name="Compile.Environment.Path" value="${environment::get-variable('SystemRoot')}\system32;${environment::get-variable('SystemRoot')};${environment::get-variable('SystemRoot')}\System32\Wbem" />
     <environment id="${Compile.Environment.RefId}">
-      <variable name="PATH" value="${Compile.Environment.Path};${ThirdPartyDirectory}\nAnt\bin" />
+      <variable name="PATH" value="${Compile.Environment.Path};${NantBinPath}" />
     </environment>
   </target>
 </project>

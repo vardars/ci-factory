@@ -36,11 +36,23 @@
         <items refid="Coverage.Target.ProjectFiles" />
       </in>
       <do>
+        <echo message="Looking for assembly output in ${Coverage.Target.ProjectFile.Path}."/>
         <property name="TargetAssemblyName" value="${vsproject::get-assemblyname(Coverage.Target.ProjectFile.Path)}"/>
-        <property name="TargetAssemblyPath" value="${path::get-directory-name(Coverage.Target.ProjectFile.Path)}\**\bin\**\${TargetAssemblyName}.dll"/>
-        <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}"/>
+        <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(Coverage.Target.ProjectFile.Path, Compile.ConfigName)}\${TargetAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}" if="${file::exists(TargetAssemblyPath)}"/>
       </do>
     </foreach>
+
+    <if test="${fileset::file-count('Coverage.Targets') == 0}">
+      <call target="Coverage.FindTargetAssebmlies"/>
+    </if>
+    
+    <setenv>
+      <environment>
+        <variable name="Cor_Enable_Profiling" value="1" />
+        <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
+      </environment>
+    </setenv>
 
     <trycatch>
       <try>
@@ -63,6 +75,13 @@
     </trycatch>
   </target>
 
+  <target name="Coverage.FindTargetAssebmlies">
+    <fileset id="Coverage.Targets" >
+      <include name="${ProductionDirectory}\**\bin\${Coverage.TargetAssemblyFormat}" />
+      <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
+    </fileset>
+  </target>
+
   <target name="Private.Coverage.NCoverExplorer">
     <echo message="Starting NCoverExplorer report generation..."/>
     <ncoverexplorer program="${BuildDirectory}\Packages\NCover\NCoverExplorer\NCoverExplorer.Console.exe"
@@ -79,7 +98,7 @@
   </target>
 
   <target name="Private.Coverage.CreatePropertiesFile">
-    <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+    <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
     <saveproperties file="${Coverage.CommonPropertiesFile}" format="CommandLine" >
       <property name="CCNetBuildCondition"/>
       <property name="CCNetIntegrationStatus"/>

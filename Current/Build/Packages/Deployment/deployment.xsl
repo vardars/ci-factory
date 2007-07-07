@@ -15,7 +15,7 @@
       </tr>
       <xsl:for-each select="/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']">
         <xsl:call-template name="DeploymentFile">
-          <xsl:with-param name="DeploymentWebPath" select=".//target[@name='Private.Deployment.EchoDeploymentFileWebPath']/task[@name='echo']/message"/>
+          <xsl:with-param name="DeploymentWebPath" select=".//target[@name='Deployment.EchoDeploymentFileWebPath']/task[@name='echo']/message"/>
           <xsl:with-param name="DeploymentWebName" select=".//target[@name='Private.Deployment.EchoDeploymentFileWebName']/task[@name='echo']/message"/>
         </xsl:call-template>
       </xsl:for-each>

@@ -25,7 +25,7 @@
   <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
   <target name="Common.CreatePropertiesFile">
     <delete file="${Common.PropertiesFile}" if ="${file::exists(Common.PropertiesFile)}" />
-    <property name="Compile.ConfigName" value="debug" overwrite="false"/>
+    <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
     <saveproperties file="${Common.PropertiesFile}" format="CommandLine" >
       <property name="CCNetBuildCondition"/>
       <property name="CCNetIntegrationStatus"/>

@@ -5,4 +5,11 @@
   <property name="Versioning.ProductInformationFile" value="ProjectInfo.*" />
   <property name="Versioning.ProductVersion" value="${CCNetLabel}" />
 
+  <property name="Versioning.FixUp.ProjectFile.FileSet" value="Versioning.FixUp.ProjectFile.FileSet" overwrite="false"/>
+
+  <fileset id="Versioning.FixUp.ProjectFile.FileSet">
+    <include name="${ProductionDirectory}\**\*.csproj"/>
+    <include name="${ProductionDirectory}\**\*.vbproj"/>
+  </fileset>
+
 </project>

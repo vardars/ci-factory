@@ -22,7 +22,7 @@
   
   <target name="Deployment.PublishLink">
     <call target="Private.Deployment.EchoDeploymentFileWebName" />
-    <call target="Private.Deployment.EchoDeploymentFileWebPath" />
+    <call target="Deployment.EchoDeploymentFileWebPath" />
   </target>
 
   <target name="Deployment.PublishFileSilently">
@@ -38,7 +38,7 @@
     <echo message="${Deployment.FileWebName}" level="Info"/>
   </target>
   
-  <target name="Private.Deployment.EchoDeploymentFileWebPath" >
+  <target name="Deployment.EchoDeploymentFileWebPath" >
     <echo message="${Deployment.FileWebPath}" level="Info"/>
   </target>
 
