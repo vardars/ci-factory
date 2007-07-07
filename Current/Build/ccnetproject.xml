@@ -43,7 +43,7 @@
       &email;
     </publishers>
   </project>
-  <!--<project name="CI Factory">
+  <project name="CI Factory">
     <webURL>http://cifactorybuild/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
@@ -139,5 +139,5 @@
         <buildTimeoutSeconds>300</buildTimeoutSeconds>
       </nant>
     </publishers>
-  </project>-->
+  </project>
 </cruisecontrol>
