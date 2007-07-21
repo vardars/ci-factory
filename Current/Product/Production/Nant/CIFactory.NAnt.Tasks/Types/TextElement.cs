@@ -49,7 +49,7 @@ namespace CIFactory.NAnt.Types
 						XmlNoNamespaceWriter Writer = new XmlNoNamespaceWriter(new StringWriter(Builder));
 						
 						Writer.WriteNode(
-							new XmlTextReader(new StringReader(this.XmlNode.OuterXml)), false);
+							new XmlTextReader(new StringReader(this.XmlNode.InnerXml)), false);
 
 						Writer.Flush();
 						Writer.Close();
