@@ -14,6 +14,74 @@ using Microsoft.TeamFoundation.Client;
 
 namespace TF.Tasks.Alerts
 {
+	[TaskName("tfsdeletealertsubscription")]
+	public class DeleteAlertSubscriptionTask : Task
+	{
+		private IEventService _EventService;
+		private TeamFoundationServer _Server;
+		private TfsServerConnection _ServerConnection;
+
+		public IEventService EventService
+		{
+			get
+			{
+				if (_EventService == null)
+					_EventService = (IEventService)this.ServerConnection.TFS.GetService(typeof(IEventService));
+				return _EventService;
+			}
+			set
+			{
+				_EventService = value;
+			}
+		}
+
+		public TeamFoundationServer Server
+		{
+			get
+			{
+				return _Server;
+			}
+			set
+			{
+				_Server = value;
+			}
+		}
+
+		[BuildElement("tfsserverconnection", Required = true)]
+		public TfsServerConnection ServerConnection
+		{
+			get
+			{
+				return _ServerConnection;
+			}
+			set
+			{
+				_ServerConnection = value;
+			}
+		}
+
+		private int _SubscriptionId;
+
+		[TaskAttribute("subscriptionid", Required = true)]
+		public int SubscriptionId
+		{
+			get
+			{
+				return _SubscriptionId;
+			}
+			set
+			{
+				_SubscriptionId = value;
+			}
+		}
+
+		protected override void ExecuteTask()
+		{
+			this.EventService.UnsubscribeEvent(this.SubscriptionId);
+		}
+	}
+
+
 	[TaskName("tfsqueryalertsubscriptions")]
 	public class QueryAlertSubscriptionsTask : Task
 	{

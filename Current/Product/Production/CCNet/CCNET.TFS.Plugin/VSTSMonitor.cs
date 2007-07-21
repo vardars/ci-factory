@@ -244,8 +244,11 @@ namespace CCNET.TFS.Plugin
 
         private void StartListener(Uri uri)
         {
+			BasicHttpBinding Binding = new BasicHttpBinding();
+			Binding.MaxReceivedMessageSize = int.MaxValue;
+
             this.ServiceHost = new ServiceHost(typeof(NotificationReciever), uri);
-            this.ServiceHost.AddServiceEndpoint(typeof(INotificationReciever), new BasicHttpBinding(), uri);
+			this.ServiceHost.AddServiceEndpoint(typeof(INotificationReciever), Binding, uri);
             this.ServiceHost.Open();
         }
 
