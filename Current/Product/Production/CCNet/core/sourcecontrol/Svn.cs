@@ -38,14 +38,38 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		[ReflectorProperty("tagBaseUrl", Required = false)]
 		public string TagBaseUrl;
 
-		[ReflectorProperty("username", Required = false)]
-		public string Username;
+		private string _Username;
 
-		[ReflectorProperty("password", Required = false)]
-		public string Password;
+        [ReflectorProperty("username", Required = false)]
+        public string Username
+        {
+            get
+            {
+                return _Username;
+            }
+            set
+            {
+                _Username = value;
+            }
+        }
 
-		[ReflectorProperty("autoGetSource", Required = false)]
-		public bool AutoGetSource = false;
+        private string _Password;
+
+        [ReflectorProperty("password", Required = false)]
+        public string Password
+        {
+            get
+            {
+                return _Password;
+            }
+            set
+            {
+                _Password = value;
+            }
+        }
+
+        [ReflectorProperty("autoGetSource", Required = false)]
+        public bool AutoGetSource = false;
 
 		public string FormatCommandDate(DateTime date)
 		{
@@ -117,7 +141,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private ProcessInfo NewGetSourceProcessInfo(IIntegrationResult result)
 		{
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
-			buffer.Append("update");
+			buffer.AddArgument("update");
 			AppendRevision(buffer, result.LastChangeNumber);
 			AppendCommonSwitches(buffer);
 			return NewProcessInfo(buffer.ToString(), result);
@@ -127,10 +151,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private ProcessInfo NewLabelProcessInfo(IIntegrationResult result)
 		{
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
-			buffer.AppendArgument("copy");
+			buffer.AddArgument("copy");
 			buffer.AppendArgument(TagMessage(result.Label));
-			buffer.AppendArgument(TagSource(result));
-			buffer.AppendArgument(TagDestination(result.Label));
+			buffer.AddArgument(TagSource(result));
+			buffer.AddArgument(TagDestination(result.Label));
 			AppendRevision(buffer, result.LastChangeNumber);
 			AppendCommonSwitches(buffer);
 			return NewProcessInfo(buffer.ToString(), result);
@@ -140,8 +164,8 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private ProcessInfo NewHistoryProcessInfo(IIntegrationResult from, IIntegrationResult to)
 		{
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
-			buffer.AppendArgument("log");
-			buffer.AppendArgument(TrunkUrl);
+			buffer.AddArgument("log");
+			buffer.AddArgument(TrunkUrl);
 			buffer.AppendArgument(string.Format("-r \"{{{0}}}:{{{1}}}\"", FormatCommandDate(from.StartTime), FormatCommandDate(to.StartTime)));
 			buffer.AppendArgument("--verbose --xml");
 			AppendCommonSwitches(buffer);
@@ -169,10 +193,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private void AppendCommonSwitches(ProcessArgumentBuilder buffer)
 		{
-			buffer.AppendArgument("--username", Username);
-			buffer.AppendArgument("--password", Password);
-			buffer.AppendArgument("--non-interactive");
-			buffer.AppendArgument("--no-auth-cache");
+			buffer.AddArgument("--username", Username);
+			buffer.AddArgument("--password", Password);
+			buffer.AddArgument("--non-interactive");
+			buffer.AddArgument("--no-auth-cache");
 		}
 
 		private void AppendRevision(ProcessArgumentBuilder buffer, int revision)
