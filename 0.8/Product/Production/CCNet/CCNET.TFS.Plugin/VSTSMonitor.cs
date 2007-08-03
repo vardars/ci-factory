@@ -9,6 +9,7 @@ using System.ServiceModel;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Server;
+using System.Xml;
 
 namespace CCNET.TFS.Plugin
 {
@@ -244,8 +245,18 @@ namespace CCNET.TFS.Plugin
 
         private void StartListener(Uri uri)
         {
+			BasicHttpBinding Binding = new BasicHttpBinding();
+			Binding.MaxReceivedMessageSize = int.MaxValue;
+			XmlDictionaryReaderQuotas Quotas = new XmlDictionaryReaderQuotas();
+			Quotas.MaxArrayLength = int.MaxValue;
+			Quotas.MaxBytesPerRead = int.MaxValue;
+			Quotas.MaxDepth = int.MaxValue;
+			Quotas.MaxNameTableCharCount = int.MaxValue;
+			Quotas.MaxStringContentLength = int.MaxValue;
+			Binding.ReaderQuotas = Quotas;
+
             this.ServiceHost = new ServiceHost(typeof(NotificationReciever), uri);
-            this.ServiceHost.AddServiceEndpoint(typeof(INotificationReciever), new BasicHttpBinding(), uri);
+			this.ServiceHost.AddServiceEndpoint(typeof(INotificationReciever), Binding, uri);
             this.ServiceHost.Open();
         }
 

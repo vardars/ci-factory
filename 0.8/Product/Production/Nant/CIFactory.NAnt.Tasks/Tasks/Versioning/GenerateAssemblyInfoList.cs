@@ -143,6 +143,8 @@ namespace UpdateVersion.Tasks
                 case ".vbproj":
                     FileExt = ".vb";
                     break;
+				default:
+					return;
             }
 
             XmlDocument xd = new XmlDocument();
