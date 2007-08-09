@@ -50,5 +50,12 @@ namespace CIFactory.NAnt.CCNet.Functions
             ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
             return Manager.GetProjectStatus(projectName).LastBuildLabel;
         }
+
+		[Function("get-project-last-build-date")]
+		public string GetProjectLastBuildDate(string serverUrl, string projectName)
+		{
+			ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
+			return Manager.GetProjectStatus(projectName).LastBuildDate.ToString(ThoughtWorks.CruiseControl.Core.LogFile.FilenameDateFormat);
+		}
     }
 }
