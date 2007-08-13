@@ -6,6 +6,7 @@ using NAnt.Core;
 using NAnt.Core.Types;
 using NAnt.Core.Attributes;
 using ThoughtWorks.CruiseControl.Remote;
+using CIFactory.NAnt.Types;
 
 namespace CIFactory.NAnt.CCNet.Functions
 {
@@ -57,5 +58,22 @@ namespace CIFactory.NAnt.CCNet.Functions
 			ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
 			return Manager.GetProjectStatus(projectName).LastBuildDate.ToString(ThoughtWorks.CruiseControl.Core.LogFile.FilenameDateFormat);
 		}
+
+		[Function("get-project-some-build-labels")]
+		public void GetProjectSomeBuildLabels(string serverUrl, string projectName, int numberToRetrieve, string refID)
+		{
+			if (!this.Project.DataTypeReferences.Contains(refID))
+				throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+			StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
+
+			ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
+            string[] Builds = Manager.GetMostRecentBuildNames(projectName, numberToRetrieve);
+
+			foreach (string BuildName in Builds)
+			{
+				RefStringList.StringItems.Add(BuildName, new StringItem(BuildName));
+			}
+        }
     }
 }

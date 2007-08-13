@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -59,6 +59,10 @@
     <ProjectReference Include="..\..\CCNet\Remote\Remote.csproj">
       <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
       <Name>Remote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CIFactory.NAnt.Tasks\CIFactory.NAnt.Tasks.csproj">
+      <Project>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</Project>
+      <Name>CIFactory.NAnt.Tasks</Name>
     </ProjectReference>
     <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
       <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>

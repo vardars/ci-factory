@@ -92,8 +92,12 @@ namespace CIFactory.NAnt.Tasks
             if (this.ShowDialog)
             {
                 Ask.AskQuestion Questioner = new CIFactory.NAnt.Tasks.Ask.AskQuestion();
+				int OptionCount = 0;
                 foreach (String Choice in this.Options)
                 {
+					++OptionCount;
+					if (OptionCount > 6)
+						break;
                     Questioner.AddChoice(Choice);
                 }
                 Questioner.StateQuestion(this.Question);
