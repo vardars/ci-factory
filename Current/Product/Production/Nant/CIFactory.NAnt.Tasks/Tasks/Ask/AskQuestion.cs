@@ -15,6 +15,21 @@ namespace CIFactory.NAnt.Tasks.Ask
             InitializeComponent();
         }
 
+
+		private AskTask.Mode _DialogMode = AskTask.Mode.Options;
+
+		public AskTask.Mode DialogMode
+		{
+			get
+			{
+				return _DialogMode;
+			}
+			set
+			{
+				_DialogMode = value;
+			}
+		}
+
         private List<RadioButton> _RadioButtons;
         public List<RadioButton> RadioButtons
         {
@@ -58,6 +73,12 @@ namespace CIFactory.NAnt.Tasks.Ask
             this.AvailibleIndex += 1;
         }
 
+		public void SetFreeTextMode()
+		{
+			this.textBox2.Visible = true;
+			this.DialogMode = AskTask.Mode.FreeText;
+		}
+
         public void StateQuestion(string question)
         {
             this.textBox1.Text = question;
@@ -71,6 +92,9 @@ namespace CIFactory.NAnt.Tasks.Ask
 
         public string GetAnswer()
         {
+			if (this.DialogMode == AskTask.Mode.FreeText)
+				return this.textBox2.Text;
+
             foreach (RadioButton Choice in this.RadioButtons)
             {
                 if (Choice.Checked)

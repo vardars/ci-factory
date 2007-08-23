@@ -92,16 +92,37 @@ namespace NAnt.Core.Tasks {
     /// </example>
     [TaskName("xmlpoke")]
     public class XmlPokeTask : Task {
+
+		public enum Mode
+		{
+			Replace,
+			Add
+		}
+
         #region Private Instance Fields
         
         private FileInfo _xmlFile;
         private string _value;
         private string _xPathExpression;
         private XmlNamespaceCollection _namespaces = new XmlNamespaceCollection();
+		private Mode _PokeMode = Mode.Replace;
         
         #endregion Private Instance Fields
 
         #region Public Instance Properties
+
+		[TaskAttribute("pokemode", Required = false)]
+		public Mode PokeMode
+		{
+			get
+			{
+				return _PokeMode;
+			}
+			set
+			{
+				_PokeMode = value;
+			}
+		}
 
         /// <summary>
         /// The name of the file that contains the XML document that is going 
@@ -171,7 +192,7 @@ namespace NAnt.Core.Tasks {
                 // don't bother trying to update any nodes or save the
                 // file if no nodes were found in the first place.
                 if (nodes.Count > 0) {
-                    UpdateNodes(nodes, Value);
+                    UpdateNodes(nodes, Value, document);
                     SaveDocument(document, XmlFile.FullName);
                 } 
             } catch (BuildException ex) {
@@ -269,20 +290,27 @@ namespace NAnt.Core.Tasks {
         /// <param name="value">
         /// The text to replace the contents with.
         /// </param>
-        private void UpdateNodes(XmlNodeList nodes, string value) {
-            Log(Level.Verbose, "Updating nodes with value '{0}'.",
-                value);
-                
-            int index = 0;
-            foreach (XmlNode node in nodes) {
-                Log(Level.Verbose, "Updating node '{0}'.", index);
-                node.InnerXml = value;
-                index ++;
-            }
+		private void UpdateNodes(XmlNodeList nodes, string value, XmlDocument document)
+		{
+			Log(Level.Verbose, "Updating nodes with value '{0}'.",
+				value);
 
-            Log( Level.Verbose, "Updated all nodes successfully.",
-                value);
-        }
+			int index = 0;
+			foreach (XmlNode node in nodes)
+			{
+				Log(Level.Verbose, "Updating node '{0}'.", index);
+				if (this.PokeMode == Mode.Replace)
+					node.InnerXml = value;
+				else if (this.PokeMode == Mode.Add)
+				{
+					node.InnerXml = node.InnerXml + Value;
+				}
+				index++;
+			}
+
+			Log(Level.Verbose, "Updated all nodes successfully.",
+				value);
+		}
         
         /// <summary>
         /// Saves the XML document to a file.

@@ -10,6 +10,12 @@ namespace CIFactory.NAnt.Tasks
     [TaskName("ask")]
     public class AskTask : Task
     {
+		public enum Mode
+		{
+			Options,
+			FreeText
+		}
+
         #region Fields
 
         private string _AnswerProperty;
@@ -17,11 +23,24 @@ namespace CIFactory.NAnt.Tasks
         private string _Question;
         private bool _ShowDialog = true;
         private string _Caption;
+		private Mode _DialogMode = Mode.Options;
 
         #endregion
 
         #region Properties
 
+		[TaskAttribute("dialogmode", Required = false)]
+		public Mode DialogMode
+		{
+			get
+			{
+				return _DialogMode;
+			}
+			set
+			{
+				_DialogMode = value;
+			}
+		}
 
         [TaskAttribute("caption", Required = false)]
         public string Caption
@@ -88,23 +107,36 @@ namespace CIFactory.NAnt.Tasks
 
         protected override void ExecuteTask()
         {
-            string Answer;
+            string Answer = string.Empty;
             if (this.ShowDialog)
             {
-                Ask.AskQuestion Questioner = new CIFactory.NAnt.Tasks.Ask.AskQuestion();
-				int OptionCount = 0;
-                foreach (String Choice in this.Options)
-                {
-					++OptionCount;
-					if (OptionCount > 6)
-						break;
-                    Questioner.AddChoice(Choice);
-                }
-                Questioner.StateQuestion(this.Question);
-                if (!String.IsNullOrEmpty(this.Caption))
-                    Questioner.SetCaption(this.Caption);
-                Questioner.ShowDialog();
-                Answer = Questioner.GetAnswer();
+				if (this.DialogMode == Mode.Options)
+				{
+					Ask.AskQuestion Questioner = new CIFactory.NAnt.Tasks.Ask.AskQuestion();
+					int OptionCount = 0;
+					foreach (String Choice in this.Options)
+					{
+						++OptionCount;
+						if (OptionCount > 6)
+							break;
+						Questioner.AddChoice(Choice);
+					}
+					Questioner.StateQuestion(this.Question);
+					if (!String.IsNullOrEmpty(this.Caption))
+						Questioner.SetCaption(this.Caption);
+					Questioner.ShowDialog();
+					Answer = Questioner.GetAnswer();
+				}
+				else if (this.DialogMode == Mode.FreeText)
+				{
+					Ask.AskQuestion Questioner = new CIFactory.NAnt.Tasks.Ask.AskQuestion();
+					Questioner.SetFreeTextMode();
+					Questioner.StateQuestion(this.Question);
+					if (!String.IsNullOrEmpty(this.Caption))
+						Questioner.SetCaption(this.Caption);
+					Questioner.ShowDialog();
+					Answer = Questioner.GetAnswer();
+				}
             }
             else
             {
@@ -130,6 +162,15 @@ namespace CIFactory.NAnt.Tasks
             Questioner.ShowDialog();
             string Answer = Questioner.GetAnswer();
             Console.WriteLine(Answer);
-        }
+		}
+		public void Test2()
+		{
+			Ask.AskQuestion Questioner = new CIFactory.NAnt.Tasks.Ask.AskQuestion();
+			Questioner.SetFreeTextMode();
+			Questioner.StateQuestion(string.Format("{0}{1}{0}", "I really have a lot to say.", Environment.NewLine));
+			Questioner.ShowDialog();
+			string Answer = Questioner.GetAnswer();
+			Console.WriteLine(Answer);
+		}
     }
 }
