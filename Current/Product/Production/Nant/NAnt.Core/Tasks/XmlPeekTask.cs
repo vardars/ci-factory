@@ -27,6 +27,9 @@ using NAnt.Core;
 using NAnt.Core.Attributes;
 using NAnt.Core.Types;
 using NAnt.Core.Util;
+using System.Xml.XPath;
+using System.Reflection;
+using System.Text;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -78,7 +81,7 @@ namespace NAnt.Core.Tasks {
         #region Private Instance Fields
 
         private FileInfo _xmlFile;
-        private int _nodeIndex = 0;
+        private int? _nodeIndex = null;
         private string _property;
         private string _xPath;
         private XmlNamespaceCollection _namespaces = new XmlNamespaceCollection();
@@ -102,10 +105,9 @@ namespace NAnt.Core.Tasks {
         /// returns multiple nodes.
         /// </summary>
         [TaskAttribute("nodeindex", Required=false)]
-        [Int32Validator(0, Int32.MaxValue)]
         public int NodeIndex {
-            get { return _nodeIndex; }
-            set { _nodeIndex = value; }
+            get { return (int)_nodeIndex; }
+			set { _nodeIndex = (int)value; }
         }
 
         /// <summary>
@@ -157,7 +159,7 @@ namespace NAnt.Core.Tasks {
 
             try {
                 XmlDocument document = LoadDocument(XmlFile.FullName);
-                Properties[Property] = GetNodeContents(XPath, document, NodeIndex);
+                Properties[Property] = GetNodeContents(XPath, document);
             } catch (BuildException ex) {
                 throw ex; // Just re-throw the build exceptions.
             } catch (Exception ex) {
@@ -202,9 +204,9 @@ namespace NAnt.Core.Tasks {
         /// <returns>
         /// The contents of the node specified by the XPath expression.
         /// </returns>
-        private string GetNodeContents(string xpath, XmlDocument document, int nodeIndex ) {
+        private string GetNodeContents(string xpath, XmlDocument document) {
             string contents = null;
-            XmlNodeList nodes;
+			object XPathResult = null;
 
             try {
                 XmlNamespaceManager nsMgr = new XmlNamespaceManager(document.NameTable);
@@ -213,30 +215,42 @@ namespace NAnt.Core.Tasks {
                         nsMgr.AddNamespace(xmlNamespace.Prefix, xmlNamespace.Uri);
                     }
                 }
-                nodes = document.SelectNodes(xpath, nsMgr);
+				XPathNavigator Navigator =  document.CreateNavigator();
+				XPathExpression XPression = Navigator.Compile(xpath);
+				XPression.SetContext(nsMgr);
+
+				switch (XPression.ReturnType)
+				{
+					case XPathResultType.Boolean:
+					case XPathResultType.Number:
+					case XPathResultType.String:
+						return Navigator.Evaluate(XPression).ToString();
+					case XPathResultType.NodeSet:
+						XPathNodeIterator Iterator = (XPathNodeIterator)Navigator.Select(XPression);
+						StringBuilder ResultBuilder = new StringBuilder();
+						int NodeCount = -1;
+						while (Iterator.MoveNext())
+						{
+							if (this._nodeIndex != null)
+							{
+								++NodeCount;
+								if (this.NodeIndex != NodeCount)
+								{
+									continue;
+								}
+							}
+							ResultBuilder.Append(Iterator.Current.OuterXml);
+						}
+						return ResultBuilder.ToString();
+					default:
+						return string.Empty;
+				}
+				XPathResult = Navigator.Evaluate(XPression);
             } catch (Exception ex) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture,
                     ResourceUtils.GetString("NA1155"), xpath), 
                     Location, ex);
             }
-
-            if (nodes == null || nodes.Count == 0) {
-                throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                    ResourceUtils.GetString("NA1156"), xpath), 
-                    Location);
-            }
-
-            Log(Level.Info, "Found '{0}' nodes with the XPath expression '{1}'.",
-                nodes.Count, xpath);
-          
-            if (nodeIndex >= nodes.Count){
-                throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                    ResourceUtils.GetString("NA1157"), nodeIndex), Location);
-            }
-            
-            XmlNode selectedNode = nodes[nodeIndex];
-            contents = selectedNode.InnerXml;
-            return contents;
         }
 
         #endregion private Instance Methods
