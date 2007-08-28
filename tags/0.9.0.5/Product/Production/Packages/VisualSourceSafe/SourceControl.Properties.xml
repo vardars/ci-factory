@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSS.Properties">
+
+  <property name="VSS.RootShare" value="%VSS.RootShare%" overwrite="false"/>
+  <property name="VSS.DBPath" value="%VSS.DBPath%" overwrite="false" />
+  <property name="VSS.Username" value="%VSS.Username%"  overwrite="false"/>
+  <property name="VSS.Password" value="%VSS.Password%"  overwrite="false"/>
+  <property name="SourceControl.Update.FileTimeStamp" value="Modified" overwrite="false"/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="True" overwrite="false"/>
+  <property name="SourceControl.Update.MakeWritable" value="True" overwrite="false"/>
+  <property name="VSS.TemplateDB" value="%VSS.TemplateDB%"/>
+
+</project>
