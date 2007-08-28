@@ -124,7 +124,7 @@
 
   <target name="Private.Versioning.FixUp.AddProjectInfoToProjectFile" >
     <property name="Versioning.FixUp.XPath.AssemblyInfo" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]"/>
-    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]/b:Compile"/>
+    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]/child::"/>
     
     <largeproperty name="Versioning.FixUp.XPath.Replacment" >
       <value xml="false" expand="true">

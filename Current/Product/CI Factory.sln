@@ -378,6 +378,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "Production\CCNet
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup Scripts", "Setup Scripts", "{BF9256CA-6674-4279-BD3D-647B6D240D8B}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Svn", "Svn", "{FDA71152-F139-48E4-B3E7-A5D2680FBD5F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{1EBF1C88-2E91-43D0-8DFF-D2ACC524E9E4}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Power Tools\Setup Scripts\Svn\templates\FarmSideBar.vm = Power Tools\Setup Scripts\Svn\templates\FarmSideBar.vm
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkspaceSetup", "WorkspaceSetup", "{32F34126-C24B-41D2-B72F-791FA9368507}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Power Tools\Setup Scripts\Svn\WorkspaceSetup\CreateWorkspace.bat.txt = Power Tools\Setup Scripts\Svn\WorkspaceSetup\CreateWorkspace.bat.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU
@@ -684,8 +714,12 @@ Global
 		{9A667DA2-A419-4014-91B0-5967FE567DB7} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{CFA044EE-2C9C-4BB0-B6E8-7F3CB1BFF0EC} = {17D6CBEF-B324-4886-A964-AD3AD8E81B36}
 		{60647DBD-813B-4C1F-A771-94C38BFD1590} = {7A743EB9-F3EE-4DF0-80F6-387329D65639}
+		{BF9256CA-6674-4279-BD3D-647B6D240D8B} = {A32167E4-D3A2-404A-A9FC-9DCDDD36F6B8}
 		{D4B4CE7F-3D05-4F3E-BDA3-059BCAFB7E40} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{EE6F9B28-5BE3-4058-86A7-110FBB6DA81A} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
+		{FDA71152-F139-48E4-B3E7-A5D2680FBD5F} = {BF9256CA-6674-4279-BD3D-647B6D240D8B}
+		{1EBF1C88-2E91-43D0-8DFF-D2ACC524E9E4} = {FDA71152-F139-48E4-B3E7-A5D2680FBD5F}
+		{32F34126-C24B-41D2-B72F-791FA9368507} = {FDA71152-F139-48E4-B3E7-A5D2680FBD5F}
 	EndGlobalSection
 EndGlobal
