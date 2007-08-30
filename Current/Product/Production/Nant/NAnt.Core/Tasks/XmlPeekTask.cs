@@ -85,11 +85,22 @@ namespace NAnt.Core.Tasks {
         private string _property;
         private string _xPath;
         private XmlNamespaceCollection _namespaces = new XmlNamespaceCollection();
+		private bool _OuterXml;
 
         #endregion Private Instance Fields
 
         #region Public Instance Properties
-        
+
+		/// <summary>
+		/// Will grab the outterxml instead of the innerxml.
+		/// </summary>
+		[TaskAttribute("outerxml", Required = false), BooleanValidator()]
+		public bool OuterXml
+		{
+			get { return _OuterXml; }
+			set { _OuterXml = value; }
+		}
+
         /// <summary>
         /// The name of the file that contains the XML document
         /// that is going to be peeked at.
@@ -227,6 +238,17 @@ namespace NAnt.Core.Tasks {
 						return Navigator.Evaluate(XPression).ToString();
 					case XPathResultType.NodeSet:
 						XPathNodeIterator Iterator = (XPathNodeIterator)Navigator.Select(XPression);
+						if (Iterator == null || Iterator.Count == 0)
+							throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+								ResourceUtils.GetString("NA1156"), xpath),
+								Location);
+
+						if (this._nodeIndex != null && this.NodeIndex >= Iterator.Count)
+						{
+							throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+								ResourceUtils.GetString("NA1157"), this.NodeIndex), Location);
+						}
+
 						StringBuilder ResultBuilder = new StringBuilder();
 						int NodeCount = -1;
 						while (Iterator.MoveNext())
@@ -239,16 +261,10 @@ namespace NAnt.Core.Tasks {
 									continue;
 								}
 							}
-							switch (Iterator.Current.NodeType)
-							{
-								case XPathNodeType.Text:
-								case XPathNodeType.Attribute:
-									ResultBuilder.Append(Iterator.Current.InnerXml);
-									break;
-								default:
-									ResultBuilder.Append(Iterator.Current.OuterXml);
-									break;
-							}
+							if (this.OuterXml)
+								ResultBuilder.Append(Iterator.Current.OuterXml);
+							else
+								ResultBuilder.Append(Iterator.Current.InnerXml);
 						}
 						return ResultBuilder.ToString();
 					default:
