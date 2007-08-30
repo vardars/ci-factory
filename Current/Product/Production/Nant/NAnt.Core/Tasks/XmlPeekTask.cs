@@ -239,7 +239,16 @@ namespace NAnt.Core.Tasks {
 									continue;
 								}
 							}
-							ResultBuilder.Append(Iterator.Current.OuterXml);
+							switch (Iterator.Current.NodeType)
+							{
+								case XPathNodeType.Text:
+								case XPathNodeType.Attribute:
+									ResultBuilder.Append(Iterator.Current.InnerXml);
+									break;
+								default:
+									ResultBuilder.Append(Iterator.Current.OuterXml);
+									break;
+							}
 						}
 						return ResultBuilder.ToString();
 					default:
