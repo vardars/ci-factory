@@ -17,5 +17,6 @@
   <property name="SVN.Credentials.SafeStorage" value="%SVN.Credentials.SafeStorage%" overwrite="false"/>
   <property name="SVN.TemplateDB" value="%SVN.TemplateDB%" overwrite="false" />
   <property name="SVN.RootShare" value="%SVN.RootShare%" overwrite="false"/>
+	<property name="SourceControl.Update.Interactive" value="false" overwrite="false"/>
 
 </project>

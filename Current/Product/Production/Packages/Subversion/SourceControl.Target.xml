@@ -67,41 +67,111 @@
 
   </target>
 
-  <target name="SourceControl.GetOf" >
-    <mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
-    <property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+	<target name="SourceControl.GetOf" >
+		<mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
+		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+		<property name="SourceControl.GetOf.CleanUp" value="false"/>
 
+		<trycatch>
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<ifthenelse test="${SourceControl.Update.Interactive}">
+							<then>
+								<asyncexec program="svn" workingdir="${SourceControl.GetOf}" verbose="true"
+											createnowindow="false" redirectoutput="false" useshellexecute="true"
+											waitforexit="true" taskname="SvnUpdate">
+									<arg line="update" />
+								</asyncexec>
+							</then>
+							<else>
+								<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+									<arg line="update" />
+									<arg line="--non-interactive" />
+								</exec>
+							</else>
+						</ifthenelse>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.CleanUp" value="true"/>
+			</catch>
+			<finally>
+				<waitforexit>
+					<tasknames>
+						<string value="SvnUpdate"/>
+					</tasknames>
+				</waitforexit>
+			</finally>
+		</trycatch>
 
-	<trycatch>
-		<try>
-		  <ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
-			  <then>
-				  <exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
-					  <arg line="update" />
-					  <arg line="--non-interactive" />
-				  </exec>
-			  </then>
-			  <else>
-				  <echo message="${SourceControl.GetOf} is not versioned by Svn."/>
-				  <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-			  </else>
-		  </ifthenelse>
-		</try>
-		<catch>
-		  <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-		</catch>
-	</trycatch>
-	
-    <if test="${SourceControl.GetOf.NeedCheckout}">
-      <property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
-      <call target="Private.SourceControl.DeleteLocal.Directory" />
-      <property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
-      <property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
-      <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
-    </if>
-  </target>
+		<trycatch if="${SourceControl.GetOf.CleanUp}">
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="cleanup" />
+						</exec>
+						<ifthenelse test="${SourceControl.Update.Interactive}">
+							<then>
+								<asyncexec program="svn" workingdir="${SourceControl.GetOf}" verbose="true"
+											createnowindow="false" redirectoutput="false" useshellexecute="true"
+											waitforexit="true" taskname="SvnUpdate">
+									<arg line="update" />
+								</asyncexec>
+							</then>
+							<else>
+								<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+									<arg line="update" />
+									<arg line="--non-interactive" />
+								</exec>
+							</else>
+						</ifthenelse>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			</catch>
+			<finally>
+				<waitforexit>
+					<tasknames>
+						<string value="SvnUpdate"/>
+					</tasknames>
+				</waitforexit>
+			</finally>
+		</trycatch>
 
-  <target name="Private.SourceControl.DeleteLocal.Directory">
+		<if test="${SourceControl.GetOf.NeedCheckout}">
+			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+			<ifthenelse test="${SourceControl.Update.Interactive}">
+				<then>
+					<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true" createnowindow="false" redirectoutput="false" useshellexecute="true" useruntimeengine="false">
+						<arg line="checkout" />
+						<arg line='${Uri}' />
+						<arg line='${SourceControl.GetOf}' />
+					</exec>
+				</then>
+				<else>
+					<svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
+				</else>
+			</ifthenelse>
+		</if>
+	</target>
+
+	<target name="Private.SourceControl.DeleteLocal.Directory">
     <if test="${directory::exists(Private.SourceControl.DeleteLocal.Directory)}" >
       <attrib readonly="false">
         <fileset>

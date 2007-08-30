@@ -40,7 +40,11 @@ namespace CIFactory.NAnt.Tasks
             foreach (string TaskName in this.TaskNames.StringItems.Values)
             {
                 Worker = AsyncExecList.GetTask(TaskName);
-                Worker.Wait();
+				if (Worker != null)
+				{
+					Worker.Wait();
+					AsyncExecList.Remove(TaskName);
+				}
             }
         }
 
