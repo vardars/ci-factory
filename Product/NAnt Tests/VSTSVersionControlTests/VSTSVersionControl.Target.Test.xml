@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Target.Test" default="VSTSVersionControl.Target.RunAllTests">
+
+  <property name="Ignored" value="true"/>
+  
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2006-09-12"/>
+  <property name="CCNetBuildTime" value="11:10:00"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+  <property name="CCNetLabel" value="1.0.0.2"/>
+  <property name="CCNetProject" value="test.project"/>
+
+  <include buildfile="C:\Projects\CI Factory\Current\Product\Production\Foundation\Default\Build\Properties.build.xml"/>
+  <include buildfile="C:\Projects\CI Factory\Current\Product\Production\Foundation\Default\Build\Common.Build.xml" />
+
+  <property name="TFS.TaskAssembly" value="C:\Dont Load\TF.Tasks.dll" />
+  <include buildfile="..\Package\VSTSVersionControl\VSTSVersionControl.Target.xml"/>
+  
+  <target name="VSTSVersionControl.Target.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="VSTSVersionControl.Target.Test"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="VSTSVersionControl.Target.FixtureSetUp">
+    
+  </target>
+
+  <target name="VSTSVersionControl.Target.ConvertLocalPathToPath-RegularPaths.Test" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="c:\Projects\test.project\Current\Product"/>
+    
+    <call target="Private.SourceControl.ConvertLocalPathToPath"/>
+
+    <property name="ExpectedValue" value="$/test.project/Current/Product"/>
+    <assertequal actual="${Private.SourceControl.ConvertLocalPathToPath.Path}" expected="${ExpectedValue}" message="The local path (${Private.SourceControl.ConvertLocalPathToPath.LocalPath}) was not converted to a server path ({1})."/>
+  </target>
+
+
+  <target name="VSTSVersionControl.Target.convertlocaltoserver-RegularPaths.Test" >
+    <property name="ActualValue" value="${sourcecontrol::convertlocaltoserver('C:\Projects\test.project\Current\Product')}"/>
+
+    <property name="ExpectedValue" value="$/test.project/Current/Product"/>
+    <fail if="${ActualValue == ExpectedValue}" 
+          message="Expected the path to have been '${ExpectedValue}' and not '${ActualValue}'."/>
+  </target>
+
+  <target name="VSTSVersionControl.Target.ReLabel.Test" unless="${Ignored}">
+    <!--unless="${Ignored}">-->
+    <property name="SourceControl.Relabel.OldLabel" value="OldLabel"/>
+    <property name="SourceControl.Relabel.NewLabel" value="NewLabel"/>
+    <property name="SourceControl.Relabel.Path" value="$/test.project/Current"/>
+
+    <call target="SourceControl.Relabel"/>
+
+    <fail if="${tfs-vc::label-exists('VSTSVersionControl.Connection', 'NewLabel', SourceControl.Relabel.Path)}"/>
+    <!--Diff between the Labels expecting no diff.-->
+  </target>
+
+  <!--<target name="test3">
+    <tfsserverconnection id="tfs"
+        serverurl="http://vsts.chcsii.com:8080"/>
+
+    <property name="WorkspaceName" value="BuildTest"/>
+    <property name="LocalItem" value="C:\Projects\BuildTest_CMMI"/>
+
+    -->
+  <!--<tfslabel comment="Auto Build" itemspec="$/BuildTest_CMMI/dod.ahlta/Current" labelname="Test4" recursive="true" scope="$/BuildTest_CMMI/dod.ahlta/Current" >
+      <tfsserverconnection refid="tfs"/>
+      <versionspec type="Changeset" versionspec="92"/>
+    </tfslabel>-->
+  <!--
+    
+    -->
+  <!--<if test="${tfs-vc::workspace-exists('tfs', WorkspaceName)}">
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+
+      <tfsdeleteworkspace workspacename="${WorkspaceName}" >
+        <tfsserverconnection refid="tfs"/>
+      </tfsdeleteworkspace>
+
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+    </if>
+
+    <delete dir="${LocalItem}" failonerror="false"/>
+    <mkdir dir="${LocalItem}" />
+
+    <ifnot test="${tfs-vc::workspace-exists('tfs', WorkspaceName)}">
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+
+      <tfsmapworkspace workspacename="${WorkspaceName}" comment="Created By Script" >
+        <tfsserverconnection refid="tfs"/>
+        <mappings>
+          <mapping localitem="${LocalItem}" serveritem="$/BuildTest_CMMI"/>
+        </mappings>
+      </tfsmapworkspace>
+
+      <echo message="It is ${tfs-vc::workspace-exists('tfs', WorkspaceName)} that ${WorkspaceName} exists."/>
+    </ifnot>
+
+    <tfsget workspacename="${WorkspaceName}" serveritem="$/BuildTest_CMMI/dod.ahlta/Current/Build" recursive="true" >
+      <tfsserverconnection refid="tfs"/>
+    </tfsget>-->
+  <!--
+
+    -->
+  <!--<fileset id="Files">
+      <include name="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\nAnt\**\*"/>
+    </fileset>
+
+    <tfsadd workspacename="${WorkspaceName}">
+      <tfsserverconnection refid="tfs"/>
+      <localitems refid="Files" />
+    </tfsadd>
+
+    <tfscheckin comment="From Script" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs"/>
+      <localitems refid="Files" />
+    </tfscheckin>-->
+  <!--
+
+    -->
+  <!--<tfshistory itemspec="$/BuildTest_CMMI/dod.ahlta/Current" recursive="true" reportfile="C:\Temp\TfsHistory.xml" verbose="true">
+      <tfsserverconnection refid="tfs"/>
+      <fromversionspec type="Label" versionspec="Test1"/>
+      <toversionspec type="Null" versionspec=""/>
+    </tfshistory>-->
+  <!--
+
+    <tfscheckout localitem="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs">
+    </tfscheckout>
+
+    <echo append="true" file="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" message="Hello World! "/>
+
+    <tfscheckin localitem="C:\Projects\BuildTest_CMMI\dod.ahlta\Current\Build\Test.txt" workspacename="${WorkspaceName}" >
+      <tfsserverconnection refid="tfs"/>
+    </tfscheckin>
+    
+  </target>-->
+
+</project>
