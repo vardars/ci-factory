@@ -1,6 +1,4 @@
 using System;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Collections;
 using System.Globalization;
 using System.IO;
@@ -140,131 +138,9 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		public static string[] GetLogFileNames(string path)
 		{
-			string[] filenames = GetFileNames(path, "log*.xml");
+            string[] filenames = Directory.GetFiles(path, "log*.xml");
 			return filenames;
 		}
-
-		[DllImport("kernel32", EntryPoint="FindFirstFileA", CharSet=CharSet.Ansi, SetLastError=true, ExactSpelling=true)]
-		private static extern IntPtr FindFirstFile([MarshalAs(UnmanagedType.VBByRefStr)] ref string lpFileName, ref WIN32_FIND_DATA lpFindFileData);
-
-		[DllImport("kernel32", EntryPoint="FindNextFileA", CharSet=CharSet.Ansi, SetLastError=true, ExactSpelling=true)]
-		private static extern bool FindNextFile(IntPtr hFindFile, ref WIN32_FIND_DATA lpFindFileData);
-
-		[DllImport("kernel32.dll")]
-		private static extern bool FindClose(IntPtr hFindFile);
- 
-		private static string[] GetFileNames(string path, string filter /* = "*" */)
-		{
-			string fullPath = Path.Combine(path, filter);
-			string[] textArray1 = new string[1];
-			WIN32_FIND_DATA win_find_data1 = new WIN32_FIND_DATA();
-			IntPtr ptr1 = FindFirstFile(ref fullPath, ref win_find_data1);
-			if (ptr1.ToString() == "-1")
-			{
-				int num2 = Marshal.GetLastWin32Error();
-				if (num2 == 2)
-				{
-					return new string[0];
-				}
-				WinIOError(num2, path);
-			}
-			int num1 = 0;
-			bool flag1 = true;
-			do
-			{
-				if (((FileAttributes) 0) == (win_find_data1.dwFileAttributes & FileAttributes.Directory))
-				{
-					string FileName = Encoding.ASCII.GetString(Encoding.Unicode.GetBytes(win_find_data1.cFileName)).Split(new char[] { '\0' })[0];
-					
-					textArray1[num1] = FileName;
-					num1++;
-					if ((num1 >= textArray1.Length) && flag1)
-					{
-						string[] textArray3 = new string[((num1 * 2) - 1) + 1];
-						textArray1.CopyTo(textArray3, 0);
-						textArray1 = textArray3;
-					}
-				}
-			}
-			while (flag1 && FindNextFile(ptr1, ref win_find_data1));
-			FindClose(ptr1);
-			if (num1 < textArray1.Length)
-			{
-				string[] textArray4 = new string[(num1 - 1) + 1];
-				Array.Copy(textArray1, 0, textArray4, 0, num1);
-				textArray1 = textArray4;
-			}
-			return textArray1;
-		}
-
-		private static void WinIOError(int errorCode, string str)
-		{
-			switch (errorCode)
-			{
-				case 2:
-					if (str.Length == 0)
-					{
-						throw new FileNotFoundException("The file path provided does not exist");
-					}
-					throw new FileNotFoundException("The file Path " + str + " does not exist");
-
-				case 3:
-					if (str.Length == 0)
-					{
-						throw new DirectoryNotFoundException("The directory path provided does not exist");
-					}
-					throw new DirectoryNotFoundException("The file Path " + str + " does not exist");
-
-				case 4:
-					throw new IOException("Some unknown IO Error occured");
-
-				case 5:
-					if (str.Length == 0)
-					{
-						throw new UnauthorizedAccessException("Unauthorized Access to NULL Path");
-					}
-					throw new UnauthorizedAccessException("Unauthorized access to " + str);
-
-				case 0x20:
-					if (str.Length == 0)
-					{
-						throw new IOException("Sharing Violation on NULL Path");
-					}
-					throw new IOException("Sharing violation on Path: " + str);
-
-				case 0x57:
-					throw new IOException("Some unknown IO Error occured");
-
-				case 0xce:
-					throw new PathTooLongException("Path " + str + " is too long");
-
-				case 80:
-					if (str.Length != 0)
-					{
-						throw new IOException("File already exists");
-					}
-					break;
-			}
-		}
-
-		[StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
-			protected struct WIN32_FIND_DATA
-		{
-			public FileAttributes dwFileAttributes;
-			public FILETIME ftCreationTime;
-			public FILETIME ftLastAccessTime;
-			public FILETIME ftLastWriteTime;
-			public int nFileSizeHigh;
-			public int nFileSizeLow;
-			public int dwReserved0;
-			public int dwReserved1;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=260)]
-			public string cFileName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst=14)]
-			public string cAlternate;
-		}
- 
-
 
 		public static int GetLatestBuildNumber(string path)
 		{
