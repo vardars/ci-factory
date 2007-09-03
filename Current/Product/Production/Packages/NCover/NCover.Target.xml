@@ -61,7 +61,8 @@
 						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
 						workingDirectory="${Coverage.ReportFolder}"
 						coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
-						copyXsl="false"
+						copyXsl="false" 
+						profiledProcessModule="${NCover.ProcessToMonitor}"
 						version="1.5.4" >
           <assemblies refid="Coverage.Targets" />
         </ncover>

@@ -75,5 +75,12 @@ namespace CIFactory.NAnt.CCNet.Functions
 				RefStringList.StringItems.Add(BuildName, new StringItem(BuildName));
 			}
         }
+
+        [Function("get-project-last-build-log")]
+        public string GetProjectLastBuildLog(string serverUrl, string projectName)
+        {
+            ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
+            return Manager.GetLatestBuildName(projectName);
+        }
     }
 }

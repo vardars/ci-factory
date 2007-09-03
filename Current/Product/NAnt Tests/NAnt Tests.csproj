@@ -19,6 +19,8 @@
     <Content Include="NCoverTests\Resources\MSTestProject.pdb" />
     <Content Include="NCoverTests\Resources\NUnitProject.dll" />
     <Content Include="NCoverTests\Resources\NUnitProject.pdb" />
+    <Content Include="NUnitTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="NUnitTests\NUnitTests.xml" />
     <Content Include="Stubs\SourceControlStub\Install\Install.xml" />
     <Content Include="Stubs\SourceControlStub\Install\Properties.xml" />
     <Content Include="SubversionTests\Install Resources\DefaultArguments.xml" />
@@ -34,5 +36,8 @@
     <Content Include="VisualSourceSafeTests\InstallationTest.xml" />
     <Content Include="VS.NETCompileTests\Install Resources\DefaultArguments.xml" />
     <Content Include="VS.NETCompileTests\InstallationTest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NUnitTests\Resources\" />
   </ItemGroup>
 </Project>

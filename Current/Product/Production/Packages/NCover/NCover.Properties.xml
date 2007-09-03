@@ -5,6 +5,7 @@
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt"  overwrite="false" />
   <property name="Coverage.UnitTestPackageInclude" value="%Coverage.UnitTestPackageInclude%"  overwrite="false" />
   <property name="Coverage.UnitTestPropertiesInclude" value="%Coverage.UnitTestPropertiesInclude%"  overwrite="false" />
+	<property name="NCover.ProcessToMonitor" value="%NCover.ProcessToMonitor%" overwrite="false"/>
   <property name="Coverage.TargetAssemblyFormat" value="${ProjectName}.*.dll" overwrite="false"/>
     
   <fileset id="Coverage.Target.ProjectFiles">

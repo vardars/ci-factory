@@ -23,6 +23,8 @@ namespace ThoughtWorks.CruiseControl.Core.tasks
 			XmlSerializer serializer = new XmlSerializer(typeof (Modification[]));
 			StringWriter writer = new Utf8StringWriter();
 			serializer.Serialize(writer, result.Modifications);
+            if (!Directory.Exists(this.OutputPath))
+                Directory.CreateDirectory(this.OutputPath);
 			fileSystem.Save(ModificationFile(result), writer.ToString());
 		}
 

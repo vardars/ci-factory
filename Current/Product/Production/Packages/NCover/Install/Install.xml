@@ -37,6 +37,11 @@
     <fail unless="${property::exists('Coverage.UnitTestPackageInclude')}" message="Please set the property Coverage.UnitTestPackageInclude"/>
     <fail unless="${property::exists('Coverage.UnitTestPropertiesInclude')}" message="Please set the property Coverage.UnitTestPropertiesInclude"/>
     <call target="NCover.InsureNCoverInstallation"/>
+
+		<if test="${not property::exists('NCover.ProcessToMonitor')}">
+			<property name="NCover.ProcessToMonitor" value="" />
+		</if>
+		<function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ProcessToMonitor%', NCover.ProcessToMonitor)}"/>
   </target>
 
   <target name="NCover.InsureNCoverInstallation" >

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using ThoughtWorks.CruiseControl.Core.Util;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -138,8 +139,12 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		public static string[] GetLogFileNames(string path)
 		{
-            string[] filenames = Directory.GetFiles(path, "log*.xml");
-			return filenames;
+            List<string> FileNames = new List<string>();
+            foreach (string FilePath in Directory.GetFiles(path, "log*.xml"))
+            {
+                FileNames.Add(Path.GetFileName(FilePath));
+            }
+			return FileNames.ToArray();
 		}
 
 		public static int GetLatestBuildNumber(string path)
