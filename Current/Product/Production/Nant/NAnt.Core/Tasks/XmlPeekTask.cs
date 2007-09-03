@@ -206,17 +206,7 @@ namespace NAnt.Core.Tasks {
             }
         }
 
-        /// <summary>
-        /// Gets the contents of the node specified by the XPath expression.
-        /// </summary>
-        /// <param name="xpath">The XPath expression used to determine which nodes to choose from.</param>
-        /// <param name="document">The XML document to select the nodes from.</param>
-        /// <param name="nodeIndex">The node index in the case where multiple nodes satisfy the expression.</param>
-        /// <returns>
-        /// The contents of the node specified by the XPath expression.
-        /// </returns>
         private string GetNodeContents(string xpath, XmlDocument document) {
-            string contents = null;
 			object XPathResult = null;
 
             try {
@@ -268,9 +258,8 @@ namespace NAnt.Core.Tasks {
 						}
 						return ResultBuilder.ToString();
 					default:
-						return string.Empty;
+                        throw new InvalidOperationException(string.Format("The xpath return type of {0} is not yet supported!", XPression.ReturnType));
 				}
-				XPathResult = Navigator.Evaluate(XPression);
             } catch (Exception ex) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture,
                     ResourceUtils.GetString("NA1155"), xpath), 

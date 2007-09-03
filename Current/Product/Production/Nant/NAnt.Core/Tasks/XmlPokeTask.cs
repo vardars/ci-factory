@@ -281,15 +281,6 @@ namespace NAnt.Core.Tasks {
             }
         }
 
-        /// <summary>
-        /// Given a node list, replaces the XML within those nodes.
-        /// </summary>
-        /// <param name="nodes">
-        /// The list of nodes to replace the contents of.
-        /// </param>
-        /// <param name="value">
-        /// The text to replace the contents with.
-        /// </param>
 		private void UpdateNodes(XmlNodeList nodes, string value, XmlDocument document)
 		{
 			Log(Level.Verbose, "Updating nodes with value '{0}'.",
