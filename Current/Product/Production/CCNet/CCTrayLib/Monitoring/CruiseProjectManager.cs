@@ -68,7 +68,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 			{
 				ForceFilterClientInfo[] clientInfo;
 				clientInfo = (ForceFilterClientInfo[]) clientInfoList.ToArray(typeof(ForceFilterClientInfo));
-				manager.ForceBuild(ProjectName, clientInfo);
+					manager.ForceBuild(ProjectName, clientInfo);
 			}
 			else
 			{

@@ -198,6 +198,46 @@ namespace CCNet.Server.Aggregator
             return delegate(ProjectStatus item) { return item.Name == projectName; };
         }
 
+		public void Stop(string projectName)
+		{
+			this.Projects[projectName].Stop(projectName);
+		}
+
+		public void Start(string projectName)
+		{
+			this.Projects[projectName].Start(projectName);
+		}
+
+		public string GetBuildLogDirectory(string projectName)
+		{
+			return this.Projects[projectName].GetBuildLogDirectory(projectName);
+		}
+
+		public string GetHostServerName(string projectName)
+		{
+			return this.Projects[projectName].GetHostServerName(projectName);
+		}
+
+		public string GetLog(string projectName, string buildName)
+		{
+			return this.Projects[projectName].GetLog(projectName, buildName);
+		}
+
+		public string[] GetMostRecentBuildNames(string projectName, int buildCount)
+		{
+			return this.Projects[projectName].GetMostRecentBuildNames(projectName, buildCount);
+		}
+
+		public void WaitForExit(string projectName)
+		{
+			this.Projects[projectName].WaitForExit(projectName);
+		}
+
+		public string GetLatestBuildName(string projectName)
+		{
+			return this.Projects[projectName].GetLatestBuildName(projectName);
+		}
+
         #endregion
         
         #region Not Going To Implement
@@ -227,27 +267,12 @@ namespace CCNet.Server.Aggregator
  	        throw new Exception("The method or operation is not implemented.");
         }
 
-        public string GetLog(string projectName, string buildName)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public string[] GetMostRecentBuildNames(string projectName, int buildCount)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
         public void  UpdateProject(string projectName, string serializedProject)
         {
  	        throw new Exception("The method or operation is not implemented.");
         }
 
         public void  WaitForExit()
-        {
- 	        throw new Exception("The method or operation is not implemented.");
-        }
-
-        public void  WaitForExit(string projectName)
         {
  	        throw new Exception("The method or operation is not implemented.");
         }
@@ -260,43 +285,11 @@ namespace CCNet.Server.Aggregator
         public string  GetVersion()
         {
  	        throw new Exception("The method or operation is not implemented.");
-        }
-
-        public string  GetLatestBuildName(string projectName)
-        {
- 	        throw new Exception("The method or operation is not implemented.");
-        }
+		}
         
         #endregion
 
-        #region ICruiseServer Members
 
 
-        public void Stop(string projectName)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public void Start(string projectName)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
-
-        #region ICruiseServer Members
-
-
-        public string GetBuildLogDirectory(string projectName)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        public string GetHostServerName(string projectName)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
     }
 }
