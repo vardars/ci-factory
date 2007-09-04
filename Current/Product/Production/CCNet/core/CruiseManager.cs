@@ -129,5 +129,25 @@ namespace ThoughtWorks.CruiseControl.Core
         {
             cruiseServer.Start(projectName);
         }
-	}
+
+        #region ICruiseManager Members
+
+
+        public string GetBuildLogDirectory(string projectName)
+        {
+            return this.cruiseServer.GetBuildLogDirectory(projectName);
+        }
+
+        #endregion
+
+        #region ICruiseManager Members
+
+
+        public string GetHostServerName(string projectName)
+        {
+            return this.cruiseServer.GetHostServerName(projectName);
+        }
+
+        #endregion
+    }
 }

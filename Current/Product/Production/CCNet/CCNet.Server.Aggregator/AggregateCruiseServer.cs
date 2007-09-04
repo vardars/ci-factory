@@ -283,5 +283,20 @@ namespace CCNet.Server.Aggregator
         }
 
         #endregion
+
+        #region ICruiseServer Members
+
+
+        public string GetBuildLogDirectory(string projectName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public string GetHostServerName(string projectName)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }

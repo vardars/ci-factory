@@ -33,6 +33,10 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
 		string[] GetBuildNames(string projectName);
 
+        string GetBuildLogDirectory(string projectName);
+
+        string GetHostServerName(string projectName);
+
 		/// <summary>
 		/// Returns the names of the buildCount most recent builds for the specified project, sorted s.t. the newest build is first in the array
 		/// </summary>

@@ -32,6 +32,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// Retrieve CruiseManager interface for the server
 		/// </summary>
 		ICruiseManager CruiseManager { get; }
+        string GetBuildLogDirectory(string projectName);
+        string GetHostServerName(string projectName);
 
 		/// <summary>
 		/// Gets information about the last build status, current activity and project name.

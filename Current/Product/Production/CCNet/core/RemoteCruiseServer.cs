@@ -190,5 +190,25 @@ namespace ThoughtWorks.CruiseControl.Core
 
         #endregion
 
+
+        #region ICruiseServer Members
+
+
+        public string GetBuildLogDirectory(string projectName)
+        {
+            return this._server.GetBuildLogDirectory(projectName);
+        }
+
+        #endregion
+
+        #region ICruiseServer Members
+
+
+        public string GetHostServerName(string projectName)
+        {
+            return this._server.GetHostServerName(projectName);
+        }
+
+        #endregion
     }
 }

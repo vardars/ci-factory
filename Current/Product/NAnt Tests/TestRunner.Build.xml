@@ -9,6 +9,7 @@
   <include buildfile="SubversionTests\InstallationTest.xml"/>
   <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
   <include buildfile="VersioningTests\InstallationTest.xml"/>
+	<include buildfile="NUnitTests\NUnitTests.xml"/>
   
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
@@ -18,6 +19,7 @@
         <string value="Subversion.InstallationTest"/>
         <string value="VS.NETCompile.InstallationTest"/>
         <string value="Versioning.InstallationTest"/>
+				<string value="NUnitTests"/>
       </fixtures>
     </testrunner>
   </target>

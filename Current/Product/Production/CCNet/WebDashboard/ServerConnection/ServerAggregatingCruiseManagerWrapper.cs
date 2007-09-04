@@ -45,10 +45,17 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 			return new DefaultBuildSpecifier(projectSpecifier, GetCruiseManager(projectSpecifier.ServerSpecifier).GetLatestBuildName(projectSpecifier.ProjectName));
 		}
 
-		public string GetLog(IBuildSpecifier buildSpecifier)
-		{
-			return GetCruiseManager(buildSpecifier).GetLog(buildSpecifier.ProjectSpecifier.ProjectName, buildSpecifier.BuildName);
-		}
+        public string GetLog(IBuildSpecifier buildSpecifier)
+        {
+            string HostName = this.GetCruiseManager(buildSpecifier).GetHostServerName(buildSpecifier.ProjectSpecifier.ProjectName);
+            if (Environment.MachineName == HostName)
+            {
+                string BuildLogDirectoryPath = GetCruiseManager(buildSpecifier).GetBuildLogDirectory(buildSpecifier.ProjectSpecifier.ProjectName);
+                return File.ReadAllText(Path.Combine(BuildLogDirectoryPath, buildSpecifier.BuildName));
+            }
+            else
+                return GetCruiseManager(buildSpecifier).GetLog(buildSpecifier.ProjectSpecifier.ProjectName, buildSpecifier.BuildName);
+        }
 
 		public IBuildSpecifier[] GetBuildSpecifiers(IProjectSpecifier projectSpecifier)
 		{

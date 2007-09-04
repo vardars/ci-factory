@@ -114,6 +114,8 @@ namespace ThoughtWorks.CruiseControl.Core
             return GetIntegrator(projectName).ForceBuild(clientInfo);
         }
 
+        
+
         public string[] GetBuildNames(string projectName)
         {
             // TODO - this is a hack - I'll tidy it up later - promise! :) MR
@@ -416,5 +418,42 @@ namespace ThoughtWorks.CruiseControl.Core
 
         #endregion
 
+
+        #region ICruiseServer Members
+
+
+        public string GetBuildLogDirectory(string projectName)
+        {
+            IProjectIntegrator integrator = projectIntegrators[projectName];
+            Project project = (Project)integrator.Project;
+
+            XmlLogPublisher XmlPublisher = null;
+
+            foreach (ITask CanidatePublisher in project.Publishers)
+            {
+                if (CanidatePublisher is XmlLogPublisher)
+                {
+                    XmlPublisher = (XmlLogPublisher)CanidatePublisher;
+                    break;
+                }
+            }
+
+            if (XmlPublisher == null)
+                throw new InvalidOperationException("There is no xml log publisher!");
+
+            return XmlPublisher.LogDirectory(project.ArtifactDirectory);
+        }
+
+        #endregion
+
+        #region ICruiseServer Members
+
+
+        public string GetHostServerName(string projectName)
+        {
+            return Environment.MachineName;
+        }
+
+        #endregion
     }
 }

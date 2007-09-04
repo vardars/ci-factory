@@ -2,12 +2,9 @@
 namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
 {
     using System;
-    using Doubler.Common;
     using System.ComponentModel;
     
     
-    [DoubleAttribute()]
-    [RecorderAttribute()]
     public class RecorderICruiseManager : ThoughtWorks.CruiseControl.Remote.ICruiseManager
     {
         
@@ -112,6 +109,28 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 throw this.Recordings.GetBuildNamesStringRecording.ExceptionToThrow;
             }
             return this.Recordings.GetBuildNamesStringRecording.ReturnValue;
+        }
+        
+        public virtual string GetBuildLogDirectory(string projectName)
+        {
+            this.Recordings.GetBuildLogDirectoryStringRecording.Called = true;
+            this.Recordings.GetBuildLogDirectoryStringRecording.PassedStringprojectName = projectName;
+            if ((this.Recordings.GetBuildLogDirectoryStringRecording.ExceptionToThrow != null))
+            {
+                throw this.Recordings.GetBuildLogDirectoryStringRecording.ExceptionToThrow;
+            }
+            return this.Recordings.GetBuildLogDirectoryStringRecording.ReturnValue;
+        }
+        
+        public virtual string GetHostServerName(string projectName)
+        {
+            this.Recordings.GetHostServerNameStringRecording.Called = true;
+            this.Recordings.GetHostServerNameStringRecording.PassedStringprojectName = projectName;
+            if ((this.Recordings.GetHostServerNameStringRecording.ExceptionToThrow != null))
+            {
+                throw this.Recordings.GetHostServerNameStringRecording.ExceptionToThrow;
+            }
+            return this.Recordings.GetHostServerNameStringRecording.ReturnValue;
         }
         
         public virtual String[] GetMostRecentBuildNames(string projectName, int buildCount)
@@ -333,6 +352,67 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
         }
         
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public class GetHostServerNameStringRecordingRecordings
+        {
+            
+            private bool _called;
+            
+            private string _passedStringprojectName;
+            
+            private string _returnValue;
+            
+            private System.Exception _exceptionToThrow;
+            
+            public virtual bool Called
+            {
+                get
+                {
+                    return this._called;
+                }
+                set
+                {
+                    this._called = value;
+                }
+            }
+            
+            public virtual System.Exception ExceptionToThrow
+            {
+                get
+                {
+                    return this._exceptionToThrow;
+                }
+                set
+                {
+                    this._exceptionToThrow = value;
+                }
+            }
+            
+            public virtual string PassedStringprojectName
+            {
+                get
+                {
+                    return this._passedStringprojectName;
+                }
+                set
+                {
+                    this._passedStringprojectName = value;
+                }
+            }
+            
+            public virtual string ReturnValue
+            {
+                get
+                {
+                    return this._returnValue;
+                }
+                set
+                {
+                    this._returnValue = value;
+                }
+            }
+        }
+        
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public class StartStringRecordingRecordings
         {
             
@@ -532,6 +612,67 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 set
                 {
                     this._exceptionToThrow = value;
+                }
+            }
+            
+            public virtual string ReturnValue
+            {
+                get
+                {
+                    return this._returnValue;
+                }
+                set
+                {
+                    this._returnValue = value;
+                }
+            }
+        }
+        
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public class GetBuildLogDirectoryStringRecordingRecordings
+        {
+            
+            private bool _called;
+            
+            private string _passedStringprojectName;
+            
+            private string _returnValue;
+            
+            private System.Exception _exceptionToThrow;
+            
+            public virtual bool Called
+            {
+                get
+                {
+                    return this._called;
+                }
+                set
+                {
+                    this._called = value;
+                }
+            }
+            
+            public virtual System.Exception ExceptionToThrow
+            {
+                get
+                {
+                    return this._exceptionToThrow;
+                }
+                set
+                {
+                    this._exceptionToThrow = value;
+                }
+            }
+            
+            public virtual string PassedStringprojectName
+            {
+                get
+                {
+                    return this._passedStringprojectName;
+                }
+                set
+                {
+                    this._passedStringprojectName = value;
                 }
             }
             
@@ -1147,17 +1288,23 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
         public class ICruiseManagerRecordings
         {
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.WaitForExitStringRecordingRecordings _waitForExitStringRecording;
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStatusRecordingRecordings _getProjectStatusRecording;
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetServerVersionRecordingRecordings _getServerVersionRecording;
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetLogStringStringRecordingRecordings _getLogStringStringRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.AddProjectStringRecordingRecordings _addProjectStringRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StopRecordingRecordings _stopRecording;
             
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetBuildLogDirectoryStringRecordingRecordings _getBuildLogDirectoryStringRecording;
+            
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StartStringRecordingRecordings _startStringRecording;
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStringRecordingRecordings _getProjectStringRecording;
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.ForceBuildStringRecordingRecordings _forceBuildStringRecording;
+            
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetLatestBuildNameStringRecordingRecordings _getLatestBuildNameStringRecording;
+            
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetHostServerNameStringRecordingRecordings _getHostServerNameStringRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.UpdateProjectStringStringRecordingRecordings _updateProjectStringStringRecording;
             
@@ -1167,41 +1314,39 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStatusStringRecordingRecordings _getProjectStatusStringRecording;
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStatusRecordingRecordings _getProjectStatusRecording;
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StartRecordingRecordings _startRecording;
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetLatestBuildNameStringRecordingRecordings _getLatestBuildNameStringRecording;
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStringRecordingRecordings _getProjectStringRecording;
+            
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetBuildNamesStringRecordingRecordings _getBuildNamesStringRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetMostRecentBuildNamesStringInt32RecordingRecordings _getMostRecentBuildNamesStringInt32Recording;
             
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetServerVersionRecordingRecordings _getServerVersionRecording;
+            
+            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.WaitForExitStringRecordingRecordings _waitForExitStringRecording;
+            
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.DeleteProjectStringBooleanBooleanBooleanRecordingRecordings _deleteProjectStringBooleanBooleanBooleanRecording;
             
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StartRecordingRecordings _startRecording;
-            
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetExternalLinksStringRecordingRecordings _getExternalLinksStringRecording;
-            
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.ForceBuildStringRecordingRecordings _forceBuildStringRecording;
-            
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetLogStringStringRecordingRecordings _getLogStringStringRecording;
-            
-            private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetBuildNamesStringRecordingRecordings _getBuildNamesStringRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetServerLogRecordingRecordings _getServerLogRecording;
             
             private ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StopStringRecordingRecordings _stopStringRecording;
             
-            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStringRecordingRecordings GetProjectStringRecording
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetMostRecentBuildNamesStringInt32RecordingRecordings GetMostRecentBuildNamesStringInt32Recording
             {
                 get
                 {
-                    if ((this._getProjectStringRecording == null))
+                    if ((this._getMostRecentBuildNamesStringInt32Recording == null))
                     {
-                        this._getProjectStringRecording = new GetProjectStringRecordingRecordings();
+                        this._getMostRecentBuildNamesStringInt32Recording = new GetMostRecentBuildNamesStringInt32RecordingRecordings();
                     }
-                    return this._getProjectStringRecording;
+                    return this._getMostRecentBuildNamesStringInt32Recording;
                 }
                 set
                 {
-                    this._getProjectStringRecording = value;
+                    this._getMostRecentBuildNamesStringInt32Recording = value;
                 }
             }
             
@@ -1253,6 +1398,22 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 }
             }
             
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetServerVersionRecordingRecordings GetServerVersionRecording
+            {
+                get
+                {
+                    if ((this._getServerVersionRecording == null))
+                    {
+                        this._getServerVersionRecording = new GetServerVersionRecordingRecordings();
+                    }
+                    return this._getServerVersionRecording;
+                }
+                set
+                {
+                    this._getServerVersionRecording = value;
+                }
+            }
+            
             public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.ForceBuildStringRecordingRecordings ForceBuildStringRecording
             {
                 get
@@ -1298,6 +1459,22 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 set
                 {
                     this._getLogStringStringRecording = value;
+                }
+            }
+            
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetHostServerNameStringRecordingRecordings GetHostServerNameStringRecording
+            {
+                get
+                {
+                    if ((this._getHostServerNameStringRecording == null))
+                    {
+                        this._getHostServerNameStringRecording = new GetHostServerNameStringRecordingRecordings();
+                    }
+                    return this._getHostServerNameStringRecording;
+                }
+                set
+                {
+                    this._getHostServerNameStringRecording = value;
                 }
             }
             
@@ -1397,19 +1574,19 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 }
             }
             
-            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStatusRecordingRecordings GetProjectStatusRecording
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetBuildLogDirectoryStringRecordingRecordings GetBuildLogDirectoryStringRecording
             {
                 get
                 {
-                    if ((this._getProjectStatusRecording == null))
+                    if ((this._getBuildLogDirectoryStringRecording == null))
                     {
-                        this._getProjectStatusRecording = new GetProjectStatusRecordingRecordings();
+                        this._getBuildLogDirectoryStringRecording = new GetBuildLogDirectoryStringRecordingRecordings();
                     }
-                    return this._getProjectStatusRecording;
+                    return this._getBuildLogDirectoryStringRecording;
                 }
                 set
                 {
-                    this._getProjectStatusRecording = value;
+                    this._getBuildLogDirectoryStringRecording = value;
                 }
             }
             
@@ -1461,6 +1638,22 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 }
             }
             
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStatusRecordingRecordings GetProjectStatusRecording
+            {
+                get
+                {
+                    if ((this._getProjectStatusRecording == null))
+                    {
+                        this._getProjectStatusRecording = new GetProjectStatusRecordingRecordings();
+                    }
+                    return this._getProjectStatusRecording;
+                }
+                set
+                {
+                    this._getProjectStatusRecording = value;
+                }
+            }
+            
             public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.StopStringRecordingRecordings StopStringRecording
             {
                 get
@@ -1477,35 +1670,19 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 }
             }
             
-            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetMostRecentBuildNamesStringInt32RecordingRecordings GetMostRecentBuildNamesStringInt32Recording
+            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetProjectStringRecordingRecordings GetProjectStringRecording
             {
                 get
                 {
-                    if ((this._getMostRecentBuildNamesStringInt32Recording == null))
+                    if ((this._getProjectStringRecording == null))
                     {
-                        this._getMostRecentBuildNamesStringInt32Recording = new GetMostRecentBuildNamesStringInt32RecordingRecordings();
+                        this._getProjectStringRecording = new GetProjectStringRecordingRecordings();
                     }
-                    return this._getMostRecentBuildNamesStringInt32Recording;
+                    return this._getProjectStringRecording;
                 }
                 set
                 {
-                    this._getMostRecentBuildNamesStringInt32Recording = value;
-                }
-            }
-            
-            public virtual ThoughtWorks.CruiseControl.Remote.TestDoubles.RecorderICruiseManager.GetServerVersionRecordingRecordings GetServerVersionRecording
-            {
-                get
-                {
-                    if ((this._getServerVersionRecording == null))
-                    {
-                        this._getServerVersionRecording = new GetServerVersionRecordingRecordings();
-                    }
-                    return this._getServerVersionRecording;
-                }
-                set
-                {
-                    this._getServerVersionRecording = value;
+                    this._getProjectStringRecording = value;
                 }
             }
             
