@@ -88,44 +88,33 @@
 
 		<trycatch>
 			<try>
-				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
-					<then>
-						<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
-							<arg line="/command:update" />
-							<arg line='/path:"${SourceControl.GetOf}"' />
-						</exec>
-					</then>
-					<else>
-						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
-						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-					</else>
-				</ifthenelse>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
 			</try>
-			<catch>
+			<catch property="exception">
+				<echo message="${exception}" />
 				<property name="SourceControl.GetOf.CleanUp" value="true"/>
 			</catch>
 		</trycatch>
 
 		<trycatch if="${SourceControl.GetOf.CleanUp}">
 			<try>
-				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
-					<then>
-						<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
-							<arg line="/command:cleanup" />
-							<arg line='/path:"${SourceControl.GetOf}"' />
-						</exec>
-						<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
-							<arg line="/command:update" />
-							<arg line='/path:"${SourceControl.GetOf}"' />
-						</exec>
-					</then>
-					<else>
-						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
-						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-					</else>
-				</ifthenelse>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:cleanup" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
 			</try>
-			<catch>
+			<catch property="exception">
+				<echo message="${exception}" />
 				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
 			</catch>
 		</trycatch>
