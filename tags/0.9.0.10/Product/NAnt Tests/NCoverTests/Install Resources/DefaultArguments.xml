@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="NCoverTestProject" />
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerPort" value="21247"/>
+  <property name="CCNET.ModificationDelaySeconds" value="60"/>
+  <property name="CCNET.IntervalTrigger" value="30"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+  <property name="NCover.Version" value="1.5.8" overwrite="false"/>
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <strings id="Packages.InstallList">
+    <string value="NCover" />
+    <string value="MSTest" />
+    <string value="DotNetUnitTest"/>
+    <string value="SourceControlStub"/>
+    <string value="Deployment"/>
+  </strings>
+
+  <target name="Post.Install">
+    
+  </target>
+  
+</project>
