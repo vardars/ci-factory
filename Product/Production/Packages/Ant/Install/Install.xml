@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Ant.Install" default="Ant.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Ant.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Ant.CompileSource" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Ant Report" actionName="AntReport" xslFileName="Packages\Ant\AntReport.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\AntLogs\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="Ant.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Ant"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Ant.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Ant"/>
+  </target>
+
+  <target name="Ant.ValidateParameters">
+    
+  </target>
+  
+</project>
