@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
+
+  <fileset id="UnitTest.TestAssemblies" />
+  
+  <include buildfile="UnitTest.Properties.xml" />
+
+	<target name="UnitTest.RunTests">
+
+		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
+		
+    <foreach item="File" property="UnitTest.ProjectFile.Path">
+      <in>
+        <items refid="UnitTest.ProjectFiles" />
+      </in>
+      <do>
+        <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+        <property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+				<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.exe"/>
+				<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+      </do>
+    </foreach>
+
+    <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+      <call target="UnitTest.FindTestAssebmlies"/>
+    </if>
+
+		<trycatch>
+			<try>
+				<property name="Count" value="0"/>
+				<property name='NUnit.Fail' value='false'/>
+				
+				<foreach item="File" property="UnitTest.TestAssembly">
+					<in>
+						<items refid="UnitTest.TestAssemblies"/>
+					</in>
+					<do>
+						<property name="Count" value="${int::parse(Count) + 1}"/>
+						<property name="UnitTest.ReportFilePath" value="${UnitTest.ReportFolder}\${Count}${UnitTest.BaseReportFileName}"/>
+						<property name="UnitTest.BinDirectory" value="${path::get-directory-name(UnitTest.TestAssembly)}" />
+						
+						<exec program="${NUnit.ConsolePath}" 
+									resultproperty="NUnit.ExitErrorLevel" 
+									failonerror="false"
+									verbose="true"
+									workingdir="${UnitTest.BinDirectory}">
+							<arg line='/xml:"${UnitTest.ReportFilePath}"' />
+							<arg line='"${UnitTest.TestAssembly}"' />
+							<arg line='/noshadow' />
+						</exec>
+						<if test='${int::parse(NUnit.ExitErrorLevel) != 0}'>
+							<property name='NUnit.Fail' value='true'/>
+						</if>
+					</do>
+				</foreach>
+
+				<fail if='${NUnit.Fail}' message='Atlest one unit test failed!'/>
+			</try>
+			<finally>
+				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
+			</finally>
+		</trycatch>
+		
+	</target>
+
+  <target name="UnitTest.FindTestAssebmlies">
+    <fileset id="UnitTest.TestAssemblies" >
+      <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+    </fileset>
+  </target>
+
+  <target name="UnitTest.ShowReport">
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
+    <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\NUnitSummary.xsl"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <delete dir="${UnitTest.ReportFolder}" if="${directory::exists(UnitTest.ReportFolder)}" />
+    <mkdir dir="${UnitTest.ReportFolder}"/>
+  </target>
+
+  <target name="UnitTest.TearDown">
+
+  </target>
+
+	<script language="C#" prefix="directory" >
+		<imports>
+			<import namespace="System.IO" />
+		</imports>
+
+		<code>
+			<![CDATA[
+         [Function("getcurrentdirectory")]
+         public static string GetCurrentDirectory()
+         {
+                 return Directory.GetCurrentDirectory();
+         }
+		 
+		 [Function("setcurrentdirectory")]
+         public static void SetCurrentDirectory(string path)
+         {
+                 Directory.SetCurrentDirectory(path);
+         }
+      ]]>
+		</code>
+	</script>
+
+</project>
