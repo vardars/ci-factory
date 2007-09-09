@@ -49,6 +49,49 @@ a img {border: 0}
 <h1>
   CI Factory Release Notes
 </h1>
+<h2>Beta 0.9.0.14
+</h2>
+<h3>New</h3>
+<p>
+Added task to delete tfs subscriptions<br>
+Added nant function to get date of last ccnet build<br>
+Added ccnet nant function to get a list of build file names<br>
+
+Added Setup Scripts to Power Tools<br>
+Added NUnit Package and Tests<br>
+Added CCNet NAnt function to get latest build file name
+</p>
+<h3>
+Improvements&nbsp;</h3>Added FreeText Mode to Ask task<br>
+Added Add mode to XmlPoke task, named existing functionality replace mode<br>
+Improved xpath eval of xmlpeek, now includes eval of functions like count()<br>
+Added OuterXml property to xmlpeek<br>
+Asyncexec/WaitForExit - Remove TaskNames from list after having waited on them<br>
+
+Asyncexec/WaitForExit - Check to see if the Task exists before waiting on it<br>
+Add interactive option to get in Subversion Package, uses Tortoise<br>
+Added control over svn install location, no need to have in the path any more<br>
+Added condition where when the build log files are on the same host as the dashboard the build logs are retrieved directly from the hard drive.<br>
+SetupIIS.xml - Set to Classic ASP.Net for Vista.<br>
+Performance improvements to CCNet core<br>
+CCNet Server Aggregator - Implement more of the interface, allowing the aggregator to service dashboards<br>
+Upgrade MbUnit to 2.4.1<br>
+CCNet mod writer will now create the output dir if needed
+
+<h3>
+Fixes
+</h3>Fix VersionFixup target, was deleting xml nodes that were not of the type compile, for example resources<br>
+Issue 51 - Include exe project output for unit test execution<br>
+Fix Ask, don't look for more options than can be displayed<br>
+Fix TextElement xml value for multiroot node fragements<br>
+Alerts UnitTests - Fix missing ${ in unless<br>
+TFS Source Control Block - Add fix for XmlDictionaryReaderQuotas and Notification size<br>
+Fix username and Password issue with CCNet subversion source control block, it was a bad merge job, oops<br>
+Fix largeproperty issue where when xml is true the outerxml is set as the value instead of the innerxml<br>
+
+Fix message size issue for CCNet TFS source control block<br>
+Fix issue with vdproj files and versioning<br>
+VSTSVersionControl - Oops the or was not working as I thought Needed a ${} around the property<br>
 <h2>
   Final 0.8.0.165
 </h2>
