@@ -14,7 +14,7 @@
 ]>
 <cruisecontrol>
   <project name="CI Factory Build Scripts">
-    <webURL>http://cifactorybuild/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+    <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
       <intervalTrigger seconds="90" />
@@ -43,7 +43,7 @@
     </publishers>
   </project>
   <project name="CI Factory">
-    <webURL>http://cifactorybuild/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+    <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
       <intervalTrigger seconds="90" />
