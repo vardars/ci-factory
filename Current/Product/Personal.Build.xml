@@ -30,6 +30,7 @@
 
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
+	<include buildfile="Custom.Targets.xml" />
 
   <description>Begin Package Includes</description>
   <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
@@ -87,6 +88,7 @@
     <property name="SourceControl.Update.FileTimeStamp" value="Current"/>
     <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
     <property name="SourceControl.Update.MakeWritable" value="False"/>
+		<property name="SourceControl.Update.Interactive" value="True"/>
     <call target="SourceControl.GetOfBuildDirectory"/>
     <call target="SourceControl.GetOfThirdPartyDirectory" />
     <call target="SourceControl.GetOfProductDirectory" />
