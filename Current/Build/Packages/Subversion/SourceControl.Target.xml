@@ -54,7 +54,7 @@
           <arg line="--recursive" />
           <arg line="." />
         </exec>
-        <svncleantree directory="${SourceControl.CleanGetOf}" recursive="true" if="${directory::exists(SourceControl.CleanGetOf)}" failonerror="false"/>
+        <svncleantree directory="${SourceControl.CleanGetOf}" recursive="true" if="${directory::exists(SourceControl.CleanGetOf)}" verbose="true"/>
         <property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
         <call target="SourceControl.GetOf"/>
       </try>
@@ -67,41 +67,126 @@
 
   </target>
 
-  <target name="SourceControl.GetOf" >
-    <mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
-    <property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+	<target name="SourceControl.GetOf" >
+		<mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
+		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+		<property name="SourceControl.GetOf.CleanUp" value="false"/>
 
+		<ifthenelse test="${SourceControl.Update.Interactive}">
+			<then>
+				<call target="Private.SourceControl.IteractiveGetOf"/>
+			</then>
+			<else>
+				<call target="Private.SourceControl.NonIteractiveGetOf"/>
+			</else>
+		</ifthenelse>
+	</target>
 
-	<trycatch>
-		<try>
-		  <ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
-			  <then>
-				  <exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
-					  <arg line="update" />
-					  <arg line="--non-interactive" />
-				  </exec>
-			  </then>
-			  <else>
-				  <echo message="${SourceControl.GetOf} is not versioned by Svn."/>
-				  <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-			  </else>
-		  </ifthenelse>
-		</try>
-		<catch>
-		  <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-		</catch>
-	</trycatch>
+	<target name="Private.SourceControl.IteractiveGetOf">
+		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+		<property name="SourceControl.GetOf.CleanUp" value="false"/>
+
+		<trycatch>
+			<try>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+			</try>
+			<catch property="exception">
+				<echo message="${exception}" />
+				<property name="SourceControl.GetOf.CleanUp" value="true"/>
+			</catch>
+		</trycatch>
+
+		<trycatch if="${SourceControl.GetOf.CleanUp}">
+			<try>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:cleanup" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+			</try>
+			<catch property="exception">
+				<echo message="${exception}" />
+				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			</catch>
+		</trycatch>
+
+		<if test="${SourceControl.GetOf.NeedCheckout}">
+			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+			<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+				<arg line="/command:checkout" />
+				<arg line='/url:"${Uri}"' />
+				<arg line='/path:"${SourceControl.GetOf}"' />
+			</exec>
+		</if>
+	</target>
+
+	<target name="Private.SourceControl.NonIteractiveGetOf">
+		<trycatch>
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="update" />
+							<arg line="--non-interactive" />
+						</exec>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.CleanUp" value="true"/>
+			</catch>
+		</trycatch>
+
+		<trycatch if="${SourceControl.GetOf.CleanUp}">
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="cleanup" />
+							<arg line="--non-interactive" />
+						</exec>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="update" />
+							<arg line="--non-interactive" />
+						</exec>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			</catch>
+		</trycatch>
+
+		<if test="${SourceControl.GetOf.NeedCheckout}">
+			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+			<svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
+		</if>
+	</target>
 	
-    <if test="${SourceControl.GetOf.NeedCheckout}">
-      <property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
-      <call target="Private.SourceControl.DeleteLocal.Directory" />
-      <property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
-      <property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
-      <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
-    </if>
-  </target>
-
-  <target name="Private.SourceControl.DeleteLocal.Directory">
+	<target name="Private.SourceControl.DeleteLocal.Directory">
     <if test="${directory::exists(Private.SourceControl.DeleteLocal.Directory)}" >
       <attrib readonly="false">
         <fileset>

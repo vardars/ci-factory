@@ -3,6 +3,7 @@
 
   <include buildfile="Properties.build.xml"/>
   <include buildfile="Common.Build.xml" />
+	<include buildfile="Custom.Targets.xml" />
 
   <description>Begin Package Includes</description>
   <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
@@ -44,7 +45,7 @@
         <description>End Varification Actions</description>
 
         <description>Begin Post Build Actions</description>
-        <call target="NAnt.CreateDocumentation"/>
+        <call target="Custom.NAnt.CreateDocumentation"/>
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
 
         <property name="Deployment.SourceFileName"  value="CIFactory.zip"/>
@@ -71,52 +72,6 @@
         <call target="TearDowns"/>
       </finally>
     </trycatch>
-  </target>
-
-  <target name="NAnt.CreateDocumentation">
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
-    <property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
-    <!--<property name="" value=""/>
-    <property name="" value=""/>-->
-
-    <uptodate property="Help.IsUpToDate">
-      <targetfiles>
-        <include name="${NAntDocumentationDirectory}/*.html" />
-      </targetfiles>
-      <sourcefiles basedir="${ThirdPartyDirectory}/nAnt/bin">
-        <include name="NAnt.Core.dll" />
-        <include name="*Task*.dll" />
-        <include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
-        <include name="NDoc.Documenter.*.dll" />
-      </sourcefiles>
-    </uptodate>
-    <ifnot test="${Help.IsUpToDate}">
-      <ndoc>
-        <assemblies basedir="${ThirdPartyDirectory}/nAnt/bin">
-          <include name="NAnt.Core.dll" />
-          <include name="*Task*.dll" />
-          <include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
-        </assemblies>
-        <documenters>
-          <documenter name="NAnt">
-            <property name="OutputDirectory" value="${NAntDocumentationDirectory}" />
-            <property name="SdkDocVersion" value="SDK_v1_1" />
-            <property name="SdkLinksOnWeb" value="true" />
-            <property name="NAntBaseUri" value="../" />
-            <property name="NamespaceFilter" value="" />
-            <property name="ProductName" value="CI Factory" />
-            <property name="ProductVersion" value="${CCNetLabel}" />
-            <property name="ProductUrl" value="http://cifactory.org" />
-            <property name="Preliminary" value="true" />
-            <property name="DocumentAttributes" value="True" />
-            <property name="IncludeAssemblyVersion" value="false" />
-            <property name="ShowMissingParams" value="True" />
-            <property name="ShowMissingReturns" value="True" />
-            <property name="ShowMissingValues" value="True" />
-          </documenter>
-        </documenters>
-      </ndoc>
-    </ifnot>
   </target>
 
   <target name="SetUps" >
