@@ -3,7 +3,6 @@
 
   <property name="CCNetProject" value="CI Factory"/>
   <include buildfile="..\Build\Properties.Build.xml"/>
-  <include buildfile="..\Build\Common.Build.xml" />
   <include buildfile="..\Build\Custom.Targets.xml" />
   <include buildfile="..\Build\DevEnv.Targets.xml" />
 
