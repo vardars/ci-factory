@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp">
+
+  <property name="CCNetProject" value="CI Factory"/>
+  <include buildfile="..\Build\Properties.Build.xml"/>
+  <include buildfile="..\Build\Common.Build.xml" />
+  <include buildfile="..\Build\Custom.Targets.xml" />
+  <include buildfile="..\Build\DevEnv.Targets.xml" />
+
+  <target name="SetUp">
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
+  </target>
+  
+</project>
