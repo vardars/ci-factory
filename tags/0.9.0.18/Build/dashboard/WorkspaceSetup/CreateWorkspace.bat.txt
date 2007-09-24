@@ -1,0 +1,39 @@
+set ProjectName=CI Factory
+set ProjectCodeLineName=Current
+set ProjectCodeLineDirectory=C:\Projects\%ProjectName%\%ProjectCodeLineName%
+set ProductDirectory=%ProjectCodeLineDirectory%\Product
+set SVN.URL=https://ci-factory.googlecode.com/svn/%ProjectCodeLineName%
+
+mkdir "%ProjectCodeLineDirectory%"
+
+IF EXIST "%ProgramFiles%\TortoiseSVN\bin\TortoiseProc.exe" GOTO UseTortoise
+
+svn --version
+IF NOT ERRORLEVEL 0 set PATH=%PATH%;%ProgramFiles%\Subversion\bin
+
+svn --version
+IF NOT ERRORLEVEL 0 set PATH=%PATH%;%ProgramFiles%\CollabNet Subversion Server\bin
+
+svn --version
+IF NOT ERRORLEVEL 0 GOTO UseSubversion ELSE GOTO NoSubversion
+
+:UseSubversion
+SET /P SvnUserName="What is the user name you wish to use to checkout the source?"
+
+svn checkout --username "%SvnUserName%" "%SVN.URL%" "%ProjectCodeLineDirectory%"
+
+IF NOT ERRORLEVEL 0 GOTO OpenFolder ELSE GOTO END
+
+:NoSubversion
+echo I can't find where you have Subversion installed!
+GOTO END
+
+:UseTortoise
+"%ProgramFiles%\TortoiseSVN\bin\TortoiseProc.exe" /command:checkout /url:"%SVN.URL%" /path:"%ProjectCodeLineDirectory%"
+
+IF NOT ERRORLEVEL 0 GOTO OpenFolder ELSE GOTO END
+
+:OpenFolder
+explorer "%ProductDirectory%"
+
+:END
