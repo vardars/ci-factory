@@ -31,6 +31,9 @@
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
 	<include buildfile="Custom.Targets.xml" />
+  <include buildfile="DevEnv.Targets.xml" />
+
+  <property name="Compile.ConfigName" value="Debug"/>
 
   <description>Begin Package Includes</description>
   <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
@@ -75,11 +78,15 @@
   </target>
   
   <target name="Build">
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
     <call target="Compile"/>
     <call target="Test"/>
   </target>
 
   <target name="Rebuild">
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
     <call target="Recompile"/>
     <call target="Test"/>
   </target>
@@ -116,7 +123,6 @@
           <fileset refid="InfoFiles" />
         </attrib>
 
-        <property name="Compile.ConfigName" value="Debug"/>
         <property name="Compile.ToCopyToBin" value="false"  />
         <property name="Compile.ToDeployZip" value="false"  />
         <property name="Compile.PublishLogFile" value="false" />

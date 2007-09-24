@@ -3,10 +3,13 @@
 
   <property name="CCNetProject" value="CI Factory"/>
   <include buildfile="..\Build\Properties.Build.xml"/>
+  <include buildfile="..\Build\Common.Build.xml" />
+  <include buildfile="..\Build\Custom.Targets.xml" />
+  <include buildfile="..\Build\DevEnv.Targets.xml" />
 
   <target name="SetUp">
-    <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\AssemblyPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.AddIn.dll"/>
-    <writeregistry hive="LocalMachine" key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application" value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
   </target>
   
 </project>

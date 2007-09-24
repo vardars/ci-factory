@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 03/02/2007 14:14:11</xs:documentation>
+    <xs:documentation>NAnt schema generated at 09/23/2007 20:50:37</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -16,6 +20,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -88,14 +94,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -146,6 +144,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="failonerror" use="optional" />
@@ -156,6 +155,10 @@
   <xs:complexType name="CIFactory.NAnt.Types.CaseElement">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -166,6 +169,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -238,14 +243,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -296,6 +293,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="break" use="optional" />
@@ -512,23 +510,6 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Types.CvsFileSet">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="includes" type="nant:NAnt.Core.Types.FileSet-Include" />
-      <xs:element minOccurs="0" maxOccurs="1" name="include" type="nant:NAnt.Core.Types.FileSet-Include" />
-      <xs:element minOccurs="0" maxOccurs="1" name="excludes" type="nant:NAnt.Core.Types.FileSet-Exclude" />
-      <xs:element minOccurs="0" maxOccurs="1" name="exclude" type="nant:NAnt.Core.Types.FileSet-Exclude" />
-      <xs:element minOccurs="0" maxOccurs="1" name="includesList" type="nant:NAnt.Core.Types.FileSet-IncludesFile" />
-      <xs:element minOccurs="0" maxOccurs="1" name="includesfile" type="nant:NAnt.Core.Types.FileSet-IncludesFile" />
-      <xs:element minOccurs="0" maxOccurs="1" name="excludesfile" type="nant:NAnt.Core.Types.FileSet-ExcludesFile" />
-    </xs:sequence>
-    <xs:attribute name="usecvsignore" use="optional" />
-    <xs:attribute name="failonempty" use="optional" />
-    <xs:attribute name="defaultexcludes" use="optional" />
-    <xs:attribute name="basedir" use="optional" />
-    <xs:attribute name="id" use="optional" />
-    <xs:attribute name="refid" use="optional" />
-  </xs:complexType>
   <xs:complexType name="NAnt.Core.Filters.Filter">
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
@@ -635,9 +616,52 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetForceTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="ccnetplugins" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
+    <xs:attribute name="projectname" use="required" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStartTask">
+    <xs:attribute name="projectname" use="required" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.CCNetStopTask">
+    <xs:attribute name="projectname" use="optional" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask">
+    <xs:attribute name="pollinginterval" use="optional" />
+    <xs:attribute name="projectname" use="required" />
+    <xs:attribute name="serverurl" use="required" />
+    <xs:attribute name="timeoutinseconds" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.AskTask">
-    <xs:attribute name="answer" use="optional" />
-    <xs:attribute name="question" use="optional" />
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="options" type="nant:CIFactory.NAnt.Types.StringList" />
+    </xs:sequence>
+    <xs:attribute name="dialogmode" use="optional" />
+    <xs:attribute name="caption" use="optional" />
+    <xs:attribute name="showdialog" use="optional" />
+    <xs:attribute name="answer" use="required" />
+    <xs:attribute name="question" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -677,6 +701,7 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.WriteRegistryTask">
+    <xs:attribute name="kind" use="optional" />
     <xs:attribute name="value" use="required" />
     <xs:attribute name="key" use="required" />
     <xs:attribute name="hive" use="optional" />
@@ -686,11 +711,11 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="UpdateVersion.Tasks.GenerateAssemblyInfoList">
-    <xs:attribute name="SearchDirectory" use="required" />
-    <xs:attribute name="SearchPattern" use="required" />
-    <xs:attribute name="Append" use="optional" />
-    <xs:attribute name="Output" use="required" />
-    <xs:attribute name="DateTime" use="required" />
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="assemblyinfoset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="1" maxOccurs="1" name="changeset" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
+    <xs:attribute name="rootdirectory" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -736,6 +761,7 @@
     <xs:attribute name="useruntimeengine" use="optional" />
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -769,6 +795,25 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.WaitForTask">
+    <xs:attribute name="condition" use="required" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="pollinginterval" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.WhileTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
+    </xs:sequence>
+    <xs:attribute name="condition" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Xml.Tasks.XmlCopy">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="inputFiles" type="nant:NAnt.Core.Types.FileSet" />
@@ -783,12 +828,16 @@
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.IfThenTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
-      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="1" maxOccurs="1" name="then" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -799,6 +848,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -871,14 +922,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -929,6 +972,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="uptodatefile" use="optional" />
@@ -964,8 +1008,8 @@
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.LoopThrough">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:element minOccurs="1" maxOccurs="1" name="items" type="nant:CIFactory.NAnt.Types.LoopItemContainer" />
+      <xs:element minOccurs="1" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
     </xs:sequence>
     <xs:attribute name="property" use="required" />
     <xs:attribute name="failonerror" use="optional" />
@@ -1137,6 +1181,7 @@
     <xs:attribute name="pad-all" use="optional" />
     <xs:attribute name="nobreak-complex" use="optional" />
     <xs:attribute name="nobreak-singlelineblocks" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1219,6 +1264,7 @@
     <xs:attribute name="proxyusername" use="optional" />
     <xs:attribute name="proxypassword" use="optional" />
     <xs:attribute name="proxydomain" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1246,6 +1292,7 @@
     <xs:attribute name="includeSummaryReport" use="optional" />
     <xs:attribute name="typeList" use="optional" />
     <xs:attribute name="saveResults" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1269,6 +1316,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1285,6 +1333,7 @@
     </xs:sequence>
     <xs:attribute name="assembly" use="optional" />
     <xs:attribute name="action" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1317,6 +1366,7 @@
     </xs:sequence>
     <xs:attribute name="native" use="optional" />
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1351,6 +1401,7 @@
     <xs:attribute name="nowarnings" use="optional" />
     <xs:attribute name="uncompilefile" use="optional" />
     <xs:attribute name="uncompileoutputdir" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1376,6 +1427,7 @@
     <xs:attribute name="alias" use="optional" />
     <xs:attribute name="commandfile" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1397,6 +1449,7 @@
     <xs:attribute name="out" use="optional" />
     <xs:attribute name="username" use="optional" />
     <xs:attribute name="password" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1416,6 +1469,7 @@
     <xs:attribute name="debug" use="optional" />
     <xs:attribute name="debugoptimized" use="optional" />
     <xs:attribute name="profiled" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1458,6 +1512,7 @@
     <xs:attribute name="registered" use="optional" />
     <xs:attribute name="typelib" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1479,6 +1534,7 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="program-path-sep" use="optional" />
     <xs:attribute name="basedir" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1677,6 +1733,7 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1699,6 +1756,7 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1720,6 +1778,7 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1787,6 +1846,7 @@
     <xs:attribute name="checkreferences" use="optional" />
     <xs:attribute name="errorfile" use="optional" />
     <xs:attribute name="conditionals" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1916,6 +1976,7 @@
     <xs:attribute name="proxydomain" use="optional" />
     <xs:attribute name="urlkey" use="optional" />
     <xs:attribute name="baseurl" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1940,6 +2001,7 @@
     <xs:attribute name="uri" use="optional" />
     <xs:attribute name="xmldoc" use="optional" />
     <xs:attribute name="xdr" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2003,6 +2065,7 @@
     <xs:attribute name="version" use="optional" />
     <xs:attribute name="win32icon" use="optional" />
     <xs:attribute name="win32res" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2060,6 +2123,7 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2076,6 +2140,7 @@
     </xs:sequence>
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="keycontainer" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2104,6 +2169,7 @@
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="resourcefile" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2138,6 +2204,7 @@
     <xs:attribute name="warnaserror" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2155,6 +2222,7 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="licensetarget" use="optional" />
     <xs:attribute name="target" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2190,6 +2258,7 @@
     <xs:attribute name="existingapp" use="optional" />
     <xs:attribute name="application" use="optional" />
     <xs:attribute name="partition" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2210,6 +2279,7 @@
     <xs:attribute name="target" use="optional" />
     <xs:attribute name="todir" use="optional" />
     <xs:attribute name="usesourcepath" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2276,6 +2346,7 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2315,246 +2386,7 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.ChangeLogTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="xmlfile" use="required" />
-    <xs:attribute name="start" use="required" />
-    <xs:attribute name="end" use="required" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.CheckoutTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="revision" use="optional" />
-    <xs:attribute name="sticky-tag" use="optional" />
-    <xs:attribute name="date" use="optional" />
-    <xs:attribute name="overridedir" use="optional" />
-    <xs:attribute name="override-directory" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.CvsPass">
-    <xs:attribute name="password" use="required" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.CvsTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="command" use="required" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.ExportTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="no-shortening" use="optional" />
-    <xs:attribute name="force-head" use="optional" />
-    <xs:attribute name="recursive" use="optional" />
-    <xs:attribute name="revision" use="optional" />
-    <xs:attribute name="date" use="optional" />
-    <xs:attribute name="overridedir" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.RTagTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="tag" use="required" />
-    <xs:attribute name="remove" use="optional" />
-    <xs:attribute name="move-if-exists" use="optional" />
-    <xs:attribute name="recursive" use="optional" />
-    <xs:attribute name="act-on-tag" use="optional" />
-    <xs:attribute name="act-on-date" use="optional" />
-    <xs:attribute name="force-head" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.TagTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="tag" use="required" />
-    <xs:attribute name="remove" use="optional" />
-    <xs:attribute name="move-if-exists" use="optional" />
-    <xs:attribute name="recursive" use="optional" />
-    <xs:attribute name="act-on-tag" use="optional" />
-    <xs:attribute name="act-on-date" use="optional" />
-    <xs:attribute name="force-head" use="optional" />
-    <xs:attribute name="fail-if-modified" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
-    <xs:attribute name="timeout" use="optional" />
-    <xs:attribute name="useshellexecute" use="optional" />
-    <xs:attribute name="createnowindow" use="optional" />
-    <xs:attribute name="redirectoutput" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.SourceControl.Tasks.UpdateTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
-    </xs:sequence>
-    <xs:attribute name="builddirs" use="optional" />
-    <xs:attribute name="pruneempty" use="optional" />
-    <xs:attribute name="overwritelocal" use="optional" />
-    <xs:attribute name="recursive" use="optional" />
-    <xs:attribute name="revision" use="optional" />
-    <xs:attribute name="sticky-tag" use="optional" />
-    <xs:attribute name="date" use="optional" />
-    <xs:attribute name="cvsfullpath" use="optional" />
-    <xs:attribute name="cvsroot" use="optional" />
-    <xs:attribute name="module" use="optional" />
-    <xs:attribute name="usesharpcvslib" use="optional" />
-    <xs:attribute name="cvsrsh" use="optional" />
-    <xs:attribute name="quiet" use="optional" />
-    <xs:attribute name="reallyquiet" use="optional" />
-    <xs:attribute name="readonly" use="optional" />
-    <xs:attribute name="readwrite" use="optional" />
-    <xs:attribute name="compressionlevel" use="optional" />
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="passfile" use="optional" />
-    <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2595,6 +2427,7 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="objectfile" use="optional" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2637,6 +2470,7 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="moduledefinition" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2671,6 +2505,7 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2688,6 +2523,7 @@
     <xs:attribute name="headerpath" use="optional" />
     <xs:attribute name="rcpath" use="optional" />
     <xs:attribute name="mcfile" use="required" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2737,6 +2573,7 @@
     <xs:attribute name="iid" use="optional" />
     <xs:attribute name="proxy" use="optional" />
     <xs:attribute name="filename" use="required" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2762,6 +2599,7 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="rcfile" use="required" />
     <xs:attribute name="langid" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2814,6 +2652,7 @@
     <xs:attribute name="delaysign" use="optional" />
     <xs:attribute name="generatesource" use="optional" />
     <xs:attribute name="rcw" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2840,6 +2679,7 @@
     <xs:attribute name="assembly" use="required" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="names" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2866,6 +2706,7 @@
     <xs:attribute name="sysarray" use="optional" />
     <xs:attribute name="typelib" use="required" />
     <xs:attribute name="unsafe" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2968,6 +2809,7 @@
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3006,6 +2848,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -3016,6 +2862,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3088,14 +2936,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -3146,6 +2986,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="uptodatefile" use="optional" />
@@ -3164,6 +3005,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="comparefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="uptodatefiles" type="nant:NAnt.Core.Types.FileSet" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -3174,6 +3019,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3246,14 +3093,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -3304,6 +3143,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="uptodatefile" use="optional" />
@@ -3357,6 +3197,10 @@
       <xs:element minOccurs="0" maxOccurs="1" name="in" type="nant:NAnt.Core.Tasks.InElement" />
       <xs:element minOccurs="0" maxOccurs="1" name="do" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -3367,6 +3211,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3439,14 +3285,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -3497,6 +3335,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
     </xs:sequence>
     <xs:attribute name="property" use="required" />
@@ -3768,6 +3607,7 @@
     <xs:attribute name="visibility" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="todir" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3806,6 +3646,7 @@
       <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
+    <xs:attribute name="profiledProcessModule" use="optional" />
     <xs:attribute name="commandLineArgs" use="optional" />
     <xs:attribute name="commandLineExe" use="optional" />
     <xs:attribute name="copyXsl" use="optional" />
@@ -3818,6 +3659,7 @@
     <xs:attribute name="profileService" use="optional" />
     <xs:attribute name="version" use="optional" />
     <xs:attribute name="workingDirectory" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3877,6 +3719,7 @@
     <xs:attribute name="satisfactoryCoverage" use="optional" />
     <xs:attribute name="showExcluded" use="optional" />
     <xs:attribute name="xmlReportName" use="optional" />
+    <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3900,8 +3743,20 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.SvnCleanTree">
+    <xs:attribute name="directory" use="required" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Target">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+      <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+      <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+      <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
       <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
       <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
       <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -3912,6 +3767,8 @@
       <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
       <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+      <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+      <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
       <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
       <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
       <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -3984,14 +3841,6 @@
       <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
       <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
       <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-      <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-      <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-      <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-      <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-      <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-      <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-      <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-      <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
       <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
       <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
       <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -4042,6 +3891,7 @@
       <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
       <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
       <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+      <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       <xs:element name="case" type="nant:CIFactory.NAnt.Types.CaseElement" />
       <xs:element name="items" type="nant:CIFactory.NAnt.Types.LoopItemContainer" />
       <xs:element name="regexmatch" type="nant:CIFactory.NAnt.Types.RegexMatch" />
@@ -4055,7 +3905,6 @@
       <xs:element name="namespaceimports" type="nant:NAnt.DotNet.Types.NamespaceImportCollection" />
       <xs:element name="resourcefileset" type="nant:NAnt.DotNet.Types.ResourceFileSet" />
       <xs:element name="warnaserror" type="nant:NAnt.DotNet.Types.WarningAsError" />
-      <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
       <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
       <xs:element name="credential" type="nant:NAnt.Core.Types.Credential" />
       <xs:element name="fileset" type="nant:NAnt.Core.Types.FileSet" />
@@ -4073,6 +3922,10 @@
   <xs:element name="project">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
@@ -4083,6 +3936,8 @@
         <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
         <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
         <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
         <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
@@ -4155,14 +4010,6 @@
         <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
         <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
         <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
-        <xs:element name="cvs-changelog" type="nant:NAnt.SourceControl.Tasks.ChangeLogTask" />
-        <xs:element name="cvs-checkout" type="nant:NAnt.SourceControl.Tasks.CheckoutTask" />
-        <xs:element name="cvs-pass" type="nant:NAnt.SourceControl.Tasks.CvsPass" />
-        <xs:element name="cvs" type="nant:NAnt.SourceControl.Tasks.CvsTask" />
-        <xs:element name="cvs-export" type="nant:NAnt.SourceControl.Tasks.ExportTask" />
-        <xs:element name="cvs-rtag" type="nant:NAnt.SourceControl.Tasks.RTagTask" />
-        <xs:element name="cvs-tag" type="nant:NAnt.SourceControl.Tasks.TagTask" />
-        <xs:element name="cvs-update" type="nant:NAnt.SourceControl.Tasks.UpdateTask" />
         <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
         <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
         <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
@@ -4213,6 +4060,7 @@
         <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="case" type="nant:CIFactory.NAnt.Types.CaseElement" />
         <xs:element name="items" type="nant:CIFactory.NAnt.Types.LoopItemContainer" />
         <xs:element name="regexmatch" type="nant:CIFactory.NAnt.Types.RegexMatch" />
@@ -4226,7 +4074,6 @@
         <xs:element name="namespaceimports" type="nant:NAnt.DotNet.Types.NamespaceImportCollection" />
         <xs:element name="resourcefileset" type="nant:NAnt.DotNet.Types.ResourceFileSet" />
         <xs:element name="warnaserror" type="nant:NAnt.DotNet.Types.WarningAsError" />
-        <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="credential" type="nant:NAnt.Core.Types.Credential" />
         <xs:element name="fileset" type="nant:NAnt.Core.Types.FileSet" />

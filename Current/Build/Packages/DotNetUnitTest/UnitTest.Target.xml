@@ -31,6 +31,7 @@
       <do>
         <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
         <property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
+        <echo message="${UniTestAssemblyPath}" />
         <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
       </do>
     </foreach>
