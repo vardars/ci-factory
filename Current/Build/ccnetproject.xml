@@ -207,7 +207,7 @@
 					<target>Release</target>
 				</targetList>
 
-				<buildTimeoutSeconds>1800</buildTimeoutSeconds>
+				<buildTimeoutSeconds>3600</buildTimeoutSeconds>
 			</nant>
 		</tasks>
 		<publishers>

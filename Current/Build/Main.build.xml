@@ -84,6 +84,7 @@
 
 				<description>Begin Varification Actions</description>
 				<call target="UnitTest.RunTests" />
+				<nant buildfile="${ProductDirectory}\NAnt Tests\TestRunner.Build.xml" inheritall="false" inheritrefs="false" />
 				<description>End Varification Actions</description>
 
 				<description>Begin Post Build Actions</description>
