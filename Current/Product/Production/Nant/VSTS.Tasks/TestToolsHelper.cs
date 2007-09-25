@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Specialized;
 using System.Text;
+using Microsoft.Win32;
 
 namespace VSTS.Tasks
 {
@@ -34,7 +35,16 @@ namespace VSTS.Tasks
         static TestToolsHelper()
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolver);
-            Assembly.LoadFile(@"C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.VisualStudio.QualityTools.CommandLine.dll");
+
+            string PrivateAssemblyPath = string.Empty;
+
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\8.0\Setup\VS", false))
+            {
+                string str2 = key.GetValue("EnvironmentDirectory") as string;
+                PrivateAssemblyPath = Path.Combine(str2, "PrivateAssemblies");
+            }
+
+            Assembly.LoadFile(String.Format(@"{0}\Microsoft.VisualStudio.QualityTools.CommandLine.dll", PrivateAssemblyPath));
         }
 
         public static Type FindType(String fullName)

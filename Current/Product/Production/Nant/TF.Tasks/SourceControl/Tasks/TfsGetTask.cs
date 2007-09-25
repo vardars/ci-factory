@@ -13,6 +13,8 @@ using Microsoft.TeamFoundation.Client;
 
 using TF.Tasks.SourceControl.Types;
 using TF.Tasks.SourceControl.Helpers;
+using Microsoft.Win32;
+using System.IO;
 
 namespace TF.Tasks.SourceControl.Tasks
 {
@@ -20,8 +22,20 @@ namespace TF.Tasks.SourceControl.Tasks
     public class TfsGetTask : Task
     {
 
-		private static Assembly ControlsAssembly = 
-			Assembly.LoadFile(@"C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Controls.dll");
+        private static string PrivateAssemblyPath
+        {
+            get
+            {
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\8.0\Setup\VS", false))
+                {
+                    string str2 = key.GetValue("EnvironmentDirectory") as string;
+                    return Path.Combine(str2, "PrivateAssemblies");
+                }
+            }
+        }
+
+		private static Assembly ControlsAssembly =
+            Assembly.LoadFile(String.Format(@"{0}\Microsoft.TeamFoundation.VersionControl.Controls.dll", PrivateAssemblyPath));
 		private static Type DialogResolveType = 
 			ControlsAssembly.GetType("Microsoft.TeamFoundation.VersionControl.Controls.DialogResolve");
 		private static MethodInfo ResolveConflictsMethod = DialogResolveType.GetMethod("ResolveConflicts",

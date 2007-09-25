@@ -83,7 +83,7 @@ namespace CCNET.TFS.Plugin
             get
             {
                 if (String.IsNullOrEmpty(_Executable))
-                    _Executable = @"C:\Program Files\Microsoft Team Foundation Server Power Toys\TFPT.exe";
+                    _Executable = String.Format(@"{0}\Microsoft Team Foundation Server Power Toys\TFPT.exe", Environment.GetEnvironmentVariable("ProgramFiles"));
                 return _Executable;
             }
             set
