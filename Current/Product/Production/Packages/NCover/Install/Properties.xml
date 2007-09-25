@@ -2,11 +2,8 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCover.Install.Properties">
 
   <property name="NCover.Version" value="1.5.8" overwrite="false"/>
-<<<<<<< .mine
   <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe" overwrite="false"/>
-=======
-  <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
->>>>>>> .theirs
+
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ExePath%', NCover.ExePath)}"/>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Coverage.UnitTestPackageInclude%', Coverage.UnitTestPackageInclude)}"/>
