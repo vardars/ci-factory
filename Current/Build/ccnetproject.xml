@@ -81,6 +81,9 @@
         <pathFilter>
           <pattern>**/Current/Product/**/ProjectInfo.*</pattern>
         </pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build</pattern>
+				</pathFilter>
         <pathFilter>
           <pattern>**/Current/Build/*.*</pattern>
         </pathFilter>
@@ -142,7 +145,7 @@
 		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
 		<state type="state" />
 		<triggers>
-			<intervalTrigger seconds="90" />
+			<scheduleTrigger time="23:30" buildCondition="ForceBuild" />
 		</triggers>
 		<integrationFilter>
 			<triggeredIntegrationFilter>
@@ -175,6 +178,9 @@
 				</pathFilter>
 				<pathFilter>
 					<pattern>**/Current/Product/**/ProjectInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build</pattern>
 				</pathFilter>
 				<pathFilter>
 					<pattern>**/Current/Build/*.*</pattern>
