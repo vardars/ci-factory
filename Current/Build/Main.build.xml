@@ -86,7 +86,12 @@
 
 				<description>Begin Varification Actions</description>
 				<call target="UnitTest.RunTests" />
-				<nant buildfile="${ProductDirectory}\NAnt Tests\TestRunner.Build.xml" inheritall="false" inheritrefs="false" />
+
+				<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+					<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
+					<arg line='-logger:NAnt.Core.XmlLogger' />
+					<arg line='-logfile:"${Common.ReportDirectory}\NAntTests.xml"' />
+				</exec>
 				<description>End Varification Actions</description>
 
 				<description>Begin Post Build Actions</description>
