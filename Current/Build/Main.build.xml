@@ -80,6 +80,8 @@
 
 				<description>Begin Compile Actions</description>
 				<call target="Compile.CompileSource" />
+				<call target="Custom.NAnt.CreateDocumentation"/>
+				<nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
 				<description>End Compile Actions</description>
 
 				<description>Begin Varification Actions</description>
@@ -88,9 +90,6 @@
 				<description>End Varification Actions</description>
 
 				<description>Begin Post Build Actions</description>
-				<call target="Custom.NAnt.CreateDocumentation"/>
-				<nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
-
 				<property name="Deployment.SourceFileName"  value="CIFactory.zip"/>
 				<property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
 				<property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
