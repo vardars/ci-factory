@@ -56,7 +56,7 @@
 
     <trycatch>
       <try>
-        <ncover program="C:\Program Files\NCover\NCover.Console.exe"
+        <ncover program="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"
 						commandLineExe="${BuildDirectory}\nAnt\bin\nant.exe"
 						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
 						workingDirectory="${Coverage.ReportFolder}"

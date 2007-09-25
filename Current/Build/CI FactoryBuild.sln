@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CCNETServer.Bat = CCNETServer.Bat
 		Common.Build.xml = Common.Build.xml
 		Custom.Targets.xml = Custom.Targets.xml
+		DevEnv.Targets.xml = DevEnv.Targets.xml
 		Main.build.xml = Main.build.xml
 		NAnt.xsd = NAnt.xsd
 		..\Product\Personal.Build.xml = ..\Product\Personal.Build.xml
