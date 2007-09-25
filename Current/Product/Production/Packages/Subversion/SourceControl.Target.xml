@@ -159,7 +159,6 @@
 					<then>
 						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
 							<arg line="cleanup" />
-							<arg line="--non-interactive" />
 						</exec>
 						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
 							<arg line="update" />

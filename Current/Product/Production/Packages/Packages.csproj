@@ -1031,10 +1031,6 @@
     <Content Include="StarTeam\SourceControl.Target.xml" />
     <Content Include="Subversion\SourceControl.Properties.xml" />
     <Content Include="Subversion\SourceControl.Target.xml" />
-    <Content Include="Vault\Install\Install.xml" />
-    <Content Include="Vault\Install\Properties.xml" />
-    <Content Include="Vault\SourceControl.Properties.xml" />
-    <Content Include="Vault\SourceControl.Target.xml" />
     <Content Include="VisualSourceSafe\SourceControl.Properties.xml" />
     <Content Include="VisualSourceSafe\SourceControl.Target.xml" />
     <Content Include="VS.NETCompile\Compile.xsl" />
