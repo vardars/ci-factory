@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -43,6 +43,7 @@
     <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="ForceFilters\HostForceFilter.cs" />
     <Compile Include="ForceFilters\ProjectForceFilter.cs" />
     <Compile Include="ExclusionFilters.cs" />
     <Compile Include="ForceFilters\UserForceFilter.cs" />
