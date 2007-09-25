@@ -5,8 +5,8 @@
   <property name="ProjectName" value="NUnitTestProject" />
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerPort" value="21247"/>
-  <property name="CCNET.ModificationDelaySeconds" value="60"/>
-  <property name="CCNET.IntervalTrigger" value="30"/>
+  <property name="CCNET.ModificationDelaySeconds" value="0"/>
+  <property name="CCNET.IntervalTrigger" value="60"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
