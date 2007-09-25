@@ -44,5 +44,23 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Plugins.BuildReport
 		{
 			get { return "Latest Build"; }
 		}
-	}
+
+
+        #region IPlugin Members
+
+
+        string IPlugin.ImageFileName
+        {
+            get
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+            set
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+        }
+
+        #endregion
+    }
 }

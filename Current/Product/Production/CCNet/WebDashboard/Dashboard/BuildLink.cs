@@ -9,12 +9,15 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 		private readonly ICruiseUrlBuilder urlBuilder;
 		public readonly string absoluteUrl;
 
-		public BuildLink(ICruiseUrlBuilder urlBuilder, IBuildSpecifier buildSpecifier, string text, string action)
+		public BuildLink(ICruiseUrlBuilder urlBuilder, IBuildSpecifier buildSpecifier, string text, string action, string img)
 			: base (text)
 		{
 			this.urlBuilder = urlBuilder;
 			this.action = action;
 			this.buildSpecifier = buildSpecifier;
+            
+            if (!string.IsNullOrEmpty(img))
+                this.SetImg = img;
 		}
 
 		public override string Url

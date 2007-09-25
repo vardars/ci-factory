@@ -6,37 +6,55 @@ using ThoughtWorks.CruiseControl.WebDashboard.MVC.Cruise;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
 {
-	[ReflectorType("xslReportBuildAction")]
-	public class XslReportBuildAction : ICruiseAction
-	{
-		private readonly IBuildLogTransformer buildLogTransformer;
-		private string xslFileName;
+    [ReflectorType("xslReportBuildAction")]
+    public class XslReportBuildAction : ICruiseAction
+    {
+        #region Fields
 
-		public XslReportBuildAction(IBuildLogTransformer buildLogTransformer)
-		{
-			this.buildLogTransformer = buildLogTransformer;
-		}
+        private readonly IBuildLogTransformer buildLogTransformer;
 
-		public IResponse Execute(ICruiseRequest cruiseRequest)
-		{
-			if (xslFileName == null)
-			{
-				throw new ApplicationException("XSL File Name has not been set for XSL Report Action");
-			}
-			return new HtmlFragmentResponse(buildLogTransformer.Transform(cruiseRequest.BuildSpecifier, xslFileName));
-		}
+        private string xslFileName;
 
-		[ReflectorProperty("xslFileName")]
-		public string XslFileName
-		{
-			get
-			{
-				return xslFileName;
-			}
-			set
-			{
-				xslFileName = value;
-			}
-		}
-	}
+        #endregion
+
+        #region Constructors
+
+        public XslReportBuildAction(IBuildLogTransformer buildLogTransformer)
+        {
+            this.buildLogTransformer = buildLogTransformer;
+        }
+
+        #endregion
+
+        #region Properties
+
+        [ReflectorProperty("xslFileName")]
+        public string XslFileName
+        {
+            get
+            {
+                return xslFileName;
+            }
+            set
+            {
+                xslFileName = value;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public IResponse Execute(ICruiseRequest cruiseRequest)
+        {
+            if (xslFileName == null)
+            {
+                throw new ApplicationException("XSL File Name has not been set for XSL Report Action");
+            }
+            return new HtmlFragmentResponse(buildLogTransformer.Transform(cruiseRequest.BuildSpecifier, xslFileName));
+        }
+
+        #endregion
+
+    }
 }

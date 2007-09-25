@@ -22,7 +22,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			{
 				if (plugin.IsDisplayedForProject(buildSpecifier.ProjectSpecifier))
 				{
-					links.Add(LinkFactory.CreateBuildLink(buildSpecifier, plugin.LinkDescription, plugin.NamedActions[0].ActionName));
+					links.Add(LinkFactory.CreateBuildLink(buildSpecifier, plugin.LinkDescription, plugin.NamedActions[0].ActionName, plugin.ImageFileName));
 				}
 			}
 			return (IAbsoluteLink[]) links.ToArray(typeof (IAbsoluteLink));

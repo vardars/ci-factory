@@ -28,5 +28,22 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Plugins.DeleteProject
 				};
 			}
 		}
-	}
+
+        #region IPlugin Members
+
+
+        string IPlugin.ImageFileName
+        {
+            get
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+            set
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+        }
+
+        #endregion
+    }
 }

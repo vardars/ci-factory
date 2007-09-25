@@ -15,14 +15,14 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.buildNameFormatter = buildNameFormatter;
 		}
 
-		public IAbsoluteLink CreateBuildLink(IBuildSpecifier buildSpecifier, string text, string action)
+		public IAbsoluteLink CreateBuildLink(IBuildSpecifier buildSpecifier, string text, string action, string img)
 		{
-			return new BuildLink(cruiseUrlBuilder, buildSpecifier, text, action);
+			return new BuildLink(cruiseUrlBuilder, buildSpecifier, text, action, img);
 		}
 
 		public IAbsoluteLink CreateBuildLink(IBuildSpecifier buildSpecifier, string action)
 		{
-			return new BuildLink(cruiseUrlBuilder, buildSpecifier, buildNameFormatter.GetPrettyBuildName(buildSpecifier), action);
+			return new BuildLink(cruiseUrlBuilder, buildSpecifier, buildNameFormatter.GetPrettyBuildName(buildSpecifier), action, null);
 		}
 
 		public IAbsoluteLink CreateBuildLinkWithFileName(IBuildSpecifier buildSpecifier, string action, string fileName)
@@ -57,7 +57,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 
 		public IAbsoluteLink CreateStyledBuildLink(IBuildSpecifier specifier, string action)
 		{
-			IAbsoluteLink link = CreateBuildLink(specifier, buildNameFormatter.GetPrettyBuildName(specifier), action);
+			IAbsoluteLink link = CreateBuildLink(specifier, buildNameFormatter.GetPrettyBuildName(specifier), action, null);
 			link.LinkClass = buildNameFormatter.GetCssClassForBuildLink(specifier);
 			return link;
 		}

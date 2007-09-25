@@ -44,5 +44,22 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Plugins.ServerReport
 			get {  return new INamedAction[] { new ImmutableNamedAction("ViewServerInfo", this) }; }
 		}
 
-	}
+
+        #region IPlugin Members
+
+
+        string IPlugin.ImageFileName
+        {
+            get
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+            set
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+        }
+
+        #endregion
+    }
 }

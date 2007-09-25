@@ -4,6 +4,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 	{
 		private readonly string text;
 		private readonly string url;
+        private string img = string .Empty;
 		private string linkClass;
 
 		public GeneralAbsoluteLink(string text) : this (text, "", "") { }
@@ -16,6 +17,19 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.url = url;
 			this.linkClass = linkClass;
 		}
+
+        public virtual string Img
+        {
+            get { return img; }
+        }
+
+        protected string SetImg
+        {
+            set
+            {
+            	img = value;
+            }
+        }
 
 		public virtual string Text
 		{

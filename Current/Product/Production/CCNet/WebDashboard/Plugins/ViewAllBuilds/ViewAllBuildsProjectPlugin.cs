@@ -33,5 +33,23 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Plugins.ViewAllBuilds
 		{
 			get {  return new INamedAction[] { new ImmutableNamedAction(ACTION_NAME, this) }; }
 		}
-	}
+
+
+        #region IPlugin Members
+
+
+        public string ImageFileName
+        {
+            get
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+            set
+            {
+                throw new System.Exception("The method or operation is not implemented.");
+            }
+        }
+
+        #endregion
+    }
 }

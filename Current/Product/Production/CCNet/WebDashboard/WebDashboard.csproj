@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -562,6 +562,9 @@
     <Content Include="images\fxcop-critical-warning.gif" />
     <Content Include="images\fxcop-error.gif" />
     <Content Include="images\fxcop-warning.gif" />
+    <Content Include="images\latest.gif" />
+    <Content Include="images\next.gif" />
+    <Content Include="images\previous.gif" />
     <Content Include="images\shim.gif" />
     <Content Include="images\tw_dev_logo.gif" />
   </ItemGroup>

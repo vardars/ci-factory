@@ -60,5 +60,22 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.GenericPlugins
 
 		public abstract INamedAction[] NamedActions { get; }
 		public abstract string LinkDescription { get; }
-	}
+
+
+        #region IPlugin Members
+
+        private string _ImageFileName = string.Empty;
+
+        [ReflectorProperty("imageFileName", Required = false)]
+        public virtual string ImageFileName
+        {
+            get { return _ImageFileName; }
+            set
+            {
+                _ImageFileName = value;
+            }
+        }
+
+        #endregion
+    }
 }

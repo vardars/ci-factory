@@ -5,7 +5,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 	{
 		string Text { get; }
 		string Url { get; }
-
+        string Img { get; }
 		string LinkClass { set; }
 	}
 }
