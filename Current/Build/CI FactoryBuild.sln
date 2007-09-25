@@ -31,28 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{BE4448
 		server\ccnet.exe.config = server\ccnet.exe.config
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboard", "dashboard", "{5204B581-CA40-491E-8523-D5AB5520B8CF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		dashboard\dashboard.config = dashboard\dashboard.config
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xsl", "xsl", "{D7CADE5E-A81B-4C9B-A22A-CEA8EA16C82F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(SolutionItems) = preProject
-		dashboard\xsl\compile.xsl = dashboard\xsl\compile.xsl
-		dashboard\xsl\header.xsl = dashboard\xsl\header.xsl
-		dashboard\xsl\modifications.xsl = dashboard\xsl\modifications.xsl
-		dashboard\xsl\NAnt.xsl = dashboard\xsl\NAnt.xsl
-		dashboard\xsl\NAntTiming.xsl = dashboard\xsl\NAntTiming.xsl
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xsl", "xsl", "{677D642F-3EE9-4D73-981B-2DC56024301C}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -70,6 +48,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages", "Packages.csproj
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard.csproj", "{78BDB085-7006-4053-88FF-DC6353F11A9E}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,15 +61,16 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78BDB085-7006-4053-88FF-DC6353F11A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78BDB085-7006-4053-88FF-DC6353F11A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BE4448BC-99ED-4497-9FF6-2762D46AC29A} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
-		{5204B581-CA40-491E-8523-D5AB5520B8CF} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
 		{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
+		{78BDB085-7006-4053-88FF-DC6353F11A9E} = {D4D79084-4A48-436F-A77E-2E1309EF6478}
 		{677D642F-3EE9-4D73-981B-2DC56024301C} = {BE4448BC-99ED-4497-9FF6-2762D46AC29A}
-		{D7CADE5E-A81B-4C9B-A22A-CEA8EA16C82F} = {5204B581-CA40-491E-8523-D5AB5520B8CF}
 	EndGlobalSection
 EndGlobal

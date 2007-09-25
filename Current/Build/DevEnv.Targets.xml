@@ -2,11 +2,12 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="DevEnv">
 
   <target name="DevEnv.CheckForRequieredSoftware" >
-    <readregistry hive="LocalMachine" 
-                  key="SOFTWARE\Microsoft\Active Setup\Installed Components\{D93F9C7C-AB57-44C8-BAD6-1494674BCAF7}\ComponentID" 
-                  property="VSVersion"/>
+		<property name="VisualStudioServicePack" value=""/>
+    <readregistry hive="LocalMachine"									
+                  key="SOFTWARE\Microsoft\DevDiv\VS\Servicing\8.0\SP" 
+                  property="VisualStudioServicePack" failonerror="false"/>
 
-    <ifnot test="${VSVersion == 'KB926601'}">
+    <ifnot test="${VisualStudioServicePack == '1'}">
       <ask answer="Answer" 
            question="It looks like Visual Studio 2005 SP1 is not installed.  Do you wish to continue?" 
            caption="Proceed Without Required Software?" 
