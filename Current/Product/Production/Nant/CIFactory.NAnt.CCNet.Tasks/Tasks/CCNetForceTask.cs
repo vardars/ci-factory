@@ -9,6 +9,7 @@ using ThoughtWorks.CruiseControl.Remote;
 using ThoughtWorks.CruiseControl.Core;
 using Exortech.NetReflector.Util;
 using System.Reflection;
+using System.IO;
 
 namespace CIFactory.NAnt.CCNet.Tasks
 {
@@ -61,6 +62,18 @@ namespace CIFactory.NAnt.CCNet.Tasks
             }
         }
 
+        private bool PluginAlreadyLoaded(string assemblyPath)
+        {
+            String AssemblyFileName = Path.GetFileName(assemblyPath);
+
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (Path.GetFileName(assembly.Location) == AssemblyFileName)
+                    return true;
+            }
+            return false;
+        }
+
         protected override void ExecuteTask()
         {
             Log(Level.Info, "Connecting to CCNet server " + ServerUrl);
@@ -70,8 +83,11 @@ namespace CIFactory.NAnt.CCNet.Tasks
             {
                 foreach (string AssemblyPath in this.CCNetPlugins.FileNames)
                 {
-                    Assembly LoadedAssembly = Assembly.LoadFile(AssemblyPath);
-                    Log(Level.Debug, "Loaded {0}", LoadedAssembly.Location);
+                    if (!PluginAlreadyLoaded(AssemblyPath))
+                    {
+                        Assembly LoadedAssembly = Assembly.LoadFile(AssemblyPath);
+                        Log(Level.Debug, "Loaded {0}", LoadedAssembly.Location);
+                    }
                 }
             }
 

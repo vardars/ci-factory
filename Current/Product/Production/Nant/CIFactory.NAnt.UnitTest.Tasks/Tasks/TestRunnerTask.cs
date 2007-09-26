@@ -69,6 +69,8 @@ namespace CIFactory.NAnt.UnitTest.Tasks
         {
             int TestCount = 0;
             int TestPassingCount = 0;
+            StringBuilder FailingTestInfo = new StringBuilder();
+
             foreach (String Fixture in Fixtures)
             {
                 SubProject FixtureProject = this.Project.SubProjects[Fixture];
@@ -90,11 +92,15 @@ namespace CIFactory.NAnt.UnitTest.Tasks
                             }
                             catch (BuildException bx)
                             {
-                                Log(Level.Error, "{0} at:{1}{2}", bx.Message, Environment.NewLine, bx.Location.ToString());
+                                string FailureInfo = string.Format("{0} at:{1}{2}", bx.Message, Environment.NewLine, bx.Location.ToString());
+                                Log(Level.Error, FailureInfo);
+                                FailingTestInfo.AppendLine(FailureInfo);
                             }
                             catch (Exception ex)
                             {
-                                Log(Level.Error, "{0} in {1}", ex.Message, FixtureTarget.Name);
+                                string FailureInfo = string.Format("{0} in {1}", ex.Message, FixtureTarget.Name);
+                                Log(Level.Error, FailureInfo);
+                                FailingTestInfo.AppendLine(FailureInfo);
                             }
                             finally
                             {
@@ -114,6 +120,8 @@ namespace CIFactory.NAnt.UnitTest.Tasks
             Log(Level.Info, "Tests Passing: {0}", TestPassingCount);
             Log(Level.Info, "Tests Failing: {0}", TestFailingCount);
             Log(Level.Info, "Test Assertions Executed: {0}", MbUnit.Framework.Assert.AssertCount);
+            Log(Level.Error, FailingTestInfo.ToString());
+            
             if (TestFailingCount > 0)
                 throw new BuildException(string.Format("{0} tests failed." , TestFailingCount));
         }

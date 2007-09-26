@@ -186,7 +186,12 @@
     <call target="Compile"/>
   </target>
 
-  <target name="Test" depends="Common.SetUp">
+  <target name="Test" >
+		<call target="UnitTest"/>
+		<call target="IntegrationTest"/>
+	</target>
+
+	<target name="UnitTest" >
 		<trycatch>
 			<try>
 				<call target="UnitTest.SetUp"/>
@@ -202,30 +207,30 @@
 				<call target="UnitTest.TearDown"/>
 			</finally>
 		</trycatch>
+	</target>
 
+	<target name="IntegrationTest" depends="Common.SetUp">
 		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
 			<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
-			<arg line='-logger:NAnt.Core.XmlLogger' />
-			<arg line='-logfile:"${Common.ReportDirectory}\NAntTests.xml"' />
 		</exec>
 	</target>
 
 	<target name="Ant.Build">
-    <trycatch>
-      <try>
-        <call target="Ant.SetUp"/>
-        <call target="Ant.CompileSource" />
-      </try>
-      <catch property="ExceptionMessage">
-        <property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
-        <property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
-        <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
-        <call target="Common.ShowReport"/>
+		<trycatch>
+			<try>
+				<call target="Ant.SetUp"/>
+				<call target="Ant.CompileSource" />
+			</try>
+			<catch property="ExceptionMessage">
+				<property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
+				<property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
+				<property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
+				<call target="Common.ShowReport"/>
 
-        <fail message="${ExceptionMessage}"/>
-      </catch>
-      <finally>
-        <call target="Ant.TearDown"/>
+				<fail message="${ExceptionMessage}"/>
+			</catch>
+			<finally>
+				<call target="Ant.TearDown"/>
       </finally>
     </trycatch>
   </target>
