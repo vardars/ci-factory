@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NUnitTests" default="NUnitTests.DefaultInstallTest" basedir="..\">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NUnitTests" default="NUnitTests.RunAllTests" basedir="..\">
 
   <ifnot test="${task::exists('testrunner')}">
     <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
@@ -79,8 +79,7 @@
 	</target>
 
 	<target name="NUnitTests.DefaultInstallTest">
-		<call target="NUnitTests.SetProperties"/>
-		<copy todir="${ProductDirectory}">
+		<copy todir="${ProductDirectory}" overwrite="true">
 			<fileset basedir="NUnitTests\Resources">
 				<include name="**\*"/>
 			</fileset>
