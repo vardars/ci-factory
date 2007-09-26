@@ -1,0 +1,60 @@
+<table width="100%">
+  <tr>
+    #if ($latestLink.Img.Length > 0)
+    <td height="25">
+      #else
+      <td>
+        #end
+        <a href="$latestLink.Url">
+          <img style="margin: -1px 0px; border-style: none" src="images/Latest.gif" title="Latest" alt="Latest"/> Latest
+        </a>
+      </td>
+    </tr>
+  <tr>
+    #if ($link.Img.Length > 0)
+    <td height="25">
+      #else
+      <td>
+        #end
+        <a href="$nextLink.Url">
+          <img style="margin: -1px 0px; border-style: none" src="images/Next.gif" title="Next" alt="Next"/> Next
+        </a>
+      </td>
+    </tr>
+  <tr>
+    #if ($link.Img.Length > 0)
+    <td height="25">
+      #else
+      <td>
+        #end
+        <a href="$previousLink.Url">
+          <img style="margin: -1px 0px; border-style: none" src="images/Previous.gif" title="Previous" alt="Previous"/> Previous
+        </a>
+      </td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  #foreach ($link in $links)
+  <tr>
+    #if ($link.Img.Length > 0)
+    <td height="25">
+      #else
+      <td>
+        #end
+        <a href="$link.Url" class="$link.LinkClass">
+          #if ($link.Img.Length > 0)
+          <img style="margin: -7px 0px; border-style: none" src="$link.Img" height="25" width="NaN" title="$link.Text" alt="$link.Text"/>
+          #end
+          $link.Text
+        </a>
+      </td>
+    </tr>
+  #end
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>$recentBuildsTable</td>
+  </tr>
+</table>
