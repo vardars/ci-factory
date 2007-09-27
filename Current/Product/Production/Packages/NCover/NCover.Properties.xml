@@ -14,4 +14,5 @@
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
   <property name="NCover.ExePath" value="%NCover.ExePath%"  overwrite="false" />
+  <property name="NCover.ExplorerExePath" value="%NCover.ExplorerExePath%"  overwrite="false" />
 </project>

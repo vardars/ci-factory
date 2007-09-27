@@ -17,7 +17,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverExplorer.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverExplorer.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
@@ -51,14 +51,20 @@
   </target>
 
   <target name="NCover.Install.NCover">
-    <property name="NCover.Install.TempDir" value="${SourcePackagesDirectory}\NCover\Install\Temp"/>
-    <mkdir dir="${NCover.Install.TempDir}" unless="${directory::exists(NCover.Install.TempDir)}"/>
-    <get src="http://ncover.org/SITE/files/1173/download.aspx"
-         dest="${NCover.Install.TempDir}\NCover.zip"
-         verbose="true">
-    </get>
-    <unzip todir="${NCover.Install.TempDir}" zipfile="${NCover.Install.TempDir}\NCover.zip"/>
-    <exec program="MsiExec.exe" commandline='/i "${NCover.Install.TempDir}\NCover-1.5.8.msi"' />
+    <asyncexec program="cmd" commandline='/C " explorer http://www.ncover.com/download"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+
+    <ask answer="Answer"
+           question="Do you wish to continue?"
+           caption="Have you finished installing NCover?"
+           showdialog="true" >
+      <options>
+        <string value="Continue"/>
+        <string value="Quit"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'Quit'}">
+      <fail message="Your answer was was to quit." />
+    </if>
   </target>
 
   <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCover.ExePath)}">
