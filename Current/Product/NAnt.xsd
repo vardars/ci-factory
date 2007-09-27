@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 09/04/2007 09:29:06</xs:documentation>
+    <xs:documentation>NAnt schema generated at 09/27/2007 12:17:32</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -11,6 +11,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -152,9 +153,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -162,32 +162,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -216,6 +196,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -357,9 +338,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -367,32 +347,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -857,6 +817,12 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.AttachDebuggerTask">
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.FunctionTask">
     <xs:attribute name="execute" use="required" />
     <xs:attribute name="failonerror" use="optional" />
@@ -1029,6 +995,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -1170,9 +1137,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -1180,32 +1146,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -3099,6 +3045,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3240,9 +3187,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -3250,32 +3196,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -3312,6 +3238,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3453,9 +3380,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -3463,32 +3389,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -3560,6 +3466,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3701,9 +3608,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -3711,32 +3617,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -4401,24 +4287,49 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.CoverageExclusionElement">
+    <xs:attribute name="enabled" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="isRegex" use="optional" />
+    <xs:attribute name="pattern" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.ModuleThresholdElement">
+    <xs:attribute name="moduleName" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverExplorerTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="exclusion" type="nant:NCoverExplorer.NAntTasks.Types.CoverageExclusionElement" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="moduleThreshold" type="nant:NCoverExplorer.NAntTasks.Types.ModuleThresholdElement" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
-    <xs:attribute name="profiledProcessModule" use="optional" />
-    <xs:attribute name="commandLineArgs" use="optional" />
-    <xs:attribute name="commandLineExe" use="optional" />
-    <xs:attribute name="copyXsl" use="optional" />
-    <xs:attribute name="coverageFile" use="optional" />
-    <xs:attribute name="excludeAttributes" use="optional" />
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="logFile" use="optional" />
-    <xs:attribute name="logLevel" use="optional" />
-    <xs:attribute name="profileIIS" use="optional" />
-    <xs:attribute name="profileService" use="optional" />
-    <xs:attribute name="version" use="optional" />
-    <xs:attribute name="workingDirectory" use="optional" />
+    <xs:attribute name="failCombinedMinimum" use="optional" />
+    <xs:attribute name="failMinimum" use="optional" />
+    <xs:attribute name="filter" use="optional" />
+    <xs:attribute name="htmlReportName" use="optional" />
+    <xs:attribute name="mergeFileName" use="optional" />
+    <xs:attribute name="minimumCoverage" use="optional" />
+    <xs:attribute name="outputDir" use="optional" />
+    <xs:attribute name="projectName" use="optional" />
+    <xs:attribute name="reportType" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+    <xs:attribute name="showExcluded" use="optional" />
+    <xs:attribute name="sort" use="optional" />
+    <xs:attribute name="xmlReportName" use="optional" />
     <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
@@ -4429,56 +4340,34 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NUnitProjectTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
-    </xs:sequence>
-    <xs:attribute name="project" use="optional" />
-    <xs:attribute name="appConfig" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.Types.CoverageExclusion">
-    <xs:attribute name="type" use="optional" />
-    <xs:attribute name="pattern" use="optional" />
-    <xs:attribute name="isRegex" use="optional" />
-    <xs:attribute name="enabled" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.Types.ModuleThreshold">
-    <xs:attribute name="moduleName" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverExplorerTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="exclusion" type="nant:NCoverExplorer.NAntTasks.Types.CoverageExclusion" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="moduleThreshold" type="nant:NCoverExplorer.NAntTasks.Types.ModuleThreshold" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
+    <xs:attribute name="additionalArgs" use="optional" />
+    <xs:attribute name="assemblyList" use="optional" />
+    <xs:attribute name="autoExclude" use="optional" />
+    <xs:attribute name="commandLineArgs" use="optional" />
+    <xs:attribute name="commandLineExe" use="optional" />
+    <xs:attribute name="coverageFile" use="optional" />
+    <xs:attribute name="coverageHtmlDirectory" use="optional" />
+    <xs:attribute name="coverageType" use="optional" />
+    <xs:attribute name="excludeAttributes" use="optional" />
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="failMinimum" use="optional" />
-    <xs:attribute name="htmlReportName" use="optional" />
-    <xs:attribute name="mergeFileName" use="optional" />
-    <xs:attribute name="outputDir" use="optional" />
+    <xs:attribute name="fileExclusionPatterns" use="optional" />
+    <xs:attribute name="logFile" use="optional" />
+    <xs:attribute name="logLevel" use="optional" />
+    <xs:attribute name="methodExclusionPatterns" use="optional" />
+    <xs:attribute name="profiledProcessModule" use="optional" />
+    <xs:attribute name="profileIIS" use="optional" />
+    <xs:attribute name="profileService" use="optional" />
     <xs:attribute name="projectName" use="optional" />
-    <xs:attribute name="reportType" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-    <xs:attribute name="showExcluded" use="optional" />
-    <xs:attribute name="xmlReportName" use="optional" />
+    <xs:attribute name="registerProfiler" use="optional" />
+    <xs:attribute name="serviceTimeout" use="optional" />
+    <xs:attribute name="symbolSearchPolicy" use="optional" />
+    <xs:attribute name="typeExclusionPatterns" use="optional" />
+    <xs:attribute name="workingDirectory" use="optional" />
     <xs:attribute name="pid" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
@@ -4617,19 +4506,6 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="TestCoverage.Tasks.CreateTestCoverageReport">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="productionassemblies" type="nant:NAnt.Core.Types.FileSet" />
-      <xs:element minOccurs="1" maxOccurs="1" name="testasseblies" type="nant:NAnt.Core.Types.FileSet" />
-    </xs:sequence>
-    <xs:attribute name="projectname" use="required" />
-    <xs:attribute name="format" use="required" />
-    <xs:attribute name="reportfile" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerAddNote">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
@@ -4695,234 +4571,6 @@
     </xs:sequence>
     <xs:attribute name="ScrIdList" use="required" />
     <xs:attribute name="reportfile" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
-    </xs:sequence>
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultadduser">
-    <xs:attribute name="addedname" use="required" />
-    <xs:attribute name="addedlogin" use="required" />
-    <xs:attribute name="addedpassword" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultbranch">
-    <xs:attribute name="sourcepath" use="required" />
-    <xs:attribute name="destinationpath" use="required" />
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="diskfile" use="optional" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcloak">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="labelstring" use="required" />
-    <xs:attribute name="failonmissing" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel">
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="labelstring" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile">
-    <xs:attribute name="destination" use="optional" />
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="mergeOption" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaulthistory">
-    <xs:attribute name="beginVaultDateTime" use="optional" />
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="output" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="beginlabel" use="optional" />
-    <xs:attribute name="currentbuild" use="optional" />
-    <xs:attribute name="excludedactions" use="optional" />
-    <xs:attribute name="excludedusers" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlabel">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="labelstring" use="required" />
-    <xs:attribute name="comment" use="optional" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder">
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos">
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers">
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout">
-    <xs:attribute name="repository" use="required" />
-    <xs:attribute name="path" use="required" />
-    <xs:attribute name="url" use="required" />
-    <xs:attribute name="username" use="required" />
-    <xs:attribute name="password" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -5096,6 +4744,7 @@
       <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
       <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
       <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+      <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
       <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
       <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
       <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -5237,9 +4886,8 @@
       <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
       <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
       <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-      <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-      <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
       <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+      <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
       <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
       <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
       <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -5247,32 +4895,12 @@
       <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
       <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
       <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-      <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
       <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
       <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
       <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
       <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
       <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
       <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-      <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-      <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-      <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-      <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-      <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-      <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-      <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-      <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-      <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-      <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-      <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-      <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-      <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-      <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-      <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-      <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-      <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-      <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-      <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
       <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
       <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
       <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -5328,6 +4956,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -5469,9 +5098,8 @@
         <xs:element name="ismcodestats" type="nant:CIFactory.NAnt.InstallShield.Tasks.IsmCodeStatsTask" />
         <xs:element name="buildinstallscript" type="nant:CIFactory.NAnt.InstallShield.Tasks.BuildInstallScript" />
         <xs:element name="mstest" type="nant:VSTS.Tasks.MSTestTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="stautolabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamAutoLabel" />
         <xs:element name="stcheckin" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamCheckin" />
@@ -5479,32 +5107,12 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
-        <xs:element name="createtestcoveragereport" type="nant:TestCoverage.Tasks.CreateTestCoverageReport" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
-        <xs:element name="vaultaddfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfile" />
-        <xs:element name="vaultaddrepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepo" />
-        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
-        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
-        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
-        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
-        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
-        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
-        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
-        <xs:element name="vaultdeleterepo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepo" />
-        <xs:element name="vaultgetbylabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetbylabel" />
-        <xs:element name="vaultgetfile" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfile" />
-        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
-        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
-        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
-        <xs:element name="vaultlistrepos" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepos" />
-        <xs:element name="vaultlistusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistusers" />
-        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
-        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />

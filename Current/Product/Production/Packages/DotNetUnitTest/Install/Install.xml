@@ -32,7 +32,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\DotNetUnitTest\MBUnitDetails.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\DotNetUnitTest\MBUnitDetails.xsl" imageFileName="Packages\DotNetUnitTest\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

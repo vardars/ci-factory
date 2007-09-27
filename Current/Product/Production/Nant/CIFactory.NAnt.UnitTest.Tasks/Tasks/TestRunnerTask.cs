@@ -120,7 +120,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
             Log(Level.Info, "Tests Passing: {0}", TestPassingCount);
             Log(Level.Info, "Tests Failing: {0}", TestFailingCount);
             Log(Level.Info, "Test Assertions Executed: {0}", MbUnit.Framework.Assert.AssertCount);
-            Log(Level.Error, FailingTestInfo.ToString());
+            Console.WriteLine(FailingTestInfo.ToString());
             
             if (TestFailingCount > 0)
                 throw new BuildException(string.Format("{0} tests failed." , TestFailingCount));

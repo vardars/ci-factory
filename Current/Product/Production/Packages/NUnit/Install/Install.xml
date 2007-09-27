@@ -4,11 +4,13 @@
   <include buildfile="Properties.xml" />
   
   <target name="NUnit.Install">
-    <copy todir="${ThirdPartyDirectory}\NUnit">
+    <copy todir="${ThirdPartyDirectory}\NUnit" overwrite="true">
       <fileset basedir="${SourcePackagesDirectory}\NUnit\Install\NUnit">
         <include name="**\*" />
       </fileset>
     </copy>
+
+    <copy file="${SourcePackagesDirectory}\NUnit\Install\NUnit\Logo.ico" tofile="${PackagesDirectory}\NUnit\Logo.ico"  overwrite="true"/>
 
     <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
       <then>
@@ -32,7 +34,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\NUnit\NUnitDetails.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\NUnit\NUnitDetails.xsl" imageFileName="Packages\NUnit\Logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

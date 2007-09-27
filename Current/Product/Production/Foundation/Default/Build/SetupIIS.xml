@@ -17,6 +17,12 @@
 		<exec program='${APPCMDPath}' 
 					commandline='set app "Default Web Site/${ProjectName}" /applicationPool:"Classic .NET AppPool"'
 					if='${file::exists(APPCMDPath)}'/>
+    <exec program='${APPCMDPath}'
+					commandline='set app "Default Web Site/${ProjectName}/Packages" /applicationPool:"Classic .NET AppPool"'
+					if='${file::exists(APPCMDPath)}'/>
+    <exec program='${APPCMDPath}'
+					commandline='set app "Default Web Site/${ProjectName} Artifacts" /applicationPool:"Classic .NET AppPool"'
+					if='${file::exists(APPCMDPath)}'/>
   </target>
   
 </project>
