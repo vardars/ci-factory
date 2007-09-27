@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Installer.Properties">
+
+  <!--
+  Properties that can optionally be set:
+  <property name="TFS.Domain" value="" overwrite="false"/>
+  <property name="TFS.Username" value="" overwrite="false"/>
+  <property name="TFS.Password" value="" overwrite="false"/>
+  
+  Properties that must be set:
+  <property name="TFS.ServerUrl" value="" overwrite="false"/>
+  -->
+  
+  <property name="TFS.Listener.Port" value="4567" overwrite="false"/>
+  <property name="TFS.BuildScripts.Listener.Port" value="4568" overwrite="false"/>
+  <property name="TFS.WorkspaceNameBase" value="${ProjectName}WorkSpace" overwrite="false"/>
+  <property name="TFS.WorkspaceName" value="${TFS.WorkspaceNameBase}-${environment::get-machine-name()}" overwrite="false"/>
+
+  <ifthenelse test="${property::exists('TFS.Domain') and property::exists('TFS.Username') and property::exists('TFS.Password')}">
+    <then>
+      <largeproperty name="TFS.ServerConnection">
+        <value xml="false" expand="true">
+          <![CDATA[<tfsserverconnection domain="${TFS.Domain}" password="${TFS.Password}" username="${TFS.Username}" serverurl="${TFS.ServerUrl}" id="tfsinfo"/>]]>
+        </value>
+      </largeproperty>
+
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.Domain%', TFS.Domain)}"/>
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.Username%', TFS.Username)}"/>
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.Password%', TFS.Password)}"/>
+    </then>
+    <else>
+      <largeproperty name="TFS.ServerConnection">
+        <value xml="false" expand="true">
+          <![CDATA[<tfsserverconnection serverurl="${TFS.ServerUrl}" id="tfsinfo"/>]]>
+        </value>
+      </largeproperty>
+    </else>
+  </ifthenelse>
+
+
+  <largeproperty name="SourceControl.MainBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="filtered">
+      <sourceControlProvider  
+        type="vstsbychangesetSourceControl" 
+        applyLabel="true" 
+        autoGetSource="false"
+        port="${TFS.Listener.Port}"
+        statefilepath="${BuildDirectory}\server\${ProjectName}.tfs.state.xml"
+        project="$/${ProjectName}/${ProjectCodeLineName}"
+        server="${TFS.ServerUrl}"
+        workspace="${TFS.WorkspaceNameBase}-{0}"
+        />
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>]]></value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol  
+      type="vstsbychangesetSourceControl" 
+      applyLabel="false" 
+      autoGetSource="true"
+      port="${TFS.BuildScripts.Listener.Port}"
+      statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.tfs.state.xml"
+      project="$/${ProjectName}/${ProjectCodeLineName}/Build"
+      server="${TFS.ServerUrl}"
+      workingDirectory="${BuildDirectory}"
+      workspace="${TFS.WorkspaceNameBase}-{0}"
+      />]]></value>
+  </largeproperty>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerUrl%', TFS.ServerUrl)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.WorkspaceNameBase%', TFS.WorkspaceNameBase)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TFS.ServerConnection%', TFS.ServerConnection)}"/>
+
+</project>

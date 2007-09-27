@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfModification xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>deep.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2003-abnormal/Source</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>deep.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2003-deep/Source</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>deep.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2005-abnormal/Source</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>deep.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2005-deep/Source</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>shallow.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2003-shallow</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+  <Modification>
+    <Type>Checked in</Type>
+    <FileName>shallow.cs</FileName>
+    <FolderName>$/VersioningTestProject/Current/Product/Production/2005-shallow</FolderName>
+    <ModifiedTime>2007-02-06T16:01:00.0000000-05:00</ModifiedTime>
+    <UserName>Jmack</UserName>
+    <ChangeNumber>0</ChangeNumber>
+    <Version />
+    <Comment>
+      #  119949  Open  3.4 New Results Ready to Remove, selected row goes
+      off screen.
+    </Comment>
+  </Modification>
+</ArrayOfModification>
