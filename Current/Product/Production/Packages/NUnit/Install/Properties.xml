@@ -4,6 +4,6 @@
 	<property name="NUnit.ConsolePath" value="${ThirdPartyDirectory}\NUnit\bin\nunit-console.exe" overwrite="false"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%NUnit.ConsolePath%', NUnit.ConsolePath)}"/>
 
-	<property name="NCover.ProcessToMonitor" value="${NUnit.ConsolePath}" overwrite="false"/>
+	<property name="NCover.ProcessToMonitor" value="nunit-console.exe" overwrite="false"/>
 	
 </project>
