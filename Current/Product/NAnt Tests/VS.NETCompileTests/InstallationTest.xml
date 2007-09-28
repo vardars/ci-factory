@@ -93,7 +93,7 @@
         <include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
       </ccnetplugins>
     </ccnetforce>
-    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="60" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="120" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
   </target>
   
