@@ -10,7 +10,7 @@
     <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\nDependReport.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\nDependReport.xsl" imageFileName="Packages\NDepend\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
   </target>

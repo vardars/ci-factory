@@ -15,7 +15,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianReport.xsl" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianReport.xsl" imageFileName="Packages\Simian\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
