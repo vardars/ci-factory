@@ -161,16 +161,21 @@ function refresh()
 		<td align="Center">
 			<font color="Black">$projectGridRow.Activity</font>
 		</td>
-		<form method="post">
-			<input type="hidden" name="forcebuild" value="true" />
-			<input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
-			<input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
-			<td align="Center">
-				<font color="Black">
-					<input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force"/>
-				</font>
-			</td>
-		</form>
+    <form method="post" onsubmit="return confirm(confirmPrompt(this, '$projectGridRow.Name'))">
+      <input type="hidden" name="forcebuild" value="true" />
+      <input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
+      <input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
+      <input type="hidden" name="action" value=""/>
+      <td align="Center">
+            <font color="Black">
+              #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
+              <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
+              #else
+              <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.action.value = this.value;"/>
+              #end
+            </font>
+          </td>
+    </form>
 	</tr>
 	#end
 </table>
