@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCover.Install.Properties">
+
+  <property name="NCover.Version" value="2.0.1" overwrite="false"/>
+  <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe" overwrite="false"/>
+  <property name="NCover.ExplorerExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCoverExplorer.Console.exe" overwrite="false"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ExePath%', NCover.ExePath)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ExplorerExePath%', NCover.ExplorerExePath)}"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Coverage.UnitTestPackageInclude%', Coverage.UnitTestPackageInclude)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Coverage.UnitTestPropertiesInclude%', Coverage.UnitTestPropertiesInclude)}"/>
+</project>
