@@ -1,0 +1,65 @@
+<table width="100%" valign="middle">
+  <tr>
+    #if ($latestLink.Img.Length > 0)
+    <td height="32">
+      #else
+      <td>
+        #end
+        <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+        <a href="$latestLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <img style="float: left; margin: -5px 0px; border-style: none" src="images/Latest.gif" title="Latest" alt="Latest"/>&nbsp;<strong>Latest</strong>
+      </a>
+    </div>
+      </td>
+  <tr>
+    #if ($link.Img.Length > 0)
+    <td height="32">
+      #else
+      <td>
+        #end
+        <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+        <a href="$nextLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <img style="float: left; margin: -5px 0px; border-style: none" src="images/Next.gif" title="Next" alt="Next"/>&nbsp;<strong>Next</strong>
+        </a>
+      </div>
+      </td>
+  <tr>
+    #if ($link.Img.Length > 0)
+    <td height="32">
+      #else
+      <td>
+        #end
+        <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+        <a href="$previousLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <img style="float: left; margin: -5px 0px; border-style: none" src="images/Previous.gif" title="Previous" alt="Previous"/>&nbsp;<strong>Previous</strong>
+        </a>
+        </div>
+      </td>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  #foreach ($link in $links)
+  <tr >
+    #if ($link.Img.Length > 0)
+    <td height="32">
+      #else
+      <td>
+        #end
+        <div style="BORDER-BOTTOM: #7bcf15 1px dotted; min-height: 24px;">
+          <a href="$link.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+            #if ($link.Img.Length > 0)
+            <img style="float: left; MARGIN: -5px 0px; border-style: none" src="$link.Img" height="25" title="$link.Text" alt="$link.Text"/>
+            #end
+            &nbsp;<strong>$link.Text</strong>
+          </a>
+        </div>
+      </td>
+    </tr>
+  #end
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>$recentBuildsTable</td>
+  </tr>
+</table>
