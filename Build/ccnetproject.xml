@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cruisecontrol [
+  <!ENTITY email '<email from="CIFactory.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="CI Factory">
+        <users>
+          <user name="BuildMaster" group="buildmaster" address="jay.flowers@stelligent.com"/>
+        </users>
+        <groups>
+          <group name="buildmaster" notification="always"/>
+        </groups>
+      </email>'>
+  <!ENTITY labeller '<labeller type="defaultlabeller">
+      <prefix>0.9.0.</prefix>
+    </labeller>'>
+]>
+<cruisecontrol>
+  <project name="CI Factory Build Scripts">
+    <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+    <state type="state" />
+    <triggers>
+      <intervalTrigger seconds="90" />
+    </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+    </integrationFilter>
+    <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
+      <trunkUrl>https://ci-factory.googlecode.com/svn/Current/Build</trunkUrl>
+      <workingDirectory>c:\Projects\CI Factory\Current\Build</workingDirectory>
+      <webUrlBuilder type="websvn">
+        <url>http://ci-factory.googlecode.com/svn{0}</url>
+      </webUrlBuilder>
+    </sourcecontrol>
+    &labeller;
+    <tasks>
+      <nullTask/>
+    </tasks>
+    <publishers>
+      <xmllogger />
+      &email;
+    </publishers>
+  </project>
+  <project name="CI Factory Dev">
+    <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+    <state type="state" />
+    <triggers>
+      <intervalTrigger seconds="90" />
+    </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+      <forcedIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="false" />
+        </allowed>
+        <blocked>
+        </blocked>
+      </forcedIntegrationFilter>
+    </integrationFilter>
+    <sourcecontrol type="filtered">
+      <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
+        <trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
+        <workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
+        <webUrlBuilder type="websvn">
+          <url>http://ci-factory.googlecode.com/svn{0}</url>
+        </webUrlBuilder>
+        <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
+      </sourceControlProvider>
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>**/Current/Product/**/AssemblyInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Product/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Product/**/ProjectInfo.*</pattern>
+        </pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build</pattern>
+				</pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Build/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/Current/Build/**/*.*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>
+    &labeller;
+    <tasks>
+      <modificationWriter>
+        <filename>SourceModificationReport.xml</filename>
+        <path>c:\Projects\CI Factory\Current\Build\SourceModificationReports</path>
+      </modificationWriter>
+      <nant>
+        <executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+        <baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Main.build.xml</buildFile>
+        <targetList>
+          <target>Triggered</target>
+        </targetList>
+
+        <buildTimeoutSeconds>1800</buildTimeoutSeconds>
+      </nant>
+    </tasks>
+    <publishers>
+      <merge>
+        <files>
+          <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
+        </files>
+      </merge>
+      <xslmerger>
+        <filepairs>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</xmlfile>
+          </filepair>
+        </filepairs>
+      </xslmerger>
+      <xmllogger />
+      &email;
+      <nant>
+        <executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+        <baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Post.Shim.xml</buildFile>
+        <targetList>
+          <target>PostBuildWrapper</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
+    </publishers>
+  </project>
+	<project name="CI Factory Release">
+		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+		<state type="state" />
+		<triggers>
+			<scheduleTrigger time="23:30" buildCondition="ForceBuild" />
+		</triggers>
+		<integrationFilter>
+			<triggeredIntegrationFilter>
+				<allowed>
+					<modificationsRequired condition="true" />
+				</allowed>
+			</triggeredIntegrationFilter>
+			<forcedIntegrationFilter>
+				<allowed>
+					<modificationsRequired condition="false" />
+				</allowed>
+				<blocked>
+				</blocked>
+			</forcedIntegrationFilter>
+		</integrationFilter>
+		<sourcecontrol type="filtered">
+			<sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+				<trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
+				<workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
+				<webUrlBuilder type="websvn">
+					<url>http://ci-factory.googlecode.com/svn{0}</url>
+				</webUrlBuilder>
+			</sourceControlProvider>
+			<exclusionFilters>
+				<pathFilter>
+					<pattern>**/Current/Product/**/AssemblyInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Product/ProjectInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Product/**/ProjectInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build/*.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build/**/*.*</pattern>
+				</pathFilter>
+			</exclusionFilters>
+		</sourcecontrol>
+		<labeller type="stateFileLabeller">
+			<project>CI Factory Dev</project>
+		</labeller>
+		<tasks>
+			<modificationWriter>
+				<filename>SourceModificationReport.xml</filename>
+				<path>c:\Projects\CI Factory\Current\Build\SourceModificationReports</path>
+			</modificationWriter>
+			<nant>
+				<executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+				<baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+				<logger>NAnt.Core.XmlLogger </logger>
+				<buildFile>Main.build.xml</buildFile>
+				<targetList>
+					<target>Release</target>
+				</targetList>
+
+				<buildTimeoutSeconds>3600</buildTimeoutSeconds>
+			</nant>
+		</tasks>
+		<publishers>
+			<merge>
+				<files>
+					<file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
+				</files>
+			</merge>
+			<xslmerger>
+				<filepairs>
+					<filepair>
+						<xslfile>C:\Projects\CI Factory\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
+						<xmlfile>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</xmlfile>
+					</filepair>
+				</filepairs>
+			</xslmerger>
+			<xmllogger />
+			&email;
+			<nant>
+				<executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+				<baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+				<logger>NAnt.Core.XmlLogger </logger>
+				<buildFile>Post.Shim.xml</buildFile>
+				<targetList>
+					<target>PostBuildWrapper</target>
+				</targetList>
+
+				<buildTimeoutSeconds>300</buildTimeoutSeconds>
+			</nant>
+		</publishers>
+	</project>
+</cruisecontrol>
