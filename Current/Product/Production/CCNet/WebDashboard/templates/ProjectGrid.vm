@@ -109,13 +109,7 @@ function refresh()
 		</td>
 		<td align="Center">
       <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>CCNet Status</b>
-      </span>
-		
-    </td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>Activity</b>
+        <b>Build Availability</b>
       </span>
 		
     </td>
@@ -156,10 +150,17 @@ function refresh()
       </font>
 		</td>
 		<td align="Center">
-			<font color="Black">$projectGridRow.Status</font>
-		</td>
-		<td align="Center">
-			<font color="Black">$projectGridRow.Activity</font>
+      #if ($projectGridRow.Status == "Stopped")
+        <font color="Black">Off Line</font>
+      #elseif ($projectGridRow.Activity == "Building")
+        <font color="Black">Building</font>
+      #elseif ($projectGridRow.Activity == "CheckingModifications")
+        <font color="Black">Polling for Work</font>
+      #elseif ($projectGridRow.Status == "Stopping")
+        <font color="Black">Going Off Line</font>
+      #else
+        <font color="Black">Available</font>
+      #end
 		</td>
     <form method="post" onsubmit="return confirm(confirmPrompt(this, '$projectGridRow.Name'))">
       <input type="hidden" name="forcebuild" value="true" />
