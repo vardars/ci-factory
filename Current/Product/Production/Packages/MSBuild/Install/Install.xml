@@ -27,7 +27,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="MSBuild Compile Details" actionName="MSBuildCompileDetails" xslFileName="Packages\MSBuild\msbuild.xsl" artifactRootUrl="/${ProjectName} Artifacts" xmlFileName="MSBuildLog.xml" imageFileName="Packages\MSBuild\logo.ico" />]]></value>
+      <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="MSBuild Output" actionName="MSBuildCompileDetails" xslFileName="Packages\MSBuild\msbuild.xsl" artifactRootUrl="/${ProjectName} Artifacts" xmlFileName="MSBuildLog.xml" imageFileName="Packages\MSBuild\logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
