@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 09/23/2007 20:50:37</xs:documentation>
+    <xs:documentation>NAnt schema generated at 09/29/2007 13:45:12</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -11,6 +11,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -160,6 +161,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -667,6 +669,12 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.AttachDebuggerTask">
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Tasks.FunctionTask">
     <xs:attribute name="execute" use="required" />
     <xs:attribute name="failonerror" use="optional" />
@@ -839,6 +847,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -2853,6 +2862,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3010,6 +3020,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3202,6 +3213,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3558,6 +3570,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="outerxml" use="optional" />
     <xs:attribute name="file" use="required" />
     <xs:attribute name="nodeindex" use="optional" />
     <xs:attribute name="property" use="required" />
@@ -3577,6 +3590,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="pokemode" use="optional" />
     <xs:attribute name="file" use="required" />
     <xs:attribute name="xpath" use="required" />
     <xs:attribute name="value" use="required" />
@@ -3758,6 +3772,7 @@
       <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
       <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
       <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+      <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
       <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
       <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
       <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
@@ -3927,6 +3942,7 @@
         <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
         <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
         <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
         <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
         <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
         <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />

@@ -56,13 +56,12 @@
 
     <trycatch>
       <try>
-        <ncover program="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"
-						commandLineExe="${BuildDirectory}\nAnt\bin\nant.exe"
+        <ncover program="${NCover.ExePath}"
+						commandLineExe="${NantExePath}"
 						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
 						workingDirectory="${Coverage.ReportFolder}"
 						coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
-						copyXsl="false"
-						version="1.5.4" >
+						profiledProcessModule="${NCover.ProcessToMonitor}">
           <assemblies refid="Coverage.Targets" />
         </ncover>
       </try>
@@ -84,7 +83,7 @@
 
   <target name="Private.Coverage.NCoverExplorer">
     <echo message="Starting NCoverExplorer report generation..."/>
-    <ncoverexplorer program="${BuildDirectory}\Packages\NCover\NCoverExplorer\NCoverExplorer.Console.exe"
+    <ncoverexplorer program="${NCover.ExplorerExePath}"
 						projectName="${ProjectName}"
 						reportType="4"
 						outputDir="${Coverage.ReportFolder}" 

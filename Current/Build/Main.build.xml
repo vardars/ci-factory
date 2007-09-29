@@ -81,6 +81,7 @@
 				<description>Begin Compile Actions</description>
 				<call target="Compile.CompileSource" />
 				<call target="Custom.NAnt.CreateDocumentation"/>
+        <call target="Custom.WriteReleaseNotes"/>
 				<nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
 				<description>End Compile Actions</description>
 

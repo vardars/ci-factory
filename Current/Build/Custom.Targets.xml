@@ -48,4 +48,69 @@
 		</ifnot>
 	</target>
 
+  <target name="Custom.WriteReleaseNotes">
+    <property name="TempSvnLogFilePath" value="${Common.TempDirectory}\log.xml"/>
+    <property name="TempBatchFilePath" value="${Common.TempDirectory}\log.bat"/>
+    <property name="ReleaseNotesFilePath" value="${ProductionDirectory}\CI Installer\CI Factory Release Notes.html"/>
+    <property name="RevisionToLogFrom" value="868"/>
+    
+    <echo message="svn log  --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; ${TempSvnLogFilePath}" file="${TempBatchFilePath}"/>
+    <exec program="${TempBatchFilePath}" workingdir="${ProductDirectory}" verbose="true" />
+
+    <property name='NewAndImprovedNotes' value=''/>
+    <property name='FixedNotes' value=''/>
+
+    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg[not(starts-with(text(), 'fix') or starts-with(text(), 'fixed') or starts-with(text(), 'Fix') or starts-with(text(), 'Fixed'))]" id='NewAndImprovedNotes' />
+    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg[starts-with(text(), 'fix') or starts-with(text(), 'fixed') or starts-with(text(), 'Fix') or starts-with(text(), 'Fixed')]" id='FixedNotes' />
+
+    <loopthrough property='Message'>
+      <items>
+        <xmlquery refid='NewAndImprovedNotes' />
+      </items>
+      <do>
+        <property name='NewAndImprovedNotes' value='${NewAndImprovedNotes}${Message}&lt;br/&gt;' unless="${Message == ''}"/>
+      </do>
+    </loopthrough>
+
+    <loopthrough property='Message'>
+      <items>
+        <xmlquery refid='FixedNotes' />
+      </items>
+      <do>
+        <property name='FixedNotes' value='${FixedNotes}${Message}&lt;br/&gt;' unless="${Message == ''}"/>
+      </do>
+    </loopthrough>
+
+    <get dest="${ReleaseNotesFilePath}"
+         src="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=44&amp;pop=1&amp;page=0&amp;Itemid=1" />
+
+    <largeproperty name="AdditionalNotes">
+      <value expand="true" xml="true" >
+        <h1>
+          CI Factory Release Notes
+        </h1>
+        <h2>
+          Beta ${CCNetLabel}
+        </h2>
+        <h3>New/Improvements</h3>
+        ${NewAndImprovedNotes}
+        <br/>
+        <h3>
+          Fixes
+        </h3>
+        ${FixedNotes}
+        <br/>
+      </value>
+    </largeproperty>
+
+    <xmlpoke pokemode="Replace"
+             file="${ReleaseNotesFilePath}"
+             value="${AdditionalNotes}"
+             xpath='/h:html/h:body/h:table/h:tr/h:td/h:h1'>
+      <namespaces>
+        <namespace prefix='h' uri='http://www.w3.org/1999/xhtml'/>
+      </namespaces>
+    </xmlpoke>
+  </target>
+  
 </project>
