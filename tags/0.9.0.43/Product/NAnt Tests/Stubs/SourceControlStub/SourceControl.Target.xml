@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceControl.Stub">
+
+  <target name="SourceControl.CheckOut">
+    <attrib readonly="false" file="${SourceControl.CheckOut.File}" />
+    <echo message="SourceControl.CheckOut -> ${SourceControl.CheckOut.File}"/>
+  </target>
+  
+  <target name="SourceControl.CheckIn">
+    <echo message="SourceControl.CheckIn -> ${SourceControl.CheckIn.File}"/>
+  </target>
+
+  <target name="SourceControl.SetUp">
+
+  </target>
+
+  <target name="SourceControl.TearDown">
+
+  </target>
+
+</project>
