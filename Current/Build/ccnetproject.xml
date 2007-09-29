@@ -11,14 +11,71 @@
   <!ENTITY labeller '<labeller type="defaultlabeller">
       <prefix>0.9.0.</prefix>
     </labeller>'>
+  <!ENTITY DevFailed '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="CI Factory Dev">
+            <exclusionFilters>
+              <conditions>
+                <condition>Failure</condition>
+              </conditions>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY DevBuilding '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="CI Factory Dev">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY ReleaseBuilding '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="CI Factory Release">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY ScriptsBuilding '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="CI Factory Build Scripts">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY HostForceFilter '<hostForceFilter>
+          <includedHosts>
+            <includedHost>Jay-PC</includedHost>
+            <includedHost>jflowers-lp</includedHost>
+          </includedHosts>
+        </hostForceFilter>'>
 ]>
 <cruisecontrol>
   <project name="CI Factory Build Scripts">
     <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
-      <intervalTrigger seconds="90" />
+      <projectTriggerFilter>
+        <trigger type="intervalTrigger" seconds="90" />
+        <projectFilters>
+          &DevBuilding;
+          &ReleaseBuilding;
+        </projectFilters>
+      </projectTriggerFilter>
     </triggers>
+    <forceFilters>
+      &HostForceFilter;
+      <projectForceFilter>
+        <projectFilters>
+          &DevBuilding;
+          &ReleaseBuilding;
+        </projectFilters>
+      </projectForceFilter>
+    </forceFilters>
     <integrationFilter>
       <triggeredIntegrationFilter>
         <allowed>
@@ -46,8 +103,23 @@
     <webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
     <state type="state" />
     <triggers>
-      <intervalTrigger seconds="90" />
+      <projectTriggerFilter>
+        <trigger type="intervalTrigger" seconds="90" />
+        <projectFilters>
+          &ScriptsBuilding;
+          &ReleaseBuilding;
+        </projectFilters>
+      </projectTriggerFilter>
     </triggers>
+    <forceFilters>
+      &HostForceFilter;
+      <projectForceFilter>
+        <projectFilters>
+          &ScriptsBuilding;
+          &ReleaseBuilding;
+        </projectFilters>
+      </projectForceFilter>
+    </forceFilters>
     <integrationFilter>
       <triggeredIntegrationFilter>
         <allowed>
@@ -145,8 +217,25 @@
 		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
 		<state type="state" />
 		<triggers>
-			<scheduleTrigger time="23:30" buildCondition="ForceBuild" />
-		</triggers>
+      <projectTriggerFilter>
+        <scheduleTrigger time="23:30" buildCondition="ForceBuild" />
+        <projectFilters>
+          &ScriptsBuilding;
+          &DevBuilding;
+          &DevFailed;
+        </projectFilters>
+      </projectTriggerFilter>
+    </triggers>
+    <forceFilters>
+      &HostForceFilter;
+      <projectForceFilter>
+        <projectFilters>
+          &ScriptsBuilding;
+          &DevBuilding;
+          &DevFailed;
+        </projectFilters>
+      </projectForceFilter>
+    </forceFilters>
 		<integrationFilter>
 			<triggeredIntegrationFilter>
 				<allowed>
