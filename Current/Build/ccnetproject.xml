@@ -218,7 +218,7 @@
 		<state type="state" />
 		<triggers>
       <projectTriggerFilter>
-        <scheduleTrigger time="23:30" buildCondition="ForceBuild" />
+        <trigger type="scheduleTrigger" time="23:30" buildCondition="ForceBuild" />
         <projectFilters>
           &ScriptsBuilding;
           &DevBuilding;
