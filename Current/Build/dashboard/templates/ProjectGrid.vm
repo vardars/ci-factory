@@ -169,6 +169,7 @@ function refresh()
       <input type="hidden" name="action" value=""/>
       <td align="Center">
             <font color="Black">
+              <input type="password" name="password" maxlength="6" size="10" />
               #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
               <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
               #else
