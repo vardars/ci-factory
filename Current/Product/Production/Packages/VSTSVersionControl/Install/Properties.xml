@@ -37,6 +37,17 @@
     </else>
   </ifthenelse>
 
+  <largeproperty name="SourceControl.MainBuildTrigger">
+    <value expand="true" xml="true" >
+      <vstsbychangesetTrigger
+          port="${TFS.Listener.Port}"
+          statefilepath="${BuildDirectory}\server\${ProjectName}.tfs.state.xml"
+          project="$/${ProjectName}/${ProjectCodeLineName}"
+          server="${TFS.ServerUrl}"
+          workspace="${TFS.WorkspaceNameBase}-{0}"
+          />
+    </value>
+  </largeproperty>
 
   <largeproperty name="SourceControl.MainBuildBlock">
     <value xml="false" expand="true">
@@ -87,6 +98,18 @@
       workingDirectory="${BuildDirectory}"
       workspace="${TFS.WorkspaceNameBase}-{0}"
       />]]></value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.BuildUpdateTrigger">
+    <value expand="true" xml="true" >
+      <vstsbychangesetTrigger
+          port="${TFS.BuildScripts.Listener.Port}"
+          statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.tfs.state.xml"
+          project="$/${ProjectName}/${ProjectCodeLineName}/Build"
+          server="${TFS.ServerUrl}"
+          workingDirectory="${BuildDirectory}"
+          />
+    </value>
   </largeproperty>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>

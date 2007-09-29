@@ -27,6 +27,16 @@
         <include name="*.*"/>
       </fileset>
     </zip>
+
+    <xmlpoke pokemode="Replace" 
+             file="${BuildDirectory}\ccnetproject.xml" 
+             xpath="/cruisecontrol/project[@name = '${ProjectName} Build Scripts']/triggers/intervalTrigger" 
+             value="${SourceControl.BuildUpdateTrigger}" />
+
+    <xmlpoke pokemode="Replace"
+             file="${BuildDirectory}\ccnetproject.xml"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}']/triggers/intervalTrigger"
+             value="${SourceControl.MainBuildTrigger}" />
   </target>
 
   <target name="VSTSVersionControl.SetAsCurrentPackage">
