@@ -1,0 +1,47 @@
+echo off
+set ProjectName=CI Factory
+set ProjectCodeLineName=Current
+set ProjectCodeLineDirectory=C:\Projects\%ProjectName%\%ProjectCodeLineName%
+set ProductDirectory=%ProjectCodeLineDirectory%\Product
+set SVN.URL=https://ci-factory.googlecode.com/svn/%ProjectCodeLineName%
+
+mkdir "%ProjectCodeLineDirectory%"
+
+SET /P Anonymous="Do you wish to do an anonymous checkout of the source? Yes for patch creators, No for submitters:(y,n)"
+
+IF %Anonymous%==y set SVN.URL=http://ci-factory.googlecode.com/svn/%ProjectCodeLineName%
+
+IF EXIST "%ProgramFiles%\TortoiseSVN\bin\TortoiseProc.exe" GOTO UseTortoise
+
+svn --version
+IF NOT %ERRORLEVEL%==0 (set PATH=%PATH%;%ProgramFiles%\Subversion\bin) ELSE GOTO UseSubversion
+
+svn --version
+IF NOT %ERRORLEVEL%==0 (set PATH=%PATH%;%ProgramFiles%\CollabNet Subversion Server\bin) ELSE GOTO UseSubversion
+
+svn --version
+IF %ERRORLEVEL%==0 (GOTO UseSubversion) ELSE GOTO NoSubversion
+
+:UseSubversion
+IF %Anonymous%==n SET /P SvnUserName="What is the user name you wish to use to checkout the source?"
+
+set Credentials=
+IF DEFINED SvnUserName set Credentials=--username "%SvnUserName%"
+
+svn checkout %Credentials% "%SVN.URL%" "%ProjectCodeLineDirectory%"
+
+IF %ERRORLEVEL%==0 (GOTO OpenFolder) ELSE GOTO END
+
+:NoSubversion
+echo I can't find where you have Subversion installed!
+GOTO END
+
+:UseTortoise
+"%ProgramFiles%\TortoiseSVN\bin\TortoiseProc.exe" /command:checkout /url:"%SVN.URL%" /path:"%ProjectCodeLineDirectory%"
+
+IF %ERRORLEVEL%==0 (GOTO OpenFolder) ELSE GOTO END
+
+:OpenFolder
+explorer "%ProductDirectory%"
+
+:END
