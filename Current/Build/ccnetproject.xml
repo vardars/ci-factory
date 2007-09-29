@@ -47,12 +47,6 @@
               </activities>
             </exclusionFilters>
           </projectFilter>'>
-  <!ENTITY HostForceFilter '<hostForceFilter>
-          <includedHosts>
-            <includedHost>Jay-PC</includedHost>
-            <includedHost>jflowers-lp</includedHost>
-          </includedHosts>
-        </hostForceFilter>'>
 ]>
 <cruisecontrol>
   <project name="CI Factory Build Scripts">
@@ -68,7 +62,6 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      &HostForceFilter;
       <projectForceFilter>
         <projectFilters>
           &DevBuilding;
@@ -112,7 +105,6 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      &HostForceFilter;
       <projectForceFilter>
         <projectFilters>
           &ScriptsBuilding;
@@ -227,7 +219,6 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      &HostForceFilter;
       <projectForceFilter>
         <projectFilters>
           &ScriptsBuilding;
