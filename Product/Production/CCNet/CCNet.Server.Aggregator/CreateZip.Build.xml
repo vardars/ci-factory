@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CCTray" default="CreateZip">
+
+  <property name="TargetDir" value="${string::replace(DirtyTargetDir, '\remove', '')}"/>
+  <property name="SolutionDir" value="${string::replace(DirtySolutionDir, '\remove', '')}"/>
+
+  <target name="CreateZip">
+    <!--Create a zip file in the dashboard Foundation-->
+    <echo message="TargetDir = ${TargetDir}"/>
+    <echo message="SolutionDir = ${SolutionDir}"/>
+    <property name="ZipDir" value="${SolutionDir}\Power Tools"/>
+    <mkdir dir="${ZipDir}" unless="${directory::exists(ZipDir)}"/>
+    <zip zipfile="${ZipDir}\CCNet.Server.Aggregator.zip">
+      <fileset basedir="${TargetDir}">
+        <include name="**\*"/>
+      </fileset>
+    </zip>
+  </target>
+</project>
