@@ -6,9 +6,9 @@
   <xsl:key name="changeset" match="/cruisecontrol/modifications/modification" use="changeNumber/text()"/>
 
   <xsl:template match="/">
-    <div class="container">
-      <span class="containerSubtitle">Source Control Revision History</span>
-      <div class="containerContents">
+    <div >
+      <span >Source Control Revision History</span>
+      <div >
         <xsl:if test="count($modification.list) &gt; 0">
           <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
             <xsl:sort select="changeNumber" order="descending" data-type="number"/>
@@ -22,14 +22,14 @@
 
   <!-- Changeset template -->
   <xsl:template name="changeset">
-    <div class="buildcontainer">
-      <span class="containerTitle">
+    <div >
+      <span >
         Changeset # <xsl:value-of select="changeNumber" />
       </span>
-      <div class="containerContents">
-        <table class="section" rules="groups" cellpadding="2" cellspacing="0" border="0">
+      <div >
+        <table rules="groups" cellpadding="2" cellspacing="0" border="0">
           <tbody>
-            <tr class="header2">
+            <tr >
               <th>
                 Author: <xsl:value-of select="user"/>
               </th>
@@ -44,7 +44,7 @@
                 </em>
               </td>
             </tr>
-            <tr class="header2">
+            <tr >
               <th colspan="2">Changes</th>
             </tr>
             <xsl:for-each select="key('changeset', changeNumber/text())">
