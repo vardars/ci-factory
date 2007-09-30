@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN">
+
+  <loadtasks assembly="${PackagesDirectory}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
+
+  <property name="SVN.Debug" value="false" overwrite="false" />
+
+  <include buildfile="SourceControl.Properties.xml" />
+
+  <property name="Private.SVN.ReportDirectory" value="${BuildDirectory}\SVN" overwrite="false"/>
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+	<property name="SVN.URI" value="" />
+	<property name="SVN.Username" value="" />
+	<property name="SVN.Password" value="" />
+	
+	-->
+
+  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+    <property name="SourceControl.CleanGetOf" value="${ThirdPartyDirectory}"/>
+    <call target="SourceControl.CleanGetOf"/>
+  </target>
+
+  <target name="SourceControl.CleanGetOfProductDirectory" >
+    <property name="SourceControl.CleanGetOf" value="${ProductDirectory}"/>
+    <call target="SourceControl.CleanGetOf"/>
+  </target>
+
+  <target name="SourceControl.GetOfThirdPartyDirectory" >
+    <property name="SourceControl.GetOf" value="${ThirdPartyDirectory}"/>
+    <call target="SourceControl.GetOf"/>
+  </target>
+
+  <target name="SourceControl.GetOfProductDirectory" >
+    <property name="SourceControl.GetOf" value="${ProductDirectory}"/>
+    <call target="SourceControl.GetOf"/>
+  </target>
+
+  <target name="SourceControl.GetOfBuildDirectory" >
+    <property name="SourceControl.GetOf" value="${BuildDirectory}"/>
+    <call target="SourceControl.GetOf"/>
+  </target>
+
+  <target name="SourceControl.CleanGetOf" >
+    <trycatch>
+      <try>
+        <exec program="svn" workingdir="${SourceControl.CleanGetOf}" verbose="true" failonerror="false">
+          <arg line="cleanup" />
+        </exec>
+        <exec program="svn" workingdir="${SourceControl.CleanGetOf}" verbose="true" failonerror="false">
+          <arg line="revert" />
+          <arg line="--recursive" />
+          <arg line="." />
+        </exec>
+        <svncleantree directory="${SourceControl.CleanGetOf}" recursive="true" if="${directory::exists(SourceControl.CleanGetOf)}" verbose="true"/>
+        <property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
+        <call target="SourceControl.GetOf"/>
+      </try>
+      <catch>
+        <property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.CleanGetOf}"/>
+        <call target="Private.SourceControl.DeleteLocal.Directory" />
+        <call target="SourceControl.GetOf"/>
+      </catch>
+    </trycatch>
+
+  </target>
+
+	<target name="SourceControl.GetOf" >
+		<mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
+		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+		<property name="SourceControl.GetOf.CleanUp" value="false"/>
+
+		<ifthenelse test="${SourceControl.Update.Interactive}">
+			<then>
+				<call target="Private.SourceControl.IteractiveGetOf"/>
+			</then>
+			<else>
+				<call target="Private.SourceControl.NonIteractiveGetOf"/>
+			</else>
+		</ifthenelse>
+	</target>
+
+	<target name="Private.SourceControl.IteractiveGetOf">
+		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
+		<property name="SourceControl.GetOf.CleanUp" value="false"/>
+
+		<trycatch>
+			<try>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+			</try>
+			<catch property="exception">
+				<echo message="${exception}" />
+				<property name="SourceControl.GetOf.CleanUp" value="true"/>
+			</catch>
+		</trycatch>
+
+		<trycatch if="${SourceControl.GetOf.CleanUp}">
+			<try>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:cleanup" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					<arg line="/command:update" />
+					<arg line='/path:"${SourceControl.GetOf}"' />
+					<arg line='/notempfile' />
+				</exec>
+			</try>
+			<catch property="exception">
+				<echo message="${exception}" />
+				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			</catch>
+		</trycatch>
+
+		<if test="${SourceControl.GetOf.NeedCheckout}">
+			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+			<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+				<arg line="/command:checkout" />
+				<arg line='/url:"${Uri}"' />
+				<arg line='/path:"${SourceControl.GetOf}"' />
+			</exec>
+		</if>
+	</target>
+
+	<target name="Private.SourceControl.NonIteractiveGetOf">
+		<trycatch>
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="update" />
+							<arg line="--non-interactive" />
+						</exec>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.CleanUp" value="true"/>
+			</catch>
+		</trycatch>
+
+		<trycatch if="${SourceControl.GetOf.CleanUp}">
+			<try>
+				<ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+					<then>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="cleanup" />
+						</exec>
+						<exec program="svn" workingdir="${SourceControl.GetOf}" verbose="true">
+							<arg line="update" />
+							<arg line="--non-interactive" />
+						</exec>
+					</then>
+					<else>
+						<echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+						<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+					</else>
+				</ifthenelse>
+			</try>
+			<catch>
+				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			</catch>
+		</trycatch>
+
+		<if test="${SourceControl.GetOf.NeedCheckout}">
+			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
+			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
+			<svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
+		</if>
+	</target>
+	
+	<target name="Private.SourceControl.DeleteLocal.Directory">
+    <if test="${directory::exists(Private.SourceControl.DeleteLocal.Directory)}" >
+      <attrib readonly="false">
+        <fileset>
+          <include name="${Private.SourceControl.DeleteLocal.Directory}\*" />
+        </fileset>
+      </attrib>
+
+      <trycatch>
+        <try>
+          <delete dir="${Private.SourceControl.DeleteLocal.Directory}"/>
+        </try>
+        <catch>
+          <exec program="cmd" commandline='/C "rmdir /S /Q "${Private.SourceControl.DeleteLocal.Directory}""' />
+        </catch>
+      </trycatch>
+    </if>
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckOut" >
+    <exec program="svn" workingdir="${path::get-directory-name(SourceControl.CheckOut.File)}" verbose="true">
+      <arg line="update" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='"${path::get-file-name(SourceControl.CheckOut.File)}"' />
+    </exec>
+  </target>
+
+  <!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+  <target name="SourceControl.CheckIn" >
+    <exec program="svn" workingdir="${path::get-directory-name(SourceControl.CheckIn.File)}" verbose="true">
+      <arg line="update" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='"${path::get-file-name(SourceControl.CheckIn.File)}"' />
+    </exec>
+    <exec program="svn" workingdir="${path::get-directory-name(SourceControl.CheckIn.File)}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Modified by build script in build ${CCNetLabel}"' />
+      <arg line='"${path::get-file-name(SourceControl.CheckIn.File)}"' />
+    </exec>
+  </target>
+
+  <target name="SourceControl.SetUp">
+    <mkdir if="${directory::exists(Private.SVN.ReportDirectory) == false}" dir="${Private.SVN.ReportDirectory}"/>
+    <delete>
+      <fileset>
+        <include name="${Private.SVN.ReportDirectory}\*.*"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="SourceControl.TearDown">
+
+  </target>
+
+  <target name="SourceControl.Repository.Create">
+    <mkdir if="${directory::exists(SVN.RootShare + '\' + ProjectName) == false}" dir="${SVN.RootShare}\${ProjectName}"/>
+    <unzip todir="${SVN.RootShare}" zipfile="${SVN.TemplateDB}"/>
+  </target>
+
+  <target name="SourceControl.Repository.Load">
+    <mkdir dir="${ProjectRootDirectory}\tags" unless="${directory::exists(ProjectsDirectory + '\tags')}"/>
+    <exec program="svn" workingdir="${ProjectsDirectory}" verbose="true" >
+      <arg line="import"/>
+      <arg line='-m "Initial Load by CI Factory Installer"'/>
+      <arg line="${ProjectName}"/>
+      <arg line="${SVN.URI.ProjectName}"/>
+      <arg line="--non-interactive" />
+      <arg line="--non-recursive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+    </exec>
+
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true" >
+      <arg line="add"/>
+      <arg line="* --force" />
+    </exec>
+
+    <if test="${SVN.Credentials.SafeStorage}">
+      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="true" >
+        <arg line="revert"/>
+        <arg line="SourceControl.Credentials.xml" />
+      </exec>
+
+      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="true" >
+        <arg line="propset"/>
+        <arg line="svn:ignore"/>
+        <arg line="SourceControl.Credentials.xml" />
+        <arg line="."/>
+      </exec>
+    </if>
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Initial Load by CI Factory Installer"'/>
+    </exec>
+
+	  <switch value="${environment::variable-exists('SVN_ASP_DOT_NET_HACK')}">
+		  <case value='True' break='true'>
+			  <property name='SvnDirName' value='_svn'/>
+		  </case>
+		  <case value='False' break='true'>
+			  <property name='SvnDirName' value='.svn'/>
+		  </case>
+	  </switch>
+		
+    <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
+    <delete dir='${ProjectRootDirectory}\tags' includeemptydirs='true' />
+  </target>
+
+  <target name="SourceControl.Bindings.Create">
+    <fail message="Not yet implemented!"/>
+  </target>
+</project>
