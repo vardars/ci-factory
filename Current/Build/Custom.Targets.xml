@@ -54,7 +54,7 @@
     <property name="ReleaseNotesFilePath" value="${ProductionDirectory}\CI Installer\CI Factory Release Notes.html"/>
     <property name="RevisionToLogFrom" value="868"/>
     
-    <echo message="svn log  --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; ${TempSvnLogFilePath}" file="${TempBatchFilePath}"/>
+    <echo message='svn log "${ProductDirectory}" --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; "${TempSvnLogFilePath}"' file="${TempBatchFilePath}"/>
     <exec program="${TempBatchFilePath}" workingdir="${ProductDirectory}" verbose="true" />
 
     <property name='NewAndImprovedNotes' value=''/>
