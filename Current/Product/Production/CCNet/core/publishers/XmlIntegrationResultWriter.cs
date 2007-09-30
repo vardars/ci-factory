@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Xml;
 using ThoughtWorks.CruiseControl.Core.Util;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Publishers
 {

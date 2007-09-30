@@ -1,5 +1,6 @@
 using System;
 using ThoughtWorks.CruiseControl.Core.Util;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 {
@@ -16,8 +17,10 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 		private readonly string forceBuildButtonName;
 		private readonly string url;
         private readonly string mostRecentBuildUrl;
+        private readonly Modification[] modifications;
+        private readonly string forcee;
 
-        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl)
+        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, Modification[] modifications, string forcee)
 		{
 			this.name = name;
 			this.serverName = serverName;
@@ -30,10 +33,27 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.forceBuildButtonName = forceBuildButtonName;
 			this.url = url;
             this.mostRecentBuildUrl = mostRecentBuildUrl;
+            this.modifications = modifications;
+            this.forcee = forcee;
 		}
 
-		public string Name
-		{
+        public string Forcee
+        {
+            get
+            {
+                return forcee;
+            }
+        }
+        public Modification[] Modifications
+        {
+            get
+            {
+                return modifications;
+            }
+        }
+
+        public string Name
+        {
 			get { return name; }
 		}
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {

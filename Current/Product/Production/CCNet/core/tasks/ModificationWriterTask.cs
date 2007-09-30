@@ -2,6 +2,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.tasks
 {

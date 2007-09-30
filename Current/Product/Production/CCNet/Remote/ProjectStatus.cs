@@ -22,10 +22,12 @@ namespace ThoughtWorks.CruiseControl.Remote
 		private string lastBuildLabel;
 		private string lastSuccessfulBuildLabel;
 		private readonly DateTime nextBuildTime;
+        private string _Forcee;
+        private Modification[] _Modifications;
 
 		public ProjectStatus() { }
 
-		public ProjectStatus(ProjectIntegratorState status, IntegrationStatus buildStatus, ProjectActivity activity, string name, string webURL, DateTime lastBuildDate, string lastBuildLabel, string lastSuccessfulBuildLabel, DateTime nextBuildTime) 
+		public ProjectStatus(ProjectIntegratorState status, IntegrationStatus buildStatus, ProjectActivity activity, string name, string webURL, DateTime lastBuildDate, string lastBuildLabel, string lastSuccessfulBuildLabel, DateTime nextBuildTime, string forcee, Modification[] modifications) 
 		{
 			this.status = status;
 			this.buildStatus = buildStatus;
@@ -36,7 +38,27 @@ namespace ThoughtWorks.CruiseControl.Remote
 			this.lastBuildLabel = lastBuildLabel;
 			this.lastSuccessfulBuildLabel = lastSuccessfulBuildLabel;
 			this.nextBuildTime = nextBuildTime;
+            this._Forcee = forcee;
+            this._Modifications = modifications;
 		}
+
+        public Modification[] Modifications
+        {
+            get { return _Modifications; }
+            set
+            {
+                _Modifications = value;
+            }
+        }
+        
+        public string Forcee
+        {
+            get { return _Forcee; }
+            set
+            {
+                _Forcee = value;
+            }
+        }
 
 		public ProjectIntegratorState Status 
 		{

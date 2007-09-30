@@ -56,7 +56,9 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                         status.Activity.ToString(),
                         urlBuilder.BuildFormName(forceBuildActionName),
                         projectLink,
-                        mostRecentBuildUrl
+                        mostRecentBuildUrl, 
+                        status.Modifications, 
+                        status.Forcee
                     ));
             }
 

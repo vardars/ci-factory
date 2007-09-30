@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {	

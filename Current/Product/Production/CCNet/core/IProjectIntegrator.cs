@@ -4,6 +4,8 @@ namespace ThoughtWorks.CruiseControl.Core
 {
 	public interface IProjectIntegrator
 	{
+        IIntegrationResult CurrentIntegrationResult { get; }
+
 		IProject Project { get; }
 
 		string Name { get; }

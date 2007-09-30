@@ -4,6 +4,7 @@ namespace ThoughtWorks.CruiseControl.Core.TestDoubles
     using System;
     using Doubler.Common;
     using System.ComponentModel;
+    using ThoughtWorks.CruiseControl.Remote;
     
     
     [DoubleAttribute()]

@@ -4,6 +4,7 @@ using System.Text;
 using System.Web;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 {

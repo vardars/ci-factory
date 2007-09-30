@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Collections;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 {

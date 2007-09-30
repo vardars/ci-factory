@@ -2,6 +2,7 @@ using System;
 using System.Xml;
 using System.IO;
 using Exortech.NetReflector;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 {

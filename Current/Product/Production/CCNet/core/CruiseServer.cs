@@ -186,6 +186,11 @@ namespace ThoughtWorks.CruiseControl.Core
             foreach (IProjectIntegrator integrator in projectIntegrators)
             {
                 Project project = (Project)integrator.Project;
+
+                string forcee = string.Empty;
+                if (integrator.CurrentIntegrationResult.IntegrationProperties.Contains("CCNetForcedBy"))
+                    forcee = (string) integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
+
                 projectStatusList.Add(new ProjectStatus(integrator.State,
                                                         project.LatestBuildStatus,
                                                         project.CurrentActivity,
@@ -194,7 +199,9 @@ namespace ThoughtWorks.CruiseControl.Core
                                                         project.LastIntegrationResult.StartTime,
                                                         project.LastIntegrationResult.Label,
                                                         project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
-                                                        integrator.Trigger.NextBuild));
+                                                        integrator.Trigger.NextBuild, 
+                                                        forcee, 
+                                                        integrator.CurrentIntegrationResult.Modifications));
             }
 
             return (ProjectStatus[])projectStatusList.ToArray(typeof(ProjectStatus));
@@ -206,6 +213,11 @@ namespace ThoughtWorks.CruiseControl.Core
             if (integrator == null)
                 throw new InvalidOperationException(string.Format("Unable to find an integrator for project name: '{0}'.", projectName));
             Project project = (Project)integrator.Project;
+
+            string forcee = string.Empty;
+            if (integrator.CurrentIntegrationResult.IntegrationProperties.Contains("CCNetForcedBy"))
+                forcee = (string)integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
+
             return new ProjectStatus(integrator.State,
                 project.LatestBuildStatus,
                 project.CurrentActivity,
@@ -214,7 +226,9 @@ namespace ThoughtWorks.CruiseControl.Core
                 project.LastIntegrationResult.StartTime,
                 project.LastIntegrationResult.Label,
                 project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
-                integrator.Trigger.NextBuild);
+                integrator.Trigger.NextBuild,
+                forcee, 
+                integrator.CurrentIntegrationResult.Modifications);
         }
 
         // ToDo - test

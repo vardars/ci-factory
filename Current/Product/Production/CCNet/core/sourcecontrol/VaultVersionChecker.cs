@@ -2,6 +2,7 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
 using System.Reflection;
 using System.Diagnostics;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol {
 

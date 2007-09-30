@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 {

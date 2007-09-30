@@ -296,5 +296,14 @@ namespace ThoughtWorks.CruiseControl.Core
 		}
 	
 		#endregion
-	}
+
+        #region IProjectIntegrator Members
+
+        public IIntegrationResult CurrentIntegrationResult
+        {
+            get { return this._IntegrationResult; }
+        }
+
+        #endregion
+    }
 }

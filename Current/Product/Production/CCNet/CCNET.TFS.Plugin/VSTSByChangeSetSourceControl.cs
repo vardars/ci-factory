@@ -9,6 +9,7 @@ using ThoughtWorks.CruiseControl.Core;
 
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.Client;
+using ThoughtWorks.CruiseControl.Remote;
 
 namespace CCNET.TFS.Plugin
 {

@@ -179,7 +179,60 @@ function refresh()
           </td>
     </form>
 	</tr>
-	#end
+
+  #if ($projectGridRow.Activity == "Building")
+    <tr>
+      <td colspan="6">
+        <table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
+          #foreach ($modification in $projectGrid.Modifications)
+          <span>
+            Changeset # $modification.ChangeNumber
+          </span>
+          <div>
+            <table border="0" cellpadding="2" cellspacing="0" rules="groups">
+              <tbody>
+                <tr>
+                  <th>
+                    Author: $modification.UserName
+                  </th>
+                  <th>
+                    Date: $modification.ModifiedTime
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <em>$modification.Comment</em>
+                  </td>
+                </tr>
+                <tr>
+                  <th colspan="2">Changes</th>
+                </tr>
+                <tr>
+                  <td>
+                    #if ($modification.Type == "Modified")
+                      <img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$modification.Type
+                    #elseif ($modification.Type == "Added")
+                      <img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$modification.Type
+                    #elseif ($modification.Type == "Deleted")
+                      <img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$modification.Type
+                    #else
+                      <img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$modification.Type
+                    #end
+                  </td>
+                  <td>
+                    $modification.FolderName/$modification.FileName
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          #end
+        </table>
+      </td>
+    </tr>
+  #end
+
+  #end
 </table>
 #end
 
