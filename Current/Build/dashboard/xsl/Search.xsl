@@ -3,7 +3,7 @@
   <xsl:output method="html"/>
 
   <xsl:template match="/">
-    <div style="min-height: 24px; position:relative; top: 30%; left 25%;">
+    <div style="overflow: auto; position:absolute; left: 600px; top: 425px;">
       <!-- Google CSE Search Box Begins  -->
       <form action="http://www.google.com/cse" id="searchbox_000613400651952722275:nwkbfvcczwm">
         <input type="hidden" name="cx" value="000613400651952722275:nwkbfvcczwm" />
