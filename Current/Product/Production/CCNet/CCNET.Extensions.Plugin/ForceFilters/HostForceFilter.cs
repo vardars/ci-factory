@@ -6,30 +6,28 @@ using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
 using CCNET.Extensions.ForceFilters.UserFilter;
+using System.Web;
+using CCNET.Extensions.Plugin.ForceFilters.PasswordFilter;
+using System.Windows.Forms;
 
 namespace CCNET.Extensions.Plugin.ForceFilters
 {
     [ReflectorType("hostForceFilter")]
     public class HostForceFilter : IForceFilter
     {
-        private string[] _Hosts = new string[0];
-        private ILogHelper _Logger;
-        private IHostNameHelper _NewHostNameHelper;
+        #region Fields
+
         private StringCollection _HostList;
 
-        public ILogHelper Logger
-        {
-            get
-            {
-                if (_Logger == null)
-                    _Logger = new LogHelper();
-                return _Logger;
-            }
-            set
-            {
-                _Logger = value;
-            }
-        }
+        private string[] _Hosts = new string[0];
+
+        private ILogHelper _Logger;
+
+        private IHostNameHelper _NewHostNameHelper;
+
+        #endregion
+
+        #region Properties
 
         public IHostNameHelper HostHelper
         {
@@ -41,20 +39,7 @@ namespace CCNET.Extensions.Plugin.ForceFilters
             }
             set
             {
-            	this._NewHostNameHelper = value;
-            }
-        }
-
-        [ReflectorArray("includedHosts", Required = false)]
-        public string[] Hosts
-        {
-            get
-            {
-                return _Hosts;
-            }
-            set
-            {
-                _Hosts = value;
+                this._NewHostNameHelper = value;
             }
         }
 
@@ -75,7 +60,48 @@ namespace CCNET.Extensions.Plugin.ForceFilters
             }
         }
 
-        #region IForceFilter Members
+        [ReflectorArray("includedHosts", Required = false)]
+        public string[] Hosts
+        {
+            get
+            {
+                return _Hosts;
+            }
+            set
+            {
+                _Hosts = value;
+            }
+        }
+
+        public ILogHelper Logger
+        {
+            get
+            {
+                if (_Logger == null)
+                    _Logger = new LogHelper();
+                return _Logger;
+            }
+            set
+            {
+                _Logger = value;
+            }
+        }
+
+        public bool RequiresClientInformation
+        {
+            get { return true; }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public ForceFilterClientInfo GetClientInfo()
+        {
+            HostInformation Host = new HostInformation();
+            Host.Name = this.HostHelper.GetHostName();
+            return Host;
+        }
 
         public bool ShouldRunIntegration(ForceFilterClientInfo[] clientInfo, IIntegrationResult result)
         {
@@ -91,7 +117,6 @@ namespace CCNET.Extensions.Plugin.ForceFilters
 
             if (HostInfo == null)
                 throw new InvalidOperationException("No host information was found.");
-            
 
             if (this.HostList.Contains(HostInfo.Name))
             {
@@ -102,58 +127,7 @@ namespace CCNET.Extensions.Plugin.ForceFilters
             return false;
         }
 
-        public ForceFilterClientInfo GetClientInfo()
-        {
-            HostInformation Host = new HostInformation();
-            Host.Name = this.HostHelper.GetHostName();
-            return Host;
-        }
-
-        public bool RequiresClientInformation
-        {
-            get { return true; }
-        }
-
         #endregion
-    }
 
-    public interface ILogHelper
-    {
-        void LogInfo(string message);
-    }
-    public class LogHelper : ILogHelper
-    {
-
-        public void LogInfo(string message)
-        {
-            Log.Info(message);
-        }
-    }
-
-    public interface IHostNameHelper
-    {
-        string GetHostName();
-    }
-    public class HostNameHelper : IHostNameHelper
-    {
-        public string GetHostName()
-        {
-            return Environment.MachineName;
-        }
-    }
-
-    [Serializable]
-    public class HostInformation : ForceFilterClientInfo
-    {
-
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                _Name = value;
-            }
-        }
     }
 }

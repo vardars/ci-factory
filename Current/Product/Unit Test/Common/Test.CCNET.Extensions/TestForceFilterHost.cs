@@ -9,6 +9,49 @@ using ThoughtWorks.CruiseControl.Core.TestDoubles;
 namespace CCNET.Extensions.Test
 {
     [TestFixture]
+    public class TestsPasswordForceFilter
+    {
+        [Row("frog", "frog", true)]
+        [Row("frog", "toad", false)]
+        [RowTest]
+        public void ShouldRunIntegration(string stubPassword, string password, bool expected)
+        {
+            PasswordForceFilter TestSubject = new PasswordForceFilter();
+            TestSubject.Password = password;
+            TestSubject.PasswordHelper = new PasswordHelperStub(stubPassword);
+            TestSubject.Logger = new LogHelperFake();
+
+            RecorderIIntegrationResult IntegrationResult = new RecorderIIntegrationResult();
+            IntegrationResult.SetProjectName = "bogas";
+
+            ForceFilterClientInfo ClientInfo = TestSubject.GetClientInfo();
+
+            bool Actual = TestSubject.ShouldRunIntegration(new ForceFilterClientInfo[] { ClientInfo }, IntegrationResult);
+
+            Assert.AreEqual(expected, Actual, "Got the opposite result as expected from ShouldRunIntegration.");
+        }
+    }
+
+    public class PasswordHelperStub : IPasswordHelper
+    {
+        private string _Password;
+
+        public PasswordHelperStub(string password)
+        {
+            _Password = password;
+        }
+
+        #region IPasswordHelper Members
+
+        public string GetPassword()
+        {
+            return _Password;
+        }
+
+        #endregion
+    }
+
+    [TestFixture]
     public class TestHostForceFilter
     {
         [Row("frog", "frog", true)]

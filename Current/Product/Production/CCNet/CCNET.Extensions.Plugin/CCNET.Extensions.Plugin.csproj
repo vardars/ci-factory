@@ -37,6 +37,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +46,21 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="ForceFilters\HostForceFilter.cs" />
+    <Compile Include="ForceFilters\HostInformation.cs" />
+    <Compile Include="ForceFilters\HostNameHelper.cs" />
+    <Compile Include="ForceFilters\IHostNameHelper.cs" />
+    <Compile Include="ForceFilters\ILogHelper.cs" />
+    <Compile Include="ForceFilters\IPasswordHelper.cs" />
+    <Compile Include="ForceFilters\LogHelper.cs" />
+    <Compile Include="ForceFilters\PasswordFilter\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ForceFilters\PasswordFilter\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ForceFilters\PasswordForceFilter.cs" />
+    <Compile Include="ForceFilters\PasswordGetter.cs" />
+    <Compile Include="ForceFilters\PasswordInformation.cs" />
     <Compile Include="ForceFilters\ProjectForceFilter.cs" />
     <Compile Include="ExclusionFilters.cs" />
     <Compile Include="ForceFilters\UserForceFilter.cs" />
@@ -71,6 +88,12 @@
       <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
       <Name>Remote</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ForceFilters\PasswordFilter\PasswordForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
