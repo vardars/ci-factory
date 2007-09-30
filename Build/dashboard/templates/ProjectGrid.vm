@@ -1,0 +1,257 @@
+<script language="JavaScript">
+  <!--
+function confirmPrompt(form, projectName)
+{
+   var msg = "";
+
+   if (form.action.value == 'Force')
+   {
+      msg = "You are about to force a build for " + projectName + ". Are you sure?";
+   }
+   else
+   {
+      msg = "You are about to " + form.action.value.toLowerCase() + " the " + projectName + " project. Are you sure?";
+   }
+   return msg;
+}
+
+function getExpirationDate(duration)
+{
+   var UTCstring;
+   Today = new Date();
+   milliseconds = Date.parse(Today);
+   Today.setTime(milliseconds + duration * 24 * 60 * 60 * 1000);
+   UTCstring = Today.toUTCString();
+   return UTCstring;
+}
+
+function getCookie(cookiename)
+{
+   var cookiestring = "" + document.cookie;
+
+   var index1 = cookiestring.indexOf(cookiename);
+   if (index1 == -1 || cookiename == "")
+   {
+      return "";
+   }
+
+   var index2 = cookiestring.indexOf(';',index1);
+   if (index2 == -1)
+   {
+      index2 = cookiestring.length;
+   }
+
+   return unescape(cookiestring.substring(index1 + cookiename.length + 1, index2));
+}
+
+function setCookie(name, value, duration)
+{
+   cookiestring = name + "=" + escape(value) + ";EXPIRES=" + getExpirationDate(duration);
+   document.cookie = cookiestring;
+   if (!getCookie(name))
+   {
+      return false;
+   }
+   else
+   {
+      return true;
+   }
+}
+
+function refresh()
+{
+   window.location = window.location;
+}
+//-->
+</script>
+
+    <form ID="RefreshForm" method="post" style="padding:0px 0px 6px 0px;margin:0px;">
+      <table width="100%" style="padding:0px;margin:0px;" border="0">
+        <tr>
+          <td>
+            #if ($forceBuildMessage.Length > 0)
+            <span id="StatusLabel">$forceBuildMessage</span>
+            #else
+            &nbsp;
+            #end
+          </td>
+          <td width="175" align="right">
+            Refresh every <input type="text" id="refreshInterval" align="right" name="refreshInterval" value="30" size="1" maxlength="10" onblur="setRefreshInterval(this.value)"/> seconds
+          </td>
+          <td align="right" width="140">
+            <input type="submit" align="right" name="$refreshButtonName" value="Refresh status" />
+          </td>
+          <tr>
+          
+      </table>
+    </form>
+
+#if ($forceBuildMessage.Length > 0)
+<P><span id="StatusLabel"><b><font color="#4A3C8C">$forceBuildMessage</font></b></span></P>
+#end
+
+#if ($projectGrid.Length > 0)
+<table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
+	<tr border="0">
+		<td>
+			<a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Project Name</b></a>
+		</td>
+		<td align="Center">
+			<a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Status</b></a>
+		</td>
+		<td align="Center">
+			<a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Time</b></a>
+		</td>
+		<td align="Center">
+      <span STYLE="color: 403F8D; font-size: 12px;" >
+        <b>Last Build Label</b>
+      </span>
+		</td>
+		<td align="Center">
+      <span STYLE="color: 403F8D; font-size: 12px;" >
+        <b>Build Availability</b>
+      </span>
+		
+    </td>
+		<td align="Center">
+      <span STYLE="color: 403F8D; font-size: 12px;" >
+			  <b>Force Build</b>
+      </span>
+		
+    </td>
+	</tr>
+	
+	#foreach ($projectGridRow in $projectGrid)
+	<tr bordercolor="#333399" >
+		<td align="Left">
+			<font color="Black">
+				<a href="$projectGridRow.Url">$projectGridRow.Name</a>
+			</font>
+		</td>
+		<td align="Center">
+      #if ($projectGridRow.BuildStatus == "Failure")
+        <img src="Images/Failure.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
+      #elseif ($projectGridRow.BuildStatus == "Success")
+        <img src="Images/Success.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
+      #elseif ($projectGridRow.BuildStatus == "Exception")
+        <img src="Images/Exception.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
+      #else
+        <img src="Images/Unknown.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
+      #end
+		</td>
+		<td align="Center">
+			<font color="Black">
+        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildDate</a>
+      </font>
+		</td>
+		<td align="Center">
+			<font color="Black">
+        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildLabel</a>
+      </font>
+		</td>
+		<td align="Center">
+      #if ($projectGridRow.Status == "Stopped")
+        <font color="Black">Off Line</font>
+      #elseif ($projectGridRow.Activity == "Building")
+        <font color="Black">Building</font>
+      #elseif ($projectGridRow.Activity == "CheckingModifications")
+        <font color="Black">Polling for Work</font>
+      #elseif ($projectGridRow.Status == "Stopping")
+        <font color="Black">Going Off Line</font>
+      #else
+        <font color="Black">Available</font>
+      #end
+		</td>
+    <form method="post" onsubmit="return confirm(confirmPrompt(this, '$projectGridRow.Name'))">
+      <input type="hidden" name="forcebuild" value="true" />
+      <input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
+      <input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
+      <input type="hidden" name="action" value=""/>
+      <td align="Center">
+            <font color="Black">
+              <input type="password" name="password" maxlength="6" size="10" />
+              #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
+              <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
+              #else
+              <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.action.value = this.value;"/>
+              #end
+            </font>
+          </td>
+    </form>
+	</tr>
+	#end
+</table>
+#end
+
+#if ($exceptions.Length > 0)
+<P>
+<span id="ExceptionTitleLabel">There were exceptions connecting to the following servers:</span>
+</P>
+<table cellspacing="0" cellpadding="4" rules="all" bordercolor="#CC9966" border="1" id="ExceptionGrid" bgcolor="White" width="100%">
+	<tr bgcolor="#990000">
+		<th><font color="#FFFFCC"><b>Server Name</b></font></th>
+		<th><font color="#FFFFCC"><b>Url</b></font></th>
+		<th><font color="#FFFFCC"><b>Message</b></font></th>
+	</tr>
+	#foreach ($exception in $exceptions)
+	<tr bgcolor="White">
+		<td><font color="#330099">$exception.ServerName</font></td>
+		<td><font color="#330099">$exception.Url</font></td>
+		<td><font color="#330099">$exception.Message</font></td>
+	</tr>
+	#end
+</table>
+    #end
+
+
+<script language="JavaScript" >
+  <!--
+function setRefreshInterval(interval)
+{
+   if (isNaN(interval))
+   {
+      interval = 0;
+   }
+
+   if (interval == 0)
+   {
+      if (!confirm("Setting the refresh interval to 0 will disable automatic refreshing. Are you sure?"))
+      {
+         document.getElementById('refreshInterval').value = intervalSeconds;
+         return false;
+      }
+   }
+
+   document.getElementById('refreshInterval').value = interval;
+   setCookie('refreshInterval', interval, 365);
+   if (interval > 0)
+   {
+      timer = setTimeout('refresh()', interval * 1000);
+   }
+   else
+   {
+      clearTimeout(timer);
+   }
+}
+
+var intervalSeconds = parseInt(getCookie('refreshInterval'));
+var timer;
+
+if (isNaN(intervalSeconds))
+{
+   intervalSeconds = 0;
+}
+
+
+document.getElementById('refreshInterval').value = intervalSeconds;
+if (intervalSeconds > 0)
+{
+   timer = setTimeout('refresh()', intervalSeconds * 1000);
+}
+else
+{
+   clearTimeout(timer)
+}
+
+//-->
+</script>
