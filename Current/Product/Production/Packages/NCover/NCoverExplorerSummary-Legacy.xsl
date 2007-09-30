@@ -1,26 +1,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/TR/xhtml1/strict">
 <xsl:output method="html"/>
-	<xsl:include href="NCoverExplorerSummary-Legacy.xsl"/>
 	
-	<xsl:template match="/">
-		<xsl:choose>
-			<!-- Apply the NCoverExplorer template if it exists in the input data -->
-			<xsl:when test="//coverageReport2">
-				<xsl:apply-templates select="//coverageReport2" />					
-			</xsl:when>
-			<!-- Apply the legacy (prior to 2.0) NCoverExplorer template if it exists in the input data -->
-			<xsl:when test="//coverageReport">
-				<xsl:apply-templates select="//coverageReport" />					
-			</xsl:when>
-			<!-- Otherwise apply the legacy NCover template if it exists in the input data -->
-			<xsl:when test="//coverage">
-				<xsl:apply-templates select="//coverage[count(module) != 0]" />					
-			</xsl:when>
-		</xsl:choose>
-	</xsl:template>
-
 	<!-- NCoverExplorer summary -->
-	<xsl:template match="coverageReport2">
+	<xsl:template match="coverageReport">
         <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
             <tr>
                 <td class="sectionheader" colspan="4">
@@ -45,7 +27,7 @@
 				</td>
 			</tr>
 			<xsl:for-each select="./modules/module">
-				<xsl:call-template name="ModuleSummary2" />
+				<xsl:call-template name="ModuleSummary" />
 			</xsl:for-each>
             <tr>
 				<td class="header-label">
@@ -115,7 +97,7 @@
 	</xsl:template>
 	
 	<!-- Display a summary of each module and whether it passed -->
-	<xsl:template name="ModuleSummary2">
+	<xsl:template name="ModuleSummary">
             <tr>
             <xsl:if test="position() mod 2 = 1">
                 <xsl:attribute name="class">section-oddrow</xsl:attribute>
@@ -138,5 +120,30 @@
                    </xsl:if>
                 </td>
             </tr>
+	</xsl:template>
+	
+	<!-- Legacy NCover summary -->
+	<xsl:template match="coverage">
+		<xsl:variable name="covered.lines" select="count(//coverage/module/method/seqpnt[@visitcount > 0])" />
+		<xsl:variable name="uncovered.lines" select="count(//coverage/module/method/seqpnt[@visitcount = 0])" />
+	
+        <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+            <tr>
+                <td class="sectionheader" colspan="3">
+                   NCover results:
+                </td>
+            </tr>
+            <tr>
+				<td>
+					Covered lines: <xsl:value-of select="$covered.lines"/>
+				</td>
+				<td>
+					Uncovered lines: <xsl:value-of select="$uncovered.lines"/>
+				</td>
+				<td>
+					Total coverage: <xsl:value-of select="round($covered.lines div ($uncovered.lines + $covered.lines) * 100)"/>%
+				</td>
+            </tr>
+		</table>
 	</xsl:template>
 </xsl:stylesheet>

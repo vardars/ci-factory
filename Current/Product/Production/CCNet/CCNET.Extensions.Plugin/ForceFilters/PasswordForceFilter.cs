@@ -88,7 +88,7 @@ namespace CCNET.Extensions.Plugin.ForceFilters
                 return true;
             }
 
-            Logger.LogInfo(string.Format("The password is not correct and the build will not be forced for project {0}.", result.ProjectName));
+            Logger.LogInfo(string.Format("The password '{0}' is not correct and the build will not be forced for project {1}.", PasswordInfo.Password, result.ProjectName));
             return false;
         }
 
