@@ -121,19 +121,19 @@
                 <xsl:attribute name="class">section-oddrow</xsl:attribute>
             </xsl:if>
 				<td>
-					<xsl:value-of select="@name"/>
+					<xsl:value-of select="@n"/>
 				</td>
  				<td>
-					<xsl:value-of select="format-number(@coverage, '0.0')"/>%
+					<xsl:value-of select="format-number(@c, '0.0')"/>%
 				</td>
 				<td>
-					<xsl:value-of select="@acceptable"/>%
+					<xsl:value-of select="@a"/>%
 				</td>
                 <td>
-                   <xsl:if test="@coverage &lt; @acceptable">
+                   <xsl:if test="@c &lt; @a">
 					  <span style="color:red">FAIL</span>
                    </xsl:if>
-                   <xsl:if test="@coverage &gt;= @acceptable">
+                   <xsl:if test="@c &gt;= @a">
 					  <span style="color:green">PASS</span>
                    </xsl:if>
                 </td>
