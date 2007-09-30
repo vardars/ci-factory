@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace CCNET.Extensions.Plugin.ForceFilters
 {
+    [Serializable]
     public class PasswordGetter : IPasswordHelper
     {
 
