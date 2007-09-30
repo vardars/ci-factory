@@ -19,6 +19,8 @@ a:hover { color:#FC0; }
 .header-data { color:#000; }
 .header-data-error { font-family:courier, monospaced; color:#000; white-space:pre; }
 
+.NewSectionHeader {color: #403F8D; font-size: 14px; font-weight: bold }
+
 .section-table { margin-top:10px; }
 .sectionheader { background-color:#006; color:#FFF; }
 .section-data { font-size:9px; color:#000; }
@@ -104,3 +106,5 @@ a:hover { color:#FC0; }
         background-color: #333399;
         color: ivory;
 }
+
+.statusimage { vertical-align: middle; }

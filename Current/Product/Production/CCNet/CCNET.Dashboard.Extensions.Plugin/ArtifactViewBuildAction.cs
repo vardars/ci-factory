@@ -42,7 +42,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
         {
             string ArctifactDirectoryName = cruiseRequest.BuildName.Substring("log".Length, "yyyyMMddHHmmss".Length);
             Uri url = new Uri(string.Format(@"http://{0}/{1}/{2}/",
-                System.Web.HttpContext.Current.Server.MachineName,
+                System.Web.HttpContext.Current.Request.Headers["Host"],
                 this.ArtifactRootUrl,
                 ArctifactDirectoryName));
 
