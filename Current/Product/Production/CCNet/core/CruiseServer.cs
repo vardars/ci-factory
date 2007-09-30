@@ -203,6 +203,8 @@ namespace ThoughtWorks.CruiseControl.Core
         public ProjectStatus GetProjectStatus(string projectName)
         {
             IProjectIntegrator integrator = projectIntegrators[projectName];
+            if (integrator == null)
+                throw new InvalidOperationException(string.Format("Unable to find an integrator for project name: '{0}'.", projectName));
             Project project = (Project)integrator.Project;
             return new ProjectStatus(integrator.State,
                 project.LatestBuildStatus,
@@ -398,6 +400,8 @@ namespace ThoughtWorks.CruiseControl.Core
         public string GetBuildLogDirectory(string projectName)
         {
             IProjectIntegrator integrator = projectIntegrators[projectName];
+            if (integrator == null)
+                throw new InvalidOperationException(string.Format("Unable to find an integrator for project name: '{0}'.", projectName));
             Project project = (Project)integrator.Project;
 
             XmlLogPublisher XmlPublisher = null;
