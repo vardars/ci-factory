@@ -7,7 +7,7 @@
 
   <xsl:template match="/">
     <div >
-      <span >Source Control Revision History</span>
+      <span class="sectionheader" >Source Control Revision History</span>
       <div >
         <xsl:if test="count($modification.list) &gt; 0">
           <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
@@ -22,7 +22,7 @@
 
   <!-- Changeset template -->
   <xsl:template name="changeset">
-    <div >
+    <div style="BORDER-TOP: #403F8D 1px dotted;" >
       <span >
         Changeset # <xsl:value-of select="changeNumber" />
       </span>
