@@ -7,9 +7,9 @@
 
   <xsl:template match="/">
     <div >
-      <div sytle="color: 403F8D; font-size: 12px;" >
-        <strong>Source Control Revision History</strong>
-      </div>
+      <span class="NewSectionHeader"  >
+        Source Control Revision History
+      </span>
       <div >
         <xsl:if test="count($modification.list) &gt; 0">
           <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
