@@ -62,7 +62,7 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      <passwordForceFilter password="automatic" />
+      <passwordForceFilter password="automa" />
       <projectForceFilter>
         <projectFilters>
           &DevBuilding;
@@ -106,7 +106,7 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      <passwordForceFilter password="automatic" />
+      <passwordForceFilter password="automa" />
       <projectForceFilter>
         <projectFilters>
           &ScriptsBuilding;
@@ -221,7 +221,7 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      <passwordForceFilter password="automatic" />
+      <passwordForceFilter password="automa" />
       <projectForceFilter>
         <projectFilters>
           &ScriptsBuilding;
