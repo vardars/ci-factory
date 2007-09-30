@@ -92,38 +92,47 @@ function refresh()
 
 #if ($projectGrid.Length > 0)
 <table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
-	<tr border="0">
-		<td>
-			<a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Project Name</b></a>
-		</td>
-		<td align="Center">
-			<a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Status</b></a>
-		</td>
-		<td align="Center">
-			<a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Time</b></a>
-		</td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>Last Build Label</b>
-      </span>
-		</td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>Build Availability</b>
-      </span>
-		
-    </td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-			  <b>Force Build</b>
-      </span>
-		
-    </td>
-	</tr>
-	
-	#foreach ($projectGridRow in $projectGrid)
-	<tr bordercolor="#333399" >
-		<td align="Left">
+  <thead>
+    <tr border="0">
+      <td>
+        <a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Project Name</b>
+        </a>
+      </td>
+      <td align="Center">
+        <a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Last Build Status</b>
+        </a>
+      </td>
+      <td align="Center">
+        <a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Last Build Time</b>
+        </a>
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Last Build Label</b>
+        </span>
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Build Availability</b>
+        </span>
+
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Force Build</b>
+        </span>
+
+      </td>
+    </tr>
+  </thead>
+
+  #foreach ($projectGridRow in $projectGrid)
+  <tbody bordercolor="#333399">
+	<tr>
+		<td align="Left" colspan="0">
 			<font color="Black">
 				<a href="$projectGridRow.Url">$projectGridRow.Name</a>
 			</font>
@@ -181,10 +190,18 @@ function refresh()
 	</tr>
 
   #if ($projectGridRow.Activity == "Building")
-    <tr>
+  #if ($projectGridRow.forcee.Length > 0)
+  <tr>
+    <td colspan="6">
+      Forced by: $projectGridRow.forcee
+    </td>
+  </tr>
+  #end
+  #if ($projectGridRow.Modifications.Length > 0)
+  <tr>
       <td colspan="6">
-        <table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
-          #foreach ($modification in $projectGrid.Modifications)
+        
+          #foreach ($modification in $projectGridRow.Modifications)
           <span>
             Changeset # $modification.ChangeNumber
           </span>
@@ -227,11 +244,11 @@ function refresh()
             </table>
           </div>
           #end
-        </table>
       </td>
     </tr>
   #end
-
+  #end
+</tbody>
   #end
 </table>
 #end
