@@ -153,3 +153,48 @@ a:hover { color:#FC0; }
    text-align: left;
    padding: 10px 0px 0 0px;
 }
+
+/* --- { build report } -------------------- */
+
+#content div.buildcontainer
+{
+   margin: 0 4px 10px 0px;
+   border: 1px solid #5C5D5F;
+}
+
+#content div.buildcontainer span.containerTitle
+{
+   padding: 4px 0 0 4px;
+   text-decoration: none;
+   margin: 0;
+   font-size: 125%;
+   font-weight: bold;
+   display: block;
+   background: #A1A3A5;
+   color: #0F3EAD;
+   height: 25px;
+   vertical-align: bottom;
+}
+
+#content div.buildcontainer span.containerSubtitle
+{
+   padding: 6px 0 2px 4px;
+   color: #999B9D;
+   text-decoration: none;
+   margin: 0;
+   font-size: 125%;
+   font-weight: bold;
+   display: block;
+}
+
+#content div.buildcontainer div.containerContents
+{
+   text-align: left;
+   padding: 10px 3px 0 0px;
+}
+
+table.section
+{
+   width: 98%;
+   margin: 0 0 0 4px;
+}
