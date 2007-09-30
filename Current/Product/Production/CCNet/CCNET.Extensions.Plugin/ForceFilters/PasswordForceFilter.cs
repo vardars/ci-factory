@@ -36,7 +36,12 @@ namespace CCNET.Extensions.Plugin.ForceFilters
 
         public IPasswordHelper PasswordHelper
         {
-            get { return _PasswordHelper; }
+            get 
+            {
+                if (_PasswordHelper == null)
+                    _PasswordHelper = new PasswordGetter();
+                return _PasswordHelper; 
+            }
             set
             {
                 _PasswordHelper = value;
