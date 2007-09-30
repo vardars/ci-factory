@@ -1,0 +1,13 @@
+<table width="100%">
+	#foreach ($link in $links)
+	<tr><td><a href="$link.Url" class="$link.LinkClass">$link.Text</a></td></tr>
+  #end
+  <tr>
+    <td>
+      <a href="WorkspaceSetup/CreateWorkspace.bat.txt" >
+        Workspace Setup Script
+        <br/>Save As .bat
+      </a>
+    </td>
+  </tr>
+</table>
