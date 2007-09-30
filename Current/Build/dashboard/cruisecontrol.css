@@ -104,3 +104,52 @@ a:hover { color:#FC0; }
         background-color: #333399;
         color: ivory;
 }
+
+/* --- [content] --------------------------- */
+#mainContent
+{
+   clear: both;
+   padding-top: 15px;
+}
+
+#content
+{
+   float: left;
+   width: 630px;
+   margin: 0 20px 0 3px;
+   line-height: 1.6em;
+   min-height: 500px;
+}
+
+#content div.container
+{
+   margin-bottom: 14px;
+}
+
+#content span.containerTitle
+{
+   padding: 4px 0 4px 0;
+   color: #999B9D;
+   text-decoration: none;
+   margin: 0;
+   font-size: 225%;
+   font-weight: bold;
+   display: block;
+}
+
+#content span.containerSubtitle
+{
+   padding: 6px 0 2px 0px;
+   color: #999B9D;
+   text-decoration: none;
+   margin: 0;
+   font-size: 125%;
+   font-weight: bold;
+   display: block;
+}
+
+#content div.containerContents
+{
+   text-align: left;
+   padding: 10px 0px 0 0px;
+}

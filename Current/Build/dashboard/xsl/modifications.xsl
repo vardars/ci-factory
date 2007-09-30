@@ -75,7 +75,7 @@
               <xsl:when test="@type = 'Modified'">
                 <xsl:value-of select="'images/edit.png'"/>
               </xsl:when>
-              <xsl:when test="@type = 'Removed'">images/delete.png</xsl:when>
+              <xsl:when test="@type = 'Deleted'">images/delete.png</xsl:when>
               <xsl:otherwise>images/document_text.png</xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
@@ -89,14 +89,15 @@
                 <xsl:value-of select="url" />
               </xsl:attribute>
               <xsl:if test="project != ''">
-                <xsl:value-of select="project"/>/
+                <xsl:value-of select="project"/><xsl:value-of select="'/'"/>
               </xsl:if>
               <xsl:value-of select="filename"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
               <xsl:if test="project != ''">
-                <xsl:value-of select="project"/>/
+                <xsl:value-of select="project"/>
+                <xsl:value-of select="'/'"/>
               </xsl:if>
               <xsl:value-of select="filename"/>
           </xsl:otherwise>
