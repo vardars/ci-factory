@@ -12,6 +12,9 @@
     <None Include="dashboard\Web.config" />
     <None Include="dashboard\WorkspaceSetup\**\*" Exclude="**\.svn\**\*" />
     <None Include="dashboard\xsl\**\*" Exclude="**\.svn\**\*" />
-		<None Include="dashboard\cruisecontrol.css" />
+    <None Include="dashboard\cruisecontrol.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dashboard\xsl\Search.xsl" />
   </ItemGroup>
 </Project>
