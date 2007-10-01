@@ -5,6 +5,7 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Core.Tasks;
+using System.Collections.Generic;
 
 namespace CCNET.Extensions.XslFileMerge
 {
@@ -63,7 +64,7 @@ namespace CCNET.Extensions.XslFileMerge
                             Contents = Reader.ReadToEnd();
                         }
                         XslTransformer Transformer = new XslTransformer();
-                        Data = Transformer.Transform(Contents, XslFilePath);
+                        Data = Transformer.Transform(Contents, XslFilePath, new Dictionary<string, string>());
                         result.AddTaskResult((new XslMergerTaskResult(Data)));
                     }
                     else

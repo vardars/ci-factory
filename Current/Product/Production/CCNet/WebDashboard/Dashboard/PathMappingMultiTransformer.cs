@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using ThoughtWorks.CruiseControl.Core.Reporting.Dashboard.Navigation;
 using ThoughtWorks.CruiseControl.Core.Util;
 
@@ -15,14 +16,14 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.transformer = transformer;
 		}
 
-		public string Transform(string input, string[] transformerFileNames)
+        public string Transform(string input, string[] transformerFileNames, Dictionary<string, string> xslParams)
 		{
 			ArrayList mappedFiles = new ArrayList();
 			foreach (string transformerFileName in transformerFileNames)
 			{
 				mappedFiles.Add(pathMapper.GetLocalPathFromURLPath(transformerFileName));
 			}
-			return transformer.Transform(input, (string[]) mappedFiles.ToArray(typeof (string)));
+            return transformer.Transform(input, (string[])mappedFiles.ToArray(typeof(string)), xslParams);
 		}
 	}
 }

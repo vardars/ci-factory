@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Specialized;
+using System.Web;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.MVC
 {
@@ -70,5 +71,10 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.MVC
 		{
 			get { return map; }
 		}
+
+        public string ApplicationPath
+        {
+            get { return HttpContext.Current.Request.ApplicationPath; }
+        }
 	}
 }

@@ -50,10 +50,6 @@ namespace ThoughtWorks.CruiseControl.Core.Config
 			{
 				throw new ConfigurationException("The configuration file contains invalid xml: " + configFile.FullName, ex);
 			}
-			finally
-			{
-				loader.Dispose();
-			}
 		}
 
 		private XmlValidatingLoader CreateXmlValidatingLoader(FileInfo configFile)

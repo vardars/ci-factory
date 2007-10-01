@@ -23,7 +23,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 			{
 				return this.projectSerializer.Deserialize(serializedProject);
 			}
-			catch (Exception ex)
+			catch
 			{
 				foreach (string filePath in Directory.GetFiles(Path.Combine(System.Web.HttpContext.Current.Request.PhysicalApplicationPath, "bin"), "*plugin*.dll"))
 				{

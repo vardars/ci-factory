@@ -6,7 +6,6 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
 using System.ComponentModel;
-using Exortech.NetReflector;
 
 namespace CCNET.Extensions
 {

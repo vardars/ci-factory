@@ -1,3 +1,5 @@
+
+using System.Collections.Generic;
 using ThoughtWorks.CruiseControl.Core.Reporting.Dashboard.Navigation;
 using ThoughtWorks.CruiseControl.Core.Util;
 
@@ -14,9 +16,9 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.transformer = transformer;
 		}
 
-		public string Transform(IBuildSpecifier buildSpecifier, params string[] transformerFileNames)
+        public string Transform(IBuildSpecifier buildSpecifier, Dictionary<string, string> xslParams, params string[] transformerFileNames)
 		{
-			return transformer.Transform(buildRetriever.GetBuild(buildSpecifier).Log, transformerFileNames);
+			return transformer.Transform(buildRetriever.GetBuild(buildSpecifier).Log, transformerFileNames, xslParams);
 		}
 	}
 }

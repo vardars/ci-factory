@@ -15,14 +15,12 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
     [ReflectorType("artifactXslReportBuildAction")]
 	public class ArtifactXslReportBuildAction : ICruiseAction
 	{
-		private readonly IBuildLogTransformer buildLogTransformer;
         private string xslFileName;
         private string _XmlFileName;
         private string _ArtifactRootUrl;
 
-        public ArtifactXslReportBuildAction(IBuildLogTransformer buildLogTransformer)
+        public ArtifactXslReportBuildAction()
 		{
-			this.buildLogTransformer = buildLogTransformer;
 		}
 
 		public IResponse Execute(ICruiseRequest cruiseRequest)

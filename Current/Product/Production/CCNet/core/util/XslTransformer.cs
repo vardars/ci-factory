@@ -2,52 +2,67 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core.Util
 {
 	public class XslTransformer : ITransformer
 	{
-		public string Transform(string input, string transformerFileName)
+        public string Transform(string input, string xslFilename, Dictionary<string, string> xslParams)
 		{
-			using (StringReader inputReader = new StringReader(input))
-			{
-				try
-				{
-					XslTransform transform = new XslTransform();
-					LoadStylesheet(transform, transformerFileName);
-					StringWriter output = new StringWriter();
-					transform.Transform(new XPathDocument(inputReader), null, output);
-					return output.ToString();
-				}
-				catch (XmlException ex)
-				{
-					throw new CruiseControlException("Unable to execute transform: " + transformerFileName, ex);
-				}
-			}
-		}
+            XslCompiledTransform transform = NewXslTransform(xslFilename);
 
-		private void LoadStylesheet(XslTransform transform, string xslFileName)
-		{
-			try
-			{
-				transform.Load(xslFileName);
-			}
-			catch (FileNotFoundException)
-			{
-				throw new CruiseControlException(string.Format("XSL stylesheet file not found: {0}", xslFileName));
-			}
-			catch (XmlException ex)
-			{
-				throw new CruiseControlException("Unable to load transform: " + xslFileName, ex);
-			}
-		}
+            using (StringReader inputReader = new StringReader(input))
+            {
+                try
+                {
+                    StringWriter output = new StringWriter();
+                    transform.Transform(new XPathDocument(inputReader), CreateXsltArgs(xslParams), output);
+                    return output.ToString();
+                }
+                catch (XmlException ex)
+                {
+                    throw new CruiseControlException("Unable to execute transform: " + xslFilename, ex);
+                }
+            }
+        }
 
-		public void Test()
-		{
-			string input = File.OpenText(@"C:\Projects\dod.ahlta\Current\Build\server\dod.ahlta team1\Artifacts\buildlogs\log20061103143625Lbuild.Team1-1.0.0.647.xml").ReadToEnd();
-			string output = this.Transform(input, @"C:\Temp\StatisticsPublisher.xsl");
-			System.Diagnostics.Debug.WriteLine(output);
-			
-		}
-	}
+        private static XslCompiledTransform NewXslTransform(string transformerFileName)
+        {
+            XslCompiledTransform transform = new XslCompiledTransform();
+            LoadStylesheet(transform, transformerFileName);
+            return transform;
+        }
+
+        private static XsltArgumentList CreateXsltArgs(Dictionary<string, string> xsltArgs)
+        {
+            XsltArgumentList args = new XsltArgumentList();
+            if (xsltArgs != null)
+            {
+                foreach (string key in xsltArgs.Keys)
+                {
+                    args.AddParam(key.ToString(), "", xsltArgs[key]);
+                }
+            }
+            return args;
+        }
+
+        private static void LoadStylesheet(XslCompiledTransform transform, string xslFileName)
+        {
+            XsltSettings settings = new XsltSettings(false, true);
+
+            try
+            {
+                transform.Load(xslFileName, settings, new XmlUrlResolver());
+            }
+            catch (FileNotFoundException)
+            {
+                throw new CruiseControlException(string.Format("XSL stylesheet file not found: {0}", xslFileName));
+            }
+            catch (XsltException ex)
+            {
+                throw new CruiseControlException("Unable to load transform: " + xslFileName, ex);
+            }
+        }
+    }
 }

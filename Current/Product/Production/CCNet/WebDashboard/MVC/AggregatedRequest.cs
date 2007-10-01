@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using System.Web;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.MVC
 {
@@ -69,5 +70,15 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.MVC
 				return combinedParams;
 			}
 		}
-	}
+
+        #region IRequest Members
+
+
+        public string ApplicationPath
+        {
+            get { return HttpContext.Current.Request.ApplicationPath; }
+        }
+
+        #endregion
+    }
 }

@@ -60,19 +60,19 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Configuration
 			return NetReflector.Read(node, typeTable);
 		}
 
-		private string CalculateDashboardConfigPath()
-		{
-			string path = ConfigurationSettings.AppSettings[DashboardConfigAppSettingKey];
-			if (path == null || path == string.Empty)
-			{
-				path = DefaultDashboardConfigLocation;
-			}
-			if (! Path.IsPathRooted(path))
-			{
-				path = Path.Combine(pathMapper.PhysicalApplicationPath, path);
-			}
-			return path;
-		}
+        private string CalculateDashboardConfigPath()
+        {
+            string path = ConfigurationManager.AppSettings[DashboardConfigAppSettingKey];
+            if (path == null || path == string.Empty)
+            {
+                path = DefaultDashboardConfigLocation;
+            }
+            if (!Path.IsPathRooted(path))
+            {
+                path = Path.Combine(pathMapper.PhysicalApplicationPath, path);
+            }
+            return path;
+        }
 
 			public IRemoteServicesConfiguration RemoteServices
 			{
