@@ -92,38 +92,47 @@ function refresh()
 
 #if ($projectGrid.Length > 0)
 <table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
-	<tr border="0">
-		<td>
-			<a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Project Name</b></a>
-		</td>
-		<td align="Center">
-			<a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Status</b></a>
-		</td>
-		<td align="Center">
-			<a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'"><b>Last Build Time</b></a>
-		</td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>Last Build Label</b>
-      </span>
-		</td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-        <b>Build Availability</b>
-      </span>
-		
-    </td>
-		<td align="Center">
-      <span STYLE="color: 403F8D; font-size: 12px;" >
-			  <b>Force Build</b>
-      </span>
-		
-    </td>
-	</tr>
-	
-	#foreach ($projectGridRow in $projectGrid)
-	<tr bordercolor="#333399" >
-		<td align="Left">
+  <thead>
+    <tr border="0">
+      <td>
+        <a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Project Name</b>
+        </a>
+      </td>
+      <td align="Center">
+        <a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Last Build Status</b>
+        </a>
+      </td>
+      <td align="Center">
+        <a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+          <b>Last Build Time</b>
+        </a>
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Last Build Label</b>
+        </span>
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Build Availability</b>
+        </span>
+
+      </td>
+      <td align="Center">
+        <span STYLE="color: 403F8D; font-size: 12px;" >
+          <b>Force Build</b>
+        </span>
+
+      </td>
+    </tr>
+  </thead>
+
+  #foreach ($projectGridRow in $projectGrid)
+  <tbody bordercolor="#333399">
+	<tr>
+		<td align="Left" colspan="0">
 			<font color="Black">
 				<a href="$projectGridRow.Url">$projectGridRow.Name</a>
 			</font>
@@ -169,7 +178,7 @@ function refresh()
       <input type="hidden" name="action" value=""/>
       <td align="Center">
             <font color="Black">
-              <input type="password" name="password" maxlength="6" size="10" />
+              <!--<input type="password" name="password" maxlength="6" size="10" />-->
               #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
               <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
               #else
@@ -179,7 +188,68 @@ function refresh()
           </td>
     </form>
 	</tr>
-	#end
+
+  #if ($projectGridRow.Activity == "Building")
+  #if ($projectGridRow.forcee.Length > 0)
+  <tr>
+    <td colspan="6">
+      Forced by: $projectGridRow.forcee
+    </td>
+  </tr>
+  #end
+  #if ($projectGridRow.Modifications.Length > 0)
+  <tr>
+      <td colspan="6">
+        
+          #foreach ($modification in $projectGridRow.Modifications)
+          <span>
+            Changeset # $modification.ChangeNumber
+          </span>
+          <div>
+            <table border="0" cellpadding="2" cellspacing="0" rules="groups">
+              <tbody>
+                <tr>
+                  <th>
+                    Author: $modification.UserName
+                  </th>
+                  <th>
+                    Date: $modification.ModifiedTime
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <em>$modification.Comment</em>
+                  </td>
+                </tr>
+                <tr>
+                  <th colspan="2">Changes</th>
+                </tr>
+                <tr>
+                  <td>
+                    #if ($modification.Type == "Modified")
+                      <img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$modification.Type
+                    #elseif ($modification.Type == "Added")
+                      <img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$modification.Type
+                    #elseif ($modification.Type == "Deleted")
+                      <img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$modification.Type
+                    #else
+                      <img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$modification.Type
+                    #end
+                  </td>
+                  <td>
+                    $modification.FolderName/$modification.FileName
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          #end
+      </td>
+    </tr>
+  #end
+  #end
+</tbody>
+  #end
 </table>
 #end
 
