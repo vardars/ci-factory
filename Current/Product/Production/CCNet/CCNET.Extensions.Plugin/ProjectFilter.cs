@@ -103,7 +103,16 @@ namespace CCNET.Extensions
 
         public Boolean IsAllowed()
         {
-            ProjectStatus CurrentStatus = this.GetCurrentProjectStatus();
+            ProjectStatus CurrentStatus;
+            try
+            {
+                CurrentStatus = this.GetCurrentProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return true;
+            }
 
             if (!this.InclusionFilters.IsAllowed(CurrentStatus))
                 return false;
