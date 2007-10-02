@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\Build" >
+
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2005-01-01"/>
+  <property name="CCNetBuildTime" value="00:00:01"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+  <property name="CCNetLabel" value="Personal.1"/>
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+      ]]>
+    </code>
+  </script>
+  <property name="CCNetProject" value="${directory::name('..\..\')}"/>
+  <property name="CCNetLogFilePath" value=""/>
+
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
+	<include buildfile="Custom.Targets.xml" />
+  <include buildfile="DevEnv.Targets.xml" />
+
+  <property name="Compile.ConfigName" value="Debug"/>
+
+  <description>Begin Package Includes</description>
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
+  
+  <fileset id="PacakgeFinder" />
+  <loopthrough property="PackageType">
+    <items>
+      <strings>
+        <string value="SourceControl" />
+        <string value="Compile" />
+        <string value="UnitTest" />
+      </strings>
+    </items>
+    <do>
+      <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
+      <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+      <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
+      <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+      <include buildfile="${PackagePath}"/>
+      <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
+    </do>
+  </loopthrough>
+
+  <property name="Ant.Included" value="false"/>
+  <if test="${file::exists(PackagesDirectory + '\Ant\Ant.Target.xml')}" >
+    <include buildfile="${PackagesDirectory}\Ant\Ant.Target.xml" />
+    <property name="Ant.Included" value="true"/>
+  </if>
+  <description>End Package Includes</description>
+
+  <target name="CreateCommandPrompt">
+    <if test="${Ant.Included}">
+      <setenv>
+        <environment refid="${Ant.Environment.RefId}" />
+      </setenv>
+    </if>
+    <setenv>
+      <environment refid="${Compile.Environment.RefId}" />
+    </setenv>
+
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${ProductDirectory}" />
+  </target>
+  
+  <target name="Build">
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
+    <call target="Compile"/>
+    <call target="Test"/>
+  </target>
+
+  <target name="Rebuild">
+    <call target="DevEnv.CheckForRequieredSoftware"/>
+    <call target="DevEnv.ConfigureEnvironment"/>
+    <call target="Recompile"/>
+    <call target="Test"/>
+  </target>
+
+  <target name="UpdateSource">
+    <property name="SourceControl.Update.FileTimeStamp" value="Current"/>
+    <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+    <property name="SourceControl.Update.MakeWritable" value="False"/>
+		<property name="SourceControl.Update.Interactive" value="True"/>
+    <call target="SourceControl.GetOfBuildDirectory"/>
+    <call target="SourceControl.GetOfThirdPartyDirectory" />
+    <call target="SourceControl.GetOfProductDirectory" />
+  </target>
+
+  <target name="Compile">
+    <if test="${Ant.Included}">
+      <call target="Ant.Build"/>
+    </if>
+    <fileset id="InfoFiles">
+      <include name="${ProductDirectory}\ProjectInfo.*"/>
+      <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
+    </fileset>
+    <trycatch>
+      <try>
+        <call target="Compile.SetUp"/>
+
+        <attrib readonly="false">
+          <fileset refid="InfoFiles" />
+        </attrib>
+        <touch millis="1">
+          <fileset refid="InfoFiles" />
+        </touch>
+        <attrib readonly="true">
+          <fileset refid="InfoFiles" />
+        </attrib>
+
+        <property name="Compile.ToCopyToBin" value="false"  />
+        <property name="Compile.ToDeployZip" value="false"  />
+        <property name="Compile.PublishLogFile" value="false" />
+        <call target="Compile.CompileSource" />
+      </try>
+      <catch property="ExceptionMessage">
+        <call target="Compile.ShowReport"/>
+        
+        <fail message="${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="Compile.TearDown"/>
+      </finally>
+    </trycatch>
+    
+    <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+  </target>
+
+  <target name="Recompile">
+    <fileset id="ProjectFiles">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="ProjectFiles" />
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Cleaning ${ProjectFile.Path}"/>
+
+        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj"/>
+        <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
+
+        <trycatch>
+          <try>
+            <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
+            <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
+              <fileset basedir="${Output.Path}">
+                <include name="**\*"/>
+                <exclude name="**\*.vshost.exe"/>
+              </fileset>
+            </delete>
+          </try>
+          <catch/>
+        </trycatch>
+        
+      </do>
+    </foreach>
+    <delete>
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\dashboard">
+        <include name="**\*"/>
+        <exclude name="xsl\**\*"/>
+      </fileset>
+    </delete>
+    <delete>
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\server">
+        <include name="**\*"/>
+        <exclude name="xsl\**\*"/>
+      </fileset>
+    </delete>
+    <call target="Compile"/>
+  </target>
+
+  <target name="Test" >
+		<call target="UnitTest"/>
+		<call target="IntegrationTest"/>
+	</target>
+
+	<target name="UnitTest" >
+		<trycatch>
+			<try>
+				<call target="UnitTest.SetUp"/>
+
+				<call target="UnitTest.RunTests"/>
+			</try>
+			<catch property="ExceptionMessage">
+				<call target="UnitTest.ShowReport"/>
+
+				<fail message="${ExceptionMessage}"/>
+			</catch>
+			<finally>
+				<call target="UnitTest.TearDown"/>
+			</finally>
+		</trycatch>
+	</target>
+
+	<target name="IntegrationTest" depends="Common.SetUp">
+		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+			<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
+		</exec>
+	</target>
+
+	<target name="Ant.Build">
+		<trycatch>
+			<try>
+				<call target="Ant.SetUp"/>
+				<call target="Ant.CompileSource" />
+			</try>
+			<catch property="ExceptionMessage">
+				<property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
+				<property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
+				<property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
+				<call target="Common.ShowReport"/>
+
+				<fail message="${ExceptionMessage}"/>
+			</catch>
+			<finally>
+				<call target="Ant.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+</project>
