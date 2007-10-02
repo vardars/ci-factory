@@ -11,16 +11,16 @@
 	
     <xsl:template match="/">
 			<p>
-				CCNetServer&nbsp;=&nbsp;<xsl:value-of select="$CCNetServer"/>
+				CCNetServer = <xsl:value-of select="$CCNetServer"/>
 		</p>
 		<p>
-			CCNetProject&nbsp;=&nbsp;<xsl:value-of select="$CCNetProject"/>
+			CCNetProject = <xsl:value-of select="$CCNetProject"/>
 		</p>
 		<p>
-			CCNetBuild&nbsp;=&nbsp;<xsl:value-of select="$CCNetBuild"/>
+			CCNetBuild = <xsl:value-of select="$CCNetBuild"/>
 		</p>
 		<p>
-			applicationPath&nbsp;=&nbsp;<xsl:value-of select="$applicationPath"/>
+			applicationPath = <xsl:value-of select="$applicationPath"/>
 			</p>
 			
         <xsl:variable name="modification.list" select="/cruisecontrol/modifications/modification"/>
