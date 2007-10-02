@@ -6,6 +6,9 @@ using ThoughtWorks.CruiseControl.WebDashboard.Plugins.ProjectReport;
 using ThoughtWorks.CruiseControl.WebDashboard.ServerConnection;
 using ThoughtWorks.CruiseControl.WebDashboard.Plugins.BuildReport;
 using System.Text.RegularExpressions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 {
@@ -57,7 +60,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                         urlBuilder.BuildFormName(forceBuildActionName),
                         projectLink,
                         mostRecentBuildUrl, 
-                        status.Modifications, 
+                        ChangeSet.Convert(status.Modifications), 
                         status.Forcee
                     ));
             }

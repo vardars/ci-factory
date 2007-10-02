@@ -129,6 +129,9 @@
     <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Dashboard\Change.cs" />
+    <Compile Include="Dashboard\ChangeSet.cs" />
+    <Compile Include="Dashboard\ChangeSetList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

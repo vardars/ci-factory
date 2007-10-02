@@ -196,50 +196,52 @@ function refresh()
       Forced by: $projectGridRow.forcee
     </td>
   </tr>
-  #end
-  #if ($projectGridRow.Modifications.Length > 0)
-  <tr>
+		#end
+		#if ($projectGridRow.Changes.Length > 0)
+		<tr>
       <td colspan="6">
-        
-          #foreach ($modification in $projectGridRow.Modifications)
-          <span>
-            Changeset # $modification.ChangeNumber
-          </span>
+
+				#foreach ($changeset in $projectGridRow.Changes)
+				<span>
+					Changeset # $changeset.Version
+				</span>
           <div>
             <table border="0" cellpadding="2" cellspacing="0" rules="groups">
               <tbody>
                 <tr>
                   <th>
-                    Author: $modification.UserName
-                  </th>
-                  <th>
-                    Date: $modification.ModifiedTime
-                  </th>
+										Author: $changeset.Author
+									</th>
+									<th>
+										Date: $changeset.ModifiedTime
+									</th>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <em>$modification.Comment</em>
+                    <em>$changeset.Comment</em>
                   </td>
                 </tr>
                 <tr>
                   <th colspan="2">Changes</th>
                 </tr>
-                <tr>
+								#foreach ($change in $changeset.Changes)
+								<tr>
                   <td>
-                    #if ($modification.Type == "Modified")
-                      <img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$modification.Type
-                    #elseif ($modification.Type == "Added")
-                      <img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$modification.Type
-                    #elseif ($modification.Type == "Deleted")
-                      <img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$modification.Type
-                    #else
-                      <img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$modification.Type
-                    #end
-                  </td>
+										#if ($change.Type == "Modified")
+										<img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$change.Type
+										#elseif ($change.Type == "Added")
+										<img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$change.Type
+										#elseif ($change.Type == "Deleted")
+										<img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$change.Type
+										#else
+										<img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$change.Type
+										#end
+									</td>
                   <td>
-                    $modification.FolderName/$modification.FileName
-                  </td>
+										$change.Path/$change.File
+									</td>
                 </tr>
+								#end
               </tbody>
             </table>
           </div>

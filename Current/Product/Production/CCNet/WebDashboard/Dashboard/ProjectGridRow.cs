@@ -17,10 +17,10 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 		private readonly string forceBuildButtonName;
 		private readonly string url;
         private readonly string mostRecentBuildUrl;
-        private readonly Modification[] modifications;
+        private readonly ChangeSet[] changes;
         private readonly string forcee;
 
-        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, Modification[] modifications, string forcee)
+        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, ChangeSet[] changes, string forcee)
 		{
 			this.name = name;
 			this.serverName = serverName;
@@ -33,7 +33,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			this.forceBuildButtonName = forceBuildButtonName;
 			this.url = url;
             this.mostRecentBuildUrl = mostRecentBuildUrl;
-            this.modifications = modifications;
+            this.changes = changes;
             this.forcee = forcee;
 		}
 
@@ -44,11 +44,11 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                 return forcee;
             }
         }
-        public Modification[] Modifications
+        public ChangeSet[] Changes
         {
             get
             {
-                return modifications;
+                return changes;
             }
         }
 
