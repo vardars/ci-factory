@@ -4,25 +4,7 @@
 
     <xsl:output method="html"/>
 
-	<xsl:param name="CCNetServer"/>
-	<xsl:param name="CCNetProject"/>
-	<xsl:param name="CCNetBuild"/>
-	<xsl:param name="applicationPath"/>
-	
     <xsl:template match="/">
-			<p>
-				CCNetServer = <xsl:value-of select="$CCNetServer"/>
-		</p>
-		<p>
-			CCNetProject = <xsl:value-of select="$CCNetProject"/>
-		</p>
-		<p>
-			CCNetBuild = <xsl:value-of select="$CCNetBuild"/>
-		</p>
-		<p>
-			applicationPath = <xsl:value-of select="$applicationPath"/>
-			</p>
-			
         <xsl:variable name="modification.list" select="/cruisecontrol/modifications/modification"/>
 
         <table class="section-table" cellpadding="2" cellspacing="0" border="0">
