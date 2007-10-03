@@ -9,12 +9,12 @@ a:hover { color:#FC0; }
 .main-panel { color:#FC0; }
 
 .link { color:#00F;  }
-.buildresults-header { color: #000; font-weight: bold; }
+.buildresults-header { color: #000; font-weight: bolder; }
 .buildresults-data { color: #000; }
 .buildresults-data-failed { color: #F30; }
 
 .stylesection { margin-left: 4px; }
-.header-title { font-size:16px; color:#64BC53; font-weight:bold; padding-bottom:10pt; }
+.header-title { font-size:18px; color:#64BC53; font-weight:bold; padding-bottom:10pt; }
 .header-title-error { font-size:16px; color:#D13535; font-weight:bold; padding-bottom:10pt; }
 .header-label { font-weight:bold; }
 .header-data { color:#000000; }
@@ -23,14 +23,14 @@ a:hover { color:#FC0; }
 .NewSectionHeader {color: #403F8D; font-size: 14px; font-weight: bold }
 
 .section-table { margin-top:10px; }
-.sectionheader { background-color:#006; color:#FFF; }
+.sectionheader { BORDER-TOP: #403F8D 1px dotted; color: #403F8D; font-size: 14px; font-weight: bold }
 .section-data { font-size:9px; color:#000; }
 .section-oddrow { background-color:#F0F7FF; }
 .section-evenrow { background-color:#FFF; }
 .section-error { font-size:9px; color:#F30; white-space:pre; }
 
 .warning { color:orange }
-.error { color:red }
+.error { color:#D13535 }
 
 .RecentBuildsPanel {
 	border-style: solid;
