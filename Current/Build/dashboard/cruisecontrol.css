@@ -23,7 +23,7 @@ a:hover { color:#FC0; }
 .NewSectionHeader {color: #403F8D; font-size: 14px; font-weight: bold }
 
 .section-table { margin-top:10px; }
-.sectionheader { BORDER-TOP: #403F8D 1px dotted; color: #403F8D; font-size: 14px; font-weight: bold }
+.sectionheader { border-bottom: #403F8D 1px dotted; color: #403F8D; font-size: 14px; font-weight: bold }
 .section-data { font-size:9px; color:#000; }
 .section-oddrow { background-color:#F0F7FF; }
 .section-evenrow { background-color:#FFF; }
