@@ -7,6 +7,7 @@
 
   <xsl:template match="/">
     <div >
+      <img src="images/SourceControl.gif" />
       <span class="NewSectionHeader"  >
         Source Control Revision History
       </span>
@@ -25,7 +26,6 @@
   <!-- Changeset template -->
   <xsl:template name="changeset">
     <div style="BORDER-TOP: #403F8D 1px dotted;" >
-      <img src="images/SourceControl.gif" />
       <span >
         Changeset # <xsl:value-of select="changeNumber" />
       </span>
