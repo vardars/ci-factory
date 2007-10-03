@@ -10,9 +10,15 @@
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
 
+  <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
+  <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\NUnit\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\NUnit\UnitTest.Properties.xml" />
 
   <strings id="Packages.InstallList">
 		<string value="MSBuild" />
+    <string value="NCover" />
     <string value="NUnit" />
     <string value="SourceControlStub"/>
     <string value="Deployment"/>

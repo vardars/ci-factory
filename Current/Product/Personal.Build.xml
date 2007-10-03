@@ -137,7 +137,11 @@
         <call target="Compile.TearDown"/>
       </finally>
     </trycatch>
-    
+
+    <call target="Packager.Create"/>
+  </target>
+
+  <target name="Packager.Create">
     <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
   </target>
 

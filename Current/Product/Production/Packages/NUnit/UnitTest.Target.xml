@@ -2,13 +2,10 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
 
   <fileset id="UnitTest.TestAssemblies" />
-  
+
   <include buildfile="UnitTest.Properties.xml" />
 
-	<target name="UnitTest.RunTests">
-
-		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
-		
+  <target name="Private.UnitTest.FindTestAssemblies">
     <foreach item="File" property="UnitTest.ProjectFile.Path">
       <in>
         <items refid="UnitTest.ProjectFiles" />
@@ -16,53 +13,76 @@
       <do>
         <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
         <property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
-        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
-				<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.exe"/>
-				<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" />>
       </do>
     </foreach>
 
     <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
       <call target="UnitTest.FindTestAssebmlies"/>
     </if>
+  </target>
 
-		<trycatch>
-			<try>
-				<property name="Count" value="0"/>
-				<property name='NUnit.Fail' value='false'/>
-				
-				<foreach item="File" property="UnitTest.TestAssembly">
-					<in>
-						<items refid="UnitTest.TestAssemblies"/>
-					</in>
-					<do>
-						<property name="Count" value="${int::parse(Count) + 1}"/>
-						<property name="UnitTest.ReportFilePath" value="${UnitTest.ReportFolder}\${Count}${UnitTest.BaseReportFileName}"/>
-						<property name="UnitTest.BinDirectory" value="${path::get-directory-name(UnitTest.TestAssembly)}" />
-						
-						<exec program="${NUnit.ConsolePath}" 
-									resultproperty="NUnit.ExitErrorLevel" 
-									failonerror="false"
-									verbose="true"
-									workingdir="${UnitTest.BinDirectory}">
-							<arg line='/xml:"${UnitTest.ReportFilePath}"' />
-							<arg line='"${UnitTest.TestAssembly}"' />
-							<arg line='/noshadow' />
-						</exec>
-						<if test='${int::parse(NUnit.ExitErrorLevel) != 0}'>
-							<property name='NUnit.Fail' value='true'/>
-						</if>
-					</do>
-				</foreach>
+  <target name="Private.UnitTest.WriteConfigFile">
+    <write append="false" file="${NUnit.ProjectFilePath}">
+      <text expand="true" xml="false">
+        <![CDATA[<NUnitProject>
+          <Settings activeconfig="Debug" />
+          <Config name="Debug" configfile="${ProjectName}UnitTest.config" binpathtype="Auto">
+]]>
+      </text>
+    </write>
 
-				<fail if='${NUnit.Fail}' message='Atlest one unit test failed!'/>
-			</try>
-			<finally>
-				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
-			</finally>
-		</trycatch>
-		
-	</target>
+    <foreach item="File" property="UnitTestAssemblyPath">
+      <in>
+        <items refid="UnitTest.TestAssemblies" />
+      </in>
+      <do>
+        <property name="UniTestAssemblyPath" value="${string::replace(UnitTestAssemblyPath, ProductDirectory + '\', '')}" />
+        <write append="true" file="${NUnit.ProjectFilePath}">
+          <text expand="true" xml="true">
+            <assembly path="${UniTestAssemblyPath}" />
+
+          </text>
+        </write>
+      </do>
+    </foreach>
+
+    <write append="true" file="${NUnit.ProjectFilePath}">
+      <text expand="true" xml="false">
+        <![CDATA[
+</Config>
+      </NUnitProject>]]>
+      </text>
+    </write>
+  </target>
+
+  <target name="Private.UnitTest.EnsureConfigFileExists">
+    <ifnot test="${file::exists(NUnit.ProjectConfigFilePath)}">
+      <write append="false" file="${NUnit.ProjectConfigFilePath}">
+        <text expand="false" xml="false">
+          <![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+</configuration>]]>
+        </text>
+      </write>
+    </ifnot>
+  </target>
+
+  <target name="UnitTest.RunTests">
+    <call target="Private.UnitTest.FindTestAssemblies"/>
+    <call target="Private.UnitTest.WriteConfigFile"/>
+    <call target="Private.UnitTest.EnsureConfigFileExists" />
+
+    <property name="UnitTest.ReportFilePath" value="${UnitTest.ReportFolder}\${UnitTest.BaseReportFileName}"/>
+    <exec program="${NUnit.ConsolePath}"
+					resultproperty="NUnit.ExitErrorLevel"
+					failonerror="false"
+					verbose="true">
+      <arg line='/xml:"${UnitTest.ReportFilePath}"' />
+      <arg line='"${NUnit.ProjectFilePath}"' />
+      <arg line='/noshadow' />
+    </exec>
+  </target>
 
   <target name="UnitTest.FindTestAssebmlies">
     <fileset id="UnitTest.TestAssemblies" >
@@ -87,13 +107,13 @@
 
   </target>
 
-	<script language="C#" prefix="directory" >
-		<imports>
-			<import namespace="System.IO" />
-		</imports>
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
 
-		<code>
-			<![CDATA[
+    <code>
+      <![CDATA[
          [Function("getcurrentdirectory")]
          public static string GetCurrentDirectory()
          {
@@ -106,7 +126,7 @@
                  Directory.SetCurrentDirectory(path);
          }
       ]]>
-		</code>
-	</script>
+    </code>
+  </script>
 
 </project>
