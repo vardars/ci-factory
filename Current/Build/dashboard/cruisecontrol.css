@@ -14,10 +14,11 @@ a:hover { color:#FC0; }
 .buildresults-data-failed { color: #F30; }
 
 .stylesection { margin-left: 4px; }
-.header-title { font-size:12px; color:#000; font-weight:bold; padding-bottom:10pt; }
+.header-title { font-size:16px; color:#64BC53; font-weight:bold; padding-bottom:10pt; }
+.header-title-error { font-size:16px; color:#D13535; font-weight:bold; padding-bottom:10pt; }
 .header-label { font-weight:bold; }
-.header-data { color:#000; }
-.header-data-error { font-family:courier, monospaced; color:#000; white-space:pre; }
+.header-data { color:#000000; }
+.header-data-error { font-family:courier, monospaced; color:#D13535; white-space:pre; }
 
 .NewSectionHeader {color: #403F8D; font-size: 14px; font-weight: bold }
 

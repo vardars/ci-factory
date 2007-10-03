@@ -10,7 +10,7 @@
         <table class="section-table" cellpadding="2" cellspacing="0" border="0">
 
             <xsl:if test="/cruisecontrol/exception">
-                <tr><td class="header-title" colspan="2">BUILD EXCEPTION</td></tr>
+                <tr><td class="header-title-error" colspan="2">BUILD EXCEPTION</td></tr>
                 <tr>
                     <td class="header-label"><nobr>Error Message:</nobr></td>
                     <td class="header-data-error"><xsl:value-of select="/cruisecontrol/exception"/></td>
@@ -18,7 +18,7 @@
             </xsl:if>
             
             <xsl:if test="/cruisecontrol/build/@error">
-                <tr><td class="header-title" colspan="2">BUILD FAILED</td></tr>
+                <tr><td class="header-title-error" colspan="2">BUILD FAILED</td></tr>
             </xsl:if>
             
             <xsl:if test="not (/cruisecontrol/build/@error) and not (/cruisecontrol/exception)">
