@@ -58,8 +58,8 @@
         </table>
 
         <div>
-          <a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
-            <span class="dspchar">+ Changes</span>
+          <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Changes', '+ Hide Changes')">
+            <span class="dspchar">+ Show Changes</span>
           </a>
         </div>
         <div class="dspcont">

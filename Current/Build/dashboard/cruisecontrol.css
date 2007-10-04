@@ -131,8 +131,6 @@ color: #ffffff;
 }
 
 a.dsphead{
-text-decoration:none;
-margin-left:1.5em;
 }
 
 a.dsphead:hover{
@@ -140,11 +138,8 @@ text-decoration:underline;
 }
 
 a.dsphead span.dspchar{
-font-family:monospace;
-font-weight:normal;
 }
 
 .dspcont{
 display:none;
-margin-left:1.5em;
 }
