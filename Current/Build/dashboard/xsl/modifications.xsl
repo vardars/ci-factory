@@ -6,32 +6,32 @@
   <xsl:key name="changeset" match="/cruisecontrol/modifications/modification" use="changeNumber/text()"/>
 
   <xsl:template match="/">
-    <div >
-      <div class="sectionheader-container">
-        <img src="images/SourceControl.gif" class="sectionheader-title-image" />
-        <div class="sectionheader"  >
-          Source Control Revision History
-        </div>
-      </div>
-      <div >
-        <xsl:if test="count($modification.list) &gt; 0">
-          <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
-            <xsl:sort select="changeNumber" order="descending" data-type="number"/>
-            <xsl:call-template name="changeset" />
-          </xsl:for-each>
-        </xsl:if>
-        <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
-      </div>
-    </div>
+    <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+      <tr>
+        <td height="42">
+          <img src="images/SourceControl.gif" class="sectionheader-title-image" />
+          <div class="sectionheader"  >
+            Source Control Revision History
+          </div>
+          </td>
+      </tr>
+      <xsl:if test="count($modification.list) &gt; 0">
+        <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
+          <xsl:sort select="changeNumber" order="descending" data-type="number"/>
+          <xsl:call-template name="changeset" />
+        </xsl:for-each>
+      </xsl:if>
+      <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
+    </table>
   </xsl:template>
 
   <!-- Changeset template -->
   <xsl:template name="changeset">
-    <div>
-      <span >
-        Changeset # <xsl:value-of select="changeNumber" />
-      </span>
-      <div >
+    <tr>
+      <td class="section-data">
+        <span >
+          Changeset # <xsl:value-of select="changeNumber" />
+        </span>
         <table rules="groups" cellpadding="2" cellspacing="0" border="0">
           <tbody>
             <tr >
@@ -57,8 +57,8 @@
             </xsl:for-each>
           </tbody>
         </table>
-      </div>
-    </div>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- Modifications template -->

@@ -23,7 +23,6 @@ a:hover { color:#FC0; }
 .section-table { margin-top:10px; }
 .sectionheader { border-bottom: #403F8D 1px dotted; color: #403F8D; font-size: 14px; font-weight: bold; position:relative; top: 7px; }
 .sectionheader-title-image { float: left; }
-.sectionheader-container { min-height: 34px; }
 .sectionheader-error { border-bottom: #D13535 1px dotted; color: #D13535; font-size: 14px; font-weight: bold; position:relative; top: 7px; }
 .sectionheader-warning { border-bottom: #FF7700 1px dotted; color: #FF7700; font-size: 14px; font-weight: bold }
 .section-data { font-size:9px; color:#000; }
