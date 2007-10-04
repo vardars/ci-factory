@@ -33,10 +33,10 @@
           <xsl:attribute name="href">
             <xsl:value-of select="$DeploymentWebPath"/>
           </xsl:attribute>
-          <img src="Packages/Deployment/images/file.gif" />
-          <span>
+          <img style="float: left; border-style: none" src="Packages/Deployment/images/file.gif" />
+          <div style="position:relative; top: 2px;">
             <xsl:value-of select="$DeploymentWebName"/>
-          </span>
+          </div>
         </a>
       </td>
     </tr>
