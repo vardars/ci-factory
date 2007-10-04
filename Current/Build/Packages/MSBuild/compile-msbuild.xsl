@@ -64,7 +64,7 @@
         <tr>
           <td>
             <xsl:for-each select="$warning.messages" >
-              <pre class="section-error">
+              <pre class="section-warning">
                 <xsl:value-of select="text()"/>
               </pre>
             </xsl:for-each>
