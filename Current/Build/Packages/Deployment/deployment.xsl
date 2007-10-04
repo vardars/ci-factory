@@ -8,7 +8,7 @@
   <xsl:template match="/">
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
       <tr>
-        <td height="42" style="sectionheader-container">
+        <td height="42" class="sectionheader-container">
           <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
           <div class="sectionheader">Deployment File(s)</div>
         </td>
