@@ -29,7 +29,8 @@ a:hover { color:#FC0; }
 .section-data { font-size:9px; color:#000; }
 .section-oddrow { background-color:#F0F7FF; }
 .section-evenrow { background-color:#FFF; }
-.section-error { font-size:9px; color:#F30; white-space:pre; }
+.section-error { font-size:9px; color:#D13535; white-space:pre; }
+.section-warning { font-size:9px; color:#FF7700; white-space:pre; }
 
 .warning { color:#FF7700 }
 .error { color:#D13535 }
