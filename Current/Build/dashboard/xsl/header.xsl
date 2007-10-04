@@ -75,25 +75,6 @@ if(!document.getElementById)
 					</xsl:if>
                 </td>
             </tr>
-            
-            <xsl:apply-templates select="$modification.list">
-                <xsl:sort select="date" order="descending" data-type="text" />
-            </xsl:apply-templates>
-            
         </table>
-    </xsl:template>
-
-    <!-- Last Modification template -->
-    <xsl:template match="/cruisecontrol/modifications/modification">
-        <xsl:if test="position() = 1">
-            <tr>
-                <td class="header-label"><nobr>Last changed:</nobr></td>
-                <td class="header-data"><xsl:value-of select="date"/></td>
-            </tr>
-            <tr>
-                <td class="header-label" valign="top"><nobr>Last log entry:</nobr></td>
-                <td class="header-data"><pre><xsl:value-of select="comment"/></pre></td>
-            </tr>
-        </xsl:if>
     </xsl:template>
 </xsl:stylesheet>
