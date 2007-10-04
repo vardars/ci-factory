@@ -10,8 +10,10 @@
       <!-- Modifications -->
       <tr>
         <td colspan="5">
-          <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
-          <div class="sectionheader">Deployment File(s)</div>
+          <div class="sectionheader-container">
+            <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
+            <div class="sectionheader">Deployment File(s)</div>
+          </div>
         </td>
       </tr>
       <xsl:for-each select="/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']">

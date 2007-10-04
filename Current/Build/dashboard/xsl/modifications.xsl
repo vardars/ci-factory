@@ -7,9 +7,11 @@
 
   <xsl:template match="/">
     <div >
-      <img src="images/SourceControl.gif" class="sectionheader-title-image" />
-      <div class="sectionheader"  >
-        Source Control Revision History
+      <div class="sectionheader-container">
+        <img src="images/SourceControl.gif" class="sectionheader-title-image" />
+        <div class="sectionheader"  >
+          Source Control Revision History
+        </div>
       </div>
       <div >
         <xsl:if test="count($modification.list) &gt; 0">
