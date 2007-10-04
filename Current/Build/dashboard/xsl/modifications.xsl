@@ -8,7 +8,7 @@
   <xsl:template match="/">
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
       <tr>
-        <td height="42">
+        <td height="42" style="sectionheader-container">
           <img src="images/SourceControl.gif" class="sectionheader-title-image" />
           <div class="sectionheader"  >
             Source Control Revision History
