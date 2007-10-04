@@ -9,7 +9,7 @@
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
       <!-- Modifications -->
       <tr>
-        <td class="sectionheader" colspan="5">
+        <td colspan="5">
           <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
           <div class="sectionheader">Deployment File(s)</div>
         </td>
@@ -29,7 +29,7 @@
     <xsl:param name="DeploymentWebName"/>
     <tr>
       <td class="section-data">
-        <a style="color: 403F8D; font-size: 11px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+        <a style="color: 403F8D; font-size: 11px; font-weight: bold;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
           <xsl:attribute name="href">
             <xsl:value-of select="$DeploymentWebPath"/>
           </xsl:attribute>

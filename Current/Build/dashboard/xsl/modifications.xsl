@@ -8,9 +8,9 @@
   <xsl:template match="/">
     <div >
       <img src="images/SourceControl.gif" class="sectionheader-title-image" />
-      <span class="NewSectionHeader"  >
+      <div class="sectionheader"  >
         Source Control Revision History
-      </span>
+      </div>
       <div >
         <xsl:if test="count($modification.list) &gt; 0">
           <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
@@ -25,7 +25,7 @@
 
   <!-- Changeset template -->
   <xsl:template name="changeset">
-    <div style="BORDER-TOP: #403F8D 1px dotted;" >
+    <div>
       <span >
         Changeset # <xsl:value-of select="changeNumber" />
       </span>

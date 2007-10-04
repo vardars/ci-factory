@@ -20,8 +20,6 @@ a:hover { color:#FC0; }
 .header-data { color:#000000; }
 .header-data-error { font-family:courier, monospaced; color:#D13535; white-space:pre; }
 
-.NewSectionHeader {color: #403F8D; font-size: 14px; font-weight: bold; position:relative; top: 7px; }
-
 .section-table { margin-top:10px; }
 .sectionheader { border-bottom: #403F8D 1px dotted; color: #403F8D; font-size: 14px; font-weight: bold; position:relative; top: 7px; }
 .sectionheader-title-image { float: left; }
