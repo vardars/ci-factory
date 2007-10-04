@@ -7,7 +7,7 @@
 
   <xsl:template match="/">
     <div >
-      <img src="images/SourceControl.gif" />
+      <img src="images/SourceControl.gif" class="sectionheader-title-image" />
       <span class="NewSectionHeader"  >
         Source Control Revision History
       </span>
