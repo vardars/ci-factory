@@ -35,6 +35,8 @@
         <span >
           Changeset # <xsl:value-of select="changeNumber" />
         </span>
+        
+        
         <table rules="groups" cellpadding="2" cellspacing="0" border="0">
           <tbody>
             <tr >
@@ -52,14 +54,23 @@
                 </em>
               </td>
             </tr>
-            <tr >
-              <th colspan="2">Changes</th>
-            </tr>
-            <xsl:for-each select="key('changeset', changeNumber/text())">
-              <xsl:call-template name="modification"/>
-            </xsl:for-each>
           </tbody>
         </table>
+
+        <div>
+          <a href="javascript:void(0)" class="dsphead" onclick="dsp(this)">
+            <span class="dspchar">+ Changes</span>
+          </a>
+        </div>
+        <div class="dspcont">
+          <table rules="groups" cellpadding="2" cellspacing="0" border="0">
+            <tbody>
+              <xsl:for-each select="key('changeset', changeNumber/text())">
+                <xsl:call-template name="modification"/>
+              </xsl:for-each>
+            </tbody>
+          </table>
+        </div>
       </td>
     </tr>
   </xsl:template>

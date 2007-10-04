@@ -112,3 +112,39 @@ a:hover { color:#FC0; }
 }
 
 .statusimage { vertical-align: middle; }
+
+*.pass{
+background-color: #33ff99;
+}
+
+*.fail{
+background-color: #ff6600;
+}
+
+*.unknown{
+background-color: #ffffcc;
+}
+
+*.exception{
+background-color: #000000;
+color: #ffffff;
+}
+
+a.dsphead{
+text-decoration:none;
+margin-left:1.5em;
+}
+
+a.dsphead:hover{
+text-decoration:underline;
+}
+
+a.dsphead span.dspchar{
+font-family:monospace;
+font-weight:normal;
+}
+
+.dspcont{
+display:none;
+margin-left:1.5em;
+}
