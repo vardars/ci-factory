@@ -28,10 +28,10 @@
   <!-- Changeset template -->
   <xsl:template name="changeset">
     <tr>
-      <xsl:if test="position() mod 2=0">
-        <xsl:attribute name="style">border-top: #808286 1px dotted;</xsl:attribute>
-      </xsl:if>
       <td class="section-data">
+        <xsl:if test="position() mod 2=0">
+          <xsl:attribute name="style">border-top: #808286 1px dotted;</xsl:attribute>
+        </xsl:if>
         <span >
           Changeset # <xsl:value-of select="changeNumber" />
         </span>
