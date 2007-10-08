@@ -76,7 +76,6 @@
     <property name="UnitTest.ReportFilePath" value="${UnitTest.ReportFolder}\${UnitTest.BaseReportFileName}"/>
     <exec program="${NUnit.ConsolePath}"
 					resultproperty="NUnit.ExitErrorLevel"
-					failonerror="false"
 					verbose="true">
       <arg line='/xml:"${UnitTest.ReportFilePath}"' />
       <arg line='"${NUnit.ProjectFilePath}"' />
