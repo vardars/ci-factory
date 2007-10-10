@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="DevEnv">
+
+  <target name="DevEnv.CheckForRequieredSoftware" >
+		<property name="VisualStudioServicePack" value=""/>
+    <readregistry hive="LocalMachine"									
+                  key="SOFTWARE\Microsoft\DevDiv\VS\Servicing\8.0\SP" 
+                  property="VisualStudioServicePack" failonerror="false"/>
+
+    <ifnot test="${VisualStudioServicePack == '1'}">
+      <ask answer="Answer" 
+           question="It looks like Visual Studio 2005 SP1 is not installed.  Do you wish to continue?" 
+           caption="Proceed Without Required Software?" 
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install SP1"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install SP1'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C " explorer http://msdn2.microsoft.com/en-us/vstudio/bb265237.aspx"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing VS 2005 SP1!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install VS 2005 SP1!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+
+    <ifnot test="${file::exists('C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll')}" >
+      <ask answer="Answer"
+           question="It looks like Team Explorer is not installed.  Do you wish to continue?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install Team Explorer"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install Team Explorer'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://download.microsoft.com/download/2/a/d/2ad44873-8ccb-4a1b-9c0d-23224b3ba34c/VSTFClient.img"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing Team Exporer!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install Team Explorer!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+
+    <ifnot test="${file::exists('C:\Program Files\NCover\NCover.Console.exe')}" >
+      <ask answer="Answer"
+           question="It looks like NCover is not installed.  Do you wish to continue?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install NCover"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install NCover'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://www.ncover.com/download"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing NCover!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install NCover!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
+
+  <target name="DevEnv.ConfigureEnvironment">
+
+    <writeregistry hive="LocalMachine" 
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\AssemblyPath" 
+                   value="10"/>
+    <writeregistry hive="LocalMachine" 
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\(Default)" 
+                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application"
+                   value="MbUnit.Framework"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TargetFrameworkAssemblyName"
+                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TypeName"
+                   value="MbUnit.AddIn.MbUnitTestRunner"/>
+    
+  </target>
+  
+</project>
