@@ -71,7 +71,7 @@
     <None Include="Default\Build\Build.sln.remove" />
     <None Include="Default\Build\CCNETServer.Bat" />
     <None Include="Default\Build\OpenSolution.bat" />
-    <None Include="Default\Build\Packages.csproj.remove" />
+    <None Include="Default\Build\Build.csproj.remove" />
     <None Include="Default\Build\UpdatenAntSchema.bat" />
   </ItemGroup>
   <ItemGroup>
