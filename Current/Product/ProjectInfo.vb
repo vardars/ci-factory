@@ -3,5 +3,5 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyProduct("CI Factory")> 
-<Assembly: AssemblyInformationalVersion("0.9.0.68")> 
+<Assembly: AssemblyInformationalVersion("0.9.0.69")> 
 <Assembly: AssemblyCompany("http://www.cifactory.org")> 
