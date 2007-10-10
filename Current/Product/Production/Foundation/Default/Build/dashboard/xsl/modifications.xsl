@@ -6,29 +6,37 @@
   <xsl:key name="changeset" match="/cruisecontrol/modifications/modification" use="changeNumber/text()"/>
 
   <xsl:template match="/">
-    <div >
-      <span class="NewSectionHeader"  >
-        Source Control Revision History
-      </span>
-      <div >
-        <xsl:if test="count($modification.list) &gt; 0">
-          <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
-            <xsl:sort select="changeNumber" order="descending" data-type="number"/>
-            <xsl:call-template name="changeset" />
-          </xsl:for-each>
-        </xsl:if>
-        <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
-      </div>
-    </div>
+    <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+      <tr>
+        <td height="42" class="sectionheader-container">
+          <img src="images/SourceControl.gif" class="sectionheader-title-image" />
+          <div class="sectionheader"  >
+            Source Control Revision History
+          </div>
+          </td>
+      </tr>
+      <xsl:if test="count($modification.list) &gt; 0">
+        <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
+          <xsl:sort select="changeNumber" order="descending" data-type="number"/>
+          <xsl:call-template name="changeset" />
+        </xsl:for-each>
+      </xsl:if>
+      <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
+    </table>
   </xsl:template>
 
   <!-- Changeset template -->
   <xsl:template name="changeset">
-    <div style="BORDER-TOP: #403F8D 1px dotted;" >
-      <span >
-        Changeset # <xsl:value-of select="changeNumber" />
-      </span>
-      <div >
+    <tr>
+      <td class="section-data">
+        <xsl:if test="position() mod 2=0">
+          <xsl:attribute name="style">border-top: #808286 1px dotted;</xsl:attribute>
+        </xsl:if>
+        <span >
+          Changeset # <xsl:value-of select="changeNumber" />
+        </span>
+        
+        
         <table rules="groups" cellpadding="2" cellspacing="0" border="0">
           <tbody>
             <tr >
@@ -46,16 +54,25 @@
                 </em>
               </td>
             </tr>
-            <tr >
-              <th colspan="2">Changes</th>
-            </tr>
-            <xsl:for-each select="key('changeset', changeNumber/text())">
-              <xsl:call-template name="modification"/>
-            </xsl:for-each>
           </tbody>
         </table>
-      </div>
-    </div>
+
+        <div>
+          <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Changes', '+ Hide Changes')">
+            <span class="dspchar">+ Show Changes</span>
+          </a>
+        </div>
+        <div class="dspcont">
+          <table rules="groups" cellpadding="2" cellspacing="0" border="0">
+            <tbody>
+              <xsl:for-each select="key('changeset', changeNumber/text())">
+                <xsl:call-template name="modification"/>
+              </xsl:for-each>
+            </tbody>
+          </table>
+        </div>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- Modifications template -->
@@ -91,18 +108,17 @@
                 <xsl:value-of select="url" />
               </xsl:attribute>
               <xsl:if test="project != ''">
-                <xsl:value-of select="project"/>
-                <xsl:value-of select="'/'"/>
+                <xsl:value-of select="project"/><xsl:value-of select="'/'"/>
               </xsl:if>
               <xsl:value-of select="filename"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:if test="project != ''">
-              <xsl:value-of select="project"/>
-              <xsl:value-of select="'/'"/>
-            </xsl:if>
-            <xsl:value-of select="filename"/>
+              <xsl:if test="project != ''">
+                <xsl:value-of select="project"/>
+                <xsl:value-of select="'/'"/>
+              </xsl:if>
+              <xsl:value-of select="filename"/>
           </xsl:otherwise>
         </xsl:choose>
       </td>

@@ -7,10 +7,10 @@
   
   <xsl:template match="/">
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-      <!-- Modifications -->
       <tr>
-        <td class="sectionheader" colspan="5">
-          Deployment File(s)
+        <td height="42" class="sectionheader-container">
+          <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
+          <div class="sectionheader">Deployment File(s)</div>
         </td>
       </tr>
       <xsl:for-each select="/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']">
@@ -28,11 +28,14 @@
     <xsl:param name="DeploymentWebName"/>
     <tr>
       <td class="section-data">
-        <a>
+        <a style="color: 403F8D; font-size: 11px; font-weight: bold;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
           <xsl:attribute name="href">
             <xsl:value-of select="$DeploymentWebPath"/>
           </xsl:attribute>
-          <xsl:value-of select="$DeploymentWebName"/>
+          <img style="float: left; border-style: none" src="Packages/Deployment/images/file.gif" />
+          <div style="position:relative; top: 2px;">
+            <xsl:value-of select="$DeploymentWebName"/>
+          </div>
         </a>
       </td>
     </tr>

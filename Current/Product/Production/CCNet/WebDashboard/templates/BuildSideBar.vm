@@ -5,7 +5,7 @@
       #else
       <td>
         #end
-        <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+        <div style="BORDER-BOTTOM: #403F8D 1px dotted;">
         <a href="$latestLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
           <img style="float: left; border-style: none" src="images/Latest.gif" title="Latest" alt="Latest"/>
           <div style="position:relative; top: 5px;">&nbsp;<strong>Latest</strong>
@@ -20,7 +20,7 @@
           #else
           <td>
             #end
-            <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+            <div style="BORDER-BOTTOM: #403F8D 1px dotted;">
               <a href="$nextLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
                 <img style="float: left; border-style: none" src="images/Next.gif" title="Next" alt="Next"/>
                 <div style="position:relative; top: 5px;">
@@ -36,7 +36,7 @@
               #else
               <td>
                 #end
-                <div style="BORDER-BOTTOM: #403F8D 1px dotted; min-height: 24px;">
+                <div style="BORDER-BOTTOM: #403F8D 1px dotted;">
                   <a href="$previousLink.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
                     <img style="float: left; border-style: none" src="images/Previous.gif" title="Previous" alt="Previous"/>
                     <div style="position:relative; top: 5px;">
@@ -56,7 +56,7 @@
       #else
       <td>
         #end
-        <div style="BORDER-BOTTOM: #7bcf15 1px dotted; min-height: 24px;">
+        <div style="BORDER-BOTTOM: #7bcf15 1px dotted;">
           <a href="$link.Url" STYLE="TEXT-DECORATION: NONE; color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
             #if ($link.Img.Length > 0)
             <img style="float: left; border-style: none" src="$link.Img" height="25" title="$link.Text" alt="$link.Text"/>

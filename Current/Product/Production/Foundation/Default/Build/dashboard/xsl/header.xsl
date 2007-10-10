@@ -5,12 +5,36 @@
     <xsl:output method="html"/>
 
     <xsl:template match="/">
+      <script type="text/javascript">
+        <![CDATA[
+function dsp(loc, showMessage, hiddenMessage){
+   if(document.getElementById){
+      var foc = loc.firstChild;
+      foc = loc.firstChild.innerHTML ? loc.firstChild : loc.firstChild.nextSibling;
+      foc.innerHTML = foc.innerHTML == showMessage ? hiddenMessage : showMessage;
+      foc = loc.parentNode.nextSibling.style ? loc.parentNode.nextSibling : loc.parentNode.nextSibling.nextSibling;
+      foc.style.display = foc.style.display == 'block' ? 'none' : 'block';
+    }
+}  
+
+if(!document.getElementById)
+   document.write('<style type="text/css"><!--\n.dspcont{display:block;}\n//--></style>');
+
+      ]]>
+      </script>
+
+      <noscript>
+        <style type="text/css">
+          .dspcont{display:block;}
+        </style>
+      </noscript>
+      
         <xsl:variable name="modification.list" select="/cruisecontrol/modifications/modification"/>
 
         <table class="section-table" cellpadding="2" cellspacing="0" border="0">
 
             <xsl:if test="/cruisecontrol/exception">
-                <tr><td class="header-title" colspan="2">BUILD EXCEPTION</td></tr>
+                <tr><td class="header-title-error" colspan="2">BUILD EXCEPTION</td></tr>
                 <tr>
                     <td class="header-label"><nobr>Error Message:</nobr></td>
                     <td class="header-data-error"><xsl:value-of select="/cruisecontrol/exception"/></td>
@@ -18,7 +42,7 @@
             </xsl:if>
             
             <xsl:if test="/cruisecontrol/build/@error">
-                <tr><td class="header-title" colspan="2">BUILD FAILED</td></tr>
+                <tr><td class="header-title-error" colspan="2">BUILD FAILED</td></tr>
             </xsl:if>
             
             <xsl:if test="not (/cruisecontrol/build/@error) and not (/cruisecontrol/exception)">
@@ -51,25 +75,6 @@
 					</xsl:if>
                 </td>
             </tr>
-            
-            <xsl:apply-templates select="$modification.list">
-                <xsl:sort select="date" order="descending" data-type="text" />
-            </xsl:apply-templates>
-            
         </table>
-    </xsl:template>
-
-    <!-- Last Modification template -->
-    <xsl:template match="/cruisecontrol/modifications/modification">
-        <xsl:if test="position() = 1">
-            <tr>
-                <td class="header-label"><nobr>Last changed:</nobr></td>
-                <td class="header-data"><xsl:value-of select="date"/></td>
-            </tr>
-            <tr>
-                <td class="header-label" valign="top"><nobr>Last log entry:</nobr></td>
-                <td class="header-data"><pre><xsl:value-of select="comment"/></pre></td>
-            </tr>
-        </xsl:if>
     </xsl:template>
 </xsl:stylesheet>
