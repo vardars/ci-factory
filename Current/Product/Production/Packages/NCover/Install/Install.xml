@@ -46,7 +46,7 @@
 
   <target name="NCover.InsureNCoverInstallation" >
     <call target="NCover.InsureNCoverInstallation.Exists"/>
-    <call target="NCover.InsureNCoverInstallation.Version"/>
+    <call target="NCover.InsureNCoverInstallation.Version" if="${file::exists(NCover.ExePath)}"/>
     <call target="NCover.Install.NCover" if="${NCover.Install.IsNeeded}"/>
   </target>
 
