@@ -23,7 +23,7 @@
 	<target name="SourceModificationReport.GetOldestModificationTime">
 		<script language="VB">
 			<references>
-				<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+				<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Remote.dll" />
 			</references>
 			<imports >
 				<import namespace="System.Xml"/>
@@ -35,8 +35,8 @@
 						Dim pd As PropertyDictionary = project.Properties
             Dim OldestModificationTime As DateTime = DateTime.Now.Subtract(New TimeSpan(100, 0, 0, 0))
             Dim HoldOldestModificationTime as DateTime = OldestModificationTime
-						Dim ModificationList As ThoughtWorks.CruiseControl.Core.Modification()
-						ModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("SourceModificationReport.ReportFile"))
+						Dim ModificationList As ThoughtWorks.CruiseControl.Remote.Modification()
+						ModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("SourceModificationReport.ReportFile"))
 						
             For Each modification As ThoughtWorks.CruiseControl.Core.Modification In ModificationList
 						  If OldestModificationTime.CompareTo(modification.ModifiedTime) < 0 Then
@@ -72,7 +72,7 @@
 		<if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
 			<script language="VB">
 				<references>
-					<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+					<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Remote.dll" />
 				</references>
 				<imports >
 					<import namespace="System.Xml"/>
@@ -82,10 +82,10 @@
 
 					Public Shared Sub ScriptMain(ByVal project As NAnt.Core.Project)
 						Dim pd As PropertyDictionary = project.Properties
-						Dim NewModificationList As ThoughtWorks.CruiseControl.Core.Modification()
-						Dim OldModificationList As ThoughtWorks.CruiseControl.Core.Modification()
-						NewModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("SourceModificationReport.ReportFile"))
-						OldModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Core.Modification()), pd("Private.SourceModificationReport.OldSourceModificationReportFile"))
+						Dim NewModificationList As ThoughtWorks.CruiseControl.Remote.Modification()
+						Dim OldModificationList As ThoughtWorks.CruiseControl.Remote.Modification()
+						NewModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("SourceModificationReport.ReportFile"))
+						OldModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("Private.SourceModificationReport.OldSourceModificationReportFile"))
 						Dim CombineModificationList(NewModificationList.Length + OldModificationList.Length - 1) As ThoughtWorks.CruiseControl.Core.Modification
 						Dim Count As Integer
 						For Each modi As ThoughtWorks.CruiseControl.Core.Modification In NewModificationList
