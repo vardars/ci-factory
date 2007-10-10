@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="VSSTestProject" />
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerPort" value="21245"/>
+  <property name="CCNET.ModificationDelaySeconds" value="0"/>
+  <property name="CCNET.IntervalTrigger" value="60"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+	<property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
+	<property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
+  
+  <property name="VSS.RootShare" value="C:\Source Safe DataBases" />
+  <property name="VSS.DBPath" value="${VSS.RootShare}\${ProjectName}\srcsafe.ini" />
+  <property name="VSS.Username" value="build" />
+  <property name="VSS.Password" value="password"  />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <property name="Install.Quiet" value="true"/>
+  <property name="Simian.AcceptLicense" value="true"/>
+  <property name="nDepend.AcceptLicense" value="true"/>
+  
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="VisualSourceSafe"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+    <string value="Deployment"/>
+  </strings>
+
+  <target name="Post.Install">
+    <nant target="SourceControl.Repository.Create">
+      <buildfiles>
+        <include name="${PackagesDirectory}\VisualSourceSafe\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagesDirectory}\VisualSourceSafe\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+    
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+  
+</project>
