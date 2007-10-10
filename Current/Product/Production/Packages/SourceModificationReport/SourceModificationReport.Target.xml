@@ -38,7 +38,7 @@
 						Dim ModificationList As ThoughtWorks.CruiseControl.Remote.Modification()
 						ModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("SourceModificationReport.ReportFile"))
 						
-            For Each modification As ThoughtWorks.CruiseControl.Core.Modification In ModificationList
+            For Each modification As ThoughtWorks.CruiseControl.Remote.Modification In ModificationList
 						  If OldestModificationTime.CompareTo(modification.ModifiedTime) < 0 Then
                 OldestModificationTime = modification.ModifiedTime
               End If
@@ -86,13 +86,13 @@
 						Dim OldModificationList As ThoughtWorks.CruiseControl.Remote.Modification()
 						NewModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("SourceModificationReport.ReportFile"))
 						OldModificationList = Deserialize(GetType(ThoughtWorks.CruiseControl.Remote.Modification()), pd("Private.SourceModificationReport.OldSourceModificationReportFile"))
-						Dim CombineModificationList(NewModificationList.Length + OldModificationList.Length - 1) As ThoughtWorks.CruiseControl.Core.Modification
+						Dim CombineModificationList(NewModificationList.Length + OldModificationList.Length - 1) As ThoughtWorks.CruiseControl.Remote.Modification
 						Dim Count As Integer
-						For Each modi As ThoughtWorks.CruiseControl.Core.Modification In NewModificationList
+						For Each modi As ThoughtWorks.CruiseControl.Remote.Modification In NewModificationList
 							CombineModificationList(Count) = modi
 							Count += 1
 						Next
-						For Each modi As ThoughtWorks.CruiseControl.Core.Modification In OldModificationList
+						For Each modi As ThoughtWorks.CruiseControl.Remote.Modification In OldModificationList
 							CombineModificationList(Count) = modi
 							Count += 1
 						Next
