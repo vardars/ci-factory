@@ -2,13 +2,13 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="BuildVSInstaller" >
 
   <property name="BuildVS.SolutionFile" value="${BuildDirectory}\${ProjectName}BuildScripts.sln"/>
-  <property name="BuildVS.PackagesProjectFile" value="${BuildDirectory}\Packages.csproj"/>
+  <property name="BuildVS.PackagesProjectFile" value="${BuildDirectory}\Build.csproj"/>
   <property name="BuildVS.OpenSolutionBat" value="${BuildDirectory}\OpenSolution.bat"/>
 
   <!-- These are private... -->
 
   <property name="Private.BuildVS.DefaultSolutionFile" value="${SourceBuildDirectory}\Build.sln.remove"/>
-  <property name="Private.BuildVS.DefaultPackagesProjectFile" value="${SourceBuildDirectory}\Packages.csproj.remove"/>
+  <property name="Private.BuildVS.DefaultPackagesProjectFile" value="${SourceBuildDirectory}\Build.csproj.remove"/>
   <property name="Private.BuildVS.DefaultOpenSolutionBat" value="${SourceBuildDirectory}\OpenSolution.bat"/>
   
   <target name="BuildVS.Install" depends="BuildVS.ValidateParameters" >
