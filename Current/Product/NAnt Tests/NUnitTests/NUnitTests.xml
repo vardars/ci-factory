@@ -44,7 +44,10 @@
         <include name="**\*"/>
       </fileset>
     </copy>
-    
+
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
+    <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
     <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
     <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
 

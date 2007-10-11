@@ -3,9 +3,9 @@
 
   <!--<property name="TestRunner.DeleteIISVirDirs.ProjectName" value=""/>-->
   <target name="TestRunner.DeleteIISVirDirs">
-    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}/Packages"/>
-    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}"/>
-    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName} Artifacts"/>
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}-${TestRunner.DeleteIISVirDirs.ProjectCodeLineName}/Artifacts"/>
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}-${TestRunner.DeleteIISVirDirs.ProjectCodeLineName}/Packages"/>
+    <deliisdir vdirname="${TestRunner.DeleteIISVirDirs.ProjectName}-${TestRunner.DeleteIISVirDirs.ProjectCodeLineName}"/>
   </target>
   
 </project>

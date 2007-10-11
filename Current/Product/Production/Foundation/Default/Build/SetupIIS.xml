@@ -2,26 +2,27 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="BuildServerSetup" default="Setup">
 
   <property name="ProjectName" value="%ProjectName%" />
+  <property name="ProjectCodeLineName" value="%ProjectCodeLineName%" />
   <property name="BuildDirectory" value="%BuildDirectory%" />
   <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
   <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
   <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
   
   <target name="Setup" >
-    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName} Artifacts" enabledirbrowsing="true"/>
-    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
-    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}/Packages"/>
-    <exec program="${framework::get-framework-directory('net-2.0')}\aspnet_regiis.exe" commandline="-s W3SVC/1/ROOT/${ProjectName}" />
+    <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
+    <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}/Artifacts" enabledirbrowsing="true"/>
+    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}/Packages"/>
+    <exec program="${framework::get-framework-directory('net-2.0')}\aspnet_regiis.exe" commandline="-s W3SVC/1/ROOT/${ProjectName}-${ProjectCodeLineName}" />
 
 		<property name="APPCMDPath" value="${environment::get-variable('systemroot')}\system32\inetsrv\APPCMD.EXE"/>
 		<exec program='${APPCMDPath}' 
-					commandline='set app "Default Web Site/${ProjectName}" /applicationPool:"Classic .NET AppPool"'
+					commandline='set app "Default Web Site/${ProjectName}-${ProjectCodeLineName}" /applicationPool:"Classic .NET AppPool"'
 					if='${file::exists(APPCMDPath)}'/>
     <exec program='${APPCMDPath}'
-					commandline='set app "Default Web Site/${ProjectName}/Packages" /applicationPool:"Classic .NET AppPool"'
+					commandline='set app "Default Web Site/${ProjectName}-${ProjectCodeLineName}/Packages" /applicationPool:"Classic .NET AppPool"'
 					if='${file::exists(APPCMDPath)}'/>
     <exec program='${APPCMDPath}'
-					commandline='set app "Default Web Site/${ProjectName} Artifacts" /applicationPool:"Classic .NET AppPool"'
+					commandline='set app "Default Web Site/${ProjectName}-${ProjectCodeLineName}/Artifacts" /applicationPool:"Classic .NET AppPool"'
 					if='${file::exists(APPCMDPath)}'/>
   </target>
   

@@ -6,7 +6,7 @@
   <property name="CCNET.ServerPort" value=""/>
   -->
   
-  <property name="CCNET.webURL" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_ViewFarmReport=true" overwrite="false"/>
+  <property name="CCNET.webURL" value="http://${environment::get-machine-name()}/${ProjectName}-${ProjectCodeLineName}/default.aspx?_action_ViewFarmReport=true" overwrite="false"/>
   <property name="CCNET.ProjectFile" value="${BuildDirectory}\ccnetproject.xml"/>
   <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
   <property name="CCNET.ExeConfigFile" value="${BuildDirectory}\server\ccnet.exe.config"/>
@@ -85,18 +85,8 @@
     </copy>
     <copy todir="${CCNET.ServerDirectory}">
       <fileset basedir="${Private.CCNET.DefaultBuildServerDirectory}">
-        <include name="*.*" />
+        <include name="**/*" />
         <exclude name="${Private.CCNET.DefaultExeConfigFile}"/>
-      </fileset>
-    </copy>
-    <call target="Private.CCNET.InstallBuildServerXslDirectoryFiles"/>
-  </target>
-
-  <target name="Private.CCNET.InstallBuildServerXslDirectoryFiles">
-    <mkdir unless="${directory::exists(CCNET.ServerXslDirectory)}" dir="${CCNET.ServerXslDirectory}"/>
-    <copy todir="${CCNET.ServerXslDirectory}">
-      <fileset basedir="${Private.CCNET.DefaultBuildServerXslDirectory}">
-        <include name="*.*" />
       </fileset>
     </copy>
   </target>
