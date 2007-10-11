@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="BuildServerSetup" default="Setup">
+  
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
 
-  <property name="ProjectName" value="%ProjectName%" />
-  <property name="ProjectCodeLineName" value="%ProjectCodeLineName%" />
-  <property name="BuildDirectory" value="%BuildDirectory%" />
+    <code>
+      <![CDATA[
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+		     [Function("setcurrentdirectory")]
+         public static void SetCurrentDirectory(string path)
+         {
+                 Directory.SetCurrentDirectory(path);
+         }
+      ]]>
+    </code>
+  </script>
+
+  <property name="BuildDirectory" value="${project::get-base-directory()}" />
+  <function execute="${directory::setcurrentdirectory(BuildDirectory)}"/>
+  
+  <property name="ProjectName" value="${directory::name('..\..\')}" />
+  <property name="ProjectCodeLineName" value="${directory::name('..\')}" />
+  
   <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
   <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
   <property name="CCNETDashboard.DashboardDirectory" value="${BuildDirectory}\dashboard"/>

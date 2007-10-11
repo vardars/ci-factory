@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Deployment" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir="Deployment">
 
-  <property name="Deployment.WebPathRoot" value="/${ProjectName}-${ProjectCodeLineName}/Artifacts" readonly="true"/>
+  <property name="Deployment.WebPathRoot" value="/&amp;ProjectName;-&amp;ProjectCodeLineName;/Artifacts" readonly="true"/>
   
   <!--
 	The following properties should be specified in the calling script.

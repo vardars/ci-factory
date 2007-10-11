@@ -6,7 +6,6 @@
   <property name="CCNET.ServerPort" value=""/>
   -->
   
-  <property name="CCNET.webURL" value="http://${environment::get-machine-name()}/${ProjectName}-${ProjectCodeLineName}/default.aspx?_action_ViewFarmReport=true" overwrite="false"/>
   <property name="CCNET.ProjectFile" value="${BuildDirectory}\ccnetproject.xml"/>
   <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
   <property name="CCNET.ExeConfigFile" value="${BuildDirectory}\server\ccnet.exe.config"/>
@@ -31,11 +30,11 @@
   <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceBuildDirectory}\dashboard"/>
   <property name="Private.CCNET.DefaultConfigFile" value="${Private.CCNET.DefaultDashboardDirectory}\dashboard.config"/>
 
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%HostName%', environment::get-machine-name())}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Name%', BuildMaster.Name)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Email%', BuildMaster.Email)}"        />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerPort%', CCNET.ServerPort)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.webURL%', CCNET.webURL)}"        />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ProjectFile%', CCNET.ProjectFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.BatchFile%', CCNET.BatchFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ExeConfigFile%', CCNET.ExeConfigFile)}"  />

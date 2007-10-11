@@ -18,9 +18,12 @@
   <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
-  <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" /><!--makes shure that the case is correct, Tags or tags-->
 
-  <property name="SVN.WebRepoUrl" value="http://${ProjectName}.googlecode.com/svn"/>
+  <property name="CCNet.SVN.URI.ProjectName" value="https://&amp;ProjectName;.googlecode.com/svn" />
+  <property name="CCNet.SVN.URI.ProjectCodeLine" value="https://&amp;ProjectName;.googlecode.com/svn/&amp;ProjectCodeLineName;" />
+  <property name="CCNet.SVN.WebRepoUrl" value="http://localhost/svn/&amp;ProjectName;" /><!--makes shure that the case is correct, Tags or tags-->
+  <property name="CCNet.SVN.WebRepoUrl" value="http://${ProjectName}.googlecode.com/svn"/>
+  
   <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
   <property name="SVN.Username" value="Build" />
   <property name="SVN.Password" value="password" />
