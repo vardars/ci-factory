@@ -806,7 +806,6 @@
     <Content Include="VS.NETCompile\Install\OpenSolution.bat" />
     <Content Include="VS.NETCompile\Install\Properties.xml" />
     <Content Include="VSTSVersionControl\ShowAllChanges.xsl" />
-    <Content Include="VSTSVersionControl\Tests\VSTSVersionControl.Target.Test.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MSBuild\Install\2005.sln.remove" />
@@ -1023,6 +1022,10 @@
     <Content Include="NUnit\UnitTest.Properties.xml" />
     <Content Include="NUnit\UnitTest.Target.xml" />
     <Content Include="NUnit\NUnitSummary.xsl" />
+    <Content Include="Perforce\Install\Install.xml" />
+    <Content Include="Perforce\Install\Properties.xml" />
+    <Content Include="Perforce\SourceControl.Properties.xml" />
+    <Content Include="Perforce\SourceControl.Target.xml" />
     <Content Include="Simian\Install\Install.xml" />
     <Content Include="Simian\Install\Properties.xml" />
     <Content Include="StarTeam\Install\Install.xml" />

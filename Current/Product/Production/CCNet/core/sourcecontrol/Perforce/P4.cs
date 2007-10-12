@@ -30,7 +30,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		public P4(ProcessExecutor processExecutor, IP4Initializer initializer, IP4Purger p4Purger, IP4ProcessInfoCreator processInfoCreator)
 		{
 			this.processExecutor = processExecutor;
-			this.p4Initializer = initializer;
+			p4Initializer = initializer;
 			this.processInfoCreator = processInfoCreator;
 			this.p4Purger = p4Purger;
 		}
@@ -47,6 +47,9 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		[ReflectorProperty("user", Required=false)]
 		public string User = string.Empty;
 
+		[ReflectorProperty("password", Required=false)]
+		public string Password = string.Empty;
+
 		[ReflectorProperty("port", Required=false)]
 		public string Port = string.Empty;
 
@@ -57,7 +60,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		public bool ApplyLabel = false;
 
 		[ReflectorProperty("autoGetSource", Required = false)]
-		public bool AutoGetSource = false;
+		public bool AutoGetSource = true;
 
 		[ReflectorProperty("forceSync", Required = false)]
 		public bool ForceSync = false;
@@ -65,7 +68,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		[ReflectorProperty(@"p4WebURLFormat", Required=false)]
 		public string P4WebURLFormat;
 
-		public string BuildModificationsCommandArguments(DateTime from, DateTime to)
+		[ReflectorProperty("timeZoneOffset", Required=false)]
+		public double TimeZoneOffset = 0;
+
+		private string BuildModificationsCommandArguments(DateTime from, DateTime to)
 		{
 			return string.Format("changes -s submitted {0}", GenerateRevisionsForView(from, to));
 		}
@@ -75,6 +81,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 			StringBuilder args = new StringBuilder();
 			foreach (string viewline in View.Split(','))
 			{
+				if (args.Length > 0) args.Append(' ');
 				args.Append(viewline);
 				if (from == DateTime.MinValue)
 				{
@@ -82,7 +89,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 				}
 				else
 				{
-					args.Append(string.Format("@{0},@{1} ", FormatDate(from), FormatDate(to)));
+					args.Append(string.Format("@{0},@{1}", FormatDate(from), FormatDate(to)));
 				}
 			}
 			return args.ToString();
@@ -90,7 +97,8 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 
 		private string FormatDate(DateTime date)
 		{
-			return date.ToString(COMMAND_DATE_FORMAT, CultureInfo.InvariantCulture);
+			DateTime offsetDate = date.AddHours(TimeZoneOffset);
+			return offsetDate.ToString(COMMAND_DATE_FORMAT, CultureInfo.InvariantCulture);
 		}
 
 		public virtual ProcessInfo CreateChangeListProcess(DateTime from, DateTime to)

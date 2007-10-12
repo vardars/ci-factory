@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -184,6 +184,22 @@
     <Compile Include="Tasks\NUnitReportTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\Perforce\P4Add.cs" />
+    <Compile Include="Tasks\Perforce\P4Base.cs" />
+    <Compile Include="Tasks\Perforce\P4Change.cs" />
+    <Compile Include="Tasks\Perforce\P4Client.cs" />
+    <Compile Include="Tasks\Perforce\P4Delete.cs" />
+    <Compile Include="Tasks\Perforce\P4Edit.cs" />
+    <Compile Include="Tasks\Perforce\P4Info.cs" />
+    <Compile Include="Tasks\Perforce\P4Label.cs" />
+    <Compile Include="Tasks\Perforce\P4Labelsync.cs" />
+    <Compile Include="Tasks\Perforce\P4Print.cs" />
+    <Compile Include="Tasks\Perforce\P4Reopen.cs" />
+    <Compile Include="Tasks\Perforce\P4Revert.cs" />
+    <Compile Include="Tasks\Perforce\P4Set.cs" />
+    <Compile Include="Tasks\Perforce\P4Submit.cs" />
+    <Compile Include="Tasks\Perforce\P4Sync.cs" />
+    <Compile Include="Tasks\Perforce\Perforce.cs" />
     <Compile Include="Tasks\RecordTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -332,6 +348,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Tasks\Perforce\.svn\entries" />
+    <None Include="Tasks\Perforce\.svn\format" />
     <None Include="UpdatenAnt.bat" />
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +357,14 @@
       <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
       <Name>NAnt.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tasks\Perforce\.svn\prop-base\" />
+    <Folder Include="Tasks\Perforce\.svn\props\" />
+    <Folder Include="Tasks\Perforce\.svn\text-base\" />
+    <Folder Include="Tasks\Perforce\.svn\tmp\prop-base\" />
+    <Folder Include="Tasks\Perforce\.svn\tmp\props\" />
+    <Folder Include="Tasks\Perforce\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
