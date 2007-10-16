@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="TestProject" />
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerPort" value="21236"/>
+  <property name="CCNET.ModificationDelaySeconds" value="120"/>
+  <property name="CCNET.IntervalTrigger" value="90"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+  <largeproperty name="Developer.List">
+    <value expand="true" xml="true">
+      <user name="bill.smith" group="developer"  address="bill.smith@gmail.com"/>
+    </value>
+  </largeproperty>
+  
+  <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
+  <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
+  <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
+
+  <property name="CCNet.SVN.URI.ProjectName" value="https://&amp;ProjectName;.googlecode.com/svn" />
+  <property name="CCNet.SVN.URI.ProjectCodeLine" value="https://&amp;ProjectName;.googlecode.com/svn/&amp;ProjectCodeLineName;" />
+  <property name="CCNet.SVN.WebRepoUrl" value="http://localhost/svn/&amp;ProjectName;" /><!--makes shure that the case is correct, Tags or tags-->
+  <property name="CCNet.SVN.WebRepoUrl" value="http://${ProjectName}.googlecode.com/svn"/>
+  
+  <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
+  <property name="SVN.Username" value="Build" />
+  <property name="SVN.Password" value="password" />
+  <property name="SVN.WebVisible" value="true" />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="Subversion"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+    <string value="Analytics" />
+    <string value="Alerts" />
+
+    <string value="Deployment"/>
+
+    <!--
+    <string value="VisualSourceSafe"/>
+    <string value="Ant"/>
+    <string value="Backup" />
+    <string value="VS.NETCompile"/>
+    <string value="MSTest" />
+    <string value="CoverageEye"/>
+    <string value="Tracker"/>
+    <string value="InstallShield"/>
+		<string value="Vault"/>
+    <string value="VSTSVersionControl" />
+    -->
+  </strings>
+
+  <target name="Post.Install">
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagesDirectory}\Subversion\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+    
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+
+    <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+    <asyncexec workingdir="${BuildDirectory}" program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+  </target>
+  
+</project>
