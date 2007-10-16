@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Installer.Properties">
+
+	<property name="Perforce.ServerName" value="" overwrite="false"/>
+	<property name="Perforce.ServerPort" value="1666" overwrite="false"/>
+	<property name="Perforce.ServerPathPrefix" value="//depot" overwrite="false"/>
+
+	<largeproperty name="SourceControl.MainBuildBlock">
+		<value xml="false" expand="true">
+			<![CDATA[<sourcecontrol type="filtered">
+      <sourceControlProvider  
+        type="p4" 
+        applyLabel="true" 
+        autoGetSource="false"
+        port="${Perforce.ServerName}:${Perforce.ServerPort}"
+				view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/..."
+				client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
+				executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
+        />
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>]]>
+		</value>
+	</largeproperty>
+
+	<largeproperty name="SourceControl.BuildUpdateBlock">
+		<value xml="false" expand="true">
+			<![CDATA[<sourcecontrol  
+      type="p4" 
+      applyLabel="false" 
+      autoGetSource="true"
+      port="${Perforce.ServerName}:${Perforce.ServerPort}"
+			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/Build/..."
+			client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
+			executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
+      />]]>
+		</value>
+	</largeproperty>
+
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerName%', Perforce.ServerName)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerPort%', Perforce.ServerPort)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerPathPrefix%', Perforce.ServerPathPrefix)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+
+</project>
