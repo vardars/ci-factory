@@ -4,9 +4,8 @@
   #end
   <tr>
     <td>
-      <a href="WorkspaceSetup/CreateWorkspace.bat.txt" >
-        Workspace Setup Script
-        <br/>Save As .bat
+      <a href="WorkspaceSetup/WorkspaceSetup.exe" >
+        Workspace Setup
       </a>
     </td>
   </tr>

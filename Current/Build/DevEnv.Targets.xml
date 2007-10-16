@@ -29,7 +29,7 @@
       </ifthenelse>
     </ifnot>
 
-    <ifnot test="${file::exists('C:\Program Files\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll')}" >
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll')}" >
       <ask answer="Answer"
            question="It looks like Team Explorer is not installed.  Do you wish to continue?"
            caption="Proceed Without Required Software?"
@@ -51,7 +51,7 @@
       </ifthenelse>
     </ifnot>
 
-    <ifnot test="${file::exists('C:\Program Files\NCover\NCover.Console.exe')}" >
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\NCover\NCover.Console.exe')}" >
       <ask answer="Answer"
            question="It looks like NCover is not installed.  Do you wish to continue?"
            caption="Proceed Without Required Software?"
@@ -72,7 +72,38 @@
         </elseif>
       </ifthenelse>
     </ifnot>
-  </target>
+
+		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\TortoiseSVN\bin\TortoiseProc.exe')}" >
+			<ask answer="Answer"
+           question="It looks like TortoiseSVN is not installed.  This software is required.  Do you wish to install the software?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+				<options>
+					<string value="Install"/>
+					<string value="Exit"/>
+				</options>
+			</ask>
+			<ifthenelse test="${Answer == 'Install'}">
+				<then>
+					<asyncexec program="cmd" commandline='/C "explorer http://tortoisesvn.net/downloads"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+				</then>
+				<elseif if="${Answer == 'Exit'}">
+					<fail message="Please install TortoiseSVN!" />
+				</elseif>
+			</ifthenelse>
+
+			<ask answer="Answer" caption="Are finished installing TortoiseSVN?" question="Are finished installing TortoiseSVN?" showdialog="true">
+				<options>
+					<string value="Finished"/>
+					<string value="Exit"/>
+				</options>
+			</ask>
+
+			<fail if="${Answer == 'Exit'}" message="Please try again after installing TortoiseSVN."/>
+		</ifnot>
+
+
+	</target>
 
   <target name="DevEnv.ConfigureEnvironment">
 

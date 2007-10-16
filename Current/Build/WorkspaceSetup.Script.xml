@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="WorkspaceSetup.Script" default="Setup" >
+
+	<property name="CCNetBuildCondition" value="ForceBuild "/>
+	<property name="CCNetIntegrationStatus" value="Success"/>
+	<property name="CCNetLastIntegrationStatus" value="Success"/>
+	<property name="CCNetBuildDate" value="2006-09-12"/>
+	<property name="CCNetBuildTime" value="11:10:00"/>
+	<property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+	<property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+	<property name="CCNetLabel" value="1.0.0.2"/>
+	<property name="CCNetProject" value="CI Factory"/>
+	<property name="CCNetLogFilePath" value=""/>
+	
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
+	<include buildfile="DevEnv.Targets.xml" />
+	<include buildfile="Packages\Subversion\SourceControl.Target.xml" />
+	
+	<target name="Setup">
+		<call target="DevEnv.CheckForRequieredSoftware"/>
+		<call target="WorkspaceSetup.Setup"/>
+		<call target="DevEnv.ConfigureEnvironment"/>
+
+		<ask answer="ToBuild" caption="Do you want to build?" question="Do you want to build?" showdialog="true" >
+			<options>
+				<string value="Yes"/>
+				<string value="No"/>
+			</options>
+		</ask>
+
+		<if test="${ToBuild == 'Yes'}">
+			<nant buildfile="${ProductDirectory}\Personal.Build.xml"
+						inheritall="false"
+						inheritrefs="false"
+						target="Build" />
+		</if>
+	</target>
+
+	<target name="WorkspaceSetup.Setup">
+		<mkdir dir="${ProjectCodeLineDirectory}"/>
+
+		<property name="SourceControl.Update.FileTimeStamp" value="Current"/>
+		<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+		<property name="SourceControl.Update.MakeWritable" value="False"/>
+		<property name="SourceControl.Update.Interactive" value="True"/>
+		<call target="SourceControl.GetOfBuildDirectory"/>
+		<call target="SourceControl.GetOfThirdPartyDirectory" />
+		<call target="SourceControl.GetOfProductDirectory" />
+	</target>
+
+	<target name="WorkspaceSetup.CreateSfx">
+		<largeproperty name="SfxConfig.Content">
+			<value expand="true" xml="false">
+				<![CDATA[;The comment below contains SFX script commands
+
+Setup=nant\bin\nant.exe /f:WorkspaceSetup.Script.xml
+TempMode
+Overwrite=1
+Title=Setup CI Factory Workspace]]>
+			</value>
+		</largeproperty>
+
+		<property name="SfxConfig.FilePath" value="${BuildDirectory}\SfxConfig.txt"/>
+		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
+
+		<property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar"/>
+		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\WorkspaceSetup.exe"/>
+		
+		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
+		<exec program="${WinRarProgramPath}" 
+					commandline='a -r "${WorkspaceSetupExe.FilePath}" nAnt c -z"${SfxConfig.FilePath}" -sfx'
+					workingdir='${BuildDirectory}'/>
+
+		<foreach item='File' property='File'>
+			<in>
+				<items basedir='${BuildDirectory}'>
+					<include name='WorkspaceSetup.Script.xml'/>
+					<include name='Properties.build.xml'/>
+					<include name='DevEnv.Targets.xml'/>
+					<include name='Common.build.xml'/>
+					<include name='Packages\Subversion\**\*'/>
+				</items>
+			</in>
+			<do>
+				<property name='FileToAdd' value=".\${string::replace(File, BuildDirectory, '')}"/>
+				<exec program="${WinRarProgramPath}"
+				commandline='u -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
+				workingdir='${BuildDirectory}'/>
+			</do>
+		</foreach>
+		
+	</target>
+	
+</project>
