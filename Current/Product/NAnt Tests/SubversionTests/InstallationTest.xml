@@ -35,7 +35,7 @@
     <property name="SVN.Password" value="password"  />
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
-    <property name="CCNET.ProjectName" value="${ProjectName}"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
     <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
   </target>
   
