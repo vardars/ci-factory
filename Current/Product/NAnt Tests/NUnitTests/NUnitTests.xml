@@ -102,7 +102,7 @@
 		<waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="60" pollinginterval="10"/>
 		<assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
-		<property name="NUnitTests.BuildLogPath" value="${BuildDirectory}\server\${ProjectName}\Artifacts\buildlogs\${ccnet::get-project-last-build-log(CCNET.ServerUrl, CCNET.ProjectName)}"/>
+		<property name="NUnitTests.BuildLogPath" value="${BuildDirectory}\server\${CCNET.ProjectName}\Artifacts\buildlogs\${ccnet::get-project-last-build-log(CCNET.ServerUrl, CCNET.ProjectName)}"/>
 
 		<xmlpeek property="NUnitTests.UnitTestCount" 
 						 file="${NUnitTests.BuildLogPath}" 
