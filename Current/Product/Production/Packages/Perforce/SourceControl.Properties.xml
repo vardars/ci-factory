@@ -4,8 +4,8 @@
 	<property name="Perforce.ServerName" value="%Perforce.ServerName%" overwrite="false"/>
 	<property name="Perforce.ServerPort" value="%Perforce.ServerPort%" overwrite="false"/>
 	<property name="Perforce.ServerPathPrefix" value="%Perforce.ServerPathPrefix%" overwrite="false"/>
-  <property name="Perforce.WorkspaceName" value="%Perforce.WorkspaceNameBase%-${environment::get-machine-name()}"/>
-  <property name="Perforce.LabelScope" value="$/${ProjectName}/${ProjectCodeLineName}"/>
+	<property name="Perforce.WorkspaceNameBase" value="${ProjectName}-${ProjectCodeLineName}" overwrite="false"/>
+	<property name="Perforce.WorkspaceName" value="'${Perforce.WorkspaceNameBase}-${environment::get-machine-name()}'" overwrite="false"/>
 
 	<property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce"/>
 	<setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />

@@ -100,6 +100,18 @@ namespace NAnt.Contrib.Tasks.Perforce {
             set { _force = value; }
         }
 
+        private string _ClientView;
+
+        [TaskAttribute("clientview", Required = false)]
+        public string ClientView
+        {
+            get { return _ClientView; }
+            set
+            {
+                _ClientView = value;
+            }
+        }
+
         #endregion Public Instance Properties
 
         #region Override implementation of P4Base
@@ -141,7 +153,10 @@ namespace NAnt.Contrib.Tasks.Perforce {
                     throw new BuildException("A \"view\" and \"root\" are required for creating/editing with <p4client>.");
                 }
                 // this creates or edits the client, then the -o outputs to standard out
-                Perforce.CreateClient(User, ClientName, Root, View);
+                if (string.IsNullOrEmpty(this.ClientView))
+                    Perforce.CreateClient(User, ClientName, Root, View);
+                else
+                    Perforce.CreateClient(User, ClientName, Root, View, this.ClientView);
                 arguments.Append("-o ");
             }
             arguments.Append(ClientName);

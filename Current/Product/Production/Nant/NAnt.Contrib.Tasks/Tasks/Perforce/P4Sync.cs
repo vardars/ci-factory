@@ -125,10 +125,10 @@ namespace NAnt.Contrib.Tasks.Perforce {
             if (Force) {
                 arguments.Append("-f ");
             }
-            if (View != null) {
+            if (!string.IsNullOrEmpty(View)) {
                 arguments.Append(View + " ");
             }
-            if (Label != null) {
+            if (!string.IsNullOrEmpty(Label)) {
                 arguments.Append(string.Format("@{0} ", Label));
             }
 

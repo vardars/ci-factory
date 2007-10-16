@@ -4,21 +4,18 @@
 	<property name="Perforce.ServerName" value="" overwrite="false"/>
 	<property name="Perforce.ServerPort" value="1666" overwrite="false"/>
 	<property name="Perforce.ServerPathPrefix" value="//depot" overwrite="false"/>
-  <property name="Perforce.WorkspaceNameBase" value="${ProjectName}-${ProjectCodeLineName}" overwrite="false"/>
-  <property name="Perforce.WorkspaceName" value="${Perforce.WorkspaceNameBase}-${environment::get-machine-name()}" overwrite="false"/>
 
-  <largeproperty name="SourceControl.MainBuildBlock">
-    <value xml="false" expand="true">
-      <![CDATA[<sourcecontrol type="filtered">
+	<largeproperty name="SourceControl.MainBuildBlock">
+		<value xml="false" expand="true">
+			<![CDATA[<sourcecontrol type="filtered">
       <sourceControlProvider  
-        type="vstsbyFileSpecSourceControl" 
+        type="p4" 
         applyLabel="true" 
         autoGetSource="false"
-        port="${Perforce.Listener.Port}"
-        statefilepath="${BuildDirectory}\server\${ProjectName}.Perforce.state.xml"
-        project="$/${ProjectName}/${ProjectCodeLineName}"
-        server="${Perforce.ServerUrl}"
-        workspace="${Perforce.WorkspaceNameBase}-{0}"
+        port="${Perforce.ServerName}:${Perforce.ServerPort}"
+				view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/..."
+				client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
+				executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
         />
       <exclusionFilters>
         <pathFilter>
@@ -40,31 +37,28 @@
           <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
-    </sourcecontrol>]]></value>
-  </largeproperty>
+    </sourcecontrol>]]>
+		</value>
+	</largeproperty>
 
-  <largeproperty name="SourceControl.BuildUpdateBlock">
-    <value xml="false" expand="true">
-      <![CDATA[<sourcecontrol  
-      type="vstsbyFileSpecSourceControl" 
+	<largeproperty name="SourceControl.BuildUpdateBlock">
+		<value xml="false" expand="true">
+			<![CDATA[<sourcecontrol  
+      type="p4" 
       applyLabel="false" 
       autoGetSource="true"
-      port="${Perforce.BuildScripts.Listener.Port}"
-      statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.Perforce.state.xml"
-      project="$/${ProjectName}/${ProjectCodeLineName}/Build"
-      server="${Perforce.ServerUrl}"
-      workingDirectory="${BuildDirectory}"
-      workspace="${Perforce.WorkspaceNameBase}-{0}"
-      />]]></value>
-  </largeproperty>
+      port="${Perforce.ServerName}:${Perforce.ServerPort}"
+			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/Build/..."
+			client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
+			executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
+      />]]>
+		</value>
+	</largeproperty>
 
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerName%', Perforce.ServerName)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerPort%', Perforce.ServerPort)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerPathPrefix%', Perforce.ServerPathPrefix)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerUrl%', Perforce.ServerUrl)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.WorkspaceNameBase%', Perforce.WorkspaceNameBase)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerConnection%', Perforce.ServerConnection)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
 
 </project>

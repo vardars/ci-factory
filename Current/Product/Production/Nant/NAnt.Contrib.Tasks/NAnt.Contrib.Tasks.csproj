@@ -200,6 +200,7 @@
     <Compile Include="Tasks\Perforce\P4Submit.cs" />
     <Compile Include="Tasks\Perforce\P4Sync.cs" />
     <Compile Include="Tasks\Perforce\Perforce.cs" />
+    <Compile Include="Functions\PerforceFunctions.cs" />
     <Compile Include="Tasks\RecordTask.cs">
       <SubType>Code</SubType>
     </Compile>

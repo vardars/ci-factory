@@ -116,7 +116,15 @@ namespace NAnt.Contrib.Tasks.Perforce {
         /// <param name="Clientname"></param>
         /// <param name="Root"></param>
         /// <param name="View"></param>
-        public static void CreateClient(string User, string Clientname, string Root, string View) {
+        public static void CreateClient(string User, string Clientname, string Root, string View)
+        {
+            string ClientView = Regex.Replace(View, @"//\w+/", "//" + Clientname + "/");
+
+            CreateClient(User, Clientname, Root, View, ClientView);
+        }
+
+        public static void CreateClient(string User, string Clientname, string Root, string View, string ClientView)
+        {
             // create/edit client
             string output = null;
             string clientFileDef = string.Concat(
@@ -126,14 +134,14 @@ namespace NAnt.Contrib.Tasks.Perforce {
                 "Root: " + Root + "\n",
                 "Options: noallwrite noclobber nocompress unlocked nomodtime normdir\n",
                 "LineEnd: local\n",
-                "View:\n " + View + " " + Regex.Replace(View, @"//\w+/", "//" + Clientname + "/") + "\n\n" );   //p4root/... //clientname/...
-  
-            int exitcode = RunProcess( "p4", string.Format("-u {0} client -i", User), clientFileDef, ref output );
-            if (exitcode != 0) {
-                throw new BuildException( string.Format( "Unexpected P4 output = {0}", output));
+                "View:\n " + View + " " + ClientView + "\n\n");   //p4root/... //clientname/...
+
+            int exitcode = RunProcess("p4", string.Format("-u {0} client -i", User), clientFileDef, ref output);
+            if (exitcode != 0)
+            {
+                throw new BuildException(string.Format("Unexpected P4 output = {0}", output));
             }
         }
-
         /// <summary>
         /// Create a new changelist
         /// </summary>

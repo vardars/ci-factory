@@ -16,7 +16,7 @@
   <!ENTITY PackagesDirectory        '&BuildDirectory;\Packages' >
   <!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
   
-  <!ENTITY email '<email from="&ProjectName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;">
+  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;">
         <users>
           <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
           %Developer.List%
@@ -30,7 +30,7 @@
     </labeller>'>
 ]>
 <cruisecontrol>
-  <project name="&ProjectName; Build Scripts">
+  <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
     <webURL>&webURL;</webURL>
     <state type="state" />
     <triggers>
@@ -54,7 +54,7 @@
     &email;
   </publishers>
 </project>
-<project name="&ProjectName;">
+<project name="&ProjectName;-&ProjectCodeLineName;">
   <webURL>&webURL;</webURL>
   <state type="state" />
   <triggers>
