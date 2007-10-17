@@ -7,5 +7,5 @@ using System.Reflection;
 [assembly : AssemblyTitle("CC.NET Web Dashboard")]
 [assembly : AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyVersion("1.0.0.19")]
+[assembly: AssemblyVersion("1.0.0.20")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
