@@ -276,11 +276,11 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <target name="SourceControl.GetOfBuildDirectory" >
-    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${BuildDirectory}"/>
+  <target name="SourceControl.GetOfCodeLineDirectory" >
+    <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${ProjectCodeLineDirectory}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
-    <property name="Private.SourceControl.Update.LocalPath" value="${BuildDirectory}"/>
+    <property name="Private.SourceControl.Update.LocalPath" value="${ProjectCodeLineDirectory}"/>
     <property name="Private.SourceControl.Update.Path" value="${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
     <property name="Private.SourceControl.Update.Version" value=""/>
     <call target="Private.SourceControl.Update"/>

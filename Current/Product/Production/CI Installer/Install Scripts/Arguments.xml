@@ -47,9 +47,11 @@
     <string value="Alerts" />
 
     <string value="Deployment"/>
+    <string value="Workspace"/>
 
     <!--
     <string value="VisualSourceSafe"/>
+    <string value="Perforce"/>
     <string value="Ant"/>
     <string value="Backup" />
     <string value="VS.NETCompile"/>
@@ -63,9 +65,15 @@
   </strings>
 
   <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Worspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+    
+    <fileset id="PacakgeFinder" />
+    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${PackagesDirectory}\Subversion\SourceControl.Target.xml"/>
+        <include name="${PackagePath}"/>
       </buildfiles>
     </nant>
     

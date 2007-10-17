@@ -113,8 +113,8 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetOfBuildDirectory" >
-		<property name="Private.SourceControl.Update.LocalPath" value="${BuildDirectory}"/>
+	<target name="SourceControl.GetOfCodeLineDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProjectCodeLineDirectory}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="false"/>
 		<call target="Private.SourceControl.Update"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\Build" >
 
-
+  <property name="CCNetProject" value="%ProjectName%"/>
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
   <property name="CCNetLastIntegrationStatus" value="Success"/>
@@ -11,7 +11,6 @@
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
 
   <property name="CCNetLabel" value="1.0.0.2"/>
-  <property name="CCNetProject" value="%ProjectName%"/>
   <property name="CCNetLogFilePath" value=""/>
 
   <include buildfile="Properties.Build.xml"/>
@@ -19,8 +18,9 @@
 
   <property name="Compile.ConfigName" value="Debug"/>
 
-  <include buildfile=".\Packages\Deployment\Deployment.Target.xml"/>
-  <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml"/>
+  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
+  <include buildfile="${ProductDirectory}\Scratch.Lib.xml"/>
 
   <target name="test">
     <property name="Compile.ConfigName" value="Release"/>

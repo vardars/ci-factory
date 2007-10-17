@@ -31,7 +31,14 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			Hashtable velocityContext = new Hashtable();
 			string velocityTemplateName = "";
 
-			string serverName = request.ServerName;
+            string serverName = request.ServerName;
+            string projectName = request.ProjectName;
+            string buildName = request.BuildName;
+
+            velocityContext["serverName"] = serverName;
+            velocityContext["projectName"] = projectName;
+            velocityContext["buildName"] = buildName;
+
 			if (serverName == "")
 			{
 				velocityContext["links"] = pluginLinkCalculator.GetFarmPluginLinks();
@@ -39,7 +46,6 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			}
 			else
 			{
-				string projectName = request.ProjectName;
 				if (projectName == "")
 				{
 					velocityContext["links"] = pluginLinkCalculator.GetServerPluginLinks(request.ServerSpecifier);
@@ -47,7 +53,6 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 				}
 				else
 				{
-					string buildName = request.BuildName;
 					if (buildName == "")
 					{
 						IProjectSpecifier projectSpecifier = request.ProjectSpecifier;

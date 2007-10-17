@@ -46,17 +46,21 @@
   -->
   <ItemGroup>
     <Content Include="Default\Build\ccnetproject.xml" />
-    <Content Include="Default\Build\Common.Build.xml" />
+    <Content Include="Default\Product\Common.Build.xml" />
+    <Content Include="Default\Product\Compile.Environment.xml" />
     <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
     <Content Include="Default\Build\dashboard\xsl\header.xsl" />
     <Content Include="Default\Build\dashboard\xsl\modifications.xsl" />
     <Content Include="Default\Build\dashboard\xsl\NAnt.xsl" />
     <Content Include="Default\Build\dashboard\xsl\NAntTiming.xsl" />
     <Content Include="Default\Build\Main.build.xml" />
+    <Content Include="Default\Product\OpenSolution.Script.xml" />
+    <Content Include="Default\Product\Personal.Build.xml" />
     <Content Include="Default\Build\Post.build.xml" />
     <Content Include="Default\Build\Post.Shim.xml" />
     <Content Include="Default\Build\Properties.build.xml" />
     <Content Include="Default\Build\Scratch.build.xml" />
+    <Content Include="Default\Product\Scratch.Lib.xml" />
     <Content Include="Default\Build\server\xsl\compile.xsl" />
     <Content Include="Default\Build\server\xsl\cruisecontrol.css" />
     <Content Include="Default\Build\server\xsl\header.xsl" />
@@ -68,10 +72,14 @@
     <Content Include="Default\Product\Scratch.build.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Default\Product\Build.bat" />
     <None Include="Default\Build\Build.sln.remove" />
     <None Include="Default\Build\CCNETServer.Bat" />
-    <None Include="Default\Build\OpenSolution.bat" />
+    <None Include="Default\Product\NoUpdateBuild.bat" />
+    <None Include="Default\Product\OpenCommandPrompt.bat" />
+    <None Include="Default\Product\OpenSolution.bat" />
     <None Include="Default\Build\Build.csproj.remove" />
+    <None Include="Default\Product\Test.bat" />
     <None Include="Default\Build\UpdatenAntSchema.bat" />
   </ItemGroup>
   <ItemGroup>

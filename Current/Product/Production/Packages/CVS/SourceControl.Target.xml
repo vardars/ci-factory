@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CVS">
 
-  <loadtasks assembly="${PackagesDirectory}\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll" />
+  <ifthenelse test="${file::exists('Packages\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll')}">
+    <then>
+      <property name="CVS.Task" value="Packages\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll"/>
+    </then>
+    <elseif if="${file::exists(PackagesDirectory + '\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll')}">
+      <property name="CVS.Task" value="${PackagesDirectory}\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll"/>
+    </elseif>
+    <else>
+      <fail message="Can not find ...Packages\CVS\bin\CIFactory.NAnt.CVS.Tasks.dll!"/>
+    </else>
+  </ifthenelse>
+
+  <loadtasks assembly="${CVS.Task}" />
 
   <include buildfile="SourceControl.Properties.xml" />
 
@@ -26,8 +38,8 @@
     <call target="SourceControl.GetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfBuildDirectory" >
-    <property name="SourceControl.GetOf" value="${BuildDirectory}"/>
+  <target name="SourceControl.GetOfCodeLineDirectory" >
+    <property name="SourceControl.GetOf" value="${ProjectCodeLineDirectory}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 

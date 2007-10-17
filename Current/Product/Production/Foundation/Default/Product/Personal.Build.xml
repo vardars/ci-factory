@@ -33,6 +33,7 @@
 
   <description>Begin Package Includes</description>
   <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Target.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Target.xml')}"/>
   
   <fileset id="PacakgeFinder" />
   <loopthrough property="PackageType">
@@ -47,8 +48,10 @@
       <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
       <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
       <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
-      <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-      <include buildfile="${PackagePath}"/>
+      <if test="${fileset::file-count('PacakgeFinder') > 0}">
+        <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+        <include buildfile="${PackagePath}"/>
+      </if>
       <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
     </do>
   </loopthrough>
@@ -74,11 +77,15 @@
   </target>
   
   <target name="Build">
+    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
+    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
     <call target="Compile"/>
-    <call target="Test"/>
+    <call target="Test" if="${target::exists('Test')}"/>
   </target>
 
   <target name="Rebuild">
+    <call target="Workspace.CheckForRequieredSoftware"/>
+    <call target="Workspace.ConfigureEnvironment"/>
     <call target="Recompile"/>
     <call target="Test"/>
   </target>
@@ -88,9 +95,7 @@
     <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
     <property name="SourceControl.Update.MakeWritable" value="False"/>
 		<property name="SourceControl.Update.Interactive" value="True"/>
-    <call target="SourceControl.GetOfBuildDirectory"/>
-    <call target="SourceControl.GetOfThirdPartyDirectory" />
-    <call target="SourceControl.GetOfProductDirectory" />
+    <call target="SourceControl.GetOfCodeLineDirectory"/>
   </target>
 
   <target name="Compile">
