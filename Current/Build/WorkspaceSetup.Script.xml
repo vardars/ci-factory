@@ -51,11 +51,22 @@
 	</target>
 
 	<target name="WorkspaceSetup.CreateSfx">
+    <largeproperty name="Batch.Content">
+      <value expand="true" xml="false">
+        <![CDATA[nant\bin\nant.exe /f:WorkspaceSetup.Script.xml
+SET /P variable="Hit [Enter] exit."]]>
+      </value>
+    </largeproperty>
+
+    <property name="Batch.FileName" value="WorkspaceSetup.bat"/>
+    <property name="Batch.FilePath" value="${BuildDirectory}\${Batch.FileName}"/>
+    <echo message="${Batch.Content}" file="${Batch.FilePath}"/> 
+    
 		<largeproperty name="SfxConfig.Content">
 			<value expand="true" xml="false">
 				<![CDATA[;The comment below contains SFX script commands
 
-Setup=nant\bin\nant.exe /f:WorkspaceSetup.Script.xml
+Setup=${Batch.FileName}
 TempMode
 Overwrite=1
 Title=Setup CI Factory Workspace]]>
@@ -80,6 +91,7 @@ Title=Setup CI Factory Workspace]]>
 					<include name='Properties.build.xml'/>
 					<include name='DevEnv.Targets.xml'/>
 					<include name='Common.build.xml'/>
+          <include name='${Batch.FileName}'/>
 					<include name='Packages\Subversion\**\*'/>
 				</items>
 			</in>
@@ -90,7 +102,9 @@ Title=Setup CI Factory Workspace]]>
 				workingdir='${BuildDirectory}'/>
 			</do>
 		</foreach>
-		
+
+    <delete file="${Batch.FilePath}" />
+    <delete file="${SfxConfig.FilePath}" />
 	</target>
 	
 </project>

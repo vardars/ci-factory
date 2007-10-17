@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN">
 
-  <loadtasks assembly="${PackagesDirectory}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
+  <loadtasks assembly="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
 
   <property name="SVN.Debug" value="false" overwrite="false" />
 
@@ -86,38 +86,46 @@
 		<property name="SourceControl.GetOf.NeedCheckout" value="false"/>
 		<property name="SourceControl.GetOf.CleanUp" value="false"/>
 
-		<trycatch>
-			<try>
-				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
-					<arg line="/command:update" />
-					<arg line='/path:"${SourceControl.GetOf}"' />
-					<arg line='/notempfile' />
-				</exec>
-			</try>
-			<catch property="exception">
-				<echo message="${exception}" />
-				<property name="SourceControl.GetOf.CleanUp" value="true"/>
-			</catch>
-		</trycatch>
+    <ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">
+      <then>
+		    <trycatch>
+			    <try>
+				    <exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true" >
+					    <arg line="/command:update" />
+					    <arg line='/path:"${SourceControl.GetOf}"' />
+					    <arg line='/notempfile' />
+				    </exec>
+			    </try>
+			    <catch property="exception">
+				    <echo message="${exception}" />
+				    <property name="SourceControl.GetOf.CleanUp" value="true"/>
+			    </catch>
+		    </trycatch>
 
-		<trycatch if="${SourceControl.GetOf.CleanUp}">
-			<try>
-				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
-					<arg line="/command:cleanup" />
-					<arg line='/path:"${SourceControl.GetOf}"' />
-					<arg line='/notempfile' />
-				</exec>
-				<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
-					<arg line="/command:update" />
-					<arg line='/path:"${SourceControl.GetOf}"' />
-					<arg line='/notempfile' />
-				</exec>
-			</try>
-			<catch property="exception">
-				<echo message="${exception}" />
-				<property name="SourceControl.GetOf.NeedCheckout" value="true"/>
-			</catch>
-		</trycatch>
+		    <trycatch if="${SourceControl.GetOf.CleanUp}">
+			    <try>
+				    <exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					    <arg line="/command:cleanup" />
+					    <arg line='/path:"${SourceControl.GetOf}"' />
+					    <arg line='/notempfile' />
+				    </exec>
+				    <exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="true">
+					    <arg line="/command:update" />
+					    <arg line='/path:"${SourceControl.GetOf}"' />
+					    <arg line='/notempfile' />
+				    </exec>
+			    </try>
+			    <catch property="exception">
+				    <echo message="${exception}" />
+				    <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+			    </catch>
+		    </trycatch>
+      </then>
+      <else>
+        <echo message="${SourceControl.GetOf} is not versioned by Svn."/>
+        <property name="SourceControl.GetOf.NeedCheckout" value="true"/>
+      </else>
+    </ifthenelse>
 
 		<if test="${SourceControl.GetOf.NeedCheckout}">
 			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>

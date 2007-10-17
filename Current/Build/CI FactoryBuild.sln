@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SetupIIS.xml = SetupIIS.xml
 		UpdatenAntSchema.bat = UpdatenAntSchema.bat
 		UpdatenAntSchema.xml = UpdatenAntSchema.xml
+		WorkspaceSetup.Script.xml = WorkspaceSetup.Script.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{BE4448BC-99ED-4497-9FF6-2762D46AC29A}"
