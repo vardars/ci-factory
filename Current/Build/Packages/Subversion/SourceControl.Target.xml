@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN">
+  
+  <ifthenelse test="${file::exists('Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll')}">
+    <then>
+      <property name="SVN.Task" value="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
+    </then>
+    <elseif if="${file::exists(PackagesDirectory + '\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll')}">
+      <property name="SVN.Task" value="${PackagesDirectory}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
+    </elseif>
+    <else>
+      <fail message="Can not find ...Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll!"/>
+    </else>
+  </ifthenelse>
 
-  <loadtasks assembly="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
+  <loadtasks assembly="${SVN.Task}" />
 
   <property name="SVN.Debug" value="false" overwrite="false" />
 
