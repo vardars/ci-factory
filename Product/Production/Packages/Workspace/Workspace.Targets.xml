@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Targets">
+
+  <target name="Workspace.CheckForRequieredSoftware" >
+    <loopthrough property="Workspace.RequieredSoftware.Target">
+      <items>
+        <strings refid="Workspace.RequieredSoftware" />
+      </items>
+      <do>
+        <call target="Workspace.RequieredSoftware.${Workspace.RequieredSoftware.Target}"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <target name="Workspace.ConfigureEnvironment">
+
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\AssemblyPath"
+                   value="10"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\(Default)"
+                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application"
+                   value="MbUnit.Framework"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TargetFrameworkAssemblyName"
+                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+    <writeregistry hive="LocalMachine"
+                   key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TypeName"
+                   value="MbUnit.AddIn.MbUnitTestRunner"/>
+
+  </target>
+
+  <target name="Workspace.RequieredSoftware.VisualStudio2005">
+    <property name="VisualStudioServicePack" value=""/>
+    <readregistry hive="LocalMachine"
+                  key="SOFTWARE\Microsoft\DevDiv\VS\Servicing\8.0\SP"
+                  property="VisualStudioServicePack" failonerror="false"/>
+
+    <ifnot test="${VisualStudioServicePack == '1'}">
+      <ask answer="Answer"
+           question="It looks like Visual Studio 2005 SP1 is not installed.  Do you wish to continue?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install SP1"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install SP1'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C " explorer http://msdn2.microsoft.com/en-us/vstudio/bb265237.aspx"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing VS 2005 SP1!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install VS 2005 SP1!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
+  
+  <target name="Workspace.RequieredSoftware.TeamExplorer">
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll')}" >
+      <ask answer="Answer"
+           question="It looks like Team Explorer is not installed.  Do you wish to continue?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install Team Explorer"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install Team Explorer'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://download.microsoft.com/download/2/a/d/2ad44873-8ccb-4a1b-9c0d-23224b3ba34c/VSTFClient.img"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing Team Explorer!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install Team Explorer!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
+  
+  <target name="Workspace.RequieredSoftware.NCover">
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\NCover\NCover.Console.exe')}" >
+      <ask answer="Answer"
+           question="It looks like NCover is not installed.  Do you wish to continue?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Continue"/>
+          <string value="Stop and Install NCover"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Stop and Install NCover'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://www.ncover.com/download"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+          <fail message="Installing NCover!" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install NCover!" />
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
+  
+  <target name="Workspace.RequieredSoftware.Subversion">
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\TortoiseSVN\bin\TortoiseProc.exe')}" >
+      <ask answer="Answer"
+           question="It looks like TortoiseSVN is not installed.  This software is required.  Do you wish to install the software?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Install"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Install'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://tortoisesvn.net/downloads"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install TortoiseSVN!" />
+        </elseif>
+      </ifthenelse>
+
+      <ask answer="Answer" caption="Are finished installing TortoiseSVN?" question="Are finished installing TortoiseSVN?" showdialog="true">
+        <options>
+          <string value="Finished"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+
+      <fail if="${Answer == 'Exit'}" message="Please try again after installing TortoiseSVN."/>
+    </ifnot>
+  </target>
+  
+  <target name="Workspace.RequieredSoftware.Perforce">
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4.exe')}" >
+      <ask answer="Answer"
+           question="It looks like Perforce is not installed.  This software is required.  Do you wish to install the software?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+        <options>
+          <string value="Install"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Install'}">
+        <then>
+          <asyncexec program="cmd" commandline='/C "explorer http://www.perforce.com/perforce/downloads/ntx86_64.html"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <fail message="Please install Perforce!" />
+        </elseif>
+      </ifthenelse>
+
+      <ask answer="Answer" caption="Are finished installing Perforce?" question="Are finished installing Perforce?" showdialog="true">
+        <options>
+          <string value="Finished"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+
+      <fail if="${Answer == 'Exit'}" message="Please try again after installing Perforce."/>
+    </ifnot>
+  </target>
+  
+</project>
