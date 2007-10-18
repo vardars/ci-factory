@@ -37,9 +37,21 @@
     <string value="Simian" />
     <string value="LinesOfCode"/>
     <string value="Deployment"/>
+    <string value="Workspace"/>
   </strings>
 
   <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="BuildServerHostName" value="environment::get-machine-name()"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
     <nant target="SourceControl.Repository.Create">
       <buildfiles>
         <include name="${PackagesDirectory}\VisualSourceSafe\SourceControl.Target.xml"/>

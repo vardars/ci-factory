@@ -172,5 +172,8 @@
       <fail if="${Answer == 'Exit'}" message="Please try again after installing Perforce."/>
     </ifnot>
   </target>
+
+  <target name="Workspace.SetUp"></target>
+  <target name="Workspace.TearDown"></target>
   
 </project>
