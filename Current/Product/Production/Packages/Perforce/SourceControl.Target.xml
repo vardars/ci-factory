@@ -267,6 +267,8 @@
 		<p4submit changelist="Initial Load" client="Temp-${Perforce.WorkspaceName}" />
 
 		<p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
+
+    <call target="Private.SourceControl.EnsureWorkspace" />
 	</target>
 
 	<target name="SourceControl.Bindings.Create">

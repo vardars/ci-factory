@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Setup" default="Setup" basedir="..\..\" >
 
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+      ]]>
+    </code>
+  </script>
+	
 	<property name="CCNetBuildCondition" value="ForceBuild "/>
 	<property name="CCNetIntegrationStatus" value="Success"/>
 	<property name="CCNetLastIntegrationStatus" value="Success"/>
@@ -16,6 +32,15 @@
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
 	<include buildfile="Packages\Workspace\Workspace.Targets.xml" />
+
+<fileset id="PacakgeFinder" />
+<ifnot test="${property::exists('SourceControl.PackageName')}">
+    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+    <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
+</ifnot>
+
 	<include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Target.xml" />
 	
 	<target name="Setup">
@@ -52,11 +77,6 @@
 	</target>
 
 	<target name="WorkspaceSetup.CreateSfx">
-    <fileset id="PacakgeFinder" />
-    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
-    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-    <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
     
     <largeproperty name="Batch.Content">
       <value expand="true" xml="false">
@@ -84,6 +104,8 @@ Title=Setup CI Factory Workspace]]>
 		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
     <property name="WinRarProgramPath" value="%WinRarProgramPath%" overwrite="false"/>
+
+<mkdir dir="${BuildDirectory}\dashboard\WorkspaceSetup" />
 		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-WorkspaceSetup.exe"/>
 		
 		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
@@ -114,20 +136,4 @@ Title=Setup CI Factory Workspace]]>
     <delete file="${SfxConfig.FilePath}" />
 	</target>
 
-  <script language="C#" prefix="directory" >
-    <imports>
-      <import namespace="System.IO" />
-    </imports>
-
-    <code>
-      <![CDATA[
-         [Function("name")]
-         public static string GetDirectoryName(string path)
-         {
-                 return new DirectoryInfo( path ).Name;
-         }
-      ]]>
-    </code>
-  </script>
-	
 </project>

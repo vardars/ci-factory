@@ -42,7 +42,6 @@
     <string value="DotNetUnitTest"/>
     <string value="nDepend"/>
     <string value="Simian" />
-    <string value="LinesOfCode"/>
     <string value="Analytics" />
     <string value="Alerts" />
 
@@ -50,6 +49,7 @@
     <string value="Workspace"/>
 
     <!--
+    <string value="LinesOfCode"/>
     <string value="VisualSourceSafe"/>
     <string value="Perforce"/>
     <string value="Ant"/>
@@ -65,7 +65,7 @@
   </strings>
 
   <target name="Post.Install">
-    <nant buildfile="${PackagesDirectory}\Workspace\Worspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
     
     <fileset id="PacakgeFinder" />
     <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>

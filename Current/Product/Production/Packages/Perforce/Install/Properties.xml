@@ -19,22 +19,22 @@
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]>
