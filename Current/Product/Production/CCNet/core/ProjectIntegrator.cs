@@ -301,7 +301,12 @@ namespace ThoughtWorks.CruiseControl.Core
 
         public IIntegrationResult CurrentIntegrationResult
         {
-            get { return this._IntegrationResult; }
+            get
+            {
+                if (_IntegrationResult == null)
+                    _IntegrationResult = resultManager.StartNewIntegration();
+                return this._IntegrationResult;
+            }
         }
 
         #endregion
