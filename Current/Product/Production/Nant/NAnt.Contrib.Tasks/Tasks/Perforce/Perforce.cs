@@ -19,14 +19,40 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-
 using NAnt.Core;
+using System.Globalization;
+using NAnt.Core.Util;
 
 namespace NAnt.Contrib.Tasks.Perforce {
+
     /// <summary>
     /// Static helper class for Perforce tasks.
     /// </summary>
     public class Perforce {
+
+        private static Project _Project;
+        private static bool _Verbose;
+
+        public static bool Verbose
+        {
+            get { return _Verbose; }
+            set
+            {
+                _Verbose = value;
+            }
+        }
+        public static Project Project
+        {
+            get
+            {
+                return _Project;
+            }
+            set
+            {
+                _Project = value;
+            }
+        }
+
         /// <summary>
         /// ask p4 for the user name
         /// </summary>
@@ -236,13 +262,27 @@ namespace NAnt.Contrib.Tasks.Perforce {
         /// <param name="input"></param>
         /// <param name="output"></param>
         /// <returns></returns>
-        public static int RunProcess( string exe, string prms, string input, ref string output ) {
+        public static int RunProcess( string exe, string prms, string input, ref string output ) {    
             System.Diagnostics.Process p = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo si = new System.Diagnostics.ProcessStartInfo( exe, prms );
             si.UseShellExecute = false;
             si.RedirectStandardOutput = true;
             si.RedirectStandardInput = ( input != null );
             p.StartInfo = si;
+
+            if (Verbose)
+            {
+                string msg = string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Starting '{1} ({2})' in '{0}'",
+                    p.StartInfo.WorkingDirectory,
+                    p.StartInfo.FileName,
+                    p.StartInfo.Arguments);
+                Project.Log(Level.Info, msg);
+                if (input != null)
+                    Project.Log(Level.Info, input);
+            }
+
             p.Start();
             if ( input != null ) {
                 StreamWriter sw = p.StandardInput;

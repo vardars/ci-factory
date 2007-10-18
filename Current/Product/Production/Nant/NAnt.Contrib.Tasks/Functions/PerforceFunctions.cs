@@ -20,9 +20,9 @@ namespace NAnt.Contrib.Functions.Perforce
         }
 
         [Function("workspace-exists")]
-        public bool WorkspaceExists(string client)
+        public bool WorkspaceExists(string client, string port)
         {
-            string output = Helper.getProcessOutput("p4", "clients", null);
+            string output = Helper.getProcessOutput("p4", string.Format("-p {0} clients", port), null);
             string[] lines = output.Split('\n');
             foreach (string line in lines)
             {

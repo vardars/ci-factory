@@ -41,9 +41,17 @@ namespace NAnt.Contrib.Tasks.Perforce {
     /// <seealso cref="P4Submit">P4Submit</seealso>
     /// <seealso cref="P4Sync">P4Sync</seealso>
     /// </summary>
-    public abstract class P4Base: ExternalProgramBase {
+    public abstract class P4Base: ExternalProgramBase
+    {
+        protected override void InitializeTask(System.Xml.XmlNode taskNode)
+        {
+            base.InitializeTask(taskNode);
+            Perforce.Project = this.Project;
+            Perforce.Verbose = this.Verbose;
+        }
+
         #region Private Instance Fields
-        
+
         private string _arguments;
         private string _perforcePort;
         private string _perforceClient;
@@ -158,7 +166,15 @@ namespace NAnt.Contrib.Tasks.Perforce {
 
             // Get the command specific arguments from the derived class
             arguments.Append(" ");
-            arguments.Append(CommandSpecificArguments);
+
+            try
+            {
+                arguments.Append(CommandSpecificArguments);
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException(ex.Message, this.Location, ex);
+            }
 
             _arguments = arguments.ToString();
 

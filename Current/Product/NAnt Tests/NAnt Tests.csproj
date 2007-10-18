@@ -21,6 +21,8 @@
     <Content Include="NCoverTests\Resources\NUnitProject.pdb" />
     <Content Include="NUnitTests\Install Resources\DefaultArguments.xml" />
     <Content Include="NUnitTests\NUnitTests.xml" />
+    <Content Include="PerforceTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="PerforceTests\InstallationTest.xml" />
     <Content Include="Stubs\SourceControlStub\Install\Install.xml" />
     <Content Include="Stubs\SourceControlStub\Install\Properties.xml" />
     <Content Include="SubversionTests\Install Resources\DefaultArguments.xml" />
