@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 10/10/2007 21:48:52</xs:documentation>
+    <xs:documentation>NAnt schema generated at 10/18/2007 11:00:27</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -55,6 +55,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -240,6 +254,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -1039,6 +1067,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -1677,6 +1719,291 @@
     </xs:sequence>
     <xs:attribute name="out" use="required" />
     <xs:attribute name="xslfile" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Add">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="file" use="required" />
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Change">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Client">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="clientname" use="required" />
+    <xs:attribute name="root" use="optional" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="force" use="optional" />
+    <xs:attribute name="clientview" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Delete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Edit">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Info">
+    <xs:attribute name="user" use="required" />
+    <xs:attribute name="client" use="required" />
+    <xs:attribute name="host" use="required" />
+    <xs:attribute name="root" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Label">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Labelsync">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Print">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="file" use="required" />
+    <xs:attribute name="outputfile" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Reopen">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Revert">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="revertunchanged" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Set">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Submit">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="required" />
+    <xs:attribute name="remainopen" use="optional" />
+    <xs:attribute name="revertunchanged" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Sync">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="optional" />
+    <xs:attribute name="force" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -3089,6 +3416,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -3282,6 +3623,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -3510,6 +3865,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -4788,6 +5157,20 @@
       <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
       <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
       <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+      <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+      <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+      <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+      <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+      <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+      <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+      <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+      <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+      <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+      <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+      <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+      <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+      <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+      <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
       <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
       <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
       <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -5000,6 +5383,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
