@@ -101,8 +101,8 @@
   </target>
 
   <target name="Perforce.InstallationTest.DefaultInstallTest">
-    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
-    <sleep seconds="5"/>
+    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!) Perforce seems to a little longer than other configs?-->
+    <sleep seconds="10"/>
     <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
   </target>
