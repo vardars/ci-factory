@@ -72,7 +72,7 @@
 			</do>
 		</loopthrough>
 
-		<foreach in="C:\temp\log.txt" property="Line" item="Line">
+		<foreach in="${TempNotesFilePath}" property="Line" item="Line">
 			<echo message="Line ${Line}"/>
 			<regex input="${Line}" options="Multiline,IgnoreCase"
 					 pattern="(^(?'Ignored'ignore.*)$)|(^(?'Fixed'fix.*)$)|(^(?'Added'.*)$)"/>
