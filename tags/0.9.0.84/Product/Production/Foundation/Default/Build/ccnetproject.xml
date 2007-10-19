@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cruisecontrol [
+  <!ENTITY HostName                 '%HostName%' >
+  <!ENTITY ProjectName              '%ProjectName%' >
+  <!ENTITY ProjectCodeLineName      '%ProjectCodeLineName%' >
+  <!ENTITY ProjectsDirectory        '%ProjectsDirectory%' >
+  <!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
+  <!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+  <!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\Product' >
+  <!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\Third Party' >
+  <!ENTITY ProductionDirectory      '&ProductDirectory;\Production' >
+  <!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\Build' >
+  <!ENTITY ArtifactRootDirectory    '&BuildDirectory;\Artifacts' >
+  <!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
+  <!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
+  <!ENTITY PackagesDirectory        '&BuildDirectory;\Packages' >
+  <!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
+  
+  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;">
+        <users>
+          <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
+          %Developer.List%
+        </users>
+        <groups>
+          <group name="buildmaster" notification="failed"/>
+        </groups>
+      </email>'>
+  <!ENTITY labeller '<labeller type="defaultlabeller">
+      <prefix>1.0.0.</prefix>
+    </labeller>'>
+]>
+<cruisecontrol>
+  <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
+    <webURL>&webURL;</webURL>
+    <state type="state" />
+    <triggers>
+      <intervalTrigger seconds="%CCNET.IntervalTrigger%" />
+    </triggers>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+    </integrationFilter>
+    <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
+    %SourceControl.BuildUpdateBlock%
+    &labeller;
+  <tasks>
+    <nullTask/>
+  </tasks>
+  <publishers>
+    <xmllogger />
+    &email;
+  </publishers>
+</project>
+<project name="&ProjectName;-&ProjectCodeLineName;">
+  <webURL>&webURL;</webURL>
+  <state type="state" />
+  <triggers>
+    <intervalTrigger seconds="%CCNET.IntervalTrigger%" />
+  </triggers>
+  <integrationFilter>
+    <triggeredIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="true" />
+      </allowed>
+    </triggeredIntegrationFilter>
+    <forcedIntegrationFilter>
+      <allowed>
+        <modificationsRequired condition="false" />
+      </allowed>
+      <blocked>
+      </blocked>
+    </forcedIntegrationFilter>
+  </integrationFilter>
+  <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
+  %SourceControl.MainBuildBlock%
+  &labeller;
+  <tasks>
+    <modificationWriter>
+        <filename>SourceModificationReport.xml</filename>
+        <path>&BuildDirectory;\SourceModificationReports</path>
+      </modificationWriter>
+      <nant>
+        <executable>&NantExePath;</executable>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Main.build.xml</buildFile>
+        <targetList>
+          <target>Triggered</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
+    </tasks>
+    <publishers>
+      <merge>
+        <files>
+          <file>&BuildDirectory;\Reports\*.xml</file>
+        </files>
+      </merge>
+      <xslmerger>
+        <filepairs>
+        </filepairs>
+      </xslmerger>
+      <xmllogger />
+      &email;
+      <nant>
+        <executable>&NantExePath;</executable>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <logger>NAnt.Core.XmlLogger </logger>
+        <buildFile>Post.Shim.xml</buildFile>
+        <targetList>
+          <target>PostBuildWrapper</target>
+        </targetList>
+
+        <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      </nant>
+    </publishers>
+  </project>
+</cruisecontrol>
