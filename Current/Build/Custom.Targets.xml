@@ -60,26 +60,33 @@
     <property name='NewAndImprovedNotes' value=''/>
     <property name='FixedNotes' value=''/>
 
-    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg[not(starts-with(text(), 'fix') or starts-with(text(), 'fixed') or starts-with(text(), 'Fix') or starts-with(text(), 'Fixed'))]" id='NewAndImprovedNotes' />
-    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg[starts-with(text(), 'fix') or starts-with(text(), 'fixed') or starts-with(text(), 'Fix') or starts-with(text(), 'Fixed')]" id='FixedNotes' />
+    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg" id='Notes' />
+		<property name='TempNotesFilePath' value='${Common.TempDirectory}\Notes.txt'/>
+		
+		<loopthrough property='Message'>
+			<items>
+				<xmlquery refid='Notes' />
+			</items>
+			<do>
+				<echo message='${Message}' append='true' file='${TempNotesFilePath}' />
+			</do>
+		</loopthrough>
 
-    <loopthrough property='Message'>
-      <items>
-        <xmlquery refid='NewAndImprovedNotes' />
-      </items>
-      <do>
-        <property name='NewAndImprovedNotes' value='${NewAndImprovedNotes}${Message}&lt;br/&gt;' unless="${Message == ''}"/>
-      </do>
-    </loopthrough>
+		<foreach in="C:\temp\log.txt" property="Line" item="Line">
+			<echo message="Line ${Line}"/>
+			<regex input="${Line}" options="Multiline,IgnoreCase"
+					 pattern="(^(?'Ignored'ignore.*)$)|(^(?'Fixed'fix.*)$)|(^(?'Added'.*)$)"/>
 
-    <loopthrough property='Message'>
-      <items>
-        <xmlquery refid='FixedNotes' />
-      </items>
-      <do>
-        <property name='FixedNotes' value='${FixedNotes}${Message}&lt;br/&gt;' unless="${Message == ''}"/>
-      </do>
-    </loopthrough>
+			<if test="${Added != ''}">
+				<property name='NewAndImprovedNotes' 
+								value='${NewAndImprovedNotes}${Added}&lt;br/&gt;'/>
+			</if>
+			
+			<if test="${Fixed != ''}">
+				<property name='FixedNotes' 
+								value='${FixedNotes}${Fixed}&lt;br/&gt;'/>
+			</if>
+		</foreach>
 
     <get dest="${ReleaseNotesFilePath}"
          src="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=44&amp;pop=1&amp;page=0&amp;Itemid=1" />
