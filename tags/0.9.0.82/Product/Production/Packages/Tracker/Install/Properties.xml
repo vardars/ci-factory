@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Tracker.Install.Properties">
+
+  <largeproperty name="Tracker.Connection">
+    <value><![CDATA[<connectioninformation id="Tracker.Connection"
+	  username="build"
+	  password="password"
+	  dbmsserver="servername"
+	  dbmstype="Tracker SQL Server Sys"
+	  dbmsloginmode="2"
+	  dbmsusername="user"
+	  dbmspassword="password"
+	  projectname="${ProjectName}"
+  />]]></value>
+  </largeproperty>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.Connection%', Tracker.Connection)}"/>
+
+  <property name="Tracker.FailForNone" value="true" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.FailForNone%', Tracker.FailForNone)}"/>
+
+  <largeproperty name="Tracker.QueryFields">
+    <value><![CDATA[<readfieldset id="Tracker.QueryFields">
+    <field name="Title"/>
+    <field name="Submit Type"/>
+  </readfieldset>]]></value>
+  </largeproperty>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.QueryFields%', Tracker.QueryFields)}"/>
+
+  <property name="Tracker.Query" value="PendingBuild-${ProjectName}" />
+  <property name="Tracker.QueryScrList" value=""/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.Query%', Tracker.Query)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.QueryScrList%', Tracker.QueryScrList)}"/>
+
+  <largeproperty name="Tracker.ChangeFields">
+    <value><![CDATA[<writefieldset id="Tracker.ChangeFields">
+    <field name="Status" value="Pending Test"/>
+    <field name="Assignee" value="Build"/>
+  </writefieldset>]]></value>
+  </largeproperty>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.ChangeFields%', Tracker.ChangeFields)}"/>
+
+  <largeproperty name="Tracker.UnitTest">
+    <value><![CDATA[<writefieldset id="Tracker.UnitTest">
+    <field name="Status" value="Development"/>
+  </writefieldset>]]></value>
+  </largeproperty>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.UnitTest%', Tracker.UnitTest)}"/>
+
+
+  <largeproperty name="Tracker.NewFields">
+    <value><![CDATA[<writefieldset id="Tracker.NewFields">
+    <field name="Title" value="Replace With Title"/>
+    <field name="Description" value="EF Build=${CCNetLabel} EF Trackers=${Tracker.QueryScrList}"/>
+    <field name="Status" value="Pending Build"/>
+    <field name="Assignee" value="build"/>
+  </writefieldset>]]></value>
+  </largeproperty>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Tracker.NewFields%', Tracker.NewFields)}"/>
+  
+</project>
