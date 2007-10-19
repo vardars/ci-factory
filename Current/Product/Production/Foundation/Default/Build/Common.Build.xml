@@ -145,7 +145,8 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
       </value>
     </largeproperty>
 
-    <property name="CCTraySettings.FilePath" value="${BuildDirectory}\Settings.xml"/>
+		<property name="CCTraySettings.FileName" value="Settings.xml"/>
+    <property name="CCTraySettings.FilePath" value="${BuildDirectory}\${CCTraySettings.FileName}"/>
     <echo message="${CCTraySettings.Content}" file="${CCTraySettings.FilePath}"/>
 
     <property name="WinRarProgramPath" value="%WinRarProgramPath%" overwrite="false"/>
@@ -162,7 +163,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
     </if>
 
     <exec program="${WinRarProgramPath}"
-				  commandline='u -r "${CCTraySetupExe.FilePath}" ${CCTraySettings.FilePath} c -z"${SfxConfig.FilePath}" -sfx'
+				  commandline='u -r "${CCTraySetupExe.FilePath}" ${CCTraySettings.FileName} c -z"${SfxConfig.FilePath}" -sfx'
 				  workingdir='${BuildDirectory}'/>
   </target>
   

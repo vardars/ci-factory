@@ -223,7 +223,7 @@
 	</script>
 
 	<target name="Private.SourceControl.EnsureWorkspace">
-		<!--Ensure the workspace is-->
+		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
 		<ifnot test="${perforce::workspace-exists(Perforce.WorkspaceName, Perforce.ServerName + ':' + Perforce.ServerPort)}">
 			<p4client clientname="${Perforce.WorkspaceName}"
 						root="${ProjectCodeLineDirectory}"

@@ -7,7 +7,7 @@
   </tr>
   <tr>
     <td>
-      <a title="Download and execute to setup a development workspace."  href="WorkspaceSetup/$projectName-WorkspaceSetup.exe" >
+      <a title="Download and execute to setup a development workspace."  href="WorkspaceSetup/${projectName}-WorkspaceSetup.exe" >
         $projectName Workspace Setup
       </a>
     </td>
