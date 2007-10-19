@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Install.Properties">
+
+  <property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%WinRarProgramPath%', WinRarProgramPath)}"/>
+</project>
