@@ -110,7 +110,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Projects>
     <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName} Build Scripts" />
-    <Project serverUrl="tcp://cifactorybuild.stelligent.com:21236/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName}" />
+    <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName}" />
   </Projects>
   <PollPeriodSeconds>5</PollPeriodSeconds>
   <BuildTransitionNotification showBalloon="true">

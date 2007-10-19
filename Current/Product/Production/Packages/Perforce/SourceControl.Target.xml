@@ -170,7 +170,8 @@
 	<target name="SourceControl.CheckIn">
 		<call target="Private.SourceControl.EnsureWorkspace"/>
 		<p4submit changelist="${SourceControl.CheckIn.File}"
-							client="${Perforce.WorkspaceName}"/>
+							client="${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(SourceControl.CheckIn.File)}"'/>
 	</target>
 
 	<!-- Needed for Private.SourceControl.ConvertLocalPathToPath
