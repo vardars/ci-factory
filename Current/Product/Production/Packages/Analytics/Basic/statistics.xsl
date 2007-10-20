@@ -204,7 +204,7 @@ if(!document.getElementById)
 		</p>
     <hr/>
 
-    <xsl:variable name="BaseChartUrl" select="concat('/%ProjectName%/Packages/Analytics/charts.swf?library_path=/%ProjectName%/Packages/Analytics/charts_library&amp;xml_source=/%ProjectName%-%ProjectCodeLineName%/Artifacts/', $ArtifactFolderName)"/>
+    <xsl:variable name="BaseChartUrl" select="concat('/%ProjectName%-%ProjectCodeLineName%/Packages/Analytics/charts.swf?library_path=/%ProjectName%-%ProjectCodeLineName%/Packages/Analytics/charts_library&amp;xml_source=/%ProjectName%-%ProjectCodeLineName%/Artifacts/', $ArtifactFolderName)"/>
 
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
