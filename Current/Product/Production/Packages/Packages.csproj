@@ -839,7 +839,6 @@
     <Content Include="FinalBuilder\FinalBuilder.Properties.xml" />
     <Content Include="FinalBuilder\FinalBuilder.Target.xml" />
     <Content Include="FinalBuilder\FinalBuilder.Report.xsl" />
-    <Content Include="MSBuild\Install\OpenSolution.bat" />
     <Content Include="MSBuild\Install\Properties.xml" />
     <Content Include="NUnit\Install\Install.xml" />
     <Content Include="NUnit\Install\NUnit\bin\Failure.jpg" />
