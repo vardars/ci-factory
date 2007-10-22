@@ -105,8 +105,8 @@ Title=Setup CI Factory Workspace]]>
 
     <property name="WinRarProgramPath" value="%WinRarProgramPath%" overwrite="false"/>
 
-<mkdir dir="${BuildDirectory}\dashboard\WorkspaceSetup" />
-		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-WorkspaceSetup.exe"/>
+		<mkdir dir="${BuildDirectory}\dashboard\WorkspaceSetup" />
+		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
 		
 		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
 		<exec program="${WinRarProgramPath}" 

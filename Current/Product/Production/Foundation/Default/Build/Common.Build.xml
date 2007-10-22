@@ -105,8 +105,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
 
     <largeproperty name="CCTraySettings.Content">
       <value expand="true" xml="false">
-        <![CDATA[
-<?xml version="1.0" encoding="utf-8"?>
+        <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Projects>
     <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName} Build Scripts" />
