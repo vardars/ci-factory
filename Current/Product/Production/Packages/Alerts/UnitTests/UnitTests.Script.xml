@@ -20,8 +20,8 @@
 
 		<property name="Alerts.UnitTests.Count" value="notset"/>
 
-		<switch value="true">
-			<case value="${directory::exists(PackagesDirectory + 'MSTest')}" break="true">
+		<switch value="True">
+			<case value="${directory::exists(PackagesDirectory + '\MSTest')}" break="true">
 				<xmlpeek
 					file="${Alerts.BuildLog}"
 					xpath="//Tests/TestRun/result/totalTestCount"
@@ -30,7 +30,7 @@
 					failonerror="false"
 				/>			 
 			</case>
-			<case value="${directory::exists(PackagesDirectory + 'DotNetUnitTest')}" break="true">
+			<case value="${directory::exists(PackagesDirectory + '\DotNetUnitTest')}" break="true">
 				<xmlpeek
 					file="${Alerts.BuildLog}"
 					xpath="sum(//report-result/counter/@run-count)"
