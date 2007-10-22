@@ -16,7 +16,7 @@
   <!ENTITY PackagesDirectory        '&BuildDirectory;\Packages' >
   <!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
   
-  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;">
+  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
           %Developer.List%
