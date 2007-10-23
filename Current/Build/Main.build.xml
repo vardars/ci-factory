@@ -96,10 +96,10 @@
 				<description>End Varification Actions</description>
 
 				<description>Begin Post Build Actions</description>
-				<property name="Deployment.SourceFileName"  value="CIFactory.zip"/>
-				<property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory\Zip"/>
+				<property name="Deployment.SourceFileName"  value="CIFactorySetup.exe"/>
+				<property name="Deployment.SourceDir"	      value="${ProductDirectory}\Install\CI Factory"/>
 				<property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
-				<property name="Deployment.TargetFile"	    value="CI-Factory-${CCNetLabel}.zip"/>
+				<property name="Deployment.TargetFile"	    value="CI-Factory-${CCNetLabel}.exe"/>
 				<property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
 				<property name="Deployment.FileWebName"	    value="${Deployment.TargetFile}" />
 
