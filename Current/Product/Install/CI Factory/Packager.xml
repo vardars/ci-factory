@@ -3,7 +3,8 @@
 
   <property name="ThirdPartyDirectory" value="C:\Projects\CI Factory\Current\Third Party"/>
   <property name="ProductDirectory" value="C:\Projects\CI Factory\Current\Product"/>
-  <property name="ZipDirectory" value="${ProductDirectory}\Install\CI Factory\Zip"/>
+	<property name="InstallDirectory" value="${ProductDirectory}\Install\CI Factory"/>
+  <property name="ZipDirectory" value="${InstallDirectory}\CI Factory"/>
 
   <target name="Packager.Create">
 
@@ -26,12 +27,6 @@
       <fileset basedir="${ProductDirectory}\Production\Foundation">
         <include name="Default\**\*"/>
         <exclude name="Default\Build\nAnt\**\*"/>
-      </fileset>
-    </copy>
-
-    <copy todir="${ZipDirectory}\Default\Build\nAnt" includeemptydirs="true" >
-      <fileset basedir="${ThirdPartyDirectory}\nAnt">
-        <include name="**\*"/>
       </fileset>
     </copy>
       
@@ -61,12 +56,35 @@
       </fileset>
     </copy>
 
-    <zip includeemptydirs="true" zipfile="${ZipDirectory}\CIFactory.zip" >
+    <!--<zip includeemptydirs="true" zipfile="${ZipDirectory}\CIFactory.zip" >
       <fileset basedir="${ZipDirectory}" defaultexcludes="false">
         <include name="**\*"/>
       </fileset>
-    </zip>
+    </zip>-->
 
+		<largeproperty name="SfxConfig.Content">
+			<value expand="true" xml="false">
+				<![CDATA[;The comment below contains SFX script commands
+
+Path=C:\Tools
+SavePath
+Title=Extract CI Factory
+]]>
+			</value>
+		</largeproperty>
+
+		<property name="SfxConfig.FilePath" value="${InstallDirectory}\SfxConfig.txt"/>
+		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
+
+		<property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
+		<property name="CIFactorySetupExe.FilePath" value="${InstallDirectory}\CIFactorySetup.exe"/>
+
+		<delete file="${CIFactorySetupExe.FilePath}" if="${file::exists(CIFactorySetupExe.FilePath)}" />
+		<exec program="${WinRarProgramPath}"
+					commandline='a -m5 -iicon"${ProductDirectory}\Images\cifactory.ico" -iimg"${ProductDirectory}\Images\CIFactoryInstall.bmp" -r "${CIFactorySetupExe.FilePath}" "CI Factory" c -z"${SfxConfig.FilePath}" -sfx'
+					workingdir='${InstallDirectory}'/>
+
+		<delete file="${SfxConfig.FilePath}" />
   </target>
   
 </project>

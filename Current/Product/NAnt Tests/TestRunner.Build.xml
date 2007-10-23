@@ -28,9 +28,8 @@
     <delete dir="${Deployment.Directory.Path}" if="${directory::exists(Deployment.Directory.Path)}" />
     <mkdir dir="${Deployment.Directory.Path}"/>
     <copy todir="${Deployment.Directory.Path}">
-      <fileset basedir="C:\Projects\CI Factory\Current\Product\Install\CI Factory\Zip">
+      <fileset basedir="C:\Projects\CI Factory\Current\Product\Install\CI Factory\CI Factory">
         <include name="**\*"/>
-        <exclude name="CIFactory.zip"/>
       </fileset>
     </copy>
     <copy todir="${Deployment.Directory.Path}\Packages">

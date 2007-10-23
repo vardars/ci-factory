@@ -5,7 +5,7 @@
 
   <!-- These are private... -->
   
-  <property name="Private.nAnt.DefaultBuildDirectory" value="${SourceBuildDirectory}\nAnt"/>
+  <property name="Private.nAnt.DefaultBuildDirectory" value="${SourceRoot}\nAnt"/>
 
   <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
 
