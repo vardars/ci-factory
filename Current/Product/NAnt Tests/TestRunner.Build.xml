@@ -19,7 +19,8 @@
         <string value="Subversion.InstallationTest"/>
         <string value="VS.NETCompile.InstallationTest"/>
         <string value="Versioning.InstallationTest"/>
-				<string value="NUnitTests"/>
+        <string value="NUnitTests"/>
+        <string value="PerforceTests"/>
       </fixtures>
     </testrunner>
   </target>
