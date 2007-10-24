@@ -10,6 +10,7 @@
   <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
   <include buildfile="VersioningTests\InstallationTest.xml"/>
 	<include buildfile="NUnitTests\NUnitTests.xml"/>
+  <include buildfile="PerforceTests\InstallationTest.xml"/>
   
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
