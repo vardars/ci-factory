@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Properties">
+
+  <strings id="Workspace.RequieredSoftware">
+    <string value="VisualStudio2005"/>
+    <string value="NCover"/>
+    <!--
+    <string value="TeamExplorer"/>
+    <string value="Subversion"/>
+    <string value="Perforce"/>-->
+  </strings>
+	
+</project>
