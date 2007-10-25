@@ -73,6 +73,8 @@ namespace CIFactory.NAnt.UnitTest.Tasks
 
             foreach (String Fixture in Fixtures)
             {
+                if (!this.Project.SubProjects.Contains(Fixture))
+                    throw new BuildException(string.Format("There is no fixture loaded for {0}.", Fixture), this.Location);
                 SubProject FixtureProject = this.Project.SubProjects[Fixture];
 
                 try

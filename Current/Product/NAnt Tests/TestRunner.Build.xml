@@ -21,7 +21,7 @@
         <string value="VS.NETCompile.InstallationTest"/>
         <string value="Versioning.InstallationTest"/>
         <string value="NUnitTests"/>
-        <string value="PerforceTests"/>
+        <string value="Perforce.InstallationTest"/>
       </fixtures>
     </testrunner>
   </target>
