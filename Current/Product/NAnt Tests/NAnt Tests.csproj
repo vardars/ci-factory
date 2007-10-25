@@ -31,6 +31,8 @@
     <Content Include="TestRunner.Common.xml" />
     <Content Include="TestRunner.Properties.xml" />
     <Content Include="Stubs\SourceControlStub\SourceControl.Target.xml" />
+    <Content Include="VaultTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VaultTests\InstallationTest.xml" />
     <Content Include="VersioningTests\Install Resources\DefaultArguments.xml" />
     <Content Include="VersioningTests\InstallationTest.xml" />
     <Content Include="VersioningTests\SourceModificationReports\SourceModificationReport.xml" />
