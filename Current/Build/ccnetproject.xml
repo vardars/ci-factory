@@ -212,8 +212,9 @@
 		<state type="state" />
 		<triggers>
 			<projectTriggerFilter>
-				<projectFilters>
-					&ScriptsBuilding;
+        <trigger type="intervalTrigger" seconds="0" />
+        <projectFilters>
+          &ScriptsBuilding;
 					&DevBuilding;
 					&ReleaseBuilding;
 				</projectFilters>
