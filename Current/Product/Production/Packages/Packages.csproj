@@ -210,6 +210,7 @@
     <Content Include="Alerts\Alerts.Properties.xml" />
     <Content Include="Alerts\Alerts.Target.xml" />
     <Content Include="Alerts\ChangePackageSize\ChangePackageSize.Script.xml" />
+    <Content Include="Alerts\Diskspace\DiskSpace.Script.xml" />
     <Content Include="Alerts\Install\Install.xml" />
     <Content Include="Alerts\Install\Properties.xml" />
     <Content Include="Alerts\Tracker\Tracker.Script.xml" />
@@ -225,6 +226,10 @@
     <Content Include="Analytics\UnitTests\UnitTests.Statistics.xml" />
     <Content Include="Analytics\UnitTests\UnitTestsCountsLineChartData.Publisher.xsl" />
     <Content Include="Analytics\UnitTests\UnitTestsCountsLineChartData.xml" />
+    <Content Include="Archive\Archive.Properties.xml" />
+    <Content Include="Archive\Archive.Target.xml" />
+    <Content Include="Archive\Install\Install.xml" />
+    <Content Include="Archive\Install\Properties.xml" />
     <Content Include="CVS\Install\Install.xml" />
     <Content Include="CVS\Install\Properties.xml" />
     <Content Include="CVS\SourceControl.Properties.xml" />
