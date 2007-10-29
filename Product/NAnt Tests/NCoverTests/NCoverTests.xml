@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCoverTests" default="NCoverTests.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="NCoverTests.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="NCoverTests"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="NCoverTests.SetProperties" >
+    <property name="ProjectName" value="NCoverTestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  </target>
+
+  <target name="NCoverTests.FixtureSetUp">
+    <call target="NCoverTests.SetProperties"/>
+
+    <property name="SourceControlStub.Directory" value="${Deployment.Directory.Path}\Packages\SourceControlStub"/>
+    <copy todir="${Deployment.Directory.Path}\Packages" unless="${directory::exists(SourceControlStub.Directory)}">
+      <fileset basedir="Stubs">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+    
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <copy file="NCoverTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+    <copy todir="${ProductionDirectory}\My.Project\bin\Debug">
+      <fileset basedir="NCoverTests\Resources">
+        <include name="Module.*"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="NCoverTests.FixtureTearDown">
+    
+  </target>
+
+  <target name="NCoverTests.SetUp">
+    <property name="Test.Project.Directory" value="${ProductDirectory}\Unit Test\Test.Project"/>
+    <delete dir="${Test.Project.Directory}" if="${directory::exists(Test.Project.Directory)}" />
+  </target>
+
+  <target name="NCoverTests.TearDown">
+    
+  </target>
+
+  <target name="NCoverTests.MSTest.Test">
+
+    <copy todir="${ProductDirectory}\Unit Test\Test.Project\bin\Debug">
+      <fileset basedir="NCoverTests\Resources">
+        <include name="Module.*"/>
+        <include name="*MStest*.*"/>
+      </fileset>
+    </copy>
+    
+    <nant buildfile="${BuildDirectory}\Main.Build.xml" inheritall="false" inheritrefs="false" target="Triggered" >
+      <properties>
+        <property name="CCNetBuildCondition" value="ForceBuild "/>
+        <property name="CCNetIntegrationStatus" value="Success"/>
+        <property name="CCNetLastIntegrationStatus" value="Success"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+        <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+        <property name="CCNetLabel" value="1.0.0.2"/>
+        <property name="CCNetProject" value="${ProjectName}"/>
+        <property name="CCNetLogFilePath" value=""/>
+
+        <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory}\MSTest\UnitTest.Target.xml" />
+        <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory}\MSTest\UnitTest.Properties.xml" />
+        <property name="Coverage.TargetAssemblyFormat" value="Module.dll" />
+      </properties>
+    </nant>
+    
+  </target>
+
+  <target name="NCoverTests.MbUnit.Test">
+
+    <copy todir="${ProductDirectory}\Unit Test\Test.Project\bin\Debug">
+      <fileset basedir="NCoverTests\Resources">
+        <include name="Module.*"/>
+        <include name="*MbUnit*.*"/>
+      </fileset>
+    </copy>
+    
+    <nant buildfile="${BuildDirectory}\Main.Build.xml" inheritall="false" inheritrefs="false" target="Triggered" >
+      <properties>
+        <property name="CCNetBuildCondition" value="ForceBuild "/>
+        <property name="CCNetIntegrationStatus" value="Success"/>
+        <property name="CCNetLastIntegrationStatus" value="Success"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+        <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+        <property name="CCNetLabel" value="1.0.0.2"/>
+        <property name="CCNetProject" value="${ProjectName}"/>
+        <property name="CCNetLogFilePath" value=""/>
+
+        <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory}\DotNetUnitTest\UnitTest.Target.xml" />
+        <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory}\DotNetUnitTest\UnitTest.Properties.xml" />
+        <property name="Coverage.TargetAssemblyFormat" value="Module.dll" />
+      </properties>
+    </nant>
+  </target>
+
+  <target name="NCoverTests.NUnit.Test">
+
+    <copy todir="${ProductDirectory}\Unit Test\Test.Project\bin\Debug">
+      <fileset basedir="NCoverTests\Resources">
+        <include name="Module.*"/>
+        <include name="*NUnit*.*"/>
+      </fileset>
+    </copy>
+    
+    <nant buildfile="${BuildDirectory}\Main.Build.xml" inheritall="false" inheritrefs="false" target="Triggered" >
+      <properties>
+        <property name="CCNetBuildCondition" value="ForceBuild "/>
+        <property name="CCNetIntegrationStatus" value="Success"/>
+        <property name="CCNetLastIntegrationStatus" value="Success"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+        <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+        <property name="CCNetLabel" value="1.0.0.2"/>
+        <property name="CCNetProject" value="${ProjectName}"/>
+        <property name="CCNetLogFilePath" value=""/>
+
+        <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory}\DotNetUnitTest\UnitTest.Target.xml" />
+        <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory}\DotNetUnitTest\UnitTest.Properties.xml" />
+      </properties>
+    </nant>
+
+  </target>
+  
+</project>
