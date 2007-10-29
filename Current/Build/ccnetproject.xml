@@ -207,6 +207,123 @@
       </nant>
     </publishers>
   </project>
+	<project name="CI Factory Heavy">
+		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
+		<state type="state" />
+		<triggers>
+			<projectTriggerFilter>
+				<projectFilters>
+					&ScriptsBuilding;
+					&DevBuilding;
+					&ReleaseBuilding;
+				</projectFilters>
+			</projectTriggerFilter>
+		</triggers>
+		<forceFilters>
+			<passwordForceFilter password="automa" />
+			<projectForceFilter>
+				<projectFilters>
+					&ScriptsBuilding;
+					&DevBuilding;
+					&ReleaseBuilding;
+				</projectFilters>
+			</projectForceFilter>
+		</forceFilters>
+		<integrationFilter>
+			<triggeredIntegrationFilter>
+				<allowed>
+					<modificationsRequired condition="true" />
+				</allowed>
+			</triggeredIntegrationFilter>
+			<forcedIntegrationFilter>
+				<allowed>
+					<modificationsRequired condition="false" />
+				</allowed>
+				<blocked>
+				</blocked>
+			</forcedIntegrationFilter>
+		</integrationFilter>
+		<sourcecontrol type="filtered">
+			<sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+				<trunkUrl>https://ci-factory.googlecode.com/svn/Current</trunkUrl>
+				<workingDirectory>c:\Projects\CI Factory\Current</workingDirectory>
+				<webUrlBuilder type="websvn">
+					<url>http://ci-factory.googlecode.com/svn{0}</url>
+				</webUrlBuilder>
+			</sourceControlProvider>
+			<exclusionFilters>
+				<pathFilter>
+					<pattern>**/Current/Product/**/AssemblyInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Product/ProjectInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Product/**/ProjectInfo.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build/*.*</pattern>
+				</pathFilter>
+				<pathFilter>
+					<pattern>**/Current/Build/**/*.*</pattern>
+				</pathFilter>
+			</exclusionFilters>
+		</sourcecontrol>
+		<labeller type="stateFileLabeller">
+			<project>CI Factory Dev</project>
+		</labeller>
+		<tasks>
+			<modificationWriter>
+				<filename>SourceModificationReport.xml</filename>
+				<path>c:\Projects\CI Factory\Current\Build\SourceModificationReports</path>
+			</modificationWriter>
+			<nant>
+				<executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+				<baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+				<logger>NAnt.Core.XmlLogger </logger>
+				<buildFile>Main.build.xml</buildFile>
+				<targetList>
+					<target>Heavy</target>
+				</targetList>
+
+				<buildTimeoutSeconds>3600</buildTimeoutSeconds>
+			</nant>
+		</tasks>
+		<publishers>
+			<merge>
+				<files>
+					<file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
+					<file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
+				</files>
+			</merge>
+			<xslmerger>
+				<filepairs>
+					<filepair>
+						<xslfile>C:\Projects\CI Factory\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
+						<xmlfile>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</xmlfile>
+					</filepair>
+				</filepairs>
+			</xslmerger>
+			<xmllogger />
+			&email;
+			<nant>
+				<executable>c:\Projects\CI Factory\Current\Build\nAnt\bin\nant.exe</executable>
+				<baseDirectory>c:\Projects\CI Factory\Current\Build</baseDirectory>
+				<logger>NAnt.Core.XmlLogger </logger>
+				<buildFile>Post.Shim.xml</buildFile>
+				<targetList>
+					<target>PostBuildWrapper</target>
+				</targetList>
+
+				<buildTimeoutSeconds>300</buildTimeoutSeconds>
+			</nant>
+		</publishers>
+	</project>
 	<project name="CI Factory Release">
 		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
 		<state type="state" />

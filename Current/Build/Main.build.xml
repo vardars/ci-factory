@@ -62,6 +62,45 @@
     </trycatch>
   </target>
 
+	<target name="Heavy" depends="SetUps" >
+		<trycatch>
+			<try>
+				<description>Begin Main Build</description>
+
+				<description>Begin Pre Build Actions</description>
+				<description>End Pre Build Actions</description>
+
+				<description>Begin Clean Up Actions</description>
+				<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+				<call target="SourceControl.CleanGetOfProductDirectory" />
+				<description>End Clean Up Actions</description>
+
+				<description>Begin Compile Actions</description>
+				<call target="Compile.CompileSource" />
+				<nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+				<description>End Compile Actions</description>
+
+				<description>Begin Varification Actions</description>
+				<call target="UnitTest.RunTests" />
+
+				<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+					<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
+					<arg line='-logger:NAnt.Core.XmlLogger' />
+					<arg line='-logfile:"${Common.ReportDirectory}\NAntTests.xml"' />
+				</exec>
+				<description>End Varification Actions</description>
+
+				<description>Begin Post Build Actions</description>
+				<description>End Post Build Actions</description>
+
+				<description>End Main Build</description>
+			</try>
+			<finally>
+				<call target="TearDowns"/>
+			</finally>
+		</trycatch>
+	</target>
+
 	<target name="Release" depends="SetUps" >
 		<trycatch>
 			<try>
