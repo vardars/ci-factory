@@ -52,6 +52,7 @@
     <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
     <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
 
+		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
 		<p4client clientname="${Perforce.WorkspaceName}"
 					root="${ProjectCodeLineDirectory}"
 					port="${Perforce.ServerName}:${Perforce.ServerPort}"

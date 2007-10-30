@@ -45,7 +45,9 @@
 	
 	<target name="Setup">
     <function execute="${stringlist::add('Workspace.RequieredSoftware', SourceControl.PackageName)}" 
-              unless="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}"/> 
+              unless="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}"/>
+		<include buildfile="${PackagesDirectory}\Workspace\Software\${SourceControl.PackageName}\${SourceControl.PackageName}.Script.xml" 
+						 unless="${target::exists('Workspace.RequieredSoftware.' + SourceControl.PackageName)}"/>
     
 		<call target="Workspace.CheckForRequieredSoftware"/>
 		<call target="Workspace.Setup"/>

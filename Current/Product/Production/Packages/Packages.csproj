@@ -457,9 +457,14 @@
     <Content Include="Wix\Install\Properties.xml" />
     <Content Include="Wix\Wix.Properties.xml" />
     <Content Include="Wix\Wix.Target.xml" />
+    <Content Include="Workspace\Configuration\MbUnit\MbUnit.Script.xml" />
     <Content Include="Workspace\Install\Install.xml" />
     <Content Include="Workspace\Install\Properties.xml" />
     <Content Include="Workspace\Install\wrar371.exe" />
+    <Content Include="Workspace\Software\NCover\NCover.Script.xml" />
+    <Content Include="Workspace\Software\Perforce\Perforce.Script.xml" />
+    <Content Include="Workspace\Software\Subversion\Subversion.Script.xml" />
+    <Content Include="Workspace\Software\VisualStudio\VisualStudio.Script.xml" />
     <Content Include="Workspace\Workspace.Properties.xml" />
     <Content Include="Workspace\Workspace.Targets.xml" />
     <Content Include="Workspace\Workspace.Setup.xml" />
