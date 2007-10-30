@@ -81,7 +81,7 @@
       </in>
       <do>
         <property name="AssemblyName" value="${vsproject::get-assemblyname(nDepend.Target.ProjectFile.Path)}"/>
-        <ifnot test="${AssemblyName == '' and stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+        <ifnot test="${AssemblyName == '' or stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
           <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
