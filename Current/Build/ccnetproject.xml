@@ -210,16 +210,7 @@
 	<project name="CI Factory Heavy">
 		<webURL>http://cifactorybuild.stelligent.com/CI Factory/default.aspx?_action_ViewFarmReport=true</webURL>
 		<state type="state" />
-		<triggers>
-			<projectTriggerFilter>
-        <trigger/>
-        <projectFilters>
-          &ScriptsBuilding;
-					&DevBuilding;
-					&ReleaseBuilding;
-				</projectFilters>
-			</projectTriggerFilter>
-		</triggers>
+		<triggers/>
 		<forceFilters>
 			<passwordForceFilter password="automa" />
 			<projectForceFilter>
