@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault">
+
+	<loadtasks assembly="${PackagesDirectory}\Vault\bin\NAnt.VaultTasks.dll" />
+
+	<include buildfile="SourceControl.Properties.xml" />
+
+	<target name="Private.SourceControl.Login">
+		<vaultsetloginoptions 
+			URL="${Vault.URL}" 
+			user="${Vault.Username}" 
+			password="${Vault.Password}" 
+			repository="${Vault.Repository}" />
+		<call target="SourceControl.Repository.SetWorkingFolder" />
+	</target>
+	
+	<target name="SourceControl.Repository.SetWorkingFolder">
+		<vaultsetworkingfolder diskPath="${ProjectRootDirectory}" repositoryFolderPath="$" />
+	</target>
+
+	
+	<target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+		<property name="SourceControl.CleanGetOf" value="${ThirdPartyDirectory}"/>
+		<call target="SourceControl.CleanGetOf"/>
+	</target>
+
+	<target name="SourceControl.CleanGetOfProductDirectory" >
+		<property name="SourceControl.CleanGetOf" value="${ProductDirectory}"/>
+		<call target="SourceControl.CleanGetOf"/>
+	</target>
+
+	<target name="SourceControl.GetOfThirdPartyDirectory" >
+		<property name="SourceControl.GetOf" value="${ThirdPartyDirectory}"/>
+		<call target="SourceControl.GetOf"/>
+	</target>
+
+	<target name="SourceControl.GetOfProductDirectory" >
+		<property name="SourceControl.GetOf" value="${ProductDirectory}"/>
+		<call target="SourceControl.GetOf"/>
+	</target>
+
+	<target name="SourceControl.GetOfCodeLineDirectory" >
+		<property name="SourceControl.GetOf" value="${ProjectCodeLineDirectory}"/>
+		<call target="SourceControl.GetOf"/>
+	</target>
+
+	<target name="SourceControl.CleanGetOf" >
+		<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.CleanGetOf}"/>
+		<call target="Private.SourceControl.DeleteLocal.Directory" />
+		<property name="SourceControl.GetOf" value="${SourceControl.CleanGetOf}"/>
+		<call target="SourceControl.GetOf" />
+	</target>
+
+	<target name="SourceControl.GetOf"  depends="Private.SourceControl.Login">
+		<mkdir dir="${SourceControl.GetOf}" unless="${directory::exists(SourceControl.GetOf)}"/>
+
+		<vaultget>
+			<vaultfileset>
+				<include name="${SourceControl.GetOf}" />
+			</vaultfileset>
+		</vaultget>
+	</target>
+
+	<target name="Private.SourceControl.DeleteLocal.Directory">
+		<if test="${directory::exists(Private.SourceControl.DeleteLocal.Directory)}" >
+			<attrib readonly="false">
+				<fileset>
+					<include name="${Private.SourceControl.DeleteLocal.Directory}\*" />
+				</fileset>
+			</attrib>
+
+			<trycatch>
+				<try>
+					<delete dir="${Private.SourceControl.DeleteLocal.Directory}"/>
+				</try>
+				<catch>
+					<exec program="cmd" commandline='/C "rmdir /S /Q "${Private.SourceControl.DeleteLocal.Directory}""' />
+				</catch>
+			</trycatch>
+		</if>
+	</target>
+
+	<!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+	<target name="SourceControl.CheckOut"  depends="Private.SourceControl.Login">
+		<vaultcheckout checkoutExclusive="false" comment="Checkout by CI Script">
+			<vaultfileset> 
+				<include name="${Private.SourceControl.CheckOut.File}" />
+			</vaultfileset>
+		</vaultcheckout>
+	</target>
+
+	<!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+	<target name="SourceControl.CheckIn"  depends="Private.SourceControl.Login" >
+		<vaultcheckin>
+			<vaultfileset>
+				<include name="${Private.SourceControl.CheckIn.File}" />
+			</vaultfileset>
+		</vaultcheckin>
+	</target>
+
+	<!--
+<script language="C#" prefix="sourcecontrol">
+		<code>
+			<![CDATA[                 
+					
+          [Function("convertlocaltoserver")]
+					public string ConvertLocalToServer(string local)
+          {
+            String server = local.Replace(this.Project.Properties["ProjectsDirectory"], "");
+            server = server.Replace(@"\", @"/");
+            server = String.Format(@"$/{0}", server);
+            return server.Replace(@"//", @"/");
+          }
+          
+			]]>
+		</code>
+	</script>
+-->
+
+	<target name="SourceControl.SetUp">
+
+	</target>
+
+	<target name="SourceControl.TearDown">
+
+	</target>
+
+	<target name="SourceControl.Repository.Create">
+		<vaultsetloginoptions 
+			URL="${Vault.URL}" 
+			user="${Vault.Username}" 
+			password="${Vault.Password}" />
+		<vaultaddrepository newReposName="${Vault.Repository}" />
+		<vaultsetrepository repositoryName="${Vault.Repository}" />
+		<call target="SourceControl.Repository.SetWorkingFolder" />
+	</target>
+
+	<target name="Private.SourceControl.AddLocalDirectory">
+		<vaultcreatefolder newFolderPath="${Private.SourceControl.AddLocalDirectory}" />
+			<vaultadd folderPath="${Private.SourceControl.AddLocalDirectory}" failonerror="false">
+			<fileset>
+				<include name="${Private.SourceControl.AddLocalDirectory}\*.*" />
+			</fileset>
+		</vaultadd>		
+	</target>
+
+	<target name="Private.SourceControl.AddLocalDirectories">
+		<foreach item="Folder" in="${Private.SourceControl.AddLocalDirectories}" property="Private.SourceControl.AddLocalDirectory" >
+			<call target="Private.SourceControl.AddLocalDirectory" unless="${string::contains(Private.SourceControl.AddLocalDirectory,'_sgbak')}" />
+			<property name="Private.SourceControl.AddLocalDirectories" value="${Private.SourceControl.AddLocalDirectory}"  />
+			<call target="Private.SourceControl.AddLocalDirectories" />
+		</foreach>
+	</target>
+
+	<target name="SourceControl.Repository.Load">
+		<call target="SourceControl.Repository.Create" />
+
+		<property name="Private.SourceControl.AddLocalDirectories" value="${ProjectRootDirectory}" />
+		<call target="Private.SourceControl.AddLocalDirectories" />
+	</target>
+
+	<target name="SourceControl.Bindings.Create">
+		<fail message="Not yet implemented!"/>
+	</target>
+</project>

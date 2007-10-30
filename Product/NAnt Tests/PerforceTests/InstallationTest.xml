@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.InstallationTest" default="Perforce.InstallationTest.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="Perforce.InstallationTest.RunAllTests">
+    <testrunner>
+      <fixtures>
+        <string value="Perforce.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="Perforce.InstallationTest.SetProperties">
+    <property name="ProjectName" value="P4TestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+
+		<property name="Perforce.ServerName" value="localhost"/>
+		<property name="Perforce.ServerPort" value="1666"/>
+		<property name="Perforce.ServerPathPrefix" value="//depot"/>
+		<property name="Perforce.WorkspaceNameBase" value="${ProjectName}-${ProjectCodeLineName}" />
+		<property name="Perforce.WorkspaceName" value="'${Perforce.WorkspaceNameBase}-${environment::get-machine-name()}'" />
+
+		<property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce"/>
+		<setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
+
+		<property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  </target>
+  
+  <target name="Perforce.InstallationTest.FixtureSetUp">
+    <call target="Perforce.InstallationTest.SetProperties"/>
+
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
+    <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+		<p4client clientname="${Perforce.WorkspaceName}"
+					root="${ProjectCodeLineDirectory}"
+					port="${Perforce.ServerName}:${Perforce.ServerPort}"
+					view="${Perforce.ServerPathPrefix}/${ProjectName}/..."
+					clientview="//${Perforce.WorkspaceName}/..." verbose="true"/>
+		
+    <exec program="P4" 
+					commandline='-c ${Perforce.WorkspaceName} obliterate -y ${Perforce.ServerPathPrefix}/${ProjectName}/...' 
+					failonerror='false' />
+
+
+		<p4client clientname="${Perforce.WorkspaceName}"
+					root="${ProjectCodeLineDirectory}"
+					port="${Perforce.ServerName}:${Perforce.ServerPort}"
+					view="${Perforce.ServerPathPrefix}/${ProjectName}/..."
+					clientview="//${Perforce.WorkspaceName}/..."
+					delete="true"/>
+
+    <copy file="PerforceTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+    <sleep seconds="2"/>
+
+    <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+  </target>
+
+  <target name="Perforce.InstallationTest.FixtureTearDown">
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+
+    <trycatch if="${property::exists('CCNet.Pid')}">
+      <try>
+        <waitfor condition="${process::isrunning(CCNet.Pid) == false}" timeout="10" pollinginterval="2"/>
+      </try>
+      <catch>
+        <exec program="taskkill" commandline="/PID ${CCNet.Pid} /T /F" if="${process::isrunning(CCNet.Pid)}" />
+      </catch>
+    </trycatch>
+  </target>
+
+  <target name="Perforce.InstallationTest.SetUp">
+    
+  </target>
+
+  <target name="Perforce.InstallationTest.TearDown">
+    <echo message="TearDown"/>
+  </target>
+
+  <target name="Perforce.InstallationTest.DefaultInstallTest">
+    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!) Perforce seems to a little longer than other configs?-->
+    <sleep seconds="10"/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>
+    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+  </target>
+  
+</project>
