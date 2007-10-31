@@ -235,7 +235,7 @@ namespace NAnt.Contrib.Tasks {
                 if (TryBlock != null) {
                     TryBlock.Execute();
                 }
-            } catch (BuildException be) {
+            } catch (Exception be) {
                 if (CatchBlock != null) {
                     CatchBlock.Catch(be);
                 } else {
@@ -284,14 +284,14 @@ namespace NAnt.Contrib.Tasks {
 
             #region Public Instance Methods
 
-            public void Catch(BuildException be) {
+            public void Catch(Exception be) {
                 bool propertyExists = false;
                 string originalPropertyValue = null;
 
                 if (Property != null) {
                     propertyExists = Project.Properties.Contains(Property);
                     originalPropertyValue = Project.Properties[Property];
-                    Project.Properties[Property] = be.RawMessage;
+                    Project.Properties[Property] = be.ToString();
                 }
 
                 try {
