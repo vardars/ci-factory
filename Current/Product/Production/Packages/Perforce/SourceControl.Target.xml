@@ -247,10 +247,12 @@
 	</target>
 
 	<target name="SourceControl.Repository.Load">
+		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
 		<p4client clientname="Temp-${Perforce.WorkspaceName}"
 							root="${ProjectsDirectory}"
 							port="${Perforce.ServerName}:${Perforce.ServerPort}"
-							view="${Perforce.ServerPathPrefix}/..."/>
+							view="${Perforce.ServerPathPrefix}/..."
+							clientview="//Temp-${Perforce.WorkspaceName}/..."/>
 
 		<foreach item="File" property="File">
 			<in>

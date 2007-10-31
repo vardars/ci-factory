@@ -71,6 +71,9 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		[ReflectorProperty("timeZoneOffset", Required=false)]
 		public double TimeZoneOffset = 0;
 
+        [ReflectorProperty(@"labelPrefix", Required = false)]
+        public string LabelPrefix = string.Empty;
+
 		private string BuildModificationsCommandArguments(DateTime from, DateTime to)
 		{
 			return string.Format("changes -s submitted {0}", GenerateRevisionsForView(from, to));
@@ -159,14 +162,19 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 				if (result.Label == null || result.Label.Length == 0)
 					throw new ApplicationException("Internal Exception - Invalid (null or empty) label passed");
 
+                string Label = result.Label;
+
+                if (!String.IsNullOrEmpty(this.LabelPrefix))
+                    Label = string.Concat(this.LabelPrefix, Label);
+
 				try
 				{
-					int.Parse(result.Label);
+                    int.Parse(Label);
 					throw new CruiseControlException("Perforce cannot handle purely numeric labels - you must use a label prefix for your project");
 				}
 				catch (FormatException)
 				{}
-				ProcessInfo process = CreateLabelSpecificationProcess(result.Label);
+                ProcessInfo process = CreateLabelSpecificationProcess(Label);
 
 				string processOutput = Execute(process);
 				if (containsErrors(processOutput))
@@ -175,7 +183,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 					return;
 				}
 
-				process = CreateLabelSyncProcess(result.Label);
+                process = CreateLabelSyncProcess(Label);
 				processOutput = Execute(process);
 				if (containsErrors(processOutput))
 				{

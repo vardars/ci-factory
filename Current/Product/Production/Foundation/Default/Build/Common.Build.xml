@@ -155,14 +155,14 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
     <if test="${file::exists(CCTrayZip.FilePath)}">
       <delete file="${CCTraySetupExe.FilePath}" if="${file::exists(CCTraySetupExe.FilePath)}" />
       <exec program="${WinRarProgramPath}"
-            commandline='s "${CCTrayZip.FilePath}" c -z"${SfxConfig.FilePath}"'
+            commandline='s -ibck "${CCTrayZip.FilePath}" c -z"${SfxConfig.FilePath}"'
             workingdir='${BuildDirectory}'/>
       <delete file='${CCTrayZip.FilePath}' if='${file::exists(CCTrayZip.FilePath)}' />
       <move file='${BuildDirectory}\dashboard\cctray\cctray.exe' tofile='${CCTraySetupExe.FilePath}' />
     </if>
 
     <exec program="${WinRarProgramPath}"
-				  commandline='u -r "${CCTraySetupExe.FilePath}" ${CCTraySettings.FileName} c -z"${SfxConfig.FilePath}" -sfx'
+				  commandline='u -ibck -r "${CCTraySetupExe.FilePath}" ${CCTraySettings.FileName} c -z"${SfxConfig.FilePath}" -sfx'
 				  workingdir='${BuildDirectory}'/>
 
 		<delete file="${SfxConfig.FilePath}" />

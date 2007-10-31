@@ -47,7 +47,6 @@
   <ItemGroup>
     <Content Include="Default\Build\ccnetproject.xml" />
     <Content Include="Default\Build\Common.Build.xml" />
-    <Content Include="Default\Product\Common.Build.xml" />
     <Content Include="Default\Product\Compile.Environment.xml" />
     <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
     <Content Include="Default\Build\dashboard\xsl\header.xsl" />

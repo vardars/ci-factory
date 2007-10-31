@@ -11,6 +11,7 @@
       <sourceControlProvider  
         type="p4" 
         applyLabel="true" 
+				labelPrefix="${ProjectName}-"
         autoGetSource="false"
         port="${Perforce.ServerName}:${Perforce.ServerPort}"
 				view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/..."

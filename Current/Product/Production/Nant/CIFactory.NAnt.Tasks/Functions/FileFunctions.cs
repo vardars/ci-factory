@@ -35,6 +35,15 @@ namespace CIFactory.NAnt.Functions
             return FileVersionInfo.GetVersionInfo(path).FileVersion;
         }
 
+        [Function("get-product-version")]
+        public string GetProductVersion(string path)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException(string.Format("File not found: {0}", path), path);
+
+            return FileVersionInfo.GetVersionInfo(path).ProductVersion;
+        }
+
         #endregion
 
     }

@@ -46,43 +46,46 @@
   <target name="CCNET.Install">
     <call target="Private.CCNET.InstallBuildDirectoryFiles"/>
     <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
+		<call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
 
-    <mkdir unless="${directory::exists(CCNET.DashboardDirectory)}" dir="${CCNET.DashboardDirectory}"/>
+		<mkdir unless="${directory::exists(BuildDirectory + '\Artifacts')}" dir="${BuildDirectory}\Artifacts"/>
+	</target>
 
-    <copy tofile="${CCNET.ConfigFile}" file="${Private.CCNET.DefaultConfigFile}">
-      <filterchain refid="Common.FilterChain" />
-    </copy>
+	<target name="CCNET.ValidateParameters">
+		<fail unless="${property::exists('CCNET.ServerPort')}" message="Property CCNET.ServerPort was not set on the commandline."/>
+	</target>
 
-    <copy todir="${CCNET.DashboardDirectory}">
-      <fileset basedir="${Private.CCNET.DefaultDashboardDirectory}">
-        <include name="**/*" />
-        <exclude name="${Private.CCNET.DefaultConfigFile}"/>
-      </fileset>
-    </copy>
+	<target name="Private.CCNET.InstallDashboardDirectoryFiles">
+		<mkdir unless="${directory::exists(CCNET.DashboardDirectory)}" dir="${CCNET.DashboardDirectory}"/>
 
-    <mkdir unless="${directory::exists(BuildDirectory + '\Artifacts')}" dir="${BuildDirectory}\Artifacts"/>
-  </target>
+		<copy overwrite="true" tofile="${CCNET.ConfigFile}" file="${Private.CCNET.DefaultConfigFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
 
-  <target name="CCNET.ValidateParameters">
-    <fail unless="${property::exists('CCNET.ServerPort')}" message="Property CCNET.ServerPort was not set on the commandline."/>
-  </target>
-
+		<copy overwrite="true" todir="${CCNET.DashboardDirectory}">
+			<fileset basedir="${Private.CCNET.DefaultDashboardDirectory}">
+				<include name="**/*" />
+				<exclude name="${Private.CCNET.DefaultConfigFile}"/>
+			</fileset>
+		</copy>
+	</target>
+	
   <target name="Private.CCNET.InstallBuildDirectoryFiles">
-    <copy tofile="${CCNET.ProjectFile}" file="${Private.CCNET.DefaultProjectFile}">
-      <filterchain refid="Common.FilterChain" />
-    </copy>
+		<copy overwrite="true" tofile="${CCNET.ProjectFile}" file="${Private.CCNET.DefaultProjectFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
 
-    <copy tofile="${CCNET.BatchFile}" file="${Private.CCNET.DefaultBatchFile}">
+		<copy overwrite="true" tofile="${CCNET.BatchFile}" file="${Private.CCNET.DefaultBatchFile}">
       <filterchain refid="Common.FilterChain" />
     </copy>
   </target>
 
   <target name="Private.CCNET.InstallBuildServerDirectoryFiles">
     <mkdir unless="${directory::exists(CCNET.ServerDirectory)}" dir="${CCNET.ServerDirectory}"/>
-    <copy tofile="${CCNET.ExeConfigFile}" file="${Private.CCNET.DefaultExeConfigFile}">
-      <filterchain refid="Common.FilterChain" />
-    </copy>
-    <copy todir="${CCNET.ServerDirectory}">
+		<copy overwrite="true" tofile="${CCNET.ExeConfigFile}" file="${Private.CCNET.DefaultExeConfigFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
+		<copy overwrite="true" todir="${CCNET.ServerDirectory}">
       <fileset basedir="${Private.CCNET.DefaultBuildServerDirectory}">
         <include name="**/*" />
         <exclude name="${Private.CCNET.DefaultExeConfigFile}"/>

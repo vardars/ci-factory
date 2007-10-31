@@ -109,9 +109,9 @@ namespace NAnt.Core.Tasks {
             // Task can only be included as a global task.
             // This might not be a firm requirement but you could get some real 
             // funky errors if you start including targets wily-nily.
-            if (Parent != null && !(Parent is Project)) {
-                throw new BuildException(ResourceUtils.GetString("NA1180"), Location);
-            }
+            //if (Parent != null && !(Parent is Project)) {
+            //    throw new BuildException(ResourceUtils.GetString("NA1180"), Location);
+            //}
             if (StringUtils.IsNullOrEmpty(_currentBasedir) || _nestinglevel == 0) {
                 _currentBasedir = Project.BaseDirectory;
             }

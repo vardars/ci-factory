@@ -112,7 +112,7 @@ Title=Setup CI Factory Workspace]]>
 		
 		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
 		<exec program="${WinRarProgramPath}" 
-					commandline='a -r "${WorkspaceSetupExe.FilePath}" nAnt c -z"${SfxConfig.FilePath}" -sfx'
+					commandline='a -ibck -r "${WorkspaceSetupExe.FilePath}" nAnt c -z"${SfxConfig.FilePath}" -sfx'
 					workingdir='${BuildDirectory}'/>
 
 		<foreach item='File' property='File'>
@@ -129,7 +129,7 @@ Title=Setup CI Factory Workspace]]>
 			<do>
 				<property name='FileToAdd' value=".\${string::replace(File, BuildDirectory, '')}"/>
 				<exec program="${WinRarProgramPath}"
-				commandline='u -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
+				commandline='u -ibck -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
 				workingdir='${BuildDirectory}'/>
 			</do>
 		</foreach>

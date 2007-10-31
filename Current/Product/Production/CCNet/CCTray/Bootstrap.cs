@@ -42,7 +42,18 @@ namespace ThoughtWorks.CruiseControl.CCTray
 			string newSettingsFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"cctray-settings.xml");
 			
 			if (File.Exists(oldFashionedSettingsFilename) && !File.Exists(newSettingsFilename))
-				File.Copy(oldFashionedSettingsFilename, newSettingsFilename);
+            {
+                if (File.GetLastWriteTime(oldFashionedSettingsFilename) >= File.GetLastWriteTime(newSettingsFilename))
+                {
+                    File.Delete(newSettingsFilename);
+                }
+                else
+                {
+                    File.Delete(oldFashionedSettingsFilename);
+                    File.Move(newSettingsFilename, oldFashionedSettingsFilename);    
+                }
+                return oldFashionedSettingsFilename;
+            }
 			
 			return newSettingsFilename;
 		}
