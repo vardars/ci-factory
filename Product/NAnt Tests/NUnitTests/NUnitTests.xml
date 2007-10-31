@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NUnitTests" default="NUnitTests.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+		<include buildfile="TestRunner.Build.xml" unless="${target::exists('CIFactory.TestRunner.Deploy')}"/>
+  </ifnot>
+
+	<target name="NUnitTests.RunAllTests" >
+		<testrunner>
+			<fixtures>
+				<string value="NUnitTests"/>
+			</fixtures>
+		</testrunner>
+	</target>
+
+  <target name="NUnitTests.SetProperties" >
+    <property name="ProjectName" value="NUnitTestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  </target>
+
+  <target name="NUnitTests.FixtureSetUp">
+    <call target="NUnitTests.SetProperties"/>
+
+    <property name="SourceControlStub.Directory" value="${Deployment.Directory.Path}\Packages\SourceControlStub"/>
+    <copy todir="${Deployment.Directory.Path}\Packages" unless="${directory::exists(SourceControlStub.Directory)}">
+      <fileset basedir="Stubs">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
+    <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <copy file="NUnitTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+		<ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+		<sleep seconds="2"/>
+
+		<asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+	</target>
+
+	<target name="NUnitTests.FixtureTearDown">
+		<ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+
+		<trycatch if="${property::exists('CCNet.Pid')}">
+			<try>
+				<waitfor condition="${process::isrunning(CCNet.Pid) == false}" timeout="10" pollinginterval="2"/>
+			</try>
+			<catch>
+				<exec program="taskkill" commandline="/PID ${CCNet.Pid} /T /F" if="${process::isrunning(CCNet.Pid)}" />
+			</catch>
+		</trycatch>
+	</target>
+
+	<target name="NUnitTests.SetUp">
+
+	</target>
+
+	<target name="NUnitTests.TearDown">
+
+	</target>
+
+	<target name="NUnitTests.DefaultInstallTest">
+		<copy todir="${ProductDirectory}" overwrite="true">
+			<fileset basedir="NUnitTests\Resources">
+				<include name="**\*"/>
+			</fileset>
+		</copy>
+		
+		<assertequal actual="${directory::exists(ProductionDirectory + '\TestSubject')}" expected="True" message="Expected to have copied the test product."/>
+		<assertequal actual="${directory::exists(ProductDirectory + '\Unit Test\UnitTests')}" expected="True" message="Expected to have copied the unit test."/>
+
+		<!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
+		<sleep seconds="5"/>
+
+		<ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
+			<ccnetplugins>
+				<include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
+			</ccnetplugins>
+		</ccnetforce>
+		<waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="60" pollinginterval="10"/>
+		<assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+
+		<property name="NUnitTests.BuildLogPath" value="${BuildDirectory}\server\${CCNET.ProjectName}\Artifacts\buildlogs\${ccnet::get-project-last-build-log(CCNET.ServerUrl, CCNET.ProjectName)}"/>
+
+		<xmlpeek property="NUnitTests.UnitTestCount" 
+						 file="${NUnitTests.BuildLogPath}" 
+						 xpath="count(//test-results//results/test-case)" />
+		<assertequal expected="2" actual="${NUnitTests.UnitTestCount}" message="Expected there to be 2 unit test case."/>
+
+    <xmlpeek property="NUnitTests.TestSubject.Coverage"
+						 file="${NUnitTests.BuildLogPath}"
+						 xpath="//coverageReport2//modules/module[@n = 'TestSubject.dll']/@c" />
+    <assertequal expected="100" actual="${NUnitTests.TestSubject.Coverage}" message="Expected there to be 100% coverage on TestSubject."/>
+
+    <xmlpeek property="NUnitTests.MoreTestSubject.Coverage"
+						 file="${NUnitTests.BuildLogPath}"
+						 xpath="//coverageReport2//modules/module[@n = 'MoreTestSubject.dll']/@c" />
+    <assertequal expected="100" actual="${NUnitTests.MoreTestSubject.Coverage}" message="Expected there to be 100% coverage on MoreTestSubject ."/>
+	</target>
+</project>
