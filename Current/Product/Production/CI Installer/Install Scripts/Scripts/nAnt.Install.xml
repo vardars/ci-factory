@@ -9,22 +9,22 @@
 
   <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
 
-    <copy todir="${BuildDirectory}">
-      <fileset basedir="${SourceBuildDirectory}">
-        <include name="Main.build.xml"/>
-        <include name="Properties.build.xml"/>
-        <include name="Common.build.xml"/>
-        <include name="Scratch.build.xml"/>
-        <include name="UpdatenAntSchema.bat"/>
-        <include name="UpdatenAntSchema.xml"/>
-        <include name="Post.build.xml"/>
-        <include name="Post.Shim.xml"/>
-        <include name="SetupIIS.xml"/>
-      </fileset>
-      <filterchain refid="Common.FilterChain" />
-    </copy>
+    <copy todir="${BuildDirectory}" overwrite="true">
+			<fileset basedir="${SourceBuildDirectory}">
+				<include name="Main.build.xml"/>
+				<include name="Properties.build.xml"/>
+				<include name="Common.build.xml"/>
+				<include name="Scratch.build.xml"/>
+				<include name="UpdatenAntSchema.bat"/>
+				<include name="UpdatenAntSchema.xml"/>
+				<include name="Post.build.xml"/>
+				<include name="Post.Shim.xml"/>
+				<include name="SetupIIS.xml"/>
+			</fileset>
+			<filterchain refid="Common.FilterChain" />
+		</copy>
 
-    <copy todir="${ProductDirectory}">
+		<copy todir="${ProductDirectory}" overwrite="true">
       <fileset basedir="${SourceProductDirectory}">
         <include name="*.*"/>
       </fileset>
@@ -40,7 +40,7 @@
   </target>
 
   <target name="Private.nAnt.CopyToBuild">
-    <copy todir="${nAnt.BuildDirectory}">
+    <copy todir="${nAnt.BuildDirectory}" overwrite="true">
       <fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
         <include name="**/*" />
       </fileset>

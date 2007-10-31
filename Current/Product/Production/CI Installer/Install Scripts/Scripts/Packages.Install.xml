@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PackagesInstaller" >
 
+	<property name="Preserve.CCNetDashboard" value="No" overwrite="false"/>
+	<property name="Preserve.CCNetServer" value="No" overwrite="false"/>
+	<property name="IsUpgrade" value="false" overwrite="true"/>
+
   <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
   <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
   <property name="Packages.CurrenctPackage.PackageName" value=""/>
@@ -66,26 +70,8 @@
   <largeproperty name="Private.Packages.PostBuild.EndTag">
     <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
   </largeproperty>
-
+ 
   <!-- These are private... -->
-
-  <loopthrough property="Private.Packages.Install.PackageName">
-    <items>
-      <strings refid="Packages.InstallList"/>
-    </items>
-    <do>
-      <property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
-      <echo message="${InstallScript}" />
-      <ifthenelse  test="${file::exists(InstallScript)}">
-        <then>
-          <include buildfile="${InstallScript}" />
-        </then>
-        <else>
-          <fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
-        </else>
-      </ifthenelse>
-    </do>
-  </loopthrough>
 
   <target name="Packages.Install" >
     <loopthrough property="Private.Packages.Install.PackageName">
@@ -127,17 +113,19 @@
 
   <target name="Private.Packages.CopyPackage" >
     <mkdir dir="${PackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
-    <copy todir="${PackagesDirectory}" >
+    <copy todir="${PackagesDirectory}" overwrite="true" >
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install" />
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade" />
+				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
       </fileset>
     </copy>
-    <copy todir="${PackagesDirectory}">
+    <copy todir="${PackagesDirectory}" overwrite="true">
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
@@ -151,7 +139,7 @@
 
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
-  <target name="Packages.AddMergeFiles">
+  <target name="Packages.AddMergeFiles" if="${Preserve.CCNetServer == 'No'}">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddMergeFiles.Block}
@@ -163,7 +151,7 @@
   </target>
 
   <property name="Packages.AddXslMerger.Block" value=""/>
-  <target name="Packages.AddXslMerger">
+  <target name="Packages.AddXslMerger" if="${Preserve.CCNetServer == 'No'}">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddXslMerger.Block}
@@ -175,7 +163,7 @@
   </target>
 
   <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
-  <target name="Packages.AddbuildReportBuildPlugin">
+  <target name="Packages.AddbuildReportBuildPlugin" if="${Preserve.CCNetDashboard == 'No'}">
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
@@ -187,7 +175,7 @@
   </target>
 
   <property name="Packages.AddbuildPlugins.Block" value=""/>
-  <target name="Packages.AddbuildPlugins">
+  <target name="Packages.AddbuildPlugins" if="${Preserve.CCNetDashboard == 'No'}">
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddbuildPlugins.Block}
@@ -199,7 +187,7 @@
   </target>
 
 
-  <target name="Private.Packages.AddInclude">
+  <target name="Private.Packages.AddInclude" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]>
@@ -212,22 +200,22 @@
   </target>
 
 
-  <target name="Private.Packages.AddSetUp">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
-      </value>
-    </largeproperty>
+  <target name="Private.Packages.AddSetUp" unless="${IsUpgrade}">
+		<largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+			<value xml="false" expand="true">
+				<![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
+			</value>
+		</largeproperty>
 
-    <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='SetUps']"/>
-    <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='SetUps']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.SetUp']"/>
-    <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+		<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='SetUps']"/>
+		<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='SetUps']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.SetUp']"/>
+		<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
 
-    <call target="Private.Packages.MainBuild.SmartAddXml"/>
-  </target>
+		<call target="Private.Packages.MainBuild.SmartAddXml"/>
+	</target>
 
 
-  <target name="Private.Packages.AddTearDown">
+	<target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
       <value xml="false" expand="true">
         <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown" />]]>
@@ -243,7 +231,7 @@
 
 
   <property name="Packages.AddPreBuildActions.Block" value=""/>
-  <target name="Packages.AddPreBuildActions">
+  <target name="Packages.AddPreBuildActions" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddPreBuildActions.Block}]]>
@@ -256,7 +244,7 @@
   </target>
 
   <property name="Packages.AddCleanUpActions.Block" value=""/>
-  <target name="Packages.AddCleanUpActions">
+  <target name="Packages.AddCleanUpActions" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddCleanUpActions.Block}]]>
@@ -269,7 +257,7 @@
   </target>
 
   <property name="Packages.AddCompileActions.Block" value=""/>
-  <target name="Packages.AddCompileActions">
+  <target name="Packages.AddCompileActions" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddCompileActions.Block}]]>
@@ -282,20 +270,20 @@
   </target>
 
   <property name="Packages.AddVarificationActions.Block" value=""/>
-  <target name="Packages.AddVarificationActions">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddVarificationActions.Block}]]>
-      </value>
-    </largeproperty>
+  <target name="Packages.AddVarificationActions" unless="${IsUpgrade}">
+		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+			<value xml="false" expand="true">
+				<![CDATA[${Packages.AddVarificationActions.Block}]]>
+			</value>
+		</largeproperty>
 
-    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.VarificationActions.EndTag}"/>
+		<property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.VarificationActions.EndTag}"/>
 
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
-  </target>
+		<call target="Private.Packages.MainBuild.SmartAddString"/>
+	</target>
 
-  <property name="Packages.AddPostBuildActions.Block" value=""/>
-  <target name="Packages.AddPostBuildActions">
+	<property name="Packages.AddPostBuildActions.Block" value=""/>
+	<target name="Packages.AddPostBuildActions" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddPostBuildActions.Block}]]>
@@ -309,19 +297,19 @@
 
   <property name="Private.Packages.MainBuild.Replace.To" value=""/>
   <property name="Private.Packages.MainBuild.Replace.From" value=""/>
-  <target name="Private.Packages.MainBuild.Replace">
-    <replace file="${Current.BuildFile}">
-      <filterchain>
-        <replacestring from="${Private.Packages.MainBuild.Replace.From}" to="${Private.Packages.MainBuild.Replace.To}" />
-      </filterchain>
-    </replace>
-  </target>
+  <target name="Private.Packages.MainBuild.Replace" unless="${IsUpgrade}">
+		<replace file="${Current.BuildFile}">
+			<filterchain>
+				<replacestring from="${Private.Packages.MainBuild.Replace.From}" to="${Private.Packages.MainBuild.Replace.To}" />
+			</filterchain>
+		</replace>
+	</target>
 
-  <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value=""/>
-  <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value=""/>
-  <property name="Private.Packages.MainBuild.SmartAddXml.NewText" value=""/>
-  <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value=""/>
-  <target name="Private.Packages.MainBuild.SmartAddXml">
+	<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.NewText" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value=""/>
+	<target name="Private.Packages.MainBuild.SmartAddXml" unless="${IsUpgrade}">
     <script language="C#">
       <imports >
         <import namespace="System.Xml"/>
@@ -390,7 +378,7 @@ public static void ScriptMain(NAnt.Core.Project project)
 
   <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value=""/>
   <property name="Private.Packages.MainBuild.SmartAddString.NewText" value=""/>
-  <target name="Private.Packages.MainBuild.SmartAddString">
+  <target name="Private.Packages.MainBuild.SmartAddString" unless="${IsUpgrade}">
     <script language="C#">
       <imports >
         <import namespace="System.Xml"/>
@@ -475,7 +463,7 @@ static string Normalize(string input)
 
   <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
   <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>
-  <target name="Private.Packages.DashboardConfig.Replace">
+  <target name="Private.Packages.DashboardConfig.Replace" if="${Preserve.CCNetDashboard == 'No'}">
     <replace file="${BuildDirectory}\dashboard\dashboard.config">
       <filterchain>
         <replacestring from="${Private.Packages.DashboardConfig.Replace.From}" to="${Private.Packages.DashboardConfig.Replace.To}" />
@@ -485,7 +473,7 @@ static string Normalize(string input)
 
   <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
   <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
-  <target name="Private.Packages.CCNETProjectConfig.Replace">
+  <target name="Private.Packages.CCNETProjectConfig.Replace" if="${Preserve.CCNetServer == 'No'}">
     <replace file="${BuildDirectory}\ccnetproject.xml">
       <filterchain>
         <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />
@@ -494,11 +482,21 @@ static string Normalize(string input)
   </target>
 
   <target name="Packages.ValidateParameters">
-    <loopthrough property="Private.Packages.Install.PackageName">
-      <items>
-        <strings refid="Packages.InstallList"/>
-      </items>
-      <do>
+		<loopthrough property="Private.Packages.Install.PackageName">
+			<items>
+				<strings refid="Packages.InstallList"/>
+			</items>
+			<do>
+				<property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
+				<echo message="${InstallScript}" />
+				<ifthenelse  test="${file::exists(InstallScript)}">
+					<then>
+						<include buildfile="${InstallScript}" />
+					</then>
+					<else>
+						<fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
+					</else>
+				</ifthenelse>
         <call target="${Private.Packages.Install.PackageName}.ValidateParameters"/>
       </do>
     </loopthrough>
