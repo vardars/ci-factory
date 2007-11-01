@@ -55,7 +55,11 @@
     <copy file="VisualSourceSafeTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
 
-    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+    <loglevel level="None">
+      <do>
+        <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+      </do>
+    </loglevel>
     <sleep seconds="2"/>
 
     <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
