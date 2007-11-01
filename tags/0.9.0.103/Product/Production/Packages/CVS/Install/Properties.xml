@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CVS.Installer.Properties" >
+
+
+  <property name="CVS.Username" value="Build" overwrite="false" />
+  <property name="CVS.Password" value="password" overwrite="false" />
+
+  <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol  type="CVS" applyLabel="false" autoGetSource="true" >
+        <folder >${???}/Build</folder >
+        <workingDirectory>${BuildDirectory}</workingDirectory>
+        <username>${Vault.Username}</username>
+        <password>${Vault.Password}</password>
+      </sourcecontrol>]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.MainBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="filtered">
+        <sourceControlProvider  type="CVS" applyLabel="true" autoGetSource="false" >
+          <folder >${???}</folder >
+          <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
+          <username>${Vault.Username}</username>
+          <password>${Vault.Password}</password>
+        </sourceControlProvider>
+        <exclusionFilters>
+          <pathFilter>
+            <pattern>**/&ProjectCodeLineName;/Product/**/AssemblyInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProjectCodeLineName;/Product/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProjectCodeLineName;/Product/**/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProjectCodeLineName;/Build/*.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProjectCodeLineName;/Build/**/*.*</pattern>
+          </pathFilter>
+        </exclusionFilters>
+      </sourcecontrol>]]>
+    </value>
+  </largeproperty>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CVS.Username%', CVS.Username)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CVS.Password%', CVS.Password)}" />
+</project>
