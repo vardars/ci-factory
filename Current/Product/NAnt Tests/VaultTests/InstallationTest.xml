@@ -7,7 +7,11 @@
     <include buildfile="TestRunner.Common.xml"/>
   </ifnot>
 
-  <loadtasks assembly="C:\Projects\CI Factory\Current\Product\Production\Packages\Vault\bin\NAnt.VaultTasks.dll" />
+  <ifnot test="${property::exists('ProductionDirectory')}">
+    <include buildfile="..\..\Build\Properties.build.xml"/>
+  </ifnot>
+
+  <loadtasks assembly="${ProductionDirectory}\Packages\Vault\bin\NAnt.VaultTasks.dll" />
   
   <target name="Vault.InstallationTest.RunAllTests">
     <testrunner>
@@ -56,30 +60,19 @@
 			user="${Vault.Username}"
 			password="${Vault.Password}"
 			repository="${Vault.Repository}" />
+    
+    <vaultdeleterepository repositoryName="${Vault.Repository}"/>
 
+<<<<<<< .mine
 		<vaultdeleterepository repositoryName="${Vault.Repository}" failonerror="false"/>
-		
-		<property name="Vault.RepoExists" value="true"/>
-		<trycatch>
-			<try>
-				<vaultdeleterepository repositoryName="${Vault.Repository}"/>
-			</try>
-			<catch>
-				<property name="Vault.RepoExists" value="false"/>
-			</catch>
-		</trycatch>
-		<assertequal actual="${Vault.RepoExists}" expected="false" message="The vault test repo should not exist."/>
-
-    <vaultlogout failonerror="false"/>
+=======
+    <vaultlogout/>
+>>>>>>> .r1411
 
     <copy file="VaultTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
 
-    <loglevel level="None">
-      <do>
-        <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
-      </do>
-    </loglevel>
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
     <sleep seconds="2"/>
 
     <asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />

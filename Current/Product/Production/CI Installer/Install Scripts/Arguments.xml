@@ -33,9 +33,9 @@
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
 
   <strings id="Packages.InstallList">
-    <string value="SourceModificationReport"/>
-    <string value="CSDiff" />
     <string value="Subversion"/>
+    <string value="CSDiff" />
+    <string value="SourceModificationReport"/>
     <string value="Versioning"/>
     <string value="MSBuild" />
     <string value="NCover" />

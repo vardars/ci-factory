@@ -59,7 +59,4 @@
     <None Include="Packages.csproj.remove" />
     <None Include="run.bat" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Install Scripts\Zips\" />
-  </ItemGroup>
 </Project>
