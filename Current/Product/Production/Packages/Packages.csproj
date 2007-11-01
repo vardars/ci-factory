@@ -425,7 +425,6 @@
     <Content Include="Perforce\Install\Properties.xml" />
     <Content Include="Perforce\SourceControl.Properties.xml" />
     <Content Include="Perforce\SourceControl.Target.xml" />
-    <Content Include="Perforce\Upgrade\Upgrade.xml" />
     <Content Include="Simian\Install\Install.xml" />
     <Content Include="Simian\Install\Properties.xml" />
     <Content Include="StarTeam\Install\Install.xml" />

@@ -58,5 +58,6 @@
     <None Include="CI Factory.sln.remove" />
     <None Include="Packages.csproj.remove" />
     <None Include="run.bat" />
+    <None Include="upgrade.bat" />
   </ItemGroup>
 </Project>

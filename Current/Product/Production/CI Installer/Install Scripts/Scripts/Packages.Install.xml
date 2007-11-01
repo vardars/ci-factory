@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PackagesInstaller" >
 
 	<property name="Preserve.CCNetDashboard" value="No" overwrite="false"/>
-	<property name="Preserve.CCNetServer" value="No" overwrite="false"/>
+	<property name="Preserve.CCNetConfig" value="No" overwrite="false"/>
 	<property name="IsUpgrade" value="false" overwrite="false"/>
 
   <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
@@ -157,7 +157,7 @@
 
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
-  <target name="Packages.AddMergeFiles" if="${Preserve.CCNetServer == 'No'}">
+  <target name="Packages.AddMergeFiles" if="${Preserve.CCNetConfig == 'No'}">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddMergeFiles.Block}
@@ -169,7 +169,7 @@
   </target>
 
   <property name="Packages.AddXslMerger.Block" value=""/>
-  <target name="Packages.AddXslMerger" if="${Preserve.CCNetServer == 'No'}">
+  <target name="Packages.AddXslMerger" if="${Preserve.CCNetConfig == 'No'}">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddXslMerger.Block}
@@ -491,7 +491,7 @@ static string Normalize(string input)
 
   <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
   <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
-  <target name="Private.Packages.CCNETProjectConfig.Replace" if="${Preserve.CCNetServer == 'No'}">
+  <target name="Private.Packages.CCNETProjectConfig.Replace" if="${Preserve.CCNetConfig == 'No'}">
     <replace file="${BuildDirectory}\ccnetproject.xml">
       <filterchain>
         <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />
