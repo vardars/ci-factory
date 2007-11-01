@@ -3,7 +3,7 @@
 
 	<property name="Preserve.CCNetDashboard" value="No" overwrite="false"/>
 	<property name="Preserve.CCNetServer" value="No" overwrite="false"/>
-	<property name="IsUpgrade" value="false" overwrite="true"/>
+	<property name="IsUpgrade" value="false" overwrite="false"/>
 
   <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
   <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
@@ -70,8 +70,26 @@
   <largeproperty name="Private.Packages.PostBuild.EndTag">
     <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
   </largeproperty>
- 
+
   <!-- These are private... -->
+
+  <loopthrough property="Private.Packages.Install.PackageName">
+    <items>
+      <strings refid="Packages.InstallList"/>
+    </items>
+    <do>
+      <property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
+      <echo message="${InstallScript}" />
+      <ifthenelse  test="${file::exists(InstallScript)}">
+        <then>
+          <include buildfile="${InstallScript}" />
+        </then>
+        <else>
+          <fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
+        </else>
+      </ifthenelse>
+    </do>
+  </loopthrough>
 
   <target name="Packages.Install" >
     <loopthrough property="Private.Packages.Install.PackageName">
@@ -482,21 +500,11 @@ static string Normalize(string input)
   </target>
 
   <target name="Packages.ValidateParameters">
-		<loopthrough property="Private.Packages.Install.PackageName">
-			<items>
-				<strings refid="Packages.InstallList"/>
-			</items>
-			<do>
-				<property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
-				<echo message="${InstallScript}" />
-				<ifthenelse  test="${file::exists(InstallScript)}">
-					<then>
-						<include buildfile="${InstallScript}" />
-					</then>
-					<else>
-						<fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
-					</else>
-				</ifthenelse>
+    <loopthrough property="Private.Packages.Install.PackageName">
+      <items>
+        <strings refid="Packages.InstallList"/>
+      </items>
+      <do>
         <call target="${Private.Packages.Install.PackageName}.ValidateParameters"/>
       </do>
     </loopthrough>
