@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Upgrader" default="Perforce.Upgrade">
+
+
+	<target name="Perforce.Upgrade">
+		
+	</target>
+
+	<target name="Perforce.SetAsCurrentPackage">
+		<property name="Packages.CurrenctPackage.PackageDirectoryName" value="Perforce"/>
+		<property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
+		<property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+	</target>
+
+	<target name="Perforce.ValidateParameters">
+		<include buildfile="${PackagesDirectory}\Perforce\SourceControl.Properties.xml"/>
+		<include buildfile="${SourcePackagesDirectory}\Perforce\Install\Properties.xml"/>
+	</target>
+	
+</project>

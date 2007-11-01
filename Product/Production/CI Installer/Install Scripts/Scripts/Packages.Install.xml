@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PackagesInstaller" >
+
+	<property name="Preserve.CCNetDashboard" value="No" overwrite="false"/>
+	<property name="Preserve.CCNetServer" value="No" overwrite="false"/>
+	<property name="IsUpgrade" value="false" overwrite="true"/>
+
+  <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
+  <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
+  <property name="Packages.CurrenctPackage.PackageName" value=""/>
+  <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
+
+  <largeproperty name="Private.Packages.PreBuildActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Pre Build Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.CleanUpActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Clean Up Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.CompileActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Compile Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.VarificationActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Varification Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.PostBuildActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Post Build Actions</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.TearDown.EndTag">
+    <value xml="false"><![CDATA[<description>End TearDowns</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.SetUp.EndTag">
+    <value xml="false"><![CDATA[<description>End SetUps</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.Include.EndTag">
+    <value xml="false"><![CDATA[<description>End Package Includes</description>]]></value>
+  </largeproperty>
+
+	<largeproperty name="Private.Packages.buildReportBuildPlugin.EndTag">
+		<value>
+			<![CDATA[</xslFileNames>
+			</buildReportBuildPlugin>]]>
+		</value>
+	</largeproperty>
+
+	<largeproperty name="Private.Packages.buildPlugins.EndTag">
+    <value><![CDATA[</buildPlugins>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.XslMerger.EndTag">
+    <value>
+      <![CDATA[</filepairs>
+      </xslmerger>]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.MergeFiles.EndTag">
+    <value>
+      <![CDATA[</files>
+      </merge>]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.PostBuild.EndTag">
+    <value xml="false"><![CDATA[<description>End Post Build</description>]]></value>
+  </largeproperty>
+ 
+  <!-- These are private... -->
+
+  <target name="Packages.Install" >
+    <loopthrough property="Private.Packages.Install.PackageName">
+      <items>
+        <strings refid="Packages.InstallList"/>
+      </items>
+      <do>
+        <call target="Packages.Reset.CurrentPackage" />
+        <call target="${Private.Packages.Install.PackageName}.SetAsCurrentPackage"/>
+        <call target="Packages.Validate.CurrentSetPackage"/>
+
+        <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
+        <call target="Private.Packages.CopyPackage"/>
+
+        <call target="Private.Packages.AddInclude" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+
+        <call target="${Private.Packages.Install.PackageName}.Install"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <target name="Packages.Reset.CurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
+    <property name="Packages.CurrenctPackage.PackageName" value=""/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Main.Build.xml"/>
+    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
+  </target>
+
+  <target name="Packages.Validate.CurrentSetPackage">
+    <fail if="${Packages.CurrenctPackage.PackageDirectoryName == ''}" message="PackageDirectoryName was not set as the current package."/>
+    <fail if="${Packages.CurrenctPackage.PackageTargetFileName == ''}" message="PackageTargetFileName was not set as the current package."/>
+    <fail if="${Packages.CurrenctPackage.PackageName == ''}" message="PackageName was not set as the current package."/>
+  </target>
+
+  <property name="Packages.CopyPackage.PackageName" value=""/>
+
+  <target name="Private.Packages.CopyPackage" >
+    <mkdir dir="${PackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
+    <copy todir="${PackagesDirectory}" overwrite="true" >
+      <fileset basedir="${SourcePackagesDirectory}">
+        <include name="${Packages.CopyPackage.PackageName}\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade" />
+				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
+      </fileset>
+    </copy>
+    <copy todir="${PackagesDirectory}" overwrite="true">
+      <fileset basedir="${SourcePackagesDirectory}">
+        <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
+        <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
+        <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Install" />
+      </fileset>
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+  </target>
+
+
+  <property name="Packages.AddMergeFiles.Block" value=""/>
+  <target name="Packages.AddMergeFiles" if="${Preserve.CCNetServer == 'No'}">
+    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddMergeFiles.Block}
+  ${Private.Packages.MergeFiles.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.MergeFiles.EndTag}" />
+    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddXslMerger.Block" value=""/>
+  <target name="Packages.AddXslMerger" if="${Preserve.CCNetServer == 'No'}">
+    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddXslMerger.Block}
+  ${Private.Packages.XslMerger.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.XslMerger.EndTag}" />
+    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
+  <target name="Packages.AddbuildReportBuildPlugin" if="${Preserve.CCNetDashboard == 'No'}">
+    <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
+  ${Private.Packages.buildReportBuildPlugin.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildReportBuildPlugin.EndTag}" />
+    <call target="Private.Packages.DashboardConfig.Replace"/>
+  </target>
+
+  <property name="Packages.AddbuildPlugins.Block" value=""/>
+  <target name="Packages.AddbuildPlugins" if="${Preserve.CCNetDashboard == 'No'}">
+    <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddbuildPlugins.Block}
+  ${Private.Packages.buildPlugins.EndTag}]]>
+      </value>
+    </largeproperty>
+    <property name="Private.Packages.DashboardConfig.Replace.From" value="${Private.Packages.buildPlugins.EndTag}" />
+    <call target="Private.Packages.DashboardConfig.Replace"/>
+  </target>
+
+
+  <target name="Private.Packages.AddInclude" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.Include.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
+
+
+  <target name="Private.Packages.AddSetUp" unless="${IsUpgrade}">
+		<largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+			<value xml="false" expand="true">
+				<![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
+			</value>
+		</largeproperty>
+
+		<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='SetUps']"/>
+		<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='SetUps']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.SetUp']"/>
+		<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+
+		<call target="Private.Packages.MainBuild.SmartAddXml"/>
+	</target>
+
+
+	<target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown" />]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='TearDowns']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='TearDowns']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.TearDown']"/>
+    <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddXml"/>
+  </target>
+
+
+  <property name="Packages.AddPreBuildActions.Block" value=""/>
+  <target name="Packages.AddPreBuildActions" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddPreBuildActions.Block}]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PreBuildActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
+
+  <property name="Packages.AddCleanUpActions.Block" value=""/>
+  <target name="Packages.AddCleanUpActions" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddCleanUpActions.Block}]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CleanUpActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
+
+  <property name="Packages.AddCompileActions.Block" value=""/>
+  <target name="Packages.AddCompileActions" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddCompileActions.Block}]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CompileActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
+
+  <property name="Packages.AddVarificationActions.Block" value=""/>
+  <target name="Packages.AddVarificationActions" unless="${IsUpgrade}">
+		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+			<value xml="false" expand="true">
+				<![CDATA[${Packages.AddVarificationActions.Block}]]>
+			</value>
+		</largeproperty>
+
+		<property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.VarificationActions.EndTag}"/>
+
+		<call target="Private.Packages.MainBuild.SmartAddString"/>
+	</target>
+
+	<property name="Packages.AddPostBuildActions.Block" value=""/>
+	<target name="Packages.AddPostBuildActions" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+      <value xml="false" expand="true">
+        <![CDATA[${Packages.AddPostBuildActions.Block}]]>
+      </value>
+    </largeproperty>
+
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PostBuildActions.EndTag}"/>
+
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
+
+  <property name="Private.Packages.MainBuild.Replace.To" value=""/>
+  <property name="Private.Packages.MainBuild.Replace.From" value=""/>
+  <target name="Private.Packages.MainBuild.Replace" unless="${IsUpgrade}">
+		<replace file="${Current.BuildFile}">
+			<filterchain>
+				<replacestring from="${Private.Packages.MainBuild.Replace.From}" to="${Private.Packages.MainBuild.Replace.To}" />
+			</filterchain>
+		</replace>
+	</target>
+
+	<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.NewText" value=""/>
+	<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value=""/>
+	<target name="Private.Packages.MainBuild.SmartAddXml" unless="${IsUpgrade}">
+    <script language="C#">
+      <imports >
+        <import namespace="System.Xml"/>
+        <import namespace="NAnt.Core.Types" />
+      </imports >
+      <code>
+        <![CDATA[
+public static void ScriptMain(NAnt.Core.Project project)
+{
+  string buildFile = project.Properties["Current.BuildFile"];
+
+  XmlDocument buildXmlDoc = new XmlDocument();
+  buildXmlDoc.Load(buildFile);
+  XmlNamespaceManager namespaces = new XmlNamespaceManager(buildXmlDoc.NameTable);
+  namespaces.AddNamespace("nant", "http://nant.sf.net/schemas/nant.xsd");
+
+  string sectionXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToXPath"];
+  string newText = project.Properties["Private.Packages.MainBuild.SmartAddXml.NewText"];
+  string ifNotXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.IfNotXPath"];
+  string toFrontString = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToFront"];
+
+  if (String.IsNullOrEmpty(sectionXPath))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.ToXPath");
+  if (String.IsNullOrEmpty(newText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.NewText");
+
+  bool toFront = "true".Equals(toFrontString);
+
+  XmlNode sectionNode = buildXmlDoc.SelectSingleNode(sectionXPath, namespaces);
+  if (sectionNode == null)
+    throw new ApplicationException("No node matched xpath (did you forget the nant: namespace?): " + sectionXPath);
+
+
+  bool add = true;
+
+  if (!String.IsNullOrEmpty(ifNotXPath))
+  {
+    if (buildXmlDoc.SelectSingleNode(ifNotXPath, namespaces) != null)
+    {
+      add = false;
+    }
+  }
+
+  if (add)
+  {
+    string nodeText;
+    if (toFront)
+    {
+      nodeText = newText + sectionNode.InnerXml;
+    }
+    else
+    {
+      nodeText = sectionNode.InnerXml + newText;
+    }
+
+    sectionNode.InnerXml = nodeText;
+
+    buildXmlDoc.PreserveWhitespace = false;
+    buildXmlDoc.Save(buildFile);
+  }
+}
+        ]]>
+      </code>
+    </script>
+  </target>
+
+  <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value=""/>
+  <property name="Private.Packages.MainBuild.SmartAddString.NewText" value=""/>
+  <target name="Private.Packages.MainBuild.SmartAddString" unless="${IsUpgrade}">
+    <script language="C#">
+      <imports >
+        <import namespace="System.Xml"/>
+        <import namespace="NAnt.Core.Types" />
+      </imports >
+      <code>
+        <![CDATA[
+public static void ScriptMain(NAnt.Core.Project project)
+{
+  string buildFile = project.Properties["Current.BuildFile"];
+
+
+  string beforeText = project.Properties["Private.Packages.MainBuild.SmartAddString.BeforeText"];
+  if (String.IsNullOrEmpty(beforeText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddString.BeforeText");
+  string newText = project.Properties["Private.Packages.MainBuild.SmartAddString.NewText"];
+  if (String.IsNullOrEmpty(newText))
+    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddString.NewText");
+
+  string documentOuterText = File.ReadAllText(buildFile);
+
+  // We normalize white space
+  documentOuterText = Normalize(documentOuterText);
+  newText = Normalize(newText);
+
+  // Don't add the same text repeatedly
+  if (documentOuterText.IndexOf(newText) == -1)
+  {    
+    //Console.WriteLine(newText);
+    //Console.WriteLine(documentOuterText);
+
+    XmlDocument buildXmlDoc = new XmlDocument();
+    buildXmlDoc.Load(buildFile);
+    XmlNamespaceManager namespaces = new XmlNamespaceManager(buildXmlDoc.NameTable);
+    namespaces.AddNamespace("nant", "http://nant.sf.net/schemas/nant.xsd");
+
+    string documentOuterXml = buildXmlDoc.OuterXml;
+
+    documentOuterXml = Normalize(documentOuterXml);
+    beforeText = Normalize(beforeText);
+
+    int beforeTextIndex = documentOuterXml.IndexOf(beforeText);
+    if (beforeTextIndex < 0)
+      throw new ApplicationException("Text not found: " + beforeText);
+
+
+    documentOuterXml = documentOuterXml.Substring(0, beforeTextIndex) + newText + documentOuterXml.Substring(beforeTextIndex);
+
+    buildXmlDoc.LoadXml( documentOuterXml);
+
+
+    buildXmlDoc.PreserveWhitespace = false;
+    buildXmlDoc.Save(buildFile);
+  }
+
+
+}
+
+static string Normalize(string input)
+{
+  // We normalize white space
+  input = input.Replace('\r', ' ');
+  input = input.Replace('\n', ' ');
+  input = input.Replace('\t', ' ');
+  while (true)
+  {
+    int oldLength = input.Length;
+    input = input.Replace("  ", " ");
+    if (input.Length == oldLength) break;
+  }
+
+  // Normalize the space at the end of self-closing attributes
+  input = input.Replace("\"/>", "\" />");
+
+  return input;
+}
+        ]]>
+      </code>
+    </script>
+  </target>
+
+
+  <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
+  <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>
+  <target name="Private.Packages.DashboardConfig.Replace" if="${Preserve.CCNetDashboard == 'No'}">
+    <replace file="${BuildDirectory}\dashboard\dashboard.config">
+      <filterchain>
+        <replacestring from="${Private.Packages.DashboardConfig.Replace.From}" to="${Private.Packages.DashboardConfig.Replace.To}" />
+      </filterchain>
+    </replace>
+  </target>
+
+  <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
+  <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
+  <target name="Private.Packages.CCNETProjectConfig.Replace" if="${Preserve.CCNetServer == 'No'}">
+    <replace file="${BuildDirectory}\ccnetproject.xml">
+      <filterchain>
+        <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />
+      </filterchain>
+    </replace>
+  </target>
+
+  <target name="Packages.ValidateParameters">
+		<loopthrough property="Private.Packages.Install.PackageName">
+			<items>
+				<strings refid="Packages.InstallList"/>
+			</items>
+			<do>
+				<property name="InstallScript" value="${SourcePackagesDirectory}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
+				<echo message="${InstallScript}" />
+				<ifthenelse  test="${file::exists(InstallScript)}">
+					<then>
+						<include buildfile="${InstallScript}" />
+					</then>
+					<else>
+						<fail message="Installer for ${Private.Packages.Install.PackageName} not found: file not found - '${InstallScript}'."/>
+					</else>
+				</ifthenelse>
+        <call target="${Private.Packages.Install.PackageName}.ValidateParameters"/>
+      </do>
+    </loopthrough>
+  </target>
+
+</project>
