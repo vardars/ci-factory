@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Install" default="Wix.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Workspace.Install">
+    
+  </target>
+
+  <target name="Workspace.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Workspace"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Workspace.Targets.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Workspace"/>
+  </target>
+
+  <target name="Workspace.ValidateParameters">
+    <ifnot test="${file::exists(WinRarProgramPath)}" >
+      <exec program="${SourcePackagesDirectory}\Workspace\Install\wrar371.exe" />
+    </ifnot>
+  </target>
+  
+</project>
