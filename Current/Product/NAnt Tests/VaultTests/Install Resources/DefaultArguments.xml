@@ -25,7 +25,8 @@
   <property name="Vault.Password" value=""  />
   <property name="Vault.Host" value="localhost"  />
   <property name="Vault.URL" value="http://localhost/VaultService"  />
-  <property name="Vault.Repository" value="${ProjectName}"  />
+  <property name="Vault.Repository" value="Main"  />
+  <property name="Vault.Repository.BasePath" value="$/${ProjectName}"/>
 
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />

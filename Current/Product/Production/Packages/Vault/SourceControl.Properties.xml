@@ -6,5 +6,6 @@
   <property name="Vault.URL" value="%Vault.URL%" />
   <property name="Vault.Host" value="%Vault.Host%" overwrite="false" />
   <property name="Vault.Repository" value="%Vault.Repository%" overwrite="false" />
+  <property name="Vault.Repository.BasePath" value="%Vault.Repository.BasePath%" overwrite="false" />
   <property name="Vault" value="%Vault%" overwrite="false" />
 </project>

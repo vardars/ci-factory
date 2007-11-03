@@ -25,11 +25,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadd.folderPath">
             <summary>
             The folder where the items should be added.  This can be either a local path or a server path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadd.localItemsToAdd">
             <summary>
             An array of local paths that should be added to the folder given.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem">
@@ -60,6 +62,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem.item">
             <summary>
             The FortressItemExpanded to be added.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment">
@@ -90,11 +93,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.bugID">
             <summary>
             The id of the bug to which the comment will be added.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.comment">
             <summary>
             The comment to be added to the bug.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository">
@@ -107,6 +112,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository.newReposName">
             <summary>
             The name of the repository that will be created.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository.enableSecurity">
@@ -125,16 +131,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.login">
             <summary>
             The login name for the user.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.password">
             <summary>
             The initial password for the user.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.email">
             <summary>
             The email address for the user.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultblame">
@@ -165,6 +174,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.objectPath">
             <summary>
             The file whose history will be examined.  This can be either a local path or a server path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.version">
@@ -176,6 +186,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.startlinenumber">
             <summary>
             The first line of the region of interest in the file.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.endlinenumber">
@@ -200,11 +211,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch.objectPath_From">
             <summary>
             The path to the object that will be branched.  This can be either a local path or a server path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch.objectPath_To">
             <summary>
             The path to the new location for the branch.  This path should not exist in the repository.  The last segment of this path will be the new name of the branched folder.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin">
@@ -217,11 +230,12 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.objectPaths">
             <summary>
             An array of paths to Vault objects.  These paths can be either local or repository paths.  If they are repository paths, wildcards can be included see 
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.unchanged">
             <summary>
-            Controls how unchanged files are treated.
+            Controls how unchanged files are treated.  Possible values are:  "LeaveCheckedOut", "Checkin", and "UndoCheckout".
             This attribute is optional.  The default value is "UndoCheckout".
             </summary>
         </member>
@@ -233,7 +247,7 @@
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.localCopy">
             <summary>
-            If unchanged is UnchangedHandler.UndoCheckOut, this parameter controls what is done with any modified local files that are present in the working folder.
+            If unchanged is UnchangedHandler.UndoCheckOut, this parameter controls what is done with any modified local files that are present in the working folder.  Possible values are:  "Replace", "Delete", and "Leave".
             This attribute is optional.  The default value is "Replace".
             </summary>
         </member>
@@ -247,6 +261,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.objectPaths">
             <summary>
             An array of paths to Vault objects.  These paths can be either local or repository paths.  If they are repository paths, wildcards can be included see 
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.checkoutExclusive">
@@ -267,6 +282,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak">
@@ -279,6 +295,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak.objectPaths">
             <summary>
             An array of folder paths.  These can be either local paths or repository paths
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder">
@@ -297,6 +314,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder.newFolderPath">
             <summary>
             The path to the location for the new folder.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete">
@@ -315,6 +333,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete.objectPaths">
             <summary>
             An array of object paths.  These can be either local or repository paths.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery">
@@ -327,6 +346,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery.queryID">
             <summary>
             The id of the query to delete.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel">
@@ -339,11 +359,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel.objectPath">
             <summary>
             The path to the object that has been labeled.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel.labelName">
             <summary>
             The label that will be deleted from the object.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository">
@@ -356,6 +378,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository.repositoryName">
             <summary>
             The name of the repository that will be deleted.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff">
@@ -368,32 +391,38 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.diffProgram">
             <summary>
             The path to the diff program that will be launched.  If null or an empty string is passed, the VAULTDIFF environment variable will be read.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.diffArguments">
             <summary>
             The arguments that will be passed into the diff program.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.compareToOption">
             <summary>
-            The type of diff that will be performed.
+            The type of diff that will be performed.  Possible values are:  "current", "label", "lastget", "local", and "repository".
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.recursive">
             <summary>
             Recursively diff folders.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.objectPathLeft">
             <summary>
             The path to the first object that will be diffed.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.objectPathRight">
             <summary>
             The value of this argument will depend on the CompareToOption that is specified.
                         CompareToOption.current: This parameter is not needed (pass null).CompareToOption.label:  This parameter is the label that was applied to the object at objectPathLeft.CompareToOption.lastget: This parameter is not needed (pass null).CompareToOption.local:  This parameter is the path to the local folder or file.CompareToOption.repository:  This parameter is the path to the repository file or folder.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment">
@@ -424,21 +453,25 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.msgID">
             <summary>
             The message id.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.attID">
             <summary>
             The attachment id.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.filename">
             <summary>
             The name of the file.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.strReceivedFilePath">
             <summary>
             The local path to download the attachment to.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet">
@@ -471,6 +504,7 @@
             
                         The name of the project.
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.ItemType">
@@ -478,6 +512,7 @@
             
                         The bug tracking item type (i.e. Bug, Feature, etc).
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Status">
@@ -485,6 +520,7 @@
             
                         The status of the item (i.e. Open, Completed, In Progress, etc).
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Platform">
@@ -492,6 +528,7 @@
             
                         The platform for the item (i.e. Windows, Unix, Unknown, etc).
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.TimeEstimate">
@@ -499,6 +536,7 @@
             
                         The estimated time to complete the item (i.e. Unknown, One Hour, One Month, etc).
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Assignee">
@@ -522,6 +560,7 @@
             
                         A description of the item.
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Priority">
@@ -529,6 +568,7 @@
             
                         The priority of the item (i.e. Unknown, Low, Urgent, etc).
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Details">
@@ -536,6 +576,7 @@
             
                         The details of the item.
                         
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.VersionStr">
@@ -606,6 +647,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance.projectName">
             <summary>
             The name of the project for which information will be listed.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultget">
@@ -619,11 +661,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultget.objectPaths">
             <summary>
             An array of paths to get.  These can be either local paths or repository paths.  If they are repository paths, wildcards can be included.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultget.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery">
@@ -654,6 +698,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery.queryID">
             <summary>
             The id of the query to retrieve.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder">
@@ -668,11 +713,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.objectPath">
             <summary>
             The path to an object.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.label">
             <summary>
             The label that was applied to the object.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.labelSubItem">
@@ -684,11 +731,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.destPath">
             <summary>
             The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder">
@@ -702,11 +751,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.objectPath">
             <summary>
             The path to an object.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.label">
             <summary>
             The label that was applied to the object.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.labelSubItem">
@@ -718,11 +769,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.tmpWorkingFolder">
             <summary>
             The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions">
@@ -737,6 +790,7 @@
             <summary>
             
                         Controls how and if files that have been modified locally are replaced with versions from the repository.
+                        Possible values are:  "OverwriteWorkingCopy", "MergeLater", "AttemptAutomaticMerge", and "Unspecified".
                         
             This attribute is optional.  The default value is "AttemptAutomaticMerge".
             </summary>
@@ -753,6 +807,7 @@
             <summary>
             
                         Controls if files are marked as writable when fetched.
+                        Possible values are:  "MakeNonMergableFilesReadOnly", "MakeAllFilesReadOnly", and "MakeAllFilesWritable".
                         
             This attribute is optional.  The default value is "MakeNonMergableFilesReadOnly".
             </summary>
@@ -761,6 +816,7 @@
             <summary>
             
                         Controls the date placed in the file's Last Modified attribute.
+                        Possible values are:  "Current", "Modification", and "CheckIn".
                         
             This attribute is optional.  The default value is "Current".
             </summary>
@@ -771,6 +827,7 @@
                         Controls if files which are deleted, moved or renamed in the repository are deleted, moved
                         or renamed on disk when the get is completed.  This option is ignored for get operations 
                         to locations outside of working folders.
+                        Possible values are:  "RemoveWorkingCopy", "DoNotRemoveWorkingCopy", and "RemoveWorkingCopyIfUnmodified".
                         
             This attribute is optional.  The default value is "RemoveWorkingCopyIfUnmodified".
             </summary>
@@ -779,7 +836,7 @@
             <summary>
             
                         Mergable files will be converted to the given line-ending type when fetched.
-                        Available types are: "none", "cr", "lf", or "crlf".
+                        Available types are: "None", "Native", "CR", "LF", or "CRLF".
                         "none" means "don't override".
                         
             This attribute is optional.  The default value is "None".
@@ -797,16 +854,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.objectPaths">
             <summary>
             An array of paths to get.  These can be either local paths or repository paths.  If they are repository paths, wildcards can be included.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.destPath">
             <summary>
             The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion">
@@ -822,16 +882,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.objectPath">
             <summary>
             The path to an object.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.version">
             <summary>
             The version of the object that will be downloaded.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder">
@@ -846,21 +909,25 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.objectPath">
             <summary>
             The path to an object.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.version">
             <summary>
             The version of the object that will be downloaded.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.destPath">
             <summary>
             The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard">
@@ -877,16 +944,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.folderPath">
             <summary>
             The path to an folder.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.wildcardArray">
             <summary>
             An array of strings that will be used as wildcards to match.  You may use '?' to match a single character or '*' to match a range of characters.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder">
@@ -904,21 +974,25 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.folderPath">
             <summary>
             The path to an folder.  This can be either a local path or a repository path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.wildcardArray">
             <summary>
             An array of strings that will be used as wildcards to match.  You may use '?' to match a single character or '*' to match a range of characters.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.getOptions">
             <summary>
             The options that will control how the get is performed.
+            This attribute is optional.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.destPath">
             <summary>
             The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments">
@@ -974,6 +1048,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.objectPath">
             <summary>
             The path to the object to use for the root as the history query.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.recursive">
@@ -984,7 +1059,7 @@
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.dateSort">
             <summary>
-            Specify the sort ordering of the history results
+            Specify the sort ordering of the history results.  Possible values are:  "asc" and "desc".
             This attribute is optional.  The default value is "desc".
             </summary>
         </member>
@@ -1052,11 +1127,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.objectPath">
             <summary>
             The path to the object to label.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.labelName">
             <summary>
             The label that will be applied.  If the label has already been applied, an exception will be thrown.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.versionID">
@@ -1149,6 +1226,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.folderPath">
             <summary>
             The path to the folder whose contents you would like displayed.   This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.recursive">
@@ -1185,6 +1263,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories.projectName">
             <summary>
             The name of the project.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels">
@@ -1240,11 +1319,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.msgID">
             <summary>
             The message id.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.attID">
             <summary>
             The attachment id.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails">
@@ -1275,6 +1356,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails.itemID">
             <summary>
             The id of the item for which full details will be returned.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes">
@@ -1330,6 +1412,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones.projectName">
             <summary>
             The name of the project.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms">
@@ -1439,6 +1522,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries.projectName">
             <summary>
             The name of the project for which saved queries will be retrieved.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses">
@@ -1519,6 +1603,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers.projectName">
             <summary>
             The name of the project for which users will be listed.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems">
@@ -1549,6 +1634,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems.projectName">
             <summary>
             The name of the project for which items will be listed.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties">
@@ -1579,6 +1665,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties.objectPath">
             <summary>
             The path to the object whose properties.   This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems">
@@ -1609,6 +1696,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems.projectName">
             <summary>
             The name of the project for which items will be listed.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories">
@@ -1671,6 +1759,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem.item">
             <summary>
             The MantisItem which has been modified.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery">
@@ -1683,6 +1772,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery.sq">
             <summary>
             The SavedQuery object which has been modified.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultmove">
@@ -1701,11 +1791,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmove.objectPath_From">
             <summary>
             The path to the object that will be moved.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmove.objectPath_To">
             <summary>
             The path to the folder into which the item is to be moved.  If the folder already exists, no object with the same name as the moving object can exist therein already.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate">
@@ -1722,6 +1814,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate.repositoryPath">
             <summary>
             The repository path to the object which will be obliterate.  This object must already be deleted.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultpin">
@@ -1740,6 +1833,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultpin.objectPath">
             <summary>
             The path to the object that will be pinned.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultpin.version">
@@ -1783,6 +1877,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.qf">
             <summary>
             The MantisItemQueryFilter to process
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.sendDetails">
@@ -1801,6 +1896,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder.repositoryFolderPath">
             <summary>
             The path to the repository folder whose working folder association will be deleted.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrename">
@@ -1819,11 +1915,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrename.objectPath">
             <summary>
             The path to the object that will be renamed.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrename.newName">
             <summary>
             The new name for the object.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel">
@@ -1836,16 +1934,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.objectPath">
             <summary>
             The path to the object that has been labeled with the oldLabelName.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.oldLabelName">
             <summary>
             The label that will be renamed.  If this label hasn't been applied to the object, an exception will be thrown.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.newLabelName">
             <summary>
             The new label that will given to the object.  If this label has already been applied to the object, an exception will be thrown.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery">
@@ -1876,16 +1977,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.projectName">
             <summary>
             The name of the parent project.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.queryName">
             <summary>
             The name of the saved query.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.sendDetails">
             <summary>
             true to include the details field in the returned items, false otherwise.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery">
@@ -1916,11 +2020,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.queryName">
             <summary>
             The name of the query as a string.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.qf">
             <summary>
             The MantisItemQueryFilter to be saved.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions">
@@ -1933,16 +2039,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.URL">
             <summary>
             The URL to the Vault server.  For example "http://localhost/VaultService"
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.user">
             <summary>
             The username to use to log in to Vault.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.password">
             <summary>
             The password to use for authentication.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.repository">
@@ -1967,6 +2076,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository.repositoryName">
             <summary>
             The name of the repository to connect to.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder">
@@ -1979,11 +2089,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.repositoryFolderPath">
             <summary>
             The path to the repository folder.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.diskPath">
             <summary>
             The path to a directory on disk.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.createDiskPath">
@@ -2008,11 +2120,13 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultshare.objectPath_From">
             <summary>
             The path to the file or folder that will be shared.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultshare.folderPath_To">
             <summary>
             The path to the folder where the shared object will be put.  This folder must already exist.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail">
@@ -2043,6 +2157,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail.nTxID">
             <summary>
             The transaction id
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak">
@@ -2055,6 +2170,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak.objectPaths">
             <summary>
             An array of paths to uncloak.  These can be either local paths or repository paths.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout">
@@ -2067,6 +2183,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.objectPaths">
             <summary>
             An array of paths to the objects whose pending changes will be undone.  This can be either a repository path or a local path.  If they are repository paths, wildcards can be included see 
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.recursive">
@@ -2077,7 +2194,7 @@
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.localCopy">
             <summary>
-            Controls what is done with any modified local files that are present in the working folder.
+            Controls what is done with any modified local files that are present in the working folder.  Possible values are:  "Replace", "Delete", and "Leave".
             This attribute is optional.  The default value is "Replace".
             </summary>
         </member>
@@ -2097,6 +2214,7 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin.objectPath">
             <summary>
             The path to the file or folder that will be unpinned.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment">
@@ -2109,16 +2227,19 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.nTxID">
             <summary>
             the transaction id
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.nObjverID">
             <summary>
             the obj version id
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.newComment">
             <summary>
             the new comment
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory">
@@ -2149,26 +2270,31 @@
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.folderPath">
             <summary>
             The path to the folder to query for.  This can be either a repository or a local path.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.versionHistoryBeginVersion">
             <summary>
             The version number to start with.  Pass 0 to retrieve all versions.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.beginDate">
             <summary>
             The earliest date/time that will be returned in the results.  Pass VaultDate.EmptyDate() to return all versions.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.endDate">
             <summary>
             The latest date/time that will be returned in the results.  Pass VaultDate.EmptyDate() to return all versions.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.rowLimit">
             <summary>
             The maximum number of history items will be returned.
+            This attribute is <b>required</b>.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray">

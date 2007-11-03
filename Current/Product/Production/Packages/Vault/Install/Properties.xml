@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Installer.Properties" >
 
-  <property name="Vault.Username" value="dev" overwrite="false" />
-  <property name="Vault.Password" value="devpassword" overwrite="false" />
-  <property name="Vault.Host" value="buildserver" overwrite="false" />	
-  <property name="Vault.URL" value="http://buildserver/VaultService" overwrite="false" />
-  <property name="Vault.Repository" value="TestProject" overwrite="false" />
- 
-
+  <property name="Vault.Username" value="vaultusername" overwrite="false" />
+  <property name="Vault.Password" value="vaultpassword" overwrite="false" />
+  <property name="Vault.Host" value="vaultserver" overwrite="false" />	
+  <property name="Vault.URL" value="http://vaultserver/VaultService" overwrite="false" />
+  <property name="Vault.Repository" value="Main" overwrite="false" />
+  <property name="Vault.Repository.BasePath" value="$/${ProjectName}" overwrite="false" />
+  
 	 <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol  type="vault" applyLabel="false" autoGetSource="true" >
@@ -15,7 +15,7 @@
         <username>${Vault.Username}</username>
         <password>${Vault.Password}</password>        
         <host>${Vault.Host}</host>
-        <folder>$/${ProjectCodeLineName}/Build</folder>
+        <folder>${Vault.Repository.BasePath}/${ProjectCodeLineName}/Build</folder>
         <repository>${Vault.Repository}</repository>
       </sourcecontrol>]]></value>
   </largeproperty>
@@ -28,7 +28,7 @@
           <username>${Vault.Username}</username>
           <password>${Vault.Password}</password>
           <host>${Vault.Host}</host>
-          <folder>$/${ProjectCodeLineName}</folder>
+          <folder>${Vault.Repository.BasePath}/${ProjectCodeLineName}</folder>
           <repository>${Vault.Repository}</repository>
         </sourceControlProvider>
         <exclusionFilters>
@@ -58,5 +58,6 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Host%', Vault.Host)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.URL%', Vault.URL)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Repository%', Vault.Repository)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Repository.BasePath%', Vault.Repository.BasePath)}" />
 	
 </project>
