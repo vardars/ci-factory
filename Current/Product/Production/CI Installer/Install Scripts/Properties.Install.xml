@@ -16,7 +16,6 @@
   <property name="PackagesDirectoryName"      value="Packages"/>
   
   <property name="ProjectRootDirectory"     value="${ProjectsDirectory}\${ProjectName}"  overwrite="false"/>
-  
   <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" overwrite="false"/>
   <property name="ProductDirectory"         value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ProductDirectoryName}"  overwrite="false"/>
   <property name="ThirdPartyDirectory"      value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ThirdPartyDirectoryName}"  overwrite="false"/>
