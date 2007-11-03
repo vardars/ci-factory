@@ -60,7 +60,7 @@
 
     <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
       <properties>
-        <property name="BuildServerHostName" value="environment::get-machine-name()"/>
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
         <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
         <property name="CCNetBuildDate" value="2006-09-12"/>
         <property name="CCNetBuildTime" value="11:10:00"/>
