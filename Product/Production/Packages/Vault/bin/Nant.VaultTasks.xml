@@ -1,0 +1,2185 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Nant.VaultTasks</name>
+    </assembly>
+    <members>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultadd">
+            <summary>
+            
+                        Add local items to the Vault repository into the given folder
+                        
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultTask">
+            <summary>
+            Summary description for VaultTask.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadd.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadd.folderPath">
+            <summary>
+            The folder where the items should be added.  This can be either a local path or a server path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadd.localItemsToAdd">
+            <summary>
+            An array of local paths that should be added to the folder given.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem">
+            <summary>
+            
+                        Adds a new bug tracking item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem.item">
+            <summary>
+            The FortressItemExpanded to be added.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment">
+            <summary>
+            
+                        Adds a comment to an existing bug tracking item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.bugID">
+            <summary>
+            The id of the bug to which the comment will be added.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.comment">
+            <summary>
+            The comment to be added to the bug.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository">
+            <summary>
+            
+                        Add a new repository.  You must be logged on as a user with admin rights to create a new repository.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository.newReposName">
+            <summary>
+            The name of the repository that will be created.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository.enableSecurity">
+            <summary>
+            If true, enable folder security for the new repository.
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser">
+            <summary>
+            
+                        Add a new user to Vault.  You must be logged on as a user with admin rights to add a user.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.login">
+            <summary>
+            The login name for the user.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.password">
+            <summary>
+            The initial password for the user.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser.email">
+            <summary>
+            The email address for the user.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultblame">
+            <summary>
+            
+                        Return details about the last time a line was changed in a region of a file.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.objectPath">
+            <summary>
+            The file whose history will be examined.  This can be either a local path or a server path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.version">
+            <summary>
+            The newest version of the file that will be examined for changes.  Passing -1 for this parameter chooses the latest version in the repository.
+            This attribute is optional.  The default value is -1.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.startlinenumber">
+            <summary>
+            The first line of the region of interest in the file.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultblame.endlinenumber">
+            <summary>
+            The last line of the region of interest in the file. Passing zero or a value less than startlinenumber is equivalant to passing in the same value as startlinenumber.
+            This attribute is optional.  The default value is 0.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch">
+            <summary>
+            
+                        Branch an item from one location to another.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch.objectPath_From">
+            <summary>
+            The path to the object that will be branched.  This can be either a local path or a server path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch.objectPath_To">
+            <summary>
+            The path to the new location for the branch.  This path should not exist in the repository.  The last segment of this path will be the new name of the branched folder.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin">
+            <summary>
+            
+                        Commit pending operations at or underneath an array of Vault object paths.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.objectPaths">
+            <summary>
+            An array of paths to Vault objects.  These paths can be either local or repository paths.  If they are repository paths, wildcards can be included see 
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.unchanged">
+            <summary>
+            Controls how unchanged files are treated.
+            This attribute is optional.  The default value is "UndoCheckout".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.keepCheckedOut">
+            <summary>
+            Inform the server that you wish to retain the checkout on items.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.localCopy">
+            <summary>
+            If unchanged is UnchangedHandler.UndoCheckOut, this parameter controls what is done with any modified local files that are present in the working folder.
+            This attribute is optional.  The default value is "Replace".
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout">
+            <summary>
+            
+                        Checkout a collection of Vault objects
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.objectPaths">
+            <summary>
+            An array of paths to Vault objects.  These paths can be either local or repository paths.  If they are repository paths, wildcards can be included see 
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.checkoutExclusive">
+            <summary>
+            If this parameter is true, exclusive checkout will be requested for all objects.
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.getLatest">
+            <summary>
+            
+                           If true, the latest version of the file(s) will be got after the checkout.
+                           You can't just set getOptions to null; getOptions.Recursive is used during the checkout.
+                        
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak">
+            <summary>
+            
+                        Cloak the given paths.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak.objectPaths">
+            <summary>
+            An array of folder paths.  These can be either local paths or repository paths
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder">
+            <summary>
+            
+                        Create a new folder in the given location.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder.newFolderPath">
+            <summary>
+            The path to the location for the new folder.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete">
+            <summary>
+            
+                        Delete objects from the Vault tree.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete.objectPaths">
+            <summary>
+            An array of object paths.  These can be either local or repository paths.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery">
+            <summary>
+            
+                        Deletes a query, given the query id.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery.queryID">
+            <summary>
+            The id of the query to delete.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel">
+            <summary>
+            
+                        Delete a label that has been applied to a Vault object
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel.objectPath">
+            <summary>
+            The path to the object that has been labeled.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel.labelName">
+            <summary>
+            The label that will be deleted from the object.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository">
+            <summary>
+            
+                        Delete a repository.  You must be logged on as a user with admin rights to delete a repository.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository.repositoryName">
+            <summary>
+            The name of the repository that will be deleted.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff">
+            <summary>
+            
+                         Launch a diff program to compare a file or folder.
+                         
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.diffProgram">
+            <summary>
+            The path to the diff program that will be launched.  If null or an empty string is passed, the VAULTDIFF environment variable will be read.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.diffArguments">
+            <summary>
+            The arguments that will be passed into the diff program.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.compareToOption">
+            <summary>
+            The type of diff that will be performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.recursive">
+            <summary>
+            Recursively diff folders.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.objectPathLeft">
+            <summary>
+            The path to the first object that will be diffed.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff.objectPathRight">
+            <summary>
+            The value of this argument will depend on the CompareToOption that is specified.
+                        CompareToOption.current: This parameter is not needed (pass null).CompareToOption.label:  This parameter is the label that was applied to the object at objectPathLeft.CompareToOption.lastget: This parameter is not needed (pass null).CompareToOption.local:  This parameter is the path to the local folder or file.CompareToOption.repository:  This parameter is the path to the repository file or folder.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment">
+            <summary>
+            
+                        Downloads the requested attachment to the given local path.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.msgID">
+            <summary>
+            The message id.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.attID">
+            <summary>
+            The attachment id.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.filename">
+            <summary>
+            The name of the file.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment.strReceivedFilePath">
+            <summary>
+            The local path to download the attachment to.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet">
+            <summary>
+            Summary description for VaultFileSet.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet.Include.Pattern">
+            <summary>
+            The pattern or file name to include.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded">
+            <summary>
+            
+                        This class encapsulates the information required to create or modify a bug tracking item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.throwExceptions">
+            <summary>
+            
+                        A bool determining whether or not exceptions will be thrown if unrecognized string values are encountered by Fortress.
+                        
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.ProjectName">
+            <summary>
+            
+                        The name of the project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.ItemType">
+            <summary>
+            
+                        The bug tracking item type (i.e. Bug, Feature, etc).
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Status">
+            <summary>
+            
+                        The status of the item (i.e. Open, Completed, In Progress, etc).
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Platform">
+            <summary>
+            
+                        The platform for the item (i.e. Windows, Unix, Unknown, etc).
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.TimeEstimate">
+            <summary>
+            
+                        The estimated time to complete the item (i.e. Unknown, One Hour, One Month, etc).
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Assignee">
+            <summary>
+            
+                        The user the item is to be assigned to.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Resolver">
+            <summary>
+            
+                        The user set to resolve the item after completion.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Description">
+            <summary>
+            
+                        A description of the item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Priority">
+            <summary>
+            
+                        The priority of the item (i.e. Unknown, Low, Urgent, etc).
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Details">
+            <summary>
+            
+                        The details of the item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.VersionStr">
+            <summary>
+            
+                        The version of the item.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Custom1">
+            <summary>
+            
+                        A custom field.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Custom2">
+            <summary>
+            
+                        A custom field.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Category">
+            <summary>
+            
+                        The category to which the item will belong.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.Milestone">
+            <summary>
+            
+                        The milestone to which the item will belong.
+                        
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance">
+            <summary>
+            
+                        Lists At A Glance information.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance.projectName">
+            <summary>
+            The name of the project for which information will be listed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultget">
+            <summary>
+            
+                        Gets the latest version of Vault objects to a working folder.  This method requires that a working folder
+                        is already set for the objects to be downloaded.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultget.objectPaths">
+            <summary>
+            An array of paths to get.  These can be either local paths or repository paths.  If they are repository paths, wildcards can be included.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultget.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery">
+            <summary>
+            
+                        Retrieves a SavedQuery object given the query id.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery.queryID">
+            <summary>
+            The id of the query to retrieve.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder">
+            <summary>
+            
+                        Get the version of a Vault object which has the provided label.  This method will download the Vault objects into a non 
+                        working folder.  If you use this method to download objects, you will not be able to check in from the that folder on disk.  
+                        If you will need to check in from this location, use ProcessCommandGetLabelToTempWorkingFolder instead.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.objectPath">
+            <summary>
+            The path to an object.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.label">
+            <summary>
+            The label that was applied to the object.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.labelSubItem">
+            <summary>
+            If the specified item is shared to multiple places in the label, use this parameter to specify which subitem to download.  Can (and usually should) be null.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder.destPath">
+            <summary>
+            The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder">
+            <summary>
+            
+                        Get the version of a Vault object which has the provided label.  This method will download the Vault object into a temporary 
+                        working folder.  If you use this method to download objects, you will not be able to check in from the that folder on disk.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.objectPath">
+            <summary>
+            The path to an object.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.label">
+            <summary>
+            The label that was applied to the object.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.labelSubItem">
+            <summary>
+            If the specified item is shared to multiple places in the label, use this parameter to specify which subitem to download.  Can (and usually should) be null.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder.tmpWorkingFolder">
+            <summary>
+            The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions">
+            <summary>
+            
+                        This class encapsulates all of the options that can be passed into a simple get
+                        request.  When a new GetOptions is constructed, it is prefilled with the user's current options.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.Merge">
+            <summary>
+            
+                        Controls how and if files that have been modified locally are replaced with versions from the repository.
+                        
+            This attribute is optional.  The default value is "AttemptAutomaticMerge".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.Recursive">
+            <summary>
+            
+                        Controls if folders are recursively fetched.
+                        
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.MakeWritable">
+            <summary>
+            
+                        Controls if files are marked as writable when fetched.
+                        
+            This attribute is optional.  The default value is "MakeNonMergableFilesReadOnly".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.SetFileTime">
+            <summary>
+            
+                        Controls the date placed in the file's Last Modified attribute.
+                        
+            This attribute is optional.  The default value is "Current".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.PerformDeletions">
+            <summary>
+            
+                        Controls if files which are deleted, moved or renamed in the repository are deleted, moved
+                        or renamed on disk when the get is completed.  This option is ignored for get operations 
+                        to locations outside of working folders.
+                        
+            This attribute is optional.  The default value is "RemoveWorkingCopyIfUnmodified".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions.OverrideEOL">
+            <summary>
+            
+                        Mergable files will be converted to the given line-ending type when fetched.
+                        Available types are: "none", "cr", "lf", or "crlf".
+                        "none" means "don't override".
+                        
+            This attribute is optional.  The default value is "None".
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder">
+            <summary>
+            
+                        Gets the latest version of Vault objects to a location outside of a working folder.  If you use this method to download
+                        an object, you will not be able to check in from the that folder on disk.  If you will need to check in from this location,
+                        use ProcessCommandGet instead.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.objectPaths">
+            <summary>
+            An array of paths to get.  These can be either local paths or repository paths.  If they are repository paths, wildcards can be included.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder.destPath">
+            <summary>
+            The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion">
+            <summary>
+            
+                        Get a specific version of a Vault object.  
+                        This method will download the object into the working folder that has been set.
+                        This method requires that a working folder
+                        is already set for the objects to be downloaded.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.objectPath">
+            <summary>
+            The path to an object.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.version">
+            <summary>
+            The version of the object that will be downloaded.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder">
+            <summary>
+            
+                        Get a specific version of a Vault object to a location outside of a working folder.  If you use this method to download
+                        an object, you will not be able to check in from the that folder on disk.  If you will need to check in from this location,
+                        use ProcessCommandGetVersion instead.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.objectPath">
+            <summary>
+            The path to an object.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.version">
+            <summary>
+            The version of the object that will be downloaded.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder.destPath">
+            <summary>
+            The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard">
+            <summary>
+            
+                        GETWILDCARD will retrieve all files within the folder specified by
+                        repositoryfolder whose name matches one of the wildcards specified.
+                        You may use '?' to match a single character or '*' to match a range of
+                        characters.  This method requires that a working folder
+                        is already set for the objects to be downloaded.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.folderPath">
+            <summary>
+            The path to an folder.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.wildcardArray">
+            <summary>
+            An array of strings that will be used as wildcards to match.  You may use '?' to match a single character or '*' to match a range of characters.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder">
+            <summary>
+            
+                        GETWILDCARD will retrieve all files within the folder specified by
+                        repositoryfolder whose name matches one of the wildcards specified.
+                        You may use '?' to match a single character or '*' to match a range of
+                        characters.  If you use this method to download an object, you will not be 
+                        able to check in from the that folder on disk.  If you will need to 
+                        check in from this location, use ProcessCommandGetVersion instead.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.folderPath">
+            <summary>
+            The path to an folder.  This can be either a local path or a repository path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.wildcardArray">
+            <summary>
+            An array of strings that will be used as wildcards to match.  You may use '?' to match a single character or '*' to match a range of characters.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.getOptions">
+            <summary>
+            The options that will control how the get is performed.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder.destPath">
+            <summary>
+            The location on disk where the downloaded files will be placed.  You will not be able to check in from this location.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments">
+            <summary>
+            
+                        Return information about the working folder assignments for the currently logged in user.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory">
+            <summary>
+            
+                        Perform a history query on the server.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.objectPath">
+            <summary>
+            The path to the object to use for the root as the history query.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.recursive">
+            <summary>
+            Recursively act on folders.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.dateSort">
+            <summary>
+            Specify the sort ordering of the history results
+            This attribute is optional.  The default value is "desc".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.excludedUsers">
+            <summary>
+            A comma-separated list of users to filter out of the history request.  For example, "admin,builduser,bob".  Pass null to return history items for all users.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.excludedActions">
+            <summary>
+            A comma-separated list of actions to filter out of the history request.  To exclude all actions, pass "add,branch,checkin,create,delete,label,move,obliterate,pin,propertychange,rename,rollback,share,snapshot,undelete".  Pass null to return history for all actions.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.beginDate">
+            <summary>
+            The date that will be used as the starting point for the history query.  Pass VaultDate.EmptyDate() to include all history.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.endDate">
+            <summary>
+            The date that will be used as the ending point for the history query.  Pass VaultDate.EmptyDate() to include all history.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.beginLabel">
+            <summary>
+            The label that will be used as the starting point for the history query.  Pass null to include all history.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.endLabel">
+            <summary>
+            The label that will be used as the ending point for the history query.  Pass null to include all history.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.beginVersion">
+            <summary>
+            The version that will be used as the starting point for the history query.  Pass -1 to include all history.
+            This attribute is optional.  The default value is -1.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.endVersion">
+            <summary>
+            The version that will be used as the ending point for the history query.  Pass -1 to include all history.
+            This attribute is optional.  The default value is -1.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory.rowLimit">
+            <summary>
+            The maximum number of history items will be returned.
+            This attribute is optional.  The default value is 1000.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel">
+            <summary>
+            
+                        Apply a label to a specific version of a Vault object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.objectPath">
+            <summary>
+            The path to the object to label.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.labelName">
+            <summary>
+            The label that will be applied.  If the label has already been applied, an exception will be thrown.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel.versionID">
+            <summary>
+            The version that will have the label applied.  Pass -1 to apply a label to the latest version.
+            This attribute is optional.  The default value is -1.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset">
+            <summary>
+            
+                        Return the collection of change set items that are pending.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset.objectPaths">
+            <summary>
+            An array of paths to recursively search for changes.  These can be either local paths or repository paths.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts">
+            <summary>
+            
+                        Returns the collection of items that are checked out by all users in the repository
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder">
+            <summary>
+            
+                        List the contents of a folder.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.folderPath">
+            <summary>
+            The path to the folder whose contents you would like displayed.   This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder.recursive">
+            <summary>
+            Return information about items inside this folder's children.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories">
+            <summary>
+            
+                        Lists the Fortress categories for a given project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories.projectName">
+            <summary>
+            The name of the project.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels">
+            <summary>
+            
+                        Lists the Fortress custom labels.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo">
+            <summary>
+            
+                        Returns an object containing the full info for a bug tracking item attachment.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.msgID">
+            <summary>
+            The message id.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo.attID">
+            <summary>
+            The attachment id.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails">
+            <summary>
+            
+                        Returns the full details of a given item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails.itemID">
+            <summary>
+            The id of the item for which full details will be returned.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes">
+            <summary>
+            
+                        Lists all Fortress item types.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones">
+            <summary>
+            
+                        Lists all Fortress milestones for a given project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones.projectName">
+            <summary>
+            The name of the project.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms">
+            <summary>
+            
+                        Lists all Fortress platforms.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities">
+            <summary>
+            
+                        Lists all Fortress priorities.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects">
+            <summary>
+            
+                        Returns an array containing Fortress projects.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries">
+            <summary>
+            
+                        Returns an array of SavedQuery objects for the given project.
+                        
+                        Note:  The SavedQuery objects will only have the name and id fields set.  
+                        To get the MantisItemQueryFilter, use ProcessCommandGetFortressSavedQuery
+                        to retrieve the full object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries.projectName">
+            <summary>
+            The name of the project for which saved queries will be retrieved.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses">
+            <summary>
+            
+                        Lists all Fortress statuses.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates">
+            <summary>
+            
+                        Lists all Fortress time estimates.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers">
+            <summary>
+            
+                        Lists all Fortress users for a given project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers.projectName">
+            <summary>
+            The name of the project for which users will be listed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems">
+            <summary>
+            
+                        Lists the open bug tracking items for the user (currently logged in) for the given project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems.projectName">
+            <summary>
+            The name of the project for which items will be listed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties">
+            <summary>
+            
+                        List the properties of a folder or file in the repositories.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties.objectPath">
+            <summary>
+            The path to the object whose properties.   This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems">
+            <summary>
+            
+                        Lists all open items for a given project.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems.projectName">
+            <summary>
+            The name of the project for which items will be listed.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories">
+            <summary>
+            
+                        Return the collection of repository information for the server that is currently connected.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout">
+            <summary>
+            
+                        Disconnect from the Vault server.
+                        
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem">
+            <summary>
+            
+                        Saves changes to an existing bug tracking item.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem.item">
+            <summary>
+            The MantisItem which has been modified.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery">
+            <summary>
+            
+                        Saves modifications to a SavedQuery object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery.sq">
+            <summary>
+            The SavedQuery object which has been modified.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultmove">
+            <summary>
+            
+                        Move a vault object from one location
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmove.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmove.objectPath_From">
+            <summary>
+            The path to the object that will be moved.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultmove.objectPath_To">
+            <summary>
+            The path to the folder into which the item is to be moved.  If the folder already exists, no object with the same name as the moving object can exist therein already.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate">
+            <summary>
+            
+                        Obliterate an object which has been deleted.  This will throw an Exception if there are multiple deleted objects at the specified path.
+                        Obliterate is will permanently remove a deleted folder or file (and all 
+                        its history) from the repository.  You must be logged in as a administrator 
+                        user to use this command.  This command should not be used lightly, as there 
+                        is no way to undo it.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate.repositoryPath">
+            <summary>
+            The repository path to the object which will be obliterate.  This object must already be deleted.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultpin">
+            <summary>
+            
+                        Pin an object at a specific version.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultpin.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultpin.objectPath">
+            <summary>
+            The path to the object that will be pinned.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultpin.version">
+            <summary>
+            The version number that the object will be pinned at.  If the object doesn't have this version, an exception will be thrown.  Passing -1 will pin the object to the current version.
+            This attribute is optional.  The default value is -1.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession">
+            <summary>
+            
+                        Remove login information that was previously cached with SetLoginOptions
+                        
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems">
+            <summary>
+            
+                        Returns an array of items matching the specifications of the query.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.qf">
+            <summary>
+            The MantisItemQueryFilter to process
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems.sendDetails">
+            <summary>
+            True to include the details field in the returned items, false otherwise
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder">
+            <summary>
+            
+                        Delete a working folder assignment.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder.repositoryFolderPath">
+            <summary>
+            The path to the repository folder whose working folder association will be deleted.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrename">
+            <summary>
+            
+                        Rename a Vault object in the repository.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrename.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrename.objectPath">
+            <summary>
+            The path to the object that will be renamed.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrename.newName">
+            <summary>
+            The new name for the object.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel">
+            <summary>
+            
+                        Rename a label that has been applied to an Vault object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.objectPath">
+            <summary>
+            The path to the object that has been labeled with the oldLabelName.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.oldLabelName">
+            <summary>
+            The label that will be renamed.  If this label hasn't been applied to the object, an exception will be thrown.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel.newLabelName">
+            <summary>
+            The new label that will given to the object.  If this label has already been applied to the object, an exception will be thrown.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery">
+            <summary>
+            
+                        Runs and returns the results of a given saved query.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.projectName">
+            <summary>
+            The name of the parent project.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.queryName">
+            <summary>
+            The name of the saved query.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery.sendDetails">
+            <summary>
+            true to include the details field in the returned items, false otherwise.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery">
+            <summary>
+            
+                        Saves a new query as a SavedQuery object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.queryName">
+            <summary>
+            The name of the query as a string.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery.qf">
+            <summary>
+            The MantisItemQueryFilter to be saved.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions">
+            <summary>
+            
+                        Set the login options that will be used when connecting to Vault.  This command does not trigger a login.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.URL">
+            <summary>
+            The URL to the Vault server.  For example "http://localhost/VaultService"
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.user">
+            <summary>
+            The username to use to log in to Vault.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.password">
+            <summary>
+            The password to use for authentication.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.repository">
+            <summary>
+            The name of the repository to connect to.  If this is null, then no repository will be connected to.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions.saveSession">
+            <summary>
+            If saveSession is true, then the information will be stored on disk and used to automatically connect in the future (until the PurgeSession command is invoked).
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository">
+            <summary>
+            
+                        Connect to the specified Vault repository.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository.repositoryName">
+            <summary>
+            The name of the repository to connect to.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder">
+            <summary>
+            
+                        Set a working folder association between a repository folder and a location on disk.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.repositoryFolderPath">
+            <summary>
+            The path to the repository folder.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.diskPath">
+            <summary>
+            The path to a directory on disk.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder.createDiskPath">
+            <summary>
+            If createDiskPath is true, diskPath will be created if it doesn't exist.
+            This attribute is optional.  The default value is true.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultshare">
+            <summary>
+            
+                        Share a Vault object from one location to another.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultshare.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultshare.objectPath_From">
+            <summary>
+            The path to the file or folder that will be shared.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultshare.folderPath_To">
+            <summary>
+            The path to the folder where the shared object will be put.  This folder must already exist.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail">
+            <summary>
+            
+                        Gets the transaction information for a specific vault transaction.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail.nTxID">
+            <summary>
+            The transaction id
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak">
+            <summary>
+            
+                        Remove the cloak property on a folder.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak.objectPaths">
+            <summary>
+            An array of paths to uncloak.  These can be either local paths or repository paths.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout">
+            <summary>
+            
+                        Undo any checkouts for a given Vault object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.objectPaths">
+            <summary>
+            An array of paths to the objects whose pending changes will be undone.  This can be either a repository path or a local path.  If they are repository paths, wildcards can be included see 
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.recursive">
+            <summary>
+            Recusively undo the checkouts for subfolders.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout.localCopy">
+            <summary>
+            Controls what is done with any modified local files that are present in the working folder.
+            This attribute is optional.  The default value is "Replace".
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin">
+            <summary>
+            
+                        Unpin a Vault object.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin.objectPath">
+            <summary>
+            The path to the file or folder that will be unpinned.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment">
+            <summary>
+            
+                        Updates the comment of a vault transaction.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.nTxID">
+            <summary>
+            the transaction id
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.nObjverID">
+            <summary>
+            the obj version id
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment.newComment">
+            <summary>
+            the new comment
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory">
+            <summary>
+            
+                        Lists the transactions that have been applied to a folder.
+                        
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.outputfile">
+            <summary>
+            A local disk file path.  If this is not null, output from this command will be sent into the file instead of outputting to the console.
+            This attribute is optional.  The default value is null.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.identifier">
+            <summary>
+            An optional identifier which will be put into the XML output for these results.  This helps distinguish output from a command when multiple runs are appended to the same outputfile.  It would be very helpful to include information about the current build number in this identifier.
+            This attribute is optional.  The default value is DateTime.Now.ToString().
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.append">
+            <summary>
+            If append is true, then the output of this run will be added to the existing contents of outputfile.  If this is false, outpufile will be overwritten entirely.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.folderPath">
+            <summary>
+            The path to the folder to query for.  This can be either a repository or a local path.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.versionHistoryBeginVersion">
+            <summary>
+            The version number to start with.  Pass 0 to retrieve all versions.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.beginDate">
+            <summary>
+            The earliest date/time that will be returned in the results.  Pass VaultDate.EmptyDate() to return all versions.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.endDate">
+            <summary>
+            The latest date/time that will be returned in the results.  Pass VaultDate.EmptyDate() to return all versions.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory.rowLimit">
+            <summary>
+            The maximum number of history items will be returned.
+            </summary>
+        </member>
+        <member name="T:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray">
+            <summary>
+            Summary description for VaultWildcardArray.
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray.Include.Pattern">
+            <summary>
+            The pattern or file name to include.
+            </summary>
+        </member>
+    </members>
+</doc>
