@@ -51,7 +51,10 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Configuration
 				dashboardConfig = sr.ReadToEnd();
 			}
 
+            string OldCurrentDirectory = Environment.CurrentDirectory;
+            Environment.CurrentDirectory = Path.GetDirectoryName(CalculateDashboardConfigPath());
 			XmlNode node = XmlUtil.SelectNode(dashboardConfig, xpath);
+            Environment.CurrentDirectory = OldCurrentDirectory;
 
 			NetReflectorTypeTable typeTable = NetReflectorTypeTable.CreateDefault(instantiator);
 			typeTable.Add(Path.GetDirectoryName(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.RelativeSearchPath)), "ccnet.*.plugin.dll");
