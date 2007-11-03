@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Upgrader" default="Upgrade">
+
+	<property name="IsUpgrade" value="true" readonly="true"/>
+  <property name="Install.Quiet" value="false" />
+
+	<property name="ProjectsDirectory" value="c:\Projects" overwrite="false"/>
+
+	<property name="SourceRoot" value="${path::get-full-path('..')}"/>
+	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
+	<property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
+	<property name="SourceProductDirectory" value="${SourceDefaultDirectory}\Product"/>
+	<property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
+	<property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
+
+	<property name="Winmerge.DirectoryPath" value="${environment::get-variable('ProgramFiles')}\WinMerge"/>
+	
+	<target name="Upgrade">
+
+		<ask answer="ProjectName" 
+				 caption="What is the name of the project to be upgraded?" 
+				 question="What is the name of the project to be upgraded?" 
+				 showdialog="true" dialogmode="FreeText"></ask>
+
+		<property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}" />
+		
+		<fail message="I can't find the project ${ProjectName} in ${ProjectsDirectory}." 
+					unless="${directory::exists(ProjectRootDirectory)}"/>
+
+		<property name="NumberOfCodelines" value="${directory::number-of-children(ProjectRootDirectory)}"/>
+		<strings id="Codelines" />
+		<ifthenelse test="${NumberOfCodelines == '1'}">
+			<then>
+				<foreach item="Folder" property="CodelineName">
+					<in>
+						<items>
+							<include name="${ProjectRootDirectory}\*"/>
+							<exclude name="${ProjectRootDirectory}"/>
+						</items>
+					</in>
+					<do>
+
+						<property name="ProjectCodeLineName" value="${directory::name(CodelineName)}" overwrite="false"/>
+					</do>
+				</foreach>
+			</then>
+			<elseif if="${NumberOfCodelines == '0'}">
+				<fail message="There are no codelines present for the project ${ProjectName}.  It appears to be an empty directory."/>
+			</elseif>
+			<else>
+				<foreach item="Folder" property="CodelineName">
+					<in>
+						<items>
+							<include name="${ProjectRootDirectory}\*"/>
+							<exclude name="${ProjectRootDirectory}"/>
+						</items>
+					</in>
+					<do>
+						<function execute="${stringlist::add('Codelines', directory::name(CodelineName))}"/>
+					</do>
+				</foreach>
+				<ask answer="ProjectCodeLineName"
+						 caption="Which codeline do you wish to upgrade?"
+						 question="Which codeline do you wish to upgrade?"
+						 showdialog="true">
+					<options refid="Codelines" />
+				</ask>
+			</else>
+		</ifthenelse>
+
+    <property name="BuildDirectoryName" value="Build"/>
+    <ifnot test="${directory::exists(ProjectsDirectory + '\' + ProjectName + '\' + ProjectCodeLineName + '\Build')}">
+      <ask answer="BuildDirectoryName" caption="Can't Find the Build Directory" dialogmode="FreeText" question="What is the name of the Build directory?" showdialog="true"></ask>
+    </ifnot>
+
+    <include buildfile="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}\Properties.build.xml" />
+
+    <property name="ProductDirectoryName"       value="Product" overwrite="false"/>
+    <property name="ThirdPartyDirectoryName"    value="Third Party" overwrite="false"/>
+    <property name="ProductionDirectoryName"    value="Production" overwrite="false"/>
+    <property name="ArtifactRootDirectoryName"  value="Artifact" overwrite="false"/>
+    <property name="PackagesDirectoryName"      value="Packages" overwrite="false"/>
+
+    <property name="Common.ArtifactFolderName" value="bogas"/>
+    <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+    <property name="Common.ReportDirectory" value="${BuildDirectory}\Reports"/>
+    <property name="Common.TempDirectory" value="${BuildDirectory}\Temp"/>
+    <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
+
+    <property name="CCNetBuildCondition" value="ForceBuild "/>
+    <property name="CCNetIntegrationStatus" value="Success"/>
+    <property name="CCNetLastIntegrationStatus" value="Success"/>
+    <property name="CCNetBuildDate" value="2006-09-12"/>
+    <property name="CCNetBuildTime" value="11:10:00"/>
+    <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+    <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+
+    <property name="CCNetLabel" value="1.0.0.2"/>
+    <property name="CCNetProject" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNetLogFilePath" value=""/>
+
+		<fileset id="PacakgeFinder" />
+		<ifnot test="${property::exists('SourceControl.PackageName')}">
+			<property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+      <echo message="${PackagePathPattern}" />
+			<function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+      <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${PackagesDirectory}." />
+			<property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+			<property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
+		</ifnot>
+
+		<nant buildfile="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"
+					target="SourceControl.GetOfCodeLineDirectory">
+			<properties>
+				<property name="SourceControl.Update.FileTimeStamp" value="Current"/>
+				<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+				<property name="SourceControl.Update.MakeWritable" value="False"/>
+				<property name="SourceControl.Update.Interactive" value="True"/>
+			</properties>
+		</nant>
+
+		<filterchain id="Common.FilterChain">
+			<replacestring from="%ProjectName%"  to="${ProjectName}"   />
+			<replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
+
+      <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
+      <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
+      <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
+      <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
+      <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
+      <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
+      <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
+
+      <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
+      <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
+      <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />
+      <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
+      <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
+      <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
+		</filterchain>
+		
+		<largeproperty name="UpgradeOverview">
+			<value expand="true" xml="false">
+  <![CDATA[Please review the following upgrade:
+Project Name:     ${ProjectName}
+Codeline Name:    ${ProjectCodeLineName}
+Current Version:  ${file::get-product-version(BuildDirectory + '\nAnt\bin\nant.exe')}
+Upgrade Version:  ${file::get-product-version(SourceRoot + '\nAnt\bin\nant.exe')}
+
+ProductDirectory    = ${ProductDirectory}
+ThirdPartyDirectory = ${ThirdPartyDirectory}
+BuildDirectory      = ${BuildDirectory}
+]]></value>
+		</largeproperty>
+
+		<ask answer="Answer"
+				  caption="Upgrade Overview"
+				  question="${UpgradeOverview}"
+				  showdialog="true">
+			<options>
+				<string value="Cancel Upgrade"/>
+				<string value="Proceed with Upgrade"/>
+			</options>
+		</ask>
+
+		<fail message="Upgrade canceled." if="${Answer == 'Cancel Upgrade'}"/>
+
+		<xmlpeek file="${BuildDirectory}\dashboard\dashboard.config" 
+						 property="CCNetServer.Url" 
+						 xpath="/dashboard/remoteServices/servers/server/@url" />
+		<ccnetstop serverurl="${CCNetServer.Url}" failonerror="false"/>
+
+		<call target="Upgrade.Packages.ValidateParameters"/>
+		<call target="Upgrade.Foundation"/>
+		<call target="Upgrade.Packages"/>
+
+    <largeproperty name="ManualSteps">
+      <value expand="true" xml="false">
+        <![CDATA[
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Please note that the upgrade script is not complete.
+There are actions that you must do to complete the upgrade.
+
+1) If files were added the the directory they need to be added to source control.
+A brute force approatch is to diff the tree, to identify which if any files need to be added.
+
+2) If this is not the build server then you need to update the build server by hand from source control after you have finished updating source control.
+
+3) Turn the ccnet server back on.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+]]></value>
+    </largeproperty>
+    <echo message="${ManualSteps}"/>
+    
+	</target>
+
+	<target name="Upgrade.Packages.ValidateParameters">
+    <strings id="Packages.InstallList" />
+		<fileset id="PacakgeFinder" />
+
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\SourceModificationReport" />
+    <call target="Upgrade.Package.ValidateParameters" />
+
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Deployment" />
+    <call target="Upgrade.Package.ValidateParameters" />
+
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Workspace" />
+    <call target="Upgrade.Package.ValidateParameters" />
+    
+		<foreach item="Folder" property="TargetPackageDirectory">
+			<in>
+				<items basedir="${PackagesDirectory}">
+					<include name="*"/>
+					<exclude name="${PackagesDirectory}"/>
+          <exclude name="${PackagesDirectory}\SourceModificationReport"/>
+          <exclude name="${PackagesDirectory}\Deployment"/>
+          <exclude name="${PackagesDirectory}\Workspace"/>
+				</items>
+			</in>
+			<do>
+        <call target="Upgrade.Package.ValidateParameters" />
+			</do>
+		</foreach>
+	</target>
+
+  <target name="Upgrade.Package.ValidateParameters">
+    <property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
+
+    <if test="${directory::exists(SourcePackagesDirectory + '\' + SourcePackageName)}" >
+      <function execute="${stringlist::add('Packages.InstallList', SourcePackageName)}" />
+      <property name="PackagePathPattern" value="${SourcePackagesDirectory}\${SourcePackageName}\Upgrade\Upgrade.xml"/>
+      <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+      <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
+      <if test="${fileset::file-count('PacakgeFinder') > 0}">
+        <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+        <include buildfile="${PackagePath}"/>
+      </if>
+      <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
+
+      <ifthenelse test="${target::exists(SourcePackageName + '.ValidateParameters')}">
+        <then>
+          <call target="${SourcePackageName}.ValidateParameters" />
+        </then>
+        <else>
+          <property name="PackagePathPattern" value="${PackagesDirectory}\${SourcePackageName}\*.Properties.xml"/>
+          <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+          <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
+          <if test="${fileset::file-count('PacakgeFinder') > 0}">
+            <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+            <include buildfile="${PackagePath}"/>
+          </if>
+          <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
+
+          <include buildfile="${SourcePackagesDirectory}\${SourcePackageName}\Install\Install.xml"/>
+          <call target="${SourcePackageName}.ValidateParameters"/>
+        </else>
+      </ifthenelse>
+    </if>
+  </target>
+
+	<target name="Upgrade.Foundation">
+		<call target="Upgrade.CCNet"/>
+		<call target="Upgrade.NAnt"/>
+		<call target="Upgrade.Base"/>
+	</target>
+
+	<target name="Upgrade.NAnt">
+		<property name="nAnt.BuildDirectory" value="${BuildDirectory}\nAnt"/>
+		<property name="Private.nAnt.DefaultBuildDirectory" value="${SourceRoot}\nAnt"/>
+		<copy todir="${nAnt.BuildDirectory}" overwrite="true">
+			<fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<exec program="${BuildDirectory}\UpdatenAntSchema.bat" workingdir="${BuildDirectory}"/>	
+	</target>
+	
+	<target name="Upgrade.Base">
+		<loopthrough property="File">
+			<items>
+				<strings>
+					<string value="Build\Common.Build.xml"/>
+					<string value="Build\Post.Shim.xml"/>
+					<string value="Build\Properties.build.xml"/>
+					<string value="Build\SetupIIS.xml"/>
+					<string value="Build\Scratch.build.xml" />
+          <string value="Build\Entities.xml" />
+
+					<string value="Product\Build.bat" />
+					<string value="Product\Compile.Environment.xml" />
+					<string value="Product\NoUpdateBuild.bat" />
+					<string value="Product\OpenCommandPrompt.bat" />
+					<string value="Product\OpenSolution.bat" />
+					<string value="Product\OpenSolution.Script.xml" />
+					<string value="Product\Personal.Build.xml" />
+					<string value="Product\Scratch.build.xml" />
+					<string value="Product\Scratch.Lib.xml" />
+					<string value="Product\Test.bat" />
+				</strings>
+			</items>
+			<do>
+				<ask answer="Preserve.Base"
+				 caption="Preserve customizations to ${File}?"
+				 question="Have you made customizations to ${File} that you would like to preserve?"
+				 showdialog="true">
+					<options>
+						<string value="Yes"/>
+						<string value="No"/>
+					</options>
+				</ask>
+
+				<ifthenelse test="${Preserve.Base == 'Yes'}">
+					<then>
+						<exec basedir="${Winmerge.DirectoryPath}"
+									program="winmerge"
+									failonerror="false">
+							<arg line="/x" />
+							<arg line="/e" />
+							<arg line='"${SourceDefaultDirectory}\${File}"' />
+							<arg line='"${ProjectCodeLineDirectory}\${File}"' />
+						</exec>
+					</then>
+					<else>
+						<copy todir="${ProjectCodeLineDirectory}" overwrite="true">
+							<fileset basedir="${SourceDefaultDirectory}">
+								<include name="${File}"/>
+							</fileset>
+							<filterchain refid="Common.FilterChain" />
+						</copy>
+					</else>
+				</ifthenelse>
+			</do>
+		</loopthrough>
+		
+	</target>
+
+	<target name="Upgrade.CCNet">
+    <property name="CCNET.ServerPort" value=""/>
+		<xmlpeek file="${BuildDirectory}\server\ccnet.exe.config"
+						property="CCNET.ServerPort"
+						xpath="/configuration/system.runtime.remoting/application/channels/channel/@port"
+            failonerror="false"/>
+
+    <if test="${CCNET.ServerPort == ''}">
+      <xmlpeek file="${BuildDirectory}\Properties.build.xml"
+						property="CCNET.ServerPort"
+						xpath="/project/property[@name='BuildServerPort']/@value"
+            failonerror="false"/>
+    </if>
+
+    <if test="${CCNET.ServerPort == ''}">
+      <ask answer="CCNET.ServerPort" 
+           caption="CCNet Port Number" 
+           dialogmode="FreeText" 
+           question="I can't figure out what the port number is for the CCNet server.  Please enter the port number." 
+           showdialog="true">
+        
+      </ask>
+    </if>
+
+    <property name="CCNET.ServerName" value=""/>
+    <xmlpeek file="${BuildDirectory}\Properties.build.xml"
+						property="CCNET.ServerName"
+						xpath="/project/property[@name='BuildServerHostName']/@value"
+            failonerror="false"/>
+
+    <if test="${CCNET.ServerName == ''}">
+      <ask answer="CCNET.ServerName"
+           caption="CCNet Server Name"
+           dialogmode="FreeText"
+           question="I can't figure out what the host name for the CCNet server.  Please enter the host name."
+           showdialog="true">
+
+      </ask>
+    </if>
+    
+		<include buildfile="Scripts\CCNET.Install.xml"/>
+
+		<ask answer="Preserve.CCNetDashboard"
+				 caption="Preserve customizations to CCNet Dashboard?"
+				 question="Have you made customizations to the CCNet dashboard that you would like to preserve?"
+				 showdialog="true">
+			<options>
+				<string value="Yes"/>
+				<string value="No"/>
+			</options>
+		</ask>
+
+		<ifthenelse test="${Preserve.CCNetDashboard == 'Yes'}">
+			<then>
+				<exec basedir="${Winmerge.DirectoryPath}" 
+							program="winmerge"
+							failonerror="false">
+					<arg line="/x" />
+					<arg line="/e" />
+					<arg line='"${SourceBuildDirectory}\dashboard"' />
+					<arg line='"${BuildDirectory}\dashboard"' />
+				</exec>
+			</then>
+			<else>
+				<call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
+			</else>
+		</ifthenelse>
+
+		<ask answer="Preserve.CCNetServer"
+				 caption="Preserve customizations to CCNet Server?"
+				 question="Have you made customizations to the CCNet Server that you would like to preserve?"
+				 showdialog="true">
+			<options>
+				<string value="Yes"/>
+				<string value="No"/>
+			</options>
+		</ask>
+
+		<ifthenelse test="${Preserve.CCNetServer == 'Yes'}">
+			<then>
+				<exec basedir="${Winmerge.DirectoryPath}"
+							program="winmerge"
+							failonerror="false">
+					<arg line="/x" />
+					<arg line="/e" />
+					<arg line='"${SourceBuildDirectory}\server"' />
+					<arg line='"${BuildDirectory}\server"' />
+				</exec>
+			</then>
+			<else>
+				<call target="Private.CCNET.InstallBuildDirectoryFiles"/>
+			</else>
+		</ifthenelse>
+
+		<ask answer="Preserve.CCNetConfig"
+				 caption="Preserve customizations to CCNet Config?"
+				 question="Have you made customizations to the CCNet Config that you would like to preserve?"
+				 showdialog="true">
+			<options>
+				<string value="Yes"/>
+				<string value="No"/>
+			</options>
+		</ask>
+
+		<ifthenelse test="${Preserve.CCNetConfig == 'Yes'}">
+			<then>
+				<exec basedir="${Winmerge.DirectoryPath}"
+							program="winmerge"
+							failonerror="false">
+					<arg line="/x" />
+					<arg line="/e" />
+					<arg line='"${SourceBuildDirectory}\ccnetproject.xml"' />
+					<arg line='"${BuildDirectory}\ccnetproject.xml"' />
+				</exec>
+			</then>
+			<else>
+				<call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
+			</else>
+		</ifthenelse>
+		
+	</target>
+	
+	<target name="Upgrade.Packages">
+		<include buildfile="Scripts\Packages.Install.xml"/>
+		<fileset id="PacakgeFinder" />
+		<foreach item="Folder" property="TargetPackageDirectory">
+			<in>
+				<items basedir="${PackagesDirectory}">
+					<include name="*"/>
+					<exclude name="${PackagesDirectory}"/>
+				</items>
+			</in>
+			<do>
+				<property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
+
+				<if test="${directory::exists(SourcePackagesDirectory + '\' + SourcePackageName)}" >
+					<ifthenelse test="${target::exists(SourcePackageName + '.Upgrade')}">
+						<then>
+							<call target="${SourcePackageName}.Upgrade" />
+						</then>
+						<else>
+							<call target="Packages.Reset.CurrentPackage" />
+							<call target="${SourcePackageName}.SetAsCurrentPackage"/>
+							<call target="Packages.Validate.CurrentSetPackage"/>
+
+							<property name="Packages.CopyPackage.PackageName" value="${SourcePackageName}"/>
+							<call target="Private.Packages.CopyPackage"/>
+
+							<call target="${SourcePackageName}.Install"/>
+						</else>
+					</ifthenelse>
+				</if>
+			</do>
+		</foreach>
+	</target>
+	
+	<script language="C#" prefix="directory" >
+		<imports>
+			<import namespace="System.IO" />
+		</imports>
+
+		<code>
+			<![CDATA[
+         [Function("number-of-children")]
+         public static int NumberOfChildren(string path)
+         {
+                 return Directory.GetDirectories(path).Length;
+         }
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+      ]]>
+		</code>
+	</script>
+</project>

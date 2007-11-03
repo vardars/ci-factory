@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="VaultTestProject" />
+
+  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+  <property name="ProductDirectoryName"       value="Product"/>
+  <property name="ThirdPartyDirectoryName"    value="Third Party"/>
+  <property name="ProductionDirectoryName"    value="Production"/>
+
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
+  <property name="CCNET.ServerPort" value="21246"/>
+  <property name="CCNET.ModificationDelaySeconds" value="0"/>
+  <property name="CCNET.IntervalTrigger" value="60"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+	<property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
+  <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
+
+  <property name="Vault.Username" value="admin"  />
+  <property name="Vault.Password" value=""  />
+  <property name="Vault.Host" value="localhost"  />
+  <property name="Vault.URL" value="http://localhost/VaultService"  />
+  <property name="Vault.Repository" value="${ProjectName}"  />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <property name="Install.Quiet" value="true"/>
+  <property name="Simian.AcceptLicense" value="true"/>
+  <property name="nDepend.AcceptLicense" value="true"/>
+
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="Vault"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+
+    <string value="Deployment"/>
+    <string value="Workspace"/>
+  </strings>
+
+  <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagesDirectory}\Vault\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+
+</project>
