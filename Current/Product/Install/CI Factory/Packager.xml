@@ -14,6 +14,7 @@
     <copy file="${ProductDirectory}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" />
     <copy file="${ProductDirectory}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" />
     <copy file="${ProductDirectory}\Production\CI Installer\run.bat" tofile="${ZipDirectory}\run.bat" />
+    <copy file="${ProductDirectory}\Production\CI Installer\upgrade.bat" tofile="${ZipDirectory}\upgrade.bat" />
     <copy file="${ProductDirectory}\Production\CI Installer\CI Factory.URL" tofile="${ZipDirectory}\CI Factory.URL" />
     <copy file="${ProductDirectory}\Production\CI Installer\CI Factory Release Notes.html" tofile="${ZipDirectory}\CI Factory Release Notes.html" failonerror="false" />
 

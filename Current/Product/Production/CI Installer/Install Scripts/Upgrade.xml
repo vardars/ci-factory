@@ -40,7 +40,7 @@
 					</in>
 					<do>
 
-						<property name="ProjectCodeLineName" value="${CodelineName}" overwrite="false"/>
+						<property name="ProjectCodeLineName" value="${directory::name(CodelineName)}" overwrite="false"/>
 					</do>
 				</foreach>
 			</then>

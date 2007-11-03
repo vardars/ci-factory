@@ -185,6 +185,7 @@
       <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\server">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
+        <exclude name="ccnet.exe.config"/>
       </fileset>
     </delete>
     <call target="Compile"/>

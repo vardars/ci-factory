@@ -21,7 +21,7 @@ namespace ThoughtWorks.CruiseControl.Core
         {
             get
             {
-                string value = ConfigurationSettings.AppSettings["WatchConfigFile"];
+                string value = ConfigurationManager.AppSettings["WatchConfigFile"];
                 return value == null || StringUtil.EqualsIngnoreCase(value, Boolean.TrueString);
             }
         }

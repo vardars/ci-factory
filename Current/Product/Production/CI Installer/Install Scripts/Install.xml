@@ -15,9 +15,14 @@
     <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
     <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
     <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
-    <replacestring from="%InstallDirectory%"         to="${InstallDirectory}"  />
-    <replacestring from="%UnitTestDirectory%"        to="${UnitTestDirectory}"  />
     <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
+
+    <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
+    <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
+    <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />
+    <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
+    <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
+    <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
   </filterchain>
   
   <include buildfile="Scripts\CCNET.Install.xml"/>
@@ -60,8 +65,6 @@
     <mkdir unless="${directory::exists(ProductDirectory)}"         dir="${ProductDirectory}"/>
     <mkdir unless="${directory::exists(ThirdPartyDirectory)}"      dir="${ThirdPartyDirectory}"/>
     <mkdir unless="${directory::exists(ProductionDirectory)}"      dir="${ProductionDirectory}"/>
-    <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
-    <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
     <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
     <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
   </target>

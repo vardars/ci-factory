@@ -13,6 +13,7 @@
 			<fileset basedir="${SourceBuildDirectory}">
 				<include name="Main.build.xml"/>
 				<include name="Properties.build.xml"/>
+        <include name="Entities.xml"/>
 				<include name="Common.build.xml"/>
 				<include name="Scratch.build.xml"/>
 				<include name="UpdatenAntSchema.bat"/>

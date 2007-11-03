@@ -47,6 +47,7 @@
   <ItemGroup>
     <Content Include="Default\Build\ccnetproject.xml" />
     <Content Include="Default\Build\Common.Build.xml" />
+    <Content Include="Default\Build\Entities.xml" />
     <Content Include="Default\Product\Compile.Environment.xml" />
     <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
     <Content Include="Default\Build\dashboard\xsl\header.xsl" />
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Default\Build\OpenSolution.bat" />
+    <None Include="Default\Build\server\ccnet.exe.config" />
     <None Include="Default\Product\Build.bat" />
     <None Include="Default\Build\Build.sln.remove" />
     <None Include="Default\Build\CCNETServer.Bat" />

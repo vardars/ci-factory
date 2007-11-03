@@ -3,6 +3,10 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using ThoughtWorks.CruiseControl.Remote;
 using ThoughtWorks.CruiseControl.Core.Util;
+using System.Configuration;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Xml;
+using System.Xml.XPath;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -29,8 +33,8 @@ namespace ThoughtWorks.CruiseControl.Core
         public RemoteCruiseServer(ICruiseServer server, string remotingConfigurationFile)
         {
             _server = server;
-            RemotingConfiguration.Configure(remotingConfigurationFile);
-            RegisterForRemoting();
+            //RemotingConfiguration.Configure(remotingConfigurationFile);
+            RegisterForRemoting(remotingConfigurationFile);
         }
 
         #endregion
@@ -170,8 +174,18 @@ namespace ThoughtWorks.CruiseControl.Core
             _server.Dispose();
         }
 
-        private void RegisterForRemoting()
+        private void RegisterForRemoting(string remotingConfigurationFile)
         {
+            XmlDocument document = new XmlDocument();
+            document.Load(remotingConfigurationFile); XPathNavigator Navigator = document.CreateNavigator();
+            string StringPort = Navigator.SelectSingleNode("/configuration/appSettings/add[@key = 'Port']/@value").ToString();
+
+            if (string.IsNullOrEmpty(StringPort))
+                throw new InvalidProgramException(@"Please set the app setting key ""Port"" in the config file.");
+            int Port = int.Parse(StringPort);
+
+            TcpChannel CCNetTcpChannel = new TcpChannel(Port);
+            ChannelServices.RegisterChannel(CCNetTcpChannel, false);
             MarshalByRefObject marshalByRef = (MarshalByRefObject)_server.CruiseManager;
             RemotingServices.Marshal(marshalByRef, URI);
 
