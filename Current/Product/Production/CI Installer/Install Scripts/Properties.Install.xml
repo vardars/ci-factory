@@ -12,7 +12,7 @@
   <property name="Install.Quiet" value="false" />
 
   <property name="BuildDirectoryName"         value="Build"/>
-  <property name="ArtifactRootDirectoryName"  value="Artifact"/>
+  <property name="ArtifactRootDirectoryName"  value="Artifacts"/>
   <property name="PackagesDirectoryName"      value="Packages"/>
   
   <property name="ProjectRootDirectory"     value="${ProjectsDirectory}\${ProjectName}"  overwrite="false"/>
