@@ -17,6 +17,8 @@
   <property name="SVN.TemplateDB" value="C:\Tools\CI Factory\Packages\Subversion\Install\Template.zip" overwrite="false"/>
   <property name="SVN.RootShare" value="C:\svnrepos" overwrite="false"/>
 
+  <property name="SvnBinPath" value="${environment::get-variable('ProgramFiles')}\Subversion\bin" overwrite="false"/>
+
   <ifthenelse test="${SVN.WebVisible}">
     <then>
       <largeproperty name="SourceControl.BuildUpdateBlock.WebRepoUrl">
@@ -57,8 +59,9 @@
   <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
           <![CDATA[<sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}/Build</trunkUrl>
+        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}/&BuildDirectoryName;</trunkUrl>
         <workingDirectory>&BuildDirectory;</workingDirectory>
+        <executable>${SvnBinPath}\svn.exe</executable>
         ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
       </sourcecontrol>]]></value>
@@ -70,25 +73,26 @@
         <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
           <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}</trunkUrl>
           <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+          <executable>${SvnBinPath}\svn.exe</executable>
           ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
           <tagBaseUrl>${CCNet.SVN.URI.Tags}</tagBaseUrl>
         </sourceControlProvider>
         <exclusionFilters>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/Product/**/AssemblyInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/Product/ProjectInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/Product/**/ProjectInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/Build/*.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/Build/**/*.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
           </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>
@@ -104,4 +108,6 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.TemplateDB%', SVN.TemplateDB)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.RootShare%', SVN.RootShare)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.Credentials.SafeStorage%', SVN.Credentials.SafeStorage)}"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SvnBinPath%', SvnBinPath)}"/>
 </project>

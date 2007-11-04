@@ -57,29 +57,29 @@
         applyLabel="true" 
         autoGetSource="false"
         port="${TFS.Listener.Port}"
-        statefilepath="${BuildDirectory}\server\${ProjectName}.tfs.state.xml"
+        statefilepath="&BuildDirectory;\server\${ProjectName}.tfs.state.xml"
         project="$/${ProjectName}/${ProjectCodeLineName}"
         server="${TFS.ServerUrl}"
         workspace="${TFS.WorkspaceNameBase}-{0}"
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
+          <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]></value>
@@ -92,10 +92,10 @@
       applyLabel="false" 
       autoGetSource="true"
       port="${TFS.BuildScripts.Listener.Port}"
-      statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.tfs.state.xml"
-      project="$/${ProjectName}/${ProjectCodeLineName}/Build"
+      statefilepath="&BuildDirectory;\server\${ProjectName}BuildScripts.tfs.state.xml"
+      project="$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
       server="${TFS.ServerUrl}"
-      workingDirectory="${BuildDirectory}"
+      workingDirectory="&BuildDirectory;"
       workspace="${TFS.WorkspaceNameBase}-{0}"
       />]]></value>
   </largeproperty>
@@ -105,7 +105,7 @@
       <vstsbychangesetTrigger
           port="${TFS.BuildScripts.Listener.Port}"
           statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.tfs.state.xml"
-          project="$/${ProjectName}/${ProjectCodeLineName}/Build"
+          project="$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
           server="${TFS.ServerUrl}"
           workingDirectory="${BuildDirectory}"
           />

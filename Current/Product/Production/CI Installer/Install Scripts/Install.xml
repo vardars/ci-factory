@@ -11,12 +11,7 @@
 
     <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
     <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
-    <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
-    <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
-    <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
-    <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
-    <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
-
+    
     <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
     <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
     <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />

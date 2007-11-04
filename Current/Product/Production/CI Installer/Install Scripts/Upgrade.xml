@@ -125,11 +125,6 @@
 
       <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
       <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
-      <replacestring from="%ProjectCodeLineDirectory%" to="${ProjectCodeLineDirectory}"  />
-      <replacestring from="%ProductDirectory%"         to="${ProductDirectory}"  />
-      <replacestring from="%ThirdPartyDirectory%"      to="${ThirdPartyDirectory}"  />
-      <replacestring from="%ProductionDirectory%"      to="${ProductionDirectory}"  />
-      <replacestring from="%BuildDirectory%"           to="${BuildDirectory}"  />
 
       <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
       <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
@@ -279,34 +274,53 @@ A brute force approatch is to diff the tree, to identify which if any files need
 		</copy>
 		<exec program="${BuildDirectory}\UpdatenAntSchema.bat" workingdir="${BuildDirectory}"/>	
 	</target>
-	
-	<target name="Upgrade.Base">
+
+  <target name="Upgrade.Base">
+
+    <strings id="BuildFiles">
+      <string value="Common.Build.xml"/>
+      <string value="Post.Shim.xml"/>
+      <string value="Properties.build.xml"/>
+      <string value="SetupIIS.xml"/>
+      <string value="Scratch.build.xml" />
+      <string value="Entities.xml" />
+    </strings>
+
+    <strings id="ProductFiles">
+      <string value="Build.bat" />
+      <string value="Compile.Environment.xml" />
+      <string value="NoUpdateBuild.bat" />
+      <string value="OpenCommandPrompt.bat" />
+      <string value="OpenSolution.bat" />
+      <string value="OpenSolution.Script.xml" />
+      <string value="Personal.Build.xml" />
+      <string value="Scratch.build.xml" />
+      <string value="Scratch.Lib.xml" />
+      <string value="Test.bat" />
+    </strings>
+
+    <property name="Files" value="BuildFiles"/>
+    <property name="SourceDirectoryName" value="Build"/>
+    <property name="TargetDirectoryName" value="${BuildDirectoryName}"/>
+    <call target="Upgrade.Base.Files"/>
+
+
+    <property name="Files" value="ProductFiles"/>
+    <property name="SourceDirectoryName" value="Product"/>
+    <property name="TargetDirectoryName" value="${ProductDirectoryName}"/>
+    <call target="Upgrade.Base.Files"/>
+  </target>
+  
+  <target name="Upgrade.Base.Files">
+    
 		<loopthrough property="File">
 			<items>
-				<strings>
-					<string value="Build\Common.Build.xml"/>
-					<string value="Build\Post.Shim.xml"/>
-					<string value="Build\Properties.build.xml"/>
-					<string value="Build\SetupIIS.xml"/>
-					<string value="Build\Scratch.build.xml" />
-          <string value="Build\Entities.xml" />
-
-					<string value="Product\Build.bat" />
-					<string value="Product\Compile.Environment.xml" />
-					<string value="Product\NoUpdateBuild.bat" />
-					<string value="Product\OpenCommandPrompt.bat" />
-					<string value="Product\OpenSolution.bat" />
-					<string value="Product\OpenSolution.Script.xml" />
-					<string value="Product\Personal.Build.xml" />
-					<string value="Product\Scratch.build.xml" />
-					<string value="Product\Scratch.Lib.xml" />
-					<string value="Product\Test.bat" />
-				</strings>
+        <strings refid="${Files}" />
 			</items>
 			<do>
 				<ask answer="Preserve.Base"
-				 caption="Preserve customizations to ${File}?"
-				 question="Have you made customizations to ${File} that you would like to preserve?"
+				 caption="Preserve customizations to ${TargetDirectoryName}\${File}?"
+				 question="Have you made customizations to ${TargetDirectoryName}\${File} that you would like to preserve?"
 				 showdialog="true">
 					<options>
 						<string value="Yes"/>
@@ -321,13 +335,13 @@ A brute force approatch is to diff the tree, to identify which if any files need
 									failonerror="false">
 							<arg line="/x" />
 							<arg line="/e" />
-							<arg line='"${SourceDefaultDirectory}\${File}"' />
-							<arg line='"${ProjectCodeLineDirectory}\${File}"' />
+							<arg line='"${SourceDefaultDirectory}\${SourceDirectoryName}\${File}"' />
+							<arg line='"${ProjectCodeLineDirectory}\${TargetDirectoryName}\${File}"' />
 						</exec>
 					</then>
 					<else>
-						<copy todir="${ProjectCodeLineDirectory}" overwrite="true">
-							<fileset basedir="${SourceDefaultDirectory}">
+						<copy todir="${ProjectCodeLineDirectory}\${TargetDirectoryName}" overwrite="true">
+							<fileset basedir="${SourceDefaultDirectory}\${SourceDirectoryName}">
 								<include name="${File}"/>
 							</fileset>
 							<filterchain refid="Common.FilterChain" />

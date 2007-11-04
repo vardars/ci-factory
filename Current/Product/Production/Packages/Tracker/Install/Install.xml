@@ -22,7 +22,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\Tracker Reports\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&BuildDirectory;\Tracker Reports\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
 

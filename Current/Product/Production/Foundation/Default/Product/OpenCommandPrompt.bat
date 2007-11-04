@@ -1,1 +1,1 @@
-..\Build\nant\bin\nant.exe -buildfile:Personal.Build.xml CreateCommandPrompt
+..\%BuildDirectoryName%\nant\bin\nant.exe -buildfile:Personal.Build.xml CreateCommandPrompt

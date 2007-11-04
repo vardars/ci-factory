@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\Build" >
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\%BuildDirectoryName%" >
 
   <property name="CCNetProject" value="%ProjectName%"/>
   <property name="CCNetBuildCondition" value="ForceBuild "/>

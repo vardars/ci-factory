@@ -14,6 +14,11 @@
       <value xml="false"><![CDATA[<xslFile>Packages\LinesOfCode\LinesOfCode.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
+    
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>&BuildDirectory;\LinesOfCode\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="LinesOfCode.SetAsCurrentPackage">

@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
+<!DOCTYPE dashboard [
+  <!ENTITY % entities SYSTEM "..\..\..\Entities.xml">
+
+  %entities;
+]>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:msxsl="urn:schemas-microsoft-com:xslt"
   xmlns:ms="urn:DateScripts"
@@ -204,7 +209,7 @@ if(!document.getElementById)
 		</p>
     <hr/>
 
-    <xsl:variable name="BaseChartUrl" select="concat('/%ProjectName%-%ProjectCodeLineName%/Packages/Analytics/charts.swf?library_path=/%ProjectName%-%ProjectCodeLineName%/Packages/Analytics/charts_library&amp;xml_source=/%ProjectName%-%ProjectCodeLineName%/Artifacts/', $ArtifactFolderName)"/>
+    <xsl:variable name="BaseChartUrl" select="concat('/&ProjectName;-&ProjectCodeLineName;/&PackagesDirectoryName;/Analytics/charts.swf?library_path=/&ProjectName;-&ProjectCodeLineName;/&PackagesDirectoryName;/Analytics/charts_library&amp;xml_source=/&ProjectName;-&ProjectCodeLineName;/&ArtifactRootDirectoryName;/', $ArtifactFolderName)"/>
 
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>

@@ -5,6 +5,8 @@
 	<property name="Perforce.ServerPort" value="1666" overwrite="false"/>
 	<property name="Perforce.ServerPathPrefix" value="//depot" overwrite="false"/>
 
+  <property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce" overwrite="false"/>
+  
 	<largeproperty name="SourceControl.MainBuildBlock">
 		<value xml="false" expand="true">
 			<![CDATA[<sourcecontrol type="filtered">
@@ -16,26 +18,26 @@
         port="${Perforce.ServerName}:${Perforce.ServerPort}"
 				view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/..."
 				client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
-				executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
+				executable="${Perforce.BinPath}\p4.exe"
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/Product/**/~*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]>
@@ -49,9 +51,9 @@
       applyLabel="false" 
       autoGetSource="true"
       port="${Perforce.ServerName}:${Perforce.ServerPort}"
-			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/Build/..."
+			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/..."
 			client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
-			executable="${environment::get-variable('ProgramFiles')}\Perforce\p4.exe"
+			executable="${Perforce.BinPath}\p4.exe"
       />]]>
 		</value>
 	</largeproperty>
@@ -61,5 +63,6 @@
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.ServerPathPrefix%', Perforce.ServerPathPrefix)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Perforce.BinPath%', Perforce.BinPath)}"/>
 
 </project>

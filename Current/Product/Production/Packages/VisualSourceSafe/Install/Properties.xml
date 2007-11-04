@@ -17,23 +17,23 @@
           <username>${VSS.Username}</username>
           <password>${VSS.Password}</password>
           <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
-          <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
+          <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         </sourceControlProvider >
         <exclusionFilters>
           <pathFilter>
-            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/AssemblyInfo.*</pattern>
+            <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/ProjectInfo.*</pattern>
+            <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Product/**/ProjectInfo.*</pattern>
+            <pattern>$/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/*.*</pattern>
+            <pattern>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>$/${ProjectName}/${ProjectCodeLineName}/Build/**/*.*</pattern>
+            <pattern>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
           </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>
@@ -43,11 +43,11 @@
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol  type="vss" applyLabel="false" autoGetSource="true" >
         <executable>${VSS.ExePath}</executable>
-        <project>$/${ProjectName}/${ProjectCodeLineName}/Build</project>
+        <project>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;</project>
         <username>${VSS.Username}</username>
         <password>${VSS.Password}</password>
         <ssdir>${path::get-directory-name(VSS.DBPath)}</ssdir>
-        <workingDirectory>${BuildDirectory}</workingDirectory>
+        <workingDirectory>&BuildDirectory;</workingDirectory>
       </sourcecontrol>]]></value>
   </largeproperty>
 

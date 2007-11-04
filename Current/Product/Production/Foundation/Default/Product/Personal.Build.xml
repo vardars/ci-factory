@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\Build" >
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\%BuildDirectoryName%" >
 
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
@@ -8,27 +8,12 @@
   <property name="CCNetBuildTime" value="00:00:01"/>
   <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
-
   <property name="CCNetLabel" value="Personal.1"/>
-  <script language="C#" prefix="directory" >
-    <imports>
-      <import namespace="System.IO" />
-    </imports>
-
-    <code>
-      <![CDATA[
-         [Function("name")]
-         public static string GetDirectoryName(string path)
-         {
-                 return new DirectoryInfo( path ).Name;
-         }
-      ]]>
-    </code>
-  </script>
-  <property name="CCNetProject" value="${directory::name('..\..\')}"/>
   <property name="CCNetLogFilePath" value=""/>
 
   <include buildfile="Properties.Build.xml"/>
+  <property name="CCNetProject" value="${ProjectName}"/>
+  
   <include buildfile="Common.Build.xml" />
 
   <description>Begin Package Includes</description>
