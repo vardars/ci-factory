@@ -35,7 +35,7 @@
     <property name="Vault.Password" value=""  />
     <property name="Vault.Host" value="localhost"  />
     <property name="Vault.URL" value="http://localhost/VaultService"  />
-    <property name="Vault.Repository" value="Main"  />
+    <property name="Vault.Repository" value="Initial Repository"  />
     <property name="Vault.Repository.BasePath" value="$/${ProjectName}"/>
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
@@ -51,6 +51,20 @@
     <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
     <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
     <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <vaultsetloginoptions
+			URL="${Vault.URL}"
+			user="${Vault.Username}"
+			password="${Vault.Password}"
+			repository="${Vault.Repository}" />
+
+    <vaultdelete failonerror="false">
+      <vaultfileset>
+        <include name="${Vault.Repository.BasePath}"/>
+      </vaultfileset>
+    </vaultdelete>
+    
+    <vaultlogout/>
 
     <copy file="VaultTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
