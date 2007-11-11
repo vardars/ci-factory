@@ -14,9 +14,29 @@
   </target>
 
   <target name="Workspace.ValidateParameters">
-    <ifnot test="${file::exists(WinRarProgramPath)}" >
-      <exec program="${SourcePackagesDirectory}\Workspace\Install\wrar371.exe" />
-    </ifnot>
+    <call target="WinRar.InsureInstallationExists"/>
+  </target>
+
+  <target name="WinRar.InsureInstallationExists" unless="${file::exists(property::expand(WinRarProgramPath))}">
+    <ask answer="Answer"
+           question="It looks like WinRar 3.71 is not installed.  This software is required.  Do you wish to install the software?"
+           caption="WinRar is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\wrar371.exe" src="${WinRarDownloadUrl}"></get>
+        <exec program="C:\Temp\wrar371.exe" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install WinRar!" />
+      </elseif>
+    </ifthenelse>
   </target>
   
 </project>

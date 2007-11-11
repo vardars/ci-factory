@@ -352,6 +352,12 @@ namespace NAnt.Core.Functions {
 
             return Project.Properties.IsDynamicProperty(name);
         }
+        
+        [Function("expand")]
+        public string Expand(string value)
+        {
+            return Project.ExpandProperties(value, new Location(""));
+        }
 
         #endregion Public Instance Methods
     }

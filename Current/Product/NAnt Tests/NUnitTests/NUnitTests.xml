@@ -61,7 +61,7 @@
     </loglevel>
 		<sleep seconds="2"/>
 
-		<asyncexec program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+		<asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
 	</target>
 
 	<target name="NUnitTests.FixtureTearDown">

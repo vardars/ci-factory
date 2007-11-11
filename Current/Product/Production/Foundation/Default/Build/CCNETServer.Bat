@@ -1,4 +1,4 @@
-set PATH=%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%BuildDirectory%\nAnt\bin
+set PATH=%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem
 
-cd "%CCNET.ServerDirectory%"
-"%CCNET.ServerExe%" -config:"%CCNET.ProjectFile%" -remoting:on
+cd server
+CCNET.exe -config:"..\ccnetproject.xml" -remoting:on

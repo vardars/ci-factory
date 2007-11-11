@@ -22,7 +22,29 @@
   </target>
 
   <target name="Subversion.ValidateParameters">
+    <call target="Subversion.InsureInstallationExists"/>
+  </target>
 
+  <target name="Subversion.InsureInstallationExists" unless="${directory::exists(property::expand(SvnBinPath))}">
+    <ask answer="Answer"
+           question="It looks like Subversion is not installed.  This software is required.  Do you wish to install the software?"
+           caption="Subversion is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\svn-setup.exe" src="${SVN.DownloadUrl}"></get>
+        <exec program="C:\Temp\svn-setup.exe" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install Subversion!" />
+      </elseif>
+    </ifthenelse>
   </target>
   
 </project>

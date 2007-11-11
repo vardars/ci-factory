@@ -56,6 +56,7 @@
 
     <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
       <properties>
+        <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}" />
         <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
         <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
         <property name="CCNetBuildDate" value="2006-09-12"/>
