@@ -16,7 +16,7 @@
   
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
-    <testrunner>
+    <testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="VisualSourceSafe.InstallationTest"/>
         <string value="Subversion.InstallationTest"/>

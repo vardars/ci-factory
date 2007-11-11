@@ -11,6 +11,7 @@
   <ItemGroup>
     <Content Include="AlternateNamingTests\Install Resources\DefaultArguments.xml" />
     <Content Include="AlternateNamingTests\InstallationTest.xml" />
+    <Content Include="IntegrationSummaryReport.xsl" />
     <Content Include="NCoverTests\NCoverTests.xml" />
     <Content Include="NCoverTests\Install Resources\DefaultArguments.xml" />
     <Content Include="NCoverTests\Resources\MbUnitProject.dll" />

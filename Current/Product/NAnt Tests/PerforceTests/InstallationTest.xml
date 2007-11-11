@@ -8,7 +8,7 @@
   </ifnot>
   
   <target name="Perforce.InstallationTest.RunAllTests">
-    <testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="Perforce.InstallationTest"/>
       </fixtures>

@@ -8,7 +8,7 @@
   </ifnot>
   
   <target name="Subversion.InstallationTest.RunAllTests">
-    <testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="Subversion.InstallationTest"/>
       </fixtures>

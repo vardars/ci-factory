@@ -8,7 +8,7 @@
   </ifnot>
   
   <target name="Versioning.InstallationTest.RunAllTests">
-    <testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="Versioning.InstallationTest"/>
       </fixtures>

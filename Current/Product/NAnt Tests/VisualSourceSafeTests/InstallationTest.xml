@@ -8,7 +8,7 @@
   </ifnot>
 
   <target name="VisualSourceSafe.InstallationTest.RunAllTests">
-    <testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="VisualSourceSafe.InstallationTest"/>
       </fixtures>

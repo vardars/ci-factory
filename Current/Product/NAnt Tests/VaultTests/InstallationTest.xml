@@ -10,7 +10,7 @@
   <loadtasks assembly="C:\Projects\CI Factory\Current\Product\Production\Packages\Vault\bin\NAnt.VaultTasks.dll" />
   
   <target name="Vault.InstallationTest.RunAllTests">
-    <testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="Vault.InstallationTest"/>
       </fixtures>

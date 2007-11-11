@@ -9,7 +9,7 @@
   </ifnot>
 
 	<target name="NUnitTests.RunAllTests" >
-		<testrunner>
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
 			<fixtures>
 				<string value="NUnitTests"/>
 			</fixtures>
