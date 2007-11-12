@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop.Install.Properties">
+  
+  <property name="FxCop.BinFolder"    value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35"/>
+  <property name="FxCop.DownloadUrl"  value="http://www.gotdotnet.com/Team/FxCop/FxCopInstall1.35.MSI"/>
+  
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%FxCop.BinFolder%', FxCop.BinFolder)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%FxCop.DownloadUrl%', FxCop.DownloadUrl)}"/>
+  
+</project>
