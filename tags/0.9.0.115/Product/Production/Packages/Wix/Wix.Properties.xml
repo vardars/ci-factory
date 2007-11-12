@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Wix.Properties">
+
+	<property name="Wix.WixSourcePath" value="${ProductDirectory}\Install"/>
+	<property name="Wix.BinDir" value="${ThirdPartyDirectory}\Wix"/>
+	<fileset id="Wix.ProjectFiles">
+		<include name="${Wix.WixSourcePath}\**\*.wxs"/>
+	</fileset>
+	
+</project>
