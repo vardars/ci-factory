@@ -2,6 +2,6 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CIFactory.TestRunner.Properties">
 
   <property name="Deployment.Directory.Path" value="C:\Tools\CI Factory"/>
-	<property name="IntegrationTest.ReportFilePath" value="C:\Temp\Report.xml"/>
+	<property name="IntegrationTest.ReportFilePath" value="C:\Temp\Report.xml" overwrite="false"/>
   
 </project>
