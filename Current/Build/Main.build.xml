@@ -87,6 +87,7 @@
 					<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
 					<arg line='-logger:NAnt.Core.XmlLogger' />
 					<arg line='-logfile:"${Common.ReportDirectory}\NAntTests.xml"' />
+					<arg line='-D:IntegrationTest.ReportFilePath="${Common.ReportDirectory}\NAntTestReport.xml"' />
 				</exec>
 				<description>End Varification Actions</description>
 
@@ -131,7 +132,7 @@
 					<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
 					<arg line='-logger:NAnt.Core.XmlLogger' />
 					<arg line='-logfile:"${Common.ReportDirectory}\NAntTests.xml"' />
-					<arg line='-D:IntegrationTest.ReportFilePath=${Common.ReportDirectory}\NAntTestReport.xml' />
+					<arg line='-D:IntegrationTest.ReportFilePath="${Common.ReportDirectory}\NAntTestReport.xml"' />
 				</exec>
 				<description>End Varification Actions</description>
 
