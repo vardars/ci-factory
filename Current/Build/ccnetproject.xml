@@ -182,7 +182,6 @@
           <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
-        <file>c:\Projects\CI Factory\Current\Build\FxCop\Report\FxCopReport.xml</file>
   </files>
       </merge>
       <xslmerger>
