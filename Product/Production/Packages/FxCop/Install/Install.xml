@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="FxCop.Install" default="FxCop.Install">
+
+  <include buildfile="Properties.xml"/>
+
+  <target name="FxCop.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="FxCop.Calculate" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="FxCop Report" actionName="FxCopReport" xslFileName="Packages\FxCop\FxCopReport.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\FxCop\FxCopSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>${BuildDirectory}\FxCop\Report\FxCopReport.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="FxCop.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="FxCop"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="FxCop.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="FxCop"/>
+  </target>
+
+  <target name="FxCop.ValidateParameters">
+    <call target="FxCop.InsureInstallationExists"/>
+  </target>
+
+  <target name="FxCop.InsureInstallationExists" unless="${directory::exists(property::expand(FxCop.BinFolder))}">
+    <ask answer="Answer"
+           question="It looks like FxCop 1.35 is not installed.  This software is required.  Do you wish to install the software?"
+           caption="FxCop is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\FxCopInstall.MSI" src="${FxCop.DownloadUrl}"></get>
+        <exec program="msiexec" commandline="/i C:\Temp\FxCopInstall.MSI" verbose="true" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install FxCop!" />
+      </elseif>
+    </ifthenelse>
+  </target>
+  
+</project>
