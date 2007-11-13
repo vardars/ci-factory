@@ -21,17 +21,10 @@
           commandline='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'
           failonerror="false" verbose="true"/>
       <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">
-        <property name = "Deployment.SourceFileName" value = "FxCopReport.xml"/>
-        <property name = "Deployment.SourceDir" value = "${FxCop.BuildFolder}\Report"/>
-        <property name = "Deployment.TargetDir" value = "${Common.ArtifactDirectoryPath}"/>
-        <property name = "Deployment.TargetFile" value = "${Deployment.SourceFileName}"/>
-        <call target = "Deployment.PublishFileSilently"/>
-        <copy todir = "${Deployment.TargetDir}">
-          <fileset basedir = "${FxCop.BuildFolder}">
-            <include name = "*.png"/>
-            <include name = "*.xml"/>
-          </fileset>
-        </copy>
+
+        <style in="${FxCop.ReportFolder}\FxCopReport.xml"
+               out="${Common.ArtifactDirectoryPath}\FxCopReport.html"
+               style="${PackagesDirectory}\FxCop\FxCopReport.xsl"/>
       </if>
     </if>
   </target>

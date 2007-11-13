@@ -7,5 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
+    <Content Include="Packages\IntegrationTests\IntegrationTests.Properties.xml" />
+    <Content Include="Packages\IntegrationTests\IntegrationTests.Targets.xml" />
   </ItemGroup>
 </Project>

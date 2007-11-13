@@ -191,6 +191,10 @@
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\MSBuild\MSBuildMerge.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\CompileLogs\*.xml</xmlfile>
           </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\FxCop\Report\FxCopReport.xml</xmlfile>
+          </filepair>
         </filepairs>
       </xslmerger>
       <xmllogger />
