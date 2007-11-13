@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CCNETInstaller" >
+
+  <!-- To be repleacable tokens in the files to be installed  -->
+  <!-- These should be passed on the command line
+  <property name="CCNET.ServerPort" value=""/>
+  -->
+  
+  <property name="CCNET.ProjectFile" value="${BuildDirectory}\ccnetproject.xml"/>
+  <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  <property name="CCNET.ExeConfigFile" value="${BuildDirectory}\server\ccnet.exe.config"/>
+  <property name="CCNET.ServerDirectory" value="${BuildDirectory}\server"/>
+  <property name="CCNET.ServerXslDirectory" value="${CCNET.ServerDirectory}\xsl"/>
+  <property name="CCNET.ServerExe" value="${CCNET.ServerDirectory}\CCNET.exe"/>
+  <property name="CCNET.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
+  <property name="CCNET.ConfigFile" value="${CCNET.DashboardDirectory}\dashboard.config"/>
+  <property name="BuildMaster.Name" value="BuildMaster" overwrite="false"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com" overwrite="false"/>
+  <property name="Developer.List" value="" overwrite="false"/>
+  <property name="CCNET.ModificationDelaySeconds" value="120" overwrite="false"/>
+  <property name="CCNET.IntervalTrigger" value="90" overwrite="false"/>
+
+  <!-- These are private... -->
+
+  <property name="Private.CCNET.DefaultProjectFile" value="${SourceBuildDirectory}\ccnetproject.xml"/>
+  <property name="Private.CCNET.DefaultBatchFile" value="${SourceBuildDirectory}\CCNETServer.Bat"/>
+  <property name="Private.CCNET.DefaultExeConfigFile" value="${SourceBuildDirectory}\server\ccnet.exe.config"/>
+  <property name="Private.CCNET.DefaultBuildServerDirectory" value="${SourceBuildDirectory}\server"/>
+  <property name="Private.CCNET.DefaultBuildServerXslDirectory" value="${Private.CCNET.DefaultBuildServerDirectory}\xsl"/>
+  <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceBuildDirectory}\dashboard"/>
+  <property name="Private.CCNET.DefaultConfigFile" value="${Private.CCNET.DefaultDashboardDirectory}\dashboard.config"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Name%', BuildMaster.Name)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Email%', BuildMaster.Email)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerName%', CCNET.ServerName)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerPort%', CCNET.ServerPort)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ProjectFile%', CCNET.ProjectFile)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.BatchFile%', CCNET.BatchFile)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ExeConfigFile%', CCNET.ExeConfigFile)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerDirectory%', CCNET.ServerDirectory)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerExe%', CCNET.ServerExe)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ModificationDelaySeconds%', CCNET.ModificationDelaySeconds)}"  />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.IntervalTrigger%', CCNET.IntervalTrigger)}"  />
+  
+  <target name="CCNET.Install">
+    <call target="Private.CCNET.InstallBuildDirectoryFiles"/>
+    <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
+		<call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
+
+		<mkdir unless="${directory::exists(BuildDirectory + '\Artifacts')}" dir="${BuildDirectory}\Artifacts"/>
+	</target>
+
+	<target name="CCNET.ValidateParameters">
+		<fail unless="${property::exists('CCNET.ServerPort')}" message="Property CCNET.ServerPort was not set on the commandline."/>
+	</target>
+
+	<target name="Private.CCNET.InstallDashboardDirectoryFiles">
+		<mkdir unless="${directory::exists(CCNET.DashboardDirectory)}" dir="${CCNET.DashboardDirectory}"/>
+
+		<copy overwrite="true" tofile="${CCNET.ConfigFile}" file="${Private.CCNET.DefaultConfigFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
+
+		<copy overwrite="true" todir="${CCNET.DashboardDirectory}">
+			<fileset basedir="${Private.CCNET.DefaultDashboardDirectory}">
+				<include name="**/*" />
+				<exclude name="${Private.CCNET.DefaultConfigFile}"/>
+			</fileset>
+		</copy>
+	</target>
+	
+  <target name="Private.CCNET.InstallBuildDirectoryFiles">
+		<copy overwrite="true" tofile="${CCNET.ProjectFile}" file="${Private.CCNET.DefaultProjectFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
+
+		<copy overwrite="true" tofile="${CCNET.BatchFile}" file="${Private.CCNET.DefaultBatchFile}">
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+  </target>
+
+  <target name="Private.CCNET.InstallBuildServerDirectoryFiles">
+    <mkdir unless="${directory::exists(CCNET.ServerDirectory)}" dir="${CCNET.ServerDirectory}"/>
+		<copy overwrite="true" tofile="${CCNET.ExeConfigFile}" file="${Private.CCNET.DefaultExeConfigFile}">
+			<filterchain refid="Common.FilterChain" />
+		</copy>
+		<copy overwrite="true" todir="${CCNET.ServerDirectory}">
+      <fileset basedir="${Private.CCNET.DefaultBuildServerDirectory}">
+        <include name="**/*" />
+        <exclude name="${Private.CCNET.DefaultExeConfigFile}"/>
+      </fileset>
+    </copy>
+  </target>
+
+</project>
