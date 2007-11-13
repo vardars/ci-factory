@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop.Properties">
+  
+  <property name="FxCop.BinFolder"    value = "%FxCop.BinFolder%"/>
+  <property name="FxCop.DownloadUrl"  value="%FxCop.DownloadUrl%"/>
+
+  <property name="FxCop.Console"                    value="${FxCop.BinFolder}\FxCopCmd.exe"/>
+  <property name="FxCop.BuildFolder"                value="${BuildDirectory}\FxCop"/>
+  <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report"/>
+  <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies"/>
+  <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules"/>
+  <property name="FxCop.ReferenceAssembliesFolder"  value="${ThirdPartyDirectory}"/>
+  <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*"/>
+  
+  <fileset id="FxCop.Target.ProjectFiles">
+    <include name="${ProductionDirectory}\**\*.*proj"/>
+  </fileset>
+  
+</project>
