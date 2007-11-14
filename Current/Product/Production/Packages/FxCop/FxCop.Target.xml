@@ -1,61 +1,71 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop">
-    <include buildfile = "FxCop.Properties.xml"/>
-    <fileset id = "FxCop.AssembliesFileSet"/>
-    <property name = "Private.FxCop.HaveAssemblies" value = "false"/>
-    <target name = "FxCop.Calculate">
-        <call target = "Private.FxCop.CollectAssemblies"/>
-        <ifnot test = "${Private.FxCop.HaveAssemblies}">
-            <echo level = "Warning" message = "No assemblies found to analyze for FxCop!"/>
+
+  <include buildfile = "FxCop.Properties.xml"/>
+
+  <fileset id = "FxCop.AssembliesFileSet"/>
+
+  <property name = "Private.FxCop.HaveAssemblies" value = "false"/>
+
+  <target name = "FxCop.Calculate">
+    <call target = "Private.FxCop.CollectAssemblies"/>
+    <ifnot test = "${Private.FxCop.HaveAssemblies}">
+      <echo level = "Warning" message = "No assemblies found to analyze for FxCop!"/>
+    </ifnot>
+    <if test = "${Private.FxCop.HaveAssemblies}">
+      <copy todir = "${FxCop.AssembliesFolder}" verbose = "true">
+        <fileset refid = "FxCop.AssembliesFileSet"/>
+      </copy>
+      <exec
+          program="${path::get-short-path(FxCop.Console)}"
+          commandline='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'
+          failonerror="false" verbose="true"/>
+      <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">
+        <property name = "Deployment.SourceFileName" value = "FxCopReport.xml"/>
+        <property name = "Deployment.SourceDir" value = "${FxCop.BuildFolder}\Report"/>
+        <property name = "Deployment.TargetDir" value = "${Common.ArtifactDirectoryPath}"/>
+        <property name = "Deployment.TargetFile" value = "${Deployment.SourceFileName}"/>
+        <call target = "Deployment.PublishFileSilently"/>
+        <copy todir = "${Deployment.TargetDir}">
+          <fileset basedir = "${FxCop.BuildFolder}">
+            <include name = "*.png"/>
+            <include name = "*.xml"/>
+          </fileset>
+        </copy>
+      </if>
+    </if>
+  </target>
+
+  <target name = "Private.FxCop.CollectAssemblies">
+    <strings id = "FxCop.AssemblyList"/>
+    <foreach item = "File" property = "FxCop.Target.ProjectFile.Path">
+      <in>
+        <items refid = "FxCop.Target.ProjectFiles"/>
+      </in>
+      <do>
+        <property name = "AssemblyName" value = "${vsproject::get-assemblyname(FxCop.Target.ProjectFile.Path)}"/>
+        <ifnot test = "${AssemblyName == '' or stringlist::contains('FxCop.AssemblyList', AssemblyName)}">
+          <property name = "Private.FxCop.HaveAssemblies" value = "true"/>
+          <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name = "TargetPDBPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetPDBPath)}"/>
+          <function execute = "${stringlist::add('FxCop.AssemblyList', AssemblyName)}"/>
         </ifnot>
-        <if test = "${Private.FxCop.HaveAssemblies}">
-            <copy todir = "${FxCop.AssembliesFolder}" verbose = "true">
-                <fileset refid = "FxCop.AssembliesFileSet"/>
-            </copy>
-            <exec
-                program = "${path::get-short-path(FxCop.Console)}"
-                commandline = "/file:${path::get-short-path(FxCop.AssembliesFolder)} /out:${path::get-short-path(FxCop.ReportFolder)}\FxCopReport.xml /rule:${FxCop.RulesFolder} /directory:${path::get-short-path(FxCop.ReferenceAssembliesFolder)} /searchgac  /fo"
-                failonerror = "false"/>
-            <property name = "Deployment.SourceFileName" value = "FxCopReport.xml"/>
-            <property name = "Deployment.SourceDir" value = "${FxCop.BuildFolder}\Report"/>
-            <property name = "Deployment.TargetDir" value = "${Common.ArtifactDirectoryPath}"/>
-            <property name = "Deployment.TargetFile" value = "${Deployment.SourceFileName}"/>
-            <call target = "Deployment.PublishFileSilently"/>
-            <copy todir = "${Deployment.TargetDir}">
-                <fileset basedir = "${FxCop.BuildFolder}">
-                    <include name = "*.png"/>
-                    <include name = "*.xml"/>
-                </fileset>
-            </copy>
-        </if>
-    </target>
-    <target name = "Private.FxCop.CollectAssemblies">
-        <strings id = "FxCop.AssemblyList"/>
-        <foreach item = "File" property = "FxCop.Target.ProjectFile.Path">
-            <in>
-                <items refid = "FxCop.Target.ProjectFiles"/>
-            </in>
-            <do>
-                <property name = "AssemblyName" value = "${vsproject::get-assemblyname(FxCop.Target.ProjectFile.Path)}"/>
-                <ifnot test = "${AssemblyName == '' or stringlist::contains('FxCop.AssemblyList', AssemblyName)}">
-                    <property name = "Private.FxCop.HaveAssemblies" value = "true"/>
-                    <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
-                    <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
-                    <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
-                    <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
-                    <property name = "TargetPDBPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
-                    <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetPDBPath)}"/>
-                    <function execute = "${stringlist::add('FxCop.AssemblyList', AssemblyName)}"/>
-                </ifnot>
-            </do>
-        </foreach>
-    </target>
-    <target name = "FxCop.SetUp">
-        <mkdir if = "${directory::exists(FxCop.BuildFolder) == false}" dir = "${FxCop.BuildFolder}"/>
-        <property name = "Common.FilesToDelete" value = "${FxCop.FilesToDeleteAtSetup}"/>
-        <call target = "Common.DeleteFiles"/>
-        <mkdir if = "${directory::exists(FxCop.ReportFolder) == false}" dir = "${FxCop.ReportFolder}"/>
-        <mkdir if = "${directory::exists(FxCop.AssembliesFolder) == false}" dir = "${FxCop.AssembliesFolder}"/>
-    </target>
-    <target name = "FxCop.TearDown"></target>
+      </do>
+    </foreach>
+  </target>
+
+  <target name = "FxCop.SetUp">
+    <mkdir if = "${directory::exists(FxCop.BuildFolder) == false}" dir = "${FxCop.BuildFolder}"/>
+    <property name = "Common.FilesToDelete" value = "${FxCop.FilesToDeleteAtSetup}"/>
+    <call target = "Common.DeleteFiles"/>
+    <mkdir if = "${directory::exists(FxCop.ReportFolder) == false}" dir = "${FxCop.ReportFolder}"/>
+    <mkdir if = "${directory::exists(FxCop.AssembliesFolder) == false}" dir = "${FxCop.AssembliesFolder}"/>
+  </target>
+
+  <target name = "FxCop.TearDown"></target>
+
 </project>
