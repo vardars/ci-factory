@@ -19,7 +19,7 @@
   <xsl:template match = "/">
     <xsl:variable name="stuff" select="//fxcopsummary" />
     <xsl:if test="$stuff/node()">
-      <xsl:value-of select="XPath:InnerXml($stuff)"/>
+      <xsl:value-of select="XPath:InnerXml($stuff)" disable-output-escaping="yes"/>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
