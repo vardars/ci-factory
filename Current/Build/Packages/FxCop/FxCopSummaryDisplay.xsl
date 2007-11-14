@@ -18,6 +18,8 @@
 
   <xsl:template match = "/">
     <xsl:variable name="stuff" select="//fxcopsummary" />
-    <xsl:value-of select="XPath:InnerXml($stuff)"/>
+    <xsl:if test="$stuff/node()">
+      <xsl:value-of select="XPath:InnerXml($stuff)"/>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
