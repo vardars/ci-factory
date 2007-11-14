@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
+  
+  <include buildfile="Properties.build.xml" />
+  <include buildfile="Common.Build.xml" />
+  <include buildfile="Custom.Targets.xml" />
+  
+  <description>Begin Package Includes</description>
+  <include buildfile=".\Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
+  <include buildfile=".\Packages\Subversion\SourceControl.Target.xml" />
+  <include buildfile=".\Packages\MSBuild\Compile.Target.xml" />
+  <include buildfile=".\Packages\NCover\NCover.Target.xml" />
+  <include buildfile=".\Packages\Simian\Simian.Target.xml" />
+  <include buildfile=".\Packages\nDepend\nDepend.Target.xml" />
+  <include buildfile=".\Packages\LinesOfCode\LinesOfCode.Target.xml" />
+  <include buildfile=".\Packages\Deployment\Deployment.Target.xml" />
+  <include buildfile=".\Packages\Versioning\Versioning.Target.xml" />
+  <include buildfile="${PackagesDirectory}\FxCop\FxCop.Target.xml" />
+  <description>End Package Includes</description>
+  
+  <target name="Triggered" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+        
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.PublishOldSource" />
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <description>End Pre Build Actions</description>
+        
+        <description>Begin Clean Up Actions</description>
+        <call target="SourceControl.GetOfThirdPartyDirectory" />
+        <call target="SourceControl.GetOfProductDirectory" />
+        <call target="SourceModificationReport.PublishNewSource" />
+        <description>End Clean Up Actions</description>
+        
+        <description>Begin Compile Actions</description>
+        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies" />
+        <call target="Versioning.IncreamentBuildNumberOfProduct" />
+        <call target="Compile.CompileSource" />
+        <description>End Compile Actions</description>
+        
+        <description>Begin Varification Actions</description>
+        <call target="UnitTest.RunTests" />
+        <description>End Varification Actions</description>
+        
+        <description>Begin Post Build Actions</description>
+        <loglevel level="None">
+          <do>
+            <call target="Simian.Run" failonerror="false" />
+          </do>
+        </loglevel>
+        <call target="nDepend.Calculate" />
+        <call target="LinesOfCode.CountCodeLines" />
+        <call target="FxCop.Calculate" />
+        <description>End Post Build Actions</description>
+        
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Heavy" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+        <description>Begin Pre Build Actions</description>
+        <description>End Pre Build Actions</description>
+        <description>Begin Clean Up Actions</description>
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <description>End Clean Up Actions</description>
+        <description>Begin Compile Actions</description>
+        <call target="Compile.CompileSource" />
+        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+        <description>End Compile Actions</description>
+        <description>Begin Varification Actions</description>
+        <call target="UnitTest.RunTests" />
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
+          <arg line="-buildfile:&quot;${ProductDirectory}\NAnt Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-logger:NAnt.Core.XmlLogger" />
+          <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
+        </exec>
+        <description>End Varification Actions</description>
+        <description>Begin Post Build Actions</description>
+        <description>End Post Build Actions</description>
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+  <target name="Release" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.PublishOldSource" />
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <description>End Pre Build Actions</description>
+        <description>Begin Clean Up Actions</description>
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <call target="SourceModificationReport.PublishNewSource" />
+        <description>End Clean Up Actions</description>
+        <description>Begin Compile Actions</description>
+        <call target="Compile.CompileSource" />
+        <call target="Custom.NAnt.CreateDocumentation" />
+        <call target="Custom.WriteReleaseNotes" />
+        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+        <description>End Compile Actions</description>
+        <description>Begin Varification Actions</description>
+        <call target="UnitTest.RunTests" />
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
+          <arg line="-buildfile:&quot;${ProductDirectory}\NAnt Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-logger:NAnt.Core.XmlLogger" />
+          <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
+        </exec>
+        <description>End Varification Actions</description>
+        <description>Begin Post Build Actions</description>
+        <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
+        <property name="Deployment.SourceDir" value="${ProductDirectory}\Install\CI Factory" />
+        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <call target="Deployment.PublishFile" />
+        <loglevel level="None">
+          <do>
+            <call target="Simian.Run" failonerror="false" />
+          </do>
+        </loglevel>
+        <call target="nDepend.Calculate" />
+        <call target="LinesOfCode.CountCodeLines" />
+        <call target="FxCop.Calculate" />
+        <description>End Post Build Actions</description>
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+  <target name="SetUps">
+    <call target="Common.SetUp" />
+    <description>Begin SetUps</description>
+    <call target="SourceModificationReport.SetUp" />
+    <call target="Versioning.SetUp" />
+    <call target="SourceControl.SetUp" />
+    <call target="UnitTest.SetUp" />
+    <call target="Compile.SetUp" />
+    <call target="UnitTest.SetUp" />
+    <call target="Simian.SetUp" />
+    <call target="nDepend.SetUp" />
+    <call target="LinesOfCode.SetUp" />
+    <call target="Deployment.SetUp" />
+    <description>End SetUps</description>
+    <call target="FxCop.SetUp" />
+  </target>
+  <target name="TearDowns">
+    <description>Begin TearDowns</description>
+    <call target="SourceModificationReport.TearDown" />
+    <call target="Versioning.TearDown" />
+    <call target="SourceControl.TearDown" />
+    <call target="UnitTest.TearDown" />
+    <call target="Compile.TearDown" />
+    <call target="UnitTest.TearDown" />
+    <call target="Simian.TearDown" />
+    <call target="nDepend.TearDown" />
+    <call target="LinesOfCode.TearDown" />
+    <call target="Deployment.TearDown" />
+    <description>End TearDowns</description>
+    <call target="FxCop.TearDown" />
+  </target>
+</project>
