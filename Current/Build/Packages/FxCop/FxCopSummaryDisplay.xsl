@@ -15,6 +15,9 @@
   <xsl:output method = "html"/>
 
   <xsl:param name = "applicationPath"/>
+  <xsl:param name="CCNetServer"/>
+  <xsl:param name="CCNetProject"/>
+  <xsl:param name="CCNetBuild"/>
 
   <xsl:template match = "/">
     <xsl:variable name="stuff" select="//fxcopsummary" />
@@ -29,10 +32,12 @@
           <td class="sectionheader" colSpan="2">
             <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
               <xsl:attribute name="href">
-                <xsl:value-of select="/cruisecontrol/build/buildresults//target[@name='FxCop.SetUp']//target[@name='FxCop.EchoReportLink']/task[@name='echo']/message" />
+                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_FxCopReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img style="float: left; border-style: none" src="Packages\FxCop\fxcop.ico" height="25" title="FxCop" alt="FxCop"/>
-              <div style="position:relative; top: -10px;">FxCop Summary (<xsl:value-of select="$stuff/@issues" /> Issues)</div>
+              <div style="position:relative; top: -10px;">
+                FxCop Summary (<xsl:value-of select="$stuff/@issues" /> Issues)
+              </div>
             </a>
           </td>
         </tr>
