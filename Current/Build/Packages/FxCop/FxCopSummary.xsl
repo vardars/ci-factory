@@ -14,17 +14,9 @@
     <xsl:variable name = "message.list.count" select = "count($message.list)"/>
     <xsl:if test = "($message.list.count > 0)">
       <fxcopsummary>
-        <table
-                    class = "section-table"
-                    cellSpacing = "0"
-                    cellPadding = "2"
-                    width = "98%"
-                    border = "0">
-          <tr>
-            <td class="sectionheader" colSpan="2">
-              FxCop Summary (<xsl:value-of select="$message.list.count" /> Issues)
-            </td>
-          </tr>
+        <xsl:attribute name="issues">
+          <xsl:value-of select="$message.list.count" />
+        </xsl:attribute>
           <tr>
             <td>Assemblies tested:</td>
             <td>
@@ -54,8 +46,7 @@
             <td>
               <xsl:value-of select="count(.//Member//Message)"/>
             </td>
-          </tr>
-        </table>      
+          </tr>   
       </fxcopsummary>
     </xsl:if>
   </xsl:template>

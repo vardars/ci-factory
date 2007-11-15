@@ -51,12 +51,17 @@
     </foreach>
   </target>
 
+  <target name="FxCop.EchoReportLink">
+    <echo message="http://${BuildServerHostName}/${ProjectName}/default.aspx?_action_FxCopReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+  </target>
+
   <target name = "FxCop.SetUp">
     <mkdir if = "${directory::exists(FxCop.BuildFolder) == false}" dir = "${FxCop.BuildFolder}"/>
     <property name = "Common.FilesToDelete" value = "${FxCop.FilesToDeleteAtSetup}"/>
     <call target = "Common.DeleteFiles"/>
     <mkdir if = "${directory::exists(FxCop.ReportFolder) == false}" dir = "${FxCop.ReportFolder}"/>
     <mkdir if = "${directory::exists(FxCop.AssembliesFolder) == false}" dir = "${FxCop.AssembliesFolder}"/>
+    <call target="FxCop.EchoReportLink"/>
   </target>
 
   <target name = "FxCop.TearDown"></target>
