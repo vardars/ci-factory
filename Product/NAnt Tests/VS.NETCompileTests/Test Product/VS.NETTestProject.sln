@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test Subject", "Production\Test Subject\Test Subject.csproj", "{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug.ActiveCfg = Debug|.NET
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug.Build.0 = Debug|.NET
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release.ActiveCfg = Release|.NET
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		Scratch.build.xml = Scratch.build.xml
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
