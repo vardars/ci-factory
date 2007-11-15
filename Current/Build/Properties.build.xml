@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
 
+  <property name="BuildServerHostName"        value="cifactorybuild.stelligent.com"/>
+
   <property name="ProjectName" value="CI Factory" />
   <property name="ProjectCodeLineName" value="Current" />
   <property name="ProjectsDirectory" value="c:\Projects" />
