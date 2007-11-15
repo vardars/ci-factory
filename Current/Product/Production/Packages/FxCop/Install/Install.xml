@@ -8,18 +8,26 @@
       <value xml="false"><![CDATA[<call target="FxCop.Calculate" />]]></value>
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
-    <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="FxCop Report" actionName="FxCopReport" xslFileName="Packages\FxCop\FxCopReport.xsl" />]]></value>
-    </largeproperty>
-    <call target="Packages.AddbuildPlugins"/>
+
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\FxCop\FxCopSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\FxCop\FxCopSummaryDisplay.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>${BuildDirectory}\FxCop\Report\FxCopReport.xml</file>]]></value>
+    
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="FxCop Report" actionName="FxCopReport" xslFileName="Packages\FxCop\FxCopReportDisplay.xsl" imageFileName="Packages\FxCop\fxcop.ico" />]]></value>
     </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="FxCop.SetAsCurrentPackage">

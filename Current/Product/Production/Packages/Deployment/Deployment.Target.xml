@@ -57,7 +57,7 @@
   </target>
 
   <target name="Deployment.SetUp">
-    
+    <call target="Deployment.EchoDeploymentFileWebPath" />
   </target>
 
   <target name="Deployment.TearDown">

@@ -91,7 +91,7 @@
   </target>
 
   <target name="UnitTest.ShowReport">
-    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.BaseReportFileName}"/>
     <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\NUnitSummary.xsl"/>
     <call target="Common.ShowReport"/>

@@ -1,413 +1,390 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns="http://www.w3.org/TR/xhtml1/strict">
+<xsl:stylesheet
+	version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+	xmlns:user="urn:my-scripts"
+	exclude-result-prefixes="user msxsl"
+    >
 
-<xsl:template match="/">
-<xsl:apply-templates select="//FxCopReport" />
-</xsl:template>
+  <xsl:output method="html"
+    version="1.0"
+  	indent="yes"/>
 
-<xsl:template match="//FxCopReport">
-    <html>
-    <head><title>Analysis Report</title></head>
-    <style>
-        #Title {font-family: Verdana; font-size: 14pt; color: black; font-weight: bold}
-        .ColumnHeader {font-family: Verdana; font-size: 8pt; background-color:white; color: black}
-        .CriticalError {font-family: Verdana; font-size: 8pt; color: darkred; font-weight: bold; vertical-align: middle; }
-        .Error {font-family: Verdana; font-size: 8pt; color: royalblue; font-weight: bold; vertical-align: middle; }
-        .CriticalWarning {font-family: Verdana; font-size: 8pt; color: darkorange; font-weight: bold; vertical-align: middle; }
-        .Warning {font-family: Verdana; font-size: 8pt; color: darkgray; font-weight: bold; vertical-align: middle; }
-        .Information {font-family: Verdana; font-size: 8pt; color: black; font-weight: bold; vertical-align: middle; }
+  <msxsl:script language="C#" implements-prefix="user">
+    <![CDATA[
+		public string MakeLongTextSplittable(string textToAlter)
+		{	
+			return textToAlter.Replace("(", "( ").Replace(")",") ").Replace(",", ", ").Replace(":", ": ");
+		}
+		
+		public string ExtractCategory(string rawCategory)
+		{
+			return rawCategory.Replace("Microsoft.", "");
+		}
+		]]>
+  </msxsl:script>
 
-        .PropertyName {font-family: Verdana; font-size: 8pt; color: black; font-weight: bold}
-        .PropertyContent {font-family: Verdana; font-size: 8pt; color: black}
-        .NodeIcon { font-family: WebDings; font-size: 12pt; color: navy; padding-right: 5;}
-        .MessagesIcon { font-family: WebDings; font-size: 12pt; color: red;}
-        .RuleDetails { padding-top: 10;}
-        .SourceCode { background-color:#DDDDFF; }
-        .RuleBlock { background-color:#EEEEFF; }
-        .MessageNumber { font-family: Verdana; font-size: 10pt; color: darkred; }
-        .MessageBlock { font-family: Verdana; font-size: 10pt; color: darkred; }
-        .Resolution {font-family: Verdana; font-size: 8pt; color: black; }        
-        .NodeLine { font-family: Verdana; font-size: 9pt;}
-        .Note { font-family: Verdana; font-size: 9pt; color:black; background-color: #DDDDFF; }
-        .NoteUser { font-family: Verdana; font-size: 9pt; font-weight: bold; }
-        .NoteTime { font-family: Verdana; font-size: 8pt; font-style: italic; }
-        .Button { font-family: Verdana; font-size: 9pt; color: blue; background-color: #EEEEEE; border-style: outset;}
-        a:link { color: blue; text-decoration: none; }
-        a:visited { color: blue; text-decoration: none; }
-        a:active { color: blue; text-decoration: none; }
-    </style>
-    <script>
-        function ViewState(blockId) 
-        { 
-           var block = document.getElementById(blockId); 
-           if (block.style.display=='none')
-           { 
-              block.style.display='block'; 
-              if (block.className == 'MessageDiv')
-              {
-                var toggle = document.getElementById(blockId + "Toggle");                
-                toggle.innerHTML = "&#x0036;";
-              }              
-           }
-           else
-           { 
-              block.style.display='none'; 
-              if (block.className=='MessageDiv')
-              {
-                var toggle = document.getElementById(blockId + "Toggle");                
-                toggle.innerHTML = "&#x0034;";
-              }            
-           }            
-        } 
-       
-        function SwitchAll(how)
-        {          
-           var nodes = document.getElementsByTagName("div"); 
-           for (i = 0; i != nodes.length;i++)
-           {    
-              var block = nodes[i]; 
-              if (block != null)
-              { 
-                 if (block.className == 'NodeDiv' || block.className == 'MessageBlockDiv' || IsMessageDivWithActionNone(block, how))
-                 { 
-                    block.style.display=how; 
-                 }                
-              } 
-           } 
-        } 
-        
-        function IsMessageDivWithActionNone(block, how)
-        {
-          if (block.className != 'MessageDiv') return false;
-          if (how != 'none') return false;
-          
-          //as we're collapsing the tree, set the correct toggle icon
-          var toggle = document.getElementById(block.id + "Toggle");                
-          toggle.innerHTML = "&#x0034;";         
-          return true;
-        }
-
-        function ExpandAll()
-        { 
-           SwitchAll('block'); 
-        } 
-       
-        function CollapseAll() 
-        { 
-           SwitchAll('none'); 
-        } 
-        
-        function DoNothing() {}
-        
-        function ButtonState(blockId) 
-        { 
-           var block = document.getElementById(blockId); 
-           if (block.style.borderStyle=='inset')
-           { 
-              block.style.borderStyle='outset'; 
-           }
-           else
-           { 
-              block.style.borderStyle='inset'; 
-           } 
-        } 
-    </script>
-    <body bgcolor="white" alink="Black" vlink="Black" link="Black">
-
-    <!-- Report Title -->
-    <div id="Title">
-        FxCop <xsl:value-of select="@Version"/> Analysis Report
-    </div>
-    <br/>
-    <table>
-        <tr>
-            <td class="Button" Id="ExpandAllButton" OnMouseOver="ButtonState('ExpandAllButton');" OnMouseOut="ButtonState('ExpandAllButton');">
-                <a href="javascript:ExpandAll()">Expand All</a>
-            </td>
-            <td class="Button" Id="CollapseAllButton" OnMouseOver="ButtonState('CollapseAllButton');" OnMouseOut="ButtonState('CollapseAllButton');">
-                <a href="javascript:CollapseAll();">Collapse All</a>
-            </td>
-        </tr>
-    </table>    
-    <br/>
-    <xsl:apply-templates select="Namespaces"/>
+  <xsl:template match="/">
     <xsl:choose>
-        <xsl:when test="Namespaces">
-            <hr/>
-        </xsl:when>
+      <xsl:when test="//FxCopReport">
+        <xsl:apply-templates select="//FxCopReport" />
+      </xsl:when>
+      <xsl:otherwise>
+        <h2>FxCop Analysis Report</h2>
+        <h3>No FxCop data available</h3>
+      </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="Targets"/>
-    </body>
+  </xsl:template>
+
+  <xsl:template match="FxCopReport">
+    <html>
+      <head>
+        <title>Analysis Report</title>
+      </head>
+
+      <style>
+        .ColumnHeader {font-family: Verdana; font-size: 8pt; background-color:white; color: black}
+        .CriticalError {font-family: Verdana; font-size: 8pt; color: darkred; font-weight: bold; text-align: center}
+        .Error {font-family: Verdana; font-size: 8pt; color: royalblue; font-weight: bold; text-align: center}
+        .CriticalWarning {font-family: Verdana; font-size: 8pt; color: green; font-weight: bold; text-align: center}
+        .Warning {font-family: Verdana; font-size: 8pt; color: darkgray; font-weight: bold; text-align: center}
+        .Information {font-family: Verdana; font-size: 8pt; color: black; font-weight: bold; text-align: center}
+      </style>
+
+      <script type="text/javascript">
+        function toggleDiv(imgId, divId)
+        {
+        eDiv = document.getElementById(divId);
+        eImg = document.getElementById(imgId);
+
+        if ( eDiv.style.display == "none" )
+        {
+        eDiv.style.display="block";
+        eImg.src="images/arrow_minus_small.gif";
+        }
+        else
+        {
+        eDiv.style.display = "none";
+        eImg.src="images/arrow_plus_small.gif";
+        }
+        }
+      </script>
+      <body bgcolor="white" alink="Black" vlink="Black" link="Black">
+        <div id="fxCopReport">
+          <xsl:variable name="Issues" select="count(.//Message)"></xsl:variable>
+          <div id="header">
+            <h1>
+              FxCop Version <xsl:value-of select="@Version" /> Analysis Report
+            </h1>
+            <h2>
+              <xsl:value-of select="$Issues" /> Issues Detected
+            </h2>
+          </div>
+          <div id="problemSummary">
+            <h3>Summary</h3>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Assemblies tested:</td>
+                  <td>
+                    <xsl:value-of select="count(.//Module)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Assembly violations:</td>
+                  <td>
+                    <xsl:value-of select="count(.//Module/Messages/Message)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Resource violations:</td>
+                  <td>
+                    <xsl:value-of select="count(.//Resources//Message)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Type violations:</td>
+                  <td>
+                    <xsl:value-of select="count(.//Type/Messages/Message)"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Member violations:</td>
+                  <td>
+                    <xsl:value-of select="count(.//Member//Message)"/>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="breakdown">
+            <xsl:if test="$Issues > 0">
+              <h3>Breakdown by Assembly</h3>
+              <xsl:for-each select="Targets/Target/Modules/Module">
+                <xsl:apply-templates select="." />
+              </xsl:for-each>
+            </xsl:if>
+          </div>
+
+          <div id="rules">
+            <h3>Rule Violations</h3>
+            <xsl:if test="$Issues > 0">
+              <table class="issuesSummary">
+                <thead>
+                  <tr>
+                    <th class="leftCol">Rule</th>
+                    <th class="rightCol">Issues</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <xsl:for-each select="Rules/Rule">
+                    <xsl:sort select="@TypeName" order="ascending"/>
+                    <xsl:variable name="Type" select="@TypeName" />
+                    <xsl:variable name="Errors" select="count(//Message[@TypeName=$Type])" />
+                    <xsl:if test ="$Errors > 0">
+                      <tr>
+                        <td class="leftCol">
+                          <xsl:value-of select="Name/text()"/>
+                        </td>
+                        <td class="rightCol">
+                          <xsl:value-of select ="$Errors"/>
+                        </td>
+                      </tr>
+                    </xsl:if>
+                  </xsl:for-each>
+                </tbody>
+              </table>
+            </xsl:if>
+          </div>
+        </div>
+      </body>
     </html>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="*">
-<xsl:choose>
-    <xsl:when test="@Name or name()='Resources'">
-        <xsl:variable name="MessageCount" select="count(.//Message[@Status='Active'])"/>
-        <xsl:choose>
-            <xsl:when test="$MessageCount > 0">
-                <xsl:variable name="nodeId" select="generate-id()"/>
-                <div class="NodeLine">
+  <xsl:template match="Module">
+    <xsl:variable name="divId">
+      <xsl:value-of select="generate-id(@Name)" />
+    </xsl:variable>
 
-                    <xsl:attribute name="onClick">
-                        javascript:ViewState('<xsl:value-of select="$nodeId"/>');
-                    </xsl:attribute>
-                    
-                    <!-- Display Icon -->
-                    <a href="javascript:DoNothing()">
-                    <xsl:choose>
-                        <xsl:when test="name()='Member' and @Kind='Method'">
-                            <nobr class="NodeIcon">&#x004C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Member' and @Kind='Constructor'">
-                            <nobr class="NodeIcon">&#x003D;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Member' and @Kind='Property'">
-                            <nobr class="NodeIcon">&#x0098;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Member' and @Kind='Event'">
-                            <nobr class="NodeIcon">&#x007E;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Member' and @Kind='Field'">
-                            <nobr class="NodeIcon">&#x00EB;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Type' and @Kind='Class'">
-                            <nobr class="NodeIcon">&#x003C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Type' and @Kind='Interface'">
-                            <nobr class="NodeIcon">&#x003C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Type' and @Kind='Delegate'">
-                            <nobr class="NodeIcon">&#x003C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Type' and @Kind='Enum'">
-                            <nobr class="NodeIcon">&#x003C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Type' and @Kind='Struct'">
-                            <nobr class="NodeIcon">&#x003C;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Namespace'">
-                            <nobr style="color: navy;">{} </nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Target'">
-                            <nobr class="NodeIcon">&#x0032;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Module'">
-                            <nobr class="NodeIcon">&#x0031;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Resource'">
-                            <nobr class="NodeIcon">&#x009D;</nobr>    
-                        </xsl:when>
-                        <xsl:when test="name()='Resources'">
-                            <nobr class="NodeIcon">&#x00CC;</nobr>    
-                        </xsl:when>
-                        <xsl:otherwise>
-                            [<xsl:value-of select="name()"/>]    
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    </a>
-                    <xsl:choose>
-                        <xsl:when test="name()='Resources'">
-                            <xsl:value-of select="name()"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="@Name"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <nobr class="MessageNumber">
-                        (<xsl:value-of select="$MessageCount"/>)
-                    </nobr>
-                </div>
-                
-                <div class="NodeDiv" style="display: none; position: relative; padding-left: 11;">
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="$nodeId"/>
-                    </xsl:attribute>
+    <div class="module clickable">
+      <xsl:attribute name="onclick">
+        <xsl:text>toggleDiv('img-</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>','</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>')</xsl:text>
+      </xsl:attribute>
 
-                    <xsl:apply-templates />
-                </div>
-
-            </xsl:when>
-        </xsl:choose>
-    </xsl:when>
-    <xsl:otherwise>
-        <xsl:apply-templates />
-    </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-<xsl:template match="Messages">
-    <xsl:variable name="MessageBlockId" select="generate-id()"/>        
-    <div class="MessageBlock">
-        <xsl:attribute name="onClick">
-            javascript:ViewState('<xsl:value-of select="$MessageBlockId"/>');
-        </xsl:attribute>
-        <a href="javascript:DoNothing()"><nobr class="MessagesIcon">&#x005D;</nobr></a>
-        <xsl:variable name="MessageCount" select="count(Message[@Status='Active'])"/>
-        <xsl:value-of select="$MessageCount"/>
-            Message<xsl:choose><xsl:when test="$MessageCount > 1">s</xsl:when></xsl:choose>
-            for 
-            <xsl:value-of select="../@Name"/>
-    </div>
-    <div class="MessageBlockDiv" style="display: none; position: relative; padding-left: 5;">
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
-            <xsl:value-of select="$MessageBlockId"/>
+          <xsl:text>img-</xsl:text>
+          <xsl:value-of select="$divId" />
         </xsl:attribute>
-
-        <table width="100%">
-            <tr>
-                <td class="ColumnHeader"> </td>
-                <td class="ColumnHeader">Message Level</td>
-                <td class="ColumnHeader">Certainty</td>
-                <td class="ColumnHeader" width="100%">Resolution</td>
-            </tr>
-        <xsl:apply-templates select="Message[@Status='Active']"/>
-        </table>
+      </img>
+      <xsl:text>&#0160;</xsl:text>
+      <xsl:value-of select="@Name" />
+      <xsl:text>&#0160;(</xsl:text>
+      <xsl:value-of select="count(.//Message)"/>
+      <xsl:text>)</xsl:text>
     </div>
-        
-</xsl:template>
+    <div>
+      <xsl:attribute name="style">
+        <xsl:text>display:none;</xsl:text>
+      </xsl:attribute>
+      <xsl:attribute name="id">
+        <xsl:value-of select="$divId"/>
+      </xsl:attribute>
 
-<xsl:template match="Message">
+      <xsl:if test ="Messages/Message">
+        <div class="assembly" style="margin-left:20px">
+          <xsl:text>Assembly</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Messages//Message)"/>
+          <xsl:text>)</xsl:text>
+          <ul style="margin-top:0px">
+            <xsl:apply-templates select="Messages//Message" />
+          </ul>
+        </div>
+      </xsl:if>
 
-    <!-- Message Row -->
+      <xsl:if test ="Namespaces/Namespace">
+        <div class="types" style="margin-left:20px">
+          <xsl:text>Types</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Namespaces//Message)"/>
+          <xsl:text>)</xsl:text>
+          <xsl:for-each select="Namespaces/Namespace">
+            <xsl:apply-templates select="." />
+          </xsl:for-each>
+        </div>
+      </xsl:if>
+      <xsl:if test="Resources/Resource">
+        <div class="resources" style="margin-left:20px">
+          <xsl:text>Resources</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Resources//Message)"/>
+          <xsl:text>)</xsl:text>
+          <xsl:for-each select="Resources/Resource">
+            <xsl:apply-templates select="." />
+          </xsl:for-each>
+        </div>
+      </xsl:if>
+      <xsl:if test="Namespaces/Namespace/Messages/Message">
+        <div class="moduleLevel" style="margin-left:20px">
+          <xsl:text>Module-level</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Messages/Message)"/>
+          <xsl:text>)</xsl:text>
 
-    <xsl:variable name="messageId" select="generate-id()"/>
-    <xsl:variable name="rulename" select="@TypeName"/>
+          <ul style="margin-top:0px">
+            <xsl:apply-templates select="./Namespaces/Namespace/Messages/Message" />
+          </ul>
+        </div>
+      </xsl:if>
+    </div>
+  </xsl:template>
 
-        <xsl:apply-templates select="Issue" >
-                <xsl:with-param name="messageId"><xsl:value-of select="$messageId"/></xsl:with-param>
-        </xsl:apply-templates>
+  <xsl:template match="Namespace">
+    <xsl:variable name="Namespace" select="@Name"/>
 
-    <tr>
-        <td></td>
-        <td colspan="3">
-            <div class="MessageDiv" style="display: none">
-                <xsl:attribute name="id">
-                    <xsl:value-of select="$messageId"/>
-                </xsl:attribute>
+    <xsl:for-each select="Types/Type">
+      <xsl:apply-templates select=".">
+        <xsl:with-param name="Namespace" select="$Namespace" />
+      </xsl:apply-templates>
+    </xsl:for-each>
+  </xsl:template>
 
-                <!--- Rule Details  -->
-                <table width="100%" class="RuleBlock">
-                                        <xsl:apply-templates select="Notes" mode="notes"/>
-                    <xsl:apply-templates select="/FxCopReport/Rules/Rule[@TypeName=$rulename]" mode="ruledetails"/>
-                </table>
-            </div>
-        </td>        
-    </tr>
-</xsl:template>    
+  <xsl:template match="Type">
+    <xsl:param name="Namespace" />
+    <xsl:variable name="divId">
+      <xsl:value-of select="generate-id(@Name)" />
+    </xsl:variable>
 
-<xsl:template match="Issue">
-<xsl:param name="messageId"></xsl:param>
-    <tr>
-        <xsl:attribute name="onClick">
-            javascript:ViewState('<xsl:value-of select="$messageId"/>');
+    <div class="type clickable">
+      <xsl:attribute name="onclick">
+        <xsl:text>toggleDiv('img-</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>','</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>')</xsl:text>
+      </xsl:attribute>
+
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+        <xsl:attribute name="id">
+          <xsl:text>img-</xsl:text>
+          <xsl:value-of select="$divId" />
         </xsl:attribute>
+      </img>
 
-        <xsl:attribute name="bgcolor">
-            <xsl:choose>
-                <xsl:when test="position() mod 2 = 1">#EEEEEE</xsl:when>
-                <xsl:otherwise>white</xsl:otherwise>
-            </xsl:choose>
+      <xsl:value-of select="$Namespace"/>
+      <xsl:if test="string-length($Namespace) > 0">
+        <xsl:text>.</xsl:text>
+      </xsl:if>
+      <xsl:value-of select="@Name" />
+      <xsl:text>&#0160;(</xsl:text>
+      <xsl:value-of select="count(.//Message)"/>
+      <xsl:text>)</xsl:text>
+    </div>
+    <div>
+      <xsl:attribute name="style">
+        <xsl:text>display:none;</xsl:text>
+      </xsl:attribute>
+      <xsl:attribute name="id">
+        <xsl:value-of select="$divId"/>
+      </xsl:attribute>
+
+      <xsl:if test="Messages/Message">
+        <div class="typeLevel" style="margin-left:20px">
+          <xsl:text>Type-level</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Messages/Message)"/>
+          <xsl:text>)</xsl:text>
+          <ul style="margin-top:0px">
+            <xsl:apply-templates select="Messages/Message" />
+          </ul>
+        </div>
+      </xsl:if>
+      <xsl:if test="Members/Member">
+        <div class="members" style="margin-left:20px">
+          <xsl:text>Members</xsl:text>
+          <xsl:text>&#0160;(</xsl:text>
+          <xsl:value-of select="count(Members//Message)"/>
+          <xsl:text>)</xsl:text>
+          <xsl:for-each select="Members/Member">
+            <xsl:apply-templates select="." />
+          </xsl:for-each>
+        </div>
+      </xsl:if>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="Member">
+    <div class="member" style="margin-left:20px">
+      <xsl:value-of select="user:MakeLongTextSplittable(@Name)" />
+      <ul style="margin-top:0px">
+        <xsl:apply-templates select=".//Messages/Message" />
+      </ul>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="Resource">
+    <xsl:variable name="divId">
+      <xsl:value-of select="generate-id(@Name)" />
+    </xsl:variable>
+
+    <div class="type clickable">
+      <xsl:attribute name="onclick">
+        <xsl:text>toggleDiv('img-</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>','</xsl:text>
+        <xsl:value-of select="$divId" />
+        <xsl:text>')</xsl:text>
+      </xsl:attribute>
+
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+        <xsl:attribute name="id">
+          <xsl:text>img-</xsl:text>
+          <xsl:value-of select="$divId" />
         </xsl:attribute>
+      </img>
+      <xsl:value-of select="@Name" />
+      <xsl:text>&#0160;(</xsl:text>
+      <xsl:value-of select="count(.//Message)"/>
+      <xsl:text>)</xsl:text>
+    </div>
+    <div>
+      <xsl:attribute name="style">
+        <xsl:text>display:none;</xsl:text>
+      </xsl:attribute>
+      <xsl:attribute name="id">
+        <xsl:value-of select="$divId"/>
+      </xsl:attribute>
 
-        <td valign="top">
-            <a href="javascript:DoNothing();"><nobr class="NodeIcon"><xsl:attribute name="id"><xsl:value-of select="$messageId"/>Toggle</xsl:attribute>&#x0034;</nobr></a>
-       </td>
-       <td>
-            <xsl:attribute name="class"><xsl:value-of select="@Level" /></xsl:attribute>
-            <xsl:value-of select="@Level" />
-        </td>
-        <td valign="top" style=" text-align: center; ">
-            <xsl:attribute name="class"><xsl:value-of select="@Level" /></xsl:attribute>
-            <xsl:value-of select="@Certainty" />
-        </td>
-        <td class="Resolution" valign="top">
-            <xsl:value-of select="text()" />
-        </td>
-    </tr>
-    <xsl:if test="@Path">
-    <tr class="SourceCode">
-        <td></td>    
-        <td class="PropertyName">Source:</td>
-        <td class="PropertyContent" colspan="2">
-            <a>
-                <xsl:attribute name="href">
-                    <xsl:value-of select="@Path"/>\<xsl:value-of select="@File"/>
-                </xsl:attribute>
-                <xsl:value-of select="@Path"/>\<xsl:value-of select="@File"/>
-            </a>
-            (Line <xsl:value-of select="@Line"/>)
-        </td>
-    </tr>
-    </xsl:if>    
-</xsl:template>
+      <ul style="margin-top:0px">
+        <xsl:apply-templates select="Messages/Message" />
+      </ul>
+    </div>
+  </xsl:template>
 
-<xsl:template match="Notes" mode="notes">
-        <xsl:apply-templates select="User" mode="notes" />
-</xsl:template>
-
-<xsl:template match="User" mode="notes">
-    <tr class="Note">
-        <td class="Note">
-        <nobr class="NoteUser"><xsl:value-of select="@Name"/></nobr>
-        &#160;    
-        <xsl:apply-templates select="Note" mode="notes">
-        <xsl:with-param name="username"><xsl:value-of select="@Name"/></xsl:with-param>
-        </xsl:apply-templates>
-        </td>
-    </tr>
-</xsl:template>
-
-<xsl:template match="Note" mode="notes">
-    <xsl:param name="username"></xsl:param>
-    <xsl:variable name="id" select="@Id"/>
-    <xsl:apply-templates select="/FxCopReport/Notes/User[@Name=$username]/Note[@Id=$id]" mode="notesPointer"/>
-</xsl:template>
-
-
-
-<xsl:template match="Note" mode="notesPointer">
-        <td></td>
-        <td colspan="2" class="Note">
-        <nobr class="NoteTime">[<xsl:value-of select="@Modified"/>]</nobr>:
-        <xsl:value-of select="."/>
-        </td>        
-</xsl:template>
-
-<xsl:template match="Description" mode="ruledetails">
-    <tr>
-        <td class="PropertyName">Rule Description:</td>
-        <td class="PropertyContent"><xsl:value-of select="text()" /></td>
-    </tr>    
-</xsl:template>
-
-<xsl:template match="File" mode="ruledetails">
-    <tr>
-        <td class="PropertyName">Rule File:</td>
-        <td class="PropertyContent"><xsl:value-of select="@Name"/> [<xsl:value-of select="@Version"/>]</td>
-    </tr>    
-</xsl:template>
-
-<xsl:template match="Rule" mode="ruledetails">
-    <tr>
-        <td class="PropertyName">Rule:</td>
-        <td class="PropertyContent"><xsl:value-of select="Name" /></td>
-    </tr>    
-    <tr>
-        <td class="PropertyName">Category:</td>
-        <td class="PropertyContent"><xsl:value-of select="@Category" /></td>
-    </tr>    
-    <tr>
-        <td class="PropertyName">Check Id:</td>
-        <td class="PropertyContent"><xsl:value-of select="@CheckId" /></td>
-    </tr>    
-    <xsl:apply-templates select="Description" mode="ruledetails" />
-    <xsl:apply-templates select="File" mode="ruledetails" />
-</xsl:template>
-
-<!-- End Rule Details -->
-
+  <xsl:template match="Message">
+    <li class="message">
+      <span style="padding-right:10px">
+        <xsl:attribute name="class">
+          <xsl:value-of select="Issue/@Level" />
+        </xsl:attribute>
+        <xsl:value-of select="Issue/@Level" />:
+      </span>
+      <xsl:value-of select="user:MakeLongTextSplittable(Issue/text())" />
+      <xsl:text>&#0160;[</xsl:text>
+      <a target="_blank">
+        <xsl:attribute name="href">
+          http://www.gotdotnet.com/team/fxcop/Docs/Rules/<xsl:value-of select="user:ExtractCategory(@Category)" />/<xsl:value-of select="@TypeName" />.html
+        </xsl:attribute>
+        <xsl:value-of select="@TypeName" />
+      </a>
+      <xsl:text>]&#0160;</xsl:text>
+    </li>
+  </xsl:template>
 </xsl:stylesheet>
