@@ -8,7 +8,7 @@
   <xsl:output method = "html"/>
   
   <xsl:param name = "applicationPath"/>
-  <xsl:variable name = "fxcop.root" select = "//FxCopReport"/>
+  <xsl:variable name = "fxcop.root" select = "/FxCopReport"/>
   <xsl:variable name = "message.list" select = "$fxcop.root//Messages"/>
   
   <xsl:template match = "/">
@@ -24,7 +24,7 @@
                     border = "0">
           <tr>
             <td class="sectionheader" colSpan="2">
-              FxCop Summary (<xsl:value-of select="count($message.list.count)" /> Issues)
+              FxCop Summary (<xsl:value-of select="$message.list.count" /> Issues)
             </td>
           </tr>
           <tr>
