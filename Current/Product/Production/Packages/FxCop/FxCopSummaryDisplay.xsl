@@ -29,13 +29,13 @@
                     width = "98%"
                     border = "0">
         <tr>
-          <td class="sectionheader" colSpan="2">
+          <td height="42" class="sectionheader-container" colSpan="2">
             <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
               <xsl:attribute name="href">
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_FxCopReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
-              <img style="float: left; border-style: none" src="Packages\FxCop\fxcop.ico" height="25" title="FxCop" alt="FxCop"/>
-              <div style="position:relative; top: -10px;">
+              <img src="Packages\FxCop\fxcop.ico" class="sectionheader-title-image"/>
+              <div class="sectionheader">
                 FxCop Summary (<xsl:value-of select="$stuff/@issues" /> Issues)
               </div>
             </a>
