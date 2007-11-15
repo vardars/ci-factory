@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Scratch.Lib">
+
+  <!--
+  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="ShouldFix" value="true"/>
+  -->
+  <target name="FixProjectBindings" >
+    <property name="ShouldFix" value="false" overwrite="false"/>
+    <fileset id="ProjectFiles">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+
+    <property name="count" value="0"/>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="ProjectFiles" />
+      </in>
+      <do>
+        <property name="AreProjectBindingsCorrect" value="${vsproject::are-bindings-correct(ProjectFile.Path)}"/>
+        <ifnot test="${AreProjectBindingsCorrect}">
+          <echo message="${ProjectFile.Path} needs it's bindings fixed"/>
+          <property name="count" value="${int::parse(count) + 1}"/>
+          <if test="${ShouldFix}">
+            <property name="SourceControl.CheckOut.File" value="${ProjectFile.Path}"/>
+            <call target="SourceControl.CheckOut"/>
+            <function execute="${vsproject::fix-bindings(ProjectFile.Path)}"/>
+          </if>
+        </ifnot>
+
+        <property name="VSPSCCFile.Path" value="${ProjectFile.Path}.vspscc"/>
+        <loadfile encoding="utf-8" file="${VSPSCCFile.Path}" property="VSPSCCFile.Contents" />
+
+        <loglevel level="None">
+          <do>
+            <property name="VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual" value="not set"/>
+            <regex input="${VSPSCCFile.Contents}" pattern="&quot;PROJECT_FILE_RELATIVE_PATH&quot;\s+=\s+&quot;(?'VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual'.*)&quot;" failonerror="false"/>
+
+            <property name="VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected" value="relative:${string::replace(string::replace(path::get-directory-name(ProjectFile.Path), ProductDirectory + '\', ''), '\', '\\')}"/>
+
+            <property name="VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual" value="not set"/>
+            <regex input="${VSPSCCFile.Contents}" pattern="&quot;SOURCE_CONTROL_SETTINGS_PROVIDER&quot;\s+=\s+&quot;(?'VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual'.*)&quot;" failonerror="false"/>
+
+            <property name="VSPSCCFile.SOURCE_CONTROL_SETTINGS_PROVIDER.Expected" value="PROVIDER"/>
+          </do>
+        </loglevel>
+
+        <ifnot test="${VSPSCCFile.SOURCE_CONTROL_SETTINGS_PROVIDER.Expected == VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual and VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected == VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual}" >
+          <echo message="${VSPSCCFile.Path} needs it's bindings fixed"/>
+          <property name="count" value="${int::parse(count) + 1}"/>
+          <if test="${ShouldFix}">
+            <property name="SourceControl.CheckOut.File" value="${VSPSCCFile.Path}"/>
+            <call target="SourceControl.CheckOut"/>
+
+            <applyfilter propertyname="VSPSCCFile.Contents" >
+              <text expand="true"><![CDATA[${VSPSCCFile.Contents}]]></text>
+              <filterchain>
+                <regexreplace replacment="$+${VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected}&quot;" pattern="(&quot;PROJECT_FILE_RELATIVE_PATH&quot;\s+=\s+&quot;).*" lines="1" />
+              </filterchain>
+            </applyfilter>
+
+            <applyfilter propertyname="VSPSCCFile.Contents" >
+              <text expand="true"><![CDATA[${VSPSCCFile.Contents}]]></text>
+              <filterchain>
+                <regexreplace replacment="$+${VSPSCCFile.SOURCE_CONTROL_SETTINGS_PROVIDER.Expected}&quot;" pattern="(&quot;SOURCE_CONTROL_SETTINGS_PROVIDER&quot;\s+=\s+&quot;).*" lines="1" />
+              </filterchain>
+            </applyfilter>
+
+            <echo message="${VSPSCCFile.Contents}" file="${VSPSCCFile.Path}"/>
+          </if>
+        </ifnot>
+      </do>
+    </foreach>
+
+    <ifthenelse test="${ShouldFix}">
+      <then>
+        <echo message="${count} projects were fixed."/>
+      </then>
+      <else>
+        <echo message="${count} projects need to be fixed."/>
+      </else>
+    </ifthenelse>
+
+  </target>
+
+  <script language="C#" prefix="vsproject">
+    <imports >
+      <import namespace="System.Xml"/>
+      <import namespace="System.Text"/>
+      <import namespace="System.Collections.Generic"/>
+    </imports >
+    <code>
+      <![CDATA[                 
+					
+          [Function("are-bindings-correct")]
+          public bool AreBindingsCorrect(string projectFilePath)
+          {
+              XmlDocument xd = new XmlDocument();
+              xd.PreserveWhitespace=true;
+              xd.Load(projectFilePath);
+              
+              XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+              namespaceManager.AddNamespace("b", @"http://schemas.microsoft.com/developer/msbuild/2003");
+
+              List<string> Queries = new List<string>();
+              Queries.Add("//b:SccProjectName");
+              Queries.Add("//b:SccLocalPath");
+              Queries.Add("//b:SccAuxPath");
+              Queries.Add("//b:SccProvider");
+
+              foreach (string Query in Queries)
+              {
+                  XmlNode Node = null;
+                  Node = xd.SelectSingleNode(Query, namespaceManager);
+                  if (Node == null || Node.InnerText != "SAK")
+                      return false;
+              }
+
+              return true;
+          }
+          
+          [Function("fix-bindings")]
+          public void FixBindings(string projectFilePath)
+          {
+              XmlDocument xd = new XmlDocument();
+              xd.PreserveWhitespace = true;
+              xd.Load(projectFilePath);
+
+              XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+              namespaceManager.AddNamespace("b", @"http://schemas.microsoft.com/developer/msbuild/2003");
+
+              XmlNode ParentNode = xd.SelectSingleNode(@"/b:Project/b:PropertyGroup[boolean(@Condition) = false]", namespaceManager);
+
+              Dictionary<string, string> Queries = new Dictionary<string, string>();
+              Queries.Add("SccProjectName", "//b:SccProjectName");
+              Queries.Add("SccLocalPath", "//b:SccLocalPath");
+              Queries.Add("SccAuxPath", "//b:SccAuxPath");
+              Queries.Add("SccProvider", "//b:SccProvider");
+
+              foreach (KeyValuePair<string, string> Pair in Queries)
+              {
+                  string Query = Pair.Value;
+                  XmlNode Node = null;
+                  Node = xd.SelectSingleNode(Query, namespaceManager);
+                  if (Node != null || Node.InnerText != "SAK")
+                      Node.InnerText = "SAK";
+                  if (Node == null)
+                  {
+                      XmlElement Element = xd.CreateElement(Pair.Key);
+                      Element.InnerText = "SAK";
+                      ParentNode.AppendChild(Element);
+                  }
+              }
+
+              xd.Save(projectFilePath);
+          }
+          
+			]]>
+    </code>
+  </script>
+
+  <!--
+  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="SolutionFile.Path" value="${ProductDirectory}\dod.ahlta.sln"/>
+  <property name="ShouldFix" value="true"/>
+  -->
+  <target name="FixSolutionBindings">
+    <property name="ShouldFix" value="false" overwrite="false"/>
+
+    <loadfile encoding="utf-8" file="${SolutionFile.Path}" property="SolutionFile.Contents" >
+      <filterchain>
+        <regexreplace replacment="$+." pattern="(SccLocalPath\d+\s+=\s+).*" lines="1" />
+      </filterchain>
+    </loadfile>
+
+    <applyfilter propertyname="SolutionFile.Contents" >
+      <text expand="true"><![CDATA[${SolutionFile.Contents}]]></text>
+      <filterchain>
+        <regexreplace replacment="= ${ProjectName}.sln\r\n" pattern="=\s+${ProjectName}.sln\r\n\s+SccProjectName\d+\s+=\s+.*\r\n" lines="2" />
+      </filterchain>
+    </applyfilter>
+
+    <ifthenelse test="${ShouldFix}">
+      <then>
+        <property name="SourceControl.CheckOut.File" value="${SolutionFile.Path}"/>
+        <call target="SourceControl.CheckOut"/>
+        <echo message="${SolutionFile.Contents}" file="${SolutionFile.Path}"/>
+      </then>
+      <else>
+        <echo message="${SolutionFile.Contents}"/>
+      </else>
+    </ifthenelse>
+  </target>
+
+  <target name="ConvertVBToCSharp">
+    <copy todir="C:\Temp\" overwrite="true" newext=".cs">
+      <fileset basedir="C:\Projects\CI Factory\Current\Product\Production\Nant">
+        <include name="Common.Tasks\**\*.vb"/>
+      </fileset>
+      <filterchain>
+        <codeconvert to="CSharp" from="VBNet" />
+      </filterchain>
+    </copy>
+  </target>
+
+  <target name="FixUpProjectInfo">
+    <property name="Versioning.FixUp.ProjectFile.FileSet" value="My.Versioning.FixUp.ProjectFile.FileSet"/>
+
+    <fileset id="${Versioning.FixUp.ProjectFile.FileSet}">
+      <include name="${ProductionDirectory}\**\*.csproj"/>
+      <include name="${ProductionDirectory}\**\*.vbproj"/>
+    </fileset>
+    <call target="Versioning.FixUp"/>
+  </target>
+
+  <target name="FixUpThirdPartyRefs">
+    <strings id="ThirdPartyComponents" />
+
+    <foreach item="File" property="ThirdPartyComponent.Path">
+      <in>
+        <items basedir="${ThirdPartyDirectory}">
+          <include name="**\*.dll"/>
+          <include name="**\*.exe"/>
+        </items>
+      </in>
+      <do>
+        <property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, ThirdPartyDirectory + '\', '')}"/>
+        <echo message="${ThirdPartyComponent.Path}"/>
+        <function execute="${stringlist::add('ThirdPartyComponents', ThirdPartyComponent.Path)}"/>
+      </do>
+    </foreach>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items>
+          <include name="${ProductDirectory}\**\*.*proj"/>
+        </items>
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Looking at ${ProjectFile.Path}"/>
+
+        <property name="Index" value="1"/>
+
+        <loopthrough property="Hint.Path">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/b:HintPath">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+            <loopthrough property="ThirdPartyComponent.Path">
+              <items>
+                <strings refid="ThirdPartyComponents" />
+              </items>
+              <do>
+                <if test="${string::ends-with(Hint.Path, ThirdPartyComponent.Path)}">
+                  <echo message="Looks like we have a match:"/>
+                  <echo message="    ${Hint.Path}"/>
+                  <echo message="will be changed to:"/>
+                  <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+                  <!--xmlpoke it-->
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
+                    <namespaces>
+                      <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                    </namespaces>
+                  </xmlpoke>
+                </if>
+              </do>
+            </loopthrough>
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+
+        <property name="Index" value="1"/>
+        
+        <loopthrough property="IncludeName">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/@Include">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+            <loopthrough property="ThirdPartyComponent.Path">
+              <items>
+                <strings refid="ThirdPartyComponents" />
+              </items>
+              <do>
+                <property name="ThirdPartyComponent.Name" value="${path::get-file-name-without-extension(ThirdPartyComponent.Path)}"/>
+                <if test="${string::starts-with(IncludeName, ThirdPartyComponent.Name)}">
+                  <echo message="Looks like we have a match:"/>
+                  <echo message="    ${IncludeName}"/>
+                  <echo message="will be changed to:"/>
+                  <echo message="    ${ThirdPartyComponent.Name}"/>
+                  <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+                  <!--xmlpoke it-->
+
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/@Include)[${Index}]" value="${ThirdPartyComponent.Name}">
+                    <namespaces>
+                      <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                    </namespaces>
+                  </xmlpoke>
+                  
+                  <largeproperty name="Reference.Info" >
+                    <value xml="false" expand="true">
+                      <![CDATA[<Name>${ThirdPartyComponent.Name}</Name>
+  <HintPath>${ThirdPartyDirectory}\${ThirdPartyComponent.Path}</HintPath>]]>
+                    </value>
+                  </largeproperty>
+                  
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference)[${Index}]" value="${Reference.Info}">
+                    <namespaces>
+                      <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                    </namespaces>
+                  </xmlpoke>
+                </if>
+              </do>
+            </loopthrough>
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+      </do>
+    </foreach>
+  </target>
+
+  <!--<property name="Config.Value" value="Debug"/>
+  <property name="Config.Property.Name" value="ErrorReport"/>
+  <property name="Config.Property.Value" value="none"/>-->
+  <target name="SetConfigPropertyValue">
+
+    <fileset id="Subjects">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="Subjects" />
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Setting ${Config.Property.Name} for config ${Config.Value} in ${ProjectFile.Path}"/>
+
+        <xmlpoke
+            file="${ProjectFile.Path}"
+            xpath ="b:Project/b:PropertyGroup[contains(@Condition, '${Config.Value}')]/b:${Config.Property.Name}"
+            value="${Config.Property.Value}">
+          <namespaces>
+            <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+          </namespaces>
+        </xmlpoke>
+
+      </do>
+    </foreach>
+  </target>
+
+  <target name="SetProjectOutputDirectory">
+    <property name="OutputDirectory" value="${ProductDirectory}\CommonBin" overwrite="false"/>
+    <property name="Switch" value="Per" overwrite="false"/>
+    <!--Common-->
+
+    <fileset id="Subjects">
+      <include name="${ProductDirectory}\**\*.*proj"/>
+    </fileset>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items refid="Subjects" />
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Setting output directory for ${ProjectFile.Path}"/>
+
+        <property name="Index" value="1"/>
+
+        <loopthrough property="notused">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:PropertyGroup/b:OutputPath">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+
+            <if test="${Switch == 'Per'}">
+              <xmlpeek file="${ProjectFile.Path}" property="Config" xpath="(b:Project/b:PropertyGroup/@Condition)[${Index}]">
+                <namespaces>
+                  <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                </namespaces>
+              </xmlpeek>
+              <regex input="${Config}" pattern="\= \'(?'Config'\w+)\|"/>
+              <property name="OutputDirectory" value="bin\${Config}\"/>
+            </if>
+
+            <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:PropertyGroup/b:OutputPath)[${Index}]" value="${OutputDirectory}">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlpoke>
+
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+
+      </do>
+    </foreach>
+  </target>
+
+  <target name="SwitchToMuchBetterUnit">
+    <property name="MbUnit.Framework.RefPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.Framework.dll"/>
+
+    <foreach item="File" property="ProjectFile.Path">
+      <in>
+        <items>
+          <include name="${ProductDirectory}\Unit Test\**\*.*proj"/>
+        </items>
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Looking at ${ProjectFile.Path}"/>
+
+        <property name="Index" value="1"/>
+        <property name="UsesNUnit" value="false"/>
+
+        <loopthrough property="Hint.Path">
+          <items>
+            <xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/b:HintPath">
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlquery>
+          </items>
+          <do>
+
+            <if test="${string::ends-with(string::to-lower(Hint.Path), 'nunit.framework.dll')}">
+              <echo message="Looks like we have a match."/>
+
+              <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${MbUnit.Framework.RefPath}">
+                <namespaces>
+                  <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+                </namespaces>
+              </xmlpoke>
+
+              <property name="UsesNUnit" value="true"/>
+            </if>
+
+            <property name="Index" value="${int::parse(Index) + 1}"/>
+          </do>
+        </loopthrough>
+
+        <if test="${UsesNUnit}">
+          <foreach item="File" property="Source.File.Path">
+            <in>
+              <items basedir="${path::get-directory-name(ProjectFile.Path)}">
+                <include name="**\*.cs"/>
+                <include name="**\*.vb"/>
+              </items>
+            </in>
+            <do>
+              <loadfile encoding="utf-8" file="${Source.File.Path}" property="Source.File.Content">
+                <filterchain>
+                  <regexreplace replacment="MbUnit" pattern="NUnit" lines="1" />
+                </filterchain>
+              </loadfile>
+
+              <echo file="${Source.File.Path}" message="${Source.File.Content}"/>
+            </do>
+          </foreach>
+        </if>
+
+      </do>
+    </foreach>
+
+  </target>
+
+</project>
