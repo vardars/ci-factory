@@ -15,14 +15,6 @@
     </foreach>
   </target>
 
-  <ifnot test="${property::exists('CCNetLogFilePath')}">
-    <property name="CCNetLogFilePath" value="log${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
-    <if test="${CCNetIntegrationStatus == 'Success'}">
-      <property name="CCNetLogFilePath" value="${CCNetLogFilePath}Lbuild.${CCNetLabel}"/>
-    </if>
-    <property name="CCNetLogFilePath" value="${BuildDirectory}\sever\${CCNetProject}\Artifacts\buildlogs\${CCNetLogFilePath}.xml"/>
-  </ifnot>
-
   <property name="Common.ArtifactFolderName" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
   <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
   <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
