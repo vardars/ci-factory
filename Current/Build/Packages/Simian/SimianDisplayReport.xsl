@@ -12,12 +12,12 @@
       function iFrameHeight() {
       var h = 0;
       if ( !document.all ) {
+      setTimeout(function(){iFrameHeight()}, 1000)
       h = document.getElementById('blockrandom').contentDocument.height;
       document.getElementById('blockrandom').style.height = h + 60 + 'px';
 
       w = document.getElementById('blockrandom').contentDocument.width;
       document.getElementById('blockrandom').style.width = w + 60 + 'px';
-
       } else if( document.all ) {
       h = document.frames('blockrandom').document.body.scrollHeight;
       document.all.blockrandom.style.height = h + 20 + 'px';
