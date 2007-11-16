@@ -9,22 +9,29 @@
   <xsl:template match="/">
 
     <script language="javascript" type="text/javascript">
-      function iFrameHeight() {
-      var h = 0;
-      if ( !document.all ) {
-      setTimeout(function(){iFrameHeight()}, 1000)
-      h = document.getElementById('blockrandom').contentDocument.height;
-      document.getElementById('blockrandom').style.height = h + 60 + 'px';
+      function iFrameHeight()
+      {
+        var h = 0;
+        var w = 0;
 
-      w = document.getElementById('blockrandom').contentDocument.width;
-      document.getElementById('blockrandom').style.width = w + 60 + 'px';
-      } else if( document.all ) {
-      h = document.frames('blockrandom').document.body.scrollHeight;
-      document.all.blockrandom.style.height = h + 20 + 'px';
+        h = document.getElementById('blockrandom').contentDocument.height;
+        document.getElementById('blockrandom').style.height = h + 60 + 'px';
 
-      w = document.frames('blockrandom').document.body.scrollWidth;
-      document.all.blockrandom.style.width = w + 20 + 'px';
-      }
+        w = document.getElementById('blockrandom').contentDocument.width;
+        document.getElementById('blockrandom').style.width = w + 60 + 'px';
+        
+        if ( !document.all )
+        {
+          setTimeout(function(){iFrameHeight()}, 1000)
+        } 
+        else if( document.all ) 
+        {
+          h = document.frames('blockrandom').document.body.scrollHeight;
+          document.all.blockrandom.style.height = h + 20 + 'px';
+
+          w = document.frames('blockrandom').document.body.scrollWidth;
+          document.all.blockrandom.style.width = w + 20 + 'px';
+        }
       }
     </script>
 
