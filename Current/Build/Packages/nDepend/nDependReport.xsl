@@ -17,7 +17,7 @@
       document.getElementById('blockrandom').style.height = h + 60 + 'px';
 
       w = document.getElementById('blockrandom').contentDocument.width;
-      document.getElementById('blockrandom').style.width = w + 60 + 'px';
+      document.getElementById('blockrandom').style.width = w + 'px';
       } else if( document.all ) {
       h = document.frames('blockrandom').document.body.scrollHeight;
       document.all.blockrandom.style.height = h + 20 + 'px';
