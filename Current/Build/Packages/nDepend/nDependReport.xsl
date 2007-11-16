@@ -14,9 +14,15 @@
       if ( !document.all ) {
       h = document.getElementById('blockrandom').contentDocument.height;
       document.getElementById('blockrandom').style.height = h + 60 + 'px';
+
+      w = document.getElementById('blockrandom').contentDocument.width;
+      document.getElementById('blockrandom').style.width = w + 60 + 'px';
       } else if( document.all ) {
       h = document.frames('blockrandom').document.body.scrollHeight;
       document.all.blockrandom.style.height = h + 20 + 'px';
+
+      w = document.frames('blockrandom').document.body.scrollWidth;
+      document.all.blockrandom.style.width = w + 20 + 'px';
       }
       }
     </script>
@@ -26,7 +32,7 @@
       onload="iFrameHeight()"		id="blockrandom"
       name="iframe"
       width="100%"
-      height="10000"
+      height="100000"
       scrolling="auto"
       align="top"
       frameborder="0"

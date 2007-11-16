@@ -7,9 +7,11 @@
 	<xsl:variable name="simian.version" select="$simian.root/@version" />
 
 	<xsl:template match="/">
-		<xsl:if test="$simian.version!=''">
-					<xsl:apply-templates select="$simian.root//summary"/>
-		</xsl:if>
+    <simiansummary>
+		  <xsl:if test="$simian.version!=''">
+					  <xsl:apply-templates select="$simian.root//summary"/>
+		  </xsl:if>
+    </simiansummary>
 	</xsl:template>
 	
 	<!-- Reports rules relating specifically to namespaces -->
