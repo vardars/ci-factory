@@ -32,7 +32,7 @@
             </a>
           </td>
         </tr>
-        <xsl:value-of select="$stuff" disable-output-escaping="yes"/>
+        <xsl:copy-of select="//fxcopsummary"/>
       </table>
     </xsl:if>
   </xsl:template>

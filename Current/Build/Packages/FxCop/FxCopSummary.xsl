@@ -4,7 +4,6 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
   <xsl:output method = "xml"/>
-  <xsl:output cdata-section-elements="fxcopsummary"/>
   
   <xsl:param name = "applicationPath"/>
   <xsl:variable name = "fxcop.root" select = "/FxCopReport"/>
