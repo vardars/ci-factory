@@ -19,8 +19,11 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
         private readonly string mostRecentBuildUrl;
         private readonly ChangeSet[] changes;
         private readonly string forcee;
+        private readonly DateTime currentBuildStartTime;
+        private readonly string buildCondition;
+        private readonly TimeSpan lastBuildDuration;
 
-        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, ChangeSet[] changes, string forcee)
+        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, TimeSpan lastBuildDuration, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, ChangeSet[] changes, string forcee, DateTime currentBuildStartTime, string buildCondition)
 		{
 			this.name = name;
 			this.serverName = serverName;
@@ -35,8 +38,32 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
             this.mostRecentBuildUrl = mostRecentBuildUrl;
             this.changes = changes;
             this.forcee = forcee;
+            this.currentBuildStartTime = currentBuildStartTime;
+            this.buildCondition = buildCondition;
+            this.lastBuildDuration = lastBuildDuration;
 		}
 
+        public TimeSpan LastBuildDuration
+        {
+            get
+            {
+                return lastBuildDuration;
+            }
+        }
+        public string BuildCondition
+        {
+            get
+            {
+                return buildCondition;
+            }
+        }
+        public DateTime CurrentBuildStartTime
+        {
+            get
+            {
+                return currentBuildStartTime;
+            }
+        }
         public string Forcee
         {
             get

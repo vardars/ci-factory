@@ -239,10 +239,13 @@
     <Content Include="FinalBuilder\FinalBuilder.Properties.xml" />
     <Content Include="FinalBuilder\FinalBuilder.Target.xml" />
     <Content Include="FinalBuilder\FinalBuilder.Report.xsl" />
+    <Content Include="FxCop\fxcop.ico" />
     <Content Include="FxCop\FxCop.Properties.xml" />
     <Content Include="FxCop\FxCop.Target.xml" />
     <Content Include="FxCop\FxCopReport.xsl" />
+    <Content Include="FxCop\FxCopReportDisplay.xsl" />
     <Content Include="FxCop\FxCopSummary.xsl" />
+    <Content Include="FxCop\FxCopSummaryDisplay.xsl" />
     <Content Include="FxCop\Install\Install.xml" />
     <Content Include="FxCop\Install\Properties.xml" />
     <Content Include="MSBuild\Install\Properties.xml" />

@@ -24,10 +24,16 @@ namespace ThoughtWorks.CruiseControl.Remote
 		private readonly DateTime nextBuildTime;
         private string _Forcee;
         private Modification[] _Modifications;
+        private DateTime currentBuildStartTime;
+        private BuildCondition buildCondition;
+        private TimeSpan lastBuildDuration;
 
 		public ProjectStatus() { }
 
-		public ProjectStatus(ProjectIntegratorState status, IntegrationStatus buildStatus, ProjectActivity activity, string name, string webURL, DateTime lastBuildDate, string lastBuildLabel, string lastSuccessfulBuildLabel, DateTime nextBuildTime, string forcee, Modification[] modifications) 
+		public ProjectStatus(ProjectIntegratorState status, IntegrationStatus buildStatus, 
+            ProjectActivity activity, string name, string webURL, DateTime lastBuildDate, TimeSpan lastBuildDuration,
+            string lastBuildLabel, string lastSuccessfulBuildLabel, DateTime nextBuildTime,
+            string forcee, Modification[] modifications, DateTime currentBuildStartTime, BuildCondition buildCondition) 
 		{
 			this.status = status;
 			this.buildStatus = buildStatus;
@@ -40,7 +46,46 @@ namespace ThoughtWorks.CruiseControl.Remote
 			this.nextBuildTime = nextBuildTime;
             this._Forcee = forcee;
             this._Modifications = modifications;
+            this.currentBuildStartTime = currentBuildStartTime;
+            this.buildCondition = buildCondition;
+            this.lastBuildDuration = lastBuildDuration;
 		}
+
+
+        public TimeSpan LastBuildDuration
+        {
+            get
+            {
+                return lastBuildDuration;
+            }
+            set
+            {
+                lastBuildDuration = value;
+            }
+        }
+        public BuildCondition BuildCondition
+        {
+            get
+            {
+                return buildCondition;
+            }
+            set
+            {
+                buildCondition = value;
+            }
+        }
+
+        public DateTime CurrentBuildStartTime
+        {
+            get
+            {
+                return currentBuildStartTime;
+            }
+            set
+            {
+                currentBuildStartTime = value;
+            }
+        }
 
         public Modification[] Modifications
         {

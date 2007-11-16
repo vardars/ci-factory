@@ -14,7 +14,7 @@
     <mkdir dir="${TemplatesDir}" unless="${directory::exists(TemplatesDir)}"/>
     <mkdir dir="${ImagesDir}" unless="${directory::exists(ImagesDir)}"/>
 
-    <copy todir="${DashboardDir}">
+    <copy todir="${DashboardDir}" overwrite="true">
       <fileset basedir="${TargetDir}">
         <include name="**\*"/>
         <exclude name="de"/>
@@ -24,20 +24,20 @@
         <exclude name="**\*.pdb"/>
       </fileset>
     </copy>
-    <copy todir="${BinDir}">
+    <copy todir="${BinDir}" overwrite="true">
       <fileset basedir="${TargetDir}">
         <include name="**\*.dll"/>
         <include name="**\*.pdb"/>
       </fileset>
     </copy>
     
-    <copy todir="${TemplatesDir}">
+    <copy todir="${TemplatesDir}" overwrite="true">
       <fileset basedir="${ProjectDir}\templates">
         <include name="**\*"/>
       </fileset>
     </copy>
 
-    <copy todir="${ImagesDir}">
+    <copy todir="${ImagesDir}" overwrite="true">
       <fileset basedir="${ProjectDir}\images">
         <include name="**\*"/>
       </fileset>

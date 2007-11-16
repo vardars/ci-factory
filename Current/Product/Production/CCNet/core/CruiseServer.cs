@@ -197,11 +197,14 @@ namespace ThoughtWorks.CruiseControl.Core
                                                         project.Name,
                                                         project.WebURL,
                                                         project.LastIntegrationResult.StartTime,
+                                                        project.LastIntegrationResult.TotalIntegrationTime,
                                                         project.LastIntegrationResult.Label,
                                                         project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
                                                         integrator.Trigger.NextBuild, 
-                                                        forcee, 
-                                                        integrator.CurrentIntegrationResult.Modifications));
+                                                        forcee,
+                                                        integrator.CurrentIntegrationResult.Modifications,
+                                                        integrator.CurrentIntegrationResult.StartTime, 
+                                                        integrator.CurrentIntegrationResult.BuildCondition));
             }
 
             return (ProjectStatus[])projectStatusList.ToArray(typeof(ProjectStatus));
@@ -224,11 +227,14 @@ namespace ThoughtWorks.CruiseControl.Core
                 project.Name,
                 project.WebURL,
                 project.LastIntegrationResult.StartTime,
+                project.LastIntegrationResult.TotalIntegrationTime,
                 project.LastIntegrationResult.Label,
                 project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
                 integrator.Trigger.NextBuild,
                 forcee, 
-                integrator.CurrentIntegrationResult.Modifications);
+                integrator.CurrentIntegrationResult.Modifications,
+                integrator.CurrentIntegrationResult.StartTime,
+                integrator.CurrentIntegrationResult.BuildCondition);
         }
 
         // ToDo - test

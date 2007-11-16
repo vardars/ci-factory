@@ -54,6 +54,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                         projectName, statusOnServer.ServerSpecifier.ServerName, status.BuildStatus.ToString(),
                         CalculateHtmlColor(status.BuildStatus),
                         status.LastBuildDate,
+                        status.LastBuildDuration,
                         (status.LastBuildLabel != null ? status.LastBuildLabel : "no build available"),
                         status.Status.ToString(),
                         status.Activity.ToString(),
@@ -61,7 +62,9 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                         projectLink,
                         mostRecentBuildUrl, 
                         ChangeSet.Convert(status.Modifications), 
-                        status.Forcee
+                        status.Forcee, 
+                        status.CurrentBuildStartTime, 
+                        status.BuildCondition.ToString()
                     ));
             }
 

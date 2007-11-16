@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
+<!DOCTYPE dashboard [
+  <!ENTITY % entities SYSTEM "..\..\Entities.xml">
+
+  %entities;
+]>
 <xsl:stylesheet
 	version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -61,15 +66,15 @@
         if ( eDiv.style.display == "none" )
         {
         eDiv.style.display="block";
-        eImg.src="images/arrow_minus_small.gif";
-        }
-        else
-        {
-        eDiv.style.display = "none";
-        eImg.src="images/arrow_plus_small.gif";
-        }
-        }
-      </script>
+        eImg.src="/&ProjectName;/images/arrow_minus_small.gif";
+      }
+      else
+      {
+      eDiv.style.display = "none";
+      eImg.src="/&ProjectName;/images/arrow_plus_small.gif";
+      }
+      }
+    </script>
       <body bgcolor="white" alink="Black" vlink="Black" link="Black">
         <div id="fxCopReport">
           <xsl:variable name="Issues" select="count(.//Message)"></xsl:variable>
@@ -177,7 +182,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/&ProjectName;/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -271,7 +276,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/&ProjectName;/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -343,7 +348,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/&ProjectName;/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
