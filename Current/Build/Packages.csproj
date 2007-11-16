@@ -7,9 +7,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
-    <Content Include="Packages\FxCop\FxCopReportDisplay.xsl" />
-    <Content Include="Packages\FxCop\FxCopSummaryDisplay.xsl" />
-    <Content Include="Packages\IntegrationTests\IntegrationTests.Properties.xml" />
-    <Content Include="Packages\IntegrationTests\IntegrationTests.Targets.xml" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
     version = "1.0"
     xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:output method = "html"/>
+  <xsl:output method = "xml"/>
 
   <xsl:param name = "applicationPath"/>
   <xsl:param name="CCNetServer"/>
@@ -27,7 +27,7 @@
               </xsl:attribute>
               <img src="Packages\Simian\logo.gif" class="sectionheader-title-image"/>
               <div class="sectionheader">
-                Simian Summary (<xsl:value-of select="$stuff/@percentduplication" />% Duplication)
+                Simian Summary (<xsl:value-of select="$stuff/@percentduplication" /> Duplication)
               </div>
             </a>
           </td>

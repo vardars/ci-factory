@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://schemas.microsoft.com/intellisense/ie5">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:output method="html"/>
 
@@ -8,24 +8,48 @@
 
 	<xsl:template match="/">
     <simiansummary>
-		  <xsl:if test="$simian.version!=''">
-					  <xsl:apply-templates select="$simian.root//summary"/>
+      <xsl:if test="$simian.version!=''">
+        <xsl:attribute name="percentduplication">
+          <xsl:value-of select="format-number(sum(//set/@lineCount) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
+        </xsl:attribute>
+        <tr>
+          <td>Total number of duplicate lines</td>
+          <td>
+            <xsl:value-of select="sum(//check/summary/@duplicateLineCount)"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Total number of duplicate blocks</td>
+          <td>
+            <xsl:value-of select="sum(//check/summary/@duplicateBlockCount)"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Total number of files with duplicates</td>
+          <td>
+            <xsl:value-of select="sum(//check/summary/@duplicateFileCount)"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Total number of files</td>
+          <td>
+            <xsl:value-of select="sum(//check/summary/@totalFileCount)"/>
+          </td>
+        </tr>
+        <tr>
+          <td>Total number of significant lines</td>
+          <td>
+            <xsl:value-of select="sum(//check/summary/@totalSignificantLineCount)"/>
+          </td>
+        </tr>
+        <tr>
+          <td>% Duplication</td>
+          <td>
+            <xsl:value-of select="format-number(sum(//set/@lineCount) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
+          </td>
+        </tr>
 		  </xsl:if>
     </simiansummary>
-	</xsl:template>
-	
-	<!-- Reports rules relating specifically to namespaces -->
-	<xsl:template match="summary">
-		<xsl:for-each select="./@*" >
-			<tr>
-				<td colspan="2" class="section-data">
-					<xsl:value-of select="name()"/>
-				</td>
-				<td colspan="2" class="section-data">
-					<xsl:value-of select="."/>
-				</td>
-			</tr>
-		</xsl:for-each>
 	</xsl:template>
 	
 </xsl:stylesheet>
