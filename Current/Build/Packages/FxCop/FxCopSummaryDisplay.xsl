@@ -1,16 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet
     version = "1.0"
-    xmlns:xsl = "http://www.w3.org/1999/XSL/Transform"
-    xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-    xmlns:XPath="urn:XPathScript">
-
-  <msxsl:script language="C#" implements-prefix="XPath">
-    public string InnerXml(XPathNavigator nav)
-    {
-    return nav.InnerXml;
-    }
-  </msxsl:script>
+    xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">
 
   <xsl:output method = "html"/>
 
@@ -41,7 +32,7 @@
             </a>
           </td>
         </tr>
-        <xsl:value-of select="XPath:InnerXml($stuff)" disable-output-escaping="yes"/>
+        <xsl:value-of select="$stuff" disable-output-escaping="yes"/>
       </table>
     </xsl:if>
   </xsl:template>
