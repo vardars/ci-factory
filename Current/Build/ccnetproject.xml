@@ -181,7 +181,7 @@
         <files>
           <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
-          <file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
   </files>
       </merge>
       <xslmerger>
@@ -193,6 +193,10 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\FxCop\FxCopSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\FxCop\Report\FxCopReport.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -411,7 +415,6 @@
 				<files>
 					<file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
 					<file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
-					<file>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</file>
 					<file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
 				</files>
 			</merge>
@@ -424,6 +427,10 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\FxCop\FxCopSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\FxCop\Report\FxCopReport.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
 				</filepairs>
 			</xslmerger>

@@ -61,12 +61,12 @@
         if ( eDiv.style.display == "none" )
         {
         eDiv.style.display="block";
-        eImg.src="images/arrow_minus_small.gif";
+        eImg.src="/CI Factory/images/arrow_minus_small.gif";
         }
         else
         {
         eDiv.style.display = "none";
-        eImg.src="images/arrow_plus_small.gif";
+        eImg.src="/CI Factory/images/arrow_plus_small.gif";
         }
         }
       </script>
@@ -177,7 +177,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -271,7 +271,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -343,7 +343,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
