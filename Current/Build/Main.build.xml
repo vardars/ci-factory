@@ -36,7 +36,6 @@
         
         <description>Begin Compile Actions</description>
         <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies" />
-        <call target="Versioning.IncreamentBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
         <description>End Compile Actions</description>
         
@@ -109,6 +108,7 @@
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
+        <call target="Versioning.IncreamentBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
         <call target="Custom.NAnt.CreateDocumentation" />
         <call target="Custom.WriteReleaseNotes" />
