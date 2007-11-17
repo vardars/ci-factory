@@ -32,7 +32,11 @@
             </a>
           </td>
         </tr>
-        <xsl:copy-of select="//ndependsummary"/>
+        <tr>
+          <td>
+            <xsl:copy-of select="//ndependsummary"/>
+          </td>
+        </tr>
       </table>
     </xsl:if>
   </xsl:template>
