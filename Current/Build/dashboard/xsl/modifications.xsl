@@ -6,7 +6,6 @@
   <xsl:key name="changeset" match="/cruisecontrol/modifications/modification" use="changeNumber/text()"/>
 
   <xsl:template match="/">
-    <xsl:if test="count($modification.list) &gt; 0">
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
       <tr>
         <td height="42" class="sectionheader-container">
@@ -20,9 +19,12 @@
           <xsl:sort select="changeNumber" order="descending" data-type="number"/>
           <xsl:call-template name="changeset" />
         </xsl:for-each>
-      </table>
-    </xsl:if>
-    <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
+      <xsl:if test="count($modification.list) = 0">
+        <tr>
+          <td>There were no changes made since the last build.</td>
+        </tr>
+      </xsl:if>
+    </table>
   </xsl:template>
 
   <!-- Changeset template -->
