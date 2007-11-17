@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/TR/xhtml1/strict">
 
-<!-- Assumes that you have applied the CCNET Image Handler, explained at http://www.robincurry.org/blog/IntegratingImagesIntoCustomCruiseControlNETBuildReports.aspx -->
-
+  <xsl:param name="ArtifactUrl" />
+  
 	<xsl:output method="html" />
 
 	<xsl:variable name="project" select="//buildproject/text()"/>
@@ -108,7 +108,8 @@
 		</A>
 		<p></p>
 		<img>
-			<xsl:attribute name="src">VisualNDependView.png</xsl:attribute>
+			<xsl:attribute name="src">
+        <xsl:value-of select="$ArtifactUrl"/>VisualNDependView.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
@@ -117,7 +118,8 @@
 		</A>
 		<p></p>
 		<img>
-			<xsl:attribute name="src">AbstracnessVSInstability.png</xsl:attribute>
+			<xsl:attribute name="src">
+        <xsl:value-of select="$ArtifactUrl"/>AbstracnessVSInstability.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
@@ -135,7 +137,8 @@
 		<div class="info">Blue : Assemblies of your application.</div>
 		<div class="info">Yellow : Framework assemblies referenced by assemblies of your application.</div>
 		<img>
-			<xsl:attribute name="src">ComponentDependenciesDiagram.png</xsl:attribute>
+			<xsl:attribute name="src">
+        <xsl:value-of select="$ArtifactUrl"/>ComponentDependenciesDiagram.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>

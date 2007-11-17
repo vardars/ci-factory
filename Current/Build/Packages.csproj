@@ -9,6 +9,5 @@
     <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
     <Content Include="Packages\nDepend\ndependsummary-ccnet.xsl" />
     <Content Include="Packages\nDepend\nDependSummaryDisplay.xsl" />
-    <Content Include="Packages\nDepend\ndependreport-ccnet.xsl" />
   </ItemGroup>
 </Project>

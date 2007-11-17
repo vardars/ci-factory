@@ -30,7 +30,7 @@
 
       <style in="${nDepend.BuildFolder}\NDependMain.xml"
              out="${Common.ArtifactDirectoryPath}\NDependReport.html"
-             style="${PackagesDirectory}\nDepend\ndependreport-ccnet.xsl">
+             style="${PackagesDirectory}\nDepend\bin\CruiseControl.NET\ndependreport-ccnet.v2.xsl">
         <parameters>
           <parameter name="ArtifactUrl" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}"/>
         </parameters>
