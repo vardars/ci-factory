@@ -119,7 +119,7 @@
 		<p></p>
 		<img>
 			<xsl:attribute name="src">
-        <xsl:value-of select="$ArtifactUrl"/>/AbstracnessVSInstability.png</xsl:attribute>
+        <xsl:value-of select="$ArtifactUrl"/>/AbstractnessVSInstability.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
