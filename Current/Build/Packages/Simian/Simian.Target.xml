@@ -12,6 +12,7 @@
           <arg line="-language=xml" />
           <arg line='-includes=Production/Packages/**/*.xml' />
           <arg line='-excludes=Production/Packages/**/bin/**/*.xml' />
+          <arg line='-excludes=Production/Packages/**/bin/*.xml' />
           <arg line='-includes=Production/Foundation/Default/Build/*.xml' />
           <arg line='-includes="Production/CI Installer/Install Scripts/**/*.xml"' />
           <arg line='-formatter=xml:${Simian.ReportFilePath}' />
