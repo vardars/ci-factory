@@ -34,8 +34,6 @@
 
     <style type="text/css" xmlns="http://www.w3.org/TR/xhtml1/strict">
 
-      BODY { font-family: Trebuchet MS; font-size: 10pt; }
-      TD { font-family: Trebuchet MS; font-size: 10pt; }
       .title { font-size: 25pt; font-weight: bold; }
       .subtitle { color: #883333; font-size: 20pt; font-weight: bold; background-color: #CCCCCC }
       .subtitleref { color: blue; font-size: 10pt }
