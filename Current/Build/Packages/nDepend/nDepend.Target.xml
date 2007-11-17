@@ -30,7 +30,11 @@
 
       <style in="${nDepend.BuildFolder}\NDependMain.xml"
              out="${Common.ArtifactDirectoryPath}\NDependReport.html"
-             style="${PackagesDirectory}\nDepend\ndependreport-ccnet.xsl"/>
+             style="${PackagesDirectory}\nDepend\ndependreport-ccnet.xsl">
+        <parameters>
+          <parameter name="ArtifactUrl" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}"/>
+        </parameters>
+      </style>
 
       <copy todir="${Deployment.TargetDir}">
         <fileset basedir="${nDepend.BuildFolder}">
