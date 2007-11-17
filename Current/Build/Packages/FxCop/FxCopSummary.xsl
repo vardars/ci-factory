@@ -7,7 +7,7 @@
   
   <xsl:param name = "applicationPath"/>
   <xsl:variable name = "fxcop.root" select = "/FxCopReport"/>
-  <xsl:variable name = "message.list" select = "$fxcop.root//Messages"/>
+  <xsl:variable name = "message.list" select = "$fxcop.root//Message"/>
   
   <xsl:template match = "/">
 
