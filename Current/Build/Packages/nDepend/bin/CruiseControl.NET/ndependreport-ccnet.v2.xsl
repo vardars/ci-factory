@@ -109,7 +109,7 @@
 		<p></p>
 		<img>
 			<xsl:attribute name="src">
-        <xsl:value-of select="$ArtifactUrl"/>VisualNDependView.png</xsl:attribute>
+        <xsl:value-of select="$ArtifactUrl"/>/VisualNDependView.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
@@ -119,7 +119,7 @@
 		<p></p>
 		<img>
 			<xsl:attribute name="src">
-        <xsl:value-of select="$ArtifactUrl"/>AbstracnessVSInstability.png</xsl:attribute>
+        <xsl:value-of select="$ArtifactUrl"/>/AbstracnessVSInstability.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
@@ -138,7 +138,7 @@
 		<div class="info">Yellow : Framework assemblies referenced by assemblies of your application.</div>
 		<img>
 			<xsl:attribute name="src">
-        <xsl:value-of select="$ArtifactUrl"/>ComponentDependenciesDiagram.png</xsl:attribute>
+        <xsl:value-of select="$ArtifactUrl"/>/ComponentDependenciesDiagram.png</xsl:attribute>
 		</img>
 		<p></p>
 		<p></p>
