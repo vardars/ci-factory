@@ -28,17 +28,13 @@
 			  commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
 		  />
 
-      <property name="Deployment.SourceFileName" value="NDependReport.html" />
-      <property name="Deployment.SourceDir"	value="${nDepend.BuildFolder}" />
-      <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
-      <property name="Deployment.TargetFile"	value="${Deployment.SourceFileName}" />
-
-      <call target="Deployment.PublishFileSilently"/>
+      <style in="${nDepend.BuildFolder}\NDependMain.xml"
+             out="${Common.ArtifactDirectoryPath}\NDependReport.html"
+             style="${PackagesDirectory}\nDepend\ndependreport-ccnet.xsl"/>
 
       <copy todir="${Deployment.TargetDir}">
         <fileset basedir="${nDepend.BuildFolder}">
           <include name="*.png"/>
-          <include name="*.xml"/>
         </fileset>
       </copy>
     </if>
@@ -46,9 +42,9 @@
 
   <target name="Private.nDepend.CreateConfiguration">
     <write file="${nDepend.ConfigurationFile}" append="false">
-      <text>
+      <text expand="true" xml="false">
         <![CDATA[<?xml version="1.0"?>
-<NDepend AppName="NDepend V1.2.0">]]>
+<NDepend AppName="${ProjectName}">]]>
       </text>
     </write>
 

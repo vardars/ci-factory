@@ -43,34 +43,35 @@
         <title>Analysis Report</title>
       </head>
 
-      <style>
-        .ColumnHeader {font-family: Verdana; font-size: 8pt; background-color:white; color: black}
-        .CriticalError {font-family: Verdana; font-size: 8pt; color: darkred; font-weight: bold; text-align: center}
-        .Error {font-family: Verdana; font-size: 8pt; color: royalblue; font-weight: bold; text-align: center}
-        .CriticalWarning {font-family: Verdana; font-size: 8pt; color: green; font-weight: bold; text-align: center}
-        .Warning {font-family: Verdana; font-size: 8pt; color: darkgray; font-weight: bold; text-align: center}
-        .Information {font-family: Verdana; font-size: 8pt; color: black; font-weight: bold; text-align: center}
-      </style>
-
-      <script type="text/javascript">
-        function toggleDiv(imgId, divId)
-        {
-        eDiv = document.getElementById(divId);
-        eImg = document.getElementById(imgId);
-
-        if ( eDiv.style.display == "none" )
-        {
-        eDiv.style.display="block";
-        eImg.src="/CI Factory/images/arrow_minus_small.gif";
-        }
-        else
-        {
-        eDiv.style.display = "none";
-        eImg.src="/CI Factory/images/arrow_plus_small.gif";
-        }
-        }
-      </script>
       <body bgcolor="white" alink="Black" vlink="Black" link="Black">
+
+        <style>
+          .ColumnHeader {font-family: Verdana; font-size: 8pt; background-color:white; color: black}
+          .CriticalError {font-family: Verdana; font-size: 8pt; color: darkred; font-weight: bold; text-align: center}
+          .Error {font-family: Verdana; font-size: 8pt; color: royalblue; font-weight: bold; text-align: center}
+          .CriticalWarning {font-family: Verdana; font-size: 8pt; color: green; font-weight: bold; text-align: center}
+          .Warning {font-family: Verdana; font-size: 8pt; color: darkgray; font-weight: bold; text-align: center}
+          .Information {font-family: Verdana; font-size: 8pt; color: black; font-weight: bold; text-align: center}
+        </style>
+
+        <script type="text/javascript">
+          function toggleDiv(imgId, divId)
+          {
+          eDiv = document.getElementById(divId);
+          eImg = document.getElementById(imgId);
+
+          if ( eDiv.style.display == "none" )
+          {
+          eDiv.style.display="block";
+          eImg.src="images/arrow_minus_small.gif";
+          }
+          else
+          {
+          eDiv.style.display = "none";
+          eImg.src="images/arrow_plus_small.gif";
+          }
+          }
+        </script>
         <div id="fxCopReport">
           <xsl:variable name="Issues" select="count(.//Message)"></xsl:variable>
           <div id="header">
@@ -177,7 +178,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -271,7 +272,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />
@@ -343,7 +344,7 @@
         <xsl:text>')</xsl:text>
       </xsl:attribute>
 
-      <img src="/CI Factory/images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
+      <img src="images/arrow_plus_small.gif" alt="Toggle display of Tests contained within this assembly">
         <xsl:attribute name="id">
           <xsl:text>img-</xsl:text>
           <xsl:value-of select="$divId" />

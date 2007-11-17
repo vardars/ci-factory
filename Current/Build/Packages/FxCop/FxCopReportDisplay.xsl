@@ -9,28 +9,39 @@
   <xsl:template match="/">
 
     <script language="javascript" type="text/javascript">
-      function iFrameHeight() {
-      var h = 0;
-      if ( !document.all ) {
-      h = document.getElementById('blockrandom').contentDocument.height;
-      document.getElementById('blockrandom').style.height = h + 60 + 'px';
-      } else if( document.all ) {
-      h = document.frames('blockrandom').document.body.scrollHeight;
-      document.all.blockrandom.style.height = h + 20 + 'px';
+      function inject()
+      {
+      var doc;
+      if (typeof document.getElementById('buffer').document != 'undefined')
+      {
+      doc = window.frames['buffer'].document;
+      }
+      else if (typeof document.getElementById('buffer').contentDocument != 'undefined')
+      {
+      doc = document.getElementById('buffer').contentDocument;
+      }
+
+      if (typeof doc.body.innerHTML != 'undefined')
+      {
+      document.getElementById('injectionpoint').innerHTML = doc.body.innerHTML;
+      }
+      else
+      {
+      setTimeout(function(){inject()}, 1000);
       }
       }
     </script>
 
+    <div id="injectionpoint">
+      <p>Loading...</p>
+    </div>
+
 
     <iframe
-      onload="iFrameHeight()"		id="blockrandom"
-      name="iframe"
-      width="100%"
-      height="10000"
-      scrolling="auto"
-      align="top"
-      frameborder="0"
-      class="wrapper">
+      onload="inject();"
+      id="buffer"
+      style="display: none;"
+      frameborder="0">
       <xsl:attribute name="src">
         <xsl:value-of select="$URL"/>/FxCopReport.html
       </xsl:attribute>
