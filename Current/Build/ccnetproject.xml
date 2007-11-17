@@ -182,6 +182,7 @@
           <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\LinesOfCode\*.xml</file>
   </files>
       </merge>
       <xslmerger>
@@ -420,6 +421,7 @@
 					<file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
 					<file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
 					<file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
+          <file>c:\Projects\CI Factory\Current\Build\LinesOfCode\*.xml</file>
 				</files>
 			</merge>
 			<xslmerger>
