@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Properties" >
+
+	<property name="Perforce.ServerName" value="%Perforce.ServerName%" overwrite="false"/>
+	<property name="Perforce.ServerPort" value="%Perforce.ServerPort%" overwrite="false"/>
+	<property name="Perforce.ServerPathPrefix" value="%Perforce.ServerPathPrefix%" overwrite="false"/>
+	<property name="Perforce.WorkspaceNameBase" value="${ProjectName}-${ProjectCodeLineName}" overwrite="false"/>
+	<property name="Perforce.WorkspaceName" value="'${Perforce.WorkspaceNameBase}-${environment::get-machine-name()}'" overwrite="false"/>
+
+	<property name="Perforce.BinPath" value="%Perforce.BinPath%"/>
+	<setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
+	
+	<property name="SourceControl.Update.ReplaceWritableFiles" value="True" overwrite="false"/>
+	<property name="SourceControl.Update.Interactive" value="false" overwrite="false"/>
+
+</project>
