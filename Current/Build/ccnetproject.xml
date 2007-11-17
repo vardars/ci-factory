@@ -198,6 +198,10 @@
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\Simian\SimianSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\nDepend\NDependMain.xml</xmlfile>
+          </filepair>
         </filepairs>
       </xslmerger>
       <xmllogger />
