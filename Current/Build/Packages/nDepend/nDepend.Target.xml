@@ -81,13 +81,16 @@
       </in>
       <do>
         <property name="AssemblyName" value="${vsproject::get-assemblyname(nDepend.Target.ProjectFile.Path)}"/>
-        <ifnot test="${AssemblyName == '' and stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
+        <ifnot test="${AssemblyName == '' or stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
           <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
+          <echo message="${file::exists(TargetAssemblyPath)} ${TargetAssemblyPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
           <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
+          <echo message="${file::exists(TargetAssemblyPath)} ${TargetAssemblyPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
           <property name="TargetPDBPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
+          <echo message="${file::exists(TargetPDBPath)} ${TargetPDBPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetPDBPath)}"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">
@@ -147,10 +150,7 @@
     <write file="${nDepend.ConfigurationFile}" append="true">
       <text>
         <![CDATA[
-    <WarnFilter WarnNotUsedType="True" WarnNotUsedMember="True" WarnTypeVisibility="True" WarnPropertiesVisibility="True" WarnMethodsVisibility="True" WarnConstructorsVisibility="True" WarnFieldsVisibility="True" WarnEventsVisibility="True" >
-      <DontWarn>WARNING: In the context of this application, the property getter {NDepend.DependenciesContainers.OnMember.NMember.get_ListOfMemberThatIUse()} is never used.</DontWarn>
-      <DontWarn>WARNING: In the context of this application, the property getter {NDepend.DependenciesContainers.OnAssembly.NAssembly.get_ListOfType()} is never used.</DontWarn>
-    </WarnFilter>
+    <WarnFilter WarnNotUsedType="False" WarnNotUsedMember="False" WarnTypeVisibility="False" WarnPropertiesVisibility="False" WarnMethodsVisibility="False" WarnConstructorsVisibility="False" WarnFieldsVisibility="False" WarnEventsVisibility="False" WarnAssemblyVersioningIssues="True" WarnPDBIssues="True" />
         ]]>
       </text>
     </write>

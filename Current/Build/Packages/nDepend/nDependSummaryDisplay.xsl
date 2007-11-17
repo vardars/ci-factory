@@ -27,7 +27,7 @@
               </xsl:attribute>
               <img src="Packages\nDepend\logo.gif" class="sectionheader-title-image"/>
               <div class="sectionheader">
-                NDepend Summary
+                NDepend Summary (<xsl:value-of select="$stuff/@warnings" /> Serious Warnings)
               </div>
             </a>
           </td>

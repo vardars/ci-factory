@@ -5,6 +5,9 @@
 	
 	<xsl:template match="/">
     <ndependsummary>
+      <xsl:attribute name="warnings">
+        <xsl:value-of select="count(//NDepend//Warning[@Category = '1'])" />
+      </xsl:attribute>
 		<xsl:apply-templates select="//NDepend"/>
     </ndependsummary>
 	</xsl:template>
@@ -26,8 +29,8 @@
 
     <tr>
       <td>
-        <xsl:for-each select="//NDepend//Warning[@Category = '1']" >
-          <pre class="section-error">
+        <xsl:for-each select=".//Warning[@Category = '1']" >
+          <pre class="section-warning">
             <xsl:value-of select="text()"/>
           </pre>
         </xsl:for-each>
