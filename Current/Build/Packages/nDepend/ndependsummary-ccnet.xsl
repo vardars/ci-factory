@@ -15,7 +15,7 @@
 	<xsl:template match="NDepend">
     <xsl:choose>
       <xsl:when test="AssemblySortForCompilOrObfusk">
-        <xsl:apply-templates select="AssemblySortForCompilOrObfusk" />
+        
       </xsl:when>
       <xsl:otherwise>
         <tr>
