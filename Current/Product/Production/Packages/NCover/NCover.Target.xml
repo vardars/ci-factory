@@ -94,6 +94,10 @@
         <include name="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"/>
       </fileset>
     </ncoverexplorer>
+    
+    <style in="${Coverage.ReportFolder}\CoverageReport.xml"
+           out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+           style="${PackagesDirectory}\NCover\NCoverExplorer.xsl"/>
   </target>
 
   <target name="Private.Coverage.CreatePropertiesFile">

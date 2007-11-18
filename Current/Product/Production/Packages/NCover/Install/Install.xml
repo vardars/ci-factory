@@ -12,19 +12,24 @@
     <call target="Packages.AddVarificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverExplorerSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverDisplaySummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverExplorer.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverDisplayReport.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\CoverageReports\CoverageReport.xml</file>]]></value>
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</x
+            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
+          </filepair>]]>
+      </value>
     </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="NCover.SetAsCurrentPackage">
