@@ -13,7 +13,7 @@
         <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
           <tr>
             <td class="sectionheader-container-error">
-              <div class="sectionheader">
+              <div>
                 Build Errors: (<xsl:value-of select="$builderror.count"/>)
               </div>
             </td>
@@ -38,7 +38,7 @@
         <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
           <tr>
             <td class="sectionheader-container-warning">
-              <div class="sectionheader">
+              <div>
                 Build Warnings: (<xsl:value-of select="$warning.count"/>)
               </div>
             </td>
