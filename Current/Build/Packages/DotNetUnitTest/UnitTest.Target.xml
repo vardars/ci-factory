@@ -56,6 +56,10 @@
 			</try>
 			<finally>
 				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
+
+        <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
+               out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
+               style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"/>
 			</finally>
 		</trycatch>
 		

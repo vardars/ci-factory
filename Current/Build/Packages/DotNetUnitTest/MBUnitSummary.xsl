@@ -24,15 +24,23 @@
   <xsl:variable name="totalErrorsAndFailures" select="sum($nunit2.result.list/@failure-count)"/>
 
   <xsl:template match="/">
-    <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-
-      <!-- Unit Tests -->
-      <tr>
-        <td class="sectionheader" colspan="2">
-          Unit Tests (Executed: <xsl:value-of select="$nunit2.testcount"/>, Failed: <xsl:value-of select="$nunit2.failures"/>, Ignored: <xsl:value-of select="$nunit2.notrun"/>, Assert Count: <xsl:value-of select="$UnitTest.AssertCount"/>, Duration: <xsl:value-of select="$nunit2.time"/> seconds)
-        </td>
-      </tr>
-
+    <mbunitsummary>
+      <xsl:attribute name="testcount">
+        <xsl:value-of select="$nunit2.testcount"/>
+      </xsl:attribute>
+      <xsl:attribute name="failures">
+        <xsl:value-of select="$nunit2.failures"/>
+      </xsl:attribute>
+      <xsl:attribute name="notrun">
+        <xsl:value-of select="$nunit2.notrun"/>
+      </xsl:attribute>
+      <xsl:attribute name="AssertCount">
+        <xsl:value-of select="$UnitTest.AssertCount"/>
+      </xsl:attribute>
+      <xsl:attribute name="time">
+        <xsl:value-of select="$nunit2.time"/>
+      </xsl:attribute>
+      
       <xsl:choose>
         <xsl:when test="$nunit2.testcount = 0">
           <tr>
@@ -93,7 +101,7 @@
           <td colspan="2"> </td>
         </tr>
       </xsl:if>
-    </table>
+    </mbunitsummary>
   </xsl:template>
 
   <!-- UnitTest Errors -->

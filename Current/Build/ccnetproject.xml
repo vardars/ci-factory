@@ -179,11 +179,10 @@
     <publishers>
       <merge>
         <files>
-          <file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\LinesOfCode\*.xml</file>
-  </files>
+        </files>
       </merge>
       <xslmerger>
         <filepairs>
@@ -202,6 +201,10 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\nDepend\ndependsummary-ccnet.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\nDepend\NDependMain.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -437,6 +440,14 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\Simian\SimianSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\SimianReport\SimianReport.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\nDepend\NDependMain.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</xmlfile>
           </filepair>
 				</filepairs>
 			</xslmerger>
