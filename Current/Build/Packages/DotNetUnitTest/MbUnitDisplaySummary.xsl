@@ -26,7 +26,7 @@
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_UnitTestDetailsBuildReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img src="Packages\DotNetUnitTest\logo.gif" class="sectionheader-title-image"/>
-              <div>
+              <div class="sectionheader-text">
                 Unit Tests (Executed: <xsl:value-of select="$stuff/@testcount"/>, Failed: <xsl:value-of select="$stuff/@failures"/>, Ignored: <xsl:value-of select="$stuff/@notrun"/>, Assert Count: <xsl:value-of select="$stuff/@AssertCount"/>, Duration: <xsl:value-of select="$stuff/@time"/> seconds)
               </div>
             </a>

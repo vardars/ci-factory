@@ -22,6 +22,7 @@ a:hover { color:#FC0; }
 
 .section-table { margin-top:10px; }
 .sectionheader { color: #403F8D; font-size: 14px; font-weight: bold; position:relative; top: 9px; }
+.sectionheader-text { font-size: 14px; font-weight: bold; position:relative; top: 9px; }
 .sectionheader-title-image { float: left; border-style: none; height: 25px; }
 .sectionheader-container { border-bottom: #403F8D 1px dotted; font-size: 14px; font-weight: bold;}
 .sectionheader-container-error { border-bottom: #D13535 1px dotted; color: #D13535; font-size: 14px; font-weight: bold;}

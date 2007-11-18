@@ -26,7 +26,7 @@
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_NDependReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img src="Packages\nDepend\logo.gif" class="sectionheader-title-image"/>
-              <div>
+              <div class="sectionheader-text">
                 NDepend Summary (<xsl:value-of select="$stuff/@warnings" /> Serious Warnings)
               </div>
             </a>
