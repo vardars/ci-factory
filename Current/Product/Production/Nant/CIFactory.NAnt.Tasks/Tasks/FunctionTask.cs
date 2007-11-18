@@ -11,7 +11,7 @@ namespace CIFactory.NAnt.Tasks
         #region Properties
 
         [TaskAttribute("execute", ExpandProperties = true, Required = true)]
-        public String Execute
+        public String ExecuteFunction
         {
             set
             {
