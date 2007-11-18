@@ -6,21 +6,23 @@
   <xsl:output method="html"/>
   
   <xsl:template match="/">
-    <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-      <tr>
-        <td height="42" class="sectionheader-container">
-          <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
-          <div class="sectionheader">Deployment File(s)</div>
-        </td>
-      </tr>
-      <xsl:for-each select="/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']">
-        <xsl:call-template name="DeploymentFile">
-          <xsl:with-param name="DeploymentWebPath" select=".//target[@name='Deployment.EchoDeploymentFileWebPath']/task[@name='echo']/message"/>
-          <xsl:with-param name="DeploymentWebName" select=".//target[@name='Private.Deployment.EchoDeploymentFileWebName']/task[@name='echo']/message"/>
-        </xsl:call-template>
-      </xsl:for-each>
-      
-    </table>
+    <xsl:if test="count(/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']) &gt; 0">
+      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <tr>
+          <td height="42" class="sectionheader-container">
+            <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
+            <div class="sectionheader">Deployment File(s)</div>
+          </td>
+        </tr>
+        <xsl:for-each select="/cruisecontrol/build/buildresults//target[@name='Deployment.PublishLink']">
+          <xsl:call-template name="DeploymentFile">
+            <xsl:with-param name="DeploymentWebPath" select=".//target[@name='Deployment.EchoDeploymentFileWebPath']/task[@name='echo']/message"/>
+            <xsl:with-param name="DeploymentWebName" select=".//target[@name='Private.Deployment.EchoDeploymentFileWebName']/task[@name='echo']/message"/>
+          </xsl:call-template>
+        </xsl:for-each>
+        
+      </table>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template name="DeploymentFile">

@@ -11,7 +11,7 @@
   <xsl:param name="CCNetBuild"/>
 
   <xsl:template match = "/">
-    <xsl:variable name="stuff" select="//fxcopsummary" />
+    <xsl:variable name="stuff" select="//ndependsummary" />
     <xsl:if test="$stuff/node()">
       <table
                     class = "section-table"
@@ -23,16 +23,16 @@
           <td height="42" class="sectionheader-container" colSpan="2">
             <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
               <xsl:attribute name="href">
-                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_FxCopReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
+                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_NDependReport=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
-              <img src="Packages\FxCop\fxcop.ico" class="sectionheader-title-image"/>
+              <img src="Packages\nDepend\logo.gif" class="sectionheader-title-image"/>
               <div class="sectionheader">
-                FxCop Summary (<xsl:value-of select="$stuff/@issues" /> Issues)
+                NDepend Summary (<xsl:value-of select="$stuff/@warnings" /> Serious Warnings)
               </div>
             </a>
           </td>
         </tr>
-        <xsl:copy-of select="//fxcopsummary"/>
+        <xsl:copy-of select="//ndependsummary"/>
       </table>
     </xsl:if>
   </xsl:template>

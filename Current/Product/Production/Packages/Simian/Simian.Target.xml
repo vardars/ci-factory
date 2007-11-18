@@ -15,6 +15,10 @@
         </exec>
       </do>
     </loglevel>
+
+    <style in="${Simian.ReportFilePath}"
+           out="${Common.ArtifactDirectoryPath}\SimianReport.html"
+           style="${PackagesDirectory}\Simian\bin\simian.xsl"/>
   </target>
 
   <target name="Simian.SetUp">

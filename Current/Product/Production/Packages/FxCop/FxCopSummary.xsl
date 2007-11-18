@@ -4,11 +4,10 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
   <xsl:output method = "xml"/>
-  <xsl:output cdata-section-elements="fxcopsummary"/>
   
   <xsl:param name = "applicationPath"/>
   <xsl:variable name = "fxcop.root" select = "/FxCopReport"/>
-  <xsl:variable name = "message.list" select = "$fxcop.root//Messages"/>
+  <xsl:variable name = "message.list" select = "$fxcop.root//Message"/>
   
   <xsl:template match = "/">
 
@@ -18,7 +17,6 @@
         <xsl:attribute name="issues">
           <xsl:value-of select="$message.list.count" />
         </xsl:attribute>
-        
           <tr>
             <td>Assemblies tested:</td>
             <td>

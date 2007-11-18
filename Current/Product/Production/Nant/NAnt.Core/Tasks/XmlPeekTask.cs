@@ -207,8 +207,6 @@ namespace NAnt.Core.Tasks {
         }
 
         private string GetNodeContents(string xpath, XmlDocument document) {
-			object XPathResult = null;
-
             try {
                 XmlNamespaceManager nsMgr = new XmlNamespaceManager(document.NameTable);
                 foreach (XmlNamespace xmlNamespace in Namespaces) {

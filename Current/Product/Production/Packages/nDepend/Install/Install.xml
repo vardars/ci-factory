@@ -9,10 +9,25 @@
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
 
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\nDepend\nDependSummaryDisplay.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+    
     <largeproperty name="Packages.AddbuildPlugins.Block">
       <value xml="false"><![CDATA[<xslReportBuildPlugin description="NDepend Report" actionName="NDependReport" xslFileName="Packages\NDepend\nDependReport.xsl" imageFileName="Packages\NDepend\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="nDepend.SetAsCurrentPackage">

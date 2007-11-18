@@ -165,7 +165,6 @@
     <Content Include="Packages.csproj" />
     <Content Include="Simian\Simian.Properties.xml" />
     <Content Include="Simian\Simian.Target.xml" />
-    <Content Include="Simian\SimianReport.xsl" />
     <Content Include="Simian\SimianSummary.xsl" />
     <Content Include="SourceModificationReport\Install\Install.xml" />
     <Content Include="SourceModificationReport\Install\Properties.xml" />
@@ -249,6 +248,9 @@
     <Content Include="FxCop\Install\Install.xml" />
     <Content Include="FxCop\Install\Properties.xml" />
     <Content Include="MSBuild\Install\Properties.xml" />
+    <Content Include="nDepend\logo.gif" />
+    <Content Include="nDepend\ndependsummary-ccnet.xsl" />
+    <Content Include="nDepend\nDependSummaryDisplay.xsl" />
     <Content Include="NUnit\Install\Install.xml" />
     <Content Include="NUnit\Install\NUnit\bin\Failure.jpg" />
     <Content Include="NUnit\Install\NUnit\bin\fit.dll" />
@@ -436,6 +438,8 @@
     <Content Include="Perforce\SourceControl.Target.xml" />
     <Content Include="Simian\Install\Install.xml" />
     <Content Include="Simian\Install\Properties.xml" />
+    <Content Include="Simian\SimianDisplayReport.xsl" />
+    <Content Include="Simian\SimianDisplaySummary.xsl" />
     <Content Include="StarTeam\Install\Install.xml" />
     <Content Include="StarTeam\Install\Properties.xml" />
     <Content Include="StarTeam\SourceControl.Properties.xml" />

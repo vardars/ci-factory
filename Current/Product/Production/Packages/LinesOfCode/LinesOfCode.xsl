@@ -6,9 +6,11 @@
   <xsl:output method="html"/>
   <xsl:template match="/">
     <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-      <tr class="sectionheader">
-        <td class="sectionheader" colspan="5">
-          Line Count
+      <tr>
+        <td height="42" class="sectionheader-container" colSpan="2">
+            <div class="sectionheader">
+              Line Count
+            </div>
         </td>
       </tr>
     </table>

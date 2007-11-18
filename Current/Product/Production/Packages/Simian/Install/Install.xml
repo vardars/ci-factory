@@ -19,10 +19,15 @@
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\SimianReport\SimianReport.xml</file>]]></value>
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+          </filepair>]]>
+      </value>
     </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="Simian.SetAsCurrentPackage">

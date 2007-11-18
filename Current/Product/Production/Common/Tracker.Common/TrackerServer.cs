@@ -527,7 +527,6 @@ namespace Tracker.Common
             {
                 this.ToolKit.ReleaseRecordHandle(RecordHandle);
             }
-            return 0;
         }
 
         public void SaveStringFieldValue(string FieldName, string newValue, int RecordHandle)

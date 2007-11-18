@@ -15,13 +15,15 @@
           </div>
           </td>
       </tr>
-      <xsl:if test="count($modification.list) &gt; 0">
         <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
           <xsl:sort select="changeNumber" order="descending" data-type="number"/>
           <xsl:call-template name="changeset" />
         </xsl:for-each>
+      <xsl:if test="count($modification.list) = 0">
+        <tr>
+          <td>There were no changes made since the last build.</td>
+        </tr>
       </xsl:if>
-      <xsl:if test="count($modification.list) = 0">There were no changes made since the last build. </xsl:if>
     </table>
   </xsl:template>
 

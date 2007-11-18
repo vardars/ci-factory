@@ -92,10 +92,6 @@ namespace NAnt.SourceControl.Tasks {
 
         #region Protected Instance Constructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractCvsTask" /> 
-        /// class.
-        /// </summary>
         protected AbstractSourceControlTask () : base() {
         }
 

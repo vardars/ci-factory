@@ -29,7 +29,7 @@ namespace NAnt.Core.Types {
             return item.VariableName;
         }
 
-        public void Add(EnvironmentVariable item)
+        public new void Add(EnvironmentVariable item)
         {
             if (this.Contains(item.VariableName))
                 base.Dictionary[item.VariableName] = item;
