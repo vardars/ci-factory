@@ -121,6 +121,7 @@
       <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
       <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
       <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
     </saveproperties>
   </target>
 
