@@ -1,22 +1,13 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/TR/xhtml1/strict">
 <xsl:output method="html"/>
-	<xsl:include href="NCoverExplorerSummary-Legacy.xsl"/>
 	
 	<xsl:template match="/">
-		<xsl:choose>
-			<!-- Apply the NCoverExplorer template if it exists in the input data -->
-			<xsl:when test="//coverageReport2">
-				<xsl:apply-templates select="//coverageReport2" />					
-			</xsl:when>
-			<!-- Apply the legacy (prior to 2.0) NCoverExplorer template if it exists in the input data -->
-			<xsl:when test="//coverageReport">
-				<xsl:apply-templates select="//coverageReport" />					
-			</xsl:when>
-			<!-- Otherwise apply the legacy NCover template if it exists in the input data -->
-			<xsl:when test="//coverage">
-				<xsl:apply-templates select="//coverage[count(module) != 0]" />					
-			</xsl:when>
-		</xsl:choose>
+    <ncoversummary>
+      <xsl:attribute name="totalpercent">
+        <xsl:value-of select="format-number(//coverageReport2/project/@coverage, '0.0')"/>
+      </xsl:attribute>
+				<xsl:apply-templates select="//coverageReport2" />
+    </ncoversummary>
 	</xsl:template>
 
 	<!-- NCoverExplorer summary -->

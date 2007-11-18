@@ -86,7 +86,7 @@
     <ncoverexplorer program="${NCover.ExplorerExePath}"
 						projectName="${ProjectName}"
 						reportType="4"
-						outputDir="${Coverage.ReportFolder}" 
+						outputDir="${Coverage.ReportFolder}"
 						xmlReportName="CoverageReport.xml"
 						showExcluded="True"
 						satisfactoryCoverage="80" >
@@ -94,6 +94,10 @@
         <include name="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"/>
       </fileset>
     </ncoverexplorer>
+    
+    <style in="${Coverage.ReportFolder}\CoverageReport.xml"
+           out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+           style="${PackagesDirectory}\NCover\NCoverExplorer.xsl"/>
   </target>
 
   <target name="Private.Coverage.CreatePropertiesFile">

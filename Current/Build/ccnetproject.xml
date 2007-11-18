@@ -179,7 +179,6 @@
     <publishers>
       <merge>
         <files>
-          <file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\LinesOfCode\*.xml</file>
         </files>
@@ -205,6 +204,10 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -421,8 +424,6 @@
 		<publishers>
 			<merge>
 				<files>
-					<file>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</file>
-					<file>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</file>
 					<file>c:\Projects\CI Factory\Current\Build\Reports\*.xml</file>
           <file>c:\Projects\CI Factory\Current\Build\LinesOfCode\*.xml</file>
 				</files>
@@ -448,6 +449,10 @@
           <filepair>
             <xslfile>C:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
             <xmlfile>c:\Projects\CI Factory\Current\Build\Unit Test Reports\*.xml</xmlfile>
+          </filepair>
+          <filepair>
+            <xslfile>C:\Projects\CI Factory\Current\Build\Packages\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>c:\Projects\CI Factory\Current\Build\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
 				</filepairs>
 			</xslmerger>

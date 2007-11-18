@@ -9,6 +9,8 @@
     <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
     <Content Include="Packages\DotNetUnitTest\MbUnitDisplayReport.xsl" />
     <Content Include="Packages\DotNetUnitTest\MbUnitDisplaySummary.xsl" />
+    <Content Include="Packages\NCover\NCoverDisplayReport.xsl" />
+    <Content Include="Packages\NCover\NCoverDisplaySummary.xsl" />
     <Content Include="Packages\nDepend\ndependsummary-ccnet.xsl" />
     <Content Include="Packages\nDepend\nDependSummaryDisplay.xsl" />
   </ItemGroup>
