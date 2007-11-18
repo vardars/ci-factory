@@ -28,7 +28,7 @@
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
-              <div class="sectionheader">
+              <div>
                 Projects Rebuilt: (<xsl:value-of select="$RecompiledProjects"/>)
               </div>
             </a>
@@ -61,7 +61,7 @@
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
-              <div class="sectionheader">
+              <div>
                 Compiler Errors: (<xsl:value-of select="$error.count"/>)
               </div>
             </a>
@@ -88,7 +88,7 @@
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
               <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
-              <div class="sectionheader">
+              <div>
                 Compiler Warnings: (<xsl:value-of select="$warning.count"/>)
               </div>
             </a>
