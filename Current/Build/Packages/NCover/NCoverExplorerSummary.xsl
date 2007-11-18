@@ -12,12 +12,6 @@
 
 	<!-- NCoverExplorer summary -->
 	<xsl:template match="coverageReport2">
-        <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-            <tr>
-                <td class="sectionheader" colspan="4">
-                   NCoverExplorer Code Coverage Summary: <xsl:value-of select="./project/@name"/>
-                </td>
-            </tr>
             <tr>
 				<td class="header-label" width="300px">
 					Module
@@ -102,7 +96,6 @@
 					<xsl:value-of select="./project/@members"/>
 				</td>
             </tr>
-		</table>
 	</xsl:template>
 	
 	<!-- Display a summary of each module and whether it passed -->
