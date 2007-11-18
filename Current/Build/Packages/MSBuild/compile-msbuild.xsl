@@ -2,7 +2,11 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:output method="html"/>
+  <xsl:output method="xml"/>
+  <xsl:param name = "applicationPath"/>
+  <xsl:param name="CCNetServer"/>
+  <xsl:param name="CCNetProject"/>
+  <xsl:param name="CCNetBuild"/>
 
   <xsl:template match="/">
 
@@ -11,20 +15,33 @@
     <xsl:variable name="RecompiledProjects" select="//msbuilsummary/projectinfo/counts/@recompiled" />
 
     <xsl:if test="$TotalProjects > 0">
-      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+      <table
+                    class = "section-table"
+                    cellSpacing = "0"
+                    cellPadding = "2"
+                    width = "98%"
+                    border = "0">
         <tr>
-          <td class="sectionheader">
-            Projects Rebuilt: (<xsl:value-of select="$RecompiledProjects"/>)
+          <td height="42" class="sectionheader-container" colSpan="2">
+            <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+              <xsl:attribute name="href">
+                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
+              </xsl:attribute>
+              <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
+              <div class="sectionheader">
+                Projects Rebuilt: (<xsl:value-of select="$RecompiledProjects"/>)
+              </div>
+            </a>
           </td>
         </tr>
         <tr>
           <td>
-            <p>
-              Total Projects: <xsl:value-of select="$TotalProjects"/>
-            </p>
-            <p>
-              Projects Skipped: <xsl:value-of select="$SkippedProjects"/>
-            </p>
+            Total Projects: <xsl:value-of select="$TotalProjects"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Projects Skipped: <xsl:value-of select="$SkippedProjects"/>
           </td>
         </tr>
       </table>
@@ -38,8 +55,16 @@
     <xsl:if test="$error.count > 0">
       <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
         <tr>
-          <td class="sectionheader-error">
-            Compiler Errors: (<xsl:value-of select="$error.count"/>)
+          <td height="42" class="sectionheader-container" colSpan="2">
+            <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+              <xsl:attribute name="href">
+                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
+              </xsl:attribute>
+              <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
+              <div class="sectionheader">
+                Compiler Errors: (<xsl:value-of select="$error.count"/>)
+              </div>
+            </a>
           </td>
         </tr>
         <tr>
@@ -57,8 +82,16 @@
     <xsl:if test="$warning.count > 0">
       <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
         <tr>
-          <td class="sectionheader-warning">
-            Compiler Warnings: (<xsl:value-of select="$warning.count"/>)
+          <td height="42" class="sectionheader-container" colSpan="2">
+            <a STYLE="TEXT-DECORATION: NONE; color: 403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
+              <xsl:attribute name="href">
+                /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_MSBuildCompileDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
+              </xsl:attribute>
+              <img src="Packages\MSBuild\logo.ico" class="sectionheader-title-image"/>
+              <div class="sectionheader">
+                Compiler Warnings: (<xsl:value-of select="$warning.count"/>)
+              </div>
+            </a>
           </td>
         </tr>
         <tr>
