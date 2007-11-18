@@ -27,19 +27,24 @@
     </ifthenelse>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\DotNetUnitTest\MBUnitSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\DotNetUnitTest\MbUnitDisplaySummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\DotNetUnitTest\MBUnitDetails.xsl" imageFileName="Packages\DotNetUnitTest\logo.gif" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\DotNetUnitTest\MbUnitDisplayReport.xsl" imageFileName="Packages\DotNetUnitTest\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
-    <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>$&BuildDirectory;\Unit Test Reports\*.xml</file>]]></value>
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
     </largeproperty>
-    <call target="Packages.AddMergeFiles"/>
+    <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="DotNetUnitTest.SetAsCurrentPackage">

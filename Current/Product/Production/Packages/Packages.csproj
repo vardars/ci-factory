@@ -233,6 +233,8 @@
     <Content Include="CVS\Install\Properties.xml" />
     <Content Include="CVS\SourceControl.Properties.xml" />
     <Content Include="CVS\SourceControl.Target.xml" />
+    <Content Include="DotNetUnitTest\MbUnitDisplayReport.xsl" />
+    <Content Include="DotNetUnitTest\MbUnitDisplaySummary.xsl" />
     <Content Include="FinalBuilder\Install\Install.xml" />
     <Content Include="FinalBuilder\Install\Properties.xml" />
     <Content Include="FinalBuilder\FinalBuilder.Properties.xml" />

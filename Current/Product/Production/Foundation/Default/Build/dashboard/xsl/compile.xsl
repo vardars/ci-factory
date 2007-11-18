@@ -12,8 +12,10 @@
       <xsl:if test="$builderror.count > 0">
         <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
           <tr>
-            <td class="sectionheader-error">
-              Build Errors: (<xsl:value-of select="$builderror.count"/>)
+            <td  height="42" class="sectionheader-container-error">
+              <div class="sectionheader-text">
+                Build Errors: (<xsl:value-of select="$builderror.count"/>)
+              </div>
             </td>
           </tr>
           <tr>
@@ -35,8 +37,10 @@
       <xsl:if test="$warning.count > 0">
         <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
           <tr>
-            <td class="sectionheader-warning">
-              Build Warnings: (<xsl:value-of select="$warning.count"/>)
+            <td  height="42" class="sectionheader-container-warning">
+              <div class="sectionheader-text">
+                Build Warnings: (<xsl:value-of select="$warning.count"/>)
+              </div>
             </td>
           </tr>
           <tr>

@@ -207,7 +207,7 @@
 	<xsl:template match="report-result">
             <table cellpadding="2" cellspacing="0" border="0" width="98%">
             <tr>
-                <td class="unittests-sectionheader" colspan="3">
+                <td class="sectionheader" colspan="3">
                     MbUnit Tests run:
                     <xsl:value-of select="counter/@run-count" /> tests,
                     <xsl:value-of select="counter/@success-count" /> succeeded,
