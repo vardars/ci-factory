@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="P4TestProject" />
+
+  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+  <property name="ProductDirectoryName"       value="Product"/>
+  <property name="ThirdPartyDirectoryName"    value="Third Party"/>
+  <property name="ProductionDirectoryName"    value="Production"/>
+  <property name="UnitTestDirectoryName"    value="Unit Test"/>
+  <property name="InstallDirectoryName"     value="Install"/>
+
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
+  <property name="CCNET.ServerPort" value="21246"/>
+  <property name="CCNET.ModificationDelaySeconds" value="0"/>
+  <property name="CCNET.IntervalTrigger" value="60"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+	<property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
+  <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
+
+	<property name="Perforce.ServerName" value="localhost" />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <property name="Install.Quiet" value="true"/>
+  <property name="Simian.AcceptLicense" value="true"/>
+  <property name="nDepend.AcceptLicense" value="true"/>
+
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="Perforce"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+
+    <string value="Deployment"/>
+    <string value="Workspace"/>
+  </strings>
+
+  <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}" />
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagesDirectory}\Perforce\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+
+</project>
