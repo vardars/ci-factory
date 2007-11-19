@@ -24,10 +24,10 @@
             <xsl:attribute name="class">
               <xsl:choose>
                 <xsl:when test="$stuff/@failures > 0">
-                  <xsl:value-of select="sectionheader-container-error"/>
+                  <xsl:text>sectionheader-container-error"</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="sectionheader-container"/>
+                  <xsl:text>sectionheader-container"</xsl:text>
                 </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
