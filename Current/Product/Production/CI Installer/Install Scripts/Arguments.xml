@@ -6,9 +6,11 @@
 
   <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
   <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
-  <property name="ProductDirectoryName"       value="Product"/>
-  <property name="ThirdPartyDirectoryName"    value="Third Party"/>
-  <property name="ProductionDirectoryName"    value="Production"/>
+  <property name="ProductDirectoryName"     value="Product"/>
+  <property name="ThirdPartyDirectoryName"  value="Third Party"/>
+  <property name="ProductionDirectoryName"  value="Production"/>
+  <property name="UnitTestDirectoryName"    value="Unit Test"/>
+  <property name="InstallDirectoryName"     value="Install"/>
   
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
@@ -49,6 +51,7 @@
     <string value="NCover" />
     <string value="DotNetUnitTest"/>
     <string value="nDepend"/>
+    <string value="FxCop"/>
     <string value="Simian" />
     <string value="Analytics" />
     <string value="Alerts" />
@@ -64,7 +67,6 @@
     <string value="Backup" />
     <string value="VS.NETCompile"/>
     <string value="MSTest" />
-    <string value="CoverageEye"/>
     <string value="Tracker"/>
     <string value="InstallShield"/>
 		<string value="Vault"/>

@@ -9,6 +9,8 @@
   <property name="ProductDirectoryName"       value="src"/>
   <property name="ThirdPartyDirectoryName"    value="lib"/>
   <property name="ProductionDirectoryName"    value="Production"/>
+  <property name="UnitTestDirectoryName"    value="Unit Test"/>
+  <property name="InstallDirectoryName"     value="Install"/>
 
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>

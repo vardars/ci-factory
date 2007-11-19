@@ -20,7 +20,10 @@
   <property name="ProductDirectory"         value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ProductDirectoryName}"  overwrite="false"/>
   <property name="ThirdPartyDirectory"      value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ThirdPartyDirectoryName}"  overwrite="false"/>
   <property name="ProductionDirectory"      value="${ProductDirectory}\${ProductionDirectoryName}"  overwrite="false"/>
+  <property name="UnitTestDirectory"        value="${ProductDirectory}\${UnitTestDirectoryName}"  overwrite="false"/>
+  <property name="InstallDirectory"         value="${ProductDirectory}\${InstallDirectoryName}"  overwrite="false"/>
   <property name="BuildDirectory"           value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}"  overwrite="false"/>
+  <property name="PackagesDirectory"        value="${BuildDirectory}\${PackagesDirectoryName}"  overwrite="false"/>
   <property name="PackagesDirectory"        value="${BuildDirectory}\${PackagesDirectoryName}"  overwrite="false"/>
   
   <property name="PackagesDirectory.Ref"    value="${string::replace('${PackagesDirectory}/', '/', '')}" />

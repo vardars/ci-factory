@@ -3,8 +3,6 @@
 
 	<include buildfile="XenocodePostbuild.Properties.xml"/>
 
-	<property name="Private.InstallDirectory" value="${ProductDirectory}\Install" />
-
 	<target name="XenocodePostbuild.SetUp">
 
 	</target>

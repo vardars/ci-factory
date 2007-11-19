@@ -21,6 +21,8 @@
   <property name="BuildDirectory"             value="&BuildDirectory;" />
   <property name="ArtifactRootDirectory"      value="&ArtifactRootDirectory;"/>
   <property name="PackagesDirectory"          value="&PackagesDirectory;"/>
+  <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
+  <property name="InstallDirectory"           value="&InstallDirectory;"/>
 
   <property name="ProductDirectoryName"       value="&ProductDirectoryName;"/>
   <property name="ThirdPartyDirectoryName"    value="&ThirdPartyDirectoryName;"/>
@@ -28,6 +30,8 @@
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
   <property name="ArtifactRootDirectoryName"  value="&ArtifactRootDirectoryName;"/>
   <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>
+  <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
+  <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
 
   <property name="NantBinPath" value="&NantBinPath;"/>
   <property name="NantExePath" value="&NantExePath;"/>

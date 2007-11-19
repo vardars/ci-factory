@@ -24,7 +24,7 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</x
+            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
             <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>]]>
       </value>

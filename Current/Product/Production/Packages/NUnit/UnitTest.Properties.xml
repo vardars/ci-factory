@@ -2,11 +2,10 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
   <property name="NUnit.ProjectConfigFilePath" value="${ProductDirectory}\${ProjectName}UnitTest.config" overwrite="false"/>
   <property name="NUnit.ProjectFilePath" value="${ProductDirectory}\${ProjectName}.nunit" overwrite="false"/>
-  <property name="UnitTest.TestPath" value="${ProductDirectory}\Unit Test" overwrite="false"/>
   <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll" overwrite="false"/>
   
   <fileset id="UnitTest.ProjectFiles">
-    <include name="${UnitTest.TestPath}\**\*.*proj"/>
+    <include name="${UnitTestDirectory}\**\*.*proj"/>
   </fileset>
 
 	<property name="NUnit.ConsolePath" value="%NUnit.ConsolePath%"  overwrite="false"/>

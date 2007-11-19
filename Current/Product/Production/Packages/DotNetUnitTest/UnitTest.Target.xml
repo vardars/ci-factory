@@ -12,7 +12,6 @@
 	<!--
 	The following properties should be specified in the calling script.
 	
-	<property name="UnitTest.TestPath" value=""/>
 	<property name="UnitTest.TestAssemblyFormat" value=""/>
 	<property name="UnitTest.ReportFolder" value=""/>
 	<property name="UnitTest.ReportNameFormat" value=""/>
@@ -60,7 +59,8 @@
 
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
                out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
-               style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"/>
+               style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"
+               if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
 			</finally>
 		</trycatch>
 		
@@ -91,8 +91,8 @@
 
   <target name="UnitTest.FindTestAssebmlies">
     <fileset id="UnitTest.TestAssemblies" >
-      <include name="${UnitTest.TestPath}\**\bin\${UnitTest.TestAssemblyFormat}" />
-      <include name="${UnitTest.TestPath}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTestDirectory}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTestDirectory}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
     </fileset>
   </target>
 

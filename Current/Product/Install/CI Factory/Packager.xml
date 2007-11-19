@@ -40,6 +40,7 @@
     <copy todir="${ZipDirectory}" includeemptydirs="true">
       <fileset basedir="${ProductDirectory}\Production" defaultexcludes="false">
         <include name="Packages\**\*"/>
+        <exclude name="Packages\CoverageEye"/>
         <exclude name="Packages\Packages.csproj"/>
         <exclude name="Packages\obj"/>
         <exclude name="Packages\obj\**\*"/>

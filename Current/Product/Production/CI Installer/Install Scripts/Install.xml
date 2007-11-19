@@ -6,11 +6,11 @@
   <property name="Install.Action" value="Install.Project" overwrite="false"/>
 
   <filterchain id="Common.FilterChain">
-    <replacestring from="%ProjectName%"  to="${ProjectName}"   />
-    <replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
+    <replacestring from="%ProjectName%"                 to="${ProjectName}"   />
+    <replacestring from="%ProjectCodeLineName%"         to="${ProjectCodeLineName}"  />
 
-    <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
-    <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
+    <replacestring from="%ProjectsDirectory%"           to="${ProjectsDirectory}"  />
+    <replacestring from="%ProjectRootDirectory%"        to="${ProjectRootDirectory}"  />
     
     <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
     <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
@@ -18,6 +18,8 @@
     <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
     <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
     <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
+    <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
+    <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
   </filterchain>
   
   <include buildfile="Scripts\CCNET.Install.xml"/>
@@ -62,6 +64,8 @@
     <mkdir unless="${directory::exists(ProductionDirectory)}"      dir="${ProductionDirectory}"/>
     <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
     <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
+    <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
+    <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
   </target>
   
 </project>

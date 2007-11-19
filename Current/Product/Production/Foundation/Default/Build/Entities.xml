@@ -10,6 +10,8 @@
 <!ENTITY BuildDirectoryName           '%BuildDirectoryName%' >
 <!ENTITY ArtifactRootDirectoryName    '%ArtifactRootDirectoryName%' >
 <!ENTITY PackagesDirectoryName        '%PackagesDirectoryName%' >
+<!ENTITY UnitTestDirectoryName        '%UnitTestDirectoryName%' >
+<!ENTITY InstallDirectoryName         '%InstallDirectoryName%' >
 
 <!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
 <!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
@@ -19,6 +21,8 @@
 <!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
 <!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&ArtifactRootDirectoryName;' >
 <!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
+<!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >
+<!ENTITY InstallDirectory      '&ProductDirectory;\&InstallDirectoryName;' >
 
 <!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
 <!ENTITY NantExePath              '&NantBinPath;\nant.exe' >

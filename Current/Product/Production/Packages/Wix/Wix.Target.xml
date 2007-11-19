@@ -3,8 +3,6 @@
 
 	<include buildfile="Wix.Properties.xml"/>
 
-	<property name="Private.InstallDirectory" value="${ProductDirectory}\Install" />
-
 	<target name="Wix.SetUp">
 
 	</target>
@@ -26,7 +24,7 @@
 				<property name="Wix.Name" value="${path::get-file-name-without-extension(Wix.ProjectFile.Path)}" />
 				<property name="Wix.OutputDir" value="${Common.ArtifactDirectoryPath}" />
 
-				<echo message="Running candle.exe -out ${Private.InstallDirectory}\${ProjectName}\${path::get-file-name-without-extension(Wix.ProjectFile.Path)}.wixobj ${Wix.ProjectFile.Path}" />
+				<echo message="Running candle.exe -out ${InstallDirectory}\${ProjectName}\${path::get-file-name-without-extension(Wix.ProjectFile.Path)}.wixobj ${Wix.ProjectFile.Path}" />
 
 				<mkdir dir="${Common.TempDirectory}\Wix\" />
 

@@ -49,6 +49,12 @@
       <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
       <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
       <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.ReportDirectory"/>
+      <property name="Common.TempDirectory"/>
+      <property name="UnitTestDirectory"/>
+      <property name="InstallDirectory"/>
     </saveproperties>
   </target>
 

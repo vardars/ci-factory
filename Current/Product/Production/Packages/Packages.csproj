@@ -250,6 +250,11 @@
     <Content Include="FxCop\Install\Install.xml" />
     <Content Include="FxCop\Install\Properties.xml" />
     <Content Include="MSBuild\Install\Properties.xml" />
+    <Content Include="NCover\logo.ico" />
+    <Content Include="NCover\NCoverDisplayReport.xsl" />
+    <Content Include="NCover\NCoverDisplaySummary.xsl" />
+    <Content Include="NCover\NCoverExplorer-Legacy.xsl" />
+    <Content Include="NCover\NCoverExplorerSummary-Legacy.xsl" />
     <Content Include="nDepend\logo.gif" />
     <Content Include="nDepend\ndependsummary-ccnet.xsl" />
     <Content Include="nDepend\nDependSummaryDisplay.xsl" />

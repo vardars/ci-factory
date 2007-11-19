@@ -115,12 +115,12 @@
 
     <xmlpeek property="NUnitTests.TestSubject.Coverage"
 						 file="${NUnitTests.BuildLogPath}"
-						 xpath="//coverageReport2//modules/module[@n = 'TestSubject.dll']/@c" />
-    <assertequal expected="100" actual="${NUnitTests.TestSubject.Coverage}" message="Expected there to be 100% coverage on TestSubject."/>
+						 xpath="/cruisecontrol/build/ncoversummary/tr/td[text() ='TestSubject.dll']/following-sibling::td[1]" />
+    <assertequal expected="100.0%" actual="${string::trim(NUnitTests.TestSubject.Coverage)}" message="Expected there to be 100% coverage on TestSubject."/>
 
     <xmlpeek property="NUnitTests.MoreTestSubject.Coverage"
 						 file="${NUnitTests.BuildLogPath}"
-						 xpath="//coverageReport2//modules/module[@n = 'MoreTestSubject.dll']/@c" />
-    <assertequal expected="100" actual="${NUnitTests.MoreTestSubject.Coverage}" message="Expected there to be 100% coverage on MoreTestSubject ."/>
+						 xpath="/cruisecontrol/build/ncoversummary/tr/td[text() ='MoreTestSubject.dll']/following-sibling::td[1]" />
+    <assertequal expected="100.0%" actual="${string::trim(NUnitTests.MoreTestSubject.Coverage)}" message="Expected there to be 100% coverage on MoreTestSubject ."/>
 	</target>
 </project>
