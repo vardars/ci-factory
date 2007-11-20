@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Create Branch Script" default="CreateBranch">
+
+	<include buildfile="Properties.Build.xml"/>
+	<include buildfile="Common.Build.xml" />
+
+	<fileset id="PacakgeFinder" />
+	<ifnot test="${property::exists('SourceControl.PackageName')}">
+		<property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+		<function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+		<property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+		<property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
+	</ifnot>
+	
+	<include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Target.xml" />
+
+
+	<target name="CreateBranch">
+		<property name="CCNetProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+		<property name="CCNetServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
+
+		<property name="StateFilePath" value="${BuildDirectory}\server\${CCNetProjectName}.state"/>
+		
+		<if test="${file::exists(StateFilePath)}">
+			<fail message="Please execute this on the build server."/>
+		</if>
+
+		<call target="AskForBranchName"/>
+
+		<echo message="New branch name: '${BranchName}'."/>
+
+		<call target="AskForBuildServerHostName"/>
+
+		<call target="AskForBuildServerPort"/>
+
+		<call target="SetBranchProperties"/>
+
+		<ifnot test="${target::exists('SourceControl.CreateBranch')}">
+			<fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
+		</ifnot>
+
+		<property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
+		<call target="SourceControl.CreateBranch"/>
+
+		<call target="EditBranchXmlEntities"/>
+		<call target="SetBranchCCNetLabels"/>
+		<call target="SetBranchParentCCNetLabels"/>
+	</target>
+
+	<target name="CreateBranchStateFiles">
+
+		<!--Ask for the main version (1.0.0.23) then parse it prefix '1.0.0.'-->
+
+		<largeproperty name="LabelPrefixPattern">
+			<value expand="true" xml="false">
+				<![CDATA[\<\!ENTITY\s+LabelPrefix\s+'${LabelPrefix}'\s+\>]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="NewLabelPrefixEntity">
+			<value expand="true" xml="false">
+				<![CDATA[<!ENTITY\s+LabelPrefix\s+'${BranchLabelPrefix}'\s+>]]>
+			</value>
+		</largeproperty>
+
+		<replace file="${BranchBuildDirectory}\Entities.xml">
+			<filterchain>
+				<regexreplace replacment="${NewLabelPrefixEntity}" pattern="${LabelPrefixPattern}" lines="1" />
+			</filterchain>
+		</replace>
+		
+		<xmlquery query='/cruisecontrol/project/@name' file='' id='' />
+		
+<!--
+loop over all projects, if the label prefix == the what was set answered above write a new state file
+, ifnot ask what the prefix should be, set it, and write a new state file
+-->
+		
+		<largeproperty name="StateFile.Content">
+			<value expand="true" xml="false">
+				<![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<IntegrationResult xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectName>${ProjectName}-${BranchName}</ProjectName>
+  <Label>${InitialVersion}</Label>
+</IntegrationResult>]]>
+			</value>
+		</largeproperty>
+
+		<write append="false" encoding="utf-16"
+					 file="${BranchBuildDirectory}\server\${ProjectName}-${BranchName}.state">
+			<text expand="true" xml="false">${StateFile.Content}</text>
+		</write>
+	</target>
+
+	<target name="EditBranchXmlEntities">
+		<largeproperty name="CodeLinePattern">
+			<value expand="true" xml="false">
+				<![CDATA[\<\!ENTITY\s+ProjectCodeLineName\s+'${ProjectCodeLineName}'\s+\>]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="NewCodeLineEntity">
+			<value expand="true" xml="false">
+				<![CDATA[<!ENTITY ProjectCodeLineName      '${BranchName}' >]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="BuildServerPortPattern">
+			<value expand="true" xml="false">
+				<![CDATA[\<\!ENTITY\s+Port\s+'${BuildServerPort}'\s+\>]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="NewBuildServerPortEntity">
+			<value expand="true" xml="false">
+				<![CDATA[<!ENTITY Port      '${BranchBuildServerPort}' >]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="BuildServerHostNamePattern">
+			<value expand="true" xml="false">
+				<![CDATA[\<\!ENTITY\s+HostName\s+'${BuildServerHostName}'\s+\>]]>
+			</value>
+		</largeproperty>
+
+		<largeproperty name="NewBuildServerHostNameEntity">
+			<value expand="true" xml="false">
+				<![CDATA[<!ENTITY\s+HostName\s+'${BranchBuildServerHostName}'\s+>]]>
+			</value>
+		</largeproperty>
+
+		<replace file="${BranchBuildDirectory}\Entities.xml">
+			<filterchain>
+				<regexreplace replacment="${NewCodeLineEntity}" pattern="${CodeLinePattern}" lines="1" />
+				<regexreplace replacment="${NewBuildServerPortEntity}" pattern="${BuildServerPortPattern}" lines="1" />
+				<regexreplace replacment="${NewBuildServerHostNameEntity}" pattern="${BuildServerHostNamePattern}" lines="1" />
+			</filterchain>
+		</replace>
+	</target>
+
+	<target name="SetBranchProperties">
+		<property name="BranchProjectCodeLineDirectory" value="${ProjectRootDirectory}\${BranchName}" />
+		<property name="BranchProductDirectory"         value="${BranchProjectCodeLineDirectory}\${ProductDirectoryName}"  />
+		<property name="BranchThirdPartyDirectory"      value="${BranchProjectCodeLineDirectory}\${ThirdPartyDirectoryName}" />
+		<property name="BranchBuildDirectory"           value="${BranchProjectCodeLineDirectory}\${BuildDirectoryName}"  />
+		<property name="BranchProductionDirectory"      value="${BranchProductDirectory}\${ProductionDirectoryName}"  />
+		<property name="BranchUnitTestDirectory"        value="${BranchProductDirectory}\${UnitTestDirectoryName}"  />
+		<property name="BranchInstallDirectory"         value="${BranchProductDirectory}\${InstallDirectoryName}"  />
+		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${PackagesDirectoryName}"  />
+	</target>
+
+	<target name="AskForBuildServerPort" unless="${property::exists('BranchBuildServerPort')}">
+		<largeproperty name="BuildServerPortQuestion">
+			<value expand="true" xml="false">
+				<![CDATA[What port number should CCNet use?
+
+The '${CurrentVersion}' port is '${BuildServerPort}'.
+Maybe ${int::parse(BuildServerPort) + 1} is available.]]>
+			</value>
+		</largeproperty>
+
+		<ask answer="BranchBuildServerPort"
+				 caption="What port number?"
+				 dialogmode="FreeText"
+				 question="${BuildServerPortQuestion}"
+				 showdialog="true"
+		/>
+	</target>
+
+	<target name="AskForBuildServerHostName" unless="${property::exists('BranchBuildServerHostName')}">
+		<largeproperty name="BuildServerHostNameQuestion">
+			<value expand="true" xml="false">
+				<![CDATA[What is the name of the server that will host this build server?
+
+The '${CurrentVersion}' host name is '${BuildServerHostName}'.]]>
+			</value>
+		</largeproperty>
+
+		<ask answer="BranchBuildServerHostName"
+				 caption="What is the host server name?"
+				 dialogmode="FreeText"
+				 question="${BuildServerHostNameQuestion}"
+				 showdialog="true"
+		/>
+	</target>
+
+	<target name="AskForBranchName" unless="${property::exists('BranchName')}">
+		<xmlpeek file="${StateFilePath}"
+					 property="CurrentVersion"
+					 xpath="/IntegrationResult/LastSuccessfulIntegrationLabel" />
+
+		<largeproperty name="BranchNameQuestion">
+			<value expand="true" xml="false">
+				<![CDATA[What do you want to name this branch?
+
+The current version is '${CurrentVersion}'.]]>
+			</value>
+		</largeproperty>
+
+		<ask answer="BranchName"
+				 caption="What do you want to name this branch?"
+				 dialogmode="FreeText"
+				 question="${BranchNameQuestion}"
+				 showdialog="true"
+		/>
+	</target>
+</project>
