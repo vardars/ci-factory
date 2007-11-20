@@ -3,6 +3,8 @@
   <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
   <property name="Install.Action" value="Install.Project" />
   <property name="ProjectName" value="VSSTestProject" />
+	<property name="CCNET.LabelPrefix" value="1.0.0."/>
+	<property name="InitialVersion" value="1.0.0.0"/>
 
   <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
   <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>

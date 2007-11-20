@@ -441,6 +441,7 @@
       <fileset basedir="${ProjectRootDirectory}">
         <include name="**/*"/>
         <exclude name="**/*.scc"/>
+				<exclude name="${BuildDirectory}\server\*.state" />
       </fileset>
 
     </vssadd>

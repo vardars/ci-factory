@@ -258,6 +258,7 @@
 			<in>
 				<items>
 					<include name="${ProjectCodeLineDirectory}\**\*"/>
+					<exclude name="${BuildDirectory}\server\*.state"/>
 				</items>
 			</in>
 			<do>

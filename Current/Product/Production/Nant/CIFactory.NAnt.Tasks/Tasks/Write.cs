@@ -6,6 +6,7 @@ using NAnt.Core;
 using NAnt.Core.Filters;
 using NAnt.Core.Attributes;
 using CIFactory.NAnt.Types;
+using System.Text;
 
 namespace CIFactory.NAnt.Tasks
 {
@@ -21,6 +22,7 @@ namespace CIFactory.NAnt.Tasks
         private FileInfo _OutFile;
 
         private TextElement _Text;
+        private Encoding _encoding;
 
         #endregion
 
@@ -54,6 +56,13 @@ namespace CIFactory.NAnt.Tasks
             set { _Text = value; }
         }
 
+        [TaskAttribute("encoding")]
+        public Encoding Encoding
+        {
+            get { return _encoding; }
+            set { _encoding = value; }
+        }
+
         #endregion
 
         #region Protected Methods
@@ -76,14 +85,8 @@ namespace CIFactory.NAnt.Tasks
 
         private StreamWriter GetWriter()
         {
-            if (this.Append)
-            {
-                return this.OutFile.AppendText();
-            }
-            else
-            {
-                return this.OutFile.CreateText();
-            }
+            Encoding encoding = (Encoding != null) ? Encoding : Encoding.Default;
+            return new StreamWriter(this.OutFile.FullName, this.Append, encoding);
         }
 
         private void Write()

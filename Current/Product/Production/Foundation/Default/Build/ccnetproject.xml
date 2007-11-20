@@ -14,7 +14,7 @@
         </groups>
       </email>'>
   <!ENTITY labeller '<labeller type="defaultlabeller">
-      <prefix>1.0.0.</prefix>
+      <prefix>&LabelPrefix;</prefix>
     </labeller>'>
   <!ENTITY DevBuilding '<projectFilter
                serverUri="tcp://localhost:&Port;/CruiseManager.rem"
@@ -56,7 +56,9 @@
     </integrationFilter>
     <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
     %SourceControl.BuildUpdateBlock%
-    &labeller;
+  <labeller type="defaultlabeller">
+		<prefix>BuildScripts.</prefix>
+	</labeller>
   <tasks>
     <nullTask/>
   </tasks>

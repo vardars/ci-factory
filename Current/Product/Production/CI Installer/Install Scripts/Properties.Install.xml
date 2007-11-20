@@ -24,7 +24,6 @@
   <property name="InstallDirectory"         value="${ProductDirectory}\${InstallDirectoryName}"  overwrite="false"/>
   <property name="BuildDirectory"           value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}"  overwrite="false"/>
   <property name="PackagesDirectory"        value="${BuildDirectory}\${PackagesDirectoryName}"  overwrite="false"/>
-  <property name="PackagesDirectory"        value="${BuildDirectory}\${PackagesDirectoryName}"  overwrite="false"/>
   
   <property name="PackagesDirectory.Ref"    value="${string::replace('${PackagesDirectory}/', '/', '')}" />
 

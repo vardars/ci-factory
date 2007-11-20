@@ -147,6 +147,7 @@
     <vaultadd folderPath="${Private.SourceControl.AddLocalDirectory}" failonerror="false">
       <fileset>
         <include name="${Private.SourceControl.AddLocalDirectory}\*.*" />
+				<exclude name="${BuildDirectory}\server\*.state" />
       </fileset>
     </vaultadd>
   </target>

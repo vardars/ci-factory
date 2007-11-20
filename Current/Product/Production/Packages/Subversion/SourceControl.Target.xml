@@ -314,6 +314,18 @@
       </exec>
     </if>
 
+		<exec program="svn" workingdir="${BuildDirectory}\server" verbose="true" >
+			<arg line="revert"/>
+			<arg line="*.state" />
+		</exec>
+
+		<exec program="svn" workingdir="${BuildDirectory}\server" verbose="true" >
+			<arg line="propset"/>
+			<arg line="svn:ignore"/>
+			<arg line="*.state" />
+			<arg line="."/>
+		</exec>
+
     <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
       <arg line="commit" />
       <arg line="--non-interactive" />

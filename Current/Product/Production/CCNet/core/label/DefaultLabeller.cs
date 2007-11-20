@@ -43,6 +43,8 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 
 		private string IncrementLabel(string label)
 		{
+            if (!Regex.IsMatch(label, string.Format(@"{0}\d+$", LabelPrefix)))
+                return LabelPrefix + INITIAL_LABEL;
 			string numericLabel = Regex.Replace(label, @".*?(\d+$)", "$1");
 			int newLabel = int.Parse(numericLabel);
 			newLabel++;
