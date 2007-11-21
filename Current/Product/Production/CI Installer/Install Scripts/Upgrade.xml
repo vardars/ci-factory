@@ -73,6 +73,7 @@
       <ask answer="BuildDirectoryName" caption="Can't Find the Build Directory" dialogmode="FreeText" question="What is the name of the Build directory?" showdialog="true"></ask>
     </ifnot>
 
+    <property name="CCNetProject" value="${ProjectName}"/>
     <include buildfile="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}\Properties.build.xml" />
 
     <property name="ProductDirectoryName"       value="Product" overwrite="false"/>
@@ -80,6 +81,11 @@
     <property name="ProductionDirectoryName"    value="Production" overwrite="false"/>
     <property name="ArtifactRootDirectoryName"  value="Artifact" overwrite="false"/>
     <property name="PackagesDirectoryName"      value="Packages" overwrite="false"/>
+    <property name="UnitTestDirectoryName"      value="Unit Test" overwrite="false"/>
+    <property name="InstallDirectoryName"       value="Install" overwrite="false"/>
+
+    <property name="UnitTestDirectory"        value="${ProductDirectory}\${UnitTestDirectoryName}"  overwrite="false"/>
+    <property name="InstallDirectory"         value="${ProductDirectory}\${InstallDirectoryName}"  overwrite="false"/>
 
     <property name="Common.ArtifactFolderName" value="bogas"/>
     <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
@@ -99,6 +105,35 @@
     <property name="CCNetProject" value="${ProjectName}-${ProjectCodeLineName}"/>
     <property name="CCNetLogFilePath" value=""/>
 
+    <ifnot test="${property::exists('LabelPrefix')}">
+      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+               property="CCNetProjectCount"
+               xpath="count(/cruisecontrol/project)"
+               failonerror="false" />
+      
+      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+               property="LabelPrefix"
+               xpath="/cruisecontrol/project[@name = '${ProjectName}']/labeller/prefix" 
+               failonerror="false"
+               if="${property::exists('CCNetProjectCount') and CCNetProjectCount == '2'}"/>
+    </ifnot>
+
+    <ifnot test="${property::exists('LabelPrefix')}">
+      <largeproperty name="LabelPrefixQuestion">
+        <value expand="" xml="">
+          <![CDATA[What is the version or label prefix for this build project?
+When CI Factory first installed your project it was set to '1.0.0.' in the file ccnetproject.xml.]]>
+        </value>
+      </largeproperty>
+      <ask answer="LabelPrefix"
+           caption="What is the version prefix?"
+           dialogmode="FreeText"
+           question="${LabelPrefixQuestion}"
+           showdialog="true" />
+    </ifnot>
+    
+    <property name="CCNET.LabelPrefix" value="${LabelPrefix}"/>
+    
 		<fileset id="PacakgeFinder" />
 		<ifnot test="${property::exists('SourceControl.PackageName')}">
 			<property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
@@ -109,15 +144,70 @@
 			<property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
 		</ifnot>
 
-		<nant buildfile="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"
-					target="SourceControl.GetOfCodeLineDirectory">
-			<properties>
-				<property name="SourceControl.Update.FileTimeStamp" value="Current"/>
-				<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
-				<property name="SourceControl.Update.MakeWritable" value="False"/>
-				<property name="SourceControl.Update.Interactive" value="True"/>
-			</properties>
-		</nant>
+    <xmlpeek file="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml" property="SourceUpdateTarget" xpath="//Target[@name == 'SourceControl.GetOfCodeLineDirectory']/@name" failonerror="false" />
+
+    <strings id="SourceUpdateTargets" />
+    
+    <ifthenelse test="${property::exists('SourceUpdateTarget')}">
+      <then>
+        <function execute="${stringlist::add('SourceUpdateTargets', SourceUpdateTarget)}"/>
+      </then>
+      <else>
+        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfBuildDirectory')}"/>
+        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfThirdPartyDirectory')}"/>
+        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfProductDirectory')}"/>
+      </else>
+    </ifthenelse>
+
+    <mkdir dir="c:\temp" unless="${directory::exists('c:\temp')}"/>
+    <property name="TempPropertiesFile" value="c:\temp\prop.file"/>
+
+    <saveproperties file="${TempPropertiesFile}" format="CommandLine" >
+      <property name="CCNetBuildCondition"/>
+      <property name="CCNetIntegrationStatus"/>
+      <property name="CCNetLabel"/>
+      <property name="CCNetLastIntegrationStatus"/>
+      <property name="CCNetProject"/>
+      <property name="CCNetBuildDate"/>
+      <property name="CCNetBuildTime"/>
+      <property name="CCNetArtifactDirectory"/>
+      <property name="CCNetWorkingDirectory"/>
+      <property name="ProjectName"/>
+      <property name="ProjectCodeLineName"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
+      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.ReportDirectory"/>
+      <property name="Common.TempDirectory"/>
+      <property name="UnitTestDirectory"/>
+      <property name="InstallDirectory"/>
+    </saveproperties>
+
+    <loopthrough property="SourceUpdateTarget">
+      <items>
+        <strings refid="SourceUpdateTargets" />
+      </items>
+      <do>
+        <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
+          <arg line='/f:"${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"'/>
+          <arg line='${SourceUpdateTarget}' />
+          <arg line='-D:"SourceControl.Update.FileTimeStamp=Current"' />
+          <arg line='-D:"SourceControl.Update.ReplaceWritableFiles=False"' />
+          <arg line='-D:"SourceControl.Update.MakeWritable=False"' />
+          <arg line='-D:"SourceControl.Update.Interactive=True"' />
+          <arg line='@"${TempPropertiesFile}"' />
+        </exec>
+      </do>
+    </loopthrough>
 
 		<filterchain id="Common.FilterChain">
 			<replacestring from="%ProjectName%"  to="${ProjectName}"   />
@@ -132,6 +222,8 @@
       <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
       <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
       <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
+      <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
+      <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
 		</filterchain>
 		
 		<largeproperty name="UpgradeOverview">
@@ -139,8 +231,8 @@
   <![CDATA[Please review the following upgrade:
 Project Name:     ${ProjectName}
 Codeline Name:    ${ProjectCodeLineName}
-Current Version:  ${file::get-product-version(BuildDirectory + '\nAnt\bin\nant.exe')}
-Upgrade Version:  ${file::get-product-version(SourceRoot + '\nAnt\bin\nant.exe')}
+Current Version:  ${file::get-product-version(BuildDirectory + '\server\ThoughtWorks.CruiseControl.Core.dll')}
+Upgrade Version:  ${file::get-product-version(SourceBuildDirectory + '\server\ThoughtWorks.CruiseControl.Core.dll')}
 
 ProductDirectory    = ${ProductDirectory}
 ThirdPartyDirectory = ${ThirdPartyDirectory}
@@ -160,6 +252,16 @@ BuildDirectory      = ${BuildDirectory}
 
 		<fail message="Upgrade canceled." if="${Answer == 'Cancel Upgrade'}"/>
 
+    <ask answer="Preserve.Some"
+				 caption="Preserve customizations?"
+				 question="Have you made customizations that you would like to preserve?"
+				 showdialog="true">
+      <options>
+        <string value="Yes"/>
+        <string value="No"/>
+      </options>
+    </ask>
+    
 		<xmlpeek file="${BuildDirectory}\dashboard\dashboard.config" 
 						 property="CCNetServer.Url" 
 						 xpath="/dashboard/remoteServices/servers/server/@url" />
@@ -168,6 +270,23 @@ BuildDirectory      = ${BuildDirectory}
 		<call target="Upgrade.Packages.ValidateParameters"/>
 		<call target="Upgrade.Foundation"/>
 		<call target="Upgrade.Packages"/>
+
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <ifnot test="${string::starts-with(WinRarProgramPath, '${')}">
+      <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}"/>
+    </ifnot>
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="WinRarProgramPath" value="${WinRarProgramPath}" />
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
 
     <largeproperty name="ManualSteps">
       <value expand="true" xml="false">
@@ -178,12 +297,16 @@ BuildDirectory      = ${BuildDirectory}
 Please note that the upgrade script is not complete.
 There are actions that you must do to complete the upgrade.
 
-1) If files were added the the directory they need to be added to source control.
-A brute force approatch is to diff the tree, to identify which if any files need to be added.
+1) Most likely some files were added and they need to be added to source control.
+A brute force approach is to diff the tree, to identify which if any files need to be added.
 
 2) If this is not the build server then you need to update the build server by hand from source control after you have finished updating source control.
 
 3) Turn the ccnet server back on.
+
+4) You may need to run the SetupIIS.xml nant script in the Build server as the virtual directory names and structure have changed since version 0.8.
+      From the build directory execute:
+          C:\Projects\${ProjectName}\Current\Build>nAnt\bin\NAnt.exe /f:SetupIIS.xml
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -318,10 +441,13 @@ A brute force approatch is to diff the tree, to identify which if any files need
         <strings refid="${Files}" />
 			</items>
 			<do>
-				<ask answer="Preserve.Base"
+        <if test="${Preserve.Some == 'No'}">
+          <property name="Preserve.Base" value="No"/>
+        </if>
+        <ask answer="Preserve.Base"
 				 caption="Preserve customizations to ${TargetDirectoryName}\${File}?"
 				 question="Have you made customizations to ${TargetDirectoryName}\${File} that you would like to preserve?"
-				 showdialog="true">
+				 showdialog="true" unless="${property::exists('Preserve.Base')}">
 					<options>
 						<string value="Yes"/>
 						<string value="No"/>
@@ -395,36 +521,42 @@ A brute force approatch is to diff the tree, to identify which if any files need
     
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 
-		<ask answer="Preserve.CCNetDashboard"
+    <if test="${Preserve.Some == 'No'}">
+      <property name="Preserve.CCNetDashboard" value="No"/>
+    </if>
+    <ask answer="Preserve.CCNetDashboard"
 				 caption="Preserve customizations to CCNet Dashboard?"
 				 question="Have you made customizations to the CCNet dashboard that you would like to preserve?"
-				 showdialog="true">
-			<options>
-				<string value="Yes"/>
-				<string value="No"/>
-			</options>
-		</ask>
+				 showdialog="true" unless="${property::exists('Preserve.CCNetDashboard')}">
+      <options>
+        <string value="Yes"/>
+        <string value="No"/>
+      </options>
+    </ask>
 
-		<ifthenelse test="${Preserve.CCNetDashboard == 'Yes'}">
-			<then>
-				<exec basedir="${Winmerge.DirectoryPath}" 
+    <ifthenelse test="${Preserve.CCNetDashboard == 'Yes'}">
+      <then>
+        <exec basedir="${Winmerge.DirectoryPath}"
 							program="winmerge"
 							failonerror="false">
-					<arg line="/x" />
-					<arg line="/e" />
-					<arg line='"${SourceBuildDirectory}\dashboard"' />
-					<arg line='"${BuildDirectory}\dashboard"' />
-				</exec>
-			</then>
-			<else>
-				<call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
-			</else>
-		</ifthenelse>
+          <arg line="/x" />
+          <arg line="/e" />
+          <arg line='"${SourceBuildDirectory}\dashboard"' />
+          <arg line='"${BuildDirectory}\dashboard"' />
+        </exec>
+      </then>
+      <else>
+        <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
+      </else>
+    </ifthenelse>
 
+    <if test="${Preserve.Some == 'No'}">
+      <property name="Preserve.CCNetServer" value="No"/>
+    </if>
 		<ask answer="Preserve.CCNetServer"
 				 caption="Preserve customizations to CCNet Server?"
 				 question="Have you made customizations to the CCNet Server that you would like to preserve?"
-				 showdialog="true">
+				 showdialog="true" unless="${property::exists('Preserve.CCNetServer')}">
 			<options>
 				<string value="Yes"/>
 				<string value="No"/>
@@ -447,10 +579,13 @@ A brute force approatch is to diff the tree, to identify which if any files need
 			</else>
 		</ifthenelse>
 
+    <if test="${Preserve.Some == 'No'}">
+      <property name="Preserve.CCNetConfig" value="No"/>
+    </if>
 		<ask answer="Preserve.CCNetConfig"
 				 caption="Preserve customizations to CCNet Config?"
 				 question="Have you made customizations to the CCNet Config that you would like to preserve?"
-				 showdialog="true">
+				 showdialog="true" unless="${property::exists('Preserve.CCNetConfig')}">
 			<options>
 				<string value="Yes"/>
 				<string value="No"/>
@@ -478,36 +613,45 @@ A brute force approatch is to diff the tree, to identify which if any files need
 	<target name="Upgrade.Packages">
 		<include buildfile="Scripts\Packages.Install.xml"/>
 		<fileset id="PacakgeFinder" />
+
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Workspace"/>
+    <call target="Upgrade.Package"/>
+    
 		<foreach item="Folder" property="TargetPackageDirectory">
 			<in>
 				<items basedir="${PackagesDirectory}">
 					<include name="*"/>
 					<exclude name="${PackagesDirectory}"/>
+          <exclude name="${PackagesDirectory}\Workspace"/>
 				</items>
 			</in>
 			<do>
-				<property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
-
-				<if test="${directory::exists(SourcePackagesDirectory + '\' + SourcePackageName)}" >
-					<ifthenelse test="${target::exists(SourcePackageName + '.Upgrade')}">
-						<then>
-							<call target="${SourcePackageName}.Upgrade" />
-						</then>
-						<else>
-							<call target="Packages.Reset.CurrentPackage" />
-							<call target="${SourcePackageName}.SetAsCurrentPackage"/>
-							<call target="Packages.Validate.CurrentSetPackage"/>
-
-							<property name="Packages.CopyPackage.PackageName" value="${SourcePackageName}"/>
-							<call target="Private.Packages.CopyPackage"/>
-
-							<call target="${SourcePackageName}.Install"/>
-						</else>
-					</ifthenelse>
-				</if>
+        <call target="Upgrade.Package"/>
 			</do>
 		</foreach>
 	</target>
+
+  <target name="Upgrade.Package">
+    <property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
+
+    <if test="${directory::exists(SourcePackagesDirectory + '\' + SourcePackageName)}" >
+      <ifthenelse test="${target::exists(SourcePackageName + '.Upgrade')}">
+        <then>
+          <call target="${SourcePackageName}.Upgrade" />
+        </then>
+        <else>
+          <call target="Packages.Reset.CurrentPackage" />
+          <call target="${SourcePackageName}.SetAsCurrentPackage"/>
+          <call target="Packages.Validate.CurrentSetPackage"/>
+
+          <property name="Packages.CopyPackage.PackageName" value="${SourcePackageName}"/>
+          <call target="Private.Packages.CopyPackage"/>
+
+          <call target="${SourcePackageName}.Install"/>
+        </else>
+      </ifthenelse>
+    </if>
+  </target>
 	
 	<script language="C#" prefix="directory" >
 		<imports>
