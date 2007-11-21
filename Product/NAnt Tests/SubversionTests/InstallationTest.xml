@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Subversion.InstallationTest" default="Subversion.InstallationTest.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+  </ifnot>
+  
+  <target name="Subversion.InstallationTest.RunAllTests">
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
+      <fixtures>
+        <string value="Subversion.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="Subversion.InstallationTest.SetProperties">
+    <property name="ProjectName" value="SVNTestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+
+    <property name="SVN.URI.Root" value="http://localhost:81/svn"  />
+    <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" />
+    <property name="SVN.Username" value="build" />
+    <property name="SVN.Password" value="password"  />
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  </target>
+  
+  <target name="Subversion.InstallationTest.FixtureSetUp">
+    <call target="Subversion.InstallationTest.SetProperties"/>
+
+    <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
+    <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <loglevel level="None">
+      <do>
+        <exec program="svn" commandline='delete -m "Subversion.InstallationTest.FixtureSetUp" ${SVN.URI.ProjectName}' failonerror='false' />
+        <exec program="svn" commandline='list ${SVN.URI.ProjectName}' resultproperty='SVN.Delete.Result' failonerror='false' />
+      </do>
+    </loglevel>
+    <assertequal actual="${SVN.Delete.Result}" expected="1" message="Was not able to delete ${SVN.URI.ProjectName}."/>
+
+    <copy file="SubversionTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+    <loglevel level="None">
+      <do>
+        <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+      </do>
+    </loglevel>
+    <sleep seconds="2"/>
+
+    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+  </target>
+
+  <target name="Subversion.InstallationTest.FixtureTearDown">
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+
+    <trycatch if="${property::exists('CCNet.Pid')}">
+      <try>
+        <waitfor condition="${process::isrunning(CCNet.Pid) == false}" timeout="10" pollinginterval="2"/>
+      </try>
+      <catch>
+        <exec program="taskkill" commandline="/PID ${CCNet.Pid} /T /F" if="${process::isrunning(CCNet.Pid)}" />
+      </catch>
+    </trycatch>
+  </target>
+
+  <target name="Subversion.InstallationTest.SetUp">
+    
+  </target>
+
+  <target name="Subversion.InstallationTest.TearDown">
+    <echo message="TearDown"/>
+  </target>
+
+  <target name="Subversion.InstallationTest.DefaultInstallTest">
+    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
+    <sleep seconds="5"/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10"/>
+    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+  </target>
+  
+</project>
