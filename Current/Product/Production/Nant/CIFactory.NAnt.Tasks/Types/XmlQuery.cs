@@ -62,7 +62,10 @@ namespace CIFactory.NAnt.Types
             }
             foreach (XmlNode Node in XmlDoc.SelectNodes(this.Query, Manager))
             {
-                Strings.Add(Node.Value);
+                if (Node.Value != null)
+                    Strings.Add(Node.Value);
+                else
+                    Strings.Add(Node.InnerXml);
             }
             return ((string[])Strings.ToArray(typeof(string))).GetEnumerator();
         }
