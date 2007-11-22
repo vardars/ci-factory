@@ -363,6 +363,14 @@
       <arg line="${SVN.URI.ProjectCodeLine}" />
       <arg line="${SourceControl.CreateBranch.BranchName}" />
     </exec>
+
+    <property name="BranchSubversionPackageDirectory" value="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\${PackagesDirectoryName}\Subversion"/>
+    <copy
+      unless="${file::exists(BranchSubversionPackageDirectory + '\SourceControl.Credentials.xml')}"
+      file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml"
+      todir="${BranchSubversionPackageDirectory}"
+      verbose="true"
+    />
   </target>
 
   <target name="SourceControl.FinishCreateBranch">
