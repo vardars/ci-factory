@@ -111,7 +111,16 @@
         <call target="Versioning.IncreamentBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
         <call target="Custom.NAnt.CreateDocumentation" />
+        
         <call target="Custom.WriteReleaseNotes" />
+        <property name="Deployment.SourceFileName" value="CI Factory Release Notes.html" />
+        <property name="Deployment.SourceDir" value="${ProductionDirectory}\CI Installer" />
+        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <call target="Deployment.PublishFile" />
+        
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
         <description>Begin Varification Actions</description>
