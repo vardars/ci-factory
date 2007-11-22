@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Properties">
+
+  <property name="UrlToThisBuild" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_ViewBuildReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+  
+  <property name="Alerts.Message.CCList" value=""/>
+
+  <strings id="Alerts.TargetListId">
+    <string value="Alerts.UnitTests"/>
+		<string value="Alerts.Diskspace"/>
+    <!--<string value="Alerts.Tracker"/>-->
+  </strings>
+
+  <property name="Alerts.TargetListRefId" value="Alerts.TargetListId"/>
+
+  <include buildfile="${PackagesDirectory}\Alerts\UnitTests\UnitTests.Script.xml"/>
+	<include buildfile="${PackagesDirectory}\Alerts\Diskspace\Diskspace.Script.xml"/>
+  <!--<include buildfile="${PackagesDirectory}\Alerts\Tracker\Tracker.Script.xml"/>-->
+
+</project>
