@@ -165,7 +165,7 @@
       xpath="/dashboard/remoteServices/servers"
     />
     
-    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+    <nant buildfile="${BranchBuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
 
     <call target="SourceControl.FinishCreateBranch"/>
 	</target>
