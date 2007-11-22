@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
+
+  <property name="nDepend.BinFolder" value="${BuildDirectory}\Packages\nDepend\bin"/>
+  <property name="nDepend.Console" value="${nDepend.BinFolder}\NDepend.Console.exe" />
+
+  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend"/>
+  <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" />
+  <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report"/>
+  <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
+
+  <fileset id="nDepend.Target.ProjectFiles" >
+    <include name="${ProductionDirectory}\Common\**\*.*proj"/>
+    <include name="${ProductionDirectory}\CCNet\**\*.*proj"/>
+    <include name="${ProductionDirectory}\NAnt\**\*.*proj"/>
+  </fileset>
+
+  <fileset id="nDepend.DependenciesFileSet" >
+    <include name="${ThirdPartyDirectory}\**\*.dll"/>
+    <include name="${ThirdPartyDirectory}\**\*.exe"/>
+    <exclude name="${ThirdPartyDirectory}\MbUnit\*.*"/>
+    <exclude name="${ThirdPartyDirectory}\ICSharpCode\scvs.exe"/>
+
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\intl3_svn.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libapr.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libapriconv.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libaprutil.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libdb44d.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libeay32.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\ssleay32.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\svn_client-1.dll"/>
+    
+  </fileset>
+
+  <property name="nDepend.FilesToDeleteAtSetup" value="${nDepend.BuildFolder}\**\*.*"/>
+
+</project>
