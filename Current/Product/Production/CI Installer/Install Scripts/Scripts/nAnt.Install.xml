@@ -21,8 +21,9 @@
 				<include name="Post.build.xml"/>
 				<include name="Post.Shim.xml"/>
 				<include name="SetupIIS.xml"/>
-			</fileset>
-			<filterchain refid="Common.FilterChain" />
+        <include name="CreateBranch.xml"/>
+      </fileset>
+      <filterchain refid="Common.FilterChain" />
 		</copy>
 
 		<copy todir="${ProductDirectory}" overwrite="true">

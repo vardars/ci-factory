@@ -350,4 +350,48 @@
   <target name="SourceControl.Bindings.Create">
     <fail message="Not yet implemented!"/>
   </target>
+
+  <!--
+  Paremeters for target:
+  <property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
+  -->
+  <target name="SourceControl.StartCreateBranch">
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="copy" />
+      <arg line="${SVN.URI.ProjectCodeLine}" />
+      <arg line="${SourceControl.CreateBranch.BranchName}" />
+    </exec>
+  </target>
+
+  <target name="SourceControl.FinishCreateBranch">
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Branch by CI Factory Installer"'/>
+    </exec>
+
+    <switch value="${environment::variable-exists('SVN_ASP_DOT_NET_HACK')}">
+      <case value='True' break='true'>
+        <property name='SvnDirName' value='_svn'/>
+      </case>
+      <case value='False' break='true'>
+        <property name='SvnDirName' value='.svn'/>
+      </case>
+    </switch>
+
+    <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
+
+
+    <exec program="svn" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Branch by CI Factory Installer"'/>
+    </exec>
+  </target>
 </project>

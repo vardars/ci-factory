@@ -12,12 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI Installer", "Production\
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Installer", "CI Installer", "{C91D6A34-9178-48E8-9960-6C9D710FD399}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Test", "Unit Test", "{4AA36A51-F589-4A0F-96D7-C09E6DDBAD94}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -584,8 +578,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AD0DAE5E-A366-49A1-9122-B2093AB16E2B} = {C91D6A34-9178-48E8-9960-6C9D710FD399}
-		{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE} = {C91D6A34-9178-48E8-9960-6C9D710FD399}
 		{4AA36A51-F589-4A0F-96D7-C09E6DDBAD94} = {E462DBA7-A4A4-4219-B565-B055BD01606B}
 		{7A743EB9-F3EE-4DF0-80F6-387329D65639} = {E462DBA7-A4A4-4219-B565-B055BD01606B}
 		{1A02B89E-7A4B-440E-B9F0-086F6376D795} = {4AA36A51-F589-4A0F-96D7-C09E6DDBAD94}

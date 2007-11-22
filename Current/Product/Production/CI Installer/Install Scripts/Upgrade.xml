@@ -407,6 +407,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
       <string value="SetupIIS.xml"/>
       <string value="Scratch.build.xml" />
       <string value="Entities.xml" />
+      <string value="CreateBranch.xml"/>
     </strings>
 
     <strings id="ProductFiles">
