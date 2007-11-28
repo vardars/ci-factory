@@ -79,7 +79,7 @@
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
-          <arg line="-buildfile:&quot;${ProductDirectory}\NAnt Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
@@ -126,7 +126,7 @@
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
-          <arg line="-buildfile:&quot;${ProductDirectory}\NAnt Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
