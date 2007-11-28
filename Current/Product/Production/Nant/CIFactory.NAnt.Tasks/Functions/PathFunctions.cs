@@ -6,6 +6,7 @@ using System.Text;
 using NAnt.Core;
 using NAnt.Core.Types;
 using NAnt.Core.Attributes;
+using NDepend.Helpers.FileDirectoryPath;
 
 namespace CIFactory.NAnt.Functions
 {
@@ -41,6 +42,15 @@ namespace CIFactory.NAnt.Functions
                 return shortNameBuffer.ToString();
 
             throw new BuildException("Failed to convert to short name.");
+        }
+
+        [Function("get-relative-path")]
+        public string GetRelativePath(string absoluteFilePath, string absoluteDirectoryPath)
+        {
+            FilePathAbsolute filePathAbsolute1 = new FilePathAbsolute(absoluteFilePath);
+            DirectoryPathAbsolute directoryPathAbsolute1 = new DirectoryPathAbsolute(absoluteDirectoryPath);
+            FilePathRelative filePathRelative1 = filePathAbsolute1.GetPathRelativeFrom(directoryPathAbsolute1);
+            return filePathRelative1.Path;
         }
     }
 }

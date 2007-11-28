@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Setup" default="Setup" basedir="..\..\" >
 
+  <property name="Silent" value="false" overwrite="false"/>
+  
   <script language="C#" prefix="directory" >
     <imports>
       <import namespace="System.IO" />
@@ -53,7 +55,7 @@
 		<call target="Workspace.Setup"/>
 		<call target="Workspace.ConfigureEnvironment"/>
 
-		<ask answer="ToBuild" caption="Do you want to build?" question="Do you want to build?" showdialog="true" >
+		<ask answer="ToBuild" caption="Do you want to build?" question="Do you want to build?" showdialog="true" unless="${Silent}">
 			<options>
 				<string value="Yes"/>
 				<string value="No"/>
@@ -118,6 +120,7 @@ Title=Setup CI Factory Workspace]]>
 		<foreach item='File' property='File'>
 			<in>
 				<items basedir='${BuildDirectory}'>
+          <include name='Entities.xml'/>
 					<include name='Properties.build.xml'/>
 					<include name='DevEnv.Targets.xml'/>
 					<include name='Common.build.xml'/>

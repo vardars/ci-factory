@@ -114,6 +114,16 @@ namespace CIFactory.NAnt.Functions
             return Builder.ToString();
         }
 
+        [Function("clear")]
+        public void Clear(String refID)
+        {
+            if (!this.Project.DataTypeReferences.Contains(refID))
+                throw new BuildException(String.Format("The refid {0} is not defined.", refID));
+
+            StringList RefStringList = (StringList)this.Project.DataTypeReferences[refID];
+            RefStringList.Clear();
+        }
+
         #endregion
 
     }

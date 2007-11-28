@@ -91,7 +91,7 @@
     </largeproperty>
     <property name="Common.ShowReport.Footer" value="&lt;/body&gt;"/>
     <echo message="${Common.ShowReport.Header}${Common.ShowReport.Body}${Common.ShowReport.Footer}" file="${Common.ShowReport.HtmlFile}"/>
-    <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+    <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
 
   <target name="Common.CreateCCTraySfx">

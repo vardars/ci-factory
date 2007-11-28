@@ -232,7 +232,31 @@
 						view="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."
 						clientview="//${Perforce.WorkspaceName}/..."/>
 		</ifnot>
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="${Perforce.WorkspaceName}"/>
 	</target>
+
+  <!--
+    <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+  -->
+  <target name='SourceControl.Rename'>
+    <call target="Private.SourceControl.EnsureWorkspace"/>
+
+    <property name="Private.SourceControl.Rename.ChangeListName" value="Rename"/>
+    <property name="Private.SourceControl.Rename.ChangeListNumber" value="${perforce::get-changelist-number(Private.SourceControl.Rename.ChangeListName)}"/>
+
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line='integrate'/>
+      <arg line='-c ${Private.SourceControl.Rename.ChangeListNumber}' />
+      <arg line='"${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Source)}" "${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Target)}"'/>
+    </exec>
+
+    <p4delete client='${Perforce.WorkspaceName}' changelist='${Private.SourceControl.Rename.ChangeListName}'
+              view='"${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Source)}"' />
+
+    <p4submit changelist='${Private.SourceControl.Rename.ChangeListName}'
+							client="${Perforce.WorkspaceName}"/>
+  </target>
 
 	<target name="SourceControl.SetUp">
 

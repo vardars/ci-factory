@@ -35,5 +35,11 @@ namespace NAnt.Contrib.Functions.Perforce
             }
             return false;
         }
+
+        [Function("get-changelist-number")]
+        public string GetChangeListNumber(string changelistName)
+        {
+            return Helper.GetChangelistNumber(Helper.GetUserName(), Helper.GetClient(), changelistName, true);
+        }
     }
 }

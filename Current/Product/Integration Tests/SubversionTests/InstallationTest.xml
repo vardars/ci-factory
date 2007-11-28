@@ -70,8 +70,6 @@
       </do>
     </loglevel>
     <sleep seconds="2"/>
-
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
   </target>
 
   <target name="Subversion.InstallationTest.FixtureTearDown">
@@ -109,6 +107,24 @@
   </target>
 
   <target name="Subversion.InstallationTest.DefaultInstallTest">
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <property name="TempDirectory" value="C:\Temp"/>
+    <mkdir dir="${TempDirectory}" unless="${directory::exists(TempDirectory)}"/>
+    <exec program="svn" commandline="export --force --non-interactive ${SVN.URI.ProjectName}/${ProjectCodeLineName}/Build/dashboard/WorkspaceSetup/${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe" workingdir='${TempDirectory}' verbose="true" />
+    <exec program="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" 
+          commandline="x -O+ ${TempDirectory}\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe" workingdir='${TempDirectory}' verbose="true" />
+    <exec program="${TempDirectory}\nant\bin\nant.exe" commandline=''
+          workingdir='${TempDirectory}' verbose="true">
+      <arg line="/f:Packages\Workspace\Workspace.Setup.xml" />
+      <arg line='-D:SourceControl.PackageName="Subversion"' />
+      <arg line='-D:SourceControl.Update.Interactive="False"' />
+      <arg line='-D:Silent="True"' />
+      <arg line='-D:ToBuild="Yes"' />
+      <arg line='-D:SVN.Username="Build"' />
+      <arg line='-D:SVN.Password="password"' />
+    </exec>
+    
+    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
     <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
     <sleep seconds="5"/>
     <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10"/>

@@ -121,7 +121,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
                             }
                             catch (BuildException bx)
                             {
-                                string FailureInfo = string.Format("{0} at:{1}{2}", bx.Message, Environment.NewLine, bx.Location.ToString());
+                                string FailureInfo = string.Format("{0} at:{1}{2}{3}{4}", bx.Message, Environment.NewLine, bx.Location.ToString(), Environment.NewLine, bx.ToString());
                                 Log(Level.Error, FailureInfo);
                                 FailingTestInfo.AppendLine(FailureInfo);
 
@@ -130,7 +130,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
                             }
                             catch (Exception ex)
                             {
-                                string FailureInfo = string.Format("{0} in {1}", ex.Message, FixtureTarget.Name);
+                                string FailureInfo = string.Format("{0} in {1}{2}{3}", ex.Message, FixtureTarget.Name, Environment.NewLine, ex.ToString());
                                 Log(Level.Error, FailureInfo);
                                 FailingTestInfo.AppendLine(FailureInfo);
 

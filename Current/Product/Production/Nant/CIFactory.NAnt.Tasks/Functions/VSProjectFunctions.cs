@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using NAnt.Core;
 using NAnt.Core.Attributes;
+using CIFactory.NAnt.Types;
 
 namespace CIFactory.NAnt.Functions
 {
@@ -88,6 +89,39 @@ namespace CIFactory.NAnt.Functions
                 return Path.GetFullPath(OutputValue);
 
             return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(projectFilePath), OutputValue));
+        }
+
+        [Function("get-hint-paths")]
+        public void GetHintPaths(string stringListRef, string projectFilePath)
+        {
+            if (!this.Project.DataTypeReferences.Contains(stringListRef))
+                throw new BuildException(String.Format("The refid {0} is not defined.", stringListRef));
+
+            StringList RefStringList = (StringList)this.Project.DataTypeReferences[stringListRef];
+
+            XmlDocument xd = new XmlDocument();
+            xd.PreserveWhitespace = true;
+            xd.Load(projectFilePath);
+
+            string NameSpaceFor2005 = @"http://schemas.microsoft.com/developer/msbuild/2003";
+            bool Is2005 = xd.DocumentElement.HasAttribute("xmlns");
+
+            XmlNodeList Nodes = null;
+            if (Is2005)
+            {
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+                namespaceManager.AddNamespace("b", NameSpaceFor2005);
+
+                Nodes = xd.SelectNodes(@"b:Project/b:ItemGroup/b:Reference/b:HintPath", namespaceManager);
+            }
+            else
+            {
+                Nodes = xd.SelectNodes(@"/VisualStudioProject//Build/References/Reference/@HintPath");
+            }
+            foreach (XmlNode xmlNode in Nodes)
+            {
+                RefStringList.StringItems.Add(xmlNode.InnerText, new StringItem(xmlNode.InnerText));
+            }
         }
 
         public void Adhoctest()

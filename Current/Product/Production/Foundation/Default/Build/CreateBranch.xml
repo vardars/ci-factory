@@ -69,6 +69,20 @@
 			<fail message="Please execute this on the build server."/>
 		</ifnot>
 
+    <call target="CheckForReferenceIssues"/>
+
+    <ifnot test="${target::exists('SourceControl.StartCreateBranch')}">
+      <fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
+    </ifnot>
+
+    <ifnot test="${target::exists('SourceControl.FinishCreateBranch')}">
+      <fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
+    </ifnot>
+
+    <ifnot test="${target::exists('SourceControl.Rename')}">
+      <fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
+    </ifnot>
+
     <xmlpeek file="${BuildDirectory}\dashboard\dashboard.config"
 						 property="CCNetServer.Url"
 						 xpath="/dashboard/remoteServices/servers/server/@url" />
@@ -84,10 +98,6 @@
 
 		<call target="SetBranchProperties"/>
 
-		<ifnot test="${target::exists('SourceControl.StartCreateBranch')}">
-			<fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
-		</ifnot>
-
     <call target="SourceControl.GetOfCodeLineDirectory"/>
 
 		<property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
@@ -98,6 +108,47 @@
     
 		<call target="SetBranchParentCCNetLabels"/>
 
+    <nant buildfile="${BranchPackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml" target="SourceControl.Rename" inheritall="false" inheritrefs="false" >
+      <properties>
+        <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+        <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+
+        <property name="BuildServerHostName"        value="BranchBuildServerHostName"/>
+        <property name="BuildServerPort"            value="BranchBuildServerPort"/>
+
+        <property name="ProjectName"                value="${ProjectName}" />
+        <property name="ProjectCodeLineName"        value="${BranchName}" />
+
+        <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
+        <property name="ProjectRootDirectory"       value="${ProjectRootDirectory}" />
+        <property name="ProjectCodeLineDirectory"   value="${BranchProjectCodeLineDirectory}" />
+        <property name="ProductDirectory"           value="${BranchProductDirectory}" />
+        <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
+        <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
+        <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
+        <property name="ArtifactRootDirectory"      value="${BranchArtifactRootDirectory}"/>
+        <property name="PackagesDirectory"          value="${BranchPackagesDirectory}"/>
+        <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
+        <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
+
+        <property name="ProductDirectoryName"       value="${ProductDirectoryName}"/>
+        <property name="ThirdPartyDirectoryName"    value="${ThirdPartyDirectoryName}"/>
+        <property name="ProductionDirectoryName"    value="${ProductionDirectoryName}"/>
+        <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
+        <property name="ArtifactRootDirectoryName"  value="${ArtifactRootDirectoryName}"/>
+        <property name="PackagesDirectoryName"      value="${PackagesDirectoryName}"/>
+        <property name="UnitTestDirectoryName"      value="${UnitTestDirectoryName}"/>
+        <property name="InstallDirectoryName"       value="${InstallDirectoryName}"/>
+
+        <property name="NantBinPath" value="${BranchBuildDirectory}\nant\bin"/>
+        <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+
+        <property name="webURL" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
+      </properties>
+    </nant>
+    
     <nant buildfile="${BranchPackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
 
     <nant buildfile="${BranchBuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx" inheritall="false" inheritrefs="false" >
@@ -170,6 +221,53 @@
     <call target="SourceControl.FinishCreateBranch"/>
 	</target>
 
+  <target name="CheckForReferenceIssues">
+    <property name="FailForBadRefPath" value="false"/>
+    <largeproperty name="BadRefPathFailureMessage">
+      <value expand="true" xml="false"><![CDATA[The following project's hint paths will cause problems for a branch:]]></value>
+    </largeproperty>
+
+    <strings id="hintpaths" />
+    <foreach item="File" property="ProjectFile">
+      <in>
+        <items>
+          <include name="${ProductDirectory}\**\*.*proj"/>
+        </items>
+      </in>
+      <do>
+        <echo message="******************************************************"/>
+        <echo message="Looking at ${ProjectFile}"/>
+
+        <function execute="${vsproject::get-hint-paths('hintpaths', ProjectFile)}"/>
+
+        <loopthrough property="HintPath">
+          <items>
+            <strings refid="hintpaths"/>
+          </items>
+          <do>
+            <echo message="${HintPath}"/>
+            <if test="${string::starts-with(HintPath, ProjectCodeLineDirectory)}">
+              <property name="FailForBadRefPath" value="true"/>
+
+              <largeproperty name="BadRefPathFailureMessage">
+                <value expand="true" xml="false">
+                  <![CDATA[${BadRefPathFailureMessage}
+${ProjectFile} hint path ${HintPath}]]>
+                </value>
+              </largeproperty>
+            </if>
+          </do>
+        </loopthrough>
+
+        <function execute="${stringlist::clear('hintpaths')}"/>
+      </do>
+    </foreach>
+
+    <if test="${FailForBadRefPath}">
+      <fail message="${BadRefPathFailureMessage}"/>
+    </if>
+  </target>
+  
 	<target name="SetBranchCCNetLabels">
 
     <largeproperty name="InitialLabelPrefixQuestion">

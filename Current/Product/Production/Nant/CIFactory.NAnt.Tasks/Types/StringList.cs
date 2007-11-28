@@ -41,6 +41,11 @@ namespace CIFactory.NAnt.Types
 
         #endregion
 
+        public void Clear()
+        {
+            this.StringItems = new StringItemTable();
+        }
+
         #region Protected Methods
 
         protected override System.Collections.IEnumerator GetStrings()
