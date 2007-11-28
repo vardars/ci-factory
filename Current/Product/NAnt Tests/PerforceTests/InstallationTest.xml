@@ -41,6 +41,8 @@
 		<property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
     <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+
+    <property name="BranchName" value="1.0"/>
   </target>
   
   <target name="Perforce.InstallationTest.FixtureSetUp">
@@ -49,10 +51,18 @@
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
     <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
+
+    <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${BranchName}" />
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
     <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
     <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
 
 		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+
+    <p4client clientname="${Perforce.WorkspaceName}" delete="true" force="true" failonerror="false"/>
+    <p4client clientname="${ProjectName}-${BranchName}-${environment::get-machine-name()}" delete="true" force="true" failonerror="false"/>
+    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" force="true" failonerror="false"/>
+    
 		<p4client clientname="${Perforce.WorkspaceName}"
 					root="${ProjectCodeLineDirectory}"
 					port="${Perforce.ServerName}:${Perforce.ServerPort}"
@@ -86,6 +96,7 @@
   </target>
 
   <target name="Perforce.InstallationTest.FixtureTearDown">
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
     <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
 
     <trycatch if="${property::exists('CCNet.Pid')}">
@@ -94,6 +105,18 @@
       </try>
       <catch>
         <exec program="taskkill" commandline="/PID ${CCNet.Pid} /T /F" if="${process::isrunning(CCNet.Pid)}" />
+      </catch>
+    </trycatch>
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+
+    <trycatch if="${property::exists('BranchCCNet.Pid')}">
+      <try>
+        <waitfor condition="${process::isrunning(BranchCCNet.Pid) == false}" timeout="10" pollinginterval="2"/>
+      </try>
+      <catch>
+        <exec program="taskkill" commandline="/PID ${BranchCCNet.Pid} /T /F" if="${process::isrunning(BranchCCNet.Pid)}" />
       </catch>
     </trycatch>
   </target>
@@ -111,6 +134,44 @@
     <sleep seconds="10"/>
     <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+
+    <nant buildfile="${BuildDirectory}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
+      <properties>
+        <property name="BranchLabelPrefix" value="1.0.1."/>
+        <property name="BranchParentLabelPrefix" value="2.0.0."/>
+        <property name="BranchBuildServerPort" value="21247"/>
+        <property name="BranchBuildServerHostName" value="${environment::get-machine-name()}"/>
+        <property name="BranchName" value="${BranchName}"/>
+        <property name="Branch${ProjectName}-${BranchName}BuildScriptsInitialVersion" value="BuildScripts-1.0-1"/>
+        <property name="Branch${ProjectName}-${BranchName}InitialVersion" value="1.0.1.1"/>
+        <property name="ParentBranch${ProjectName}-${ProjectCodeLineName}BuildScriptsLabelPrefix" value="${BranchParentLabelPrefix}" dynamic="true"/>
+      </properties>
+    </nant>
+
+    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" verbose="true" />
+    <sleep seconds="10"/>
+
+    <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
+      <ccnetplugins>
+        <include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
+      </ccnetplugins>
+    </ccnetforce>
+
+    <sleep seconds="10"/>
+
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
+    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+    <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
+
+    <asyncexec workingdir="${ProjectRootDirectory}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" verbose="true" />
+    <sleep seconds="10"/>
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${BranchName}"/>
+
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>
+    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+    <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.1.1" message="Expected the version to be '1.0.1.1'."/>
   </target>
   
 </project>

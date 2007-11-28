@@ -273,9 +273,106 @@
 		<p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
 
     <call target="Private.SourceControl.EnsureWorkspace" />
+    <call target="SourceControl.GetOfCodeLineDirectory"/>
 	</target>
 
 	<target name="SourceControl.Bindings.Create">
 		<fail message="Not yet implemented!"/>
 	</target>
+
+  <!--
+  Paremeters for target:
+  <property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
+  -->
+  <target name="SourceControl.StartCreateBranch">
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+    <p4client clientname="Temp-${Perforce.WorkspaceName}"
+							root="${ProjectRootDirectory}"
+							port="${Perforce.ServerName}:${Perforce.ServerPort}"
+							view="${Perforce.ServerPathPrefix}/${ProjectName}/..."
+							clientview="//Temp-${Perforce.WorkspaceName}/..."/>
+
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="Temp-${Perforce.WorkspaceName}"/>
+
+    <p4sync client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."'
+            failonerror='false'
+						verbose="true"/>
+
+    <property name="ProjectBranchDirectory" value="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}"/>
+    <mkdir dir="${ProjectBranchDirectory}" unless="${directory::exists(ProjectBranchDirectory)}"/>
+    <copy todir="${ProjectBranchDirectory}">
+      <fileset basedir="${ProjectCodeLineDirectory}">
+        <include name="**\*"/>
+        <exclude name="${BuildDirectoryName}\${ArtifactRootDirectoryName}\**\*"/>
+        <exclude name="${BuildDirectoryName}\server\*.log"/>
+        <exclude name="${BuildDirectoryName}\server\*.state"/>
+        <exclude name="${BuildDirectoryName}\server\${ProjectName}*"/>
+      </fileset>
+    </copy>
+
+
+    <largeproperty name="P4Form">
+      <value expand="true" xml="false">
+        <![CDATA[Branch: ${ProjectName}-${SourceControl.CreateBranch.BranchName}
+
+Owner:  Jay
+
+Description: Created by CI Factory script.
+
+Options:        unlocked
+
+View:
+  "${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/..." "${Perforce.ServerPathPrefix}/${ProjectName}/${SourceControl.CreateBranch.BranchName}/..."
+]]>
+      </value>
+    </largeproperty>
+
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" stdin="${P4Form}" verbose="true">
+      <arg line='branch'/>
+      <arg line='-i' />
+    </exec>
+    
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line='integrate'/>
+      <arg line='-b ${ProjectName}-${SourceControl.CreateBranch.BranchName}'/>
+    </exec>
+
+    <p4submit changelist="default"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."'/>
+
+    <p4edit changelist="SupportBranch"
+						client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."' />
+
+    <p4edit changelist="CreateBranch"
+						client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."' />
+  </target>
+
+  <target name="SourceControl.FinishCreateBranch">
+    <p4submit changelist="SupportBranch" revertunchanged="true"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."'/>
+    
+    <p4submit changelist="CreateBranch" revertunchanged="true"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."'/>
+
+    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
+
+    <nant
+      buildfile="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\Main.Build.xml"
+      inheritall="false"
+      inheritrefs="false"
+      target="SourceControl.GetOfCodeLineDirectory"
+    >
+      <properties>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetLabel" value="Fake"/>
+      </properties>
+    </nant>
+  </target>
 </project>

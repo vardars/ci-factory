@@ -79,6 +79,18 @@ namespace NAnt.Core.Tasks {
 
         #region Public Instance Properties
 
+        private string _Input;
+
+        [TaskAttribute("stdin")]
+        public string Input
+        {
+            get { return _Input; }
+            set
+            {
+                _Input = value;
+            }
+        }
+
         private string _Pid;
 
         [TaskAttribute("pid")]
@@ -433,6 +445,9 @@ namespace NAnt.Core.Tasks {
                 process.StartInfo.FileName = ProgramFileName;
                 process.StartInfo.Arguments = CommandLine;
             }
+
+            process.StartInfo.RedirectStandardInput = (this.Input != null);
+
             process.StartInfo.RedirectStandardOutput = this.RedirectOutput;
             process.StartInfo.RedirectStandardError = this.RedirectOutput;
             //required to allow redirects
@@ -478,6 +493,12 @@ namespace NAnt.Core.Tasks {
                 p.Start();
                 if (!String.IsNullOrEmpty(this.Pid))
                     Properties[this.Pid] = p.Id.ToString();
+                if (this.Input != null)
+                {
+                    StreamWriter sw = p.StandardInput;
+                    sw.Write(this.Input);
+                    sw.Close();
+                }
                 return p;
             } catch (Exception ex) {
                 throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
