@@ -216,7 +216,7 @@
 
 	<target name="IntegrationTest" depends="Common.SetUp">
 		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
-			<arg line='-buildfile:"${ProductDirectory}\NAnt Tests\TestRunner.Build.xml"'/>
+			<arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
 		</exec>
 	</target>
 

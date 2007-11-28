@@ -1,7 +1,7 @@
 :: "$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" $(ProjectName)
 cd %1
-mkdir "NAnt Tests\bin"
-cd "NAnt Tests\bin"
+mkdir "Integration Tests\bin"
+cd "Integration Tests\bin"
 FOR /F "TOKENS=1 DELIMS=," %%A IN ('cd') DO SET Dest=%%A
 
 cd %2

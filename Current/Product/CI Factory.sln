@@ -203,12 +203,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packages", "Production\Pack
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAnt Tests", "NAnt Tests", "{7A743EB9-F3EE-4DF0-80F6-387329D65639}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E462DBA7-A4A4-4219-B565-B055BD01606B}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -314,12 +308,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.CCNet.Tasks"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAnt Tests", "NAnt Tests\NAnt Tests.csproj", "{60647DBD-813B-4C1F-A771-94C38BFD1590}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.StarTeam.Tasks", "Production\Nant\CIFactory.NAnt.StarTeam.Tasks\CIFactory.NAnt.StarTeam.Tasks.csproj", "{4F89C2EF-E421-4F53-BA84-E3EFD081B469}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -327,6 +315,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIFactory.NAnt.StarTeam.Tas
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "Production\CCNet\service\service.csproj", "{4DE3AEAD-FAFB-4D15-A0D7-3A9AAECF08E1}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration Tests", "Integration Tests\Integration Tests.csproj", "{60647DBD-813B-4C1F-A771-94C38BFD1590}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -557,10 +551,6 @@ Global
 		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E281FB3-FD8A-452D-830A-247ABB71CD1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Build|Any CPU.ActiveCfg = Debug|Any CPU
-		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Build|Any CPU.Build.0 = Debug|Any CPU
-		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F89C2EF-E421-4F53-BA84-E3EFD081B469}.Build|Any CPU.ActiveCfg = Release|Any CPU
 		{4F89C2EF-E421-4F53-BA84-E3EFD081B469}.Build|Any CPU.Build.0 = Release|Any CPU
 		{4F89C2EF-E421-4F53-BA84-E3EFD081B469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -573,13 +563,19 @@ Global
 		{4DE3AEAD-FAFB-4D15-A0D7-3A9AAECF08E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DE3AEAD-FAFB-4D15-A0D7-3A9AAECF08E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DE3AEAD-FAFB-4D15-A0D7-3A9AAECF08E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Build|Any CPU.ActiveCfg = Debug|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Build|Any CPU.Build.0 = Debug|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{60647DBD-813B-4C1F-A771-94C38BFD1590}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4AA36A51-F589-4A0F-96D7-C09E6DDBAD94} = {E462DBA7-A4A4-4219-B565-B055BD01606B}
-		{7A743EB9-F3EE-4DF0-80F6-387329D65639} = {E462DBA7-A4A4-4219-B565-B055BD01606B}
+		{60647DBD-813B-4C1F-A771-94C38BFD1590} = {E462DBA7-A4A4-4219-B565-B055BD01606B}
 		{1A02B89E-7A4B-440E-B9F0-086F6376D795} = {4AA36A51-F589-4A0F-96D7-C09E6DDBAD94}
 		{65D87CD1-4049-446A-996C-DCEC30449CDD} = {4AA36A51-F589-4A0F-96D7-C09E6DDBAD94}
 		{58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92} = {4AA36A51-F589-4A0F-96D7-C09E6DDBAD94}
@@ -615,7 +611,6 @@ Global
 		{482EF049-EC0C-4819-B568-75B5F74BDD5B} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{5E25814B-D344-43E4-B213-4E1B35D52B1F} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
 		{4DE3AEAD-FAFB-4D15-A0D7-3A9AAECF08E1} = {C0617B67-4BE7-41AA-B4A9-1D849E91F4DE}
-		{60647DBD-813B-4C1F-A771-94C38BFD1590} = {7A743EB9-F3EE-4DF0-80F6-387329D65639}
 		{D4B4CE7F-3D05-4F3E-BDA3-059BCAFB7E40} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{EE6F9B28-5BE3-4058-86A7-110FBB6DA81A} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
 		{F36E18DB-5E0A-458E-9092-59B0EE2F26D3} = {58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}
