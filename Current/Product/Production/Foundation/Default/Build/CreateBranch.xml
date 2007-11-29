@@ -218,11 +218,15 @@
     
     <nant buildfile="${BranchBuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
 
+    <echo message="HasBadRefPath = ${HasBadRefPath}"/>
+    <call target="FixReferenceIssues" if="${HasBadRefPath}"/>
+
     <call target="SourceControl.FinishCreateBranch"/>
 	</target>
 
   <target name="CheckForReferenceIssues">
-    <property name="FailForBadRefPath" value="false"/>
+    <property name="HasBadRefPath" value="false"/>
+    <echo message="HasBadRefPath = ${HasBadRefPath}"/>
     <largeproperty name="BadRefPathFailureMessage">
       <value expand="true" xml="false"><![CDATA[The following project's hint paths will cause problems for a branch:]]></value>
     </largeproperty>
@@ -235,9 +239,8 @@
         </items>
       </in>
       <do>
-        <echo message="******************************************************"/>
+        <echo message="******************************************"/>
         <echo message="Looking at ${ProjectFile}"/>
-
         <function execute="${vsproject::get-hint-paths('hintpaths', ProjectFile)}"/>
 
         <loopthrough property="HintPath">
@@ -246,8 +249,9 @@
           </items>
           <do>
             <echo message="${HintPath}"/>
-            <if test="${string::starts-with(HintPath, ProjectCodeLineDirectory)}">
-              <property name="FailForBadRefPath" value="true"/>
+            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory))}">
+              <property name="HasBadRefPath" value="true"/>
+              <echo message="HasBadRefPath = ${HasBadRefPath}"/>
 
               <largeproperty name="BadRefPathFailureMessage">
                 <value expand="true" xml="false">
@@ -263,9 +267,66 @@ ${ProjectFile} hint path ${HintPath}]]>
       </do>
     </foreach>
 
-    <if test="${FailForBadRefPath}">
+
+    <largeproperty name="BadRefPathQuestion">
+      <value expand="true" xml="false">
+        <![CDATA[${BadRefPathFailureMessage}
+
+Would you like to continue?
+If yes the script will try to fix the references in the new branch.]]>
+      </value>
+    </largeproperty>
+
+    <ask if="${HasBadRefPath}"
+         answer="FixBadRefPath"
+         caption="Bad Reference(s) Found!"
+         question="${BadRefPathQuestion}"
+         showdialog="true"
+         unless="${property::exists('FixBadRefPath')}">
+      <options>
+        <string value="No"/>
+        <string value="Yes"/>
+      </options>
+    </ask>
+
+    <if test="${FixBadRefPath == 'No'}">
       <fail message="${BadRefPathFailureMessage}"/>
     </if>
+  </target>
+
+  <target name="FixReferenceIssues">
+    <strings id="hintpaths" />
+    <foreach item="File" property="ProjectFile">
+      <in>
+        <items>
+          <include name="${BranchProductDirectory}\**\*.*proj"/>
+        </items>
+      </in>
+      <do>
+        <function execute="${vsproject::get-hint-paths('hintpaths', ProjectFile)}"/>
+
+        <loopthrough property="HintPath">
+          <items>
+            <strings refid="hintpaths"/>
+          </items>
+          <do>
+            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory))}">
+              <echo message="HintPath = ${HintPath}"/>
+              <echo message="ProjectFile = ${ProjectFile}"/>
+              <echo message="ProjectCodeLineDirectory = ${ProjectCodeLineDirectory}"/>
+              <echo message="BranchProjectCodeLineDirectory = ${BranchProjectCodeLineDirectory}"/>
+              <property name="NewHintPath" value="${string::replace(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory), string::to-lower(BranchProjectCodeLineDirectory))}"/>
+              <echo message="NewHintPath = ${NewHintPath}"/>
+              <property name="NewHintPath" value="${path::get-relative-path(NewHintPath, path::get-directory-name(ProjectFile))}"/>
+              <echo message="NewHintPath = ${NewHintPath}"/>
+              <function execute="${vsproject::replace-hint-path(ProjectFile, HintPath, NewHintPath)}"/>
+            </if>
+          </do>
+        </loopthrough>
+
+        <function execute="${stringlist::clear('hintpaths')}"/>
+      </do>
+    </foreach>
   </target>
   
 	<target name="SetBranchCCNetLabels">

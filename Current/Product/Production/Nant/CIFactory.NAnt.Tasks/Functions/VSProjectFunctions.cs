@@ -124,6 +124,34 @@ namespace CIFactory.NAnt.Functions
             }
         }
 
+
+        [Function("replace-hint-path")]
+        public void ReplaceHintPath(string projectFilePath, string oldHintPath, string newHintPath)
+        {
+            XmlDocument xd = new XmlDocument();
+            xd.PreserveWhitespace = true;
+            xd.Load(projectFilePath);
+
+            string NameSpaceFor2005 = @"http://schemas.microsoft.com/developer/msbuild/2003";
+            bool Is2005 = xd.DocumentElement.HasAttribute("xmlns");
+
+            XmlNode Node = null;
+            if (Is2005)
+            {
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+                namespaceManager.AddNamespace("b", NameSpaceFor2005);
+
+                Node = xd.SelectSingleNode(string.Format(@"b:Project/b:ItemGroup/b:Reference/b:HintPath[text() = '{0}']", oldHintPath), namespaceManager);
+            }
+            else
+            {
+                Node = xd.SelectSingleNode(string.Format(@"/VisualStudioProject//Build/References/Reference[@HintPath = '{0}']", oldHintPath));
+            }
+
+            Node.InnerText = newHintPath;
+            xd.Save(projectFilePath);
+        }
+
         public void Adhoctest()
         {
             string Dir = this.GetOutputDirectory(@"c:\Projects\dasblogce\Current\Product\Production\Lesnikowski.Pawel.Mail.Pop3\Lesnikowski.Pawel.Mail.Pop3.csproj", "Debug");

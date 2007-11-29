@@ -72,11 +72,6 @@
         <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
       </properties>
     </nant>
-    <nant target="SourceControl.Repository.Load">
-      <buildfiles>
-        <include name="${PackagesDirectory}\Subversion\SourceControl.Target.xml"/>
-      </buildfiles>
-    </nant>
 
     <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
   </target>

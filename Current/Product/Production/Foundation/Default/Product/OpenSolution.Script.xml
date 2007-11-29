@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp" basedir="..\%BuildDirectoryName%">
 
-  <include buildfile="Properties.Build.xml"/>
-  <include buildfile="Common.Build.xml" />
-
   <property name="CCNetProject" value="${ProjectName}"/>
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
@@ -12,6 +9,9 @@
   <property name="CCNetBuildTime" value="11:10:00"/>
   <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+  
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
 
   <property name="CCNetLabel" value="1.0.0.2"/>
   <property name="CCNetLogFilePath" value=""/>

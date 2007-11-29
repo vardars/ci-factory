@@ -130,6 +130,7 @@
   </target>
 
   <target name="Perforce.InstallationTest.DefaultInstallTest">
+    <fail message="Need to make sure that the Build Scripts Build is stopped before working with the regular build, resource contension is cuasing intermitent failures!"/>
     <!--Give the ccnet server a little time to get up and running. (Need to find a better way!) Perforce seems to a little longer than other configs?-->
     <sleep seconds="10"/>
     <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>

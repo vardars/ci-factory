@@ -17,7 +17,8 @@
 
   <target name="Subversion.InstallationTest.SetProperties">
     <property name="ProjectName" value="SVNTestProject"/>
-    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectsDirectory" value="c:\Projects" />
+    <property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}"/>
     <property name="ProjectCodeLineName" value="Current" />
     <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
     <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
@@ -63,6 +64,20 @@
 
     <copy file="SubversionTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+    <copy todir="${ProductDirectory}" overwrite="true">
+      <fileset basedir="SubversionTests\Resources">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe" workingdir="${BuildDirectory}" verbose="true">
+      <arg line="/f:Main.build.xml"/>
+      <arg line="SourceControl.Repository.Load" />
+      <arg line='-D:CCNetBuildDate="2006-09-12"' />
+      <arg line='-D:CCNetBuildTime="11:10:00"' />
+      <arg line='-D:CCNetLabel="fake"' />
+    </exec>
 
     <loglevel level="None">
       <do>
@@ -125,9 +140,9 @@
     </exec>
     
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
-    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
-    <sleep seconds="5"/>
-    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10"/>
+    
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="10" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
     <nant buildfile="${BuildDirectory}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
@@ -140,6 +155,7 @@
         <property name="Branch${ProjectName}-${BranchName}BuildScriptsInitialVersion" value="BuildScripts-1.0-1"/>
         <property name="Branch${ProjectName}-${BranchName}InitialVersion" value="1.0.1.1"/>
         <property name="ParentBranch${ProjectName}-${ProjectCodeLineName}BuildScriptsLabelPrefix" value="${BranchParentLabelPrefix}" dynamic="true"/>
+        <property name="FixBadRefPath" value="Yes"/>
       </properties>
     </nant>
 
@@ -158,23 +174,18 @@
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
 
+    <delete dir="${ThirdPartyDirectory}\MbUnit" />
+
     <asyncexec workingdir="${ProjectRootDirectory}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" />
     <sleep seconds="5"/>
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${BranchName}"/>
 
-    <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
-      <ccnetplugins>
-        <include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
-      </ccnetplugins>
-    </ccnetforce>
-
-    <sleep seconds="5"/>
-    
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="10" pollinginterval="10"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.1.1" message="Expected the version to be '1.0.1.1'."/>
   </target>
-  
+
 </project>
