@@ -128,7 +128,7 @@
   </target>
 
   <target name="Perforce.InstallationTest.DefaultInstallTest">
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="10" pollinginterval="10"/>
+    <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
@@ -154,7 +154,7 @@
       </ccnetplugins>
     </ccnetforce>
 
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
+    <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
@@ -164,7 +164,7 @@
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${BranchName}"/>
 
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
+    <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.1.1" message="Expected the version to be '1.0.1.1'."/>

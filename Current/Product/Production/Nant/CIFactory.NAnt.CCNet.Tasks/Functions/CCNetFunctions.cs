@@ -31,6 +31,20 @@ namespace CIFactory.NAnt.CCNet.Functions
             return Manager.GetProjectStatus(projectName).Activity.ToString();
         }
 
+        [Function("try-get-project-activity")]
+        public string TryGetProjectActivity(string serverUrl, string projectName)
+        {
+            try
+            {
+                ICruiseManager Manager = (ICruiseManager)RemotingServices.Connect(typeof(ICruiseManager), serverUrl);
+                return Manager.GetProjectStatus(projectName).Activity.ToString();
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+
         [Function("get-project-build-status")]
         public string GetProjectBuildStatus(string serverUrl, string projectName)
         {
