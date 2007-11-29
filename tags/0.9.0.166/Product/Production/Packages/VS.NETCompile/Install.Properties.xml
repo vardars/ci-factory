@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Install.Properties">
+  
+  <property name="Install.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
+  <property name="Install.MsiSourceFile"        value="${ProjectName}.msi" />
+  <property name="Install.MsiSourceDir"        value="${InstallDirectory}\${ProjectName}\Release" />
+  <property name="Install.MsiTargetFile"        value="${ProjectName}${CCNetLabel}.msi" />
+  <property name="Install.MsiTargetDir"        value="${Common.ArtifactDirectoryPath}" />
+  <property name="Install.MsiTargetFileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${ProjectName}${CCNetLabel}.msi" />
+  <property name="Install.MsiTargetFileWebName" value="${ProjectName}${CCNetLabel}.msi" />
+  <property name="Install.PostWrapBatchFile" value="" />
+  <property name="Install.ToConvertLogFile" value="true" />
+  <property name="Install.XmlLogFileName" value="Release.xml" />
+  <property name="Install.ConfigName" value="Release"/>
+  <property name="Install.FilesToDeleteAtSetup" value="${Compile.LogFileDirectory}\${Install.XmlLogFileName}" />
+
+</project>
