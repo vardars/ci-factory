@@ -36,9 +36,6 @@
         <pathFilter>
           <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
-        <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
-        </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]>
 		</value>

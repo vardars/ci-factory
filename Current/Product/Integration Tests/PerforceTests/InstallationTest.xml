@@ -89,8 +89,6 @@
         <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
       </do>
     </loglevel>
-    
-    <sleep seconds="2"/>
 
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
   </target>
@@ -130,10 +128,8 @@
   </target>
 
   <target name="Perforce.InstallationTest.DefaultInstallTest">
-    <fail message="Need to make sure that the Build Scripts Build is stopped before working with the regular build, resource contension is cuasing intermitent failures!"/>
-    <!--Give the ccnet server a little time to get up and running. (Need to find a better way!) Perforce seems to a little longer than other configs?-->
-    <sleep seconds="10"/>
-    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="10" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
     <nant buildfile="${BuildDirectory}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
@@ -146,11 +142,11 @@
         <property name="Branch${ProjectName}-${BranchName}BuildScriptsInitialVersion" value="BuildScripts-1.0-1"/>
         <property name="Branch${ProjectName}-${BranchName}InitialVersion" value="1.0.1.1"/>
         <property name="ParentBranch${ProjectName}-${ProjectCodeLineName}BuildScriptsLabelPrefix" value="${BranchParentLabelPrefix}" dynamic="true"/>
+        <property name="FixBadRefPath" value="Yes"/>
       </properties>
     </nant>
 
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" verbose="true" />
-    <sleep seconds="10"/>
 
     <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
       <ccnetplugins>
@@ -158,19 +154,18 @@
       </ccnetplugins>
     </ccnetforce>
 
-    <sleep seconds="10"/>
-
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
 
     <asyncexec workingdir="${ProjectRootDirectory}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" verbose="true" />
-    <sleep seconds="10"/>
-
+    
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${BranchName}"/>
 
-    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="500" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.1.1" message="Expected the version to be '1.0.1.1'."/>
   </target>
