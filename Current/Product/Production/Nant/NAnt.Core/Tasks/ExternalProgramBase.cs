@@ -146,6 +146,18 @@ namespace NAnt.Core.Tasks {
         /// </value>
         public abstract string ProgramArguments { get; }
 
+        private string _OutputProperty;
+
+        [TaskAttribute("outputproperty")]
+        public string OutputProperty
+        {
+            get { return _OutputProperty; }
+            set
+            {
+                _OutputProperty = value;
+            }
+        }
+
         /// <summary>
         /// Gets the file to which the standard output should be redirected.
         /// </summary>
@@ -514,6 +526,7 @@ namespace NAnt.Core.Tasks {
         private void StreamReaderThread_Output() {
             StreamReader reader = _stdOut;
             bool doAppend = OutputAppend;
+            StringBuilder Capture = new StringBuilder();
 
             while (true) {
                 string logContents = reader.ReadLine();
@@ -524,6 +537,8 @@ namespace NAnt.Core.Tasks {
                 // ensure only one thread writes to the log at any time
                 lock (_lockObject) {
                     OutputWriter.WriteLine(logContents);
+                    if (!String.IsNullOrEmpty(this.OutputProperty))
+                        Capture.AppendLine(logContents);
                     if (Output != null) {
                         StreamWriter writer = new StreamWriter(Output.FullName, doAppend);
                         writer.WriteLine(logContents);
@@ -532,6 +547,14 @@ namespace NAnt.Core.Tasks {
                     }
                 }
             }
+
+            if (!String.IsNullOrEmpty(this.OutputProperty))
+            {
+                if (!this.Properties.Contains(this.OutputProperty))
+                    this.Properties.Add(this.OutputProperty, string.Empty);
+                this.Properties[this.OutputProperty] = Capture.ToString();
+            }
+            
             OutputWriter.Flush();
         }
         /// <summary>        /// Reads from the stream until the external program is ended.        /// </summary>

@@ -142,12 +142,60 @@
 			<property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
 		</ifnot>
 
-		<p4sync client="${Perforce.WorkspaceName}"
+    <if test="${SourceControl.Update.Interactive}">
+      <call target="Private.SourceControl.IteractiveUpdate"/>
+    </if>
+    
+    <p4sync client="${Perforce.WorkspaceName}"
 						view='"${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"'
 						label="${SourceControl.Update.FileSpec}"
 						force="${SourceControl.Update.All}"
 						verbose="true"/>
 	</target>
+
+  <target name="Private.SourceControl.IteractiveUpdate">
+    <property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce" />
+    <setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
+    <exec program="p4" commandline="login -s" outputproperty="Perforce.RawTicketStatus" />
+
+    <regex input="${Perforce.RawTicketStatus}" pattern="^User\s+.*?\s+ticket\s+(?'Valid'expires)\s+in\s+\d+\s+hours\s+\d+\s+minutes\." failonerror="false"/>
+    <ifthenelse test="${property::exists('Valid')}">
+      <then>
+        <property name="Valid" value="True"/>
+      </then>
+      <else>
+        <largeproperty name="NoPasswordNeededMessage">
+          <value>
+            <![CDATA['login' not necessary, no password set for this user.
+]]>
+          </value>
+        </largeproperty>
+        <ifthenelse test="${Perforce.RawTicketStatus == NoPasswordNeededMessage}">
+          <then>
+            <property name="Valid" value="True"/>
+          </then>
+          <else>
+            <property name="Valid" value="False"/>
+          </else>
+        </ifthenelse>
+      </else>
+    </ifthenelse>
+    <echo message="${Valid}"/>
+    <ifnot test="${Valid}">
+      <!--
+      <ask
+        answer="Perforce.Password"
+        caption="What is your password?"
+        dialogmode="FreeText"
+        question="What is your Perforce password?"
+        showdialog="true"
+      />
+      <exec program="p4" commandline="login" stdin="${Perforce.Password}" />
+      -->
+    </ifnot>
+    
+  </target>
+
 
 	<!--
   The following properties should be specified in the calling script.

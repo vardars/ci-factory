@@ -7,6 +7,8 @@
 	<property name="Perforce.WorkspaceNameBase" value="${ProjectName}-${ProjectCodeLineName}" overwrite="false"/>
 	<property name="Perforce.WorkspaceName" value="'${Perforce.WorkspaceNameBase}-${environment::get-machine-name()}'" overwrite="false"/>
 
+  <property name="SourceControl.Update.Interactive" value="false" overwrite="false"/>
+  
 	<property name="Perforce.BinPath" value="%Perforce.BinPath%"/>
 	<setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
 	
