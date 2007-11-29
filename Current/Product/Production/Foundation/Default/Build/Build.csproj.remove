@@ -12,6 +12,7 @@
     <None Include="server\*.state" />
     <None Include="Packages\**\*" Exclude="**\.svn\**\*" />
     <None Include="*.xml" />
+    <None Include="*.xsd" />
     <None Include="*.bat" />
     <None Include="dashboard\dashboard.config" />
     <None Include="dashboard\images\**\*" Exclude="**\.svn\**\*" />
