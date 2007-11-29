@@ -18,7 +18,7 @@
 
   <description>Begin Package Includes</description>
   <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
-  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Target.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
   
   <fileset id="PacakgeFinder" />
   <loopthrough property="PackageType">
