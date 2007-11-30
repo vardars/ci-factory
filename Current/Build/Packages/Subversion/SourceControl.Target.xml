@@ -237,6 +237,7 @@
       <arg line="--password ${SVN.Password}" />
       <arg line='"${path::get-file-name(SourceControl.CheckOut.File)}"' />
     </exec>
+    <attrib file='${SourceControl.CheckOut.File}' readonly='false' failonerror='false' />
   </target>
 
   <!--
