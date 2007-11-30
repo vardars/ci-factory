@@ -1,4 +1,8 @@
-set PATH=%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%ProgramFiles%\PVCS\Tracker\nt;%ProgramFiles%\Subversion\bin;C:\Projects\CI Factory\Current\Third Party\nAnt\bin
+cd ..\Build\nAnt
+FOR /F "TOKENS=1 DELIMS=," %%A IN ('dir /A:D /B') DO set AntBinPath=%%~fA
+set PATH=%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%AntBinPath%
 call "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat"
+cd ..\..\Product
 nant -buildfile:OpenSolution.Script.xml
-devenv "CI Factory.sln"
+FOR /F "TOKENS=1 DELIMS=," %%A IN ('dir /b *.sln') DO SET solutionfilename=%%A
+devenv %solutionfilename%

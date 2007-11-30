@@ -1,20 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project [
+  <!ENTITY % entities SYSTEM "Entities.xml">
+
+  %entities;
+]>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Properties">
 
-  <property name="BuildServerHostName"        value="cifactorybuild.stelligent.com"/>
-
-  <property name="ProjectName" value="CI Factory" />
-  <property name="ProjectCodeLineName" value="Current" />
-  <property name="ProjectsDirectory" value="c:\Projects" />
-  <property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}" />
-  <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
-  <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
-  <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
-  <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
-  <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
-  <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-  <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
-  <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
-  <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+  <property name="BuildServerHostName"        value="&HostName;"/>
+  <property name="BuildServerPort"            value="&Port;"/>
+	<property name="LabelPrefix"								value="&LabelPrefix;"/>
   
+  <property name="ProjectName"                value="&ProjectName;" />
+  <property name="ProjectCodeLineName"        value="&ProjectCodeLineName;" />
+  
+  <property name="ProjectsDirectory"          value="&ProjectsDirectory;" />
+  <property name="ProjectRootDirectory"       value="&ProjectRootDirectory;" />
+  <property name="ProjectCodeLineDirectory"   value="&ProjectCodeLineDirectory;" />
+  <property name="ProductDirectory"           value="&ProductDirectory;" />
+  <property name="ThirdPartyDirectory"        value="&ThirdPartyDirectory;" />
+  <property name="ProductionDirectory"        value="&ProductionDirectory;" />
+  <property name="BuildDirectory"             value="&BuildDirectory;" />
+  <property name="ArtifactRootDirectory"      value="&ArtifactRootDirectory;"/>
+  <property name="PackagesDirectory"          value="&PackagesDirectory;"/>
+  <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
+  <property name="InstallDirectory"           value="&InstallDirectory;"/>
+
+  <property name="ProductDirectoryName"       value="&ProductDirectoryName;"/>
+  <property name="ThirdPartyDirectoryName"    value="&ThirdPartyDirectoryName;"/>
+  <property name="ProductionDirectoryName"    value="&ProductionDirectoryName;"/>
+  <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
+  <property name="ArtifactRootDirectoryName"  value="&ArtifactRootDirectoryName;"/>
+  <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>
+  <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
+  <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
+
+  <property name="NantBinPath" value="&NantBinPath;"/>
+  <property name="NantExePath" value="&NantExePath;"/>
+
+  <property name="webURL" value="http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true"/>
+
 </project>

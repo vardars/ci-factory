@@ -8,27 +8,12 @@
   <property name="CCNetBuildTime" value="00:00:01"/>
   <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
-
   <property name="CCNetLabel" value="Personal.1"/>
-  <script language="C#" prefix="directory" >
-    <imports>
-      <import namespace="System.IO" />
-    </imports>
-
-    <code>
-      <![CDATA[
-         [Function("name")]
-         public static string GetDirectoryName(string path)
-         {
-                 return new DirectoryInfo( path ).Name;
-         }
-      ]]>
-    </code>
-  </script>
-  <property name="CCNetProject" value="${directory::name('..\..\')}"/>
   <property name="CCNetLogFilePath" value=""/>
 
   <include buildfile="Properties.Build.xml"/>
+  <property name="CCNetProject" value="${ProjectName}"/>
+  
   <include buildfile="Common.Build.xml" />
 	<include buildfile="Custom.Targets.xml" />
   <include buildfile="DevEnv.Targets.xml" />
@@ -37,6 +22,7 @@
 
   <description>Begin Package Includes</description>
   <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
   
   <fileset id="PacakgeFinder" />
   <loopthrough property="PackageType">
@@ -51,8 +37,10 @@
       <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
       <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
       <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
-      <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-      <include buildfile="${PackagePath}"/>
+      <if test="${fileset::file-count('PacakgeFinder') > 0}">
+        <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+        <include buildfile="${PackagePath}"/>
+      </if>
       <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
     </do>
   </loopthrough>
@@ -78,15 +66,15 @@
   </target>
   
   <target name="Build">
-    <call target="DevEnv.CheckForRequieredSoftware"/>
-    <call target="DevEnv.ConfigureEnvironment"/>
+    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
+    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
     <call target="Compile"/>
-    <call target="Test"/>
+    <call target="Test" if="${target::exists('Test')}"/>
   </target>
 
   <target name="Rebuild">
-    <call target="DevEnv.CheckForRequieredSoftware"/>
-    <call target="DevEnv.ConfigureEnvironment"/>
+    <call target="Workspace.CheckForRequieredSoftware"/>
+    <call target="Workspace.ConfigureEnvironment"/>
     <call target="Recompile"/>
     <call target="Test"/>
   </target>
@@ -96,9 +84,7 @@
     <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
     <property name="SourceControl.Update.MakeWritable" value="False"/>
 		<property name="SourceControl.Update.Interactive" value="True"/>
-    <call target="SourceControl.GetOfBuildDirectory"/>
-    <call target="SourceControl.GetOfThirdPartyDirectory" />
-    <call target="SourceControl.GetOfProductDirectory" />
+    <call target="SourceControl.GetOfCodeLineDirectory"/>
   </target>
 
   <target name="Compile">
@@ -123,6 +109,7 @@
           <fileset refid="InfoFiles" />
         </attrib>
 
+        <property name="Compile.ConfigName" value="Debug"/>
         <property name="Compile.ToCopyToBin" value="false"  />
         <property name="Compile.ToDeployZip" value="false"  />
         <property name="Compile.PublishLogFile" value="false" />
@@ -160,19 +147,13 @@
         <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj"/>
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
-        <trycatch>
-          <try>
-            <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-            <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
-              <fileset basedir="${Output.Path}">
-                <include name="**\*"/>
-                <exclude name="**\*.vshost.exe"/>
-              </fileset>
-            </delete>
-          </try>
-          <catch/>
-        </trycatch>
-        
+        <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
+        <delete if="${directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}"  verbose="true">
+          <fileset basedir="${Output.Path}">
+            <include name="**\*"/>
+            <exclude name="**\*.vshost.exe"/>
+          </fileset>
+        </delete>
       </do>
     </foreach>
     <delete>

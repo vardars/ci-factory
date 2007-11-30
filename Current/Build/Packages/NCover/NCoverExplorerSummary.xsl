@@ -12,6 +12,7 @@
 
 	<!-- NCoverExplorer summary -->
 	<xsl:template match="coverageReport2">
+        
             <tr>
 				<td class="header-label" width="300px">
 					Module

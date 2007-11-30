@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend" >
 
   <include buildfile="nDepend.Properties.xml" />
@@ -84,13 +84,10 @@
         <ifnot test="${AssemblyName == '' or stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
           <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
-          <echo message="${file::exists(TargetAssemblyPath)} ${TargetAssemblyPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
           <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
-          <echo message="${file::exists(TargetAssemblyPath)} ${TargetAssemblyPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
           <property name="TargetPDBPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
-          <echo message="${file::exists(TargetPDBPath)} ${TargetPDBPath}"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetPDBPath)}"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">

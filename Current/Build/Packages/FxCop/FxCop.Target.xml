@@ -19,9 +19,9 @@
       <loglevel level="None">
         <do>
           <exec
-              program="${path::get-short-path(FxCop.Console)}"
-              commandline='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'
-              failonerror="false" verbose="true"/>
+            program="${path::get-short-path(FxCop.Console)}"
+            commandline='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'
+            failonerror="false" verbose="true"/>
         </do>
       </loglevel>
       <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">

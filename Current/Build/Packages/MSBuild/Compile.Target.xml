@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
 
-  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
-
+  <property name="Compile.LogFileDirectory" value="c:\Projects\CI Factory\Current\Build\CompileLogs" overwrite="false" />
+	
   <include buildfile="Compile.Properties.xml" />
 
-  <!--
+	<!--
 	The following properties should be specified in the calling script.
 	
 	<property name="Compile.Bin" value="" />
 	<property name="Compile.XmlLogFileName" value="" />
 	-->
-
-  <!-- The following properties are for internal use only -->
+	
+	<!-- The following properties are for internal use only -->
   <property name="Private.Compile.Result" value="" />
-
+    
   <target name="Compile.CompileSource">
     <exec 
 	    program="${framework::get-framework-directory('net-2.0')}\msbuild.exe" workingdir="${ProductDirectory}"
@@ -36,7 +36,7 @@
     <call target="Private.Compile.CopyToWorkingBin" />
     <call target="Private.Compile.DeployZip" />
   </target>
-
+    
   <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">
     <attrib readonly="false">
       <fileset refid="Compile.ToCopy" />
@@ -73,7 +73,7 @@
     <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSBuild\compile-msbuild.xsl"/>
     <call target="Common.ShowReport"/>
   </target>
-
+  
   <target name="Compile.SetUp">
     <delete dir="${Compile.LogFileDirectory}" if="${directory::exists(Compile.LogFileDirectory)}" />
     <mkdir dir="${Compile.LogFileDirectory}"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 09/29/2007 13:45:12</xs:documentation>
+    <xs:documentation>NAnt schema generated at 11/30/2007 10:55:53</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -55,6 +55,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -141,9 +155,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -205,6 +218,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -291,9 +318,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -769,7 +795,9 @@
     <xs:attribute name="useruntimeengine" use="optional" />
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -891,6 +919,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -977,9 +1019,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -1080,6 +1121,7 @@
     </xs:sequence>
     <xs:attribute name="append" use="optional" />
     <xs:attribute name="file" use="required" />
+    <xs:attribute name="encoding" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1190,7 +1232,9 @@
     <xs:attribute name="pad-all" use="optional" />
     <xs:attribute name="nobreak-complex" use="optional" />
     <xs:attribute name="nobreak-singlelineblocks" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1273,7 +1317,9 @@
     <xs:attribute name="proxyusername" use="optional" />
     <xs:attribute name="proxypassword" use="optional" />
     <xs:attribute name="proxydomain" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1301,7 +1347,9 @@
     <xs:attribute name="includeSummaryReport" use="optional" />
     <xs:attribute name="typeList" use="optional" />
     <xs:attribute name="saveResults" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1325,7 +1373,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1342,7 +1392,9 @@
     </xs:sequence>
     <xs:attribute name="assembly" use="optional" />
     <xs:attribute name="action" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1375,7 +1427,9 @@
     </xs:sequence>
     <xs:attribute name="native" use="optional" />
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1410,7 +1464,9 @@
     <xs:attribute name="nowarnings" use="optional" />
     <xs:attribute name="uncompilefile" use="optional" />
     <xs:attribute name="uncompileoutputdir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1436,7 +1492,9 @@
     <xs:attribute name="alias" use="optional" />
     <xs:attribute name="commandfile" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1458,7 +1516,9 @@
     <xs:attribute name="out" use="optional" />
     <xs:attribute name="username" use="optional" />
     <xs:attribute name="password" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1478,7 +1538,9 @@
     <xs:attribute name="debug" use="optional" />
     <xs:attribute name="debugoptimized" use="optional" />
     <xs:attribute name="profiled" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1494,6 +1556,317 @@
     </xs:sequence>
     <xs:attribute name="out" use="required" />
     <xs:attribute name="xslfile" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Add">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="file" use="required" />
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Change">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Client">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="clientname" use="required" />
+    <xs:attribute name="root" use="optional" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="force" use="optional" />
+    <xs:attribute name="clientview" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Delete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Edit">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Info">
+    <xs:attribute name="user" use="required" />
+    <xs:attribute name="client" use="required" />
+    <xs:attribute name="host" use="required" />
+    <xs:attribute name="root" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Label">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Labelsync">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="delete" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Print">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="file" use="required" />
+    <xs:attribute name="outputfile" use="required" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Reopen">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="view" use="required" />
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Revert">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="optional" />
+    <xs:attribute name="revertunchanged" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Set">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Submit">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="changelist" use="required" />
+    <xs:attribute name="remainopen" use="optional" />
+    <xs:attribute name="revertunchanged" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.Perforce.P4Sync">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
+    </xs:sequence>
+    <xs:attribute name="label" use="optional" />
+    <xs:attribute name="force" use="optional" />
+    <xs:attribute name="port" use="optional" />
+    <xs:attribute name="client" use="optional" />
+    <xs:attribute name="user" use="optional" />
+    <xs:attribute name="view" use="optional" />
+    <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
+    <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
+    <xs:attribute name="timeout" use="optional" />
+    <xs:attribute name="useshellexecute" use="optional" />
+    <xs:attribute name="createnowindow" use="optional" />
+    <xs:attribute name="redirectoutput" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1521,7 +1894,9 @@
     <xs:attribute name="registered" use="optional" />
     <xs:attribute name="typelib" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1543,7 +1918,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="program-path-sep" use="optional" />
     <xs:attribute name="basedir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1742,7 +2119,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1765,7 +2144,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1787,7 +2168,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1855,7 +2238,9 @@
     <xs:attribute name="checkreferences" use="optional" />
     <xs:attribute name="errorfile" use="optional" />
     <xs:attribute name="conditionals" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1985,7 +2370,9 @@
     <xs:attribute name="proxydomain" use="optional" />
     <xs:attribute name="urlkey" use="optional" />
     <xs:attribute name="baseurl" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2010,7 +2397,9 @@
     <xs:attribute name="uri" use="optional" />
     <xs:attribute name="xmldoc" use="optional" />
     <xs:attribute name="xdr" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2074,7 +2463,9 @@
     <xs:attribute name="version" use="optional" />
     <xs:attribute name="win32icon" use="optional" />
     <xs:attribute name="win32res" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2132,7 +2523,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2149,7 +2542,9 @@
     </xs:sequence>
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="keycontainer" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2178,7 +2573,9 @@
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="resourcefile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2213,7 +2610,9 @@
     <xs:attribute name="warnaserror" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2231,7 +2630,9 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="licensetarget" use="optional" />
     <xs:attribute name="target" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2267,7 +2668,9 @@
     <xs:attribute name="existingapp" use="optional" />
     <xs:attribute name="application" use="optional" />
     <xs:attribute name="partition" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2288,7 +2691,9 @@
     <xs:attribute name="target" use="optional" />
     <xs:attribute name="todir" use="optional" />
     <xs:attribute name="usesourcepath" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2355,7 +2760,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2395,7 +2802,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2436,7 +2845,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="objectfile" use="optional" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2479,7 +2890,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="moduledefinition" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2514,7 +2927,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2532,7 +2947,9 @@
     <xs:attribute name="headerpath" use="optional" />
     <xs:attribute name="rcpath" use="optional" />
     <xs:attribute name="mcfile" use="required" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2582,7 +2999,9 @@
     <xs:attribute name="iid" use="optional" />
     <xs:attribute name="proxy" use="optional" />
     <xs:attribute name="filename" use="required" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2608,7 +3027,9 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="rcfile" use="required" />
     <xs:attribute name="langid" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2661,7 +3082,9 @@
     <xs:attribute name="delaysign" use="optional" />
     <xs:attribute name="generatesource" use="optional" />
     <xs:attribute name="rcw" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2688,7 +3111,9 @@
     <xs:attribute name="assembly" use="required" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="names" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2715,7 +3140,9 @@
     <xs:attribute name="sysarray" use="optional" />
     <xs:attribute name="typelib" use="required" />
     <xs:attribute name="unsafe" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2818,7 +3245,9 @@
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2906,6 +3335,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -2992,9 +3435,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -3064,6 +3506,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -3150,9 +3606,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -3257,6 +3712,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -3343,9 +3812,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
@@ -3621,7 +4089,9 @@
     <xs:attribute name="visibility" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="todir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3655,25 +4125,52 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.CoverageExclusionElement">
+    <xs:attribute name="enabled" use="optional" />
+    <xs:attribute name="type" use="optional" />
+    <xs:attribute name="isRegex" use="optional" />
+    <xs:attribute name="pattern" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.Types.ModuleThresholdElement">
+    <xs:attribute name="moduleName" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverExplorerTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="exclusion" type="nant:NCoverExplorer.NAntTasks.Types.CoverageExclusionElement" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="moduleThreshold" type="nant:NCoverExplorer.NAntTasks.Types.ModuleThresholdElement" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
-    <xs:attribute name="profiledProcessModule" use="optional" />
-    <xs:attribute name="commandLineArgs" use="optional" />
-    <xs:attribute name="commandLineExe" use="optional" />
-    <xs:attribute name="copyXsl" use="optional" />
-    <xs:attribute name="coverageFile" use="optional" />
-    <xs:attribute name="excludeAttributes" use="optional" />
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="logFile" use="optional" />
-    <xs:attribute name="logLevel" use="optional" />
-    <xs:attribute name="profileIIS" use="optional" />
-    <xs:attribute name="profileService" use="optional" />
-    <xs:attribute name="version" use="optional" />
-    <xs:attribute name="workingDirectory" use="optional" />
+    <xs:attribute name="failCombinedMinimum" use="optional" />
+    <xs:attribute name="failMinimum" use="optional" />
+    <xs:attribute name="filter" use="optional" />
+    <xs:attribute name="htmlReportName" use="optional" />
+    <xs:attribute name="mergeFileName" use="optional" />
+    <xs:attribute name="minimumCoverage" use="optional" />
+    <xs:attribute name="outputDir" use="optional" />
+    <xs:attribute name="projectName" use="optional" />
+    <xs:attribute name="reportType" use="optional" />
+    <xs:attribute name="satisfactoryCoverage" use="optional" />
+    <xs:attribute name="showExcluded" use="optional" />
+    <xs:attribute name="sort" use="optional" />
+    <xs:attribute name="xmlReportName" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3683,57 +4180,37 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NUnitProjectTask">
+  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
-    </xs:sequence>
-    <xs:attribute name="project" use="optional" />
-    <xs:attribute name="appConfig" use="optional" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.Types.CoverageExclusion">
-    <xs:attribute name="type" use="optional" />
-    <xs:attribute name="pattern" use="optional" />
-    <xs:attribute name="isRegex" use="optional" />
-    <xs:attribute name="enabled" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.Types.ModuleThreshold">
-    <xs:attribute name="moduleName" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="NCoverExplorer.NAntTasks.NCoverExplorerTask">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="0" maxOccurs="1" name="exclusions">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="exclusion" type="nant:NCoverExplorer.NAntTasks.Types.CoverageExclusion" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
-      <xs:element minOccurs="0" maxOccurs="1" name="moduleThresholds">
-        <xs:complexType>
-          <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="moduleThreshold" type="nant:NCoverExplorer.NAntTasks.Types.ModuleThreshold" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="assemblies" type="nant:NAnt.Core.Types.FileSet" />
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
+    <xs:attribute name="additionalArgs" use="optional" />
+    <xs:attribute name="assemblyList" use="optional" />
+    <xs:attribute name="autoExclude" use="optional" />
+    <xs:attribute name="commandLineArgs" use="optional" />
+    <xs:attribute name="commandLineExe" use="optional" />
+    <xs:attribute name="coverageFile" use="optional" />
+    <xs:attribute name="coverageHtmlDirectory" use="optional" />
+    <xs:attribute name="coverageType" use="optional" />
+    <xs:attribute name="excludeAttributes" use="optional" />
     <xs:attribute name="program" use="optional" />
-    <xs:attribute name="failMinimum" use="optional" />
-    <xs:attribute name="htmlReportName" use="optional" />
-    <xs:attribute name="mergeFileName" use="optional" />
-    <xs:attribute name="outputDir" use="optional" />
+    <xs:attribute name="fileExclusionPatterns" use="optional" />
+    <xs:attribute name="logFile" use="optional" />
+    <xs:attribute name="logLevel" use="optional" />
+    <xs:attribute name="methodExclusionPatterns" use="optional" />
+    <xs:attribute name="profiledProcessModule" use="optional" />
+    <xs:attribute name="profileIIS" use="optional" />
+    <xs:attribute name="profileService" use="optional" />
     <xs:attribute name="projectName" use="optional" />
-    <xs:attribute name="reportType" use="optional" />
-    <xs:attribute name="satisfactoryCoverage" use="optional" />
-    <xs:attribute name="showExcluded" use="optional" />
-    <xs:attribute name="xmlReportName" use="optional" />
+    <xs:attribute name="registerProfiler" use="optional" />
+    <xs:attribute name="serviceTimeout" use="optional" />
+    <xs:attribute name="symbolSearchPolicy" use="optional" />
+    <xs:attribute name="typeExclusionPatterns" use="optional" />
+    <xs:attribute name="workingDirectory" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3816,6 +4293,20 @@
       <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
       <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
       <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+      <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+      <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+      <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+      <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+      <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+      <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+      <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+      <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+      <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+      <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+      <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+      <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+      <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+      <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
       <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
       <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
       <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -3902,9 +4393,8 @@
       <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
       <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
       <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-      <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-      <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
       <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+      <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
       <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
       <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       <xs:element name="case" type="nant:CIFactory.NAnt.Types.CaseElement" />
@@ -3986,6 +4476,20 @@
         <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
         <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
         <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
         <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
         <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
         <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
@@ -4072,9 +4576,8 @@
         <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
         <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
         <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
-        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
-        <xs:element name="nunitproject" type="nant:NCoverExplorer.NAntTasks.NUnitProjectTask" />
         <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="case" type="nant:CIFactory.NAnt.Types.CaseElement" />

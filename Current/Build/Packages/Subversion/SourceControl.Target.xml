@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN">
-  
+
   <ifthenelse test="${file::exists('Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll')}">
     <then>
       <property name="SVN.Task" value="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
@@ -50,8 +50,8 @@
     <call target="SourceControl.GetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfBuildDirectory" >
-    <property name="SourceControl.GetOf" value="${BuildDirectory}"/>
+  <target name="SourceControl.GetOfCodeLineDirectory" >
+    <property name="SourceControl.GetOf" value="${ProjectCodeLineDirectory}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 
@@ -263,6 +263,14 @@
     </exec>
   </target>
 
+  <!--
+    <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+  -->
+  <target name='SourceControl.Rename'>
+    <exec program='svn' commandline='move "${SourceControl.Rename.Source}" "${SourceControl.Rename.Target}"' workingdir='${ProjectCodeLineDirectory}' verbose='true' />
+  </target>
+
   <target name="SourceControl.SetUp">
     <mkdir if="${directory::exists(Private.SVN.ReportDirectory) == false}" dir="${Private.SVN.ReportDirectory}"/>
     <delete>
@@ -315,6 +323,18 @@
       </exec>
     </if>
 
+		<exec program="svn" workingdir="${BuildDirectory}\server" verbose="true" >
+			<arg line="revert"/>
+			<arg line="*.state" />
+		</exec>
+
+		<exec program="svn" workingdir="${BuildDirectory}\server" verbose="true" >
+			<arg line="propset"/>
+			<arg line="svn:ignore"/>
+			<arg line="*.state" />
+			<arg line="."/>
+		</exec>
+
     <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
       <arg line="commit" />
       <arg line="--non-interactive" />
@@ -338,5 +358,63 @@
 
   <target name="SourceControl.Bindings.Create">
     <fail message="Not yet implemented!"/>
+  </target>
+
+  <!--
+  Paremeters for target:
+  <property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
+  -->
+  <target name="SourceControl.StartCreateBranch">
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="copy" />
+      <arg line="${SVN.URI.ProjectCodeLine}" />
+      <arg line="${SourceControl.CreateBranch.BranchName}" />
+    </exec>
+
+    <property name="BranchSubversionPackageDirectory" value="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\${PackagesDirectoryName}\Subversion"/>
+    <copy
+      unless="${file::exists(BranchSubversionPackageDirectory + '\SourceControl.Credentials.xml')}"
+      file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml"
+      todir="${BranchSubversionPackageDirectory}"
+      verbose="true"
+    />
+    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Branch by CI Factory Installer"'/>
+    </exec>
+
+    <switch value="${environment::variable-exists('SVN_ASP_DOT_NET_HACK')}">
+      <case value='True' break='true'>
+        <property name='SvnDirName' value='_svn'/>
+      </case>
+      <case value='False' break='true'>
+        <property name='SvnDirName' value='.svn'/>
+      </case>
+    </switch>
+
+    <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
+  </target>
+
+  <target name="SourceControl.FinishCreateBranch">
+    <exec program="svn" workingdir="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Adjust Branch by CI Factory Installer"'/>
+    </exec>
+
+    <exec program="svn" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line="commit" />
+      <arg line="--non-interactive" />
+      <arg line="--username ${SVN.Username}" />
+      <arg line="--password ${SVN.Password}" />
+      <arg line='-m "Support Branch by CI Factory Installer"'/>
+    </exec>
   </target>
 </project>

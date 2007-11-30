@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
-  <property name="UnitTest.TestPath" value="${ProductDirectory}\Unit Test"/>
   <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll"/>
   
   <fileset id="UnitTest.ProjectFiles">
-    <include name="${UnitTest.TestPath}\**\*.*proj"/>
-    <exclude name="${UnitTest.TestPath}\**\TestAssistance.NAnt.*proj"/>
+    <include name="${UnitTestDirectory}\**\*.*proj"/>
+    <exclude name="${UnitTestDirectory}\**\TestAssistance.NAnt.*proj"/>
   </fileset>
+  
   <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${string::replace(ProjectName, ' ', '_')}UnitTests"/>
   <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>

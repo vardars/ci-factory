@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd"  name="Coverage.Properties">
   
   <property name="Coverage.ReportFolder" value="${BuildDirectory}\CoverageReports" overwrite="false"/>
-  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt"  overwrite="false"/>
-  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml"  overwrite="false"/>
-  <property name="Coverage.UnitTestPropertiesInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Properties.xml" overwrite="false" />
+  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt"  overwrite="false" />
+  <property name="Coverage.UnitTestPackageInclude" value="c:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\UnitTest.Target.xml"  overwrite="false" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="c:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\UnitTest.Properties.xml"  overwrite="false" />
 	<property name="NCover.ProcessToMonitor" value="" overwrite="false"/>
   <property name="Coverage.TargetAssemblyFormat" value="${ProjectName}.*.dll" overwrite="false"/>
     
@@ -14,6 +14,6 @@
   </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
-  <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"  overwrite="false" />
-  <property name="NCover.ExplorerExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCoverExplorer.Console.exe"  overwrite="false" />
+  <property name="NCover.ExePath" value="C:\Program Files\NCover\NCover.Console.exe"  overwrite="false" />
+  <property name="NCover.ExplorerExePath" value="C:\Program Files\NCover\NCoverExplorer.Console.exe"  overwrite="false" />
 </project>

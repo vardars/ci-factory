@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp" basedir="..\Build">
 
-  <property name="CCNetProject" value="CI Factory"/>
-  <include buildfile="..\Build\Properties.Build.xml"/>
-  <include buildfile="..\Build\Custom.Targets.xml" />
-  <include buildfile="..\Build\DevEnv.Targets.xml" />
-
-  <target name="SetUp">
-    <call target="DevEnv.CheckForRequieredSoftware"/>
-    <call target="DevEnv.ConfigureEnvironment"/>
-  </target>
+  <property name="CCNetProject" value="${ProjectName}"/>
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2006-09-12"/>
+  <property name="CCNetBuildTime" value="11:10:00"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
   
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
+
+  <property name="CCNetLabel" value="1.0.0.2"/>
+  <property name="CCNetLogFilePath" value=""/>
+
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
+  
+  <target name="SetUp">
+    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
+    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
+  </target>
+
 </project>

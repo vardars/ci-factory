@@ -190,15 +190,91 @@ function refresh()
 	</tr>
 
   #if ($projectGridRow.Activity == "Building")
-  #if ($projectGridRow.forcee.Length > 0)
-  <tr>
-    <td colspan="6">
-      Forced by: $projectGridRow.forcee
-    </td>
-  </tr>
-		#end
-		#if ($projectGridRow.Changes.Length > 0)
-		<tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="5">
+        <table border="0" cellpadding="2" cellspacing="0" rules="groups">
+          <tbody>    
+            #if ($projectGridRow.BuildCondition == "ForceBuild")
+              #if ($projectGridRow.Forcee.Length > 0)
+                <th>
+                  Forced by: $projectGridRow.Forcee at $projectGridRow.CurrentBuildStartTime
+                </th>
+              #else
+                <th>
+                  Build Forced at $projectGridRow.CurrentBuildStartTime
+                </th>
+              #end
+            #else
+              <th>
+                Build Triggered at $projectGridRow.CurrentBuildStartTime
+              </th>
+            #end
+            <th>&nbsp;&nbsp;&nbsp;</th>
+            <th>
+              Previous Build Duration $projectGridRow.LastBuildDuration
+            </th>
+            <th>&nbsp;&nbsp;&nbsp;</th>
+            <th>
+        <script type="text/javascript">
+
+          /***********************************************
+          * Dynamic CountUp script- © Dynamic Drive (http://www.dynamicdrive.com)
+          * This notice MUST stay intact for legal use
+          * Visit http://www.dynamicdrive.com/ for this script and 100s more.
+          ***********************************************/
+
+          function dcountup(startingdate){
+          this.currentTime=new Date()
+          this.startingdate=new Date(startingdate)
+          this.timesup=false
+          this.start()
+          }
+
+          dcountup.prototype.oncountup=function(){} //default action for "oncountup"
+
+          dcountup.prototype.start=function(){
+          var thisobj=this
+          this.currentTime.setSeconds(this.currentTime.getSeconds()+1)
+          var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
+          var oneMinute=60 //minute unit in seconds
+          var oneHour=60*60 //hour unit in seconds
+          var oneDay=60*60*24 //day unit in seconds
+          var dayfield=Math.floor(timediff/oneDay)
+          var hourfield=Math.floor((timediff-dayfield*oneDay)/oneHour)
+          var minutefield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour)/oneMinute)
+          var secondfield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour-minutefield*oneMinute))
+          
+          minutefield=dayfield*24*60+hourfield*60+minutefield
+          
+          var result={minutes:minutefield, seconds:secondfield}
+          this.oncountup(result)
+          setTimeout(function(){thisobj.start()}, 1000) //update results every second
+          }
+
+        </script>
+
+        <div id="clock">&nbsp;</div>
+
+        <script type="text/javascript">
+
+          //SYNTAX: myvariable=new dcountup(past_date_and_time_string)
+          //Example: ("April 9, 2005 13:30:00")
+          var BuildTimeElapsed=new dcountup("$projectGridRow.CurrentBuildStartTime")
+
+          BuildTimeElapsed.oncountup=function(result){
+          var mycountainer=document.getElementById("clock")
+          mycountainer.innerHTML="Build Time Elpased: "+result['minutes']+":"+result['seconds']
+          }
+
+        </script>
+      </th>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    #if ($projectGridRow.Changes.Length > 0)
+    <tr>
       <td colspan="6">
 
 				#foreach ($changeset in $projectGridRow.Changes)
@@ -206,7 +282,7 @@ function refresh()
 					Changeset # $changeset.Version
 				</span>
           <div>
-            <table border="0" cellpadding="2" cellspacing="0" rules="groups">
+            <table border="0" cellpadding="2" cellspacing="0" width="98%">
               <tbody>
                 <tr>
                   <th>
