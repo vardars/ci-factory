@@ -81,11 +81,11 @@
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
           <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
+          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ArtifactDirectoryPath}\NAntTestReport.html"
+               out="${Common.ReportDirectory}\NAntTestReport.html"
                style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
@@ -131,11 +131,11 @@
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
           <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
+          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ArtifactDirectoryPath}\NAntTestReport.html"
+               out="${Common.ReportDirectory}\NAntTestReport.html"
                style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
