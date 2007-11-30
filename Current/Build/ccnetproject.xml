@@ -3,7 +3,7 @@
   <!ENTITY % entities SYSTEM "Entities.xml">
 
   %entities;
-  
+
   <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="BuildMaster" group="buildmaster" address="jay.flowers@stelligent.com"/>
@@ -82,24 +82,24 @@
       </triggeredIntegrationFilter>
     </integrationFilter>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
-        <workingDirectory>&BuildDirectory;</workingDirectory>
-        <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
-        <webUrlBuilder type="websvn">
-          <url>http://localhost/svn/&ProjectName;{0}</url>
-        </webUrlBuilder>
-      </sourcecontrol>
-  <labeller type="defaultlabeller">
-		<prefix>BuildScripts.</prefix>
-	</labeller>
-  <tasks>
-    <nullTask/>
-  </tasks>
-  <publishers>
-    <xmllogger />
-    &email;
-  </publishers>
-</project>
+      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
+      <workingDirectory>&BuildDirectory;</workingDirectory>
+      <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
+      <webUrlBuilder type="websvn">
+        <url>http://localhost/svn/&ProjectName;{0}</url>
+      </webUrlBuilder>
+    </sourcecontrol>
+    <labeller type="defaultlabeller">
+      <prefix>BuildScripts.</prefix>
+    </labeller>
+    <tasks>
+      <nullTask/>
+    </tasks>
+    <publishers>
+      <xmllogger />
+      &email;
+    </publishers>
+  </project>
   <project name="&ProjectName;-&ProjectCodeLineName; Dev">
     <webURL>&webURL;</webURL>
     <state type="state" />
@@ -136,38 +136,36 @@
       </forcedIntegrationFilter>
     </integrationFilter>
     <sourcecontrol type="filtered">
-          <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
-            <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
-            <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
-            <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
-            <username>Build</username>
-          <password>password</password>
-          <webUrlBuilder type="websvn">
-            <url>http://localhost/svn/&ProjectName;{0}</url>
-          </webUrlBuilder>
-            <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
-          </sourceControlProvider>
-          <exclusionFilters>
-            <pathFilter>
-              <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
-            </pathFilter>
-            <pathFilter>
-              <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
-            </pathFilter>
-            <pathFilter>
-              <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
-            </pathFilter>
-            <pathFilter>
-              <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
-            </pathFilter>
-            <pathFilter>
-              <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
-            </pathFilter>
-          </exclusionFilters>
-        </sourcecontrol>
+      <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
+        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
+        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+        <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
+        <webUrlBuilder type="websvn">
+          <url>http://localhost/svn/&ProjectName;{0}</url>
+        </webUrlBuilder>
+        <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
+      </sourceControlProvider>
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>
     &labeller;
     <tasks>
-    <modificationWriter>
+      <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
         <path>&BuildDirectory;\SourceModificationReports</path>
       </modificationWriter>
@@ -266,8 +264,6 @@
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
-        <username>Build</username>
-        <password>password</password>
         <webUrlBuilder type="websvn">
           <url>http://localhost/svn/&ProjectName;{0}</url>
         </webUrlBuilder>
@@ -403,8 +399,6 @@
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
-        <username>Build</username>
-        <password>password</password>
         <webUrlBuilder type="websvn">
           <url>http://localhost/svn/&ProjectName;{0}</url>
         </webUrlBuilder>
