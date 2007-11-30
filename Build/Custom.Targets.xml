@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Custom.Targets" >
+
+
+	<target name="Custom.NAnt.CreateDocumentation">
+		<property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+		<property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
+		<!--<property name="" value=""/>
+    <property name="" value=""/>-->
+
+		<uptodate property="Help.IsUpToDate">
+			<targetfiles>
+				<include name="${NAntDocumentationDirectory}/*.html" />
+			</targetfiles>
+			<sourcefiles basedir="${ThirdPartyDirectory}/nAnt/bin">
+				<include name="NAnt.Core.dll" />
+				<include name="*Task*.dll" />
+				<include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
+				<include name="NDoc.Documenter.*.dll" />
+			</sourcefiles>
+		</uptodate>
+		<ifnot test="${Help.IsUpToDate}">
+			<ndoc>
+				<assemblies basedir="${ThirdPartyDirectory}/nAnt/bin">
+					<include name="NAnt.Core.dll" />
+					<include name="*Task*.dll" />
+					<include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
+				</assemblies>
+				<documenters>
+					<documenter name="NAnt">
+						<property name="OutputDirectory" value="${NAntDocumentationDirectory}" />
+						<property name="SdkDocVersion" value="SDK_v1_1" />
+						<property name="SdkLinksOnWeb" value="true" />
+						<property name="NAntBaseUri" value="../" />
+						<property name="NamespaceFilter" value="" />
+						<property name="ProductName" value="CI Factory" />
+						<property name="ProductVersion" value="${CCNetLabel}" />
+						<property name="ProductUrl" value="http://cifactory.org" />
+						<property name="Preliminary" value="true" />
+						<property name="DocumentAttributes" value="True" />
+						<property name="IncludeAssemblyVersion" value="false" />
+						<property name="ShowMissingParams" value="True" />
+						<property name="ShowMissingReturns" value="True" />
+						<property name="ShowMissingValues" value="True" />
+					</documenter>
+				</documenters>
+			</ndoc>
+		</ifnot>
+	</target>
+
+  <target name="Custom.WriteReleaseNotes">
+    <property name="TempSvnLogFilePath" value="${Common.TempDirectory}\log.xml"/>
+    <property name="TempBatchFilePath" value="${Common.TempDirectory}\log.bat"/>
+    <property name="ReleaseNotesFilePath" value="${ProductionDirectory}\CI Installer\CI Factory Release Notes.html"/>
+    <property name="RevisionToLogFrom" value="1734"/>
+    
+    <echo message='svn log "${ProductDirectory}" --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; "${TempSvnLogFilePath}"' file="${TempBatchFilePath}"/>
+    <exec program="${TempBatchFilePath}" workingdir="${ProductDirectory}" verbose="true" />
+
+    <property name='NewAndImprovedNotes' value=''/>
+    <property name='FixedNotes' value=''/>
+
+    <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg" id='Notes' />
+		<property name='TempNotesFilePath' value='${Common.TempDirectory}\Notes.txt'/>
+		
+		<loopthrough property='Message'>
+			<items>
+				<xmlquery refid='Notes' />
+			</items>
+			<do>
+				<echo message='${Message}' append='true' file='${TempNotesFilePath}' />
+			</do>
+		</loopthrough>
+
+		<foreach in="${TempNotesFilePath}" property="Line" item="Line">
+			<echo message="Line ${Line}"/>
+			<regex input="${Line}" options="Multiline,IgnoreCase"
+					 pattern="(^(?'Ignored'ignore.*)$)|(^(?'Fixed'fix.*)$)|(^(?'Added'.*)$)"/>
+
+			<if test="${Added != ''}">
+				<property name='NewAndImprovedNotes' 
+								value='${NewAndImprovedNotes}${Added}&lt;br/&gt;'/>
+			</if>
+			
+			<if test="${Fixed != ''}">
+				<property name='FixedNotes' 
+								value='${FixedNotes}${Fixed}&lt;br/&gt;'/>
+			</if>
+		</foreach>
+
+    <get dest="${ReleaseNotesFilePath}"
+         src="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=44&amp;pop=1&amp;page=0&amp;Itemid=1" />
+
+    <largeproperty name="AdditionalNotes">
+      <value expand="true" xml="true" >
+        <h1>
+          CI Factory Release Notes
+        </h1>
+        <h2>
+          Beta ${CCNetLabel}
+        </h2>
+        <h3>New/Improvements</h3>
+        ${NewAndImprovedNotes}
+        <br/>
+        <h3>
+          Fixes
+        </h3>
+        ${FixedNotes}
+        <br/>
+      </value>
+    </largeproperty>
+
+    <xmlpoke pokemode="Replace"
+             file="${ReleaseNotesFilePath}"
+             value="${AdditionalNotes}"
+             xpath='/h:html/h:body/h:table[1]/h:tr[1]/h:td[1]/h:h1[1]'>
+      <namespaces>
+        <namespace prefix='h' uri='http://www.w3.org/1999/xhtml'/>
+      </namespaces>
+    </xmlpoke>
+  </target>
+  
+</project>
