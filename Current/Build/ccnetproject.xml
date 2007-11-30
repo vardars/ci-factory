@@ -82,11 +82,11 @@
       </triggeredIntegrationFilter>
     </integrationFilter>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
+      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
       <workingDirectory>&BuildDirectory;</workingDirectory>
       <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
       <webUrlBuilder type="websvn">
-        <url>http://localhost/svn/&ProjectName;{0}</url>
+        <url>http://ci-factory.googlecode.com/svn{0}</url>
       </webUrlBuilder>
     </sourcecontrol>
     <labeller type="defaultlabeller">
@@ -137,11 +137,11 @@
     </integrationFilter>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
-        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
+        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
-          <url>http://localhost/svn/&ProjectName;{0}</url>
+          <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
         <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
       </sourceControlProvider>
@@ -261,11 +261,11 @@
     </integrationFilter>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
-        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
+        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
-          <url>http://localhost/svn/&ProjectName;{0}</url>
+          <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
         <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
       </sourceControlProvider>
@@ -396,11 +396,11 @@
     </integrationFilter>
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
-        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectName;/&ProjectCodeLineName;</trunkUrl>
+        <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
-          <url>http://localhost/svn/&ProjectName;{0}</url>
+          <url>http://ci-factory.googlecode.com/svn{0}</url>
         </webUrlBuilder>
         <tagBaseUrl>https://ci-factory.googlecode.com/svn/tags</tagBaseUrl>
       </sourceControlProvider>
