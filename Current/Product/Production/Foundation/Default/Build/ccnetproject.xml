@@ -48,7 +48,6 @@
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
-      <passwordForceFilter password="automa" />
       <projectForceFilter>
         <projectFilters>
           &DevBuilding;
@@ -87,7 +86,6 @@
     </projectTriggerFilter>
   </triggers>
   <forceFilters>
-    <passwordForceFilter password="automa" />
     <projectForceFilter>
       <projectFilters>
         &ScriptsBuilding;
