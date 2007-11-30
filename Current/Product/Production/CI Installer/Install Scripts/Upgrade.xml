@@ -120,7 +120,7 @@
 
     <ifnot test="${property::exists('LabelPrefix')}">
       <largeproperty name="LabelPrefixQuestion">
-        <value expand="" xml="">
+        <value expand="false" xml="false">
           <![CDATA[What is the version or label prefix for this build project?
 When CI Factory first installed your project it was set to '1.0.0.' in the file ccnetproject.xml.]]>
         </value>
@@ -519,6 +519,37 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
       </ask>
     </if>
+
+    <property name="CCNET.ModificationDelaySeconds" value="120"/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="CCNET.ModificationDelaySeconds"
+             xpath="/cruisecontrol/project/modificationDelaySeconds[1]"
+             failonerror="false"/>
+    
+    <property name="CCNET.IntervalTrigger" value="90"/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="CCNET.IntervalTrigger"
+             xpath="/cruisecontrol/project//trigger[@type='intervalTrigger']/@seconds[1]"
+             failonerror="false"/>
+    
+    <property name="BuildMaster.Name" value="BuildMaster"/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="BuildMaster.Name"
+             xpath="/cruisecontrol/project//user[@group='buildmaster']/@name[1]"
+             failonerror="false"/>
+    
+    <property name="BuildMaster.Email" value="fake@bogas.com"/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="BuildMaster.Email"
+             xpath="/cruisecontrol/project//user[@group='buildmaster']/@address[1]"
+             failonerror="false"/>
+    
+    <property name="Developer.List" value=""/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="BuildMaster.Email"
+             xpath="/cruisecontrol/project//user[not @group='buildmaster' and @name = '${BuildMaster.Name}']"
+             outerxml="true"
+             failonerror="false"/>
     
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 

@@ -106,6 +106,23 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
       </value>
     </largeproperty>
 
+    <xmlquery query='/cruisecontrol/project/@name' file='${BuildDirectory}\ccnetproject.xml' id='CCNetProjects' />
+    <property name='CCTrayProjects' value=''/>
+
+    <loopthrough property='CCNetProjectName'>
+      <items>
+        <xmlquery refid='CCNetProjects'/>
+      </items>
+      <do>
+        <largeproperty name="CCTrayProjects">
+          <value expand="true" xml="false">
+            <![CDATA[${CCTrayProjects}
+    <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${CCNetProjectName}" />]]>
+          </value>
+        </largeproperty>
+      </do>
+    </loopthrough>
+
     <property name="SfxConfig.FilePath" value="${BuildDirectory}\SfxConfig.txt"/>
     <echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
@@ -114,8 +131,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
         <![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Projects>
-    <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName} Build Scripts" />
-    <Project serverUrl="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem" projectName="${ProjectName}-${ProjectCodeLineName}" />
+    ${CCTrayProjects}
   </Projects>
   <PollPeriodSeconds>5</PollPeriodSeconds>
   <BuildTransitionNotification showBalloon="true">

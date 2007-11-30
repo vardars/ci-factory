@@ -47,6 +47,14 @@
         </projectFilters>
       </projectTriggerFilter>
     </triggers>
+    <forceFilters>
+      <passwordForceFilter password="automa" />
+      <projectForceFilter>
+        <projectFilters>
+          &DevBuilding;
+        </projectFilters>
+      </projectForceFilter>
+    </forceFilters>
     <integrationFilter>
       <triggeredIntegrationFilter>
         <allowed>
@@ -78,6 +86,14 @@
       </projectFilters>
     </projectTriggerFilter>
   </triggers>
+  <forceFilters>
+    <passwordForceFilter password="automa" />
+    <projectForceFilter>
+      <projectFilters>
+        &ScriptsBuilding;
+      </projectFilters>
+    </projectForceFilter>
+  </forceFilters>
   <integrationFilter>
     <triggeredIntegrationFilter>
       <allowed>

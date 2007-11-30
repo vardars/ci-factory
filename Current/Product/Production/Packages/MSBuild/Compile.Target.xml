@@ -66,7 +66,7 @@
     <call target="Deployment.PublishFile"/>
   </target>
 
-  <target name="Compile.ShowReport">
+  <target name="Compile.ShowReport" if="${file::exists(Compile.LogFileDirectory + '\' + Compile.XmlLogFileName)}">
     <style in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" out="${Compile.LogFileDirectory}\Compile.xml" style="${BuildDirectory}\Packages\MSBuild\MSBuildMerge.xsl" />
     <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\Compile.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
