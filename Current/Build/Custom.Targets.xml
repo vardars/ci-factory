@@ -113,7 +113,7 @@
     <xmlpoke pokemode="Replace"
              file="${ReleaseNotesFilePath}"
              value="${AdditionalNotes}"
-             xpath='/h:html/h:body/h:table/h:tr/h:td/h:h1'>
+             xpath='/h:html/h:body/h:table[1]/h:tr[1]/h:td[1]/h:h1[1]'>
       <namespaces>
         <namespace prefix='h' uri='http://www.w3.org/1999/xhtml'/>
       </namespaces>

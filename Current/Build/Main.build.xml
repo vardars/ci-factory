@@ -82,8 +82,11 @@
           <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
+        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
+               out="${Common.ArtifactDirectoryPath}\NAntTestReport.html"
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -125,12 +128,15 @@
         <description>End Compile Actions</description>
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <!--<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
           <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ReportDirectory}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ReportDirectory}\NAntTestReport.xml&quot;" />
-        </exec>-->
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
+        </exec>
+        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
+               out="${Common.ArtifactDirectoryPath}\NAntTestReport.html"
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
