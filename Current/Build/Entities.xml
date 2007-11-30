@@ -9,7 +9,7 @@
 <!ENTITY ThirdPartyDirectoryName      'Third Party' >
 <!ENTITY ProductionDirectoryName      'Production' >
 <!ENTITY BuildDirectoryName           'Build' >
-<!ENTITY ArtifactRootDirectoryName    'Artifact' >
+<!ENTITY ArtifactRootDirectoryName    'Artifacts' >
 <!ENTITY PackagesDirectoryName        'Packages' >
 <!ENTITY UnitTestDirectoryName        'Unit Test' >
 <!ENTITY InstallDirectoryName         'Install' >
