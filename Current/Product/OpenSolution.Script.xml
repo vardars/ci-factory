@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp" basedir="..\Build">
 
-  <property name="CCNetProject" value="${ProjectName}"/>
+  <property name="CCNetLabel" value="1.0.0.2"/>
+  <property name="CCNetLogFilePath" value=""/>
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
   <property name="CCNetLastIntegrationStatus" value="Success"/>
@@ -11,10 +12,8 @@
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
   
   <include buildfile="Properties.Build.xml"/>
+  <property name="CCNetProject" value="${ProjectName}"/>
   <include buildfile="Common.Build.xml" />
-
-  <property name="CCNetLabel" value="1.0.0.2"/>
-  <property name="CCNetLogFilePath" value=""/>
 
   <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
   

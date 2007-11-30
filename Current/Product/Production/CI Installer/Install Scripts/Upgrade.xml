@@ -79,7 +79,7 @@
     <property name="ProductDirectoryName"       value="Product" overwrite="false"/>
     <property name="ThirdPartyDirectoryName"    value="Third Party" overwrite="false"/>
     <property name="ProductionDirectoryName"    value="Production" overwrite="false"/>
-    <property name="ArtifactRootDirectoryName"  value="Artifact" overwrite="false"/>
+    <property name="ArtifactRootDirectoryName"  value="Artifacts" overwrite="false"/>
     <property name="PackagesDirectoryName"      value="Packages" overwrite="false"/>
     <property name="UnitTestDirectoryName"      value="Unit Test" overwrite="false"/>
     <property name="InstallDirectoryName"       value="Install" overwrite="false"/>
