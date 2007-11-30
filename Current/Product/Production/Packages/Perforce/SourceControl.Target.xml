@@ -141,10 +141,6 @@
 		<ifnot test="${path::has-extension(Private.SourceControl.Update.LocalPath)}">
 			<property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
 		</ifnot>
-
-    <if test="${SourceControl.Update.Interactive}">
-      <call target="Private.SourceControl.IteractiveUpdate"/>
-    </if>
     
     <p4sync client="${Perforce.WorkspaceName}"
 						view='"${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"'
@@ -182,7 +178,6 @@
     </ifthenelse>
     <echo message="${Valid}"/>
     <ifnot test="${Valid}">
-      <!--
       <ask
         answer="Perforce.Password"
         caption="What is your password?"
@@ -191,7 +186,6 @@
         showdialog="true"
       />
       <exec program="p4" commandline="login" stdin="${Perforce.Password}" />
-      -->
     </ifnot>
     
   </target>
@@ -281,6 +275,10 @@
 						clientview="//${Perforce.WorkspaceName}/..."/>
 		</ifnot>
     <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="${Perforce.WorkspaceName}"/>
+
+    <if test="${SourceControl.Update.Interactive}">
+      <call target="Private.SourceControl.IteractiveUpdate"/>
+    </if>
 	</target>
 
   <!--

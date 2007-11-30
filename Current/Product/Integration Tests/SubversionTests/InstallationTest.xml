@@ -140,8 +140,9 @@
     </exec>
     
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
-    
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="10" pollinginterval="10"/>
+
+    <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="3"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
