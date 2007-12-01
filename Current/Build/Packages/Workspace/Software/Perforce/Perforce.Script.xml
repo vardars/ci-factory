@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Perforce.Scripts">
 
-	<property name="P4VInstallerPath" value="Z:\p4vinst.exe"/>
+	<property name="P4VInstallerPath" value="p4vinst.exe"/>
+  <property name="P4VInstallerUrl" value="http://www.perforce.com/downloads/perforce/r07.2/bin.ntx86/p4vinst.exe"/>
+
+  <property name="P4SInstallerPath" value="perforce.exe"/>
+  <property name="P4SInstallerUrl" value="http://www.perforce.com/downloads/perforce/r07.2/bin.ntx86/perforce.exe"/>
 
 	<target name="Workspace.RequieredSoftware.Perforce">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4.exe')}" >
@@ -16,6 +20,9 @@
 			</ask>
 			<ifthenelse test="${Answer == 'Install'}">
 				<then>
+
+          <get dest="P4VInstallerPath" src="${P4VInstallerUrl}"></get>
+          
 					<ifthenelse test="${file::exists(P4VInstallerPath)}">
 						<then>
 							<exec workingdir="${path::get-directory-name(P4VInstallerPath)}" program="${P4VInstallerPath}" verbose="true" />
@@ -40,5 +47,43 @@
 			</ifthenelse>
 		</ifnot>
 	</target>
+
+  <target name="Workspace.RequieredSoftware.PerforceServer">
+    <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4s.exe')}" >
+      <ask answer="Answer"
+           question="It looks like Perforce Server is not installed.  This software is required for integration testing.  Do you wish to install the software?"
+           caption="Perforce Server is optional.  If you do not install it the Perforce integration tests will fail."
+           showdialog="true" >
+        <options>
+          <string value="Install"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Install'}">
+        <then>
+
+          <get dest="P4SInstallerPath" src="${P4SInstallerUrl}"></get>
+
+          <ifthenelse test="${file::exists(P4SInstallerPath)}">
+            <then>
+              <exec workingdir="${path::get-directory-name(P4sInstallerPath)}" program="${P4SInstallerPath}" verbose="true" />
+            </then>
+            <else>
+              <asyncexec program="cmd" commandline='/C "explorer http://www.perforce.com/perforce/downloads/ntx86_64.html"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+
+              <ask answer="Answer" caption="Are finished installing Perforce?" question="Are finished installing Perforce?" showdialog="true">
+                <options>
+                  <string value="Continue"/>
+                </options>
+              </ask>
+            </else>
+          </ifthenelse>
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <!--It Is Optional!-->
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
 
 </project>
