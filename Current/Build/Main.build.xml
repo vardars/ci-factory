@@ -87,7 +87,7 @@
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
                style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
-        <fail if="${IntegrationTest.Result != 0}" message="At least one integration test failed!"/>
+        <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -138,7 +138,7 @@
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
                style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
-        <fail if="${IntegrationTest.Result != 0}" message="At least one integration test failed!"/>
+        <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
