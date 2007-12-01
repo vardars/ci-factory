@@ -78,15 +78,16 @@
         <description>End Compile Actions</description>
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe">
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
           <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.html"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"/>
+               out="${Common.ReportDirectory}\NAntTestReport.xml"
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
+        <fail if="${IntegrationTest.Result != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -135,7 +136,7 @@
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.html"
+               out="${Common.ReportDirectory}\NAntTestReport.xml"
                style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
         <fail if="${IntegrationTest.Result != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
