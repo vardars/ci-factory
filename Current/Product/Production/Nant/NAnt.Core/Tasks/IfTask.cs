@@ -36,105 +36,7 @@ namespace NAnt.Core.Tasks {
     ///     If no conditions are checked, all child tasks are executed. 
     ///     </para>
     ///     <para>
-    ///     If more than one attribute is used, they are &amp;&amp;'d. The first 
-    ///     to fail stops the check.
-    ///     </para>
-    ///     <para>
-    ///     The order of condition evaluation is, <see cref="TargetNameExists" />, 
-    ///     <see cref="PropertyNameExists" />, <see cref="PropertyNameTrue" />, 
-    ///     <see cref="UpToDateFile" />.
-    ///     </para>
     /// </remarks>
-    /// <example>
-    ///   <para>Check that a target exists.</para>
-    ///   <code>
-    ///   <![CDATA[
-    /// <target name="myTarget" />
-    /// <if targetexists="myTarget">
-    ///     <echo message="myTarget exists" />
-    /// </if>
-    ///   ]]>
-    ///   </code>
-    /// </example>
-    /// <example>
-    ///   <para>Check existence of a property.</para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if propertyexists="myProp">
-    ///     <echo message="myProp Exists. Value='${myProp}'" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    /// </example>
-    /// <example>
-    ///   <para>Check that a property value is true.</para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if propertytrue="myProp">
-    ///     <echo message="myProp is true. Value='${myProp}'" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    /// </example>
-    /// <example>
-    ///   <para>
-    ///   Check that a property exists and is <see langword="true" /> (uses multiple conditions).
-    ///   </para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if propertyexists="myProp" propertytrue="myProp">
-    ///     <echo message="myProp is '${myProp}'" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    ///   <para>which is the same as</para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if propertyexists="myProp">
-    ///     <if propertytrue="myProp">
-    ///         <echo message="myProp is '${myProp}'" />
-    ///     </if>
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    /// </example>
-    /// <example>
-    ///   <para>
-    ///   Check file dates. If <c>myfile.dll</c> is uptodate, then do stuff.
-    ///   </para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if uptodatefile="myfile.dll" comparefile="myfile.cs">
-    ///     <echo message="myfile.dll is newer/same-date as myfile.cs" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    ///   <para>or</para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if uptodatefile="myfile.dll">
-    ///     <comparefiles>
-    ///         <include name="*.cs" />
-    ///     </comparefiles>
-    ///     <echo message="myfile.dll is newer/same-date as myfile.cs" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    ///   <para>or</para>
-    ///   <code>
-    ///     <![CDATA[
-    /// <if>
-    ///     <uptodatefiles>
-    ///         <include name="myfile.dll" />
-    ///     </uptodatefiles>
-    ///     <comparefiles>
-    ///         <include name="*.cs" />
-    ///     </comparefiles>
-    ///     <echo message="myfile.dll is newer/same-date as myfile.cs" />
-    /// </if>
-    ///     ]]>
-    ///   </code>
-    /// </example>
     /// <example>
     /// <para>Tests the value of a property using expressions.</para>
     /// <code>
@@ -167,95 +69,9 @@ namespace NAnt.Core.Tasks {
         #region Public Instance Properties
 
         /// <summary>
-        /// The file to compare if uptodate.
-        /// </summary>
-        [TaskAttribute("uptodatefile")]
-        [System.Obsolete("Use <if test=\"${file::up-to-date(comparefile, uptodatefile)}\"> instead.", false)]
-        public string UpToDateFile {
-            set {
-                if (_uptodateFiles == null) {
-                    _uptodateFiles = new FileSet();
-                    _uptodateFiles.Parent = this;
-                    _uptodateFiles.Project = Project;
-                    _uptodateFiles.NamespaceManager = NamespaceManager;
-                }
-                _uptodateFiles.Includes.Add(value); 
-            }
-        }
-
-        /// <summary>
-        /// The file to check against for the uptodate file.
-        /// </summary>
-        [TaskAttribute("comparefile")]
-        [System.Obsolete("Use <if test=\"${file::up-to-date(comparefile, uptodatefile)}\"> instead.", false)]
-        public string CompareFile {
-            set { 
-                if (_compareFiles == null) {
-                    _compareFiles = new FileSet();
-                    _compareFiles.Parent = this;
-                    _compareFiles.Project = Project;
-                    _compareFiles.NamespaceManager = NamespaceManager;
-                }
-                _compareFiles.Includes.Add(value); 
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="FileSet" /> that contains the comparison files for 
-        /// the <see cref="UpToDateFile" />(s) check.
-        /// </summary>
-        [BuildElement("comparefiles")]
-        [System.Obsolete("Use <uptodate /> task instead.", false)]
-        public FileSet CompareFiles {
-            get { return _compareFiles; }
-            set { _compareFiles = value; }
-        } 
-
-        /// <summary>
-        /// The <see cref="FileSet" /> that contains the uptodate files for 
-        /// the <see cref="CompareFile" />(s) check.
-        /// </summary>
-        [BuildElement("uptodatefiles")]
-        [System.Obsolete("Use <uptodate /> task instead.", false)]
-        public FileSet UpToDateFiles {
-            get { return _uptodateFiles; }
-            set { _uptodateFiles = value; }
-        }
-
-        /// <summary>
-        /// Used to test whether a property is true.
-        /// </summary>
-        [TaskAttribute("propertytrue")]
-        [System.Obsolete("Use <if test=\"${propertyname}\"> instead.", false)]
-        public string PropertyNameTrue {
-            get { return _propNameTrue; }
-            set { _propNameTrue = StringUtils.ConvertEmptyToNull(value); }
-        }
-
-        /// <summary>
-        /// Used to test whether a property exists.
-        /// </summary>
-        [TaskAttribute("propertyexists")]
-        [System.Obsolete("Use <if test=\"${property::exists('propertyname')}\"> instead.", false)]
-        public string PropertyNameExists {
-            get { return _propNameExists;}
-            set { _propNameExists = StringUtils.ConvertEmptyToNull(value); }
-        }
-
-        /// <summary>
-        /// Used to test whether a target exists.
-        /// </summary>
-        [TaskAttribute("targetexists")]
-        [System.Obsolete("Use <if test=\"${target::exists('targetname')}\"> instead.", false)]
-        public string TargetNameExists {
-            get { return _targetName; }
-            set { _targetName = StringUtils.ConvertEmptyToNull(value); }
-        }
-
-        /// <summary>
         /// Used to test arbitrary boolean expression.
         /// </summary>
-        [TaskAttribute("test")]
+        [TaskAttribute("test", Required = true)]
         [BooleanValidator()]
         public string Test {
             get { return _test; }
@@ -276,54 +92,6 @@ namespace NAnt.Core.Tasks {
                     }
                 }
 
-                // check if target exists
-                if (TargetNameExists != null) {
-                    ret = ret && (Project.Targets.Find(TargetNameExists) != null);
-                    if (!ret) {
-                        return false;
-                    }
-                }
-
-                // check if property exists
-                if (PropertyNameExists != null) {
-                    ret = ret && Properties.Contains(PropertyNameExists);
-                    if (!ret) {
-                        return false;
-                    }
-                }
-
-                // check if value of property is boolean true
-                if (PropertyNameTrue != null) {
-                    try {
-                        ret = ret && bool.Parse(Properties[PropertyNameTrue]);
-                        if (!ret) {
-                            return false;
-                        }
-                    } catch (Exception ex) {
-                        throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                            ResourceUtils.GetString("NA1126"), PropertyNameTrue), Location, ex);
-                    }
-                }
-
-                // check if file is up-to-date
-                if (UpToDateFiles != null) {
-                    FileInfo primaryFile = UpToDateFiles.MostRecentLastWriteTimeFile;
-                    if (primaryFile == null || !primaryFile.Exists) {
-                        ret = false;
-                        Log(Level.Verbose, "Uptodatefile(s) do(es) not exist.");
-                    } else {
-                        string newerFile = FileSet.FindMoreRecentLastWriteTime(_compareFiles.FileNames, primaryFile.LastWriteTime);
-                        bool needsAnUpdate = (newerFile != null);
-                        if (needsAnUpdate) {
-                            Log(Level.Verbose, "{0} is newer than {1}.", newerFile, primaryFile.Name);
-                        }
-                        ret = ret && !needsAnUpdate;
-                    }
-                    if (!ret) {
-                        return false;
-                    }
-                }
-
                 return ret;
             }
         }
@@ -340,18 +108,6 @@ namespace NAnt.Core.Tasks {
 
         #endregion Override implementation of TaskContainer
 
-        #region Override implementation of Task
-
-        protected override void InitializeTask(System.Xml.XmlNode taskNode) {
-            base.InitializeTask (taskNode);
-            //check that we have something to do.
-            if ((UpToDateFiles == null || CompareFiles == null) && Test == null && PropertyNameExists == null && PropertyNameTrue == null && TargetNameExists == null) {
-                throw new BuildException("At least one if condition" +
-                        " must be set (test, propertytrue, targetexists, etc...):", Location);
-            }
-        }
-
-        #endregion Override implementation of Task
     }
 
     /// <summary>

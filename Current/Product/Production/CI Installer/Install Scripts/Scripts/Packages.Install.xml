@@ -150,6 +150,8 @@
         <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Upgrade" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Upgrade\**\*"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
     </copy>

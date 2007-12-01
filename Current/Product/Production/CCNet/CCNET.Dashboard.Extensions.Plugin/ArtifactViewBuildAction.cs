@@ -41,7 +41,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
         public IResponse Execute(ICruiseRequest cruiseRequest)
         {
             string ArctifactDirectoryName = cruiseRequest.BuildName.Substring("log".Length, "yyyyMMddHHmmss".Length);
-            Uri url = new Uri(string.Format(@"http://{0}/{1}/{2}/",
+            Uri url = new Uri(string.Format(@"http://{0}{1}/{2}/",
                 System.Web.HttpContext.Current.Request.Headers["Host"],
                 this.ArtifactRootUrl,
                 ArctifactDirectoryName));

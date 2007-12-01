@@ -16,7 +16,6 @@
   
   <include buildfile="Common.Build.xml" />
 	<include buildfile="Custom.Targets.xml" />
-  <include buildfile="DevEnv.Targets.xml" />
 
   <property name="Compile.ConfigName" value="Debug"/>
 

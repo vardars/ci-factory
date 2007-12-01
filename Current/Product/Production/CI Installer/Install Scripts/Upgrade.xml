@@ -360,9 +360,9 @@ A brute force approach is to diff the tree, to identify which if any files need 
       </if>
       <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
 
-      <ifthenelse test="${target::exists(SourcePackageName + '.ValidateParameters')}">
+      <ifthenelse test="${target::exists(SourcePackageName + '.UpgradeValidateParameters')}">
         <then>
-          <call target="${SourcePackageName}.ValidateParameters" />
+          <call target="${SourcePackageName}.UpgradeValidateParameters" />
         </then>
         <else>
           <property name="PackagePathPattern" value="${PackagesDirectory}\${SourcePackageName}\*.Properties.xml"/>
@@ -523,25 +523,29 @@ A brute force approach is to diff the tree, to identify which if any files need 
     <property name="CCNET.ModificationDelaySeconds" value="120"/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
              property="CCNET.ModificationDelaySeconds"
-             xpath="/cruisecontrol/project/modificationDelaySeconds[1]"
+             nodeindex="1"
+             xpath="/cruisecontrol/project/modificationDelaySeconds"
              failonerror="false"/>
     
     <property name="CCNET.IntervalTrigger" value="90"/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
              property="CCNET.IntervalTrigger"
-             xpath="/cruisecontrol/project//trigger[@type='intervalTrigger']/@seconds[1]"
+             nodeindex="1"
+             xpath="/cruisecontrol/project//trigger[@type='intervalTrigger']/@seconds"
              failonerror="false"/>
     
     <property name="BuildMaster.Name" value="BuildMaster"/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
              property="BuildMaster.Name"
-             xpath="/cruisecontrol/project//user[@group='buildmaster']/@name[1]"
+             nodeindex="1"
+             xpath="/cruisecontrol/project//user[@group='buildmaster']/@name"
              failonerror="false"/>
     
     <property name="BuildMaster.Email" value="fake@bogas.com"/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
              property="BuildMaster.Email"
-             xpath="/cruisecontrol/project//user[@group='buildmaster']/@address[1]"
+             nodeindex="1"
+             xpath="/cruisecontrol/project//user[@group='buildmaster']/@address"
              failonerror="false"/>
     
     <property name="Developer.List" value=""/>
@@ -667,18 +671,17 @@ A brute force approach is to diff the tree, to identify which if any files need 
     <property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
 
     <if test="${directory::exists(SourcePackagesDirectory + '\' + SourcePackageName)}" >
+      <call target="Packages.Reset.CurrentPackage" />
+      <call target="${SourcePackageName}.SetAsCurrentPackage"/>
+      <call target="Packages.Validate.CurrentSetPackage"/>
+
+      <property name="Packages.CopyPackage.PackageName" value="${SourcePackageName}"/>
+      <call target="Private.Packages.CopyPackage"/>
       <ifthenelse test="${target::exists(SourcePackageName + '.Upgrade')}">
         <then>
           <call target="${SourcePackageName}.Upgrade" />
         </then>
         <else>
-          <call target="Packages.Reset.CurrentPackage" />
-          <call target="${SourcePackageName}.SetAsCurrentPackage"/>
-          <call target="Packages.Validate.CurrentSetPackage"/>
-
-          <property name="Packages.CopyPackage.PackageName" value="${SourcePackageName}"/>
-          <call target="Private.Packages.CopyPackage"/>
-
           <call target="${SourcePackageName}.Install"/>
         </else>
       </ifthenelse>

@@ -15,11 +15,11 @@
   <property name="CCNetProject" value="${ProjectName}"/>
   <include buildfile="Common.Build.xml" />
 
-  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml"/>
   
   <target name="SetUp">
-    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
-    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
+    <call target="Workspace.CheckForRequieredSoftware"/>
+    <call target="Workspace.ConfigureEnvironment"/>
   </target>
 
 </project>

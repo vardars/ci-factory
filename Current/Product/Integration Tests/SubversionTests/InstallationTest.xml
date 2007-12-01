@@ -43,6 +43,10 @@
   </target>
   
   <target name="Subversion.InstallationTest.FixtureSetUp">
+
+    <property name="SvnBinPath" value="${environment::get-variable('ProgramFiles')}\Subversion\bin" overwrite="false"/>
+    <setenv name="PATH" value="${environment::get-variable('PATH')};${SvnBinPath}" unless="${string::contains(environment::get-variable('PATH'), SvnBinPath)}" />
+    
     <call target="Subversion.InstallationTest.SetProperties"/>
 
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
@@ -161,7 +165,9 @@
     </nant>
 
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
-    <sleep seconds="5"/>
+    <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == 'Running'}" timeout="20" pollinginterval="3"/>
+    <waitfor condition="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == '2.0.0.1'}" timeout="30" pollinginterval="3"/>
+    <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
 
     <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
       <ccnetplugins>

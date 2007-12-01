@@ -282,6 +282,11 @@ namespace NAnt.Contrib.Tasks {
 
             #endregion Public Instance Properties
 
+            protected override void ExecuteTask()
+            {
+                base.ExecuteTask();
+            }
+
             #region Public Instance Methods
 
             public void Catch(Exception be) {

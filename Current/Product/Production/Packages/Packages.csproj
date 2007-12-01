@@ -453,6 +453,7 @@
     <Content Include="StarTeam\SourceControl.Target.xml" />
     <Content Include="Subversion\SourceControl.Properties.xml" />
     <Content Include="Subversion\SourceControl.Target.xml" />
+    <Content Include="Subversion\Upgrade\Upgrade.xml" />
     <Content Include="Vault\bin\DragnetLib.dll" />
     <Content Include="Vault\bin\NAnt.VaultTasks.dll" />
     <Content Include="Vault\bin\Nant.VaultTasks.xml" />
