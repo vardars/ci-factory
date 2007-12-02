@@ -132,6 +132,11 @@
   </target>
 
   <target name="Recompile">
+    <call target="Clean"/>  
+    <call target="Compile"/>
+  </target>
+
+  <target name="Clean">
     <fileset id="ProjectFiles">
       <include name="${ProductDirectory}\**\*.*proj"/>
     </fileset>
@@ -170,7 +175,6 @@
         <exclude name="ccnet.exe.config"/>
       </fileset>
     </delete>
-    <call target="Compile"/>
   </target>
 
   <target name="Test" >
