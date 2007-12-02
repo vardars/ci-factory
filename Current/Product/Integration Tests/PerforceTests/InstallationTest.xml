@@ -129,9 +129,9 @@
 
   <target name="Perforce.InstallationTest.DefaultInstallTest">
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
-    <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="3"/>
-    <waitfor condition="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName) == '1.0.0.0'}" timeout="300" pollinginterval="10"/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10" failonerror="false"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+    <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.0.0" message="Expected the version to be '1.0.0.0'."/>
 
     <nant buildfile="${BuildDirectory}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
       <properties>
@@ -159,18 +159,16 @@
     </ccnetforce>
 
     <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="3" failonerror="false"/>
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
-    <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10" failonerror="false"/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
 
     <asyncexec workingdir="${ProjectRootDirectory}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" verbose="true" />
-    <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
     
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${BranchName}"/>
 
-    <waitfor condition="${ccnet::try-get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="3"/>
-    <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
+    <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
+    <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="300" pollinginterval="10" failonerror="false"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="1.0.1.1" message="Expected the version to be '1.0.1.1'."/>
   </target>
