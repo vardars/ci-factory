@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SVN.Upgrader">
+
+  <target name="Subversion.UpgradeValidateParameters">
+    <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Properties.xml" verbose="true"/>
+
+    <property name="CCNet.SVN.URI.ProjectName" value="${SVN.URI.ProjectName}"/>
+    <property name="CCNet.SVN.URI.ProjectCodeLine" value="${string::replace(SVN.URI.ProjectCodeLine, ProjectCodeLineName, '&amp;ProjectCodeLineName;')}" />
+
+    <xmlpeek
+          file='${BuildDirectory}\ccnetproject.xml'
+          property='CCNet.SVN.URI.Tags'
+          xpath='/cruisecontrol/project//tagBaseUrl[1]'
+          failonerror='false'
+        />
+
+    <xmlpeek
+          file='${BuildDirectory}\ccnetproject.xml'
+          property='CCNet.SVN.WebRepoUrl'
+          xpath='/cruisecontrol/project//webUrlBuilder/url[1]'
+          failonerror='false'
+        />
+
+    <property name="SVN.WebVisible" value="${property::exists('CCNet.SVN.WebRepoUrl')}" />
+
+    <echo message="SVN.Username exists ${property::exists('SVN.Username')}"/>
+
+    <ifnot test="${property::exists('SVN.Username') or property::exists('SVN.Password')}">
+      <ask
+        answer="SVN.Username"
+        caption="What's the Svn Build User Name?"
+        dialogmode="FreeText"
+        question="What is the user name the build uses to log into Subversion?"
+        showdialog="true"
+        unless="${property::exists(SVN.Username)}"
+      />
+      <ask
+        answer="SVN.Password"
+        caption="What's the Svn Build Password?"
+        dialogmode="FreeText"
+        question="What is the password the build uses to log into Subversion?"
+        showdialog="true"
+        unless="${property::exists(SVN.Password)}"
+      />
+    </ifnot>
+
+    <include buildfile="${SourcePackagesDirectory}\Subversion\Install\Install.xml"/>
+  </target>
+
+
+</project>

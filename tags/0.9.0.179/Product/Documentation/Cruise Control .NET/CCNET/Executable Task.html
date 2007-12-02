@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <title>CruiseControl.NET : Executable Task</title>
+	    <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">	    
+    </head>
+
+    <body>
+	    <table class="pagecontent" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff">
+		    <tr>
+			    <td valign="top" class="pagebody">
+				    <div class="pageheader">
+					    <span class="pagetitle">
+                            CruiseControl.NET : Executable Task
+                                                    </span>
+				    </div>
+				    <div class="pagesubheading">
+					    This page last changed on Oct 28, 2005 by <font color="#0050B2">mroberts</font>.
+				    </div>
+
+				    <p>The Executable Task lets you invoke any command line executable. It doesn't offer as much specific integration as (for example) the <a href="NAnt Task.html" title="NAnt Task">NAnt Task</a>, but does allow you to hook almost anything up as a build process to CCNet.</p>
+
+<h4><a name="ExecutableTask-Examples">Examples</a></h4>
+
+<p>Minimalist example:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;exec executable=<span class="code-quote">"c:\projects\myproject\build.bat"</span>/&gt;</span></pre>
+</div></div>
+
+<p>Full example:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;exec&gt;</span>
+    <span class="code-tag">&lt;executable&gt;</span>make<span class="code-tag">&lt;/executable&gt;</span>
+    <span class="code-tag">&lt;baseDirectory&gt;</span>D:\dev\MyProject<span class="code-tag">&lt;/baseDirectory&gt;</span>
+    <span class="code-tag">&lt;buildArgs&gt;</span>all<span class="code-tag">&lt;/buildArgs&gt;</span>
+    <span class="code-tag">&lt;buildTimeoutSeconds&gt;</span>10<span class="code-tag">&lt;/buildTimeoutSeconds&gt;</span>
+<span class="code-tag">&lt;/exec&gt;</span></pre>
+</div></div>
+
+<h4><a name="ExecutableTask-ConfigurationElements%3A">Configuration Elements:</a></h4>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> Node </th>
+<th class='confluenceTh'> Description </th>
+<th class='confluenceTh'> Type </th>
+<th class='confluenceTh'> Required </th>
+<th class='confluenceTh'> Default </th>
+</tr>
+<tr>
+<td class='confluenceTd'> executable </td>
+<td class='confluenceTd'> The path of the program to run. If this is relative, then must be relative to either (a) the base directory, (b) the CCNet Server application, or (c) if the path doesn't contain any directory details then can be available in the system or application's 'path' environment variable </td>
+<td class='confluenceTd'> string </td>
+<td class='confluenceTd'> true </td>
+<td class='confluenceTd'> n/a </td>
+</tr>
+<tr>
+<td class='confluenceTd'> baseDirectory </td>
+<td class='confluenceTd'> The directory to run the process in. If relative, is a subdirectory of the <a href="Project Configuration Block.html#ProjectConfigurationBlock-workingDirectory" title="workingDirectory on Project Configuration Block">Project Working Directory</a> </td>
+<td class='confluenceTd'> string </td>
+<td class='confluenceTd'> false </td>
+<td class='confluenceTd'> <a href="Project Configuration Block.html#ProjectConfigurationBlock-workingDirectory" title="workingDirectory on Project Configuration Block">Project Working Directory</a></td>
+</tr>
+<tr>
+<td class='confluenceTd'> buildArgs </td>
+<td class='confluenceTd'> Any command line arguments to pass in </td>
+<td class='confluenceTd'> string </td>
+<td class='confluenceTd'> false </td>
+<td class='confluenceTd'> no arguments </td>
+</tr>
+<tr>
+<td class='confluenceTd'> buildTimeoutSeconds </td>
+<td class='confluenceTd'> Number of seconds to wait before assuming that the process has hung and should be killed. </td>
+<td class='confluenceTd'> int </td>
+<td class='confluenceTd'> false </td>
+<td class='confluenceTd'> 600 (10 minutes) </td>
+</tr>
+</table>
+
+<h3><a name="ExecutableTask-IntegrationProperties">Integration Properties</a></h3>
+
+<p>The following parameters are passed to the external program using environment variables:</p>
+
+<table class='confluenceTable'>
+<tr>
+<th class='confluenceTh'> Label </th>
+<th class='confluenceTh'> Description </th>
+<th class='confluenceTh'> Example </th>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetBuildCondition </td>
+<td class='confluenceTd'> The condition used to trigger the build, indicating if the build was triggered by new modifications or if it was forced.  Legal values are: "IfModificationExists" or "ForceBuild" </td>
+<td class='confluenceTd'> ForceBuild </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetIntegrationStatus </td>
+<td class='confluenceTd'> The status of the current integration. Could be Success, Failure, Exception or Unknown  </td>
+<td class='confluenceTd'> Success </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetLabel </td>
+<td class='confluenceTd'> The label used to identify the CCNet build.  This label is generated by the CCNet labeller. </td>
+<td class='confluenceTd'> 1.0.2.120 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetLastIntegrationStatus </td>
+<td class='confluenceTd'> The status of the previous integration. Could be Success, Failure, Exception or Unknown  </td>
+<td class='confluenceTd'> Success </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetProject </td>
+<td class='confluenceTd'> The name of the CCNet project that is being integrated. </td>
+<td class='confluenceTd'> MyProject </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetBuildDate </td>
+<td class='confluenceTd'> The date of the build (in yyyy-MM-dd format) </td>
+<td class='confluenceTd'> 2005-08-10 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetBuildTime </td>
+<td class='confluenceTd'> The time of the start of the build (in HH:mm:ss format) </td>
+<td class='confluenceTd'> 08:45:12 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetArtifactDirectory </td>
+<td class='confluenceTd'> The <a href="Project Configuration Block.html#ProjectConfigurationBlock-artifactDirectory" title="artifactDirectory on Project Configuration Block">project artifact directory</a> </td>
+<td class='confluenceTd'> <tt>c:\program files\CruiseControl.NET\Server\MyProject\Artifacts</tt></td>
+</tr>
+<tr>
+<td class='confluenceTd'> CCNetWorkingDirectory </td>
+<td class='confluenceTd'> The <a href="Project Configuration Block.html#ProjectConfigurationBlock-workingDirectory" title="workingDirectory on Project Configuration Block">project working directory</a> </td>
+<td class='confluenceTd'> <tt>c:\program files\CruiseControl.NET\Server\MyProject\WorkingDirectory</tt></td>
+</tr>
+</table>
+
+<div class="information-block" align='center'><div class='informationMacroPadding'><table cellpadding='5' width='85%' cellspacing='0' class='noteMacro' border='0'><tr><td width='16' valign='top'><img src="/images/icons/emoticons/warning.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td>
+<p>Windows seems to change the case of environment variables occasionally. If your task target doesn't find one of these properties, try using all upper case or all lower case versions of these properties.</p></td></tr></table></div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+	    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td height="12" background="border/border_bottom.gif"><img src="border/spacer.gif" width="1" height="1" border="0"/></td>
+			</tr>
+		    <tr>
+			    <td align="center"><font color="grey">Document generated by Confluence on Nov 13, 2005 23:23</font></td>
+		    </tr>
+	    </table>
+    </body>
+</html>
