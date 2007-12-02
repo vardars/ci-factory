@@ -6,9 +6,9 @@
         <Config Name="Release" BaseAddress="285212672" ConfigurationOverrideFile="" DefineConstants="TRACE" DebugSymbols="false" NoWarn="" Optimize="true" OutputPath="bin\Release\" RegisterForComInterop="false" TreatWarningsAsErrors="false" WarningLevel="4" AdditionalOptions="" />
       </Settings>
       <References>
-        <Reference Name="vjslib" AssemblyName="vjslib" HintPath="..\..\..\..\..\WINDOWS\Microsoft Visual JSharp .NET\Framework\v1.0.4205\vjslib.dll" />
-        <Reference Name="System" AssemblyName="System" HintPath="..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.0.3705\System.dll" />
-        <Reference Name="nunit.framework" AssemblyName="nunit.framework" HintPath="..\..\..\bin\nunit.framework.dll" AssemblyFolderKey="hkcu\dn\nunit 2.4.3" />
+        <Reference Name="vjslib" AssemblyName="vjslib" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="nunit.framework" AssemblyName="nunit.framework, Version=2.4.4.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" HintPath="..\..\..\bin\nunit.framework.dll" />
       </References>
     </Build>
     <Files>

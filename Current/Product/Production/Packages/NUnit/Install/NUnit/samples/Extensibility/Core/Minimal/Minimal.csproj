@@ -6,8 +6,8 @@
         <Config Name="Release" AllowUnsafeBlocks="false" BaseAddress="285212672" CheckForOverflowUnderflow="false" ConfigurationOverrideFile="" DefineConstants="TRACE" DocumentationFile="" DebugSymbols="false" FileAlignment="4096" IncrementalBuild="false" NoStdLib="false" NoWarn="" Optimize="true" OutputPath="bin\Release\" RegisterForComInterop="false" RemoveIntegerChecks="false" TreatWarningsAsErrors="false" WarningLevel="4" />
       </Settings>
       <References>
-        <Reference Name="System" AssemblyName="System" HintPath="C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.dll" />
-        <Reference Name="nunit.core.interfaces" AssemblyName="nunit.core.interfaces" HintPath="..\..\..\..\bin\nunit.core.interfaces.dll" AssemblyFolderKey="hkcu\dn\nunit 2.4.3" Private="False" />
+        <Reference Name="System" AssemblyName="System" />
+        <Reference Name="nunit.core.interfaces" AssemblyName="nunit.core.interfaces, Version=2.4.4.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" HintPath="..\..\..\..\bin\nunit.core.interfaces.dll" Private="False" />
       </References>
     </Build>
     <Files>

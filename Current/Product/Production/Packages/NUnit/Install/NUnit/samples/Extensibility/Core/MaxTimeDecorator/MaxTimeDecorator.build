@@ -48,7 +48,6 @@
         <include name="MaxTimeDecorator.csproj" />
         <include name="MaxTimeDecorator.build" />
         <include name="AssemblyInfo.cs" />
-        <include name="ExpectFailureAttribute.cs" />
         <include name="MaxTimeAttribute.cs" />
         <include name="MaxTimeDecorator.cs" />
         <include name="MaxTimeTestCase.cs" />
@@ -66,7 +65,7 @@
     <xmlpoke 
       file="${package.samples.dir}/Extensibility/Core/MaxTimeDecorator/MaxTimeDecorator.csproj"
       xpath="/VisualStudioProject/CSHARP/Build/References/Reference[@Name='nunit.core.interfaces']/@HintPath"
-      value="..\..\..\..\bin\nunit.interfaces.dll" />
+      value="..\..\..\..\bin\nunit.core.interfaces.dll" />
 
     <xmlpoke 
       file="${package.samples.dir}/Extensibility/Core/MaxTimeDecorator/Tests/MaxTimeDecoratorTests.csproj"
