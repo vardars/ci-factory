@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSBuild.Install" default="MSBuild.Install">
+
+  <include buildfile="Properties.xml" />
+
+  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
+  
+  <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2005.sln.remove"/>
+  
+  <target name="MSBuild.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Compile.CompileSource" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+    
+    <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\MSBuild\compile-msbuild.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="MSBuild Output" actionName="MSBuildCompileDetails" xslFileName="Packages\MSBuild\msbuild.xsl" artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" xmlFileName="MSBuildLog.xml" imageFileName="Packages\MSBuild\logo.ico" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
+          </filepair>]]></value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="MSBuild.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSBuild"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Compile.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Compile"/>
+  </target>
+
+  <target name="MSBuild.ValidateParameters">
+    
+  </target>
+  
+</project>
