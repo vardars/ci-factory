@@ -21,10 +21,10 @@
   <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>
 
   <include buildfile="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}" if="${file::exists(Private.TFS.ReportDirectory + '\' + Private.TFS.CacheFile)}" failonerror="false"/>
-  <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
+  <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false" failonerror="false"/>
 
-  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
-  <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
+  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}" failonerror="false"/>
+  <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}" failonerror="false"/>
 
 	<target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
