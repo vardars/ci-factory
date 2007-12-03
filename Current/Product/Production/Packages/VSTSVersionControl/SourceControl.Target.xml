@@ -393,5 +393,9 @@
   <target name="SourceControl.TearDown">
 
   </target>
+
+  <target name="SourceControl.Repository.Load">
+    <echo message="Not Implemented! You will have to do it yourself."/>
+  </target>
   
 </project>
