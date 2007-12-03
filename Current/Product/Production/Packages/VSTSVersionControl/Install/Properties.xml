@@ -101,14 +101,14 @@
   </largeproperty>
 
   <largeproperty name="SourceControl.BuildUpdateTrigger">
-    <value expand="true" xml="true" >
-      <vstsbychangesetTrigger
+    <value expand="true" xml="false" >
+      <![CDATA[<vstsbychangesetTrigger
           port="${TFS.BuildScripts.Listener.Port}"
           statefilepath="${BuildDirectory}\server\${ProjectName}BuildScripts.tfs.state.xml"
           project="$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
           server="${TFS.ServerUrl}"
           workingDirectory="${BuildDirectory}"
-          />
+          />]]>
     </value>
   </largeproperty>
 
