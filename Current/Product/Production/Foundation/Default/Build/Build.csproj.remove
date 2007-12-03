@@ -22,4 +22,31 @@
     <None Include="dashboard\xsl\*.xsl" Exclude="**\.svn\**\*" />
     <None Include="dashboard\cruisecontrol.css" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Product\Compile.Environment.xml">
+      <Link>Personal.Build\Compile.Environment.xml</Link>
+    </None>
+    <None Include="..\Product\OpenSolution.Script.xml">
+      <Link>Personal.Build\OpenSolution.Script.xml</Link>
+    </None>
+    <None Include="..\Product\Personal.Build.xml">
+      <Link>Personal.Build\Personal.Build.xml</Link>
+    </None>
+    <None Include="..\Product\Build.bat">
+      <Link>Personal.Build\Build.bat</Link>
+    </None>
+    <None Include="..\Product\NoUpdateBuild.bat">
+      <Link>Personal.Build\NoUpdateBuild.bat</Link>
+    </None>
+    <None Include="..\Product\OpenCommandPrompt.bat">
+      <Link>Personal.Build\OpenCommandPrompt.bat</Link>
+    </None>
+    <None Include="..\Product\OpenSolution.bat">
+      <Link>Personal.Build\OpenSolution.bat</Link>
+    </None>
+    <None Include="..\Product\Test.bat">
+      <Link>Personal.Build\Test.bat</Link>
+    </None>
+
+  </ItemGroup>
 </Project>

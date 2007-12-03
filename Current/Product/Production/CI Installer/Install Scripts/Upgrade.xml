@@ -408,6 +408,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
       <string value="Scratch.build.xml" />
       <string value="Entities.xml" />
       <string value="CreateBranch.xml"/>
+      <string value="OpenSolution.bat" />
     </strings>
 
     <strings id="ProductFiles">
@@ -429,6 +430,16 @@ A brute force approach is to diff the tree, to identify which if any files need 
     <call target="Upgrade.Base.Files"/>
 
 
+    <property name="TargetBaseFile" value="Build.csproj"/>
+    <property name="SourceBaseFile" value="Build.csproj.remove"/>
+    <call target="Upgrade.Base.File"/>
+
+
+    <property name="TargetBaseFile" value="${ProjectName}BuildScripts.sln"/>
+    <property name="SourceBaseFile" value="Build.sln.remove"/>
+    <call target="Upgrade.Base.File"/>
+
+
     <property name="Files" value="ProductFiles"/>
     <property name="SourceDirectoryName" value="Product"/>
     <property name="TargetDirectoryName" value="${ProductDirectoryName}"/>
@@ -442,45 +453,54 @@ A brute force approach is to diff the tree, to identify which if any files need 
         <strings refid="${Files}" />
 			</items>
 			<do>
-        <if test="${Preserve.Some == 'No'}">
-          <property name="Preserve.Base" value="No"/>
-        </if>
-        <ask answer="Preserve.Base"
-				 caption="Preserve customizations to ${TargetDirectoryName}\${File}?"
-				 question="Have you made customizations to ${TargetDirectoryName}\${File} that you would like to preserve?"
-				 showdialog="true" unless="${property::exists('Preserve.Base')}">
-					<options>
-						<string value="Yes"/>
-						<string value="No"/>
-					</options>
-				</ask>
-
-				<ifthenelse test="${Preserve.Base == 'Yes'}">
-					<then>
-						<exec basedir="${Winmerge.DirectoryPath}"
-									program="winmerge"
-									failonerror="false">
-							<arg line="/x" />
-							<arg line="/e" />
-							<arg line='"${SourceDefaultDirectory}\${SourceDirectoryName}\${File}"' />
-							<arg line='"${ProjectCodeLineDirectory}\${TargetDirectoryName}\${File}"' />
-						</exec>
-					</then>
-					<else>
-						<copy todir="${ProjectCodeLineDirectory}\${TargetDirectoryName}" overwrite="true">
-							<fileset basedir="${SourceDefaultDirectory}\${SourceDirectoryName}">
-								<include name="${File}"/>
-							</fileset>
-							<filterchain refid="Common.FilterChain" />
-						</copy>
-					</else>
-				</ifthenelse>
+        <property name="TargetBaseFile" value="${File}"/>
+        <property name="SourceBaseFile" value="${File}"/>
+        <call target="Upgrade.Base.File"/>
 			</do>
 		</loopthrough>
 		
 	</target>
 
-	<target name="Upgrade.CCNet">
+  <!--
+  <property name="TargetBaseFile" value=""/>
+  <property name="SourceBaseFile" value=""/>
+  -->
+  <target name="Upgrade.Base.File">
+    <if test="${Preserve.Some == 'No'}">
+      <property name="Preserve.Base.${string::replace(TargetBaseFile, ' ', '')}" value="No"/>
+    </if>
+    <ask answer="Preserve.Base.${string::replace(TargetBaseFile, ' ', '')}"
+     caption="Preserve customizations to ${TargetDirectoryName}\${TargetBaseFile}?"
+     question="Have you made customizations to ${TargetDirectoryName}\${TargetBaseFile} that you would like to preserve?"
+     showdialog="true" unless="${property::exists('Preserve.Base') or property::exists('Preserve.Base.' + string::replace(TargetBaseFile, ' ', ''))}">
+      <options>
+        <string value="Yes"/>
+        <string value="No"/>
+      </options>
+    </ask>
+
+    <ifthenelse test="${property::value('Preserve.Base.' + string::replace(TargetBaseFile, ' ', '')) == 'Yes'}">
+      <then>
+        <exec basedir="${Winmerge.DirectoryPath}"
+              program="winmerge"
+              failonerror="false">
+          <arg line="/x" />
+          <arg line="/e" />
+          <arg line='"${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}"' />
+          <arg line='"${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}"' />
+        </exec>
+      </then>
+      <else>
+        <copy tofile='${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}'
+              file='${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}'
+              overwrite="true">
+          <filterchain refid="Common.FilterChain" />
+        </copy>
+      </else>
+    </ifthenelse>
+  </target>
+
+  <target name="Upgrade.CCNet">
     <property name="CCNET.ServerPort" value=""/>
 		<xmlpeek file="${BuildDirectory}\server\ccnet.exe.config"
 						property="CCNET.ServerPort"
@@ -708,4 +728,15 @@ A brute force approach is to diff the tree, to identify which if any files need 
       ]]>
 		</code>
 	</script>
+  <script language="C#" prefix="property" >
+    <code>
+      <![CDATA[
+         [Function("value")]
+         public string GetValue(string propertyName)
+         {
+                 return Project.Properties[propertyName];
+         }
+      ]]>
+    </code>
+  </script>
 </project>

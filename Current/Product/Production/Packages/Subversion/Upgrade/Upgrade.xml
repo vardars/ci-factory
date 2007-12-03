@@ -25,23 +25,25 @@
 
     <echo message="SVN.Username exists ${property::exists('SVN.Username')}"/>
 
-    <ifnot test="${property::exists('SVN.Username') or property::exists('SVN.Password')}">
-      <ask
-        answer="SVN.Username"
-        caption="What's the Svn Build User Name?"
-        dialogmode="FreeText"
-        question="What is the user name the build uses to log into Subversion?"
-        showdialog="true"
-        unless="${property::exists(SVN.Username)}"
-      />
-      <ask
-        answer="SVN.Password"
-        caption="What's the Svn Build Password?"
-        dialogmode="FreeText"
-        question="What is the password the build uses to log into Subversion?"
-        showdialog="true"
-        unless="${property::exists(SVN.Password)}"
-      />
+    <ifnot test="${bool::parse(SVN.Credentials.SafeStorage)}">
+      <ifnot test="${property::exists('SVN.Username') or property::exists('SVN.Password')}">
+        <ask
+          answer="SVN.Username"
+          caption="What's the Svn Build User Name?"
+          dialogmode="FreeText"
+          question="What is the user name the build uses to log into Subversion?"
+          showdialog="true"
+          unless="${property::exists('SVN.Username')}"
+        />
+        <ask
+          answer="SVN.Password"
+          caption="What's the Svn Build Password?"
+          dialogmode="FreeText"
+          question="What is the password the build uses to log into Subversion?"
+          showdialog="true"
+          unless="${property::exists('SVN.Password')}"
+        />
+      </ifnot>
     </ifnot>
 
     <include buildfile="${SourcePackagesDirectory}\Subversion\Install\Install.xml"/>
