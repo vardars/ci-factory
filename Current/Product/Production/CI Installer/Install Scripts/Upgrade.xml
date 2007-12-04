@@ -119,6 +119,19 @@
     </ifnot>
 
     <ifnot test="${property::exists('LabelPrefix')}">
+      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+               property="CCNetProjectCount"
+               xpath="count(/cruisecontrol/project)"
+               failonerror="false" />
+
+      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+               property="LabelPrefix"
+               xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/labeller/prefix"
+               failonerror="false"
+               if="${property::exists('CCNetProjectCount') and CCNetProjectCount == '2'}"/>
+    </ifnot>
+
+    <ifnot test="${property::exists('LabelPrefix')}">
       <largeproperty name="LabelPrefixQuestion">
         <value expand="false" xml="false">
           <![CDATA[What is the version or label prefix for this build project?
