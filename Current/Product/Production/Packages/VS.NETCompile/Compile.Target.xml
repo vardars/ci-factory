@@ -14,8 +14,9 @@
     
   <target name="Compile.CompileSource">
 		<property name="Private.Compile.LogFileName" value="${path::get-temp-file-name()}" />
-    <exec 
+    <exec
 	    program="${Compile.DevEnv}"
+      workingdir="${ProductDirectory}"
 	    commandline='"${Compile.SolutionFile}" /build "${Compile.ConfigName}" /out "${Private.Compile.LogFileName}"'
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result" >
