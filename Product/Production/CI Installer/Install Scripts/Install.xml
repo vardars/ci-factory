@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Installer" default="Main">
+  
+  <include buildfile="Arguments.xml"/>
+
+  <property name="Install.Action" value="Install.Project" overwrite="false"/>
+
+  <filterchain id="Common.FilterChain">
+    <replacestring from="%ProjectName%"                 to="${ProjectName}"   />
+    <replacestring from="%ProjectCodeLineName%"         to="${ProjectCodeLineName}"  />
+
+    <replacestring from="%EmailHost%"                   to="${EmailHost}"  />
+
+    <replacestring from="%ProjectsDirectory%"           to="${ProjectsDirectory}"  />
+    <replacestring from="%ProjectRootDirectory%"        to="${ProjectRootDirectory}"  />
+    
+    <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
+    <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
+    <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />
+    <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
+    <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
+    <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
+    <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
+    <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
+    <regexreplace replacment="${'$'}{environment::get-variable('ProgramFiles')}" pattern="(?i)C\:\\Program Files" lines="1" />
+  </filterchain>
+  
+  <include buildfile="Scripts\CCNET.Install.xml"/>
+  <include buildfile="Scripts\nAnt.Install.xml"/>
+  <include buildfile="Scripts\BuildVS.Install.xml"/>
+  <include buildfile="Scripts\Packages.Install.xml"/>
+
+  <target name="Main">
+    <call target="${Install.Action}" />
+  </target>
+
+  <target name="Install.Package" >
+    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set."/>
+    <call target="Packages.ValidateParameters"/>
+    <call target="Packages.Install"/>
+  </target>
+
+  <target name="Install.Project" depends="Private.Install.ValidateParameters">
+    <call target="Private.Install.CreateDirectoryStructure"/>
+    <call target="nAnt.Install"/>
+    <call target="CCNET.Install"/>
+    <call target="BuildVS.Install"/>
+    <call target="Packages.Install"/>
+    <call target="Post.Install"/>
+  </target>
+
+  <target name="Private.Install.ValidateParameters" >
+    <fail unless="${property::exists('ProjectName')}" message="Property ProjectName was not set."/>
+    
+    <call target="CCNET.ValidateParameters"/>
+    <call target="nAnt.ValidateParameters"/>
+    <call target="BuildVS.ValidateParameters"/>
+    <call target="Packages.ValidateParameters"/>
+  </target>
+
+  <target name="Private.Install.CreateDirectoryStructure">
+    <mkdir unless="${directory::exists(ProjectsDirectory)}"        dir="${ProjectsDirectory}"/>
+    <mkdir unless="${directory::exists(ProjectRootDirectory)}"     dir="${ProjectRootDirectory}"/>
+    <mkdir unless="${directory::exists(ProjectCodeLineDirectory)}" dir="${ProjectCodeLineDirectory}"/>
+    <mkdir unless="${directory::exists(ProductDirectory)}"         dir="${ProductDirectory}"/>
+    <mkdir unless="${directory::exists(ThirdPartyDirectory)}"      dir="${ThirdPartyDirectory}"/>
+    <mkdir unless="${directory::exists(ProductionDirectory)}"      dir="${ProductionDirectory}"/>
+    <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
+    <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
+    <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
+    <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
+  </target>
+  
+</project>
