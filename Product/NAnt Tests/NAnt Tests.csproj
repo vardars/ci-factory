@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2A2055A9-3500-417F-BBA7-9D624B278152}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="CIFactory.NAnt.Tasks\Functions\PathFunctionTests.xml" />
+    <Content Include="TestRunner.Build.xml" />
+  </ItemGroup>
+</Project>

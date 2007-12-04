@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="TestProject" />
+	<property name="CCNET.LabelPrefix" value="1.0.0."/>
+	<property name="InitialVersion" value="1.0.0.0"/>
+
+  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+  <property name="ProductDirectoryName"     value="Product"/>
+  <property name="ThirdPartyDirectoryName"  value="Third Party"/>
+  <property name="ProductionDirectoryName"  value="Production"/>
+  <property name="UnitTestDirectoryName"    value="Unit Test"/>
+  <property name="InstallDirectoryName"     value="Install"/>
+  
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
+  <property name="CCNET.ServerPort" value="21236"/>
+  <property name="CCNET.ModificationDelaySeconds" value="120"/>
+  <property name="CCNET.IntervalTrigger" value="90"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+  <largeproperty name="Developer.List">
+    <value expand="true" xml="true">
+      <user name="bill.smith" group="developer"  address="bill.smith@gmail.com"/>
+    </value>
+  </largeproperty>
+  
+  <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
+  <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
+  <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
+
+  <property name="CCNet.SVN.URI.ProjectName" value="https://&amp;ProjectName;.googlecode.com/svn" />
+  <property name="CCNet.SVN.URI.ProjectCodeLine" value="${CCNet.SVN.URI.ProjectName}/&amp;ProjectCodeLineName;" />
+
+  <property name="SVN.WebVisible" value="true" />
+  <property name="CCNet.SVN.WebRepoUrl" value="http://&amp;ProjectName;.googlecode.com/svn"/><!--makes shure that the case is correct, Tags or tags-->
+  
+  <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
+  <property name="SVN.Username" value="Build" />
+  <property name="SVN.Password" value="password" />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <strings id="Packages.InstallList">
+    <string value="Subversion"/>
+    <string value="CSDiff" />
+    <string value="SourceModificationReport"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="FxCop"/>
+    <string value="Simian" />
+    <string value="Analytics" />
+    <string value="Alerts" />
+
+    <string value="Deployment"/>
+    <string value="Workspace"/>
+
+    <!--
+    <string value="LinesOfCode"/>
+    <string value="VisualSourceSafe"/>
+    <string value="Perforce"/>
+    <string value="Ant"/>
+    <string value="Backup" />
+    <string value="VS.NETCompile"/>
+    <string value="MSTest" />
+    <string value="Tracker"/>
+    <string value="InstallShield"/>
+		<string value="Vault"/>
+    <string value="VSTSVersionControl" />
+    -->
+  </strings>
+
+  <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}" />
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
+    
+    <fileset id="PacakgeFinder" />
+    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagePath}"/>
+      </buildfiles>
+    </nant>
+    
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+
+    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+    <asyncexec workingdir="${BuildDirectory}" program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+  </target>
+  
+</project>
