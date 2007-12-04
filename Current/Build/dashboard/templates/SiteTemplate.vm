@@ -2,9 +2,9 @@
 	<HEAD>
 		<title>
 #set( $pageTitle = "CI Factory Build Dashboard" )
-#if (!($projectName == ""))
+#if ($projectName)
 #set( $pageTitle = "$pageTitle $projectLink.Text" )
-#if (!($buildName == ""))
+#if ($buildName)
 #set( $pageTitle = "$pageTitle $buildLink.Text" )
 #end
 #end
