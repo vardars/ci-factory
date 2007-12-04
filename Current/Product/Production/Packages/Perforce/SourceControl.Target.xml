@@ -267,6 +267,11 @@
 
 	<target name="Private.SourceControl.EnsureWorkspace">
 		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+    
+    <if test="${SourceControl.Update.Interactive}">
+      <call target="Private.SourceControl.IteractiveUpdate"/>
+    </if>
+    
 		<ifnot test="${perforce::workspace-exists(Perforce.WorkspaceName, Perforce.ServerName + ':' + Perforce.ServerPort)}">
 			<p4client clientname="${Perforce.WorkspaceName}"
 						root="${ProjectCodeLineDirectory}"
@@ -274,11 +279,8 @@
 						view="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."
 						clientview="//${Perforce.WorkspaceName}/..."/>
 		</ifnot>
+    
     <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="${Perforce.WorkspaceName}"/>
-
-    <if test="${SourceControl.Update.Interactive}">
-      <call target="Private.SourceControl.IteractiveUpdate"/>
-    </if>
 	</target>
 
   <!--
