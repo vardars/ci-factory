@@ -1,6 +1,14 @@
 <HTML>
 	<HEAD>
-		<title>CI Factory Build Dashboard#if (!($projectName == "")) $projectLink.Text#if (!($buildName == "")) $buildLink.Text#end#end
+		<title>
+#set( $pageTitle = "CI Factory Build Dashboard" )
+#if (!($projectName == ""))
+#set( $pageTitle = "$pageTitle $projectLink.Text" )
+#if (!($buildName == ""))
+#set( $pageTitle = "$pageTitle $buildLink.Text" )
+#end
+#end
+$pageTitle
 </title>
 		<link type="text/css" rel="stylesheet" href="cruisecontrol.css">
 		<link rel="shortcut icon" href="images/cifactory.ico" />
