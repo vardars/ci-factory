@@ -10,12 +10,12 @@
     <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\Simian\SimianSummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\Simian\SimianDisplaySummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianReport.xsl" imageFileName="Packages\Simian\logo.gif" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianDisplayReport.xsl" imageFileName="Packages\Simian\logo.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
