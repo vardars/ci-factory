@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
+  <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
+  <property name="Install.Action" value="Install.Project" />
+  <property name="ProjectName" value="AlternateNamingTestProject" />
+	<property name="CCNET.LabelPrefix" value="1.0.0."/>
+	<property name="InitialVersion" value="1.0.0.0"/>
+
+  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="ProjectCodeLineName"      value="trunk" overwrite="false"/>
+  <property name="ProductDirectoryName"       value="src"/>
+  <property name="ThirdPartyDirectoryName"    value="lib"/>
+  <property name="ProductionDirectoryName"    value="Production"/>
+  <property name="UnitTestDirectoryName"    value="Unit Test"/>
+  <property name="InstallDirectoryName"     value="Install"/>
+
+  <include buildfile="Properties.Install.xml"/>
+  <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
+  <property name="CCNET.ServerPort" value="21246"/>
+  <property name="CCNET.ModificationDelaySeconds" value="0"/>
+  <property name="CCNET.IntervalTrigger" value="60"/>
+  <property name="BuildMaster.Name" value="BuildMaster"/>
+  <property name="BuildMaster.Email" value="fake@bogas.com"/>
+
+	<property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
+  <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
+  
+  <property name="SVN.URI.Root" value="http://localhost:81/svn"  />
+  <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" /><!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
+  <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
+  <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" /><!--makes shure that the case is correct, Tags or tags-->
+
+  <property name="SVN.WebRepoUrl" value="${SVN.URI.Root}"/>
+  <property name="SVN.Credentials.SafeStorage" value="true"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
+  <property name="SVN.Username" value="Build" />
+  <property name="SVN.Password" value="password" />
+  <property name="SVN.WebVisible" value="true" />
+
+  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+
+  <property name="Install.Quiet" value="true"/>
+  <property name="Simian.AcceptLicense" value="true"/>
+  <property name="nDepend.AcceptLicense" value="true"/>
+
+  <strings id="Packages.InstallList">
+    <string value="SourceModificationReport"/>
+    <string value="CSDiff" />
+    <string value="Subversion"/>
+    <string value="Versioning"/>
+    <string value="MSBuild" />
+    <string value="NCover" />
+    <string value="DotNetUnitTest"/>
+    <string value="nDepend"/>
+    <string value="Simian" />
+    <string value="LinesOfCode"/>
+
+    <string value="Deployment"/>
+    <string value="Workspace"/>
+  </strings>
+
+  <target name="Post.Install">
+    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+      <properties>
+        <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}" />
+        <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
+        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+      </properties>
+    </nant>
+    <nant target="SourceControl.Repository.Load">
+      <buildfiles>
+        <include name="${PackagesDirectory}\Subversion\SourceControl.Target.xml"/>
+      </buildfiles>
+    </nant>
+
+    <nant buildfile="${BuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+  </target>
+
+</project>
