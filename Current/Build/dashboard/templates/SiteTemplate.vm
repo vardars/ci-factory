@@ -1,6 +1,7 @@
 <HTML>
 	<HEAD>
-		<title>CruiseControl.NET</title>
+		<title>CI Factory Build Dashboard#if (!($projectName == "")) $projectLink.Text#if (!($buildName == "")) $buildLink.Text#end#end
+</title>
 		<link type="text/css" rel="stylesheet" href="cruisecontrol.css">
 		<link rel="shortcut icon" href="images/cifactory.ico" />
 	</HEAD>
