@@ -50,6 +50,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 			velocityContext["lastBuildDateSortLink"] = GenerateSortLink(serverSpecifier, actionName, ProjectGridSortColumn.LastBuildDate, sortColumn, sortReverse);
 			velocityContext["projectGrid"] = projectGrid.GenerateProjectGridRows(
                 farmService, projectStatusListAndExceptions.StatusAndServerList, actionName, sortColumn, sortReverse);
+            velocityContext["serverTimeNow"] = DateTime.Now;
 			velocityContext["exceptions"] = projectStatusListAndExceptions.Exceptions;
 			velocityContext["refreshButtonName"] = urlBuilder.BuildFormName(actionName);
 

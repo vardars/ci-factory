@@ -73,7 +73,18 @@
       <ask answer="BuildDirectoryName" caption="Can't Find the Build Directory" dialogmode="FreeText" question="What is the name of the Build directory?" showdialog="true"></ask>
     </ifnot>
 
+    <property name="BuildDirectory" value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}"/>
+
     <property name="CCNetProject" value="${ProjectName}"/>
+    <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
+      <arg line='/f:"${SourceRoot}\Install Scripts\Scripts\Proxy.SourceControl.xml"'/>
+      <arg line='Proxy.SourceControl.UpdateTarget' />
+      <arg line='-D:"BuildDirectory=${BuildDirectory}"' />
+      <arg line='-D:"CCNetProject=${CCNetProject}"' />
+      <arg line='-D:CCNetBuildDate="2006-09-12"' />
+      <arg line='-D:CCNetBuildTime="11:10:00"' />
+    </exec>
+
     <include buildfile="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}\Properties.build.xml" />
 
     <property name="ProductDirectoryName"       value="Product" overwrite="false"/>
@@ -153,82 +164,6 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
              nodeindex="1"
              xpath="/cruisecontrol/project//email/@mailhost"
              failonerror="false"/>
-    
-		<fileset id="PacakgeFinder" />
-		<ifnot test="${property::exists('SourceControl.PackageName')}">
-			<property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
-      <echo message="${PackagePathPattern}" />
-			<function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-      <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${PackagesDirectory}." />
-			<property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-			<property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
-		</ifnot>
-
-    <xmlpeek file="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml" property="SourceUpdateTarget" xpath="//Target[@name == 'SourceControl.GetOfCodeLineDirectory']/@name" failonerror="false" />
-
-    <strings id="SourceUpdateTargets" />
-    
-    <ifthenelse test="${property::exists('SourceUpdateTarget')}">
-      <then>
-        <function execute="${stringlist::add('SourceUpdateTargets', SourceUpdateTarget)}"/>
-      </then>
-      <else>
-        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfBuildDirectory')}"/>
-        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfThirdPartyDirectory')}"/>
-        <function execute="${stringlist::add('SourceUpdateTargets', 'SourceControl.GetOfProductDirectory')}"/>
-      </else>
-    </ifthenelse>
-
-    <mkdir dir="c:\temp" unless="${directory::exists('c:\temp')}"/>
-    <property name="TempPropertiesFile" value="c:\temp\prop.file"/>
-
-    <saveproperties file="${TempPropertiesFile}" format="CommandLine" >
-      <property name="CCNetBuildCondition"/>
-      <property name="CCNetIntegrationStatus"/>
-      <property name="CCNetLabel"/>
-      <property name="CCNetLastIntegrationStatus"/>
-      <property name="CCNetProject"/>
-      <property name="EmailHost"/>
-      <property name="CCNetBuildDate"/>
-      <property name="CCNetBuildTime"/>
-      <property name="CCNetArtifactDirectory"/>
-      <property name="CCNetWorkingDirectory"/>
-      <property name="ProjectName"/>
-      <property name="ProjectCodeLineName"/>
-      <property name="ProjectsDirectory"/>
-      <property name="ProjectRootDirectory"/>
-      <property name="ProjectCodeLineDirectory"/>
-      <property name="ProductDirectory"/>
-      <property name="ThirdPartyDirectory"/>
-      <property name="ProductionDirectory"/>
-      <property name="BuildDirectory"/>
-      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
-      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
-      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
-      <property name="Common.ArtifactDirectoryPath"/>
-      <property name="Common.ArtifactFolderName"/>
-      <property name="Common.ReportDirectory"/>
-      <property name="Common.TempDirectory"/>
-      <property name="UnitTestDirectory"/>
-      <property name="InstallDirectory"/>
-    </saveproperties>
-
-    <loopthrough property="SourceUpdateTarget">
-      <items>
-        <strings refid="SourceUpdateTargets" />
-      </items>
-      <do>
-        <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
-          <arg line='/f:"${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"'/>
-          <arg line='${SourceUpdateTarget}' />
-          <arg line='-D:"SourceControl.Update.FileTimeStamp=Current"' />
-          <arg line='-D:"SourceControl.Update.ReplaceWritableFiles=False"' />
-          <arg line='-D:"SourceControl.Update.MakeWritable=False"' />
-          <arg line='-D:"SourceControl.Update.Interactive=True"' />
-          <arg line='@"${TempPropertiesFile}"' />
-        </exec>
-      </do>
-    </loopthrough>
 
 		<filterchain id="Common.FilterChain">
 			<replacestring from="%ProjectName%"  to="${ProjectName}"   />
@@ -284,12 +219,16 @@ BuildDirectory      = ${BuildDirectory}
         <string value="No"/>
       </options>
     </ask>
-    
-		<xmlpeek file="${BuildDirectory}\dashboard\dashboard.config" 
-						 property="CCNetServer.Url" 
-						 xpath="/dashboard/remoteServices/servers/server/@url" />
-		<ccnetstop serverurl="${CCNetServer.Url}" failonerror="false"/>
 
+    <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
+      <arg line='/f:"${SourceRoot}\Install Scripts\Scripts\Proxy.SourceControl.xml"'/>
+      <arg line='Proxy.SourceControl.CheckoutAll' />
+      <arg line='-D:"BuildDirectory=${BuildDirectory}"' />
+      <arg line='-D:"CCNetProject=${CCNetProject}"' />
+      <arg line='-D:CCNetBuildDate="2006-09-12"' />
+      <arg line='-D:CCNetBuildTime="11:10:00"' />
+    </exec>
+    
 		<call target="Upgrade.Packages.ValidateParameters"/>
 		<call target="Upgrade.Foundation"/>
 		<call target="Upgrade.Packages"/>
@@ -330,6 +269,13 @@ A brute force approach is to diff the tree, to identify which if any files need 
 4) You may need to run the SetupIIS.xml nant script in the Build server as the virtual directory names and structure have changed since version 0.8.
       From the build directory execute:
           C:\Projects\${ProjectName}\Current\Build>nAnt\bin\NAnt.exe /f:SetupIIS.xml
+
+5) You may need to edit the state files on the build server if your installation was version 0.8.
+      Locate the state files in:
+          C:\Projects\${ProjectName}\Current\Build\server
+      Edit the name of the file to match the name of the ccnet project.
+      Edit the content of the file, the name of the project needs to be fixed here too.
+      Please make sure to preserve the utf-16 encoding, edit with Visual Studio for example.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -46,6 +46,7 @@
   -->
   <ItemGroup>
     <Content Include="Install Scripts\Arguments.xml" />
+    <Content Include="Install Scripts\Scripts\Proxy.SourceControl.xml" />
     <Content Include="Install Scripts\Upgrade.xml" />
     <Content Include="Install Scripts\Install.xml" />
     <Content Include="Install Scripts\Properties.Install.xml" />

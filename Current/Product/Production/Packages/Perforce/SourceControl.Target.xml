@@ -199,6 +199,10 @@
 	<target name="SourceControl.CheckOut">
 		<call target="Private.SourceControl.EnsureWorkspace"/>
 
+    <ifnot test="${path::has-extension(SourceControl.CheckOut.File)}">
+      <property name="Private.SourceControl.Update.LocalPath" value="${SourceControl.CheckOut.File}/..."/>
+    </ifnot>
+
 		<p4edit changelist="${SourceControl.CheckOut.File}"
 						client="${Perforce.WorkspaceName}"
 						view='"${sourcecontrol::convertlocaltoserver(SourceControl.CheckOut.File)}"' />
@@ -211,6 +215,11 @@
   -->
 	<target name="SourceControl.CheckIn">
 		<call target="Private.SourceControl.EnsureWorkspace"/>
+
+    <ifnot test="${path::has-extension(SourceControl.CheckIn.File)}">
+      <property name="Private.SourceControl.Update.LocalPath" value="${SourceControl.CheckIn.File}/..."/>
+    </ifnot>
+    
 		<p4submit changelist="${SourceControl.CheckIn.File}"
 							client="${Perforce.WorkspaceName}"
 						view='"${sourcecontrol::convertlocaltoserver(SourceControl.CheckIn.File)}"'/>
@@ -336,7 +345,8 @@
 			<do>
 				<p4add changelist="Initial Load"
 							 file='"${File}"'
-							 client="Temp-${Perforce.WorkspaceName}" />
+							 client="Temp-${Perforce.WorkspaceName}"
+               verbose="true"/>
 			</do>
 		</foreach>
 

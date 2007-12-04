@@ -224,19 +224,22 @@ function refresh()
           * Visit http://www.dynamicdrive.com/ for this script and 100s more.
           ***********************************************/
 
-          function dcountup(startingdate){
+          function dcountup(startingdate, serverTime){
           this.currentTime=new Date()
           this.startingdate=new Date(startingdate)
+          this.serverTime=new Date(serverTime)
+          this.startingdate.setSeconds(this.startingdate.getSeconds() + ((this.currentTime-this.serverTime)/1000))
+          var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
+          alert("here")
           this.timesup=false
-          this.start()
+          this.start(timediff)
           }
 
           dcountup.prototype.oncountup=function(){} //default action for "oncountup"
 
-          dcountup.prototype.start=function(){
+          dcountup.prototype.start=function(timediff){
           var thisobj=this
-          this.currentTime.setSeconds(this.currentTime.getSeconds()+1)
-          var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
+          timediff += 1
           var oneMinute=60 //minute unit in seconds
           var oneHour=60*60 //hour unit in seconds
           var oneDay=60*60*24 //day unit in seconds
@@ -244,12 +247,12 @@ function refresh()
           var hourfield=Math.floor((timediff-dayfield*oneDay)/oneHour)
           var minutefield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour)/oneMinute)
           var secondfield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour-minutefield*oneMinute))
-          
+
           minutefield=dayfield*24*60+hourfield*60+minutefield
-          
+
           var result={minutes:minutefield, seconds:secondfield}
           this.oncountup(result)
-          setTimeout(function(){thisobj.start()}, 1000) //update results every second
+          setTimeout(function(){thisobj.start(timediff)}, 1000) //update results every second
           }
 
         </script>
@@ -260,7 +263,7 @@ function refresh()
 
           //SYNTAX: myvariable=new dcountup(past_date_and_time_string)
           //Example: ("April 9, 2005 13:30:00")
-          var BuildTimeElapsed=new dcountup("$projectGridRow.CurrentBuildStartTime")
+          var BuildTimeElapsed=new dcountup("$projectGridRow.CurrentBuildStartTime", "$serverTimeNow")
 
           BuildTimeElapsed.oncountup=function(result){
           var mycountainer=document.getElementById("clock")
