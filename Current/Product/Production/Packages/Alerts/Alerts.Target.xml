@@ -68,7 +68,7 @@
 			tolist="${Alerts.SendMessage.ToList}"
       cclist="${Alerts.SendMessage.CCList}"
 			subject="${Alerts.SendMessage.Subject}" 
-			mailhost="127.0.0.1"
+			mailhost="${EmailHost}"
 			format="Html"
 			message="${Alerts.SendMessage.Content}"
 		/>

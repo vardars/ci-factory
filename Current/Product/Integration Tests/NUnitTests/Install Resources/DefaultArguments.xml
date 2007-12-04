@@ -21,6 +21,7 @@
   <property name="CCNET.IntervalTrigger" value="60"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
+  <property name="EmailHost"        value="127.0.0.1"/>
 
   <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
   <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>

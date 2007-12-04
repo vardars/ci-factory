@@ -146,6 +146,13 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
     </ifnot>
     
     <property name="CCNET.LabelPrefix" value="${LabelPrefix}"/>
+
+    <property name="EmailHost" value="127.0.0.1"/>
+    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+             property="EmailHost"
+             nodeindex="1"
+             xpath="/cruisecontrol/project//email/@mailhost"
+             failonerror="false"/>
     
 		<fileset id="PacakgeFinder" />
 		<ifnot test="${property::exists('SourceControl.PackageName')}">
@@ -181,6 +188,7 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
       <property name="CCNetLabel"/>
       <property name="CCNetLastIntegrationStatus"/>
       <property name="CCNetProject"/>
+      <property name="EmailHost"/>
       <property name="CCNetBuildDate"/>
       <property name="CCNetBuildTime"/>
       <property name="CCNetArtifactDirectory"/>
@@ -225,6 +233,7 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
 		<filterchain id="Common.FilterChain">
 			<replacestring from="%ProjectName%"  to="${ProjectName}"   />
 			<replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
+      <replacestring from="%EmailHost%"                   to="${EmailHost}"  /> 
 
       <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
       <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
@@ -237,6 +246,7 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
       <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
       <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
       <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
+      <regexreplace replacment="${'$'}{environment::get-variable('ProgramFiles')}" pattern="(?i)C\:\\Program Files" lines="1" />
 		</filterchain>
 		
 		<largeproperty name="UpgradeOverview">

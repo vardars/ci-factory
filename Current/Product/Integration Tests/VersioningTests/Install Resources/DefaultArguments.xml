@@ -21,6 +21,7 @@
   <property name="CCNET.IntervalTrigger" value="60"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
+  <property name="EmailHost"        value="127.0.0.1"/>
 
   <strings id="Packages.InstallList">
     <string value="SourceModificationReport"/>

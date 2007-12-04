@@ -21,6 +21,7 @@
   <property name="CCNET.IntervalTrigger" value="30"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
   <property name="BuildMaster.Email" value="fake@bogas.com"/>
+  <property name="EmailHost"        value="127.0.0.1"/>
 
   <property name="NCover.Version" value="1.5.8" overwrite="false"/>
 

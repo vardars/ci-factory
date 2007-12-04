@@ -9,6 +9,8 @@
     <replacestring from="%ProjectName%"                 to="${ProjectName}"   />
     <replacestring from="%ProjectCodeLineName%"         to="${ProjectCodeLineName}"  />
 
+    <replacestring from="%EmailHost%"                   to="${EmailHost}"  />
+
     <replacestring from="%ProjectsDirectory%"           to="${ProjectsDirectory}"  />
     <replacestring from="%ProjectRootDirectory%"        to="${ProjectRootDirectory}"  />
     
@@ -20,6 +22,7 @@
     <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
     <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
     <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
+    <regexreplace replacment="${'$'}{environment::get-variable('ProgramFiles')}" pattern="(?i)C\:\\Program Files" lines="1" />
   </filterchain>
   
   <include buildfile="Scripts\CCNET.Install.xml"/>

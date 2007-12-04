@@ -1,5 +1,6 @@
 ﻿<!ENTITY HostName                 '%CCNET.ServerName%' >
 <!ENTITY Port                     '%CCNET.ServerPort%'>
+<!ENTITY EmailHost                '%EmailHost%'>
 <!ENTITY LabelPrefix              '%CCNET.LabelPrefix%'>
 <!ENTITY ProjectName              '%ProjectName%' >
 <!ENTITY ProjectCodeLineName      '%ProjectCodeLineName%' >
