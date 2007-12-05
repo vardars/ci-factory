@@ -499,7 +499,7 @@ namespace NAnt.Core {
                     OutputMessage(Level.Error, string.Empty, indentationLevel);
                     OutputMessage(Level.Error, error.ToString(), indentationLevel);
                     OutputMessage(Level.Error, string.Empty, indentationLevel);
-                    OutputMessage(Level.Error, "Please send bug report to nant-developers@lists.sourceforge.net.", indentationLevel);
+                    OutputMessage(Level.Error, "Please send bug report to ci-factory@googlegroups.com.", indentationLevel);
                 }
 
                 OutputMessage(Level.Error, string.Empty, indentationLevel);

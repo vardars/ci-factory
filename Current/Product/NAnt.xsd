@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 10/18/2007 11:00:27</xs:documentation>
+    <xs:documentation>NAnt schema generated at 12/04/2007 19:02:57</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -182,6 +182,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -381,6 +454,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -768,6 +914,56 @@
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet-Include">
+    <xs:attribute name="name" use="required" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="include" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet-Include" />
+    </xs:sequence>
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded">
+    <xs:attribute name="throwExceptions" use="optional" />
+    <xs:attribute name="ProjectName" use="required" />
+    <xs:attribute name="ItemType" use="required" />
+    <xs:attribute name="Status" use="required" />
+    <xs:attribute name="Platform" use="required" />
+    <xs:attribute name="TimeEstimate" use="required" />
+    <xs:attribute name="Assignee" use="optional" />
+    <xs:attribute name="Resolver" use="optional" />
+    <xs:attribute name="Description" use="required" />
+    <xs:attribute name="Priority" use="required" />
+    <xs:attribute name="Details" use="required" />
+    <xs:attribute name="VersionStr" use="optional" />
+    <xs:attribute name="Custom1" use="optional" />
+    <xs:attribute name="Custom2" use="optional" />
+    <xs:attribute name="Category" use="optional" />
+    <xs:attribute name="Milestone" use="optional" />
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions">
+    <xs:attribute name="Merge" use="optional" />
+    <xs:attribute name="Recursive" use="optional" />
+    <xs:attribute name="MakeWritable" use="optional" />
+    <xs:attribute name="SetFileTime" use="optional" />
+    <xs:attribute name="PerformDeletions" use="optional" />
+    <xs:attribute name="OverrideEOL" use="optional" />
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray-Include">
+    <xs:attribute name="name" use="required" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="include" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray-Include" />
+    </xs:sequence>
+    <xs:attribute name="id" use="optional" />
+    <xs:attribute name="refid" use="optional" />
+  </xs:complexType>
   <xs:complexType name="TF.Tasks.SourceControl.Types.Mapping">
     <xs:attribute name="type" use="optional" />
     <xs:attribute name="localitem" use="optional" />
@@ -945,7 +1141,9 @@
     <xs:attribute name="useruntimeengine" use="optional" />
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1194,6 +1392,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -1305,6 +1576,7 @@
     </xs:sequence>
     <xs:attribute name="append" use="optional" />
     <xs:attribute name="file" use="required" />
+    <xs:attribute name="encoding" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -1415,7 +1687,9 @@
     <xs:attribute name="pad-all" use="optional" />
     <xs:attribute name="nobreak-complex" use="optional" />
     <xs:attribute name="nobreak-singlelineblocks" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1498,7 +1772,9 @@
     <xs:attribute name="proxyusername" use="optional" />
     <xs:attribute name="proxypassword" use="optional" />
     <xs:attribute name="proxydomain" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1526,7 +1802,9 @@
     <xs:attribute name="includeSummaryReport" use="optional" />
     <xs:attribute name="typeList" use="optional" />
     <xs:attribute name="saveResults" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1550,7 +1828,9 @@
       <xs:element minOccurs="0" maxOccurs="1" name="arg" type="nant:NAnt.Core.Types.Argument" />
     </xs:sequence>
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1567,7 +1847,9 @@
     </xs:sequence>
     <xs:attribute name="assembly" use="optional" />
     <xs:attribute name="action" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1600,7 +1882,9 @@
     </xs:sequence>
     <xs:attribute name="native" use="optional" />
     <xs:attribute name="force" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1635,7 +1919,9 @@
     <xs:attribute name="nowarnings" use="optional" />
     <xs:attribute name="uncompilefile" use="optional" />
     <xs:attribute name="uncompileoutputdir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1661,7 +1947,9 @@
     <xs:attribute name="alias" use="optional" />
     <xs:attribute name="commandfile" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1683,7 +1971,9 @@
     <xs:attribute name="out" use="optional" />
     <xs:attribute name="username" use="optional" />
     <xs:attribute name="password" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1703,7 +1993,9 @@
     <xs:attribute name="debug" use="optional" />
     <xs:attribute name="debugoptimized" use="optional" />
     <xs:attribute name="profiled" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1736,7 +2028,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1757,7 +2051,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1781,7 +2077,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1801,7 +2099,9 @@
     <xs:attribute name="client" use="optional" />
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1822,7 +2122,9 @@
     <xs:attribute name="client" use="optional" />
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1853,7 +2155,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1874,7 +2178,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1895,7 +2201,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1916,7 +2224,9 @@
     <xs:attribute name="client" use="optional" />
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1937,7 +2247,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1956,7 +2268,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1978,7 +2292,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -1999,7 +2315,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="view" use="optional" />
     <xs:attribute name="script" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2031,7 +2349,9 @@
     <xs:attribute name="registered" use="optional" />
     <xs:attribute name="typelib" use="optional" />
     <xs:attribute name="unregister" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2053,7 +2373,9 @@
     <xs:attribute name="user" use="optional" />
     <xs:attribute name="program-path-sep" use="optional" />
     <xs:attribute name="basedir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2252,7 +2574,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2275,7 +2599,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2297,7 +2623,9 @@
     <xs:attribute name="destination" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2365,7 +2693,9 @@
     <xs:attribute name="checkreferences" use="optional" />
     <xs:attribute name="errorfile" use="optional" />
     <xs:attribute name="conditionals" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2495,7 +2825,9 @@
     <xs:attribute name="proxydomain" use="optional" />
     <xs:attribute name="urlkey" use="optional" />
     <xs:attribute name="baseurl" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2520,7 +2852,9 @@
     <xs:attribute name="uri" use="optional" />
     <xs:attribute name="xmldoc" use="optional" />
     <xs:attribute name="xdr" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2584,7 +2918,9 @@
     <xs:attribute name="version" use="optional" />
     <xs:attribute name="win32icon" use="optional" />
     <xs:attribute name="win32res" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2642,7 +2978,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2659,7 +2997,9 @@
     </xs:sequence>
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="keycontainer" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2688,7 +3028,9 @@
     <xs:attribute name="keyfile" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="resourcefile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2723,7 +3065,9 @@
     <xs:attribute name="warnaserror" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2741,7 +3085,9 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="licensetarget" use="optional" />
     <xs:attribute name="target" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2777,7 +3123,9 @@
     <xs:attribute name="existingapp" use="optional" />
     <xs:attribute name="application" use="optional" />
     <xs:attribute name="partition" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2798,7 +3146,9 @@
     <xs:attribute name="target" use="optional" />
     <xs:attribute name="todir" use="optional" />
     <xs:attribute name="usesourcepath" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2865,7 +3215,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2905,7 +3257,9 @@
     <xs:attribute name="nowarn" use="optional" />
     <xs:attribute name="rebuild" use="optional" />
     <xs:attribute name="main" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2946,7 +3300,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="objectfile" use="optional" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -2989,7 +3345,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="moduledefinition" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3024,7 +3382,9 @@
     <xs:attribute name="options" use="optional" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="pdbfile" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3042,7 +3402,9 @@
     <xs:attribute name="headerpath" use="optional" />
     <xs:attribute name="rcpath" use="optional" />
     <xs:attribute name="mcfile" use="required" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3092,7 +3454,9 @@
     <xs:attribute name="iid" use="optional" />
     <xs:attribute name="proxy" use="optional" />
     <xs:attribute name="filename" use="required" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3118,7 +3482,9 @@
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="rcfile" use="required" />
     <xs:attribute name="langid" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3171,7 +3537,9 @@
     <xs:attribute name="delaysign" use="optional" />
     <xs:attribute name="generatesource" use="optional" />
     <xs:attribute name="rcw" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3198,7 +3566,9 @@
     <xs:attribute name="assembly" use="required" />
     <xs:attribute name="output" use="required" />
     <xs:attribute name="names" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3225,7 +3595,9 @@
     <xs:attribute name="sysarray" use="optional" />
     <xs:attribute name="typelib" use="required" />
     <xs:attribute name="unsafe" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3328,7 +3700,9 @@
     <xs:attribute name="basedir" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="append" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -3543,6 +3917,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -3750,6 +4197,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -3992,6 +4512,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -4278,7 +4871,9 @@
     <xs:attribute name="visibility" use="optional" />
     <xs:attribute name="output" use="optional" />
     <xs:attribute name="todir" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4319,7 +4914,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4353,7 +4950,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4392,7 +4991,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4427,7 +5028,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4463,7 +5066,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4499,7 +5104,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4535,7 +5142,9 @@
     <xs:attribute name="password" use="optional" />
     <xs:attribute name="passfile" use="optional" />
     <xs:attribute name="commandline" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4584,7 +5193,9 @@
     <xs:attribute name="x" use="optional" />
     <xs:attribute name="w" use="optional" />
     <xs:attribute name="n" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4609,7 +5220,9 @@
     <xs:attribute name="append" use="optional" />
     <xs:attribute name="buildname" use="optional" />
     <xs:attribute name="summarize" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4632,7 +5245,9 @@
     <xs:attribute name="x" use="optional" />
     <xs:attribute name="w" use="optional" />
     <xs:attribute name="n" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4699,7 +5314,9 @@
     <xs:attribute name="showExcluded" use="optional" />
     <xs:attribute name="sort" use="optional" />
     <xs:attribute name="xmlReportName" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4737,7 +5354,9 @@
     <xs:attribute name="symbolSearchPolicy" use="optional" />
     <xs:attribute name="typeExclusionPatterns" use="optional" />
     <xs:attribute name="workingDirectory" use="optional" />
+    <xs:attribute name="stdin" use="optional" />
     <xs:attribute name="pid" use="optional" />
+    <xs:attribute name="outputproperty" use="optional" />
     <xs:attribute name="timeout" use="optional" />
     <xs:attribute name="useshellexecute" use="optional" />
     <xs:attribute name="createnowindow" use="optional" />
@@ -4945,6 +5564,734 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultadd">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="fileset" type="nant:NAnt.Core.Types.FileSet" />
+    </xs:sequence>
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="folderPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="fortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
+    </xs:sequence>
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="bugID" use="required" />
+    <xs:attribute name="comment" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository">
+    <xs:attribute name="newReposName" use="required" />
+    <xs:attribute name="enableSecurity" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultadduser">
+    <xs:attribute name="login" use="required" />
+    <xs:attribute name="password" use="required" />
+    <xs:attribute name="email" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultblame">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="version" use="optional" />
+    <xs:attribute name="startlinenumber" use="required" />
+    <xs:attribute name="endlinenumber" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultbranch">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath_From" use="required" />
+    <xs:attribute name="objectPath_To" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="unchanged" use="optional" />
+    <xs:attribute name="keepCheckedOut" use="optional" />
+    <xs:attribute name="localCopy" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="checkoutExclusive" use="optional" />
+    <xs:attribute name="getLatest" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcloak">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="newFolderPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdelete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery">
+    <xs:attribute name="queryID" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel">
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="labelName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository">
+    <xs:attribute name="repositoryName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdiff">
+    <xs:attribute name="diffProgram" use="required" />
+    <xs:attribute name="diffArguments" use="required" />
+    <xs:attribute name="compareToOption" use="required" />
+    <xs:attribute name="recursive" use="required" />
+    <xs:attribute name="objectPathLeft" use="required" />
+    <xs:attribute name="objectPathRight" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="msgID" use="required" />
+    <xs:attribute name="attID" use="required" />
+    <xs:attribute name="filename" use="required" />
+    <xs:attribute name="strReceivedFilePath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultget">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="queryID" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="labelSubItem" use="optional" />
+    <xs:attribute name="destPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="label" use="required" />
+    <xs:attribute name="labelSubItem" use="optional" />
+    <xs:attribute name="tmpWorkingFolder" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="destPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="version" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="version" use="required" />
+    <xs:attribute name="destPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultwildcardarray" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray" />
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="folderPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultwildcardarray" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray" />
+      <xs:element minOccurs="0" maxOccurs="1" name="getoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+    </xs:sequence>
+    <xs:attribute name="folderPath" use="required" />
+    <xs:attribute name="destPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaulthistory">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="dateSort" use="optional" />
+    <xs:attribute name="excludedUsers" use="optional" />
+    <xs:attribute name="excludedActions" use="optional" />
+    <xs:attribute name="beginDate" use="optional" />
+    <xs:attribute name="endDate" use="optional" />
+    <xs:attribute name="beginLabel" use="optional" />
+    <xs:attribute name="endLabel" use="optional" />
+    <xs:attribute name="beginVersion" use="optional" />
+    <xs:attribute name="endVersion" use="optional" />
+    <xs:attribute name="rowLimit" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlabel">
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="labelName" use="required" />
+    <xs:attribute name="versionID" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="folderPath" use="required" />
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="msgID" use="required" />
+    <xs:attribute name="attID" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="itemID" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultlogout">
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="item" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery">
+    <xs:attribute name="sq" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultmove">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath_From" use="required" />
+    <xs:attribute name="objectPath_To" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate">
+    <xs:attribute name="repositoryPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultpin">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="version" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession">
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="qf" use="required" />
+    <xs:attribute name="sendDetails" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder">
+    <xs:attribute name="repositoryFolderPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultrename">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="newName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel">
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="oldLabelName" use="required" />
+    <xs:attribute name="newLabelName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="projectName" use="required" />
+    <xs:attribute name="queryName" use="required" />
+    <xs:attribute name="sendDetails" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="queryName" use="required" />
+    <xs:attribute name="qf" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions">
+    <xs:attribute name="URL" use="required" />
+    <xs:attribute name="user" use="required" />
+    <xs:attribute name="password" use="required" />
+    <xs:attribute name="repository" use="optional" />
+    <xs:attribute name="saveSession" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository">
+    <xs:attribute name="repositoryName" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder">
+    <xs:attribute name="repositoryFolderPath" use="required" />
+    <xs:attribute name="diskPath" use="required" />
+    <xs:attribute name="createDiskPath" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultshare">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath_From" use="required" />
+    <xs:attribute name="folderPath_To" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="nTxID" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+    </xs:sequence>
+    <xs:attribute name="recursive" use="optional" />
+    <xs:attribute name="localCopy" use="optional" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultunpin">
+    <xs:attribute name="comment" use="optional" />
+    <xs:attribute name="objectPath" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment">
+    <xs:attribute name="nTxID" use="required" />
+    <xs:attribute name="nObjverID" use="required" />
+    <xs:attribute name="newComment" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory">
+    <xs:attribute name="outputfile" use="optional" />
+    <xs:attribute name="identifier" use="optional" />
+    <xs:attribute name="append" use="optional" />
+    <xs:attribute name="folderPath" use="required" />
+    <xs:attribute name="versionHistoryBeginVersion" use="required" />
+    <xs:attribute name="beginDate" use="required" />
+    <xs:attribute name="endDate" use="required" />
+    <xs:attribute name="rowLimit" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="TF.Tasks.Alerts.DeleteAlertSubscriptionTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="1" maxOccurs="1" name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
@@ -5101,6 +6448,7 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="1" maxOccurs="1" name="fixtures" type="nant:CIFactory.NAnt.Types.StringList" />
     </xs:sequence>
+    <xs:attribute name="reportfilepath" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -5284,6 +6632,79 @@
       <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
       <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
       <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+      <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+      <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+      <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+      <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+      <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+      <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+      <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+      <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+      <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+      <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+      <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+      <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+      <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+      <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+      <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+      <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+      <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+      <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+      <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+      <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+      <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+      <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+      <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+      <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+      <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+      <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+      <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+      <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+      <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+      <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+      <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+      <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+      <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+      <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+      <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+      <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+      <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+      <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+      <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+      <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+      <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+      <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+      <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+      <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+      <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+      <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+      <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+      <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+      <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+      <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+      <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+      <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+      <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+      <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+      <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+      <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+      <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+      <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+      <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+      <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+      <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+      <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+      <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+      <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+      <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+      <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+      <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+      <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+      <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+      <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+      <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+      <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+      <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
       <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
       <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
       <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -5321,6 +6742,10 @@
       <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
       <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
+      <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+      <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
+      <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+      <xs:element name="vaultwildcardarray" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray" />
       <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
       <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
       <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />
@@ -5510,6 +6935,79 @@
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
         <xs:element name="trackerreport" type="nant:Tracker.Tasks.TrackerReport" />
+        <xs:element name="vaultadd" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadd" />
+        <xs:element name="vaultaddfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitem" />
+        <xs:element name="vaultaddfortressitemcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment" />
+        <xs:element name="vaultaddrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository" />
+        <xs:element name="vaultadduser" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultadduser" />
+        <xs:element name="vaultblame" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultblame" />
+        <xs:element name="vaultbranch" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultbranch" />
+        <xs:element name="vaultcheckin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin" />
+        <xs:element name="vaultcheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckout" />
+        <xs:element name="vaultcloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcloak" />
+        <xs:element name="vaultcreatefolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultcreatefolder" />
+        <xs:element name="vaultdelete" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdelete" />
+        <xs:element name="vaultdeletefortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletefortressquery" />
+        <xs:element name="vaultdeletelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeletelabel" />
+        <xs:element name="vaultdeleterepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdeleterepository" />
+        <xs:element name="vaultdiff" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdiff" />
+        <xs:element name="vaultdownloadfortressattachment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultdownloadfortressattachment" />
+        <xs:element name="vaultfortresslistataglance" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance" />
+        <xs:element name="vaultget" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultget" />
+        <xs:element name="vaultgetfortresssavedquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetfortresssavedquery" />
+        <xs:element name="vaultgetlabeltolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetlabeltotempworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetlabeltotempworkingfolder" />
+        <xs:element name="vaultgettolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgettolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetversion" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversion" />
+        <xs:element name="vaultgetversiontolocationoutsideworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetversiontolocationoutsideworkingfolder" />
+        <xs:element name="vaultgetwildcard" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcard" />
+        <xs:element name="vaultgetwildcardtononworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetwildcardtononworkingfolder" />
+        <xs:element name="vaultgetworkingfolderassignments" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultgetworkingfolderassignments" />
+        <xs:element name="vaulthistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulthistory" />
+        <xs:element name="vaultlabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlabel" />
+        <xs:element name="vaultlistchangeset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistchangeset" />
+        <xs:element name="vaultlistcheckouts" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistcheckouts" />
+        <xs:element name="vaultlistfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfolder" />
+        <xs:element name="vaultlistfortresscategories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscategories" />
+        <xs:element name="vaultlistfortresscustomlabels" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresscustomlabels" />
+        <xs:element name="vaultlistfortressitemattachmentinfo" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemattachmentinfo" />
+        <xs:element name="vaultlistfortressitemfulldetails" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemfulldetails" />
+        <xs:element name="vaultlistfortressitemtypes" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressitemtypes" />
+        <xs:element name="vaultlistfortressmilestones" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressmilestones" />
+        <xs:element name="vaultlistfortressplatforms" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressplatforms" />
+        <xs:element name="vaultlistfortresspriorities" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresspriorities" />
+        <xs:element name="vaultlistfortressprojects" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressprojects" />
+        <xs:element name="vaultlistfortresssavedqueries" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresssavedqueries" />
+        <xs:element name="vaultlistfortressstatuses" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressstatuses" />
+        <xs:element name="vaultlistfortresstimeestimates" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortresstimeestimates" />
+        <xs:element name="vaultlistfortressusers" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistfortressusers" />
+        <xs:element name="vaultlistmyopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistmyopenfortressitems" />
+        <xs:element name="vaultlistobjectproperties" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistobjectproperties" />
+        <xs:element name="vaultlistopenfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistopenfortressitems" />
+        <xs:element name="vaultlistrepositories" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlistrepositories" />
+        <xs:element name="vaultlogout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultlogout" />
+        <xs:element name="vaultmodifyfortressitem" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifyfortressitem" />
+        <xs:element name="vaultmodifysavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmodifysavedfortressquery" />
+        <xs:element name="vaultmove" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultmove" />
+        <xs:element name="vaultobliterate" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultobliterate" />
+        <xs:element name="vaultpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpin" />
+        <xs:element name="vaultpurgesession" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultpurgesession" />
+        <xs:element name="vaultqueryfortressitems" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultqueryfortressitems" />
+        <xs:element name="vaultremoveworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultremoveworkingfolder" />
+        <xs:element name="vaultrename" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrename" />
+        <xs:element name="vaultrenamelabel" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrenamelabel" />
+        <xs:element name="vaultrunsavedfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultrunsavedfortressquery" />
+        <xs:element name="vaultsavenewfortressquery" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsavenewfortressquery" />
+        <xs:element name="vaultsetloginoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetloginoptions" />
+        <xs:element name="vaultsetrepository" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetrepository" />
+        <xs:element name="vaultsetworkingfolder" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultsetworkingfolder" />
+        <xs:element name="vaultshare" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultshare" />
+        <xs:element name="vaulttxdetail" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaulttxdetail" />
+        <xs:element name="vaultuncloak" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultuncloak" />
+        <xs:element name="vaultundocheckout" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultundocheckout" />
+        <xs:element name="vaultunpin" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultunpin" />
+        <xs:element name="vaultupdatetxcomment" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultupdatetxcomment" />
+        <xs:element name="vaultversionhistory" type="nant:NAnt.Contrib.Tasks.SourceGearVault.vaultversionhistory" />
         <xs:element name="tfsdeletealertsubscription" type="nant:TF.Tasks.Alerts.DeleteAlertSubscriptionTask" />
         <xs:element name="tfsqueryalertsubscriptions" type="nant:TF.Tasks.Alerts.QueryAlertSubscriptionsTask" />
         <xs:element name="tfsadd" type="nant:TF.Tasks.SourceControl.Tasks.TfsAddTask" />
@@ -5547,6 +7045,10 @@
         <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
+        <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
+        <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
+        <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
+        <xs:element name="vaultwildcardarray" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultWildcardArray" />
         <xs:element name="mappings" type="nant:TF.Tasks.SourceControl.Types.MappingList" />
         <xs:element name="tfsserverconnection" type="nant:TF.Tasks.SourceControl.Types.TfsServerConnection" />
         <xs:element name="versionspec" type="nant:TF.Tasks.SourceControl.Types.VersionSpecElement" />

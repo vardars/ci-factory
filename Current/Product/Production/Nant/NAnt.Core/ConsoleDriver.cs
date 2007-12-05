@@ -285,7 +285,7 @@ namespace NAnt.Core {
                 // insert empty line
                 Console.WriteLine();
                 // instruct users to report this problem
-                Console.WriteLine("Please send a bug report (including the version of NAnt you're using) to nant-developers@lists.sourceforge.net");
+                Console.WriteLine("Please send a bug report (including the version of CI Factory you're using) to ci-factory@googlegroups.com");
                 // signal fatal error
                 return 2;
             } finally {

@@ -3,6 +3,7 @@ using ObjectWizard;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC.View;
 using System.Reflection;
+using ThoughtWorks.CruiseControl.WebDashboard.IO;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.ActionDecorators
 {
@@ -26,6 +27,21 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.ActionDecorators
 			IResponse decoratedActionResponse = decoratedAction.Execute(cruiseRequest);
 			if (decoratedActionResponse is HtmlFragmentResponse)
 			{
+                ICruiseRequestFactory CruiseRequestFactory = (ICruiseRequestFactory)objectGiver.GiveObjectByType(typeof(ICruiseRequestFactory));
+                IBuildNameFormatter BuildNameFormatter = (IBuildNameFormatter)objectGiver.GiveObjectByType(typeof(IBuildNameFormatter));
+                ICruiseRequest request = CruiseRequestFactory.CreateCruiseRequest(cruiseRequest);
+
+                if (!string.IsNullOrEmpty(request.ServerName))
+                {
+                    velocityContext["serverName"] = request.ServerName;
+                    if (!string.IsNullOrEmpty(request.ProjectName))
+                    {
+                        velocityContext["projectName"] = request.ProjectName;
+                        if (!string.IsNullOrEmpty(request.BuildName))
+                            velocityContext["prettybuildName"] = BuildNameFormatter.GetPrettyBuildName(request.BuildSpecifier);
+                    }
+                }
+
 				velocityContext["breadcrumbs"] = (((TopControlsViewBuilder) objectGiver.GiveObjectByType(typeof(TopControlsViewBuilder))).Execute()).ResponseFragment;
 				velocityContext["sidebar"] = (((SideBarViewBuilder) objectGiver.GiveObjectByType(typeof(SideBarViewBuilder))).Execute()).ResponseFragment;
 				velocityContext["mainContent"] = ((HtmlFragmentResponse) decoratedActionResponse).ResponseFragment;
