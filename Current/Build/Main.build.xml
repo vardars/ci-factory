@@ -86,7 +86,9 @@
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
+               verbose="true"
+               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
@@ -137,7 +139,9 @@
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl" verbose="true"/>
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
+               verbose="true"
+               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
