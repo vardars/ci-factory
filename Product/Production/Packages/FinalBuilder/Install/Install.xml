@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="FinalBuilder.Installer" default="Install">
+
+  <include buildfile="Properties.xml" />
+
+  <target name="FinalBuilder.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="FinalBuilder.Build" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="FinalBuilder" actionName="FinalBuilder" xslFileName="Packages\FinalBuilder\FinalBuilder.Report.xsl" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+  </target>
+
+  <target name="FinalBuilder.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="FinalBuilder"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="FinalBuilder.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="FinalBuilder"/>
+  </target>
+
+  <target name="FinalBuilder.ValidateParameters">
+
+  </target>
+  
+</project>
