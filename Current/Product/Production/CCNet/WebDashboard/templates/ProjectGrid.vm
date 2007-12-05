@@ -230,7 +230,6 @@ function refresh()
           this.serverTime=new Date(serverTime)
           this.startingdate.setSeconds(this.startingdate.getSeconds() + ((this.currentTime-this.serverTime)/1000))
           var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
-          alert("here")
           this.timesup=false
           this.start(timediff)
           }
