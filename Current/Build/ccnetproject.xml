@@ -3,8 +3,8 @@
   <!ENTITY % entities SYSTEM "Entities.xml">
 
   %entities;
-
-  <!ENTITY email '<email from="CIFactory-&ProjectCodeLineName;.Build@noreply.com" mailhost="localhost" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
+  
+  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="BuildMaster" group="buildmaster" address="jay.flowers@stelligent.com"/>
         </users>

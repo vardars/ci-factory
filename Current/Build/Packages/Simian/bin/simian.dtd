@@ -23,7 +23,7 @@
 <!ATTLIST check ignoreBlocks CDATA #IMPLIED>
 <!ATTLIST check failOnDuplication (true|false) false>
 
-<!ELEMENT set (block*,summary)>
+<!ELEMENT set (block*, summary, text?)>
 <!ATTLIST set lineCount CDATA #REQUIRED>
 
 <!ELEMENT block (EMPTY)>
@@ -39,3 +39,5 @@
 <!ATTLIST summary totalRawLineCount CDATA #REQUIRED>
 <!ATTLIST summary totalSignificantLineCount CDATA #REQUIRED>
 <!ATTLIST summary processingTime CDATA #REQUIRED>
+
+<!ELEMENT text (#PCDATA)>

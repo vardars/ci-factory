@@ -36,6 +36,7 @@
       <property name="CCNetBuildTime"/>
       <property name="CCNetArtifactDirectory"/>
       <property name="CCNetWorkingDirectory"/>
+      <property name="EmailHost"/>
       <property name="ProjectName"/>
       <property name="ProjectCodeLineName"/>
       <property name="ProjectsDirectory"/>

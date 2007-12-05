@@ -36,7 +36,7 @@ This is a cumulative release which includes various major and minor fixes includ
 
 Uninstall any previously installed version of CSDiff.
 Run CSDiff42.exe from a temporary folder and follow the instructions in order to install CSDiff to the desired location. 
-(e.g., C:\Program Files\CSDiff)
+(e.g., ${environment::get-variable('ProgramFiles')}\CSDiff)
 
 
 *** To uninstall CSDiff ***
