@@ -5,4 +5,4 @@ call "%ProgramFiles%\Microsoft Visual Studio 8\VC\vcvarsall.bat"
 cd ..\..\%ProductDirectoryName%
 nant -buildfile:OpenSolution.Script.xml
 FOR /F "TOKENS=1 DELIMS=," %%A IN ('dir /b *.sln') DO SET solutionfilename=%%A
-devenv %solutionfilename%
+devenv "%solutionfilename%"

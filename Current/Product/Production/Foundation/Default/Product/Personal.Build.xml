@@ -13,6 +13,7 @@
 
   <include buildfile="Properties.Build.xml"/>
   <property name="CCNetProject" value="${ProjectName}"/>
+  <property name="Compile.ConfigName" value="Debug"/>
   
   <include buildfile="Common.Build.xml" />
 
@@ -105,7 +106,6 @@
           <fileset refid="InfoFiles" />
         </attrib>
 
-        <property name="Compile.ConfigName" value="Debug"/>
         <property name="Compile.ToCopyToBin" value="false"  />
         <property name="Compile.ToDeployZip" value="false"  />
         <property name="Compile.PublishLogFile" value="false" />

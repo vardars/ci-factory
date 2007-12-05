@@ -471,6 +471,11 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
   <target name="Upgrade.CCNet">
     <property name="CCNET.ServerPort" value=""/>
+
+    <if test="${property::exists('BuildServerPort')}">
+      <property name="CCNET.ServerPort" value="${BuildServerPort}"/>  
+    </if>
+    
 		<xmlpeek file="${BuildDirectory}\server\ccnet.exe.config"
 						property="CCNET.ServerPort"
 						xpath="/configuration/system.runtime.remoting/application/channels/channel/@port"
@@ -494,6 +499,11 @@ A brute force approach is to diff the tree, to identify which if any files need 
     </if>
 
     <property name="CCNET.ServerName" value=""/>
+
+    <if test="${property::exists('BuildServerHostName')}">
+      <property name="CCNET.ServerName" value="${BuildServerHostName}"/>
+    </if>
+    
     <xmlpeek file="${BuildDirectory}\Properties.build.xml"
 						property="CCNET.ServerName"
 						xpath="/project/property[@name='BuildServerHostName']/@value"
