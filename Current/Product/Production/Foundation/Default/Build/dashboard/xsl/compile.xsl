@@ -6,7 +6,7 @@
 
     <xsl:template match="/">
 
-      <xsl:variable name="builderror.messages" select="/cruisecontrol//buildresults//message[(contains(text(), 'error ')) or @level='Error'] | /cruisecontrol//builderror/message | /cruisecontrol//internalerror/message" />
+      <xsl:variable name="builderror.messages" select="/cruisecontrol//buildresults//message[(contains(text(), 'error ')) or @level='Error'] | /cruisecontrol//buildresults//builderror/message | /cruisecontrol//internalerror/message" />
       <xsl:variable name="builderror.count" select="count($builderror.messages)"/>
 
       <xsl:if test="$builderror.count > 0">
