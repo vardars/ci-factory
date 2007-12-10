@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PackagesInstaller" >
 
-	<property name="Preserve.CCNetDashboard" value="No" overwrite="false"/>
-	<property name="Preserve.CCNetConfig" value="No" overwrite="false"/>
 	<property name="IsUpgrade" value="false" overwrite="false"/>
 
   <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
@@ -159,7 +157,7 @@
 
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
-  <target name="Packages.AddMergeFiles" if="${Preserve.CCNetConfig == 'No'}">
+  <target name="Packages.AddMergeFiles">
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddMergeFiles.Block}
@@ -171,7 +169,7 @@
   </target>
 
   <property name="Packages.AddXslMerger.Block" value=""/>
-  <target name="Packages.AddXslMerger" if="${Preserve.CCNetConfig == 'No'}">
+  <target name="Packages.AddXslMerger" >
     <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddXslMerger.Block}
@@ -183,7 +181,7 @@
   </target>
 
   <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
-  <target name="Packages.AddbuildReportBuildPlugin" if="${Preserve.CCNetDashboard == 'No'}">
+  <target name="Packages.AddbuildReportBuildPlugin" >
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddbuildReportBuildPlugin.Block}
@@ -195,7 +193,7 @@
   </target>
 
   <property name="Packages.AddbuildPlugins.Block" value=""/>
-  <target name="Packages.AddbuildPlugins" if="${Preserve.CCNetDashboard == 'No'}">
+  <target name="Packages.AddbuildPlugins" >
     <largeproperty name="Private.Packages.DashboardConfig.Replace.To">
       <value xml="false" expand="true">
         <![CDATA[${Packages.AddbuildPlugins.Block}
@@ -483,7 +481,7 @@ static string Normalize(string input)
 
   <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
   <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>
-  <target name="Private.Packages.DashboardConfig.Replace" if="${Preserve.CCNetDashboard == 'No'}">
+  <target name="Private.Packages.DashboardConfig.Replace" >
     <replace file="${BuildDirectory}\dashboard\dashboard.config">
       <filterchain>
         <replacestring from="${Private.Packages.DashboardConfig.Replace.From}" to="${Private.Packages.DashboardConfig.Replace.To}" />
@@ -493,7 +491,7 @@ static string Normalize(string input)
 
   <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
   <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
-  <target name="Private.Packages.CCNETProjectConfig.Replace" if="${Preserve.CCNetConfig == 'No'}">
+  <target name="Private.Packages.CCNETProjectConfig.Replace" >
     <replace file="${BuildDirectory}\ccnetproject.xml">
       <filterchain>
         <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />

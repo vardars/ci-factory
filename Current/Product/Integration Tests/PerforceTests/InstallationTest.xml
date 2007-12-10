@@ -150,6 +150,8 @@
     <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" verbose="true" />
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == 'Running'}" timeout="20" pollinginterval="3"/>
     <waitfor condition="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == '2.0.0.1'}" timeout="30" pollinginterval="3"/>
+    <!--The file watcher can be slow to cuase a restart.-->
+    <sleep seconds="2"/>
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
 
     <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >

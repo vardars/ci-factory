@@ -210,16 +210,6 @@ BuildDirectory      = ${BuildDirectory}
 
 		<fail message="Upgrade canceled." if="${Answer == 'Cancel Upgrade'}"/>
 
-    <ask answer="Preserve.Some"
-				 caption="Preserve customizations?"
-				 question="Have you made customizations that you would like to preserve?"
-				 showdialog="true">
-      <options>
-        <string value="Yes"/>
-        <string value="No"/>
-      </options>
-    </ask>
-
     <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
       <arg line='/f:"${SourceRoot}\Install Scripts\Scripts\Proxy.SourceControl.xml"'/>
       <arg line='Proxy.SourceControl.CheckoutAll' />
@@ -435,38 +425,11 @@ A brute force approach is to diff the tree, to identify which if any files need 
   <property name="SourceBaseFile" value=""/>
   -->
   <target name="Upgrade.Base.File">
-    <if test="${Preserve.Some == 'No'}">
-      <property name="Preserve.Base.${string::replace(TargetBaseFile, ' ', '')}" value="No"/>
-    </if>
-    <ask answer="Preserve.Base.${string::replace(TargetBaseFile, ' ', '')}"
-     caption="Preserve customizations to ${TargetDirectoryName}\${TargetBaseFile}?"
-     question="Have you made customizations to ${TargetDirectoryName}\${TargetBaseFile} that you would like to preserve?"
-     showdialog="true" unless="${property::exists('Preserve.Base') or property::exists('Preserve.Base.' + string::replace(TargetBaseFile, ' ', ''))}">
-      <options>
-        <string value="Yes"/>
-        <string value="No"/>
-      </options>
-    </ask>
-
-    <ifthenelse test="${property::value('Preserve.Base.' + string::replace(TargetBaseFile, ' ', '')) == 'Yes'}">
-      <then>
-        <exec basedir="${Winmerge.DirectoryPath}"
-              program="winmerge"
-              failonerror="false">
-          <arg line="/x" />
-          <arg line="/e" />
-          <arg line='"${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}"' />
-          <arg line='"${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}"' />
-        </exec>
-      </then>
-      <else>
-        <copy tofile='${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}'
-              file='${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}'
-              overwrite="true">
-          <filterchain refid="Common.FilterChain" />
-        </copy>
-      </else>
-    </ifthenelse>
+    <copy tofile='${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}'
+          file='${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}'
+          overwrite="true">
+      <filterchain refid="Common.FilterChain" />
+    </copy>
   </target>
 
   <target name="Upgrade.CCNet">
@@ -556,93 +519,9 @@ A brute force approach is to diff the tree, to identify which if any files need 
     
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 
-    <if test="${Preserve.Some == 'No'}">
-      <property name="Preserve.CCNetDashboard" value="No"/>
-    </if>
-    <ask answer="Preserve.CCNetDashboard"
-				 caption="Preserve customizations to CCNet Dashboard?"
-				 question="Have you made customizations to the CCNet dashboard that you would like to preserve?"
-				 showdialog="true" unless="${property::exists('Preserve.CCNetDashboard')}">
-      <options>
-        <string value="Yes"/>
-        <string value="No"/>
-      </options>
-    </ask>
-
-    <ifthenelse test="${Preserve.CCNetDashboard == 'Yes'}">
-      <then>
-        <exec basedir="${Winmerge.DirectoryPath}"
-							program="winmerge"
-							failonerror="false">
-          <arg line="/x" />
-          <arg line="/e" />
-          <arg line='"${SourceBuildDirectory}\dashboard"' />
-          <arg line='"${BuildDirectory}\dashboard"' />
-        </exec>
-      </then>
-      <else>
-        <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
-      </else>
-    </ifthenelse>
-
-    <if test="${Preserve.Some == 'No'}">
-      <property name="Preserve.CCNetServer" value="No"/>
-    </if>
-		<ask answer="Preserve.CCNetServer"
-				 caption="Preserve customizations to CCNet Server?"
-				 question="Have you made customizations to the CCNet Server that you would like to preserve?"
-				 showdialog="true" unless="${property::exists('Preserve.CCNetServer')}">
-			<options>
-				<string value="Yes"/>
-				<string value="No"/>
-			</options>
-		</ask>
-
-		<ifthenelse test="${Preserve.CCNetServer == 'Yes'}">
-			<then>
-				<exec basedir="${Winmerge.DirectoryPath}"
-							program="winmerge"
-							failonerror="false">
-					<arg line="/x" />
-					<arg line="/e" />
-					<arg line='"${SourceBuildDirectory}\server"' />
-					<arg line='"${BuildDirectory}\server"' />
-				</exec>
-			</then>
-			<else>
-				<call target="Private.CCNET.InstallBuildDirectoryFiles"/>
-			</else>
-		</ifthenelse>
-
-    <if test="${Preserve.Some == 'No'}">
-      <property name="Preserve.CCNetConfig" value="No"/>
-    </if>
-		<ask answer="Preserve.CCNetConfig"
-				 caption="Preserve customizations to CCNet Config?"
-				 question="Have you made customizations to the CCNet Config that you would like to preserve?"
-				 showdialog="true" unless="${property::exists('Preserve.CCNetConfig')}">
-			<options>
-				<string value="Yes"/>
-				<string value="No"/>
-			</options>
-		</ask>
-
-		<ifthenelse test="${Preserve.CCNetConfig == 'Yes'}">
-			<then>
-				<exec basedir="${Winmerge.DirectoryPath}"
-							program="winmerge"
-							failonerror="false">
-					<arg line="/x" />
-					<arg line="/e" />
-					<arg line='"${SourceBuildDirectory}\ccnetproject.xml"' />
-					<arg line='"${BuildDirectory}\ccnetproject.xml"' />
-				</exec>
-			</then>
-			<else>
-				<call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
-			</else>
-		</ifthenelse>
-		
+    <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
+		<call target="Private.CCNET.InstallBuildDirectoryFiles"/>
+    <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
 	</target>
 	
 	<target name="Upgrade.Packages">
