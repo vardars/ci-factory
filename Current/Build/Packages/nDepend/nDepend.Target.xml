@@ -26,18 +26,12 @@
       <exec
 			  program="${path::get-short-path(nDepend.Console)}"
 			  commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
+				verbose="true"
 		  />
 
-      <style in="${nDepend.BuildFolder}\NDependMain.xml"
-             out="${Common.ArtifactDirectoryPath}\NDependReport.html"
-             style="${PackagesDirectory}\nDepend\bin\CruiseControl.NET\ndependreport-ccnet.v2.xsl">
-        <parameters>
-          <parameter name="ArtifactUrl" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}"/>
-        </parameters>
-      </style>
-
-      <copy todir="${Common.ArtifactDirectoryPath}">
-        <fileset basedir="${nDepend.BuildFolder}">
+      <copy todir="${Common.ArtifactDirectoryPath}" verbose="true">
+        <fileset basedir="${nDepend.BuildFolder}\NDependOut">
+					<include name="NDependReport.html" />
           <include name="*.png"/>
         </fileset>
       </copy>
