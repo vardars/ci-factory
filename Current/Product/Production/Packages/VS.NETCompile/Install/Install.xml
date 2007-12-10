@@ -46,6 +46,16 @@
       <value expand="true"><![CDATA[<file>&BuildDirectory;\CompileLogs\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
+
+		<replace file="${ProductDirectory}\OpenSolution.bat">
+			<filterchain>
+				<regexreplace 
+					replacment="Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" 
+					pattern="Microsoft Visual Studio 8\\VC\\vcvarsall\.bat" 
+					lines="1" 
+				/>
+			</filterchain>
+		</replace>
   </target>
 
   <target name="VS.NETCompile.SetAsCurrentPackage">
