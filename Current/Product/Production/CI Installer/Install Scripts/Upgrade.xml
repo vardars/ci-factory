@@ -3,7 +3,6 @@
 
 	<property name="IsUpgrade" value="true" readonly="true"/>
   <property name="Install.Quiet" value="false" overwrite="false"/>
-	<property name="FixBadRefPath" value="Yes" overwrite="false"/>
 
 	<property name="ProjectsDirectory" value="c:\Projects" overwrite="false"/>
 
