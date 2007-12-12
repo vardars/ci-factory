@@ -289,7 +289,7 @@ If yes the script will try to fix the references in the new branch.]]>
       </options>
     </ask>
 
-    <if test="${FixBadRefPath == 'No'}">
+    <if test="${HasBadRefPath and FixBadRefPath == 'No'}">
       <fail message="${BadRefPathFailureMessage}"/>
     </if>
   </target>
