@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Target" >
+
+	<include buildfile="SourceControl.Properties.xml" />
+
+	<target name="SourceControl.CleanGetFromFileSpecThirdPartyDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
+			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
+		</if>
+
+		<echo message="Getting ${ThirdPartyDirectory} from FileSpec ${SourceControl.GetFromFileSpec}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.GetFromFileSpec"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetFromFileSpecThirdPartyDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
+			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
+		</if>
+
+		<echo message="Getting ${ThirdPartyDirectory} from FileSpec ${SourceControl.GetFromFileSpec}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.GetFromFileSpec"/>
+
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.CleanGetFromLabel"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.FileSpec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfThirdPartyDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ThirdPartyDirectory}"/>
+		<property name="SourceControl.Update.FileSpec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<target name="SourceControl.CleanGetOfProductDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.FileSpec" value=""/>
+		<property name="SourceControl.Update.All" value="true"/>
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfProductDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.FileSpec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<target name="SourceControl.CleanGetFromFileSpecProductDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
+			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
+		</if>
+
+		<echo message="Getting ${ProductDirectory} from FileSpec ${SourceControl.GetFromFileSpec}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.GetFromFileSpec"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetFromFileSpecProductDirectory" >
+		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
+			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
+		</if>
+
+		<echo message="Getting ${ProductDirectory} from FileSpec ${SourceControl.GetFromFileSpec}" />
+
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="false"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.GetFromFileSpec"/>
+
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
+  <property name="SourceControl.GetFromLabel" value=""/>
+  -->
+
+	<target name="SourceControl.CleanGetFromLabelOfProductDirectory">
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProductDirectory}"/>
+		<property name="SourceControl.Update.All" value="true"/>
+
+		<property name="SourceControl.Update.FileSpec" value="SourceControl.CleanGetFromLabel"/>
+
+		<call target="Private.SourceControl.CleanUpdate"/>
+	</target>
+
+	<target name="SourceControl.GetOfCodeLineDirectory" >
+		<property name="Private.SourceControl.Update.LocalPath" value="${ProjectCodeLineDirectory}"/>
+		<property name="SourceControl.Update.FileSpec" value=""/>
+		<property name="SourceControl.Update.All" value="false"/>
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+
+	<target name="Private.SourceControl.CleanUpdate">
+		<property name="Private.SourceControl.DeleteDirectory.Directory" value="${Private.SourceControl.Update.LocalPath}"/>
+		<call target="Private.SourceControl.DeleteDirectory"/>
+
+		<call target="Private.SourceControl.Update"/>
+	</target>
+
+	<!--
+  <property name="Private.SourceControl.Update.LocalPath" value=""/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+	<property name="SourceControl.Update.FileSpec" value=""/>
+	 <property name="SourceControl.Update.All" value="true"/>
+	 -->
+
+	<target name="Private.SourceControl.Update">
+		<call target="Private.SourceControl.EnsureWorkspace"/>
+
+		<ifnot test="${path::has-extension(Private.SourceControl.Update.LocalPath)}">
+			<property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
+		</ifnot>
+    
+    <p4sync client="${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(Private.SourceControl.Update.LocalPath)}"'
+						label="${SourceControl.Update.FileSpec}"
+						force="${SourceControl.Update.All}"
+						verbose="true"/>
+	</target>
+
+  <target name="Private.SourceControl.IteractiveUpdate">
+    <property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce" />
+    <setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
+    <exec program="p4" commandline="login -s" outputproperty="Perforce.RawTicketStatus" />
+
+    <regex input="${Perforce.RawTicketStatus}" pattern="^User\s+.*?\s+ticket\s+(?'Valid'expires)\s+in\s+\d+\s+hours\s+\d+\s+minutes\." failonerror="false"/>
+    <ifthenelse test="${property::exists('Valid')}">
+      <then>
+        <property name="Valid" value="True"/>
+      </then>
+      <else>
+        <largeproperty name="NoPasswordNeededMessage">
+          <value>
+            <![CDATA['login' not necessary, no password set for this user.
+]]>
+          </value>
+        </largeproperty>
+        <ifthenelse test="${Perforce.RawTicketStatus == NoPasswordNeededMessage}">
+          <then>
+            <property name="Valid" value="True"/>
+          </then>
+          <else>
+            <property name="Valid" value="False"/>
+          </else>
+        </ifthenelse>
+      </else>
+    </ifthenelse>
+    <echo message="${Valid}"/>
+    <ifnot test="${Valid}">
+      <ask
+        answer="Perforce.Password"
+        caption="What is your password?"
+        dialogmode="FreeText"
+        question="What is your Perforce password?"
+        showdialog="true"
+      />
+      <exec program="p4" commandline="login" stdin="${Perforce.Password}" />
+    </ifnot>
+    
+  </target>
+
+
+	<!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+	<target name="SourceControl.CheckOut">
+		<call target="Private.SourceControl.EnsureWorkspace"/>
+
+    <ifnot test="${path::has-extension(SourceControl.CheckOut.File)}">
+      <property name="Private.SourceControl.Update.LocalPath" value="${SourceControl.CheckOut.File}/..."/>
+    </ifnot>
+
+		<p4edit changelist="${SourceControl.CheckOut.File}"
+						client="${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(SourceControl.CheckOut.File)}"' />
+	</target>
+
+	<!--
+  The following properties should be specified in the calling script.
+  
+  <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+  -->
+	<target name="SourceControl.CheckIn">
+		<call target="Private.SourceControl.EnsureWorkspace"/>
+
+    <ifnot test="${path::has-extension(SourceControl.CheckIn.File)}">
+      <property name="Private.SourceControl.Update.LocalPath" value="${SourceControl.CheckIn.File}/..."/>
+    </ifnot>
+    
+		<p4submit changelist="${SourceControl.CheckIn.File}"
+							client="${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(SourceControl.CheckIn.File)}"'/>
+	</target>
+
+	<!-- Needed for Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value=""/>
+  -->
+	<!-- Returned by Private.SourceControl.ConvertLocalPathToPath
+  <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value=""/>
+  -->
+	<target name="Private.SourceControl.ConvertLocalPathToPath">
+		<property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${sourcecontrol::convertlocaltoserver(Private.SourceControl.ConvertLocalPathToPath.LocalPath)}"/>
+	</target>
+
+	<!-- Needed for Private.SourceControl.DeleteDirectory
+  <property name="Private.SourceControl.DeleteDirectory.Directory" value=""/>
+  -->
+
+	<target name="Private.SourceControl.DeleteDirectory">
+		<if test="${directory::exists(Private.SourceControl.DeleteDirectory.Directory)}" >
+			<attrib readonly="false">
+				<fileset>
+					<include name="${Private.SourceControl.DeleteDirectory.Directory}\*" />
+				</fileset>
+			</attrib>
+
+			<trycatch>
+				<try>
+					<delete dir="${Private.SourceControl.DeleteDirectory.Directory}"/>
+				</try>
+				<catch>
+					<exec program="cmd" commandline='/C "rmdir /S /Q "${Private.SourceControl.DeleteDirectory.Directory}""' />
+				</catch>
+			</trycatch>
+		</if>
+	</target>
+
+	<script language="C#" prefix="sourcecontrol">
+		<code>
+			<![CDATA[                 
+					
+          [Function("convertlocaltoserver")]
+					public string ConvertLocalToServer(string local)
+          {
+            String server = local.Replace(this.Project.Properties["ProjectsDirectory"], "");
+            server = server.Replace(@"\", @"/");
+            return String.Format(@"{0}{1}", this.Project.Properties["Perforce.ServerPathPrefix"], server);
+          }
+          
+			]]>
+		</code>
+	</script>
+
+	<target name="Private.SourceControl.EnsureWorkspace">
+		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+    
+    <if test="${SourceControl.Update.Interactive}">
+      <call target="Private.SourceControl.IteractiveUpdate"/>
+    </if>
+    
+		<ifnot test="${perforce::workspace-exists(Perforce.WorkspaceName, Perforce.ServerName + ':' + Perforce.ServerPort)}">
+			<p4client clientname="${Perforce.WorkspaceName}"
+						root="${ProjectCodeLineDirectory}"
+						port="${Perforce.ServerName}:${Perforce.ServerPort}"
+						view="${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."
+						clientview="//${Perforce.WorkspaceName}/..."/>
+		</ifnot>
+    
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="${Perforce.WorkspaceName}"/>
+	</target>
+
+  <!--
+    <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+  -->
+  <target name='SourceControl.Rename'>
+    <call target="Private.SourceControl.EnsureWorkspace"/>
+
+    <property name="Private.SourceControl.Rename.ChangeListName" value="Rename"/>
+    <property name="Private.SourceControl.Rename.ChangeListNumber" value="${perforce::get-changelist-number(Private.SourceControl.Rename.ChangeListName)}"/>
+
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line='integrate'/>
+      <arg line='-c ${Private.SourceControl.Rename.ChangeListNumber}' />
+      <arg line='"${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Source)}" "${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Target)}"'/>
+    </exec>
+
+    <p4delete client='${Perforce.WorkspaceName}' changelist='${Private.SourceControl.Rename.ChangeListName}'
+              view='"${sourcecontrol::convertlocaltoserver(SourceControl.Rename.Source)}"' />
+
+    <p4submit changelist='${Private.SourceControl.Rename.ChangeListName}'
+							client="${Perforce.WorkspaceName}"/>
+  </target>
+
+	<target name="SourceControl.SetUp">
+
+	</target>
+
+	<target name="SourceControl.TearDown">
+
+	</target>
+
+	<target name="SourceControl.Repository.Create">
+		<fail message="Not yet implemented!"/>
+	</target>
+
+	<target name="SourceControl.Repository.Load">
+		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+		<p4client clientname="Temp-${Perforce.WorkspaceName}"
+							root="${ProjectsDirectory}"
+							port="${Perforce.ServerName}:${Perforce.ServerPort}"
+							view="${Perforce.ServerPathPrefix}/..."
+							clientview="//Temp-${Perforce.WorkspaceName}/..."/>
+
+		<foreach item="File" property="File">
+			<in>
+				<items>
+					<include name="${ProjectCodeLineDirectory}\**\*"/>
+					<exclude name="${BuildDirectory}\server\*.state"/>
+				</items>
+			</in>
+			<do>
+				<p4add changelist="Initial Load"
+							 file='"${File}"'
+							 client="Temp-${Perforce.WorkspaceName}"
+               verbose="true"/>
+			</do>
+		</foreach>
+
+		<p4submit changelist="Initial Load" client="Temp-${Perforce.WorkspaceName}" />
+
+		<p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
+
+    <call target="Private.SourceControl.EnsureWorkspace" />
+    <call target="SourceControl.GetOfCodeLineDirectory"/>
+	</target>
+
+	<target name="SourceControl.Bindings.Create">
+		<fail message="Not yet implemented!"/>
+	</target>
+
+  <!--
+  Paremeters for target:
+  <property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
+  -->
+  <target name="SourceControl.StartCreateBranch">
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+    <p4client clientname="Temp-${Perforce.WorkspaceName}"
+							root="${ProjectRootDirectory}"
+							port="${Perforce.ServerName}:${Perforce.ServerPort}"
+							view="${Perforce.ServerPathPrefix}/${ProjectName}/..."
+							clientview="//Temp-${Perforce.WorkspaceName}/..."/>
+
+    <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" client="Temp-${Perforce.WorkspaceName}"/>
+
+    <p4sync client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."'
+            failonerror='false'
+						verbose="true"/>
+
+    <property name="ProjectBranchDirectory" value="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}"/>
+    <mkdir dir="${ProjectBranchDirectory}" unless="${directory::exists(ProjectBranchDirectory)}"/>
+    <copy todir="${ProjectBranchDirectory}">
+      <fileset basedir="${ProjectCodeLineDirectory}">
+        <include name="**\*"/>
+        <exclude name="${BuildDirectoryName}\${ArtifactRootDirectoryName}\**\*"/>
+        <exclude name="${BuildDirectoryName}\server\*.log"/>
+        <exclude name="${BuildDirectoryName}\server\*.state"/>
+        <exclude name="${BuildDirectoryName}\server\${ProjectName}*"/>
+      </fileset>
+    </copy>
+
+
+    <largeproperty name="P4Form">
+      <value expand="true" xml="false">
+        <![CDATA[Branch: ${ProjectName}-${SourceControl.CreateBranch.BranchName}
+
+Owner:  Jay
+
+Description: Created by CI Factory script.
+
+Options:        unlocked
+
+View:
+  "${Perforce.ServerPathPrefix}/${ProjectName}/${ProjectCodeLineName}/..." "${Perforce.ServerPathPrefix}/${ProjectName}/${SourceControl.CreateBranch.BranchName}/..."
+]]>
+      </value>
+    </largeproperty>
+
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" stdin="${P4Form}" verbose="true">
+      <arg line='branch'/>
+      <arg line='-i' />
+    </exec>
+    
+    <exec program="p4" workingdir="${ProjectCodeLineDirectory}" verbose="true">
+      <arg line='integrate'/>
+      <arg line='-b ${ProjectName}-${SourceControl.CreateBranch.BranchName}'/>
+    </exec>
+
+    <p4submit changelist="default"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."'/>
+
+    <p4edit changelist="SupportBranch"
+						client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."' />
+
+    <p4edit changelist="CreateBranch"
+						client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."' />
+  </target>
+
+  <target name="SourceControl.FinishCreateBranch">
+    <p4submit changelist="SupportBranch" revertunchanged="true"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectCodeLineDirectory)}/..."'/>
+    
+    <p4submit changelist="CreateBranch" revertunchanged="true"
+							client="Temp-${Perforce.WorkspaceName}"
+						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."'/>
+
+    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
+
+    <nant
+      buildfile="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\Main.Build.xml"
+      inheritall="false"
+      inheritrefs="false"
+      target="SourceControl.GetOfCodeLineDirectory"
+    >
+      <properties>
+        <property name="CCNetBuildDate" value="2006-09-12"/>
+        <property name="CCNetBuildTime" value="11:10:00"/>
+        <property name="CCNetLabel" value="Fake"/>
+      </properties>
+    </nant>
+  </target>
+</project>
