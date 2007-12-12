@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VSTSVersionControl.Installer" default="VSTSVersionControl.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="VSTSVersionControl.Install">
+    <largeproperty name="Packages.AddCleanUpActions.Block">
+      <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+      <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCleanUpActions"/>
+
+    <copy todir="${BuildDirectory}\server">
+      <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${BuildDirectory}\dashboard\bin">
+      <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </copy>
+
+    <zip append="true" zipfile="${BuildDirectory}\dashboard\cctray\cctray.zip" >
+      <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
+        <include name="*.*"/>
+      </fileset>
+    </zip>
+
+    <xmlpeek
+      file="${BuildDirectory}\ccnetproject.xml"
+      xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/triggers/projectTriggerFilter/*[not(self::trigger)]"
+      property="SourceControl.BuildUpdateTrigger.ToSave"
+      outerxml="true"
+    />
+
+    <xmlpoke pokemode="Replace"
+             file="${BuildDirectory}\ccnetproject.xml"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/triggers[projectTriggerFilter/trigger[@type='intervalTrigger']]"
+             value="${SourceControl.BuildUpdateTrigger}${SourceControl.BuildUpdateTrigger.ToSave}" />
+
+    <xmlpoke file="${BuildDirectory}\ccnetproject.xml"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/modificationDelaySeconds"
+             value="0" />
+
+
+    <xmlpeek
+      file="${BuildDirectory}\ccnetproject.xml"
+      xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers/projectTriggerFilter/*[not(self::trigger)]"
+      property="SourceControl.MainBuildTrigger.ToSave"
+      outerxml="true"
+    />
+
+    <xmlpoke pokemode="Replace"
+             file="${BuildDirectory}\ccnetproject.xml"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers[projectTriggerFilter/trigger[@type='intervalTrigger']]"
+             value="${SourceControl.MainBuildTrigger}${SourceControl.MainBuildTrigger.ToSave}" />
+
+    <xmlpoke file="${BuildDirectory}\ccnetproject.xml"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/modificationDelaySeconds"
+             value="0" />
+  </target> 
+
+  <target name="VSTSVersionControl.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VSTSVersionControl"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+  </target>
+
+  <target name="VSTSVersionControl.ValidateParameters">
+    <fail unless="${property::exists('TFS.ServerUrl')}" message="Please set the property TFS.ServerUrl"/>
+  </target>
+
+</project>
