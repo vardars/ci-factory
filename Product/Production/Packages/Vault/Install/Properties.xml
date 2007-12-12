@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Installer.Properties" >
+
+  <property name="Vault.Username" value="vaultusername" overwrite="false" />
+  <property name="Vault.Password" value="vaultpassword" overwrite="false" />
+  <property name="Vault.Host" value="vaultserver" overwrite="false" />	
+  <property name="Vault.URL" value="http://vaultserver/VaultService" overwrite="false" />
+  <property name="Vault.Repository" value="Main" overwrite="false" />
+  <property name="Vault.Repository.BasePath" value="$/${ProjectName}" overwrite="false" />
+  
+	 <largeproperty name="SourceControl.BuildUpdateBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol  type="vault" applyLabel="false" autoGetSource="true" >
+        <workingDirectory>&BuildDirectory;</workingDirectory>
+        <username>${Vault.Username}</username>
+        <password>${Vault.Password}</password>        
+        <host>${Vault.Host}</host>
+        <folder>${Vault.Repository.BasePath}/&ProjectCodeLineName;/&BuildDirectoryName;</folder>
+        <repository>${Vault.Repository}</repository>
+      </sourcecontrol>]]></value>
+  </largeproperty>
+	
+	 <largeproperty name="SourceControl.MainBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="filtered">
+        <sourceControlProvider  type="vault" applyLabel="true" autoGetSource="false" >
+         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+          <username>${Vault.Username}</username>
+          <password>${Vault.Password}</password>
+          <host>${Vault.Host}</host>
+          <folder>${Vault.Repository.BasePath}/&ProjectCodeLineName;</folder>
+          <repository>${Vault.Repository}</repository>
+        </sourceControlProvider>
+        <exclusionFilters>
+          <pathFilter>
+            <pattern>**/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&BuildDirectoryName;/*.*</pattern>
+          </pathFilter>
+          <pathFilter>
+            <pattern>**/&BuildDirectoryName;/**/*.*</pattern>
+          </pathFilter>
+        </exclusionFilters>
+      </sourcecontrol>]]></value>
+  </largeproperty>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Username%', Vault.Username)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Password%', Vault.Password)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Host%', Vault.Host)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.URL%', Vault.URL)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Repository%', Vault.Repository)}" />
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Vault.Repository.BasePath%', Vault.Repository.BasePath)}" />
+	
+</project>
