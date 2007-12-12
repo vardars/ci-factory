@@ -44,7 +44,7 @@
       <trigger type="vstsbychangesetTrigger"
           port="${TFS.Listener.Port}"
           statefilepath="&BuildDirectory;\server\${ProjectName}.tfs.state.xml"
-          project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;"
+          project="${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;"
           server="${TFS.ServerUrl}"
           workspace="${TFS.WorkspaceNameBase}-{0}"
           />]]>
@@ -60,28 +60,28 @@
         autoGetSource="false"
         port="${TFS.Listener.Port}"
         statefilepath="&BuildDirectory;\server\${ProjectName}.tfs.state.xml"
-        project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;
+        project="${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;"
         server="${TFS.ServerUrl}"
         workspace="${TFS.WorkspaceNameBase}-{0}"
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
+          <pattern>${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]></value>
@@ -95,7 +95,7 @@
       autoGetSource="true"
       port="${TFS.BuildScripts.Listener.Port}"
       statefilepath="&BuildDirectory;\server\${ProjectName}BuildScripts.tfs.state.xml"
-      project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
+      project="${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
       server="${TFS.ServerUrl}"
       workingDirectory="&BuildDirectory;"
       workspace="${TFS.WorkspaceNameBase}-{0}"
@@ -107,7 +107,7 @@
       <![CDATA[<trigger type="vstsbychangesetTrigger"
           port="${TFS.BuildScripts.Listener.Port}"
           statefilepath="&BuildDirectory;\server\${ProjectName}BuildScripts.tfs.state.xml"
-          project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
+          project="${TFS.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
           server="${TFS.ServerUrl}"
           workingDirectory="${BuildDirectory}"
           />]]>
