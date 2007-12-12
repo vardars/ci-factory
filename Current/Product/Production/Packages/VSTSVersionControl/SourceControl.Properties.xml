@@ -3,9 +3,11 @@
 
   <property name="TFS.Info" value="tfsinfo" overwrite="false"/>
   %TFS.ServerConnection%
+  
+  <property name="TFS.ServerPathPrefix" value="%TFS.ServerPathPrefix%" overwrite="false" />
 
   <property name="TFS.WorkspaceName" value="%TFS.WorkspaceNameBase%-${environment::get-machine-name()}"/>
-  <property name="TFS.LabelScope" value="$/${ProjectName}/${ProjectCodeLineName}"/>
+  <property name="TFS.LabelScope" value="${TFS.ServerPathPrefix}${ProjectName}/${ProjectCodeLineName}"/>
 	
 	<property name="SourceControl.Update.ReplaceWritableFiles" value="True" overwrite="false"/>
 	<property name="SourceControl.Update.Interactive" value="false" overwrite="false"/>

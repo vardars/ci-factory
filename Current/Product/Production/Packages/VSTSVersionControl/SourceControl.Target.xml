@@ -16,16 +16,7 @@
   <loadtasks assembly="${TFS.Task}" />
 
   <include buildfile="SourceControl.Properties.xml" />
-
-  <property name="Private.TFS.CacheFile" value="CacheFile.xml"/>
-  <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>
-
-  <include buildfile="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}" if="${file::exists(Private.TFS.ReportDirectory + '\' + Private.TFS.CacheFile)}" failonerror="false"/>
-  <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false" failonerror="false"/>
-
-  <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}" failonerror="false"/>
-  <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}" failonerror="false"/>
-
+  
 	<target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
@@ -308,10 +299,7 @@
   <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value=""/>
   -->
   <target name="Private.SourceControl.ConvertLocalPathToPath">
-    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.LocalPath, ProjectsDirectory, '')}"/>
-    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '\', '/')}"/>
-    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="$/${Private.SourceControl.ConvertLocalPathToPath.Path}"/>
-    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${string::replace(Private.SourceControl.ConvertLocalPathToPath.Path, '//', '/')}"/>
+    <property name="Private.SourceControl.ConvertLocalPathToPath.Path" value="${sourcecontrol::convertlocaltoserver(Private.SourceControl.ConvertLocalPathToPath.LocalPath)}"/>
   </target>
   
   <!-- Needed for Private.SourceControl.DeleteDirectory
@@ -346,8 +334,7 @@
           {
             String server = local.Replace(this.Project.Properties["ProjectsDirectory"], "");
             server = server.Replace(@"\", @"/");
-            server = String.Format(@"$/{0}", server);
-            return server.Replace(@"//", @"/");
+            return String.Format(@"{0}{1}", this.Project.Properties["TFS.ServerPathPrefix"], server);
           }
           
 			]]>
@@ -377,6 +364,15 @@
   </target>
 
   <target name="SourceControl.SetUp">
+    <property name="Private.TFS.CacheFile" value="CacheFile.xml"/>
+    <property name="Private.TFS.ReportDirectory" value="${BuildDirectory}\TFS" overwrite="false"/>
+
+    <include buildfile="${Private.TFS.ReportDirectory}\${Private.TFS.CacheFile}" if="${file::exists(Private.TFS.ReportDirectory + '\' + Private.TFS.CacheFile)}" failonerror="false"/>
+    <property name="TFS.LastBuildTime" value="${CCNetBuildDate} ${CCNetBuildTime}" overwrite="false"/>
+
+    <regex pattern="(?'StaticLabelPart'.*\.)(?'BuildNumber'\d+)$" input="${CCNetLabel}"/>
+    <property name="TFS.LastBuildLabel" value="${StaticLabelPart}${int::parse(BuildNumber) - 1}"/>
+
     <mkdir dir="${Private.TFS.ReportDirectory}" unless="${directory::exists(Private.TFS.ReportDirectory)}" />
     <delete>
       <fileset>
@@ -395,7 +391,42 @@
   </target>
 
   <target name="SourceControl.Repository.Load">
-    <echo message="Not Implemented! You will have to do it yourself."/>
+    <property name="TFS.Workspace.Found" value="false"/>
+    <trycatch>
+      <try>
+        <property name="TFS.WorkspaceName" value="${tfs-vc::get-workspace-name(TFS.Info, ProjectRootDirectory)}"/>
+        <property name="TFS.Workspace.Found" value="true"/>
+      </try>
+      <catch/>
+    </trycatch>
+
+    <ifnot test="${TFS.Workspace.Found}">
+      <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By CI Factory project ${ProjectName}" >
+        <tfsserverconnection refid="${TFS.Info}"/>
+        <mappings>
+          <mapping localitem="${ProjectRootDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectRootDirectory)}"/>
+        </mappings>
+      </tfsmapworkspace>
+    </ifnot>
+
+    <trycatch>
+      <try>
+        <tfsadd localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" >
+          <tfsserverconnection refid="${TFS.Info}"/>
+        </tfsadd>
+        <tfscheckin localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" comment="Initial Load by CI Factory">
+          <tfsserverconnection refid="${TFS.Info}"/>
+        </tfscheckin>
+      </try>
+      <finally>
+        <tfsmapworkspace deletemappings="true"  workspacename="${TFS.WorkspaceName}" comment="Created By CI Factory project ${ProjectName}" >
+          <tfsserverconnection refid="${TFS.Info}"/>
+          <mappings>
+            <mapping localitem="${ProjectRootDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectRootDirectory)}"/>
+          </mappings>
+        </tfsmapworkspace>
+      </finally>
+    </trycatch>
   </target>
   
 </project>

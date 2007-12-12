@@ -27,10 +27,33 @@ namespace TF.Tasks.SourceControl.Tasks
         private string _WorkspaceName;
         private string _Comment;
         private MappingList _Mappings;
+        private bool _Delete;
+        private bool _DeleteMappings;
 
         #endregion
 
         #region Properties
+
+        [TaskAttribute("deletemappings"), BooleanValidator()]
+        public bool DeleteMappings
+        {
+            get { return _DeleteMappings; }
+            set
+            {
+                _DeleteMappings = value;
+            }
+        }
+        
+        [TaskAttribute("delete"), BooleanValidator()]
+        public bool Delete
+        {
+            get { return _Delete; }
+            set
+            {
+                _Delete = value;
+            }
+        }
+        
 
         [BuildElement("tfsserverconnection", Required = true)]
         public TfsServerConnection ServerConnection
@@ -91,9 +114,24 @@ namespace TF.Tasks.SourceControl.Tasks
         protected override void ExecuteTask()
         {
             Workspace[] Workspaces = this.ServerConnection.SourceControl.QueryWorkspaces(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, Workstation.Current.Name);
-            if (Workspaces.Length == 0)
+            if (Workspaces.Length == 0 && !(this.Delete || this.DeleteMappings))
             {
                 this.ServerConnection.SourceControl.CreateWorkspace(this.WorkspaceName, this.ServerConnection.SourceControl.AuthenticatedUser, this.Comment, this.Mappings.GetMappings());
+            }
+            else if (this.Delete)
+            {
+                WorkspaceAssistant Helper = new WorkspaceAssistant();
+                Workspace MyWorkspace = Helper.GetWorkspaceByName(this.WorkspaceName, this.ServerConnection.SourceControl);
+                MyWorkspace.Delete();
+            }
+            else if (this.DeleteMappings)
+            {
+                WorkspaceAssistant Helper = new WorkspaceAssistant();
+                Workspace MyWorkspace = Helper.GetWorkspaceByName(this.WorkspaceName, this.ServerConnection.SourceControl);
+                foreach (WorkingFolder Map in this.Mappings.GetMappings())
+                {
+                    MyWorkspace.DeleteMapping(Map);
+                }
             }
             else
             {

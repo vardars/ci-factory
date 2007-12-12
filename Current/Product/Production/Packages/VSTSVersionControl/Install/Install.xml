@@ -30,12 +30,12 @@
 
     <xmlpoke pokemode="Replace" 
              file="${BuildDirectory}\ccnetproject.xml" 
-             xpath="/cruisecontrol/project[@name = '${ProjectName} Build Scripts']/triggers/intervalTrigger" 
+             xpath="/cruisecontrol/project[@name = '${ProjectName} Build Scripts']/triggers/projectTriggerFilter/intervalTrigger" 
              value="${SourceControl.BuildUpdateTrigger}" />
 
     <xmlpoke pokemode="Replace"
              file="${BuildDirectory}\ccnetproject.xml"
-             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers/intervalTrigger"
+             xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers/projectTriggerFilter/intervalTrigger"
              value="${SourceControl.MainBuildTrigger}" />
   </target>
 
