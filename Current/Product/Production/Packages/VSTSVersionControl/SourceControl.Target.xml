@@ -400,33 +400,19 @@
       <catch/>
     </trycatch>
 
-    <ifnot test="${TFS.Workspace.Found}">
-      <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By CI Factory project ${ProjectName}" >
-        <tfsserverconnection refid="${TFS.Info}"/>
-        <mappings>
-          <mapping localitem="${ProjectRootDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectRootDirectory)}"/>
-        </mappings>
-      </tfsmapworkspace>
-    </ifnot>
+    <tfsmapworkspace workspacename="${TFS.WorkspaceName}" comment="Created By CI Factory project ${ProjectName}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+      <mappings>
+        <mapping localitem="${ProjectRootDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectRootDirectory)}"/>
+      </mappings>
+    </tfsmapworkspace>
 
-    <trycatch>
-      <try>
-        <tfsadd localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" >
-          <tfsserverconnection refid="${TFS.Info}"/>
-        </tfsadd>
-        <tfscheckin localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" comment="Initial Load by CI Factory">
-          <tfsserverconnection refid="${TFS.Info}"/>
-        </tfscheckin>
-      </try>
-      <finally>
-        <tfsmapworkspace deletemappings="true"  workspacename="${TFS.WorkspaceName}" comment="Created By CI Factory project ${ProjectName}" >
-          <tfsserverconnection refid="${TFS.Info}"/>
-          <mappings>
-            <mapping localitem="${ProjectRootDirectory}" serveritem="${sourcecontrol::convertlocaltoserver(ProjectRootDirectory)}"/>
-          </mappings>
-        </tfsmapworkspace>
-      </finally>
-    </trycatch>
+    <tfsadd localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" >
+      <tfsserverconnection refid="${TFS.Info}"/>
+    </tfsadd>
+    <tfscheckin localitem="${ProjectRootDirectory}" recursive="true" workspacename="${TFS.WorkspaceName}" comment="Initial Load by CI Factory">
+      <tfsserverconnection refid="${TFS.Info}"/>
+    </tfscheckin>
   </target>
   
 </project>
