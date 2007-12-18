@@ -35,5 +35,5 @@ using System.Reflection;
 [assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile(@"..\NAnt.key")]
 [assembly: AssemblyKeyName("")]
-[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.2")]
 
