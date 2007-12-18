@@ -6,8 +6,8 @@
 	<property name="CCNET.LabelPrefix" value="1.0.0."/>
 	<property name="InitialVersion" value="1.0.0.0"/>
 
-  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
-  <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
+  <property name="ProjectsDirectory"        value="c:\Projects"/>
+  <property name="ProjectCodeLineName"      value="Current"/>
   <property name="ProductDirectoryName"     value="Product"/>
   <property name="ThirdPartyDirectoryName"  value="Third Party"/>
   <property name="ProductionDirectoryName"  value="Production"/>

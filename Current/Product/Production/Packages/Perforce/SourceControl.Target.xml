@@ -393,12 +393,13 @@
       </fileset>
     </copy>
 
+    <p4info host="Perforce.Host" client="Perforce.Client" root="Perforce.Root"  user="Perforce.User"/>
 
     <largeproperty name="P4Form">
       <value expand="true" xml="false">
         <![CDATA[Branch: ${ProjectName}-${SourceControl.CreateBranch.BranchName}
 
-Owner:  Jay
+Owner:  ${Perforce.User}
 
 Description: Created by CI Factory script.
 

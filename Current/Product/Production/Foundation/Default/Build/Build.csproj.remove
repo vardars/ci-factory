@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<!DOCTYPE Project [
+  <!ENTITY % entities SYSTEM "Entities.xml">
+
+  %entities;
+
+]>
+  <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -23,28 +29,28 @@
     <None Include="dashboard\cruisecontrol.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Product\Compile.Environment.xml">
+    <None Include="..\&ProductDirectoryName;\Compile.Environment.xml">
       <Link>Personal.Build\Compile.Environment.xml</Link>
     </None>
-    <None Include="..\Product\OpenSolution.Script.xml">
+    <None Include="..\&ProductDirectoryName;\OpenSolution.Script.xml">
       <Link>Personal.Build\OpenSolution.Script.xml</Link>
     </None>
-    <None Include="..\Product\Personal.Build.xml">
+    <None Include="..\&ProductDirectoryName;\Personal.Build.xml">
       <Link>Personal.Build\Personal.Build.xml</Link>
     </None>
-    <None Include="..\Product\Build.bat">
+    <None Include="..\&ProductDirectoryName;\Build.bat">
       <Link>Personal.Build\Build.bat</Link>
     </None>
-    <None Include="..\Product\NoUpdateBuild.bat">
+    <None Include="..\&ProductDirectoryName;\NoUpdateBuild.bat">
       <Link>Personal.Build\NoUpdateBuild.bat</Link>
     </None>
-    <None Include="..\Product\OpenCommandPrompt.bat">
+    <None Include="..\&ProductDirectoryName;\OpenCommandPrompt.bat">
       <Link>Personal.Build\OpenCommandPrompt.bat</Link>
     </None>
-    <None Include="..\Product\OpenSolution.bat">
+    <None Include="..\&ProductDirectoryName;\OpenSolution.bat">
       <Link>Personal.Build\OpenSolution.bat</Link>
     </None>
-    <None Include="..\Product\Test.bat">
+    <None Include="..\&ProductDirectoryName;\Test.bat">
       <Link>Personal.Build\Test.bat</Link>
     </None>
 

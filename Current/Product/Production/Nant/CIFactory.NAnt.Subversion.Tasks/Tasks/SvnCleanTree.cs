@@ -112,6 +112,12 @@ namespace CIFactory.NAnt.Tasks
                     SvnClientContext ctx = SvnClientContext.Create(p);
                     ctx.Config = SvnConfig.GetConfig(p);
                     this.Client = new SvnClient(ctx, p);
+
+                    String AdminDir = ".svn";
+                    if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("SVN_ASP_DOT_NET_HACK")))
+                        AdminDir = "_svn";
+
+                    this.Client.SetWcAdmDir(AdminDir);
                     this.Client.AddSimpleProvider();
                     this.Client.AddUsernameProvider();
                     this.Client.AddSslServerTrustFileProvider();

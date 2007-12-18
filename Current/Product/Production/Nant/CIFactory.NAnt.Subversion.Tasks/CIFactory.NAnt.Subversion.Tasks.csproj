@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -29,12 +29,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AprSharp, Version=1.0.2572.20862, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AprSharp, Version=1.0.2908.18201, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Third Party\Svn.Net\AprSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="SubversionSharp, Version=1.0.2572.20865, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SubversionSharp, Version=1.0.2908.18202, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Third Party\Svn.Net\SubversionSharp.dll</HintPath>
     </Reference>
