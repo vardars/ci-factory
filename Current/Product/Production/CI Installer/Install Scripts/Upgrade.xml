@@ -528,14 +528,22 @@ A brute force approach is to diff the tree, to identify which if any files need 
 		<include buildfile="Scripts\Packages.Install.xml"/>
 		<fileset id="PacakgeFinder" />
 
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\SourceModificationReport" />
+    <call target="Upgrade.Package" />
+
+    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Deployment" />
+    <call target="Upgrade.Package" />
+
     <property name="TargetPackageDirectory" value="${PackagesDirectory}\Workspace"/>
     <call target="Upgrade.Package"/>
     
 		<foreach item="Folder" property="TargetPackageDirectory">
 			<in>
 				<items basedir="${PackagesDirectory}">
-					<include name="*"/>
-					<exclude name="${PackagesDirectory}"/>
+          <include name="*"/>
+          <exclude name="${PackagesDirectory}"/>
+          <exclude name="${PackagesDirectory}\SourceModificationReport"/>
+          <exclude name="${PackagesDirectory}\Deployment"/>
           <exclude name="${PackagesDirectory}\Workspace"/>
 				</items>
 			</in>
