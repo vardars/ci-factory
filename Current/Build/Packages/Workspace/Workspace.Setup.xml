@@ -64,7 +64,7 @@
 		</ask>
 
 		<if test="${ToBuild == 'Yes'}">
-			<nant buildfile="${ProductDirectory}\Personal.Build.xml"
+			<nant buildfile="${ProductDirectory}\Scripts\Personal.Build.xml"
 						inheritall="false"
 						inheritrefs="false"
 						target="Build" />

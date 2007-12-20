@@ -14,7 +14,7 @@
     <include name="${ProductionDirectory}\**\bin\*.*"/>
   </fileset>
 
-  <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Compile.Environment.xml" overwrite="false"/>
+  <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Scripts\Compile.Environment.xml" overwrite="false"/>
 
   <property name="Compile.Environment.RefId" value="MSBuild.Environment" overwrite="false"/>
 
