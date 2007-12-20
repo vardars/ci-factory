@@ -15,7 +15,8 @@ namespace CIFactory.NAnt.Tasks
 
         private TaskContainer _Else;
 
-        private IfTask[] _ElseIf;
+        private IfTask[] _ElseIfs;
+        private TaskContainer[] _ElseIf;
 
         private string _test = null;
 
@@ -51,28 +52,28 @@ namespace CIFactory.NAnt.Tasks
         }
 
         [BuildElementCollection("elseifs", "elseif", Required = false)]
-        public IfTask[] ElseIf
+        public IfTask[] ElseIfs
         {
             get
             {
-                if (_ElseIf == null)
+                if (_ElseIfs == null)
                 {
-                    _ElseIf = new IfTask[] {};
+                    _ElseIfs = new IfTask[] { };
                 }
-                return _ElseIf;
+                return _ElseIfs;
             }
-            set { _ElseIf = value; }
+            set { _ElseIfs = value; }
         }
 
         [BuildElementArray("elseif", Required = false)]
         [Obsolete("Use the <elseifs> child element instead.", false)]
-        public IfTask[] OldElseIf
+        public TaskContainer[] OldElseIf
         {
             get
             {
                 if (_ElseIf == null)
                 {
-                    _ElseIf = new IfTask[] { };
+                    _ElseIf = new TaskContainer[] { };
                 }
                 return _ElseIf;
             }
@@ -111,7 +112,10 @@ namespace CIFactory.NAnt.Tasks
             else
             {
                 bool Executed = false;
-                foreach (TaskContainer Possible in this.ElseIf)
+                TaskContainerCollection ElseIfList = new TaskContainerCollection();
+                ElseIfList.AddRange(this.ElseIfs);
+                ElseIfList.AddRange(this.OldElseIf);
+                foreach (TaskContainer Possible in ElseIfList)
                 {
                     if (Possible.IfDefined)
                     {
