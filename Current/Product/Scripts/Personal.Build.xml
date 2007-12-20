@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\Build" >
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\..\Build" >
 
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
@@ -61,7 +61,7 @@
       <environment refid="${Compile.Environment.RefId}" />
     </setenv>
 
-    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${ProductDirectory}" />
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${ProductDirectory}" />
   </target>
   
   <target name="Build">
