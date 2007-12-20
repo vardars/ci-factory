@@ -57,12 +57,7 @@ namespace NAnt.Core.Tasks {
     public class IfTask : TaskContainer {
         #region Private Instance Fields
 
-        private string _propNameTrue = null;
-        private string _propNameExists = null;
-        private string _targetName = null;
         private string _test = null;
-        private FileSet _compareFiles = null;
-        private FileSet _uptodateFiles = null;
 
         #endregion Private Instance Fields
 
@@ -108,6 +103,18 @@ namespace NAnt.Core.Tasks {
 
         #endregion Override implementation of TaskContainer
 
+        #region Override implementation of Task
+
+        protected override void InitializeTask(System.Xml.XmlNode taskNode) {
+            base.InitializeTask (taskNode);
+            //check that we have something to do.
+            if (Test == null) {
+                throw new BuildException("At least the condition" +
+                        "test must be set:", Location);
+            }
+        }
+
+        #endregion Override implementation of Task
     }
 
     /// <summary>

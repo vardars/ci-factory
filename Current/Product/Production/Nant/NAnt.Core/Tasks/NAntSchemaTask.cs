@@ -303,7 +303,7 @@ namespace NAnt.Core.Tasks {
 
                     XmlSchemaComplexType taskCT = FindOrCreateComplexType(t);
                     // allow any tasks...
-                    if (t.IsSubclassOf(typeof(TaskContainer)))
+                    if (t.IsSubclassOf(typeof(TaskContainer)) && !TaskContainerComplexTypes.Contains(taskCT))
                     {
                         TaskContainerComplexTypes.Add(taskCT);
                     }
@@ -626,7 +626,7 @@ namespace NAnt.Core.Tasks {
 
                         XmlSchemaComplexType ChildComplexType = FindOrCreateComplexType(childType);
 
-                        if (childType.IsSubclassOf(typeof(TaskContainer)))
+                        if (childType.IsSubclassOf(typeof(TaskContainer)) && !TaskContainerComplexTypes.Contains(ChildComplexType))
                         {
                             TaskContainerComplexTypes.Add(ChildComplexType);
                         }
