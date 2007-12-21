@@ -190,6 +190,9 @@ namespace NAnt.Core {
             string frameworkFamily = PlatformHelper.IsMono ? "mono" : "net";
             // determine the version of the current runtime framework
             string frameworkClrVersion = Environment.Version.ToString(3);
+
+            string frameworkVersion = Environment.Version.ToString(2);
+
             // determine default targetframework
             string defaultTargetFramework = GetXmlAttributeValue(platformNode, "default");
 
@@ -209,9 +212,11 @@ namespace NAnt.Core {
 
                     string family = GetXmlAttributeValue(frameworkNode, "family");
                     string clrVersion = GetXmlAttributeValue(frameworkNode, "clrversion");
+                    string version = GetXmlAttributeValue(frameworkNode, "version");
 
                     // check if we're processing the current runtime framework
-                    if (family == frameworkFamily && clrVersion == frameworkClrVersion) {
+                    if (family == frameworkFamily && clrVersion == frameworkClrVersion && version == frameworkVersion)
+                    {
                         isRuntimeFramework = true;
                     }
 
@@ -259,9 +264,6 @@ namespace NAnt.Core {
 
                     string description = frameworkProject.ExpandProperties(
                         GetXmlAttributeValue(frameworkNode, "description"),
-                        Location.UnknownLocation);
-                    string version = frameworkProject.ExpandProperties(
-                        GetXmlAttributeValue(frameworkNode, "version"),
                         Location.UnknownLocation);
                     string runtimeEngine = frameworkProject.ExpandProperties(
                         GetXmlAttributeValue(frameworkNode, "runtimeengine"),
