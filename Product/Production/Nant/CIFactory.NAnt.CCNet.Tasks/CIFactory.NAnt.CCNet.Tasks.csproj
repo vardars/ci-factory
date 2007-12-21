@@ -1,0 +1,83 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2E281FB3-FD8A-452D-830A-247ABB71CD1F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIFactory.NAnt.CCNet</RootNamespace>
+    <AssemblyName>CIFactory.NAnt.CCNet.Tasks</AssemblyName>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NetReflector, Version=1.0.0.102, Culture=neutral, PublicKeyToken=2f4dd8b32acbcd8e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\CCNET\NetReflector.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Functions\CCNetFunctions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\CCNetForceTask.cs" />
+    <Compile Include="Tasks\CCNetStartTask.cs" />
+    <Compile Include="Tasks\CCNetStopTask.cs" />
+    <Compile Include="Tasks\LaunchCruiseControlBuildTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdatenAnt.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CCNet\core\core.csproj">
+      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
+      <Name>core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CCNet\Remote\Remote.csproj">
+      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
+      <Name>Remote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CIFactory.NAnt.Tasks\CIFactory.NAnt.Tasks.csproj">
+      <Project>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</Project>
+      <Name>CIFactory.NAnt.Tasks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Name>NAnt.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" "$(TargetName)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
