@@ -469,6 +469,8 @@
     <Content Include="VisualSourceSafe\SourceControl.Properties.xml" />
     <Content Include="VisualSourceSafe\SourceControl.Target.xml" />
     <Content Include="VS.NETCompile\Compile.xsl" />
+    <Content Include="VS.NETDeploy\Install.Properties.xml" />
+    <Content Include="VS.NETDeploy\Install.Target.xml" />
     <Content Include="VSTSVersionControl\Install\Install.xml" />
     <Content Include="VSTSVersionControl\Install\Properties.xml" />
     <Content Include="VSTSVersionControl\SourceControl.Properties.xml" />
@@ -532,6 +534,11 @@
     <None Include="NUnit\Install\NUnit\samples\vb\failures\vb-failures.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\money\vb-money.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\syntax\vb-syntax.build" />
+    <Content Include="VS.NETDeploy\Install\OpenSolution.bat" />
+    <Content Include="VS.NETDeploy\Install\2005.sln.remove" />
+    <Content Include="VS.NETDeploy\Install\2003.sln.remove" />
+    <Content Include="VS.NETDeploy\Install\Install.xml" />
+    <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NUnit\Install\NUnit\samples\csharp\failures\AssemblyInfo.cs" />
