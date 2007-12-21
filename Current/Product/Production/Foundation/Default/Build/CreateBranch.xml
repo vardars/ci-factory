@@ -84,7 +84,7 @@
     </ifnot>
 
     <property name="CCNET.ServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
-    <ccnetstop serverurl="${CCNetServer.Url}" failonerror="false"/>
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
 
 		<call target="AskForBranchName"/>
 
