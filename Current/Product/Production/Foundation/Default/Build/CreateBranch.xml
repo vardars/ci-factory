@@ -83,9 +83,7 @@
       <fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
     </ifnot>
 
-    <xmlpeek file="${BuildDirectory}\dashboard\dashboard.config"
-						 property="CCNetServer.Url"
-						 xpath="/dashboard/remoteServices/servers/server/@url" />
+    <property name="CCNET.ServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
     <ccnetstop serverurl="${CCNetServer.Url}" failonerror="false"/>
 
 		<call target="AskForBranchName"/>

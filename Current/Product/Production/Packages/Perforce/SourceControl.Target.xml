@@ -368,6 +368,9 @@
   -->
   <target name="SourceControl.StartCreateBranch">
     <p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
+
+    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" force="true"  failonerror="false"/>
+    
     <p4client clientname="Temp-${Perforce.WorkspaceName}"
 							root="${ProjectRootDirectory}"
 							port="${Perforce.ServerName}:${Perforce.ServerPort}"
@@ -443,7 +446,7 @@ View:
 							client="Temp-${Perforce.WorkspaceName}"
 						view='"${sourcecontrol::convertlocaltoserver(ProjectBranchDirectory)}/..."'/>
 
-    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
+    <p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" force="true" />
 
     <nant
       buildfile="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\Main.Build.xml"
