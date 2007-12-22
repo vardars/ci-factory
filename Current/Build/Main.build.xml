@@ -44,11 +44,7 @@
         <description>End Varification Actions</description>
         
         <description>Begin Post Build Actions</description>
-        <loglevel level="None">
-          <do>
-            <call target="Simian.Run" failonerror="false" />
-          </do>
-        </loglevel>
+        <call target="Simian.Run" failonerror="false" />
         <call target="nDepend.Calculate" />
         <call target="LinesOfCode.CountCodeLines" />
         <call target="FxCop.Calculate" />
@@ -152,11 +148,7 @@
         <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
         <call target="Deployment.PublishFile" />
-        <loglevel level="None">
-          <do>
-            <call target="Simian.Run" failonerror="false" />
-          </do>
-        </loglevel>
+        <call target="Simian.Run" failonerror="false" />
         <call target="nDepend.Calculate" />
         <call target="LinesOfCode.CountCodeLines" />
         <call target="FxCop.Calculate" />
