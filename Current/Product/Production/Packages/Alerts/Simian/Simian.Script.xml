@@ -88,7 +88,7 @@
       <value expand="true" xml="true">
         <html>
           <head>
-            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css">
+            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css"/>
           </head>
           <body>
             <p>${datetime::now()}</p>
@@ -120,7 +120,7 @@
       <value expand="true" xml="true">
         <html>
           <head>
-            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css">
+            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css"/>
           </head>
           <body>
             <p>${datetime::now()}</p>
