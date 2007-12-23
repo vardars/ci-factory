@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" >
+
+  <property name="CCNetBuildCondition" value="ForceBuild "/>
+  <property name="CCNetIntegrationStatus" value="Success"/>
+  <property name="CCNetLastIntegrationStatus" value="Success"/>
+  <property name="CCNetBuildDate" value="2006-09-12"/>
+  <property name="CCNetBuildTime" value="11:10:00"/>
+  <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
+  <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+  
+  <property name="CCNetLabel" value="1.0.0.2"/>
+  <property name="CCNetProject" value="%ProjectName%"/>
+  <property name="CCNetLogFilePath" value=""/>
+  
+  <include buildfile="Properties.Build.xml"/>
+  <include buildfile="Common.Build.xml" />
+  
+  <property name="Compile.ConfigName" value="Debug"/>
+  
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml"/>
+  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
+
+  <target name="test">
+    <property name="Compile.ConfigName" value="Release"/>
+    <property name="Compile.Bin" value="${ProductDirectory}\ReleaseBin" />
+    <property name="Compile.ToCopyToBin" value="true" />
+    <property name="Compile.ToDeployZip" value="true"/>
+    <property name="Compile.ZipFileName" value="Doubler.zip"/>
+    <delete>
+      <fileset>
+        <include name="${Compile.Bin}\*.*"/>
+      </fileset>
+    </delete>
+    <call target="Private.Compile.CopyToWorkingBin" />
+    <call target="Private.Compile.DeployZip" />
+  </target>
+
+</project>
