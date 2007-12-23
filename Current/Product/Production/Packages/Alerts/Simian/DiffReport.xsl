@@ -25,6 +25,8 @@
   <xsl:template match="/">
     
     <xsl:call-template name="GenerateAddedDisplay" />
+    <br/>
+    <br/>
     <xsl:call-template name="GenerateRemovedDisplay" />
     
   </xsl:template>
