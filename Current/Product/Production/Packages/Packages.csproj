@@ -191,8 +191,6 @@
     <Content Include="VS.NETCompile\Compile.Properties.xml" />
     <Content Include="VS.NETCompile\Compile.Target.xml" />
     <Content Include="VS.NETCompile\DevEnvCompileDetails.xsl" />
-    <Content Include="VS.NETCompile\Install.Properties.xml" />
-    <Content Include="VS.NETCompile\Install.Target.xml" />
     <Content Include="VS.NETCompile\Install\2003.sln.remove" />
     <Content Include="VS.NETCompile\Install\2005.sln.remove" />
     <Content Include="VS.NETCompile\Install\Install.xml" />
@@ -534,9 +532,6 @@
     <None Include="NUnit\Install\NUnit\samples\vb\failures\vb-failures.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\money\vb-money.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\syntax\vb-syntax.build" />
-    <Content Include="VS.NETDeploy\Install\OpenSolution.bat" />
-    <Content Include="VS.NETDeploy\Install\2005.sln.remove" />
-    <Content Include="VS.NETDeploy\Install\2003.sln.remove" />
     <Content Include="VS.NETDeploy\Install\Install.xml" />
     <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>

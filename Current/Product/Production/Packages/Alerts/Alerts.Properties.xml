@@ -7,14 +7,16 @@
 
   <strings id="Alerts.TargetListId">
     <string value="Alerts.UnitTests"/>
-		<string value="Alerts.Diskspace"/>
+		<string value="Alerts.DiskSpace"/>
+    <string value="Alerts.Simian"/>
     <!--<string value="Alerts.Tracker"/>-->
   </strings>
 
   <property name="Alerts.TargetListRefId" value="Alerts.TargetListId"/>
 
   <include buildfile="${PackagesDirectory}\Alerts\UnitTests\UnitTests.Script.xml"/>
-	<include buildfile="${PackagesDirectory}\Alerts\Diskspace\Diskspace.Script.xml"/>
+	<include buildfile="${PackagesDirectory}\Alerts\Diskspace\DiskSpace.Script.xml"/>
+  <include buildfile="${PackagesDirectory}\Alerts\Simian\Simian.Script.xml"/>
   <!--<include buildfile="${PackagesDirectory}\Alerts\Tracker\Tracker.Script.xml"/>-->
 
 </project>
