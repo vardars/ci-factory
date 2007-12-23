@@ -7,10 +7,10 @@
   <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="DevGroup" group="DevGroup" address="ci-factory-dev@googlegroups.com"/>
-          <user name="jay.flowers" address="jay.flowers@gmail.com"/>
-          <user name="sbohlen" address="sbohlen@gmail.com"/>
-          <user name="IFolarin" address="IFolarin@gmail.com"/>
-          <user name="dru.sellers" address="dru.sellers@gmail.com"/>
+          <user name="jay.flowers" group="developer" address="jay.flowers@gmail.com"/>
+          <user name="sbohlen" group="developer" address="sbohlen@gmail.com"/>
+          <user name="IFolarin" group="developer" address="IFolarin@gmail.com"/>
+          <user name="dru.sellers" group="developer" address="dru.sellers@gmail.com"/>
         </users>
         <groups>
           <group name="DevGroup" notification="always"/>
