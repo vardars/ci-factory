@@ -20,6 +20,8 @@
       </do>
     </loglevel>
 
+    <copy file='${Simian.ReportFilePath}' todir='${Common.ArtifactDirectoryPath}' if='${Simian.PublishXmlReport}' />
+
     <style in="${Simian.ReportFilePath}"
            out="${Common.ArtifactDirectoryPath}\SimianReport.html"
            style="${PackagesDirectory}\Simian\bin\simian.xsl"/>

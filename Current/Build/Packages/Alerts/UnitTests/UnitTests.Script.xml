@@ -32,7 +32,7 @@
 			</case>
 			<case value="${directory::exists(PackagesDirectory + '\DotNetUnitTest')}" break="true">
 				<xmlpeek
-					file="${Alerts.BuildLog}"
+					file="${Common.ArtifactDirectoryPath}\${string::replace(CCNetProject, ' ', '_')}UnitTests.xml"
 					xpath="sum(//report-result/counter/@run-count)"
 					property="Alerts.UnitTests.Count"
 					nodeindex="0"

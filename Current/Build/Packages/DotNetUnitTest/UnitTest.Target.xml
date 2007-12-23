@@ -57,6 +57,8 @@
 			<finally>
 				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
 
+        <copy file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' todir='${Common.ArtifactDirectoryPath}' if='${UnitTest.PublishXmlReport}' />
+
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
                out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
                style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"
