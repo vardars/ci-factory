@@ -1,0 +1,106 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A667DA2-A419-4014-91B0-5967FE567DB7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CIScript.Core</RootNamespace>
+    <AssemblyName>CIScript.Core</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.1.40796, Culture=neutral, PublicKeyToken=aaa0f432407c68df">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Attributes\BooleanValidatorAttribute.cs" />
+    <Compile Include="Attributes\BuildAttributeAttribute.cs" />
+    <Compile Include="Attributes\BuildElementArrayAttribute.cs" />
+    <Compile Include="Attributes\BuildElementAttribute.cs" />
+    <Compile Include="Attributes\BuildElementCollectionAttribute.cs" />
+    <Compile Include="Attributes\DateTimeValidatorAttribute.cs" />
+    <Compile Include="Attributes\ElementNameAttribute.cs" />
+    <Compile Include="Attributes\FileSetAttribute.cs" />
+    <Compile Include="Attributes\FrameworkConfigurableAttribute.cs" />
+    <Compile Include="Attributes\FunctionAttribute.cs" />
+    <Compile Include="Attributes\FunctionSetAttribute.cs" />
+    <Compile Include="Attributes\Int32ValidatorAttribute.cs" />
+    <Compile Include="Attributes\ProgramLocationAttribute.cs" />
+    <Compile Include="Attributes\StringValidatorAttribute.cs" />
+    <Compile Include="Attributes\TaskAttributeAttribute.cs" />
+    <Compile Include="Attributes\TaskNameAttribute.cs" />
+    <Compile Include="Attributes\ValidatorAttribute.cs" />
+    <Compile Include="BuildException.cs" />
+    <Compile Include="DataTypeBase.cs" />
+    <Compile Include="DataTypeBaseBuilder.cs" />
+    <Compile Include="DataTypeBaseBuilderCollection.cs" />
+    <Compile Include="DataTypeBaseDictionary.cs" />
+    <Compile Include="Element.cs" />
+    <Compile Include="ElementTaskContainer.cs" />
+    <Compile Include="ExpressionEvalBase.cs" />
+    <Compile Include="ExpressionEvaluator.cs" />
+    <Compile Include="ExpressionParseException.cs" />
+    <Compile Include="ExpressionTokenizer.cs" />
+    <Compile Include="FunctionSetBase.cs" />
+    <Compile Include="Location.cs" />
+    <Compile Include="LocationMap.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyDictionary.cs" />
+    <Compile Include="Target.cs" />
+    <Compile Include="TargetCollection.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="TaskContainer.cs" />
+    <Compile Include="Util\AssemblyResolver.cs" />
+    <Compile Include="Util\CommandLineArgument.cs" />
+    <Compile Include="Util\CommandLineArgumentAttribute.cs" />
+    <Compile Include="Util\CommandLineArgumentCollection.cs" />
+    <Compile Include="Util\CommandLineArgumentException.cs" />
+    <Compile Include="Util\CommandLineArgumentTypes.cs" />
+    <Compile Include="Util\CommandLineParser.cs" />
+    <Compile Include="Util\DateTimeProvider.cs" />
+    <Compile Include="Util\DefaultCommandLineArgumentAttribute.cs" />
+    <Compile Include="Util\GacCache.cs" />
+    <Compile Include="Util\ReflectionUtils.cs" />
+    <Compile Include="Util\ResourceUtils.cs" />
+    <Compile Include="Util\StopWatchStack.cs" />
+    <Compile Include="Util\StringUtils.cs" />
+    <Compile Include="ValidationException.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
