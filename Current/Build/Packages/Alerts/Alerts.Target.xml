@@ -64,7 +64,7 @@
 
   <target name="Alerts.SendMessage">
     <mail 
-			from="${CCNetProject}.Build@noreply.com" 
+			from="${string::replace(CCNetProject, ' ', '')}.Build@noreply.com" 
 			tolist="${Alerts.SendMessage.ToList}"
       cclist="${Alerts.SendMessage.CCList}"
 			subject="${Alerts.SendMessage.Subject}" 
