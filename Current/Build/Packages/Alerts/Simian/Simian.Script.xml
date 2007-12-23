@@ -11,19 +11,7 @@
     </else>
   </ifthenelse>
 
-  <include buildfile="${PackagesDirectory}\Simian\Simian.Properties.xml"/>
-
-  <property name="UrlToSimianReport" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_SimianReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
   <property name="Alerts.Simian.ReportFilePath" value="${Common.ArtifactDirectoryPath}\SimianReport.xml"/>
-
-  <ifnot test="${file::exists(Alerts.Simian.ReportFilePath)}">
-    <if test="${file::exists(Simian.ReportFilePath)}">
-      <copy 
-        file="${Simian.ReportFilePath}" 
-        todir="${Common.ArtifactDirectoryPath}"
-      />
-    </if>
-  </ifnot>
 
   <!-- Begin Previous Properties -->
   <property name="Alerts.Simian.Previous.DuplicateLineCount" value="NaN" overwrite="false"/>
@@ -45,6 +33,7 @@
 
     <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
     <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
+    <property name="UrlToSimianReport" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_SimianReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
     
     <if test="${Alerts.Simian.Previous.DuplicateLineCount != 'NaN' and Alerts.Simian.DuplicateLineCount != 'notset'}">
       <call target="Alerts.Simian.GenerateReport"/>
