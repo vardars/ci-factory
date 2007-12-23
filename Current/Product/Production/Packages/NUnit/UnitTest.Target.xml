@@ -106,26 +106,4 @@
 
   </target>
 
-  <script language="C#" prefix="directory" >
-    <imports>
-      <import namespace="System.IO" />
-    </imports>
-
-    <code>
-      <![CDATA[
-         [Function("getcurrentdirectory")]
-         public static string GetCurrentDirectory()
-         {
-                 return Directory.GetCurrentDirectory();
-         }
-		 
-		 [Function("setcurrentdirectory")]
-         public static void SetCurrentDirectory(string path)
-         {
-                 Directory.SetCurrentDirectory(path);
-         }
-      ]]>
-    </code>
-  </script>
-
 </project>
