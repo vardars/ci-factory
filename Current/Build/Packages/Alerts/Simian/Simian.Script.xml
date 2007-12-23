@@ -33,7 +33,7 @@
 
     <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
     <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
-    <property name="UrlToSimianReport" value="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/default.aspx?_action_SimianReport=true&amp;server=${ProjectName}-${ProjectCodeLineName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+    <property name="UrlToSimianReport" value="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/default.aspx?_action_SimianReport=true&amp;server=${ProjectName}-${ProjectCodeLineName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
     
     <if test="${Alerts.Simian.Previous.DuplicateLineCount != 'NaN' and Alerts.Simian.DuplicateLineCount != 'notset'}">
       <call target="Alerts.Simian.GenerateReport"/>
@@ -88,7 +88,7 @@
       <value expand="true" xml="true">
         <html>
           <head>
-            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css"/>
+            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/cruisecontrol.css"/>
             </head>
           <body>
             <p>${datetime::now()}</p>
@@ -120,7 +120,7 @@
       <value expand="true" xml="true">
         <html>
           <head>
-            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/cruisecontrol.css"/>
+            <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/cruisecontrol.css"/>
           </head>
           <body>
             <p>${datetime::now()}</p>
