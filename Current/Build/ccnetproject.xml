@@ -4,7 +4,7 @@
 
   %entities;
   
-  <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
+  <!ENTITY email '<email from="CIFactory-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="DevGroup" group="DevGroup" address="ci-factory-dev@googlegroups.com"/>
           <user name="Jay.Flowers" group="developer" address="jay.flowers@gmail.com"/>
