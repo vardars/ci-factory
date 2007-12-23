@@ -6,10 +6,14 @@
   
   <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
-          <user name="BuildMaster" group="buildmaster" address="jay.flowers@stelligent.com"/>
+          <user name="DevGroup" group="DevGroup" address="ci-factory-dev@googlegroups.com"/>
+          <user name="jay.flowers" address="jay.flowers@gmail.com"/>
+          <user name="sbohlen" address="sbohlen@gmail.com"/>
+          <user name="IFolarin" address="IFolarin@gmail.com"/>
+          <user name="dru.sellers" address="dru.sellers@gmail.com"/>
         </users>
         <groups>
-          <group name="buildmaster" notification="always"/>
+          <group name="DevGroup" notification="always"/>
         </groups>
       </email>'>
   <!ENTITY labeller '<labeller type="defaultlabeller">
