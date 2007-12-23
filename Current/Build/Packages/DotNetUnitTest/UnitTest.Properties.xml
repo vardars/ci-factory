@@ -13,7 +13,7 @@
 
   <property name="UnitTest.PublishXmlReport" value="False"/>
 
-  <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml)}">
+  <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml')}">
     <include buildfile="${PackagesDirectory}\Alerts\Alerts.Properties.xml"/>
     <if test="${stringlist::contains('Alerts.TargetListId', 'Alerts.UnitTests')}">
       <property name="UnitTest.PublishXmlReport" value="True"/>
