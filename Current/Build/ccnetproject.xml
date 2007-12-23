@@ -7,7 +7,7 @@
   <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="DevGroup" group="DevGroup" address="ci-factory-dev@googlegroups.com"/>
-          <user name="jay.flowers" group="developer" address="jay.flowers@gmail.com"/>
+          <user name="Jay.Flowers" group="developer" address="jay.flowers@gmail.com"/>
           <user name="sbohlen" group="developer" address="sbohlen@gmail.com"/>
           <user name="IFolarin" group="developer" address="IFolarin@gmail.com"/>
           <user name="dru.sellers" group="developer" address="dru.sellers@gmail.com"/>

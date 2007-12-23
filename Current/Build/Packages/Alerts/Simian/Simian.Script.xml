@@ -19,7 +19,7 @@
   <ifnot test="${file::exists(Alerts.Simian.ReportFilePath)}">
     <if test="${file::exists(Simian.ReportFilePath)}">
       <copy 
-        file="${Alerts.Simian.ReportFilePath}" 
+        file="${Simian.ReportFilePath}" 
         todir="${Common.ArtifactDirectoryPath}"
       />
     </if>
