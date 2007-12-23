@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Target">
+
+  <property name="Alerts.BuildLog" value="${CCNetLogFilePath}" overwrite="false"/>
+  
+  <trycatch>
+    <try>
+      <xmlpeek 
+        file="${Alerts.BuildLog}" 
+        xpath="//modification/user" 
+        property="Alerts.Developer.Name" 
+        nodeindex="0" 
+      />
+    </try>
+    <catch property="Exception">
+      <echo level="Error" message="${Exception}"/>
+      <ifthenelse test="${CCNetBuildCondition == 'ForceBuild' and property::exists('CCNetForcedBy')}">
+        <then>
+          <property name="Alerts.Developer.Name" value="${CCNetForcedBy}"/>
+        </then>
+        <else>
+          <property name="Alerts.Developer.Name" value="Unknown"/>
+        </else>
+      </ifthenelse>
+    </catch>
+  </trycatch>
+
+  <trycatch>
+    <try>
+      <xmlpeek 
+        file="${BuildDirectory}\ccnetproject.xml" 
+        xpath="//email/users/user[@name = '${Alerts.Developer.Name}']/@address" 
+        property="Alerts.Developer.Email" 
+        nodeindex="0" 
+      />
+    </try>
+    <catch property="Exception">
+      <echo level="Error" message="${Exception}"/>
+      <property name="Alerts.Developer.Email" value="UnknownDeveloper@blackhole.com"/>
+    </catch>
+  </trycatch>
+
+  <include buildfile="Alerts.Properties.xml" />
+
+  <!-- Input Properties
+  <property name="Alerts.TargetListRefId" value=""/>
+  -->
+  <target name="Alerts.Run">
+    <loopthrough property="Alerts.Target">
+      <items>
+        <strings refid="${Alerts.TargetListRefId}" />
+      </items>
+      <do>
+        <call target="${Alerts.Target}" failonerror="false"/>
+      </do>
+    </loopthrough>
+  </target>
+
+  <!-- Parameters
+  <property name="Alerts.SendMessage.Content" value="" />
+  <property name="Alerts.SendMessage.ToList" value="" />
+  <property name="Alerts.SendMessage.Subject" value="" />
+  -->
+
+  <target name="Alerts.SendMessage">
+    <mail 
+			from="${CCNetProject}.Build@noreply.com" 
+			tolist="${Alerts.SendMessage.ToList}"
+      cclist="${Alerts.SendMessage.CCList}"
+			subject="${Alerts.SendMessage.Subject}" 
+			mailhost="${EmailHost}"
+			format="Html"
+			message="${Alerts.SendMessage.Content}"
+		/>
+  </target>
+  
+  <target name="Alerts.SetUp">
+    
+  </target>
+
+  <target name="Alerts.TearDown">
+
+  </target>
+  
+</project>
