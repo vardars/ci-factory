@@ -91,7 +91,7 @@
   </target>
 
   <target name="Alerts.UnitTests.GenerateThankYou">
-    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Thanks For Adding More Unit Tests" />
+    <property name="Alerts.SendMessage.Subject" value="${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}: Thanks For Adding More Unit Tests" />
 
     <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
@@ -101,7 +101,7 @@
           <body>
             <p>${datetime::now()}</p>
             <p>
-              <a href="${UrlToThisBuild}">${CCNetLabel}</a>
+              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
             </p>
 
             <p>${Alerts.Developer.Name},</p>
@@ -116,7 +116,7 @@
   </target>
 
   <target name="Alerts.UnitTests.GenerateWarning">
-    <property name="Alerts.SendMessage.Subject" value="${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
+    <property name="Alerts.SendMessage.Subject" value="${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
 
     <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
@@ -126,7 +126,7 @@
           <body>
             <p>${datetime::now()}</p>
             <p>
-              <a href="${UrlToThisBuild}">${CCNetLabel}</a>
+              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
             </p>
 
             <p>${Alerts.Developer.Name},</p>

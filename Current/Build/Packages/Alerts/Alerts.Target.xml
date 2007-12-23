@@ -75,7 +75,7 @@
   </target>
   
   <target name="Alerts.SetUp">
-    <property name="UrlToThisBuild" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_ViewBuildReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+    <property name="UrlToThisBuild" value="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/default.aspx?_action_ViewBuildReport=true&amp;server=${ProjectName}-${ProjectCodeLineName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
   </target>
 
   <target name="Alerts.TearDown">
