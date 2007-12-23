@@ -9,4 +9,14 @@
   <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${string::replace(ProjectName, ' ', '_')}UnitTests"/>
   <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
+
+  <property name="UnitTest.PublishXmlReport" value="False"/>
+
+  <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml)}">
+    <include buildfile="${PackagesDirectory}\Alerts\Alerts.Properties.xml"/>
+    <if test="${stringlist::contains('Alerts.TargetListId', 'Alerts.UnitTests')}">
+      <property name="UnitTest.PublishXmlReport" value="True"/>
+    </if>
+  </if>
+
 </project>
