@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Properties">
 
-  <property name="UrlToThisBuild" value="http://${environment::get-machine-name()}/${ProjectName}/default.aspx?_action_ViewBuildReport=true&amp;server=${ProjectName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
-  
   <property name="Alerts.Message.CCList" value=""/>
 
   <strings id="Alerts.TargetListId">
