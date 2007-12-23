@@ -70,9 +70,9 @@
   <target name="Alerts.Simian.GenerateReport">
     <exec program="${environment::get-variable('ProgramFiles')}\XmlDiffPatch\Bin\XmlDiff.exe" verbose="true">
       <arg line="/o /c /p /w /n /r /x /d"/>
-      <arg line="${Alerts.Simian.Previous.ReportFilePath}" />
-      <arg line="${Alerts.Simian.ReportFilePath}" />
-      <arg line="${Common.ArtifactDirectoryPath}\Simian.Diff.xml" />
+      <arg line='"${Alerts.Simian.Previous.ReportFilePath}"' />
+      <arg line='"${Alerts.Simian.ReportFilePath}"' />
+      <arg line='"${Common.ArtifactDirectoryPath}\Simian.Diff.xml"' />
     </exec>
 
     <style
