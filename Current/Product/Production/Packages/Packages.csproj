@@ -532,6 +532,8 @@
     <None Include="NUnit\Install\NUnit\samples\vb\failures\vb-failures.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\money\vb-money.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\syntax\vb-syntax.build" />
+    <Content Include="Alerts\Simian\DiffReport.xsl" />
+    <Content Include="Alerts\Simian\Simian.Script.xml" />
     <Content Include="VS.NETDeploy\Install\Install.xml" />
     <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>

@@ -6,7 +6,7 @@
 
   <property name="Simian.PublishXmlReport" value="False"/>
 
-  <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml)}">
+  <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml')}">
     <include buildfile="${PackagesDirectory}\Alerts\Alerts.Properties.xml"/>
     <if test="${stringlist::contains('Alerts.TargetListId', 'Alerts.Simian')}">
       <property name="Simian.PublishXmlReport" value="True"/>
