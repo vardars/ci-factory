@@ -106,7 +106,7 @@
               style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
               href="${UrlToSimianReport}"
             >
-              <img class="sectionheader-title-image" src="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/Packages/Simian/logo.gif"/><div>Simian Report</div>
+              <img style="float: left; border-style: none; height: 25px;" src="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/Packages/Simian/logo.gif"/><div>Simian Report</div>
             </a>
             <br/>
             <p>Please note the possibility that some pairs of added and removed items could really be a change.</p>
@@ -146,7 +146,7 @@
               style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
               href="${UrlToSimianReport}"
             >
-              <img class="sectionheader-title-image" src="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/Packages/Simian/logo.gif"/><div>Simian Report</div>
+              <img style="float: left; border-style: none; height: 25px;" src="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/Packages/Simian/logo.gif"/><div>Simian Report</div>
             </a>
             <br/>
               <p>Please note the possibility that some pairs of added and removed items could really be a change.</p>
