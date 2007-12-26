@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -55,10 +55,6 @@
     <ProjectReference Include="..\core\core.csproj">
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
       <Name>core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Remote\Remote.csproj">
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
-      <Name>Remote</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebDashboard\WebDashboard.csproj">
       <Project>{482EF049-EC0C-4819-B568-75B5F74BDD5B}</Project>

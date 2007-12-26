@@ -56,10 +56,6 @@
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
       <Name>core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CCNet\Remote\Remote.csproj">
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
-      <Name>Remote</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CIFactory.NAnt.Tasks\CIFactory.NAnt.Tasks.csproj">
       <Project>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</Project>
       <Name>CIFactory.NAnt.Tasks</Name>

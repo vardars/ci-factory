@@ -76,10 +76,6 @@
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
       <Name>core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Remote\Remote.csproj">
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
-      <Name>Remote</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

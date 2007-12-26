@@ -10,8 +10,6 @@ copy %3.pdb "%Dest%"
 
 copy ThoughtWorks.CruiseControl.Core.dll "%Dest%"
 copy ThoughtWorks.CruiseControl.Core.pdb "%Dest%"
-copy ThoughtWorks.CruiseControl.Remote.dll "%Dest%"
-copy ThoughtWorks.CruiseControl.Remote.pdb "%Dest%"
 copy NetReflector.dll "%Dest%"
 
 cd %1

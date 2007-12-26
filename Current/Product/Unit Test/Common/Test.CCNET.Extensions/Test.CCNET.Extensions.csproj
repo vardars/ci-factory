@@ -71,10 +71,6 @@
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
       <Name>core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Production\CCNet\Remote\Remote.csproj">
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
-      <Name>Remote</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Production\Common\Tracker.Common\Tracker.Common.csproj">
       <Project>{AEC5D271-59E7-4B6A-B0C7-07C2D637206F}</Project>
       <Name>Tracker.Common</Name>

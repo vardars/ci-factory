@@ -76,7 +76,7 @@
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The file ${NCover.ExePath} could not be found.
-The NCover package needs NCover version ${NCover.Version} Beta.
+The NCover package needs NCover version ${NCover.Version}.
 
 More information on NCover can be found at http://www.ncover.org]]>
     </value>
@@ -98,7 +98,7 @@ More information on NCover can be found at http://www.ncover.org]]>
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The version of NCover found, ${file::get-version(NCover.ExePath)}, is not supported.
-The NCover package needs NCover version ${NCover.Version} Beta.
+The NCover package needs NCover version ${NCover.Version}.
 
 More information on NCover can be found at http://www.ncover.org]]>
       </value>

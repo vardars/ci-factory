@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.50727</ProductVersion>
@@ -96,11 +96,6 @@
     <ProjectReference Include="..\core\core.csproj">
       <Name>core</Name>
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
-    <ProjectReference Include="..\Remote\Remote.csproj">
-      <Name>Remote</Name>
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
   </ItemGroup>

@@ -119,11 +119,6 @@
       <Project>{A81B8A36-19CC-49FA-93A4-E7E607F48567}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
-    <ProjectReference Include="..\Remote\Remote.csproj">
-      <Name>Remote</Name>
-      <Project>{E820CF3B-8C5A-4002-BC16-B7818D3D54A8}</Project>
-      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
