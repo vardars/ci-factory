@@ -9,7 +9,8 @@
     <loglevel level="None">
       <do>
         <exec workingdir="${path::get-short-path(ProductDirectory)}" program="${Simian.Console}" failonerror="false">
-          <arg line="-language=xml" />
+          <arg line='-includes=Production/CCNet/**/*.cs' />
+          <arg line='-includes=Production/NAnt/**/*.cs' />
           <arg line='-includes=Production/Packages/**/*.xml' />
           <arg line='-excludes=Production/Packages/**/bin/**/*.xml' />
           <arg line='-excludes=Production/Packages/**/bin/*.xml' />
