@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
+
+  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\UnitTests\Previous.Properties.xml"/>
+  <ifthenelse test="${file::exists(Alerts.UnitTests.PreviousPropertiesFilePath)}">
+    <then>
+      <include buildfile="${Alerts.UnitTests.PreviousPropertiesFilePath}" />
+    </then>
+    <else>
+      <echo level="Warning" message="File Does Not Exist: ${Alerts.UnitTests.PreviousPropertiesFilePath}"/>
+    </else>
+  </ifthenelse>
+  
+
+  <!-- Begin Previous Properties -->
+  <property name="Alerts.UnitTests.Previous.Count" value="NaN" overwrite="false"/>
+  <!-- End Previous Properties -->
+
+  <target name="Alerts.UnitTests">
+
+		<property name="Alerts.UnitTests.Count" value="notset"/>
+
+		<switch value="True">
+			<case value="${directory::exists(PackagesDirectory + '\MSTest')}" break="true">
+				<xmlpeek
+					file="${Alerts.BuildLog}"
+					xpath="//Tests/TestRun/result/totalTestCount"
+					property="Alerts.UnitTests.Count"
+					nodeindex="0"
+					failonerror="false"
+				/>			 
+			</case>
+			<case value="${directory::exists(PackagesDirectory + '\DotNetUnitTest')}" break="true">
+				<xmlpeek
+					file="${Common.ArtifactDirectoryPath}\${string::replace(CCNetProject, ' ', '_')}UnitTests.xml"
+					xpath="sum(//report-result/counter/@run-count)"
+					property="Alerts.UnitTests.Count"
+					nodeindex="0"
+					failonerror="false"
+				/>
+			</case>
+			<default>
+				<property name="Alerts.UnitTests.Count" value="0"/>		
+			</default>
+		</switch>
+
+    <xmlquery id="ProjectPaths"
+      file="${Alerts.BuildLog}" 
+      query="//modification/project" 
+    />
+
+    <property name="AreChangesFromThisBuild" value="False"/>
+
+    <loopthrough property="ProjectPath">
+      <items>
+        <xmlquery refid="ProjectPaths"/>
+      </items>
+      <do>
+        <property name="Found" value=""/>
+        <regex input="${ProjectPath}" pattern="(?'Found'/${ProjectCodeLineName}/Product/Unit Test).*" options="IgnoreCase" failonerror="false"/>
+        <if test="${Found != ''}">
+          <property name="AreChangesFromThisBuild" value="True"/>
+        </if>
+      </do>
+    </loopthrough>
+
+    <echo message="Unit Test Count is ${Alerts.UnitTests.Count}"/>
+
+    <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
+    <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
+
+    <echo message="Previous Unit Test Count is ${Alerts.UnitTests.Previous.Count}"/>
+
+    <if test="${Alerts.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true and Alerts.UnitTests.Count != 'notset'}">
+      <ifthenelse test="${Alerts.UnitTests.Count > Alerts.UnitTests.Previous.Count}">
+        <then>
+          <call target="Alerts.UnitTests.GenerateThankYou"/>
+          <call target="Alerts.SendMessage"/>
+        </then>
+        <elseif if="${Alerts.UnitTests.Previous.Count > Alerts.UnitTests.Count}">
+          <call target="Alerts.UnitTests.GenerateWarning"/>
+          <call target="Alerts.SendMessage"/>
+        </elseif>
+      </ifthenelse>
+    </if>
+
+    <saveproperties file="${Alerts.UnitTests.PreviousPropertiesFilePath}" format="Include" unless="${Alerts.UnitTests.Count == 'notset'}">
+      <property name="Alerts.UnitTests.Previous.Count" value="${Alerts.UnitTests.Count}"/>
+    </saveproperties>
+
+  </target>
+
+  <target name="Alerts.UnitTests.GenerateThankYou">
+    <property name="Alerts.SendMessage.Subject" value="${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}: Thanks For Adding More Unit Tests" />
+
+    <largeproperty name="Alerts.SendMessage.Content">
+      <value expand="true" xml="true">
+        <html>
+          <head>
+          </head>
+          <body>
+            <p>${datetime::now()}</p>
+            <p>
+              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
+            </p>
+
+            <p>${Alerts.Developer.Name},</p>
+            <p>Thank you for increasing the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
+            <br/>
+            <p>Cheers,</p>
+            <p>Your pal, the build server.</p>
+          </body>
+        </html>
+      </value>
+    </largeproperty>
+  </target>
+
+  <target name="Alerts.UnitTests.GenerateWarning">
+    <property name="Alerts.SendMessage.Subject" value="${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}: Did You Mean to Remove Unit Tests?" />
+
+    <largeproperty name="Alerts.SendMessage.Content">
+      <value expand="true" xml="true">
+        <html>
+          <head>
+          </head>
+          <body>
+            <p>${datetime::now()}</p>
+            <p>
+              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
+            </p>
+
+            <p>${Alerts.Developer.Name},</p>
+            <p>Please take note that you have reduced the number of unit tests from ${Alerts.UnitTests.Previous.Count} to ${Alerts.UnitTests.Count}.</p>
+            <br/>
+            <p>Cheers,</p>
+            <p>Your pal, the build server.</p>
+          </body>
+        </html>
+      </value>
+    </largeproperty>
+  </target>
+  
+</project>
