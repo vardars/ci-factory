@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Packages\**\*" Exclude="**\.svn\**\*" />
+    <Content Include="Packages\DotNetUnitTest\MbUnitDisplayReport.xsl" />
+    <Content Include="Packages\DotNetUnitTest\MbUnitDisplaySummary.xsl" />
+    <Content Include="Packages\NCover\NCoverDisplayReport.xsl" />
+    <Content Include="Packages\NCover\NCoverDisplaySummary.xsl" />
+    <Content Include="Packages\nDepend\ndependsummary-ccnet.xsl" />
+    <Content Include="Packages\nDepend\nDependSummaryDisplay.xsl" />
+  </ItemGroup>
+</Project>
