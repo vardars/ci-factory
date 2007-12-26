@@ -7,6 +7,6 @@ using System.Reflection;
 [assembly : AssemblyTitle("CC.NET SysTray Watcher Lib")]
 [assembly : AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.2")]
 
 
