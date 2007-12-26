@@ -91,15 +91,24 @@
             <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/cruisecontrol.css"/>
             </head>
           <body>
-            <p>${datetime::now()}</p>
             <p>
-              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
+              <a onmouseover="this.style.color = '#7bcf15'" 
+                 style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;" 
+                 href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
             </p>
+            <p>${datetime::now()}</p>
 
             <p>${Alerts.Developer.Name},</p>
             <p>Thank you for removing duplication, the duplicate line count was reduced from ${Alerts.Simian.Previous.DuplicateLineCount} to ${Alerts.Simian.DuplicateLineCount}.</p>
             <br/>
-            <a href="${UrlToSimianReport}">Simian Report</a>
+            <a 
+              onmouseover="this.style.color = '#7bcf15'" 
+              style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
+              href="${UrlToSimianReport}"
+            >
+              <img class="sectionheader-title-image" src="Packages\Simian\logo.gif"/>
+              <div>Simian Report</div>
+            </a>
             <br/>
             <p>Please note the possibility that some pairs of added and removed items could really be a change.</p>
             <br/>
@@ -123,15 +132,24 @@
             <link type="text/css" rel="stylesheet" href="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/cruisecontrol.css"/>
           </head>
           <body>
-            <p>${datetime::now()}</p>
             <p>
-              <a href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
+              <a onmouseover="this.style.color = '#7bcf15'"
+                 style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
+                 href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
             </p>
+            <p>${datetime::now()}</p>
 
             <p>${Alerts.Developer.Name},</p>
             <p>Please take note that you have duplicated existing code, increasing the duplicate line count from ${Alerts.Simian.Previous.DuplicateLineCount} to ${Alerts.Simian.DuplicateLineCount}.</p>
             <br/>
-              <a href="${UrlToSimianReport}">Simian Report</a>
+            <a
+              onmouseover="this.style.color = '#7bcf15'"
+              style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
+              href="${UrlToSimianReport}"
+            >
+              <img class="sectionheader-title-image" src="Packages\Simian\logo.gif"/>
+              <div>Simian Report</div>
+            </a>
             <br/>
               <p>Please note the possibility that some pairs of added and removed items could really be a change.</p>
             <br/>
