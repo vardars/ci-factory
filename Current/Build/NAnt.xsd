@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 12/05/2007 13:41:54</xs:documentation>
+    <xs:documentation>NAnt schema generated at 12/26/2007 10:02:16</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -862,11 +862,8 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.Tasks.IfThenTask">
+  <xs:complexType name="NAnt.Core.Tasks.IfTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="then" type="nant:NAnt.Core.TaskContainer" />
-      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
-      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
         <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
@@ -1022,6 +1019,25 @@
         <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="test" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.IfThenTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="then" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="elseifs">
+        <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="elseif" type="nant:NAnt.Core.Tasks.IfTask" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="elseif" type="nant:NAnt.Core.TaskContainer" />
+      <xs:element minOccurs="0" maxOccurs="1" name="else" type="nant:NAnt.Core.TaskContainer" />
     </xs:sequence>
     <xs:attribute name="test" use="required" />
     <xs:attribute name="failonerror" use="optional" />
@@ -2174,6 +2190,163 @@
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
   <xs:complexType name="NAnt.Contrib.Tasks.TryCatchTask-CatchElement">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
+        <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
+        <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
+        <xs:element name="applyfilter" type="nant:CIFactory.NAnt.Tasks.ApplyFilterTask" />
+        <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
+        <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
+        <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
+        <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
+        <xs:element name="loglevel" type="nant:CIFactory.NAnt.Tasks.LogLevelTask" />
+        <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
+        <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
+        <xs:element name="saveproperties" type="nant:CIFactory.NAnt.Tasks.SaveProperties" />
+        <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
+        <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
+        <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
+        <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
+        <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
+        <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
+        <xs:element name="zip" type="nant:NAnt.Compression.Tasks.ZipTask" />
+        <xs:element name="adsigetprop" type="nant:NAnt.Contrib.Tasks.ADSIGetPropertyTask" />
+        <xs:element name="adsisetprop" type="nant:NAnt.Contrib.Tasks.ADSISetPropertyTask" />
+        <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
+        <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
+        <xs:element name="codestats" type="nant:NAnt.Contrib.Tasks.CodeStatsTask" />
+        <xs:element name="comregister" type="nant:NAnt.Contrib.Tasks.COMRegisterTask" />
+        <xs:element name="concat" type="nant:NAnt.Contrib.Tasks.ConcatTask" />
+        <xs:element name="disco" type="nant:NAnt.Contrib.Tasks.DicsoTask" />
+        <xs:element name="fxcop" type="nant:NAnt.Contrib.Tasks.FxCopTask" />
+        <xs:element name="gac-install" type="nant:NAnt.Contrib.Tasks.GacInstallTask" />
+        <xs:element name="gac" type="nant:NAnt.Contrib.Tasks.GacTask" />
+        <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
+        <xs:element name="grep" type="nant:NAnt.Contrib.Tasks.Grep.GrepTask" />
+        <xs:element name="hxcomp" type="nant:NAnt.Contrib.Tasks.HxCompTask" />
+        <xs:element name="hxreg" type="nant:NAnt.Contrib.Tasks.HxRegTask" />
+        <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
+        <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
+        <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
+        <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
+        <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
+        <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
+        <xs:element name="vssadd" type="nant:NAnt.Contrib.Tasks.SourceSafe.AddTask" />
+        <xs:element name="vsscheckin" type="nant:NAnt.Contrib.Tasks.SourceSafe.CheckinTask" />
+        <xs:element name="vsscheckout" type="nant:NAnt.Contrib.Tasks.SourceSafe.CheckoutTask" />
+        <xs:element name="vssstatis" type="nant:NAnt.Contrib.Tasks.SourceSafe.StatisTask" />
+        <xs:element name="vssdiff" type="nant:NAnt.Contrib.Tasks.SourceSafe.DiffTask" />
+        <xs:element name="vssget" type="nant:NAnt.Contrib.Tasks.SourceSafe.GetTask" />
+        <xs:element name="vsshistory" type="nant:NAnt.Contrib.Tasks.SourceSafe.History" />
+        <xs:element name="vsslabel" type="nant:NAnt.Contrib.Tasks.SourceSafe.LabelTask" />
+        <xs:element name="vssundocheckout" type="nant:NAnt.Contrib.Tasks.SourceSafe.UndoCheckoutTask" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
+        <xs:element name="sql" type="nant:NAnt.Contrib.Tasks.SqlTask" />
+        <xs:element name="svn-checkout" type="nant:NAnt.Contrib.Tasks.Svn.SvnCheckoutTask" />
+        <xs:element name="svn" type="nant:NAnt.Contrib.Tasks.Svn.SvnTask" />
+        <xs:element name="svn-update" type="nant:NAnt.Contrib.Tasks.Svn.SvnUpdateTask" />
+        <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
+        <xs:element name="typedcollection" type="nant:NAnt.Contrib.Tasks.TypedCollectionTask" />
+        <xs:element name="validatexml" type="nant:NAnt.Contrib.Tasks.ValidateXmlTask" />
+        <xs:element name="vb6" type="nant:NAnt.Contrib.Tasks.Vb6Task" />
+        <xs:element name="version" type="nant:NAnt.Contrib.Tasks.VersionTask" />
+        <xs:element name="mkiisdir" type="nant:NAnt.Contrib.Tasks.Web.CreateVirtualDirectory" />
+        <xs:element name="deliisdir" type="nant:NAnt.Contrib.Tasks.Web.DeleteVirtualDirectory" />
+        <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="wsdl" type="nant:NAnt.Contrib.Tasks.WsdlTask" />
+        <xs:element name="xsd" type="nant:NAnt.Contrib.Tasks.XsdTask" />
+        <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
+        <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
+        <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
+        <xs:element name="delay-sign" type="nant:NAnt.DotNet.Tasks.DelaySignTask" />
+        <xs:element name="ilasm" type="nant:NAnt.DotNet.Tasks.IlasmTask" />
+        <xs:element name="jsc" type="nant:NAnt.DotNet.Tasks.JscTask" />
+        <xs:element name="license" type="nant:NAnt.DotNet.Tasks.LicenseTask" />
+        <xs:element name="ndoc" type="nant:NAnt.DotNet.Tasks.NDocTask" />
+        <xs:element name="regsvcs" type="nant:NAnt.DotNet.Tasks.RegsvcsTask" />
+        <xs:element name="resgen" type="nant:NAnt.DotNet.Tasks.ResGenTask" />
+        <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
+        <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
+        <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
+        <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
+        <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
+        <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
+        <xs:element name="mc" type="nant:NAnt.VisualCpp.Tasks.McTask" />
+        <xs:element name="midl" type="nant:NAnt.VisualCpp.Tasks.MidlTask" />
+        <xs:element name="rc" type="nant:NAnt.VisualCpp.Tasks.RcTask" />
+        <xs:element name="solution" type="nant:NAnt.VSNet.Tasks.SolutionTask" />
+        <xs:element name="aximp" type="nant:NAnt.Win32.Tasks.AxImpTask" />
+        <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
+        <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
+        <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
+        <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
+        <xs:element name="call" type="nant:NAnt.Core.Tasks.CallTask" />
+        <xs:element name="copy" type="nant:NAnt.Core.Tasks.CopyTask" />
+        <xs:element name="delete" type="nant:NAnt.Core.Tasks.DeleteTask" />
+        <xs:element name="description" type="nant:NAnt.Core.Tasks.DescriptionTask" />
+        <xs:element name="echo" type="nant:NAnt.Core.Tasks.EchoTask" />
+        <xs:element name="exec" type="nant:NAnt.Core.Tasks.ExecTask" />
+        <xs:element name="fail" type="nant:NAnt.Core.Tasks.FailTask" />
+        <xs:element name="get" type="nant:NAnt.Core.Tasks.GetTask" />
+        <xs:element name="if" type="nant:NAnt.Core.Tasks.IfTask" />
+        <xs:element name="ifnot" type="nant:NAnt.Core.Tasks.IfNotTask" />
+        <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
+        <xs:element name="loadfile" type="nant:NAnt.Core.Tasks.LoadFileTask" />
+        <xs:element name="loadtasks" type="nant:NAnt.Core.Tasks.LoadTasksTask" />
+        <xs:element name="foreach" type="nant:NAnt.Core.Tasks.LoopTask" />
+        <xs:element name="mail" type="nant:NAnt.Core.Tasks.MailTask" />
+        <xs:element name="mkdir" type="nant:NAnt.Core.Tasks.MkDirTask" />
+        <xs:element name="move" type="nant:NAnt.Core.Tasks.MoveTask" />
+        <xs:element name="nantschema" type="nant:NAnt.Core.Tasks.NAntSchemaTask" />
+        <xs:element name="nant" type="nant:NAnt.Core.Tasks.NAntTask" />
+        <xs:element name="property" type="nant:NAnt.Core.Tasks.PropertyTask" />
+        <xs:element name="regex" type="nant:NAnt.Core.Tasks.RegexTask" />
+        <xs:element name="setenv" type="nant:NAnt.Core.Tasks.SetEnvTask" />
+        <xs:element name="sleep" type="nant:NAnt.Core.Tasks.SleepTask" />
+        <xs:element name="style" type="nant:NAnt.Core.Tasks.StyleTask" />
+        <xs:element name="sysinfo" type="nant:NAnt.Core.Tasks.SysInfoTask" />
+        <xs:element name="touch" type="nant:NAnt.Core.Tasks.TouchTask" />
+        <xs:element name="tstamp" type="nant:NAnt.Core.Tasks.TStampTask" />
+        <xs:element name="uptodate" type="nant:NAnt.Core.Tasks.UpToDateTask" />
+        <xs:element name="xmlpeek" type="nant:NAnt.Core.Tasks.XmlPeekTask" />
+        <xs:element name="xmlpoke" type="nant:NAnt.Core.Tasks.XmlPokeTask" />
+        <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
+        <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+      </xs:choice>
+    </xs:sequence>
     <xs:attribute name="property" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
@@ -3274,14 +3447,164 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
-  <xs:complexType name="NAnt.Core.Tasks.IfTask">
-    <xs:attribute name="test" use="required" />
-    <xs:attribute name="failonerror" use="optional" />
-    <xs:attribute name="verbose" use="optional" />
-    <xs:attribute name="if" use="optional" />
-    <xs:attribute name="unless" use="optional" />
-  </xs:complexType>
   <xs:complexType name="NAnt.Core.Tasks.IfNotTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ccnetforce" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetForceTask" />
+        <xs:element name="ccnetstart" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStartTask" />
+        <xs:element name="ccnetstop" type="nant:CIFactory.NAnt.CCNet.Tasks.CCNetStopTask" />
+        <xs:element name="launchccnetbuild" type="nant:CIFactory.NAnt.CCNet.Tasks.LaunchCruiseControlBuildTask" />
+        <xs:element name="ask" type="nant:CIFactory.NAnt.Tasks.AskTask" />
+        <xs:element name="attachdebugger" type="nant:CIFactory.NAnt.Tasks.AttachDebuggerTask" />
+        <xs:element name="function" type="nant:CIFactory.NAnt.Tasks.FunctionTask" />
+        <xs:element name="xslmultiout" type="nant:Common.Functions.MultiXslOutput.MultiOutTransform" />
+        <xs:element name="writeregistry" type="nant:CIFactory.NAnt.Tasks.WriteRegistryTask" />
+        <xs:element name="GenerateAssemblyInfoList" type="nant:UpdateVersion.Tasks.GenerateAssemblyInfoList" />
+        <xs:element name="applyfilter" type="nant:CIFactory.NAnt.Tasks.ApplyFilterTask" />
+        <xs:element name="asyncexec" type="nant:CIFactory.NAnt.Tasks.AsyncExec" />
+        <xs:element name="IncrementAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.IncrementAssemblyVersion" />
+        <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
+        <xs:element name="UpdateProductVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateProductVersion" />
+        <xs:element name="waitfor" type="nant:CIFactory.NAnt.Tasks.WaitForTask" />
+        <xs:element name="while" type="nant:CIFactory.NAnt.Tasks.WhileTask" />
+        <xs:element name="xmlcopy" type="nant:Xml.Tasks.XmlCopy" />
+        <xs:element name="ifthenelse" type="nant:CIFactory.NAnt.Tasks.IfThenTask" />
+        <xs:element name="largeproperty" type="nant:CIFactory.NAnt.Tasks.LargePropertyTask" />
+        <xs:element name="loglevel" type="nant:CIFactory.NAnt.Tasks.LogLevelTask" />
+        <xs:element name="loopthrough" type="nant:CIFactory.NAnt.Tasks.LoopThrough" />
+        <xs:element name="replace" type="nant:CIFactory.NAnt.Tasks.Replace" />
+        <xs:element name="saveproperties" type="nant:CIFactory.NAnt.Tasks.SaveProperties" />
+        <xs:element name="switch" type="nant:CIFactory.NAnt.Tasks.SwitchTask" />
+        <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
+        <xs:element name="write" type="nant:CIFactory.NAnt.Tasks.WriteTask" />
+        <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
+        <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
+        <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
+        <xs:element name="zip" type="nant:NAnt.Compression.Tasks.ZipTask" />
+        <xs:element name="adsigetprop" type="nant:NAnt.Contrib.Tasks.ADSIGetPropertyTask" />
+        <xs:element name="adsisetprop" type="nant:NAnt.Contrib.Tasks.ADSISetPropertyTask" />
+        <xs:element name="astyle" type="nant:NAnt.Contrib.Tasks.Astyle" />
+        <xs:element name="checksum" type="nant:NAnt.Contrib.Tasks.ChecksumTask" />
+        <xs:element name="codestats" type="nant:NAnt.Contrib.Tasks.CodeStatsTask" />
+        <xs:element name="comregister" type="nant:NAnt.Contrib.Tasks.COMRegisterTask" />
+        <xs:element name="concat" type="nant:NAnt.Contrib.Tasks.ConcatTask" />
+        <xs:element name="disco" type="nant:NAnt.Contrib.Tasks.DicsoTask" />
+        <xs:element name="fxcop" type="nant:NAnt.Contrib.Tasks.FxCopTask" />
+        <xs:element name="gac-install" type="nant:NAnt.Contrib.Tasks.GacInstallTask" />
+        <xs:element name="gac" type="nant:NAnt.Contrib.Tasks.GacTask" />
+        <xs:element name="gac-uninstall" type="nant:NAnt.Contrib.Tasks.GacUninstallTask" />
+        <xs:element name="grep" type="nant:NAnt.Contrib.Tasks.Grep.GrepTask" />
+        <xs:element name="hxcomp" type="nant:NAnt.Contrib.Tasks.HxCompTask" />
+        <xs:element name="hxreg" type="nant:NAnt.Contrib.Tasks.HxRegTask" />
+        <xs:element name="mgmtclassgen" type="nant:NAnt.Contrib.Tasks.MgmtClassGenTask" />
+        <xs:element name="ngen" type="nant:NAnt.Contrib.Tasks.NGenTask" />
+        <xs:element name="nunitreport" type="nant:NAnt.Contrib.Tasks.NUnitReportTask" />
+        <xs:element name="p4add" type="nant:NAnt.Contrib.Tasks.Perforce.P4Add" />
+        <xs:element name="p4change" type="nant:NAnt.Contrib.Tasks.Perforce.P4Change" />
+        <xs:element name="p4client" type="nant:NAnt.Contrib.Tasks.Perforce.P4Client" />
+        <xs:element name="p4delete" type="nant:NAnt.Contrib.Tasks.Perforce.P4Delete" />
+        <xs:element name="p4edit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Edit" />
+        <xs:element name="p4info" type="nant:NAnt.Contrib.Tasks.Perforce.P4Info" />
+        <xs:element name="p4label" type="nant:NAnt.Contrib.Tasks.Perforce.P4Label" />
+        <xs:element name="p4labelsync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Labelsync" />
+        <xs:element name="p4print" type="nant:NAnt.Contrib.Tasks.Perforce.P4Print" />
+        <xs:element name="p4reopen" type="nant:NAnt.Contrib.Tasks.Perforce.P4Reopen" />
+        <xs:element name="p4revert" type="nant:NAnt.Contrib.Tasks.Perforce.P4Revert" />
+        <xs:element name="p4set" type="nant:NAnt.Contrib.Tasks.Perforce.P4Set" />
+        <xs:element name="p4submit" type="nant:NAnt.Contrib.Tasks.Perforce.P4Submit" />
+        <xs:element name="p4sync" type="nant:NAnt.Contrib.Tasks.Perforce.P4Sync" />
+        <xs:element name="record" type="nant:NAnt.Contrib.Tasks.RecordTask" />
+        <xs:element name="regasm" type="nant:NAnt.Contrib.Tasks.RegasmTask" />
+        <xs:element name="scp" type="nant:NAnt.Contrib.Tasks.ScpTask" />
+        <xs:element name="vssadd" type="nant:NAnt.Contrib.Tasks.SourceSafe.AddTask" />
+        <xs:element name="vsscheckin" type="nant:NAnt.Contrib.Tasks.SourceSafe.CheckinTask" />
+        <xs:element name="vsscheckout" type="nant:NAnt.Contrib.Tasks.SourceSafe.CheckoutTask" />
+        <xs:element name="vssstatis" type="nant:NAnt.Contrib.Tasks.SourceSafe.StatisTask" />
+        <xs:element name="vssdiff" type="nant:NAnt.Contrib.Tasks.SourceSafe.DiffTask" />
+        <xs:element name="vssget" type="nant:NAnt.Contrib.Tasks.SourceSafe.GetTask" />
+        <xs:element name="vsshistory" type="nant:NAnt.Contrib.Tasks.SourceSafe.History" />
+        <xs:element name="vsslabel" type="nant:NAnt.Contrib.Tasks.SourceSafe.LabelTask" />
+        <xs:element name="vssundocheckout" type="nant:NAnt.Contrib.Tasks.SourceSafe.UndoCheckoutTask" />
+        <xs:element name="vssaddproject" type="nant:NAnt.Contrib.Tasks.SourceSafe.VSSAddProject" />
+        <xs:element name="sql" type="nant:NAnt.Contrib.Tasks.SqlTask" />
+        <xs:element name="svn-checkout" type="nant:NAnt.Contrib.Tasks.Svn.SvnCheckoutTask" />
+        <xs:element name="svn" type="nant:NAnt.Contrib.Tasks.Svn.SvnTask" />
+        <xs:element name="svn-update" type="nant:NAnt.Contrib.Tasks.Svn.SvnUpdateTask" />
+        <xs:element name="trycatch" type="nant:NAnt.Contrib.Tasks.TryCatchTask" />
+        <xs:element name="typedcollection" type="nant:NAnt.Contrib.Tasks.TypedCollectionTask" />
+        <xs:element name="validatexml" type="nant:NAnt.Contrib.Tasks.ValidateXmlTask" />
+        <xs:element name="vb6" type="nant:NAnt.Contrib.Tasks.Vb6Task" />
+        <xs:element name="version" type="nant:NAnt.Contrib.Tasks.VersionTask" />
+        <xs:element name="mkiisdir" type="nant:NAnt.Contrib.Tasks.Web.CreateVirtualDirectory" />
+        <xs:element name="deliisdir" type="nant:NAnt.Contrib.Tasks.Web.DeleteVirtualDirectory" />
+        <xs:element name="iisdirinfo" type="nant:NAnt.Contrib.Tasks.Web.VirtualDirectoryInfo" />
+        <xs:element name="wsdl" type="nant:NAnt.Contrib.Tasks.WsdlTask" />
+        <xs:element name="xsd" type="nant:NAnt.Contrib.Tasks.XsdTask" />
+        <xs:element name="asminfo" type="nant:NAnt.DotNet.Tasks.AssemblyInfoTask" />
+        <xs:element name="al" type="nant:NAnt.DotNet.Tasks.AssemblyLinkerTask" />
+        <xs:element name="csc" type="nant:NAnt.DotNet.Tasks.CscTask" />
+        <xs:element name="delay-sign" type="nant:NAnt.DotNet.Tasks.DelaySignTask" />
+        <xs:element name="ilasm" type="nant:NAnt.DotNet.Tasks.IlasmTask" />
+        <xs:element name="jsc" type="nant:NAnt.DotNet.Tasks.JscTask" />
+        <xs:element name="license" type="nant:NAnt.DotNet.Tasks.LicenseTask" />
+        <xs:element name="ndoc" type="nant:NAnt.DotNet.Tasks.NDocTask" />
+        <xs:element name="regsvcs" type="nant:NAnt.DotNet.Tasks.RegsvcsTask" />
+        <xs:element name="resgen" type="nant:NAnt.DotNet.Tasks.ResGenTask" />
+        <xs:element name="script" type="nant:NAnt.DotNet.Tasks.ScriptTask" />
+        <xs:element name="vbc" type="nant:NAnt.DotNet.Tasks.VbcTask" />
+        <xs:element name="vjc" type="nant:NAnt.DotNet.Tasks.VjcTask" />
+        <xs:element name="cl" type="nant:NAnt.VisualCpp.Tasks.ClTask" />
+        <xs:element name="lib" type="nant:NAnt.VisualCpp.Tasks.LibTask" />
+        <xs:element name="link" type="nant:NAnt.VisualCpp.Tasks.LinkTask" />
+        <xs:element name="mc" type="nant:NAnt.VisualCpp.Tasks.McTask" />
+        <xs:element name="midl" type="nant:NAnt.VisualCpp.Tasks.MidlTask" />
+        <xs:element name="rc" type="nant:NAnt.VisualCpp.Tasks.RcTask" />
+        <xs:element name="solution" type="nant:NAnt.VSNet.Tasks.SolutionTask" />
+        <xs:element name="aximp" type="nant:NAnt.Win32.Tasks.AxImpTask" />
+        <xs:element name="readregistry" type="nant:NAnt.Win32.Tasks.ReadRegistryTask" />
+        <xs:element name="tlbexp" type="nant:NAnt.Win32.Tasks.TlbExpTask" />
+        <xs:element name="tlbimp" type="nant:NAnt.Win32.Tasks.TlbImpTask" />
+        <xs:element name="attrib" type="nant:NAnt.Core.Tasks.AttribTask" />
+        <xs:element name="available" type="nant:NAnt.Core.Tasks.AvailableTask" />
+        <xs:element name="call" type="nant:NAnt.Core.Tasks.CallTask" />
+        <xs:element name="copy" type="nant:NAnt.Core.Tasks.CopyTask" />
+        <xs:element name="delete" type="nant:NAnt.Core.Tasks.DeleteTask" />
+        <xs:element name="description" type="nant:NAnt.Core.Tasks.DescriptionTask" />
+        <xs:element name="echo" type="nant:NAnt.Core.Tasks.EchoTask" />
+        <xs:element name="exec" type="nant:NAnt.Core.Tasks.ExecTask" />
+        <xs:element name="fail" type="nant:NAnt.Core.Tasks.FailTask" />
+        <xs:element name="get" type="nant:NAnt.Core.Tasks.GetTask" />
+        <xs:element name="if" type="nant:NAnt.Core.Tasks.IfTask" />
+        <xs:element name="ifnot" type="nant:NAnt.Core.Tasks.IfNotTask" />
+        <xs:element name="include" type="nant:NAnt.Core.Tasks.IncludeTask" />
+        <xs:element name="loadfile" type="nant:NAnt.Core.Tasks.LoadFileTask" />
+        <xs:element name="loadtasks" type="nant:NAnt.Core.Tasks.LoadTasksTask" />
+        <xs:element name="foreach" type="nant:NAnt.Core.Tasks.LoopTask" />
+        <xs:element name="mail" type="nant:NAnt.Core.Tasks.MailTask" />
+        <xs:element name="mkdir" type="nant:NAnt.Core.Tasks.MkDirTask" />
+        <xs:element name="move" type="nant:NAnt.Core.Tasks.MoveTask" />
+        <xs:element name="nantschema" type="nant:NAnt.Core.Tasks.NAntSchemaTask" />
+        <xs:element name="nant" type="nant:NAnt.Core.Tasks.NAntTask" />
+        <xs:element name="property" type="nant:NAnt.Core.Tasks.PropertyTask" />
+        <xs:element name="regex" type="nant:NAnt.Core.Tasks.RegexTask" />
+        <xs:element name="setenv" type="nant:NAnt.Core.Tasks.SetEnvTask" />
+        <xs:element name="sleep" type="nant:NAnt.Core.Tasks.SleepTask" />
+        <xs:element name="style" type="nant:NAnt.Core.Tasks.StyleTask" />
+        <xs:element name="sysinfo" type="nant:NAnt.Core.Tasks.SysInfoTask" />
+        <xs:element name="touch" type="nant:NAnt.Core.Tasks.TouchTask" />
+        <xs:element name="tstamp" type="nant:NAnt.Core.Tasks.TStampTask" />
+        <xs:element name="uptodate" type="nant:NAnt.Core.Tasks.UpToDateTask" />
+        <xs:element name="xmlpeek" type="nant:NAnt.Core.Tasks.XmlPeekTask" />
+        <xs:element name="xmlpoke" type="nant:NAnt.Core.Tasks.XmlPokeTask" />
+        <xs:element name="ildasm" type="nant:NAnt.MSNet.Tasks.IldasmTask" />
+        <xs:element name="servicecontroller" type="nant:NAnt.MSNet.Tasks.ServiceControllerTask" />
+        <xs:element name="mbunit" type="nant:MbUnit.Tasks.MbUnitTask" />
+        <xs:element name="ncoverexplorer" type="nant:NCoverExplorer.NAntTasks.NCoverExplorerTask" />
+        <xs:element name="ncover" type="nant:NCoverExplorer.NAntTasks.NCoverTask" />
+        <xs:element name="NDepend" type="nant:NDepend.Build.NAntTasks.NDependTask" />
+        <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+      </xs:choice>
+    </xs:sequence>
     <xs:attribute name="test" use="required" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
