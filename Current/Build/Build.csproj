@@ -271,6 +271,9 @@
     <None Include="..\Product\Scripts\Test.bat">
       <Link>Personal.Build\Scripts\Test.bat</Link>
     </None>
+    <None Include="NAnt.xsx">
+      <DependentUpon>NAnt.xsd</DependentUpon>
+    </None>
     <None Include="Packages\Analytics\charts_library\.DS_Store" />
   </ItemGroup>
   <ItemGroup>
