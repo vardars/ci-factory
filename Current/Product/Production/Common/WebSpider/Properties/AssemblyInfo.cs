@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "zeta software GmbH" )]
 [assembly: AssemblyProduct( "Web spider class library" )]
-[assembly: AssemblyCopyright( "Copyright © 2006 zeta software GmbH" )]
+[assembly: AssemblyCopyright( "Copyright � 2006 zeta software GmbH" )]
 [assembly: AssemblyTrademark( "http://www.zeta-software.de" )]
 [assembly: AssemblyCulture( "" )]
 
