@@ -7,6 +7,8 @@ FOR /F "TOKENS=1 DELIMS=," %%A IN ('cd') DO SET Dest=%%A
 cd %2
 copy %3.dll "%Dest%"
 copy %3.pdb "%Dest%"
+copy Zeta.WebSpider.dll "%Dest%"
+copy SgmlReaderDll.dll "%Dest%"
 copy NDepend.Helpers.FileDirectoryPath.dll "%Dest%"
 
 cd %1

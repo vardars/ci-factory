@@ -72,6 +72,7 @@
     <Compile Include="Tasks\MultiXslOutput\MultiXmlTextWriter.cs" />
     <Compile Include="Tasks\MultiXslOutput\OutputState.cs" />
     <Compile Include="Tasks\Registry\WriteRegistryTask.cs" />
+    <Compile Include="Types\SpiderUrl.cs" />
     <Compile Include="Tasks\Versioning\GenerateAssemblyInfoList.cs" />
     <Compile Include="Tasks\ApplyFilterTask.cs" />
     <Compile Include="Tasks\AsyncExec.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Tasks\Versioning\VersionCalculator.cs" />
     <Compile Include="Tasks\Versioning\VersionUpdater.cs" />
     <Compile Include="Tasks\WaitForTask.cs" />
+    <Compile Include="Tasks\WebSpider.cs" />
     <Compile Include="Tasks\WhileTask.cs" />
     <Compile Include="Tasks\XmlCopy.cs" />
     <Compile Include="Types\CaseContainerCollection.cs" />
@@ -113,6 +115,10 @@
     <Compile Include="Types\XmlQuery.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\WebSpider\WebSpider.csproj">
+      <Project>{375170F1-93C7-410E-A5F2-DB4D51F1AABB}</Project>
+      <Name>WebSpider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
       <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
       <Name>NAnt.Core</Name>
