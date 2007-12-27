@@ -3,7 +3,68 @@
 
 
 	<target name="Custom.NAnt.CreateDocumentation">
-		<property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+    
+    <webspider destinationfolderpath="${DocumentationDirectory}">
+      <url
+        downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=28&amp;pop=1&amp;page=0&amp;Itemid=41"
+        maximumlinkdepth="0"
+        stayonsite="true"/>
+      <url
+        downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=29&amp;pop=1&amp;page=0&amp;Itemid=41"
+        maximumlinkdepth="0"
+        stayonsite="true"/>
+      <url
+        downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=26&amp;pop=1&amp;page=0&amp;Itemid=41"
+        maximumlinkdepth="0"
+        stayonsite="true"/>
+      <url
+        downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=27&amp;pop=1&amp;page=0&amp;Itemid=41"
+        maximumlinkdepth="0"
+        stayonsite="true"/>
+      <url
+        downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=47&amp;pop=1&amp;page=0&amp;Itemid=41"
+        maximumlinkdepth="0"
+        stayonsite="true"/>
+    </webspider>
+
+    <delete file="${DocumentationDirectory}\WebSiteDownloader.state" />
+
+    <filterchain id="LinkFilter">
+      <replacestring to="CI Factory - How to Create Packages.html" from="http://www.cifactory.org/joomla/index.php?option=com_content&amp;amp;task=view&amp;amp;id=28&amp;amp;Itemid=41"   />
+      <replacestring to="CI Factory - Installation.html" from="http://www.cifactory.org/joomla/index.php?option=com_content&amp;amp;task=view&amp;amp;id=26&amp;amp;Itemid=41"   />
+      <replacestring to="CI Factory - Power Tools.html" from="http://www.cifactory.org/joomla/index.php?option=com_content&amp;amp;task=view&amp;amp;id=29&amp;amp;Itemid=41"   />
+    </filterchain>
+
+    <foreach item="File" property="HtmlFilePath">
+      <in>
+        <items>
+          <include name="${DocumentationDirectory}\*.html"/>
+        </items>
+      </in>
+      <do>
+        <xmlpeek
+          file="${HtmlFilePath}"
+          property="Title"
+          xpath="/h:html/h:head/h:title"
+        >
+          <namespaces>
+            <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
+          </namespaces>
+        </xmlpeek>
+
+        <replace file="${HtmlFilePath}">
+          <filterchain refid="LinkFilter" />
+        </replace>
+
+        <move
+          file="${HtmlFilePath}"
+          tofile="${path::get-directory-name(HtmlFilePath)}\${Title}.html"
+          failonerror="true"
+        />
+      </do>
+    </foreach>
+
 		<property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
 		<!--<property name="" value=""/>
     <property name="" value=""/>-->
