@@ -41,6 +41,15 @@
       <fileset basedir="${ProductDirectory}\Production" defaultexcludes="false">
         <include name="Packages\**\*"/>
         <exclude name="Packages\CoverageEye"/>
+        <exclude name="Packages\CoverageEye\**\*"/>
+        <exclude name="Packages\CVS"/>
+        <exclude name="Packages\CVS\**\*"/>
+        <exclude name="Packages\StarTeam"/>
+        <exclude name="Packages\StarTeam\**\*"/>
+        <exclude name="Packages\TestCoverage"/>
+        <exclude name="Packages\TestCoverage\**\*"/>
+        <exclude name="Packages\Tracker"/>
+        <exclude name="Packages\Tracker\**\*"/>
         <exclude name="Packages\Packages.csproj"/>
         <exclude name="Packages\obj"/>
         <exclude name="Packages\obj\**\*"/>
