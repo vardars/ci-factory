@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Install" default="Wix.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Workspace.Install">
+    
+  </target>
+
+  <target name="Workspace.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Workspace"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Workspace.Targets.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Workspace"/>
+  </target>
+
+  <target name="Workspace.ValidateParameters">
+    <call target="WinRar.InsureInstallationExists"/>
+  </target>
+
+  <target name="WinRar.InsureInstallationExists" unless="${file::exists(property::expand(WinRarProgramPath))}">
+    <ask answer="Answer"
+           question="It looks like WinRar 3.71 is not installed.  This software is required.  Do you wish to install the software?"
+           caption="WinRar is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\wrar371.exe" src="${WinRarDownloadUrl}"></get>
+        <exec program="C:\Temp\wrar371.exe" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install WinRar!" />
+      </elseif>
+    </ifthenelse>
+  </target>
+  
+</project>
