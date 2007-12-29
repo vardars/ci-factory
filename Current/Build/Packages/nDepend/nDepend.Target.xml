@@ -24,11 +24,28 @@
       </copy>
 
       <exec
-			  program="${path::get-short-path(nDepend.Console)}"
-			  commandline="${path::get-short-path(nDepend.ConfigurationFile)}"
+			  program="${nDepend.Console}"
+			  commandline='"${nDepend.ConfigurationFile}" /Silent /HideConsole'
 				verbose="true"
 		  />
 
+      <loopthrough property="Image">
+        <items>
+          <xmlquery
+            file="${nDepend.BuildFolder}\NDependOut\NDependReport.html"
+            query="//IMG/@SRC"
+          />
+        </items>
+        <do>
+          <echo message="${Image}"/>
+          <xmlpoke
+            file="${nDepend.BuildFolder}\NDependOut\NDependReport.html"
+            xpath="//IMG[@SRC = '${Image}']/@SRC"
+            value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Image}"
+          />
+        </do>
+      </loopthrough>
+      
       <copy todir="${Common.ArtifactDirectoryPath}" verbose="true">
         <fileset basedir="${nDepend.BuildFolder}\NDependOut">
 					<include name="NDependReport.html" />
