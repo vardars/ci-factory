@@ -1,80 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Custom.Targets" >
 
+  <target name="Custom.CreateDocumentation">
+    <call target="Custom.DownloadDocumentation"/>
+    <call target="Custom.NAnt.CreateDocumentation"/>
+    <call target="Custom.CreateDocumentationIndex"/>
+  </target>
 
-	<target name="Custom.NAnt.CreateDocumentation">
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+  <target name="Custom.CreateDocumentationIndex">
+    <property name="IndexDirectoryPath" value="${ProductDirectory}\Documentation"/>
 
-    <strings id="PageList">
-      <string value="47"/>
-      <string value="29"/>
-      <string value="28"/>
-      <string value="27"/>
-      <string value="26"/>
-    </strings>
-    
-    <filterchain id="LinkFilter"/>
+    <property name="ListContainerId" value="CoreDocList"/>
+    <property name="DocDirectory" value="${ProductDirectory}\Documentation\Core"/>
+    <property name="DocList" value=""/>
+    <call target="Custom.GetDocList"/>
+    <call target="Custom.WriteDocList"/>
 
-    <loopthrough property="PageId">
-      <items>
-        <strings refid="PageList"/>
-      </items>
-      <do>
-        <webspider destinationfolderpath="${DocumentationDirectory}">
-          <url
-            downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=${PageId}&amp;pop=1&amp;page=0&amp;Itemid=41"
-            maximumlinkdepth="0"
-            stayonsite="true"/>
-        </webspider>
+    <property name="ListContainerId" value="PackageDocList"/>
+    <property name="DocDirectory" value="${ProductDirectory}\Documentation\Package"/>
+    <property name="DocList" value=""/>
+    <call target="Custom.GetDocList"/>
+    <call target="Custom.WriteDocList"/>
 
-        <foreach item="File" property="HtmlFilePath">
-          <in>
-            <items>
-              <include name="${DocumentationDirectory}\*.html"/>
-            </items>
-          </in>
-          <do>
+    <property name="ListContainerId" value="FAQDocList"/>
+    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Configuration"/>
+    <property name="DocList" value=""/>
+    <call target="Custom.GetDocList"/>
 
-            <xmlpeek
-              file="${HtmlFilePath}"
-              property="Title"
-              xpath="/h:html/h:head/h:title"
-            >
-              <namespaces>
-                <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
-              </namespaces>
-            </xmlpeek>
+    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Capabilities"/>
+    <call target="Custom.GetDocList"/>
+    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Errors and Fixes"/>
+    <call target="Custom.GetDocList"/>
 
-            <property name="NewHtmlFileName" value="${string::replace(Title, 'CI Factory - ', '')}"/>
+    <call target="Custom.WriteDocList"/>
+  </target>
 
-            <move
-              file="${HtmlFilePath}"
-              tofile="${path::get-directory-name(HtmlFilePath)}\${NewHtmlFileName}.replace"
-              failonerror="true"
-            />
+  <target name="Custom.WriteDocList">
+    <xmlpoke
+      file="${ProductDirectory}\Documentation\Index.htm"
+      pokemode="Replace"
+      value="${DocList}"
+      xpath="//h:ul[@id='${ListContainerId}']"
+    >
+      <namespaces>
+        <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
+      </namespaces>
+    </xmlpoke>
+  </target>
 
-            <function execute="${filterchain::replacestring-add('LinkFilter', 'http://www.cifactory.org/joomla/index.php?option=com_content&amp;amp;task=view&amp;amp;id=' + PageId + '&amp;amp;Itemid=41', NewHtmlFileName + '.html')}"/>
-          </do>
-        </foreach>
-
-        <delete file="${DocumentationDirectory}\WebSiteDownloader.state" />
-        
-      </do>
-    </loopthrough>
-
-    <foreach item="File" property="HtmlFilePath">
+  <target name="Custom.GetDocList">
+    <foreach item="File" property="File">
       <in>
         <items>
-          <include name="${DocumentationDirectory}\*.replace"/>
+          <include name="${DocDirectory}\*.html"/>
         </items>
       </in>
       <do>
-        <move file="${HtmlFilePath}" tofile="${path::get-directory-name(HtmlFilePath)}\${path::get-file-name-without-extension(HtmlFilePath)}.html">
-          <filterchain refid="LinkFilter" />
-        </move>
+        <xmlpeek
+          file="${File}"
+          property="Title"
+          xpath="/h:html/h:head/h:title"
+        >
+          <namespaces>
+            <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
+          </namespaces>
+        </xmlpeek>
+        <echo message="${DocList}"/>
+
+        <largeproperty name="DocList">
+          <value expand="true" xml="true">
+            ${DocList}
+            <li>
+              <a STYLE="TEXT-DECORATION: NONE; color: #403F8D;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'" href="${path::get-relative-path(File, IndexDirectoryPath)}">${Title}</a>
+            </li>
+          </value>
+        </largeproperty>
       </do>
     </foreach>
+  </target>
 
+  <target name="Custom.NAnt.CreateDocumentation">
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
 		<property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
 		<!--<property name="" value=""/>
     <property name="" value=""/>-->
@@ -119,6 +125,117 @@
 		</ifnot>
 	</target>
 
+  <target name="Custom.DownloadDocumentation">
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\Core"/>
+    <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=17&amp;Itemid=41"/>
+    <call target="Private.Custom.DownloadDocumentation"/>
+
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\Package"/>
+    <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=18&amp;Itemid=41"/>
+    <call target="Private.Custom.DownloadDocumentation"/>
+
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Configuration"/>
+    <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=7&amp;Itemid=41"/>
+    <call target="Private.Custom.DownloadDocumentation"/>
+
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Errors and Fixes"/>
+    <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=15&amp;Itemid=41"/>
+    <call target="Private.Custom.DownloadDocumentation"/>
+
+    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Capabilities"/>
+    <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=16&amp;Itemid=41"/>
+    <call target="Private.Custom.DownloadDocumentation"/>
+  </target>
+  
+  <target name="Private.Custom.DownloadDocumentation">
+    <property name="DocListFilePath" value="${Common.TempDirectory}\DocList.html"/>
+    
+    <get
+      dest="${DocListFilePath}"
+      src="${CategoryUrl}"
+      />
+
+    <delete dir="${DocumentationDirectory}" if="${directory::exists(DocumentationDirectory)}" />
+    <mkdir dir="${DocumentationDirectory}"/>
+
+    <xmlquery id="Links"
+      file="${DocListFilePath}"
+      query="//h:tr[h:td[contains(text(), 'Item Title')]]/following-sibling::*//h:a/@href"
+    >
+      <namespaces>
+        <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
+      </namespaces>
+    </xmlquery>
+
+    <filterchain id="LinkFilter"/>
+
+    <loopthrough property="Link">
+      <items>
+        <xmlquery refid="Links"/>
+      </items>
+      <do>
+        <regex input="${Link}" pattern="\&amp;id\=(?'PageId'\d+)\&amp;"/>
+        <echo message="${PageId}"/>
+
+        <webspider destinationfolderpath="${DocumentationDirectory}">
+          <url
+            downloaduri="http://www.cifactory.org/joomla/index2.php?option=com_content&amp;task=view&amp;id=${PageId}&amp;pop=1&amp;page=0&amp;Itemid=41"
+            maximumlinkdepth="0"
+            stayonsite="true"/>
+        </webspider>
+
+        <foreach item="File" property="HtmlFilePath">
+          <in>
+            <items>
+              <include name="${DocumentationDirectory}\*.html"/>
+            </items>
+          </in>
+          <do>
+
+            <xmlpeek
+              file="${HtmlFilePath}"
+              property="Title"
+              xpath="/h:html/h:head/h:title"
+            >
+              <namespaces>
+                <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
+              </namespaces>
+            </xmlpeek>
+
+            <property name="Title" value="${string::replace(Title, '?', '')}"/>
+            <property name="Title" value="${string::replace(Title, ':', '')}"/>
+
+            <property name="NewHtmlFileName" value="${string::replace(Title, 'CI Factory - ', '')}"/>
+
+            <move
+              file="${HtmlFilePath}"
+              tofile="${path::get-directory-name(HtmlFilePath)}\${NewHtmlFileName}.replace"
+              failonerror="true"
+            />
+
+            <function execute="${filterchain::replacestring-add('LinkFilter', 'http://www.cifactory.org/joomla/index.php?option=com_content&amp;amp;task=view&amp;amp;id=' + PageId + '&amp;amp;Itemid=41', NewHtmlFileName + '.html')}"/>
+          </do>
+        </foreach>
+
+        <delete file="${DocumentationDirectory}\WebSiteDownloader.state" />
+
+      </do>
+    </loopthrough>
+
+    <foreach item="File" property="HtmlFilePath">
+      <in>
+        <items>
+          <include name="${DocumentationDirectory}\*.replace"/>
+        </items>
+      </in>
+      <do>
+        <move file="${HtmlFilePath}" tofile="${path::get-directory-name(HtmlFilePath)}\${path::get-file-name-without-extension(HtmlFilePath)}.html">
+          <filterchain refid="LinkFilter" />
+        </move>
+      </do>
+    </foreach>
+  </target>
+  
   <target name="Custom.WriteReleaseNotes">
     <property name="TempSvnLogFilePath" value="${Common.TempDirectory}\log.xml"/>
     <property name="TempBatchFilePath" value="${Common.TempDirectory}\log.bat"/>

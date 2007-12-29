@@ -112,7 +112,7 @@
         <description>Begin Compile Actions</description>
         <call target="Versioning.IncreamentBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
-        <call target="Custom.NAnt.CreateDocumentation" />
+        <call target="Custom.CreateDocumentation" />
         
         <call target="Custom.WriteReleaseNotes" />
         <property name="Deployment.SourceFileName" value="CI Factory Release Notes.html" />
