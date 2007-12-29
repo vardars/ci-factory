@@ -41,8 +41,8 @@ namespace NAnt.Core.Tasks {
     public abstract class ExternalProgramBase : Task {
         #region Private Instance Fields
         
-        private StreamReader _stdError;
-        private StreamReader _stdOut;
+        protected StreamReader _stdError;
+        protected StreamReader _stdOut;
         private ArgumentCollection _arguments = new ArgumentCollection();
         private bool _useRuntimeEngine;
         private string _exeName;
@@ -73,7 +73,7 @@ namespace NAnt.Core.Tasks {
         /// <summary>
         /// Will be used to ensure thread-safe operations.
         /// </summary>
-        private static object _lockObject = new object();
+        protected static object _lockObject = new object();
 
         #endregion Private Static Fields
 
@@ -81,6 +81,9 @@ namespace NAnt.Core.Tasks {
 
         private string _Input;
 
+        /// <summary>
+        /// If set the value will be feed to the process through stdin.
+        /// </summary>
         [TaskAttribute("stdin")]
         public string Input
         {
@@ -93,6 +96,9 @@ namespace NAnt.Core.Tasks {
 
         private string _Pid;
 
+        /// <summary>
+        /// If set a property of this name will be populated with the pid of the process created.
+        /// </summary>
         [TaskAttribute("pid")]
         public string Pid
         {
@@ -148,6 +154,9 @@ namespace NAnt.Core.Tasks {
 
         private string _OutputProperty;
 
+        /// <summary>
+        /// If set a property of this name will be populated with the output of the command.
+        /// </summary>
         [TaskAttribute("outputproperty")]
         public string OutputProperty
         {
@@ -210,7 +219,10 @@ namespace NAnt.Core.Tasks {
             get { return _timeout; }
             set { _timeout = value; }
         }
-		
+
+        /// <summary>
+        /// When set to true will use the system shell to execute the process.
+        /// </summary>
 		[TaskAttribute("useshellexecute")]
 		public bool UseShellExecute
 		{
@@ -224,6 +236,9 @@ namespace NAnt.Core.Tasks {
 			}
 		}
 
+        /// <summary>
+        /// When set to false will create a command window for the command. You may need to set useshellexecute to get the desired result.
+        /// </summary>
 		[TaskAttribute("createnowindow")]
 		public bool CreateNoWindow
 		{
@@ -237,6 +252,9 @@ namespace NAnt.Core.Tasks {
 			}
 		}
 
+        /// <summary>
+        /// When set to false the stdout and error will not be collected.
+        /// </summary>
 		[TaskAttribute("redirectoutput")]
 		public bool RedirectOutput
 		{
@@ -523,7 +541,7 @@ namespace NAnt.Core.Tasks {
         #region Private Instance Methods
 
         /// <summary>        /// Reads from the stream until the external program is ended.        /// </summary>
-        private void StreamReaderThread_Output() {
+        protected virtual void StreamReaderThread_Output() {
             StreamReader reader = _stdOut;
             bool doAppend = OutputAppend;
             StringBuilder Capture = new StringBuilder();
@@ -558,7 +576,7 @@ namespace NAnt.Core.Tasks {
             OutputWriter.Flush();
         }
         /// <summary>        /// Reads from the stream until the external program is ended.        /// </summary>
-        private void StreamReaderThread_Error() {
+        protected virtual void StreamReaderThread_Error() {
             StreamReader reader = _stdError;
             bool doAppend = OutputAppend;
 

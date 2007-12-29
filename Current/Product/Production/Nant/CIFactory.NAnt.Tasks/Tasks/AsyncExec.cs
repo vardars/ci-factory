@@ -4,9 +4,45 @@ using System.IO;
 using NAnt.Core;
 using NAnt.Core.Tasks;
 using NAnt.Core.Attributes;
+using System.Text;
+using System.Threading;
 
 namespace CIFactory.NAnt.Tasks
 {
+    /// <summary>
+    /// Asynchrously executes a child process.
+    /// </summary>
+    /// <example>
+    ///   <para>Ping "cifactory.org" and wait, also ping "cifactory.com" without waiting.</para>
+    ///   <code>
+    ///     <![CDATA[
+    /// <asyncexec 
+    ///   program="ping"
+    ///   commandline="cifactory.org"
+    ///   taskname="PingTask"
+    ///   resultproperty="PingExitCode"
+    ///   failonerror="false"
+    ///   outputproperty="PingOutput"/>
+    /// 
+    /// <asyncexec 
+    ///   program="ping" 
+    ///   commandline="-t cifactory.com" 
+    ///   waitforexit="false" 
+    ///   useshellexecute="true" 
+    ///   createnowindow="false" 
+    ///   redirectoutput="false" />
+    /// 
+    /// <waitforexit>
+    ///   <tasknames>
+    ///     <string value="PingTask"/>
+    ///   </tasknames>
+    /// </waitforexit>
+    /// 
+    /// <echo message="The exit code for pinging cifactory.org was ${PingExitCode}."/>
+    /// <echo message="${PingOutput}"/>
+    ///     ]]>
+    ///   </code>
+    /// </example>
     [TaskName("asyncexec")]
     public class AsyncExec : ExecTask
     {
@@ -26,44 +62,15 @@ namespace CIFactory.NAnt.Tasks
 
         #region Properties
 
-        public override System.IO.TextWriter ErrorWriter
-        {
-            get
-            {
-                if (_ErrorWriter == null)
-                {
-                    _ErrorWriter = TextWriter.Null;
-                }
-                return _ErrorWriter;
-            }
-            set { }
-        }
-
-        public override FileInfo Output
-        {
-            get { return null; }
-            set { Log(Level.Warning, "The output attribute is not used for the asyncexec task.  Please do something like pipe the output to a file."); }
-        }
-
-        public override System.IO.TextWriter OutputWriter
-        {
-            get
-            {
-                if (_OutputWriter == null)
-                {
-                    _OutputWriter = TextWriter.Null;
-                }
-                return _OutputWriter;
-            }
-            set { }
-        }
-
         private Process Process
         {
             get { return _Process; }
             set { _Process = value; }
         }
 
+        /// <summary>
+        /// Names the task so that you can use the waitforexit task later.
+        /// </summary>
         [TaskAttribute("taskname", Required = false)]
         public string TaskName
         {
@@ -71,6 +78,9 @@ namespace CIFactory.NAnt.Tasks
             set { _taskName = value; }
         }
 
+        /// <summary>
+        /// Indicates the intent to call the waitforexit task in the future.
+        /// </summary>
         [TaskAttribute("waitforexit", Required = false)]
         public bool WaitForExit
         {
@@ -127,6 +137,24 @@ namespace CIFactory.NAnt.Tasks
         protected override void ExecuteTask()
         {
             this.Process = this.StartProcess();
+
+            if (this.RedirectOutput)
+            {
+                Thread outputThread = null;
+                Thread errorThread = null;
+                outputThread = new Thread(new ThreadStart(StreamReaderThread_Output));
+                errorThread = new Thread(new ThreadStart(StreamReaderThread_Error));
+
+                outputThread.IsBackground = true;
+                errorThread.IsBackground = true;
+
+                _stdOut = this.Process.StandardOutput;
+                _stdError = this.Process.StandardError;
+
+                outputThread.Start();
+                errorThread.Start();
+            }
+
             if (this.TaskName != string.Empty && this.WaitForExit == false)
             {
                 Log(Level.Warning, "You set the attribute taskname to {0} and waitforexit to false.  You will not be able to call the waitforexit task with the task name {0} with an error.  If you wanted to wait for this to exit please set waitforexit to true.", this.TaskName);
@@ -138,6 +166,76 @@ namespace CIFactory.NAnt.Tasks
             if (this.TaskName == string.Empty && this.WaitForExit)
             {
                 this.Wait();
+            }
+        }
+
+        /// <summary>
+        /// Reads from the stream until the external program is ended.
+        /// </summary>
+        protected override void StreamReaderThread_Output()
+        {
+            StreamReader reader = _stdOut;
+            bool doAppend = OutputAppend;
+            StringBuilder Capture = new StringBuilder();
+
+            while (true)
+            {
+                string logContents = reader.ReadLine();
+                if (logContents == null)
+                {
+                    break;
+                }
+
+                // ensure only one thread writes to the log at any time
+                lock (_lockObject)
+                {
+                    if (!String.IsNullOrEmpty(this.OutputProperty))
+                        Capture.AppendLine(logContents);
+                    if (Output != null)
+                    {
+                        StreamWriter writer = new StreamWriter(Output.FullName, doAppend);
+                        writer.WriteLine(logContents);
+                        doAppend = true;
+                        writer.Close();
+                    }
+                }
+            }
+
+            if (!String.IsNullOrEmpty(this.OutputProperty))
+            {
+                if (!this.Properties.Contains(this.OutputProperty))
+                    this.Properties.Add(this.OutputProperty, string.Empty);
+                this.Properties[this.OutputProperty] = Capture.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Reads from the stream until the external program is ended.
+        /// </summary>
+        protected override void StreamReaderThread_Error()
+        {
+            StreamReader reader = _stdError;
+            bool doAppend = OutputAppend;
+
+            while (true)
+            {
+                string logContents = reader.ReadLine();
+                if (logContents == null)
+                {
+                    break;
+                }
+
+                // ensure only one thread writes to the log at any time
+                lock (_lockObject)
+                {
+                    if (Output != null)
+                    {
+                        StreamWriter writer = new StreamWriter(Output.FullName, doAppend);
+                        writer.WriteLine(logContents);
+                        doAppend = true;
+                        writer.Close();
+                    }
+                }
             }
         }
 
