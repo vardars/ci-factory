@@ -443,7 +443,7 @@
           <target>Release</target>
         </targetList>
 
-        <buildTimeoutSeconds>6600</buildTimeoutSeconds>
+        <buildTimeoutSeconds>7200</buildTimeoutSeconds>
       </nant>
     </tasks>
     <publishers>
