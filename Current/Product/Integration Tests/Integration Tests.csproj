@@ -12,16 +12,10 @@
     <Content Include="AlternateNamingTests\Install Resources\DefaultArguments.xml" />
     <Content Include="AlternateNamingTests\InstallationTest.xml" />
     <Content Include="IntegrationSummaryReport.xsl" />
-    <Content Include="NCoverTests\NCoverTests.xml" />
-    <Content Include="NCoverTests\Install Resources\DefaultArguments.xml" />
-    <Content Include="NCoverTests\Resources\MbUnitProject.dll" />
-    <Content Include="NCoverTests\Resources\MbUnitProject.pdb" />
-    <Content Include="NCoverTests\Resources\Module.dll" />
-    <Content Include="NCoverTests\Resources\Module.pdb" />
-    <Content Include="NCoverTests\Resources\MSTestProject.dll" />
-    <Content Include="NCoverTests\Resources\MSTestProject.pdb" />
-    <Content Include="NCoverTests\Resources\NUnitProject.dll" />
-    <Content Include="NCoverTests\Resources\NUnitProject.pdb" />
+    <Content Include="MbUnitTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="MbUnitTests\MbUnitTests.xml" />
+    <Content Include="MSTestTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="MSTestTests\MSTestTests.xml" />
     <Content Include="NUnitTests\Install Resources\DefaultArguments.xml" />
     <Content Include="NUnitTests\NUnitTests.xml" />
     <Content Include="PerforceTests\Install Resources\DefaultArguments.xml" />
@@ -45,6 +39,8 @@
     <Content Include="VS.NETCompileTests\InstallationTest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="MbUnitTests\Resources\" />
+    <Folder Include="MSTestTests\Resources\" />
     <Folder Include="NUnitTests\Resources\" />
   </ItemGroup>
 </Project>

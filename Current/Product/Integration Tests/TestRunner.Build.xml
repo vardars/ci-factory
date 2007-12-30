@@ -10,6 +10,8 @@
   <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
   <include buildfile="VersioningTests\InstallationTest.xml"/>
 	<include buildfile="NUnitTests\NUnitTests.xml"/>
+  <include buildfile="MbUnitTests\MbUnitTests.xml"/>
+  <include buildfile="MSTestTests\MSTestTests.xml"/>
   <include buildfile="PerforceTests\InstallationTest.xml"/>
 	<include buildfile="VaultTests\InstallationTest.xml"/>
   <include buildfile="AlternateNamingTests\InstallationTest.xml"/>
@@ -23,6 +25,8 @@
         <string value="VS.NETCompile.InstallationTest"/>
         <string value="Versioning.InstallationTest"/>
         <string value="NUnitTests"/>
+        <string value="MbUnitTests"/>
+        <string value="MSTestTests"/>
         <string value="Perforce.InstallationTest"/>
 				<string value="Vault.InstallationTest"/>
         <string value="AlternateNaming.InstallationTest"/>
