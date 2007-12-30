@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Post Build" default="PostBuildWrapper">
+  <include buildfile="Properties.build.xml" />
+  <include buildfile="Common.Build.xml" />
+  <description>Begin Package Includes</description>
+  <include buildfile=".\Packages\CSDiff\CSDiff.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Analytics\Analytics.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Alerts\Alerts.Target.xml" />
+  <description>End Package Includes</description>
+  <target name="PostBuild">
+    <trycatch>
+      <try>
+        <description>Begin SetUp</description>
+        <call target="SetUps" />
+        <description>End SetUp</description>
+        <description>Begin Post Build Actions</description>
+        <call target="CSDiff.GenerateHtmlReports" failonerror="false" />
+        <call target="Analytics.CompileReports" failonerror="false" />
+        <call target="Alerts.Run" failonerror="false" />
+        <description>End Post Build Actions</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+  <target name="SetUps">
+    <description>Begin SetUps</description>
+    <call target="CSDiff.SetUp" />
+    <description>End SetUps</description>
+    <call target="Analytics.SetUp" />
+    <call target="Alerts.SetUp" />
+  </target>
+  <target name="TearDowns">
+    <description>Begin TearDowns</description>
+    <call target="CSDiff.TearDown" />
+    <description>End TearDowns</description>
+    <call target="Analytics.TearDown" />
+    <call target="Alerts.TearDown" />
+  </target>
+</project>
