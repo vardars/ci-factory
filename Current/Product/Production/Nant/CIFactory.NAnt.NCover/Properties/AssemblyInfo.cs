@@ -5,4 +5,4 @@ using System.Reflection;
 [assembly: AssemblyCompany("Kiwi Development Ltd")]
 [assembly: AssemblyCopyright("Copyright © 2006 Kiwi Development Ltd.")]
 [assembly: AssemblyProduct("NCoverExplorer NAnt Tasks")]
-[assembly: AssemblyVersion("1.3.5.1949")]
+[assembly: AssemblyVersion("1.3.5.1950")]
