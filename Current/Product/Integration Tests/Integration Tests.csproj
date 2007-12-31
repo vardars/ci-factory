@@ -37,10 +37,13 @@
     <Content Include="VisualSourceSafeTests\InstallationTest.xml" />
     <Content Include="VS.NETCompileTests\Install Resources\DefaultArguments.xml" />
     <Content Include="VS.NETCompileTests\InstallationTest.xml" />
+    <Content Include="WatiNTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="WatiNTests\WatiNTests.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MbUnitTests\Resources\" />
     <Folder Include="MSTestTests\Resources\" />
     <Folder Include="NUnitTests\Resources\" />
+    <Folder Include="WatiNTests\Resources\" />
   </ItemGroup>
 </Project>

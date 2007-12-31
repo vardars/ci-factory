@@ -3,7 +3,7 @@
 
   <include buildfile="NCover.Properties.xml" />
   <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
-  <loadtasks assembly="${BuildDirectory}\Packages\NCover\bin\NAnt.NCoverExplorer.Tasks.dll" />
+  <loadtasks assembly="${BuildDirectory}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
 
   <!--
 	The following properties should be specified in the calling script.
@@ -46,24 +46,45 @@
     <if test="${fileset::file-count('Coverage.Targets') == 0}">
       <call target="Coverage.FindTargetAssebmlies"/>
     </if>
-    
-    <setenv>
-      <environment>
-        <variable name="Cor_Enable_Profiling" value="1" />
-        <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
-      </environment>
-    </setenv>
 
     <trycatch>
       <try>
-        <ncover program="${NCover.ExePath}"
-						commandLineExe="${NantExePath}"
-						commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
-						workingDirectory="${Coverage.ReportFolder}"
-						coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
-						profiledProcessModule="${NCover.ProcessToMonitor}">
-          <assemblies refid="Coverage.Targets" />
-        </ncover>
+        <ifthenelse test="${NCover.IIS}">
+          <then>
+            <startncover 
+              program="${NCover.ExePath}"
+              coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
+              profileIIS="true" serviceTimeout="${NCover.IIS.Timeout}"
+            >
+              <assemblies refid="Coverage.Targets"/>
+            </startncover>
+
+            <exec
+              program="${NantExePath}"
+              commandline='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
+            />
+            
+            <stopncover/>
+          </then>
+          <else>
+            <setenv>
+              <environment>
+                <variable name="Cor_Enable_Profiling" value="1" />
+                <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
+              </environment>
+            </setenv>
+            <ncover
+              program="${NCover.ExePath}"
+              commandLineExe="${NantExePath}"
+              commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
+              workingDirectory="${Coverage.ReportFolder}"
+              coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
+              profiledProcessModule="${NCover.ProcessToMonitor}"
+            >
+              <assemblies refid="Coverage.Targets" />
+            </ncover>
+          </else>
+        </ifthenelse>
       </try>
       <catch property="failure">
         <fail message="At least one test failed: ${failure}"/>

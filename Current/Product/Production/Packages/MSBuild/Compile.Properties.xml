@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
   <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" overwrite="false"/>
   <property name="Compile.PublishLogFile" value="true" overwrite="false"/>
-  <property name="Compile.ConfigName" value="Release" overwrite="false"/>
+  <property name="Compile.ConfigName" value="%Compile.ConfigName%" overwrite="false"/>
   <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false"/>
   <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false"/>
   <property name="Compile.ToCopyToBin" value="true"  overwrite="false"/>
