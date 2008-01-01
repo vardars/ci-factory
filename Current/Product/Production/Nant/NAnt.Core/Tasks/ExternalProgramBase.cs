@@ -527,6 +527,7 @@ namespace NAnt.Core.Tasks {
                 {
                     StreamWriter sw = p.StandardInput;
                     sw.Write(this.Input);
+                    sw.Close();
                 }
                 return p;
             } catch (Exception ex) {
