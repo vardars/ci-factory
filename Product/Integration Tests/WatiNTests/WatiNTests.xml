@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="WatiNTests" default="WatiNTests.RunAllTests" basedir="..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <include buildfile="TestRunner.Properties.xml"/>
+    <include buildfile="TestRunner.Common.xml"/>
+		<include buildfile="TestRunner.Build.xml" unless="${target::exists('CIFactory.TestRunner.Deploy')}"/>
+  </ifnot>
+
+	<target name="WatiNTests.RunAllTests" >
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
+			<fixtures>
+				<string value="WatiNTests"/>
+			</fixtures>
+		</testrunner>
+	</target>
+
+  <target name="WatiNTests.SetProperties" >
+    <property name="ProjectName" value="WatiNTestProject"/>
+    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="ProjectCodeLineName" value="Current" />
+    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
+    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
+    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
+    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
+    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
+    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
+    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+
+    <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
+    <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+  </target>
+
+  <target name="WatiNTests.FixtureSetUp">
+    <call target="WatiNTests.SetProperties"/>
+
+    <property name="SourceControlStub.Directory" value="${Deployment.Directory.Path}\Packages\SourceControlStub"/>
+    <copy todir="${Deployment.Directory.Path}\Packages" unless="${directory::exists(SourceControlStub.Directory)}">
+      <fileset basedir="Stubs">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+
+    <deliisdir vdirname="GuestBook" failonerror="false"/>
+    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+
+    <copy file="WatiNTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
+    <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
+
+    <loglevel level="None">
+      <do>
+        <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+      </do>
+    </loglevel>
+		<sleep seconds="2"/>
+
+		<asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+	</target>
+
+	<target name="WatiNTests.FixtureTearDown">
+		<ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
+
+		<trycatch if="${property::exists('CCNet.Pid')}">
+			<try>
+				<waitfor condition="${process::isrunning(CCNet.Pid) == false}" timeout="10" pollinginterval="2"/>
+			</try>
+			<catch>
+				<exec program="taskkill" commandline="/PID ${CCNet.Pid} /T /F" if="${process::isrunning(CCNet.Pid)}" />
+			</catch>
+		</trycatch>
+	</target>
+
+	<target name="WatiNTests.SetUp">
+
+	</target>
+
+	<target name="WatiNTests.TearDown">
+
+	</target>
+
+	<target name="WatiNTests.DefaultInstallTest">
+		<copy todir="${ProjectCodeLineDirectory}" overwrite="true">
+			<fileset basedir="WatiNTests\Resources">
+				<include name="**\*"/>
+			</fileset>
+		</copy>
+		
+		<assertequal actual="${directory::exists(ProductionDirectory + '\GuestBook')}" expected="True" message="Expected to have copied the test product."/>
+		<assertequal actual="${directory::exists(ProductDirectory + '\Unit Test\GuestBook.Test')}" expected="True" message="Expected to have copied the unit test."/>
+
+    <mkiisdir dirpath="${ProductionDirectory}\GuestBook" vdirname="GuestBook"  defaultdoc="GuestBook.aspx" enabledefaultdoc="true"/>
+
+		<!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
+		<sleep seconds="5"/>
+
+		<ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
+			<ccnetplugins>
+				<include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
+			</ccnetplugins>
+		</ccnetforce>
+		<waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="60" pollinginterval="10"/>
+		<assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
+
+		<property name="WatiNTests.BuildLogPath" value="${BuildDirectory}\server\${CCNET.ProjectName}\Artifacts\buildlogs\${ccnet::get-project-last-build-log(CCNET.ServerUrl, CCNET.ProjectName)}"/>
+
+		<xmlpeek property="WatiNTests.UnitTestCount" 
+						 file="${WatiNTests.BuildLogPath}" 
+						 xpath="/cruisecontrol/build/mbunitsummary/@testcount" />
+		<assertequal expected="1" actual="${WatiNTests.UnitTestCount}" message="Expected there to be 1 unit test case."/>
+
+    <xmlpeek property="WatiNTests.FailureCount"
+						 file="${WatiNTests.BuildLogPath}"
+						 xpath="/cruisecontrol/build/mbunitsummary/@failures" />
+    <assertequal expected="0" actual="${WatiNTests.FailureCount}" message="Expected there to be 0 failures."/>
+
+    <xmlpeek property="WatiNTests.GuestBook.Coverage"
+						 file="${WatiNTests.BuildLogPath}"
+						 xpath="/cruisecontrol/build/ncoversummary/tr/td[text() ='GuestBook.DLL']/following-sibling::td[1]" />
+    <assertequal expected="96.8%" actual="${string::trim(WatiNTests.GuestBook.Coverage)}" message="Expected there to be 96.8% coverage on GuestBook ."/>
+	</target>
+</project>
