@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCover.Install.Properties">
+
+  <property name="NCover.Version" value="2.0.3" overwrite="false"/>
+  <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe" overwrite="false"/>
+  <property name="NCover.ExplorerExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCoverExplorer.Console.exe" overwrite="false"/>
+  <property name="NCover.IIS" value="false" overwrite="false"/>
+  <property name="NCover.IIS.Timeout" value="180" overwrite="false"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ExePath%', NCover.ExePath)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ExplorerExePath%', NCover.ExplorerExePath)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.IIS%', NCover.IIS)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.IIS.Timeout%', NCover.IIS.Timeout)}"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Coverage.UnitTestPackageInclude%', Coverage.UnitTestPackageInclude)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Coverage.UnitTestPropertiesInclude%', Coverage.UnitTestPropertiesInclude)}"/>
+</project>
