@@ -28,6 +28,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Third Party\WatiN\1.2.1-net-2.0\bin\Interop.SHDocVw.dll</HintPath>
+    </Reference>
     <Reference Include="MbUnit.Framework, Version=2.41.232.0, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Third Party\MbUnit\MbUnit.Framework.dll</HintPath>
