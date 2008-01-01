@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="LinesOfCode.Properties">
+  <property name="LinesOfCode.Directory" value="${BuildDirectory}\LinesOfCode" />
+  <property name="LinesOfCode.File" value="${LinesOfCode.Directory}\LinesOfCode.xml" />
+</project>
