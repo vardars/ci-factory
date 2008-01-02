@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="PathFunctionTests" default="PathFunctionTests.RunAllTests" basedir="..\..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <call target="Solo"/>  
+  </ifnot>
+
+  <target name="Solo">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <property name="IntegrationTest.ReportFilePath" value="C:\Temp\Report.xml" overwrite="false"/>
+    <strings id="fixtures" />
+  </target>
+
+  <function execute="${stringlist::add('fixtures', 'PathFunctionTests')}"/>
+  
+  <target name="PathFunctionTests.RunAllTests">
+		<testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
+      <fixtures refid="fixtures" />
+    </testrunner>
+  </target>
+
+
+  <target name="PathFunctionTests.FixtureSetUp">
+    
+  </target>
+
+  <target name="PathFunctionTests.FixtureTearDown">
+    
+  </target>
+
+  <target name="PathFunctionTests.SetUp">
+    
+  </target>
+
+  <target name="PathFunctionTests.TearDown">
+    
+  </target>
+
+  <target name="PathFunctionTests.Path::MakeRelative.Test">
+    <property name="AbsoluteFilePath" value="c:\Projects\Example\Current\ThirdParty\MbUnit\MbUnit.Framework.dll"/>
+    <property name="ProjectDirectoryPath" value="c:\Projects\Example\Current\Product\Unit Test\MyTests"/>
+
+    <property name="RelativeFilePath" value="${path::get-relative-path(AbsoluteFilePath, ProjectDirectoryPath)}"/>
+
+    <assertequal actual="${RelativeFilePath}" expected="..\..\..\ThirdParty\MbUnit\MbUnit.Framework.dll" message="Expeted the relative file path to have been calulated."/>
+  </target>
+  
+</project>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VS.NETDeploy.Install" default="VS.NETDeploy.Install">
+
+  <include buildfile="Properties.xml" />
+
+  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
+  <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
+  
+  <property name="Compile.Default2003SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2003.sln.remove"/>
+  <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2005.sln.remove"/>
+  <property name="Compile.DefaultOpenSolutionBat" value="${SourcePackagesDirectory}\VS.NETCompile\Install\OpenSolution.bat"/>
+  
+  <target name="VS.NETDeploy.Install">
+    <largeproperty name="Packages.AddCompileActions.Block">
+      <value xml="false"><![CDATA[<call target="Install.CreateSetup" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddCompileActions"/>
+
+
+    <ifnot test="${stringlist::contains('Packages.InstallList', 'VS.NETCompile')}">
+      <property name="Packages.CopyPackage.PackageName" value="VS.NETCompile"/>
+      <call target="Private.Packages.CopyPackage"/>
+      
+      <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+        <value xml="false"><![CDATA[<xslFile>Packages\VS.NETCompile\Compile.xsl</xslFile>]]></value>
+      </largeproperty>
+      <call target="Packages.AddbuildReportBuildPlugin"/>
+
+      <largeproperty name="Packages.AddbuildPlugins.Block">
+        <value xml="false"><![CDATA[<xslReportBuildPlugin description=".NET Compile Details" actionName="DevEnvCompileDetails" xslFileName="Packages\VS.NETCompile\DevEnvCompileDetails.xsl" />]]></value>
+      </largeproperty>
+      <call target="Packages.AddbuildPlugins"/>
+
+      <largeproperty name="Packages.AddMergeFiles.Block">
+        <value expand="true"><![CDATA[<file>&BuildDirectory;\CompileLogs\*.xml</file>]]></value>
+      </largeproperty>
+      <call target="Packages.AddMergeFiles"/>
+    </ifnot>
+  </target>
+
+  <target name="VS.NETDeploy.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VS.NETDeploy"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Install.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Install"/>
+  </target>
+
+  <target name="VS.NETDeploy.ValidateParameters">
+    <ifnot test="${stringlist::contains('Packages.InstallList', 'VS.NETCompile')}">
+
+      <ifthenelse test="${Compile.DevEnv.Version == '2003'}">
+        <then></then>
+        <elseif if="${Compile.DevEnv.Version == '2005'}"></elseif>
+        <else>
+          <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
+        </else>
+      </ifthenelse>
+      <switch value="${Compile.DevEnv.Version}">
+        <case value="2003" break="true">
+          <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" overwrite="false"/>
+          <property name="Compile.DevEnv" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\IDE\devenv.exe" overwrite="false"/>
+        </case>
+        <case value="2005" break="true">
+          <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
+          <property name="Compile.DevEnv" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
+        </case>
+      </switch>
+      <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv%', Compile.DevEnv)}"/>
+      <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv.vsvars32bat%', Compile.DevEnv.vsvars32bat)}"/>
+    </ifnot>
+  </target>
+  
+</project>
