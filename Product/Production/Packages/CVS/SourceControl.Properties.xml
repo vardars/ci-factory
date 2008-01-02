@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Vault.Properties">
+
+
+  <property name="CVS.Username" value="%CVS.Username%" overwrite="false" />
+  <property name="CVS.Password" value="%CVS.Password%" overwrite="false" />
+
+</project>
