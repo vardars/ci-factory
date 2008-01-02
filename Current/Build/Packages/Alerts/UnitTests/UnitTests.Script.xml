@@ -74,10 +74,12 @@
     <if test="${Alerts.UnitTests.Previous.Count != 'NaN' and bool::parse(AreChangesFromThisBuild) == true and Alerts.UnitTests.Count != 'notset'}">
       <ifthenelse test="${int::parse(Alerts.UnitTests.Count) > int::parse(Alerts.UnitTests.Previous.Count)}">
         <then>
+          <echo message="int::parse(Alerts.UnitTests.Count) > int::parse(Alerts.UnitTests.Previous.Count) is ${int::parse(Alerts.UnitTests.Count)} > ${int::parse(Alerts.UnitTests.Previous.Count)} is ${int::parse(Alerts.UnitTests.Count) > int::parse(Alerts.UnitTests.Previous.Count)}"/>
           <call target="Alerts.UnitTests.GenerateThankYou"/>
           <call target="Alerts.SendMessage"/>
         </then>
         <elseif if="${int::parse(Alerts.UnitTests.Previous.Count) > int::parse(Alerts.UnitTests.Count)}">
+          <echo message="int::parse(Alerts.UnitTests.Previous.Count) > int::parse(Alerts.UnitTests.Count) is ${int::parse(Alerts.UnitTests.Previous.Count)} > ${int::parse(Alerts.UnitTests.Count)} is ${int::parse(Alerts.UnitTests.Previous.Count) > int::parse(Alerts.UnitTests.Count)}" />
           <call target="Alerts.UnitTests.GenerateWarning"/>
           <call target="Alerts.SendMessage"/>
         </elseif>
