@@ -62,6 +62,8 @@
             <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
 
             <stopncover/>
+
+            <servicecontroller service="W3SVC" action="Start"/>
           </then>
           <else>
             <setenv>
