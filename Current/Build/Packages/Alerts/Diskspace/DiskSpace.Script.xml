@@ -14,7 +14,7 @@
 
     <ifthenelse test="${DiskSpaceThreshold > DiskSpace}">
       <then>
-        <call target="Alerts.UnitTests.GenerateWarning"/>
+        <call target="Alerts.DiskSpace.GenerateWarning"/>
         <call target="Alerts.SendMessage"/>
       </then>
     </ifthenelse>
