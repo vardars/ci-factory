@@ -30,6 +30,7 @@ using NAnt.Core.Types;
 
 namespace NAnt.Core {
 
+    [TaskName("break")]
     public class BreakTask : Task
     {
 
@@ -62,7 +63,6 @@ namespace NAnt.Core {
         private StringCollection _subXMLElements;
 
         #endregion Private Instance Fields
-
 
         #region Override implementation of Element
 
@@ -101,7 +101,8 @@ namespace NAnt.Core {
                 }
 
                 BuildElementAttribute buildElemAttr = (BuildElementAttribute) Attribute.GetCustomAttribute(memInfo, typeof(BuildElementAttribute), true);
-                if (buildElemAttr != null) {
+                if (buildElemAttr != null)
+                {
                     _subXMLElements.Add(buildElemAttr.Name);
                 }
             }

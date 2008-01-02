@@ -47,6 +47,7 @@ namespace CIFactory.NAnt.Tasks
 
         protected override void ExecuteTask()
         {
+            BreakTask.Break = false;
             foreach (string Item in this.Items)
             {
                 if (this.Properties.Contains(this.PropertyName))
@@ -59,6 +60,10 @@ namespace CIFactory.NAnt.Tasks
                 }
                 this.Items.Items.Executing(Item);
                 this.Actions.Execute();
+                if (BreakTask.Break)
+                {
+                    break;
+                }
             }
         }
 

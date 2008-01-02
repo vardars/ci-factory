@@ -261,7 +261,9 @@ namespace NAnt.Core.Tasks {
 
         #region Override implementation of TaskContainer
 
-        protected override void ExecuteTask() {
+        protected override void ExecuteTask()
+        {
+            BreakTask.Break = false;
             string[] oldPropVals = new string[_props.Length];
             // Save all of the old property values
             for (int nIndex = 0; nIndex < oldPropVals.Length; nIndex++) {
@@ -295,6 +297,10 @@ namespace NAnt.Core.Tasks {
                         
                             foreach (FileInfo file in files) {
                                 DoWork(file.FullName);
+                                if (BreakTask.Break)
+                                {
+                                    break;
+                                }
                             }
                         } else {
                             if (StuffToDo == null) {
@@ -303,6 +309,10 @@ namespace NAnt.Core.Tasks {
 
                             foreach (string file in InElement.Items.FileNames) {
                                 DoWork(file);
+                                if (BreakTask.Break)
+                                {
+                                    break;
+                                }
                             }
                         }
                         break;
@@ -330,6 +340,10 @@ namespace NAnt.Core.Tasks {
                             DirectoryInfo[] dirs = dirInfo.GetDirectories();
                             foreach (DirectoryInfo dir in dirs) {
                                 DoWork(dir.FullName);
+                                if (BreakTask.Break)
+                                {
+                                    break;
+                                }
                             } 
                         } else {
                             if (StuffToDo == null) {
@@ -338,6 +352,10 @@ namespace NAnt.Core.Tasks {
 
                             foreach (string dir in InElement.Items.DirectoryNames) {
                                 DoWork(dir);
+                                if (BreakTask.Break)
+                                {
+                                    break;
+                                }
                             }
                         }
                         break;
@@ -369,6 +387,10 @@ namespace NAnt.Core.Tasks {
 
                             foreach (string file in InElement.Items.FileNames) {
                                 DoWorkOnFileLines(file);
+                                if (BreakTask.Break)
+                                {
+                                    break;
+                                }
                             }
                         }
                         break;
@@ -388,6 +410,10 @@ namespace NAnt.Core.Tasks {
                         string[] items = Source.Split(Delimiter.ToCharArray());
                         foreach (string s in items) {
                             DoWork(s);
+                            if (BreakTask.Break)
+                            {
+                                break;
+                            }
                         }
                         break;
                 }
@@ -446,8 +472,16 @@ namespace NAnt.Core.Tasks {
                     }
                     if (Delimiter == null) {
                         DoWork(line);
+                        if (BreakTask.Break)
+                        {
+                            break;
+                        }
                     } else {
                         DoWork(line.Split(Delimiter.ToCharArray()));
+                        if (BreakTask.Break)
+                        {
+                            break;
+                        }
                     }
                 }
             }

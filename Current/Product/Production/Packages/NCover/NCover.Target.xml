@@ -59,11 +59,8 @@
               <assemblies refid="Coverage.Targets"/>
             </startncover>
 
-            <exec
-              program="${NantExePath}"
-              commandline='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
-            />
-            
+            <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
+
             <stopncover/>
           </then>
           <else>
