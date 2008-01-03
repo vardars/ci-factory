@@ -59,6 +59,14 @@
               <assemblies refid="Coverage.Targets"/>
             </startncover>
 
+            <!--Begin Hack-->
+            <!--MbUnit MbUnit.Core.Reports.ReportBase.Render won't emit report if cor_enable_profiling == 1-->
+            <setenv>
+              <environment>
+                <variable name="Cor_Enable_Profiling" value="" />
+              </environment>
+            </setenv>
+            <!--End Hack-->
             <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
 
             <stopncover/>
