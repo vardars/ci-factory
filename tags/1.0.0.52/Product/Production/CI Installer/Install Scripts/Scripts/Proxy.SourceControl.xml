@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Proxy.SourceControl">
+
+  <include buildfile="${BuildDirectory}\Properties.build.xml"/>
+  <include buildfile="${BuildDirectory}\Common.Build.xml"/>
+
+
+  <script language="C#" prefix="directory" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("number-of-children")]
+         public static int NumberOfChildren(string path)
+         {
+                 return Directory.GetDirectories(path).Length;
+         }
+         [Function("name")]
+         public static string GetDirectoryName(string path)
+         {
+                 return new DirectoryInfo( path ).Name;
+         }
+      ]]>
+    </code>
+  </script>
+  
+  <fileset id="PacakgeFinder" />
+  <ifnot test="${property::exists('SourceControl.PackageName')}">
+    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <echo message="${PackagePathPattern}" />
+    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
+    <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${PackagesDirectory}." />
+    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+    <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
+  </ifnot>
+
+  <property name="SourceControl.Update.FileTimeStamp" value="Current"/>
+  <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
+  <property name="SourceControl.Update.MakeWritable" value="False"/>
+  <property name="SourceControl.Update.Interactive" value="True"/>
+
+  <include buildfile="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"/>
+
+  <target name="Proxy.SourceControl.CheckoutAll">
+    <property name="SourceControl.CheckOut.File" value="${ProjectCodeLineDirectory}"/>
+    <call target="SourceControl.CheckOut" failonerror="false"/>
+  </target>
+
+  <target name="Proxy.SourceControl.UpdateTarget">
+    <ifthenelse test="${target::exists('SourceControl.GetOfCodeLineDirectory')}">
+      <then>
+        <call target="SourceControl.GetOfCodeLineDirectory"/>
+      </then>
+      <else>
+        <call target="SourceControl.GetOfBuildDirectory"/>
+        <call target="SourceControl.GetOfThirdPartyDirectory"/>
+        <call target="SourceControl.GetOfProductDirectory"/>
+      </else>
+    </ifthenelse>
+  </target>
+</project>
