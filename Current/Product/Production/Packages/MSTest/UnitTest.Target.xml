@@ -53,6 +53,7 @@
     <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"/>
     <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSTest\MsTestSummary.xsl"/>
+    <property name="Common.ShowReport.DetailsFilePath" value=""/>
     <call target="Common.ShowReport"/>
   </target>
 

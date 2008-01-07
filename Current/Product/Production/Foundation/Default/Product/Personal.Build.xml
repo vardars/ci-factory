@@ -179,6 +179,7 @@
         <property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
         <property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
         <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
+        <property name="Common.ShowReport.DetailsFilePath" value=""/>
         <call target="Common.ShowReport"/>
 
         <fail message="${ExceptionMessage}"/>

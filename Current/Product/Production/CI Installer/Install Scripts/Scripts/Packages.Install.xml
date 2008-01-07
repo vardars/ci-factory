@@ -40,6 +40,14 @@
     <value xml="false"><![CDATA[<description>End Package Includes</description>]]></value>
   </largeproperty>
 
+  <largeproperty name="Private.Packages.AddSetUp.EndTag">
+    <value xml="false"><![CDATA[<description>End SetUps</description>]]></value>
+  </largeproperty>
+
+  <largeproperty name="Private.Packages.AddTearDown.EndTag">
+    <value xml="false"><![CDATA[<description>End TearDowns</description>]]></value>
+  </largeproperty>
+
 	<largeproperty name="Private.Packages.buildReportBuildPlugin.EndTag">
 		<value>
 			<![CDATA[</xslFileNames>
@@ -219,32 +227,28 @@
 
 
   <target name="Private.Packages.AddSetUp" unless="${IsUpgrade}">
-		<largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
 			<value xml="false" expand="true">
 				<![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
 			</value>
 		</largeproperty>
 
-		<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='SetUps']"/>
-		<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='SetUps']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.SetUp']"/>
-		<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddSetUp.EndTag}"/>
 
-		<call target="Private.Packages.MainBuild.SmartAddXml"/>
-	</target>
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
+  </target>
 
 
-	<target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddXml.NewText">
+  <target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
+    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
         <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown" />]]>
       </value>
     </largeproperty>
 
-    <property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value="//nant:target[@name='TearDowns']"/>
-    <property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value="//nant:target[@name='TearDowns']/nant:call[@target='${Packages.CurrenctPackage.PackageName}.TearDown']"/>
-    <property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value="false"/>
+    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddTearDown.EndTag}"/>
 
-    <call target="Private.Packages.MainBuild.SmartAddXml"/>
+    <call target="Private.Packages.MainBuild.SmartAddString"/>
   </target>
 
 
@@ -322,77 +326,6 @@
 			</filterchain>
 		</replace>
 	</target>
-
-	<property name="Private.Packages.MainBuild.SmartAddXml.ToXPath" value=""/>
-	<property name="Private.Packages.MainBuild.SmartAddXml.IfNotXPath" value=""/>
-	<property name="Private.Packages.MainBuild.SmartAddXml.NewText" value=""/>
-	<property name="Private.Packages.MainBuild.SmartAddXml.ToFront" value=""/>
-	<target name="Private.Packages.MainBuild.SmartAddXml" unless="${IsUpgrade}">
-    <script language="C#">
-      <imports >
-        <import namespace="System.Xml"/>
-        <import namespace="NAnt.Core.Types" />
-      </imports >
-      <code>
-        <![CDATA[
-public static void ScriptMain(NAnt.Core.Project project)
-{
-  string buildFile = project.Properties["Current.BuildFile"];
-
-  XmlDocument buildXmlDoc = new XmlDocument();
-  buildXmlDoc.Load(buildFile);
-  XmlNamespaceManager namespaces = new XmlNamespaceManager(buildXmlDoc.NameTable);
-  namespaces.AddNamespace("nant", "http://nant.sf.net/schemas/nant.xsd");
-
-  string sectionXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToXPath"];
-  string newText = project.Properties["Private.Packages.MainBuild.SmartAddXml.NewText"];
-  string ifNotXPath = project.Properties["Private.Packages.MainBuild.SmartAddXml.IfNotXPath"];
-  string toFrontString = project.Properties["Private.Packages.MainBuild.SmartAddXml.ToFront"];
-
-  if (String.IsNullOrEmpty(sectionXPath))
-    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.ToXPath");
-  if (String.IsNullOrEmpty(newText))
-    throw new ArgumentNullException("Private.Packages.MainBuild.SmartAddXml.NewText");
-
-  bool toFront = "true".Equals(toFrontString);
-
-  XmlNode sectionNode = buildXmlDoc.SelectSingleNode(sectionXPath, namespaces);
-  if (sectionNode == null)
-    throw new ApplicationException("No node matched xpath (did you forget the nant: namespace?): " + sectionXPath);
-
-
-  bool add = true;
-
-  if (!String.IsNullOrEmpty(ifNotXPath))
-  {
-    if (buildXmlDoc.SelectSingleNode(ifNotXPath, namespaces) != null)
-    {
-      add = false;
-    }
-  }
-
-  if (add)
-  {
-    string nodeText;
-    if (toFront)
-    {
-      nodeText = newText + sectionNode.InnerXml;
-    }
-    else
-    {
-      nodeText = sectionNode.InnerXml + newText;
-    }
-
-    sectionNode.InnerXml = nodeText;
-
-    buildXmlDoc.PreserveWhitespace = false;
-    buildXmlDoc.Save(buildFile);
-  }
-}
-        ]]>
-      </code>
-    </script>
-  </target>
 
   <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value=""/>
   <property name="Private.Packages.MainBuild.SmartAddString.NewText" value=""/>

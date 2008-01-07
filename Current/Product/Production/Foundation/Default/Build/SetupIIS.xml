@@ -45,8 +45,11 @@
             
             foreach(DirectoryEntry ChildVdir in Vdir.Children)
             {
-              ChildVdir.Properties["ScriptMaps"].Remove(newScriptMap);
-              ChildVdir.CommitChanges();
+              if (ChildVdir.Properties["ScriptMaps"].Contains(newScriptMap))
+              {
+                ChildVdir.Properties["ScriptMaps"].Remove(newScriptMap);
+                ChildVdir.CommitChanges();
+              }
             }
           }
 

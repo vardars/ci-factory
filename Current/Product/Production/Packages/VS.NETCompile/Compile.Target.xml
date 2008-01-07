@@ -34,6 +34,7 @@
     <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"/>
     <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\VS.NETCompile\DevEnvCompileDetails.xsl"/>
+    <property name="Common.ShowReport.DetailsFilePath" value=""/>
     <call target="Common.ShowReport"/>
   </target>
     
