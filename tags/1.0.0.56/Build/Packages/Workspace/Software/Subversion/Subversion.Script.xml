@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Subversion.Scripts">
+
+  <property name="TortoiseSvnInstallerPath" value="TortoiseSVN-1.4.5.10425-win32-svn-1.4.5.msi"/>
+  <property name="TortoiseSvnInstallerUrl" value="http://superb-west.dl.sourceforge.net/sourceforge/tortoisesvn/TortoiseSVN-1.4.5.10425-win32-svn-1.4.5.msi"/>
+
+  <property name="SvnServerInstallerPath" value="CollabNetSubversion-server-1.4.5-1.win32.exe"/>
+  <property name="SvnServerInstallerUrl" value="http://downloads-guests.open.collab.net/files/documents/61/297/CollabNetSubversion-server-1.4.5-1.win32.exe"/>
+
+  <target name="Workspace.RequieredSoftware.Subversion">
+		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\TortoiseSVN\bin\TortoiseProc.exe')}" >
+			<ask answer="Answer"
+           question="It looks like TortoiseSVN is not installed.  This software is required.  Do you wish to install the software?"
+           caption="Proceed Without Required Software?"
+           showdialog="true" >
+				<options>
+					<string value="Install"/>
+					<string value="Exit"/>
+				</options>
+			</ask>
+			<ifthenelse test="${Answer == 'Install'}">
+				<then>
+
+          <get dest="TortoiseSvnInstallerPath" src="${TortoiseSvnInstallerUrl}"></get>
+
+          <ifthenelse test="${file::exists(TortoiseSvnInstallerPath)}">
+            <then>
+              <exec program="msiexec" commandline="/i ${TortoiseSvnInstallerPath}" workingdir="." verbose="true" />
+            </then>
+            <else>
+              <asyncexec program="cmd" commandline='/C "explorer http://tortoisesvn.net/downloads"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+
+              <ask answer="Answer" caption="Are finished installing TortoiseSVN?" question="Are finished installing TortoiseSVN?" showdialog="true">
+                <options>
+                  <string value="Finished"/>
+                  <string value="Exit"/>
+                </options>
+              </ask>
+
+              <fail if="${Answer == 'Exit'}" message="Please try again after installing TortoiseSVN."/>
+            </else>
+          </ifthenelse>
+				</then>
+				<elseif if="${Answer == 'Exit'}">
+					<fail message="Please install TortoiseSVN!" />
+				</elseif>
+			</ifthenelse>
+		</ifnot>
+	</target>
+
+  <target name="Workspace.RequieredSoftware.SubversionServer">
+    <exec program="svn" commandline='list http://localhost:81/svn' failonerror='false' resultproperty='FoundSvnRepo.ExitCode'/>
+    <property name="FoundSvnRepo" value="${int::parse(FoundSvnRepo.ExitCode) == 0}"/>
+    
+    <ifnot test="${FoundSvnRepo}" >
+      <ask answer="Answer"
+           question="I could not find a Subversion server at http://localhost:81/svn.  Would you like me to install one?  This is to support integration tests."
+           caption="Subversion Server is optional.  If you do not install it the Subversion integration tests will fail."
+           showdialog="true" >
+        <options>
+          <string value="Install"/>
+          <string value="Exit"/>
+        </options>
+      </ask>
+      <ifthenelse test="${Answer == 'Install'}">
+        <then>
+
+          <get dest="SvnServerInstallerPath" src="${SvnServerInstallerUrl}"></get>
+
+          <ifthenelse test="${file::exists(SvnServerInstallerPath)}">
+            <then>
+              <exec workingdir="${path::get-directory-name(SvnServerInstallerPath)}" program="${SvnServerInstallerPath}" verbose="true" />
+            </then>
+            <else>
+              <asyncexec program="cmd" commandline='/C "explorer http://downloads.open.collab.net/collabnet-subversion.html"' createnowindow="true" redirectoutput="false" useshellexecute="true" waitforexit="false" />
+
+              <ask answer="Answer" caption="Are finished installing Subversion?" question="Are finished installing Subversion?" showdialog="true">
+                <options>
+                  <string value="Continue"/>
+                </options>
+              </ask>
+            </else>
+          </ifthenelse>
+
+          <write append="true" file="${environment::get-variable('ProgramFiles')}\CollabNet Subversion Server\httpd\conf\httpd.conf">
+            <text>
+              <![CDATA[
+<Location /svn>
+   DAV svn
+   SVNPath C:/svn_repository
+</Location>]]>
+            </text>
+          </write>
+          
+          <servicecontroller action="Restart" service="Apache2"/>
+          
+          <!--need to add a junction here from CollabNet Subversion Server to Subversion\bin-->
+        </then>
+        <elseif if="${Answer == 'Exit'}">
+          <!--It Is Optional!-->
+        </elseif>
+      </ifthenelse>
+    </ifnot>
+  </target>
+
+</project>
