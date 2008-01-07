@@ -9,6 +9,11 @@
 
   <target name="Custom.CreateDocumentationIndex">
     <property name="IndexDirectoryPath" value="${ProductDirectory}\Documentation"/>
+    <copy
+      file="${BuildDirectory}\Documentation\Index.htm"
+      tofile="${ProductDirectory}\Documentation\Index.htm"
+      overwrite="true"
+    />
 
     <property name="ListContainerId" value="CoreDocList"/>
     <property name="DocDirectory" value="${ProductDirectory}\Documentation\Core"/>
@@ -65,7 +70,7 @@
             <namespace prefix="h" uri="http://www.w3.org/1999/xhtml"/>
           </namespaces>
         </xmlpeek>
-        <echo message="${DocList}"/>
+        <property name="Title" value="${string::replace(Title, 'CI Factory - ', '')}"/>
 
         <largeproperty name="DocList">
           <value expand="true" xml="true">

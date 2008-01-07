@@ -98,10 +98,18 @@
     </fileset>
   </target>
 
-  <target name="UnitTest.ShowReport">
-    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"/>
+  <target name="UnitTest.ShowReport" if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}">
+    <delete file="${UnitTest.ReportFolder}\Summary.xml" if="${file::exists(UnitTest.ReportFolder + '\Summary.xml')}" />
+    <style
+      in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
+      out="${UnitTest.ReportFolder}\Summary.xml"
+      style="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitSummary.xsl"
+    />
+
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\Summary.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
-    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitSummary.xsl"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitDisplaySummary.xsl"/>
+    <property name="Common.ShowReport.DetailsFilePath" value="${Common.ArtifactDirectoryPath}\MbUnitReport.html"/>
     <call target="Common.ShowReport"/>
   </target>
 

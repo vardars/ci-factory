@@ -286,6 +286,7 @@
     <Content Include="..\Product\Scripts\Personal.Build.xml">
       <Link>Personal.Build\Scripts\Personal.Build.xml</Link>
     </Content>
+    <Content Include="Documentation\Index.htm" />
     <Content Include="Packages\Alerts\Alerts.Properties.xml" />
     <Content Include="Packages\Alerts\Alerts.Target.xml" />
     <Content Include="Packages\Alerts\ChangePackageSize\ChangePackageSize.Script.xml" />
