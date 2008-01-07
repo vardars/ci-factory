@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="InstallShield.Install" default="InstallShield.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="InstallShield.Install">
+    <ifthenelse test="${InstallShield.Type == 'MSI'}">
+      <then>
+        <largeproperty name="Packages.AddPostBuildActions.Block">
+          <value xml="false"><![CDATA[<call target="InstallShield.BuildMsi" />]]></value>
+        </largeproperty>
+      </then>
+      <elseif if="${InstallShield.Type == 'SCRIPT'}">
+        <largeproperty name="Packages.AddPostBuildActions.Block">
+          <value xml="false"><![CDATA[<call target="InstallShield.BuildInstallScript" />]]></value>
+        </largeproperty>
+      </elseif>
+      <else>
+        <fail message="Property InstallShield.Type value must be 'MSI' or 'SCRIPT', '${InstallShield.Type}' is not a valid value."/>
+      </else>
+      <call target="Packages.AddPostBuildActions"/>
+    </ifthenelse>
+    
+    <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="InstallShield.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="InstallShield"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="InstallShield.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="InstallShield"/>
+  </target>
+
+  <target name="InstallShield.ValidateParameters">
+    <ifthenelse test="${InstallShield.Type == 'MSI'}">
+      <then>
+
+      </then>
+      <elseif if="${InstallShield.Type == 'SCRIPT'}">
+
+      </elseif>
+      <else>
+        <fail message="Property InstallShield.Type value must be 'MSI' or 'SCRIPT', '${InstallShield.Type}' is not a valid value."/>
+      </else>
+    </ifthenelse>
+  </target>
+  
+</project>
