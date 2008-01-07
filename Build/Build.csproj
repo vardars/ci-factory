@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Packages\CSDiff\bin\csdiff.chm" />
+    <None Include="Packages\CSDiff\bin\CSDiff.exe" />
+    <None Include="Packages\CSDiff\bin\cshelp.dll" />
+    <None Include="Packages\CSDiff\bin\cswinlib.dll" />
+    <None Include="Packages\CSDiff\bin\License.TXT" />
+    <None Include="Packages\CSDiff\bin\README.TXT" />
+    <None Include="Packages\CSDiff\CSDiff.Properties.xml" />
+    <None Include="Packages\CSDiff\CSDiff.Target.xml" />
+    <None Include="Packages\CSDiff\CSDiffReport.xsl" />
+    <None Include="Packages\CSDiff\Diff.gif" />
+    <None Include="Packages\Deployment\Deployment.Target.xml" />
+    <None Include="Packages\Deployment\deployment.xsl" />
+    <None Include="Packages\Deployment\images\Deployment.gif" />
+    <None Include="Packages\Deployment\images\File.gif" />
+    <None Include="Packages\DotNetUnitTest\bin\MbUnit.Framework.1.1.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\MbUnit.Framework.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\MbUnit.Tasks.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\NGraphviz.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\NGraphviz.Helpers.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\NGraphviz.Layout.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\QuickGraph.Algorithms.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\QuickGraph.Algorithms.Graphviz.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\QuickGraph.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\Refly.dll" />
+    <None Include="Packages\DotNetUnitTest\bin\TestFu.dll" />
+    <None Include="Packages\DotNetUnitTest\images\Category.png" />
+    <None Include="Packages\DotNetUnitTest\images\Fixture.png" />
+    <None Include="Packages\DotNetUnitTest\images\Invoker.png" />
+    <None Include="Packages\DotNetUnitTest\images\mbuniticon.gif" />
+    <None Include="Packages\DotNetUnitTest\images\mbunitlogo.png" />
+    <None Include="Packages\DotNetUnitTest\images\Populator.png" />
+    <None Include="Packages\DotNetUnitTest\images\Test.png" />
+    <None Include="Packages\DotNetUnitTest\logo.gif" />
+    <None Include="Packages\DotNetUnitTest\MBUnitDetails.xsl" />
+    <None Include="Packages\DotNetUnitTest\MbUnitDisplayReport.xsl" />
+    <None Include="Packages\DotNetUnitTest\MbUnitDisplaySummary.xsl" />
+    <None Include="Packages\DotNetUnitTest\MBUnitSummary.xsl" />
+    <None Include="Packages\DotNetUnitTest\UnitTest.Properties.xml" />
+    <None Include="Packages\DotNetUnitTest\UnitTest.Target.xml" />
+    <None Include="Packages\FxCop\fxcop.ico" />
+    <None Include="Packages\FxCop\FxCop.Properties.xml" />
+    <None Include="Packages\FxCop\FxCop.Target.xml" />
+    <None Include="Packages\FxCop\FxCopReport.xsl" />
+    <None Include="Packages\FxCop\FxCopReportDisplay.xsl" />
+    <None Include="Packages\FxCop\FxCopSummary.xsl" />
+    <None Include="Packages\FxCop\FxCopSummaryDisplay.xsl" />
+    <None Include="Packages\LinesOfCode\LinesOfCode.Properties.xml" />
+    <None Include="Packages\LinesOfCode\LinesOfCode.Target.xml" />
+    <None Include="Packages\LinesOfCode\LinesOfCode.xsl" />
+    <None Include="Packages\MSBuild\bin\MSBuildLogger.dll" />
+    <None Include="Packages\MSBuild\bin\MSBuildLogger.pdb" />
+    <None Include="Packages\MSBuild\compile-msbuild.xsl" />
+    <None Include="Packages\MSBuild\Compile.Properties.xml" />
+    <None Include="Packages\MSBuild\Compile.Target.xml" />
+    <None Include="Packages\MSBuild\logo.ico" />
+    <None Include="Packages\MSBuild\msbuild.xsl" />
+    <None Include="Packages\MSBuild\MSBuildMerge.xsl" />
+    <None Include="Packages\NCover\bin\NAnt.NCoverExplorer.Tasks.dll" />
+    <None Include="Packages\NCover\bin\NAnt.NCoverExplorer.Tasks.pdb" />
+    <None Include="Packages\NCover\logo.ico" />
+    <None Include="Packages\NCover\NCover.Properties.xml" />
+    <None Include="Packages\NCover\NCover.Target.xml" />
+    <None Include="Packages\NCover\NCoverDisplayReport.xsl" />
+    <None Include="Packages\NCover\NCoverDisplaySummary.xsl" />
+    <None Include="Packages\NCover\NCoverExplorer-Legacy.xsl" />
+    <None Include="Packages\NCover\NCoverExplorer.xsl" />
+    <None Include="Packages\NCover\NCoverExplorerSummary-Legacy.xsl" />
+    <None Include="Packages\NCover\NCoverExplorerSummary.xsl" />
+    <None Include="Packages\NCover\transparent.gif" />
+    <None Include="Packages\nDepend\bin\CruiseControl.NET\ndependreport-ccnet.v2.xsl" />
+    <None Include="Packages\nDepend\bin\EULA.txt" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.Data.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.OfficeSkins.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.Utils.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.XtraBars.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.XtraEditors.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\DevExpress.XtraNavBar.v7.2.dll" />
+    <None Include="Packages\nDepend\bin\Lib\EnvDTE.dll" />
+    <None Include="Packages\nDepend\bin\Lib\Mono.Cecil.dll" />
+    <None Include="Packages\nDepend\bin\Lib\Mono.Cecil.Pdb.dll" />
+    <None Include="Packages\nDepend\bin\Lib\msvcp71.dll" />
+    <None Include="Packages\nDepend\bin\Lib\msvcr71.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.AddIn.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.Analyse.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.BitmapBuilder.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.CodeStructureContainer.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.CodeStructureContainer.ILProvider.CecilWrapper.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.CodeStructureContainer.ILProvider.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.CQL.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.Helpers.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.In.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.Metrics.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.Out.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NDepend.Skins.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NGraphviz.dll" />
+    <None Include="Packages\nDepend\bin\Lib\NGraphviz.Helpers.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Algorithms.Graphviz.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Collections.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Concepts.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Exceptions.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Predicates.dll" />
+    <None Include="Packages\nDepend\bin\Lib\QuickGraph.Representations.dll" />
+    <None Include="Packages\nDepend\bin\MSBuild\NDepend.Build.MSBuild.dll" />
+    <None Include="Packages\nDepend\bin\MSBuild\ReadMe.txt" />
+    <None Include="Packages\nDepend\bin\NAnt\NDepend.Build.NAntTasks.dll" />
+    <None Include="Packages\nDepend\bin\NAnt\ReadMe.txt" />
+    <None Include="Packages\nDepend\bin\NDepend.Console.exe" />
+    <None Include="Packages\nDepend\bin\NDepend.Console.exe.config" />
+    <None Include="Packages\nDepend\bin\QuickStartTutorial.txt" />
+    <None Include="Packages\nDepend\bin\VisualNDepend.exe" />
+    <None Include="Packages\nDepend\logo.gif" />
+    <None Include="Packages\nDepend\nDepend.Properties.xml" />
+    <None Include="Packages\nDepend\nDepend.Target.xml" />
+    <None Include="Packages\nDepend\nDependReport.xsl" />
+    <None Include="Packages\nDepend\ndependsummary-ccnet.xsl" />
+    <None Include="Packages\nDepend\nDependSummaryDisplay.xsl" />
+    <None Include="Packages\Simian\bin\bin\IKVM.GNU.Classpath.dll" />
+    <None Include="Packages\Simian\bin\bin\IKVM.Runtime.dll" />
+    <None Include="Packages\Simian\bin\bin\simian-2.2.21.exe" />
+    <None Include="Packages\Simian\bin\bin\simian-2.2.21.jar" />
+    <None Include="Packages\Simian\bin\changes.html" />
+    <None Include="Packages\Simian\bin\customers.html" />
+    <None Include="Packages\Simian\bin\features.html" />
+    <None Include="Packages\Simian\bin\future_plans.html" />
+    <None Include="Packages\Simian\bin\get_dotnet.png" />
+    <None Include="Packages\Simian\bin\get_it_now.html" />
+    <None Include="Packages\Simian\bin\get_java_blue-button.gif" />
+    <None Include="Packages\Simian\bin\index.html" />
+    <None Include="Packages\Simian\bin\installation.html" />
+    <None Include="Packages\Simian\bin\javadoc\allclasses-frame.html" />
+    <None Include="Packages\Simian\bin\javadoc\allclasses-noframe.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\AuditListener.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Block.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\BlockMarkers.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Checker.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\CheckSummary.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\CompositeAuditListener.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\DecoratorAuditListener.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\FileLoader.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Language.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Option.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Options.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\package-frame.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\package-summary.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\package-tree.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\SimianCheck.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\SimianMain.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\SimianTask.Formatter.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\SimianTask.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\SourceFile.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\StreamLoader.html" />
+    <None Include="Packages\Simian\bin\javadoc\au\com\redhillconsulting\simian\Version.html" />
+    <None Include="Packages\Simian\bin\javadoc\constant-values.html" />
+    <None Include="Packages\Simian\bin\javadoc\deprecated-list.html" />
+    <None Include="Packages\Simian\bin\javadoc\help-doc.html" />
+    <None Include="Packages\Simian\bin\javadoc\index-all.html" />
+    <None Include="Packages\Simian\bin\javadoc\index.html" />
+    <None Include="Packages\Simian\bin\javadoc\overview-summary.html" />
+    <None Include="Packages\Simian\bin\javadoc\overview-tree.html" />
+    <None Include="Packages\Simian\bin\javadoc\package-list" />
+    <None Include="Packages\Simian\bin\javadoc\resources\inherit.gif" />
+    <None Include="Packages\Simian\bin\javadoc\stylesheet.css" />
+    <None Include="Packages\Simian\bin\jdk1.4.2_03.log" />
+    <None Include="Packages\Simian\bin\jdk1.4.2_03.log.zip" />
+    <None Include="Packages\Simian\bin\LICENSE.txt" />
+    <None Include="Packages\Simian\bin\menu.html" />
+    <None Include="Packages\Simian\bin\overview.html" />
+    <None Include="Packages\Simian\bin\simian.dtd" />
+    <None Include="Packages\Simian\bin\simian.jpg" />
+    <None Include="Packages\Simian\bin\simian.xsl" />
+    <None Include="Packages\Simian\logo.gif" />
+    <None Include="Packages\Simian\Simian.Properties.xml" />
+    <None Include="Packages\Simian\Simian.Target.xml" />
+    <None Include="Packages\Simian\SimianDisplayReport.xsl" />
+    <None Include="Packages\Simian\SimianDisplaySummary.xsl" />
+    <None Include="Packages\Simian\SimianSummary.xsl" />
+    <None Include="Packages\SourceModificationReport\SourceModificationReport.Properties.xml" />
+    <None Include="Packages\SourceModificationReport\SourceModificationReport.Target.xml" />
+    <None Include="Packages\Subversion\bin\AprSharp.dll" />
+    <None Include="Packages\Subversion\bin\AprSharp.pdb" />
+    <None Include="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll" />
+    <None Include="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.pdb" />
+    <None Include="Packages\Subversion\bin\intl3_svn.dll" />
+    <None Include="Packages\Subversion\bin\libapr.dll" />
+    <None Include="Packages\Subversion\bin\libapr.pdb" />
+    <None Include="Packages\Subversion\bin\libapriconv.dll" />
+    <None Include="Packages\Subversion\bin\libapriconv.pdb" />
+    <None Include="Packages\Subversion\bin\libaprutil.dll" />
+    <None Include="Packages\Subversion\bin\libaprutil.pdb" />
+    <None Include="Packages\Subversion\bin\libdb44d.dll" />
+    <None Include="Packages\Subversion\bin\libeay32.dll" />
+    <None Include="Packages\Subversion\bin\ssleay32.dll" />
+    <None Include="Packages\Subversion\bin\SubversionSharp.dll" />
+    <None Include="Packages\Subversion\bin\SubversionSharp.pdb" />
+    <None Include="Packages\Subversion\bin\svn_client-1.dll" />
+    <None Include="Packages\Subversion\bin\That.dll" />
+    <None Include="Packages\Subversion\bin\VBProxy.dll" />
+    <None Include="Packages\Subversion\HistoryPaths.xsl" />
+    <None Include="Packages\Subversion\SourceControl.Credentials.xml" />
+    <None Include="Packages\Subversion\SourceControl.Properties.xml" />
+    <None Include="Packages\Subversion\SourceControl.Target.xml" />
+    <None Include="Packages\Versioning\bin\UpdateVersion.Tasks.dll" />
+    <None Include="Packages\Versioning\bin\UpdateVersion.Tasks.pdb" />
+    <None Include="Packages\Versioning\Versioning.Properties.xml" />
+    <None Include="Packages\Versioning\Versioning.Target.xml" />
+    <None Include="Packages\Workspace\Configuration\MbUnit\MbUnit.Script.xml" />
+    <None Include="Packages\Workspace\Software\NCover\NCover.Script.xml" />
+    <None Include="Packages\Workspace\Software\Perforce\Perforce.Script.xml" />
+    <None Include="Packages\Workspace\Software\Subversion\Subversion.Script.xml" />
+    <None Include="Packages\Workspace\Software\Vault\Vault.Script.xml" />
+    <None Include="Packages\Workspace\Software\VisualSourceSafe\VisualSourceSafe.Script.xml" />
+    <None Include="Packages\Workspace\Software\VisualStudio\VisualStudio.Script.xml" />
+    <None Include="Packages\Workspace\Software\VSTSVersionControl\VSTSVersionControl.Script.xml" />
+    <None Include="Packages\Workspace\Workspace.Properties.xml" />
+    <None Include="Packages\Workspace\Workspace.Setup.xml" />
+    <None Include="Packages\Workspace\Workspace.Targets.xml" />
+    <None Include="server\xsl\*.xsl" Exclude="**\.svn\**\*" />
+    <None Include="server\*.config" />
+    <None Include="server\*.xml" />
+    <None Include="server\*.state" />
+    <None Include="*.xml" />
+    <None Include="*.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="*.bat" />
+    <None Include="dashboard\dashboard.config" />
+    <None Include="dashboard\images\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\templates\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\Web.config" />
+    <None Include="dashboard\WorkspaceSetup\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\xsl\*.xsl" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\cruisecontrol.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Product\OpenCommandPrompt.bat">
+      <Link>Personal.Build\OpenCommandPrompt.bat</Link>
+    </None>
+    <None Include="..\Product\OpenSolution.bat">
+      <Link>Personal.Build\OpenSolution.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\Build.bat">
+      <Link>Personal.Build\Scripts\Build.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\Compile.bat">
+      <Link>Personal.Build\Scripts\Compile.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\CreateDocs.bat">
+      <Link>Personal.Build\Scripts\CreateDocs.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\IntegrationTest.bat">
+      <Link>Personal.Build\Scripts\IntegrationTest.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\NoUpdateBuild.bat">
+      <Link>Personal.Build\Scripts\NoUpdateBuild.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\Package.bat">
+      <Link>Personal.Build\Scripts\Package.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\ReCompile.bat">
+      <Link>Personal.Build\Scripts\ReCompile.bat</Link>
+    </None>
+    <None Include="..\Product\Scripts\Test.bat">
+      <Link>Personal.Build\Scripts\Test.bat</Link>
+    </None>
+    <None Include="NAnt.xsx">
+      <DependentUpon>NAnt.xsd</DependentUpon>
+    </None>
+    <None Include="Packages\Analytics\charts_library\.DS_Store" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Product\Scripts\Compile.Environment.xml">
+      <Link>Personal.Build\Scripts\Compile.Environment.xml</Link>
+    </Content>
+    <Content Include="..\Product\Scripts\OpenSolution.Script.xml">
+      <Link>Personal.Build\Scripts\OpenSolution.Script.xml</Link>
+    </Content>
+    <Content Include="..\Product\Scripts\Personal.Build.xml">
+      <Link>Personal.Build\Scripts\Personal.Build.xml</Link>
+    </Content>
+    <Content Include="Packages\Alerts\Alerts.Properties.xml" />
+    <Content Include="Packages\Alerts\Alerts.Target.xml" />
+    <Content Include="Packages\Alerts\ChangePackageSize\ChangePackageSize.Script.xml" />
+    <Content Include="Packages\Alerts\Diskspace\DiskSpace.Script.xml" />
+    <Content Include="Packages\Alerts\Simian\DiffReport.xsl" />
+    <Content Include="Packages\Alerts\Simian\Simian.Script.xml" />
+    <Content Include="Packages\Alerts\Tracker\Tracker.Script.xml" />
+    <Content Include="Packages\Alerts\UnitTests\UnitTests.Script.xml" />
+    <Content Include="Packages\Analytics\Analytics.Properties.xml" />
+    <Content Include="Packages\Analytics\Analytics.Target.xml" />
+    <Content Include="Packages\Analytics\Basic\MainAnalyticsReport.xml" />
+    <Content Include="Packages\Analytics\Basic\Script.xml" />
+    <Content Include="Packages\Analytics\Basic\statistics.xsl" />
+    <Content Include="Packages\Analytics\Basic\StatisticsPublisher.xsl" />
+    <Content Include="Packages\Analytics\BuildTime\BuildTimeHistory.xsl" />
+    <Content Include="Packages\Analytics\BuildTime\BuildTimeHistoryChartData.xml" />
+    <Content Include="Packages\Analytics\BuildTime\Script.xml" />
+    <Content Include="Packages\Analytics\charts.swf" />
+    <Content Include="Packages\Analytics\charts_library\arno.swf" />
+    <Content Include="Packages\Analytics\charts_library\arst.swf" />
+    <Content Include="Packages\Analytics\charts_library\brfl.swf" />
+    <Content Include="Packages\Analytics\charts_library\brno.swf" />
+    <Content Include="Packages\Analytics\charts_library\brst.swf" />
+    <Content Include="Packages\Analytics\charts_library\cl3d.swf" />
+    <Content Include="Packages\Analytics\charts_library\clfl.swf" />
+    <Content Include="Packages\Analytics\charts_library\clno.swf" />
+    <Content Include="Packages\Analytics\charts_library\clp3.swf" />
+    <Content Include="Packages\Analytics\charts_library\cls3.swf" />
+    <Content Include="Packages\Analytics\charts_library\clst.swf" />
+    <Content Include="Packages\Analytics\charts_library\cnno.swf" />
+    <Content Include="Packages\Analytics\charts_library\lnno.swf" />
+    <Content Include="Packages\Analytics\charts_library\mxno.swf" />
+    <Content Include="Packages\Analytics\charts_library\pi3d.swf" />
+    <Content Include="Packages\Analytics\charts_library\pino.swf" />
+    <Content Include="Packages\Analytics\charts_library\pono.swf" />
+    <Content Include="Packages\Analytics\charts_library\scno.swf" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietAndRecoveryTimeHistory.xml" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietAndRecoveryTimeHistoryPublisher.xsl" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietTimeHistoryChartData.xml" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietTimeHistoryChartDataPublisher.xsl" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietTimeHistoryLineChartData.xml" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\QuietTimeHistoryLineChartDataPublisher.xsl" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\RecoveryTimeHistoryChartData.xml" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\RecoveryTimeHistoryChartDataPublisher.xsl" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\RecoveryTimeHistoryLineChartData.xml" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\RecoveryTimeHistoryLineChartDataPublisher.xsl" />
+    <Content Include="Packages\Analytics\QuietAndRecoveryTime\Script.xml" />
+    <Content Include="Packages\Analytics\Simian\Simian.ChartData.Publisher.xsl" />
+    <Content Include="Packages\Analytics\Simian\Simian.ChartData.xml" />
+    <Content Include="Packages\Analytics\Simian\Simian.Publisher.xsl" />
+    <Content Include="Packages\Analytics\Simian\Simian.Script.xml" />
+    <Content Include="Packages\Analytics\Simian\Simian.Statistics.xml" />
+    <Content Include="Packages\Analytics\SuccessProgress\Script.xml" />
+    <Content Include="Packages\Analytics\SuccessProgress\SuccessProgress.xml" />
+    <Content Include="Packages\Analytics\SuccessProgress\SuccessProgress.xsl" />
+    <Content Include="Packages\Analytics\UnitTests\UnitTests.Publisher.xsl" />
+    <Content Include="Packages\Analytics\UnitTests\UnitTests.Script.xml" />
+    <Content Include="Packages\Analytics\UnitTests\UnitTests.Statistics.xml" />
+    <Content Include="Packages\Analytics\UnitTests\UnitTestsCountsLineChartData.Publisher.xsl" />
+    <Content Include="Packages\Analytics\UnitTests\UnitTestsCountsLineChartData.xml" />
+  </ItemGroup>
+</Project>
