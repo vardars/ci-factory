@@ -510,7 +510,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
     
     <property name="Developer.List" value=""/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
-             property="BuildMaster.Email"
+             property="Developer.List"
              xpath="/cruisecontrol/project//user[not @group='buildmaster' and @name = '${BuildMaster.Name}']"
              outerxml="true"
              failonerror="false"/>
@@ -520,6 +520,15 @@ A brute force approach is to diff the tree, to identify which if any files need 
     <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
 		<call target="Private.CCNET.InstallBuildDirectoryFiles"/>
     <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
+		
+		<delete>
+			<fileset>
+				<include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Remote.dll"/>
+				<include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Remote.pdb"/>
+				<include name="${BuildDirectory}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.dll"/>
+				<include name="${BuildDirectory}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.pdb"/>
+			</fileset>
+		</delete>
 	</target>
 	
 	<target name="Upgrade.Packages">

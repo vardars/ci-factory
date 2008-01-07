@@ -58,14 +58,11 @@
 			password="${Vault.Password}"
 			repository="${Vault.Repository}" />
 
-    <vaultdelete failonerror="false">
-      <vaultfileset>
-        <include name="${Vault.Repository.BasePath}"/>
-      </vaultfileset>
-    </vaultdelete>
+		<vaultdeleterepository repositoryName="${Vault.Repository}" failonerror="false" />
+		<vaultaddrepository newReposName="${Vault.Repository}" enableSecurity="true"/>
     
     <vaultlogout/>
-
+		
     <copy file="VaultTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
 
