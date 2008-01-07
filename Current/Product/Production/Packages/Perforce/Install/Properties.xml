@@ -5,7 +5,7 @@
 	<property name="Perforce.ServerPort" value="1666" overwrite="false"/>
 	<property name="Perforce.ServerPathPrefix" value="//depot" overwrite="false"/>
 
-  <property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce" overwrite="false"/>
+  <property name="Perforce.BinPath" value="${'$'}{environment::get-variable('ProgramFiles')}\Perforce" overwrite="false"/>
   
 	<largeproperty name="SourceControl.MainBuildBlock">
 		<value xml="false" expand="true">
@@ -18,7 +18,7 @@
         port="${Perforce.ServerName}:${Perforce.ServerPort}"
 				view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/..."
 				client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
-				executable="${Perforce.BinPath}\p4.exe"
+				executable="${property::expand(Perforce.BinPath)}\p4.exe"
         />
       <exclusionFilters>
         <pathFilter>
@@ -50,7 +50,7 @@
       port="${Perforce.ServerName}:${Perforce.ServerPort}"
 			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/..."
 			client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
-			executable="${Perforce.BinPath}\p4.exe"
+			executable="${property::expand(Perforce.BinPath)}\p4.exe"
       />]]>
 		</value>
 	</largeproperty>

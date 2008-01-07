@@ -12,8 +12,6 @@
 	<property name="SourceProductDirectory" value="${SourceDefaultDirectory}\Product"/>
 	<property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
 	<property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
-
-	<property name="Winmerge.DirectoryPath" value="${environment::get-variable('ProgramFiles')}\WinMerge"/>
 	
 	<target name="Upgrade">
 

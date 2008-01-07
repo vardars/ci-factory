@@ -96,7 +96,9 @@ namespace NAnt.Core.Tasks {
 		public enum Mode
 		{
 			Replace,
-			Add
+			Add,
+            After,
+            ReplaceOuter
 		}
 
         #region Private Instance Fields
@@ -192,7 +194,7 @@ namespace NAnt.Core.Tasks {
                 // don't bother trying to update any nodes or save the
                 // file if no nodes were found in the first place.
                 if (nodes.Count > 0) {
-                    UpdateNodes(nodes, Value, document);
+                    UpdateNodes(nodes, document);
                     SaveDocument(document, XmlFile.FullName);
                 } 
             } catch (BuildException ex) {
@@ -281,26 +283,38 @@ namespace NAnt.Core.Tasks {
             }
         }
 
-		private void UpdateNodes(XmlNodeList nodes, string value, XmlDocument document)
+		private void UpdateNodes(XmlNodeList nodes, XmlDocument document)
 		{
 			Log(Level.Verbose, "Updating nodes with value '{0}'.",
-				value);
+				Value);
 
 			int index = 0;
 			foreach (XmlNode node in nodes)
 			{
 				Log(Level.Verbose, "Updating node '{0}'.", index);
 				if (this.PokeMode == Mode.Replace)
-					node.InnerXml = value;
+					node.InnerXml = Value;
 				else if (this.PokeMode == Mode.Add)
 				{
 					node.InnerXml = node.InnerXml + Value;
 				}
+                else if (this.PokeMode == Mode.After)
+                {
+                    XmlDocumentFragment Fragment = document.CreateDocumentFragment();
+                    Fragment.InnerXml = Value;
+                    node.ParentNode.InsertAfter(Fragment, node);
+                }
+                else if (this.PokeMode == Mode.ReplaceOuter)
+                {
+                    XmlDocumentFragment Fragment = document.CreateDocumentFragment();
+                    Fragment.InnerXml = Value;
+                    node.ParentNode.ReplaceChild(Fragment, node);
+                }
 				index++;
 			}
 
 			Log(Level.Verbose, "Updated all nodes successfully.",
-				value);
+				Value);
 		}
         
         /// <summary>

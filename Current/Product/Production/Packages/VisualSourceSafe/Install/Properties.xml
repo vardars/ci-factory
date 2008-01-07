@@ -6,13 +6,13 @@
   <property name="VSS.Username" value="build"  overwrite="false"/>
   <property name="VSS.Password" value="password"  overwrite="false"/>
   <property name="VSS.TemplateDB" value="C:\Tools\CI Factory\Packages\VisualSourceSafe\Install\Template.zip" overwrite="false"/>
-  <property name="VSS.ExePath" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio\VSS\win32\SS.EXE" overwrite="false"/>
+  <property name="VSS.ExePath" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio\VSS\win32\SS.EXE" overwrite="false"/>
   
   <largeproperty name="SourceControl.MainBuildBlock">
     <value xml="false" expand="true">
           <![CDATA[<sourcecontrol type="filtered">
         <sourceControlProvider  type="vss" applyLabel="true">
-          <executable>${VSS.ExePath}</executable>
+          <executable>${property::expand(VSS.ExePath)}</executable>
           <project>$/${ProjectName}/${ProjectCodeLineName}</project>
           <username>${VSS.Username}</username>
           <password>${VSS.Password}</password>
@@ -42,7 +42,7 @@
   <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol  type="vss" applyLabel="false" autoGetSource="true" >
-        <executable>${VSS.ExePath}</executable>
+        <executable>${property::expand(VSS.ExePath)}</executable>
         <project>$/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;</project>
         <username>${VSS.Username}</username>
         <password>${VSS.Password}</password>

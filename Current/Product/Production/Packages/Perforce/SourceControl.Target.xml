@@ -150,8 +150,6 @@
 	</target>
 
   <target name="Private.SourceControl.IteractiveUpdate">
-    <property name="Perforce.BinPath" value="${environment::get-variable('ProgramFiles')}\Perforce" />
-    <setenv name="PATH" value="${environment::get-variable('PATH')};${Perforce.BinPath}" unless="${string::contains(environment::get-variable('PATH'), Perforce.BinPath)}" />
     <exec program="p4" commandline="login -s" outputproperty="Perforce.RawTicketStatus" />
 
     <regex input="${Perforce.RawTicketStatus}" pattern="^User\s+.*?\s+ticket\s+(?'Valid'expires)\s+in\s+\d+\s+hours\s+\d+\s+minutes\." failonerror="false"/>

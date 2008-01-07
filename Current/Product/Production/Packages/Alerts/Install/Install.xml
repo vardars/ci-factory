@@ -19,7 +19,31 @@
   </target>
 
   <target name="Alerts.ValidateParameters">
-    
+    <property name="XmlDiffPath" value="${environment::get-variable('ProgramFiles')}\XmlDiffPatch\Bin\XmlDiff.exe"/>
+    <call target="Alerts.InsureXmlDiffInstallationExists"/>
   </target>
-  
+
+  <target name="Alerts.InsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">
+    <ask answer="Answer"
+           question="It looks like XmlDiff is not installed.  This software is required.  Do you wish to install the software?"
+           caption="XmlDiff is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\xmldiffpatch.exe" src="http://download.microsoft.com/download/xml/Patch/1.0/WXP/EN-US/xmldiffpatch.exe"></get>
+        <exec program="C:\Temp\xmldiffpatch.exe" verbose="true" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install XmlDiff!" />
+      </elseif>
+    </ifthenelse>
+  </target>
+
+
 </project>

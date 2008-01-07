@@ -6,11 +6,11 @@
   <switch value="${Compile.DevEnv.Version}">
     <case value="2003" break="true">
       <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" overwrite="false"/>
-      <property name="Compile.DevEnv" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\IDE\devenv.exe" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
     <case value="2005" break="true">
       <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
-      <property name="Compile.DevEnv" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
+      <property name="Compile.DevEnv" value="{'$'}${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
   </switch>
   <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
