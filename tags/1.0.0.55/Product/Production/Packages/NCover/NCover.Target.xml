@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Coverage" >
+
+  <include buildfile="NCover.Properties.xml" />
+  <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
+  <loadtasks assembly="${BuildDirectory}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+	<property name="Coverage.ReportFolder" value="${BuildDirectory}\Coverage Reports"/>
+  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
+  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
+
+  <fileset id="Coverage.Targets">
+    <include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
+    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
+  </fileset>
+
+  <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
+	-->
+
+  <!-- The following properties are for internal use only -->
+	
+  <property name="Private.Coverage.ConfigFile" value="" />
+  <property name="Private.Coverage.COMServer" value="" />
+  <property name="Private.Coverage.CorProfiler" value="{18656C37-035D-41CD-82C2-85DEF2DD5F7B}" />
+
+  <target name="UnitTest.RunTests">
+    <call target="Private.Coverage.CreatePropertiesFile"/>
+    <fileset id="Coverage.Targets" />
+
+    <foreach item="File" property="Coverage.Target.ProjectFile.Path">
+      <in>
+        <items refid="Coverage.Target.ProjectFiles" />
+      </in>
+      <do>
+        <echo message="Looking for assembly output in ${Coverage.Target.ProjectFile.Path}."/>
+        <property name="TargetAssemblyName" value="${vsproject::get-assemblyname(Coverage.Target.ProjectFile.Path)}"/>
+        <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(Coverage.Target.ProjectFile.Path, Compile.ConfigName)}\${TargetAssemblyName}.dll"/>
+        <function execute="${fileset::include-add('Coverage.Targets', TargetAssemblyPath)}" if="${file::exists(TargetAssemblyPath)}"/>
+      </do>
+    </foreach>
+
+    <if test="${fileset::file-count('Coverage.Targets') == 0}">
+      <call target="Coverage.FindTargetAssebmlies"/>
+    </if>
+
+    <trycatch>
+      <try>
+        <ifthenelse test="${NCover.IIS}">
+          <then>
+            <startncover 
+              program="${NCover.ExePath}"
+              coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
+              profileIIS="true" serviceTimeout="${NCover.IIS.Timeout}"
+            >
+              <assemblies refid="Coverage.Targets"/>
+            </startncover>
+
+            <!--Begin Hack-->
+            <!--MbUnit MbUnit.Core.Reports.ReportBase.Render won't emit report if cor_enable_profiling == 1-->
+            <setenv>
+              <environment>
+                <variable name="Cor_Enable_Profiling" value="" />
+              </environment>
+            </setenv>
+            <!--End Hack-->
+            <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
+
+            <stopncover/>
+
+            <servicecontroller service="W3SVC" action="Start"/>
+          </then>
+          <else>
+            <setenv>
+              <environment>
+                <variable name="Cor_Enable_Profiling" value="1" />
+                <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
+              </environment>
+            </setenv>
+            <ncover
+              program="${NCover.ExePath}"
+              commandLineExe="${NantExePath}"
+              commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
+              workingDirectory="${Coverage.ReportFolder}"
+              coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"
+              profiledProcessModule="${NCover.ProcessToMonitor}"
+            >
+              <assemblies refid="Coverage.Targets" />
+            </ncover>
+          </else>
+        </ifthenelse>
+      </try>
+      <catch property="failure">
+        <fail message="At least one test failed: ${failure}"/>
+      </catch>
+      <finally>
+        <call target="Private.Coverage.NCoverExplorer" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Coverage.FindTargetAssebmlies">
+    <fileset id="Coverage.Targets" >
+      <include name="${ProductionDirectory}\**\bin\${Coverage.TargetAssemblyFormat}" />
+      <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
+    </fileset>
+  </target>
+
+  <target name="Private.Coverage.NCoverExplorer">
+    <echo message="Starting NCoverExplorer report generation..."/>
+    <ncoverexplorer program="${NCover.ExplorerExePath}"
+						projectName="${ProjectName}"
+						reportType="4"
+						outputDir="${Coverage.ReportFolder}" 
+						xmlReportName="CoverageReport.xml"
+						showExcluded="True"
+						satisfactoryCoverage="80" >
+      <fileset>
+        <include name="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xml"/>
+      </fileset>
+    </ncoverexplorer>
+    
+    <style in="${Coverage.ReportFolder}\CoverageReport.xml"
+           out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+           style="${PackagesDirectory}\NCover\NCoverExplorer.xsl"/>
+  </target>
+
+  <target name="Private.Coverage.CreatePropertiesFile">
+    <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
+    <saveproperties file="${Coverage.CommonPropertiesFile}" format="CommandLine" >
+      <property name="CCNetBuildCondition"/>
+      <property name="CCNetIntegrationStatus"/>
+      <property name="CCNetLabel"/>
+      <property name="CCNetLastIntegrationStatus"/>
+      <property name="CCNetProject"/>
+      <property name="CCNetBuildDate"/>
+      <property name="CCNetBuildTime"/>
+      <property name="CCNetArtifactDirectory"/>
+      <property name="CCNetWorkingDirectory"/>
+      <property name="ProjectName"/>
+      <property name="ProjectCodeLineName"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
+      <property name="Compile.ConfigName"/>
+      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.ReportDirectory"/>
+      <property name="Common.TempDirectory"/>
+      <property name="UnitTestDirectory"/>
+      <property name="InstallDirectory"/>
+    </saveproperties>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <mkdir if="${directory::exists(Coverage.ReportFolder) == false}" dir="${Coverage.ReportFolder}"/>
+
+    <delete>
+      <fileset>
+        <include name="${Coverage.ReportFolder}\**\*"/>
+      </fileset>
+    </delete>
+
+    <call target="Private.Coverage.CreatePropertiesFile"/>
+    
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
+      <arg line='@"${Coverage.CommonPropertiesFile}"' />
+      <arg line="UnitTest.SetUp"/>
+    </exec>
+  </target>
+
+  <target name="UnitTest.TearDown">
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
+      <arg line='@"${Coverage.CommonPropertiesFile}"' />
+      <arg line="UnitTest.TearDown"/>
+    </exec>
+  </target>
+
+  <target name="UnitTest.Main">
+    <trycatch>
+      <try>
+        <call target="UnitTest.SetUp"/>
+        <call target="UnitTest.RunTests"/>
+      </try>
+      <finally>
+        <call target="UnitTest.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+
+
+</project>
