@@ -20,7 +20,9 @@
 
   <target name="Alerts.ValidateParameters">
     <property name="XmlDiffPath" value="${environment::get-variable('ProgramFiles')}\XmlDiffPatch\Bin\XmlDiff.exe"/>
-    <call target="Alerts.InsureXmlDiffInstallationExists"/>
+    <if test="${stringlist::contains('Packages.InstallList', 'Simain')}">
+      <call target="Alerts.InsureXmlDiffInstallationExists"/>
+    </if>
   </target>
 
   <target name="Alerts.InsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">

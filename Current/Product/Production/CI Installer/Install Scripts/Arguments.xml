@@ -44,6 +44,7 @@
 
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
+  <property name="NCover.IIS" value="false" />
 
   <strings id="Packages.InstallList">
     <string value="Subversion"/>
