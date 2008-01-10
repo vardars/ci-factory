@@ -51,7 +51,7 @@
 
   <target name="NCover.InsureNCoverInstallation" >
     <call target="NCover.InsureNCoverInstallation.Exists"/>
-    <call target="NCover.InsureNCoverInstallation.Version" if="${file::exists(NCover.ExePath)}"/>
+    <call target="NCover.InsureNCoverInstallation.Version" if="${file::exists(property::expand(NCover.ExePath))}"/>
     <call target="NCover.Install.NCover" if="${NCover.Install.IsNeeded}"/>
   </target>
 
@@ -72,10 +72,10 @@
     </if>
   </target>
 
-  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(NCover.ExePath)}">
+  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(property::expand(NCover.ExePath))}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
-        <![CDATA[The file ${NCover.ExePath} could not be found.
+        <![CDATA[The file ${property::expand(NCover.ExePath)} could not be found.
 The NCover package needs NCover version ${NCover.Version}.
 
 More information on NCover can be found at http://www.ncover.org]]>
@@ -94,10 +94,10 @@ More information on NCover can be found at http://www.ncover.org]]>
   <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
 </target>
 
-<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(NCover.ExePath) == NCover.Version}">
+<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(property::expand(NCover.ExePath)) == NCover.Version}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
-        <![CDATA[The version of NCover found, ${file::get-version(NCover.ExePath)}, is not supported.
+        <![CDATA[The version of NCover found, ${file::get-version(property::expand(NCover.ExePath))}, is not supported.
 The NCover package needs NCover version ${NCover.Version}.
 
 More information on NCover can be found at http://www.ncover.org]]>

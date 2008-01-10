@@ -114,7 +114,7 @@
 
   <target name='CleanExtraXmlNs'>
     <xmlpeek
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       property="Tasks"
       outerxml="true"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/*|/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/comment()"
@@ -127,7 +127,7 @@
     <property name='Tasks' value="${string::replace(Tasks, 'xmlns=&quot;&quot;', '')}"/>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode='Replace'
       value='${Tasks}'
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try"
@@ -140,7 +140,7 @@
 
   <target name='SetOrderForCSDiff'>
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="ReplaceOuter"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='SourceModificationReport.PublishNewSource']"
       value=''
@@ -151,7 +151,7 @@
     </xmlpoke>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="After"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='SourceControl.CleanGetOfProductDirectory']"
       value='&lt;call target="SourceModificationReport.PublishNewSource" /&gt;'
@@ -162,7 +162,7 @@
     </xmlpoke>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="ReplaceOuter"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='SourceModificationReport.PublishOldSource']"
       value=''
@@ -173,7 +173,7 @@
     </xmlpoke>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="After"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:description[text() ='Begin Pre Build Actions']"
       value='&lt;call target="SourceModificationReport.PublishOldSource" /&gt;'
@@ -186,7 +186,7 @@
 
   <target name='SetOrderForVersioning'>
     <xmlpeek
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       property="trash"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncreamentBuildNumberOfProduct']"
     >
@@ -196,7 +196,7 @@
     </xmlpeek>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="ReplaceOuter"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Compile.CompileSource']"
       value=''
@@ -207,7 +207,7 @@
     </xmlpoke>
 
     <xmlpoke
-      file="C:\Projects\SVNTestProject\Current\Build\Main.build.xml"
+      file="${BuildDirectory}\Main.build.xml"
       pokemode="After"
       xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncreamentBuildNumberOfProduct']"
       value='&lt;call target="Compile.CompileSource" /&gt;'
