@@ -1,0 +1,32 @@
+﻿<!ENTITY HostName                 '%CCNET.ServerName%' >
+<!ENTITY Port                     '%CCNET.ServerPort%'>
+<!ENTITY EmailHost                '%EmailHost%'>
+<!ENTITY LabelPrefix              '%CCNET.LabelPrefix%'>
+<!ENTITY ProjectName              '%ProjectName%' >
+<!ENTITY ProjectCodeLineName      '%ProjectCodeLineName%' >
+<!ENTITY ProjectsDirectory        '%ProjectsDirectory%' >
+
+<!ENTITY ProductDirectoryName         '%ProductDirectoryName%'>
+<!ENTITY ThirdPartyDirectoryName      '%ThirdPartyDirectoryName%' >
+<!ENTITY ProductionDirectoryName      '%ProductionDirectoryName%' >
+<!ENTITY BuildDirectoryName           '%BuildDirectoryName%' >
+<!ENTITY ArtifactRootDirectoryName    '%ArtifactRootDirectoryName%' >
+<!ENTITY PackagesDirectoryName        '%PackagesDirectoryName%' >
+<!ENTITY UnitTestDirectoryName        '%UnitTestDirectoryName%' >
+<!ENTITY InstallDirectoryName         '%InstallDirectoryName%' >
+
+<!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
+<!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&ProductDirectoryName;' >
+<!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
+<!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
+<!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
+<!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&ArtifactRootDirectoryName;' >
+<!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
+<!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >
+<!ENTITY InstallDirectory      '&ProductDirectory;\&InstallDirectoryName;' >
+
+<!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
+<!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
+
+<!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
