@@ -68,6 +68,9 @@
             </setenv>
             <!--End Hack-->
             <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
+            
+            <!--Sessions and what not need to be given an opportunity to end-->
+            <sleep seconds="3"/>
 
             <stopncover/>
 
