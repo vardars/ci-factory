@@ -12,7 +12,7 @@
   <property name="Install.MsiSourceDir"        value="${InstallDirectory}\${ProjectName}Setup\${Compile.ConfigName}" />
   <property name="Install.MsiTargetFile"        value="${ProjectName}${CCNetLabel}.msi" />
   <property name="Install.MsiTargetDir"        value="${Common.ArtifactDirectoryPath}" />
-  <property name="Install.MsiTargetFileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${ProjectName}${CCNetLabel}.msi" />
+  <property name="Install.MsiTargetFileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${ProjectName}${CCNetLabel}.msi" dynamic="true" />
   <property name="Install.MsiTargetFileWebName" value="${ProjectName}${CCNetLabel}.msi" />
 
   <property name="Install.CommonPropertiesFile" value="${Common.TempDirectory}\Install.Properties.txt"/>

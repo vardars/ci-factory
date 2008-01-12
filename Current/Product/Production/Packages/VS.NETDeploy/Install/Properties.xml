@@ -3,7 +3,7 @@
 
   <!--
                                              2003 or 2005
-  <property name="Compile.DevEnv.Version" value="2005" overwrite="false"/>
   -->
+  <property name="Compile.DevEnv.Version" value="2005" overwrite="false"/>
 
 </project>
