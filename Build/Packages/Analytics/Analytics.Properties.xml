@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.Properties">
+
+  <ifnot test="${property::exists('CCNetLogFilePath')}">
+    <property name="CCNetLogFilePath" value="log${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
+    <if test="${CCNetIntegrationStatus == 'Success'}">
+      <property name="CCNetLogFilePath" value="${CCNetLogFilePath}Lbuild.${CCNetLabel}"/>
+    </if>
+    <property name="CCNetLogFilePath" value="${BuildDirectory}\sever\${CCNetProject}\Artifacts\buildlogs\${CCNetLogFilePath}.xml"/>
+  </ifnot>
+
+  <property name="Analytics.BuildLog" value="${CCNetLogFilePath}"/>
+  <property name="Analytics.PackageDirectory" value="${PackagesDirectory}\Analytics"/>
+  
+  <fileset id="Analytics.DeleteFileSet">
+    <include name="${ArtifactRootDirectory}\SuccessProgressXAxis.xml"/>
+    <include name="${ArtifactRootDirectory}\SuccessProgressSuccessful.xml"/>
+    <include name="${ArtifactRootDirectory}\SuccessProgressFailed.xml"/>
+    <include name="${ArtifactRootDirectory}\SuccessProgressException.xml"/>
+    
+    <include name="${ArtifactRootDirectory}\MainAnalyticsReportContent.xml"/>
+  </fileset>
+
+  <property name="Analytics.DeleteFileSetRefId" value="Analytics.DeleteFileSet"/>
+
+  <strings id="Analytics.TargetListId">
+    <string value="Analytics.MainReport"/>
+    <string value="Analytics.SuccessProgressReport"/>
+    <string value="Analytics.BuildTimeHistory"/>
+  </strings>
+
+  <property name="Analytics.TargetListRefId" value="Analytics.TargetListId"/>
+
+  <include buildfile="Basic\Script.xml"/>
+  <include buildfile="BuildTime\Script.xml"/>
+  <include buildfile="SuccessProgress\Script.xml"/>
+
+</project>
