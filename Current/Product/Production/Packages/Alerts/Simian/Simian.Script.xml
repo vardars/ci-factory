@@ -37,12 +37,12 @@
 
     <if test="${Alerts.Simian.Previous.DuplicateLineCount != 'NaN' and Alerts.Simian.DuplicateLineCount != 'notset'}">
       <call target="Alerts.Simian.GenerateReport"/>
-      <ifthenelse test="${Alerts.Simian.DuplicateLineCount > Alerts.Simian.Previous.DuplicateLineCount}">
+      <ifthenelse test="${int::parse(Alerts.Simian.DuplicateLineCount) > int::parse(Alerts.Simian.Previous.DuplicateLineCount)}">
         <then>
           <call target="Alerts.Simian.GenerateWarning"/>
           <call target="Alerts.SendMessage"/>
         </then>
-        <elseif if="${Alerts.Simian.Previous.DuplicateLineCount > Alerts.Simian.DuplicateLineCount}">
+        <elseif if="${int::parse(Alerts.Simian.Previous.DuplicateLineCount) > int::parse(Alerts.Simian.DuplicateLineCount)}">
           <call target="Alerts.Simian.GenerateThankYou"/>
           <call target="Alerts.SendMessage"/>
         </elseif>
