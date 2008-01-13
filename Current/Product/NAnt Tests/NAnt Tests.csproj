@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="CIFactory.NAnt.Tasks\Functions\PathFunctionTests.xml" />
+    <Content Include="CIFactory.NAnt.Tasks\Tasks\WhileTests.xml" />
     <Content Include="TestRunner.Build.xml" />
   </ItemGroup>
 </Project>

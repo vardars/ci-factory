@@ -507,13 +507,33 @@ A brute force approach is to diff the tree, to identify which if any files need 
              nodeindex="1"
              xpath="/cruisecontrol/project//user[@group='buildmaster']/@address"
              failonerror="false"/>
-    
+
     <property name="Developer.List" value=""/>
+    <property name="Developer.List.Count" value="0"/>
     <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
-             property="Developer.List"
-             xpath="/cruisecontrol/project//user[not @group='buildmaster' and @name = '${BuildMaster.Name}']"
+             property="Developer.List.Count"
+             xpath="count(/cruisecontrol/project//user[@group!='buildmaster' and @name!='${BuildMaster.Name}'])"
              outerxml="true"
              failonerror="false"/>
+
+    <strings id="Developer.List" />
+
+    <while condition="${int::parse(Developer.List.Count) > 0}">
+      <do>
+        <property name="Developer.List.Count" value="${int::parse(Developer.List.Count) - 1}"/>
+        <xmlpeek
+          file="${BuildDirectory}\ccnetproject.xml"
+          property="Developer.List.Item"
+          xpath="/cruisecontrol/project//user[@group!='buildmaster' and @name!='${BuildMaster.Name}']"
+          outerxml="true"
+          nodeindex="${Developer.List.Count}"
+        />
+        <ifnot test="${stringlist::contains('Developer.List', Developer.List.Item)}">
+          <function execute="${stringlist::add('Developer.List', Developer.List.Item)}"/>
+          <property name="Developer.List" value="${Developer.List}${Developer.List.Item}"/>
+        </ifnot>
+      </do>
+    </while>
     
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 
