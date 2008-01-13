@@ -97,7 +97,7 @@
         <tr>
           <td>
             <div>
-              <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Changes', '+ Hide Changes')">
+              <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Warnings', '+ Hide Warnings')">
                 <span class="dspchar">+ Show Warnings</span>
               </a>
             </div>
