@@ -133,7 +133,7 @@
       xpath="//a[contains(@href, '/default.aspx?_action_')]/@href"
       value="file://${Common.ShowReport.DetailsFilePath}"
     />
-    
+
     <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
 

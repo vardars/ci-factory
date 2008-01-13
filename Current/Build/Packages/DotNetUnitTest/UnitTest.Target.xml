@@ -57,7 +57,11 @@
 			<finally>
 				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
 
-        <copy file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' todir='${Common.ArtifactDirectoryPath}' if='${UnitTest.PublishXmlReport}' />
+        <copy 
+					file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' 
+					todir='${Common.ArtifactDirectoryPath}' 
+					if="${UnitTest.PublishXmlReport and file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"
+				/>
 
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
                out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"

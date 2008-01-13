@@ -68,9 +68,9 @@
 
   <target name="Compile.ShowReport" if="${file::exists(Compile.LogFileDirectory + '\' + Compile.XmlLogFileName)}">
     <delete file="${Compile.LogFileDirectory}\Compile.xml" if="${file::exists(Compile.LogFileDirectory + '\Compile.xml')}" />
-    <style
-      in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"
-      out="${Compile.LogFileDirectory}\Compile.xml"
+    <style 
+      in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" 
+      out="${Compile.LogFileDirectory}\Compile.xml" 
       style="${BuildDirectory}\Packages\MSBuild\MSBuildMerge.xsl" />
 
     <delete file="${Common.ArtifactDirectoryPath}\MSBuildReport.html" if="${file::exists(Common.ArtifactDirectoryPath + '\MSBuildReport.html')}" />
@@ -78,7 +78,7 @@
       in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"
       out="${Common.ArtifactDirectoryPath}\MSBuildReport.html"
       style="${BuildDirectory}\Packages\MSBuild\msbuild.xsl" />
-
+    
     <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\Compile.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\MSBuild\compile-msbuild.xsl"/>

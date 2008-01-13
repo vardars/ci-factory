@@ -15,7 +15,7 @@
     
     ]]>
   </msxsl:script>
-  
+
   <xsl:output method="html"/>
 
   <xsl:param name="PathPrefix" />
@@ -23,19 +23,19 @@
   <xsl:variable name="OriginalDoc" select="document($OriginalDocPath)"/>
 
   <xsl:template match="/">
-    
+
     <xsl:call-template name="GenerateAddedDisplay" />
     <br/>
     <br/>
     <xsl:call-template name="GenerateRemovedDisplay" />
-    
+
   </xsl:template>
 
   <xsl:template name="GenerateRemovedDisplay">
     <xsl:if test="count(/xd:xmldiff//xd:remove) != 0">
-      
-      
-      
+
+
+
       <div style="border-bottom:1px dotted #403F8D; color:#403F8D; font-size:13px; font-weight:bold;">Blocks Removed</div>
       <table rules="groups" cellpadding="2" cellspacing="0" border="0">
         <tbody>
@@ -44,13 +44,13 @@
             <th>Starting Line</th>
             <th>Ending Line</th>
           </tr>
-          
-            <xsl:for-each select="/xd:xmldiff/child::*">
-              <xsl:call-template name="ProcessRemovedNodes">
-                <xsl:with-param name="ReplacedNode" select="($OriginalDoc)/*[position() = 1]"/>
-              </xsl:call-template>
-            </xsl:for-each>
-          
+
+          <xsl:for-each select="/xd:xmldiff/child::*">
+            <xsl:call-template name="ProcessRemovedNodes">
+              <xsl:with-param name="ReplacedNode" select="($OriginalDoc)/*[position() = 1]"/>
+            </xsl:call-template>
+          </xsl:for-each>
+
         </tbody>
       </table>
     </xsl:if>
@@ -58,7 +58,7 @@
 
   <xsl:template name="ProcessRemovedNodes">
     <xsl:param name="ReplacedNode"/>
-    
+
     <xsl:for-each select="./child::*">
       <xsl:variable name="match" select="@match" />
       <xsl:choose>
@@ -83,7 +83,7 @@
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-  
+
   <xsl:template name="GenerateAddedDisplay">
     <xsl:if test="count(//xd:add//block) != 0">
       <div style="border-bottom:1px dotted #403F8D; color:#403F8D; font-size:13px; font-weight:bold;">Blocks Added</div>
@@ -94,19 +94,19 @@
             <th>Starting Line</th>
             <th>Ending Line</th>
           </tr>
-            <xsl:for-each select="//xd:add//block">
-              <tr>
-                <td>
-                  <xsl:value-of select="ms:Replace(@sourceFile, $PathPrefix, '')"/>
-                </td>
-                <td>
-                  <xsl:value-of select="@startLineNumber"/>
-                </td>
-                <td>
-                  <xsl:value-of select="@endLineNumber"/>
-                </td>
-              </tr>
-            </xsl:for-each>
+          <xsl:for-each select="//xd:add//block">
+            <tr>
+              <td>
+                <xsl:value-of select="ms:Replace(@sourceFile, $PathPrefix, '')"/>
+              </td>
+              <td>
+                <xsl:value-of select="@startLineNumber"/>
+              </td>
+              <td>
+                <xsl:value-of select="@endLineNumber"/>
+              </td>
+            </tr>
+          </xsl:for-each>
         </tbody>
       </table>
     </xsl:if>

@@ -16,4 +16,7 @@
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
   <property name="NCover.ExePath" value="C:\Program Files\NCover\NCover.Console.exe"  overwrite="false" />
   <property name="NCover.ExplorerExePath" value="C:\Program Files\NCover\NCoverExplorer.Console.exe"  overwrite="false" />
+
+  <property name="NCover.IIS" value="false" overwrite="false"/>
+  <property name="NCover.IIS.Timeout" value="180" overwrite="false"/>
 </project>

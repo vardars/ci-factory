@@ -40,6 +40,9 @@
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
     <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
 
+    <xsl:variable name="quietandrecoverytimefile" select="concat('..\..\..\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
+    <xsl:variable name="quietandrecoverytimedoc" select="document($quietandrecoverytimefile)"/>
+
     <style>
       *.pass{
       background-color: #33ff99;
@@ -111,6 +114,7 @@ if(!document.getElementById)
       <xsl:variable name="failureCount" select="$totalCount - ($successCount + $exceptionCount)"/>
 
       <xsl:variable name="TotalBuildTime" select="ms:SumTimes(integration/statistic[@name='Duration']/text())" />
+      <xsl:variable name="TotalRecoveryTime"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure']]/@duration)" />
       
       <xsl:variable name="totalCountForTheLast7Day" select="count(integration[@dayofyear > $dayofyear - 7])"/>
       <xsl:variable name="successCountForTheLast7Day" select="count(integration[@status='Success' and @dayofyear > $dayofyear - 7 and @year = $year])"/>
@@ -118,6 +122,7 @@ if(!document.getElementById)
       <xsl:variable name="failureCountForTheLast7Day" select="$totalCountForTheLast7Day - ($successCountForTheLast7Day + $exceptionCountForTheLast7Day)"/>
 
       <xsl:variable name="TotalBuildTimeForTheLast7Day" select="ms:SumTimes(integration[@dayofyear > $dayofyear - 7 and @year = $year]/statistic[@name='Duration']/text())" />
+      <xsl:variable name="TotalRecoveryTimeForTheLast7Day"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @dayofyear > $dayofyear - 7 and @year = $year]]/@duration)" />
       
       <xsl:variable name="totalCountForTheDay" select="count(integration[@day=$day and @month=$month and @year=$year])"/>
 			<xsl:variable name="successCountForTheDay" select="count(integration[@status='Success' and @day=$day and @month=$month and @year=$year])"/>
@@ -125,6 +130,7 @@ if(!document.getElementById)
       <xsl:variable name="failureCountForTheDay" select="$totalCountForTheDay - ($successCountForTheDay + $exceptionCountForTheDay)"/>
 
       <xsl:variable name="TotalBuildTimeTimeForTheDay" select="ms:SumTimes(integration[@day=$day and @month=$month and @year=$year]/statistic[@name='Duration']/text())" />
+      <xsl:variable name="TotalRecoveryTimeForTheDay"      select="sum(($quietandrecoverytimedoc)//recoverytime[between/build[@possition=1 and @status='Failure' and @day=$day and @month=$month and @year=$year]]/@duration)" />
       
       <table class="section-table" cellpadding="2" cellspacing="0" border="1">
         <tr class="sectionheader">
@@ -184,6 +190,21 @@ if(!document.getElementById)
             <xsl:value-of select="' mins'"/>
           </td>
         </tr>
+        <tr>
+          <th align="left">Time Spent Recovering from Failed Builds</th>
+          <td>
+            <xsl:value-of select="round($TotalRecoveryTimeForTheDay)"/>
+            <xsl:value-of select="' mins'"/>
+          </td>
+          <td>
+            <xsl:value-of select="round($TotalRecoveryTimeForTheLast7Day)"/>
+            <xsl:value-of select="' mins'"/>
+          </td>
+          <td>
+            <xsl:value-of select="round($TotalRecoveryTime)"/>
+            <xsl:value-of select="' mins'"/>
+          </td>
+        </tr>
 			</table>
 		</p>
     <hr/>
@@ -229,7 +250,81 @@ if(!document.getElementById)
 
     <br/>
     <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the duration of the last 200 quiet times.  Durations over 120 minutes are excluded.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/QuietTimeHistoryLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays the duration of the last 200 recovery times.  Durations over 120 minutes are excluded.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/RecoveryTimeHistoryLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays a trend of unit test counts.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/UnitTestsCountsLineChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td>
+          <p style="width: 25em;">
+            This chart displays a trend of dulplicatation.
+          </p>
+        </td>
+        <td>
+          <xsl:call-template name="ShowChart">
+            <xsl:with-param name="Url" select="concat($BaseChartUrl, '/Simian.ChartData.xml')"/>
+          </xsl:call-template>
+        </td>
+      </tr>
+    </table>
+
+    <br/>
+    <hr/>
     
+    <hr/>
+		<p><pre><strong>Note: </strong>Only builds run with the statistics publisher enabled will appear on this page!</pre></p>
 		<table  class="section-table" cellpadding="2" cellspacing="0" border="1" width="98%">
       <tr class="sectionheader">
 				<th>Build Label</th>

@@ -14,6 +14,59 @@
     <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
     <mkiisdir dirpath="${ArtifactRootDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}/${ArtifactRootDirectoryName}" enabledirbrowsing="true"/>
     <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}/${PackagesDirectoryName}"/>
+
+    <script language="C#">
+      <imports>
+        <import namespace="System.DirectoryServices" />
+      </imports>
+      <code>
+        <![CDATA[
+          public static void ScriptMain(Project project)
+          {
+            DirectoryEntry IISRoot = new  DirectoryEntry("IIS://localhost/W3SVC/1/Root");
+                
+            DirectoryEntry Vdir = null;
+            foreach(DirectoryEntry VdirCanidate in IISRoot.Children)
+            {
+              if (VdirCanidate.Name == project.Properties["ProjectName"] + "-" + project.Properties["ProjectCodeLineName"])
+              {
+                Vdir = VdirCanidate;
+              }
+            }
+
+            string aspxScriptMap = GetAspxScriptMap(Vdir);
+                  
+            string newScriptMap = aspxScriptMap.Replace(".aspx", ".xml").Replace(",GET,HEAD,POST,DEBUG", "");
+            
+            project.Log(Level.Info, newScriptMap);
+            
+            Vdir.Properties["ScriptMaps"].Add(newScriptMap);
+            Vdir.CommitChanges();
+            
+            foreach(DirectoryEntry ChildVdir in Vdir.Children)
+            {
+              if (ChildVdir.Properties["ScriptMaps"].Contains(newScriptMap))
+              {
+                ChildVdir.Properties["ScriptMaps"].Remove(newScriptMap);
+                ChildVdir.CommitChanges();
+              }
+            }
+          }
+
+          public static string GetAspxScriptMap(DirectoryEntry Vdir)
+          {
+            foreach (string scriptMap in Vdir.Properties["ScriptMaps"])
+            {
+              if (scriptMap.StartsWith(".aspx"))
+              {
+                return scriptMap;
+              }
+            }
+            throw new Exception("Cannot Find ASPX Application Mapping to Copy - do you have ASP.NET mapped to IIS?");
+          }
+        ]]>
+      </code>
+    </script>
     
     <exec program="${framework::get-framework-directory('net-2.0')}\aspnet_regiis.exe" commandline="-s W3SVC/1/ROOT/${ProjectName}-${ProjectCodeLineName}" />
 

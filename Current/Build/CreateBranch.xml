@@ -83,10 +83,8 @@
       <fail message="The source control package ${SourceControl.PackageName} does not support branching yet."/>
     </ifnot>
 
-    <xmlpeek file="${BuildDirectory}\dashboard\dashboard.config"
-						 property="CCNetServer.Url"
-						 xpath="/dashboard/remoteServices/servers/server/@url" />
-    <ccnetstop serverurl="${CCNetServer.Url}" failonerror="false"/>
+    <property name="CCNET.ServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
+    <ccnetstop serverurl="${CCNET.ServerUrl}" failonerror="false"/>
 
 		<call target="AskForBranchName"/>
 
@@ -289,7 +287,7 @@ If yes the script will try to fix the references in the new branch.]]>
       </options>
     </ask>
 
-    <if test="${FixBadRefPath == 'No'}">
+    <if test="${HasBadRefPath and FixBadRefPath == 'No'}">
       <fail message="${BadRefPathFailureMessage}"/>
     </if>
   </target>

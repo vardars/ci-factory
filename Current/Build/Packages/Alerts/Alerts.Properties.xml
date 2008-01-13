@@ -6,7 +6,6 @@
   <strings id="Alerts.TargetListId">
     <string value="Alerts.UnitTests"/>
 		<string value="Alerts.DiskSpace"/>
-    <string value="Alerts.Simian"/>
     <!--<string value="Alerts.Tracker"/>-->
   </strings>
 
@@ -14,7 +13,11 @@
 
   <include buildfile="${PackagesDirectory}\Alerts\UnitTests\UnitTests.Script.xml"/>
 	<include buildfile="${PackagesDirectory}\Alerts\Diskspace\DiskSpace.Script.xml"/>
-  <include buildfile="${PackagesDirectory}\Alerts\Simian\Simian.Script.xml"/>
   <!--<include buildfile="${PackagesDirectory}\Alerts\Tracker\Tracker.Script.xml"/>-->
+  
+  <if test="${file::exists(PackagesDirectory + '\Simian\Simian.Properties.xml')}">
+    <include buildfile="${PackagesDirectory}\Alerts\Simian\Simian.Script.xml"/>
+    <function execute="${stringlist::add('Alerts.TargetListId', 'Alerts.Simian')}"/>
+  </if>
 
 </project>
