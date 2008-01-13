@@ -32,7 +32,7 @@
   </xsl:template>
 
   <xsl:template name="GenerateRemovedDisplay">
-    <xsl:if test="count(/xd:xmldiff/child::*) != 0">
+    <xsl:if test="count(/xd:xmldiff//xd:remove) != 0">
 
 
 
