@@ -8,9 +8,14 @@
   <target name="Simian.Run">
     <loglevel level="None">
       <do>
-        <exec workingdir="${path::get-short-path(ProductDirectory)}" program="${Simian.Console}" failonerror="false" >
-          <arg line='"**/*.vb"' />
-          <arg line='"**/*.cs"' />
+        <exec workingdir="${path::get-short-path(ProductDirectory)}" program="${Simian.Console}" failonerror="false">
+          <arg line='-includes=Production/CCNet/**/*.cs' />
+          <arg line='-includes=Production/NAnt/**/*.cs' />
+          <arg line='-includes=Production/Packages/**/*.xml' />
+          <arg line='-excludes=Production/Packages/**/bin/**/*.xml' />
+          <arg line='-excludes=Production/Packages/**/bin/*.xml' />
+          <arg line='-includes=Production/Foundation/Default/Build/*.xml' />
+          <arg line='-includes="Production/CI Installer/Install Scripts/**/*.xml"' />
           <arg line='-formatter=xml:${Simian.ReportFilePath}' />
         </exec>
       </do>
