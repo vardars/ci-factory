@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
+  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" overwrite="false"/>
+  <property name="Compile.PublishLogFile" value="true" overwrite="false"/>
+  <property name="Compile.ConfigName" value="Release" overwrite="false"/>
+  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false"/>
+  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false"/>
+  <property name="Compile.ToCopyToBin" value="false"  overwrite="false"/>
+  <property name="Compile.ToDeployZip" value="false"  overwrite="false"/>
+  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false"/>
+
+  <fileset id="Compile.ToCopy">
+    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
+    <include name="${ProductionDirectory}\**\bin\*.*"/>
+  </fileset>
+
+  <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Scripts\Compile.Environment.xml" overwrite="false"/>
+
+  <property name="Compile.Environment.RefId" value="MSBuild.Environment" overwrite="false"/>
+
+  <ifthenelse test="${file::exists(Compile.Environment.ConfigFilePath)}">
+    <then>
+      <include buildfile="${Compile.Environment.ConfigFilePath}"/>
+    </then>
+    <else>
+      <call target="Compile.Environment.Set"/>
+    </else>
+  </ifthenelse>
+
+  <target name="Compile.Environment.Set">
+    <property name="Compile.Environment.Path" value="${environment::get-variable('SystemRoot')}\system32;${environment::get-variable('SystemRoot')};${environment::get-variable('SystemRoot')}\System32\Wbem" />
+    <environment id="${Compile.Environment.RefId}">
+      <variable name="PATH" value="${Compile.Environment.Path};${NantBinPath}" />
+    </environment>
+  </target>
+</project>
