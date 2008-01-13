@@ -45,11 +45,18 @@
           </tr>
           <tr>
             <td>
-              <xsl:for-each select="$warning.messages" >
-                <pre class="section-warning">
-                  <xsl:value-of select="text()"/>
-                </pre>
-              </xsl:for-each>
+              <div>
+                <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Changes', '+ Hide Changes')">
+                  <span class="dspchar">+ Show Warnings</span>
+                </a>
+              </div>
+              <div class="dspcont">
+                <xsl:for-each select="$warning.messages" >
+                  <pre class="section-warning">
+                    <xsl:value-of select="text()"/>
+                  </pre>
+                </xsl:for-each>
+              </div>
             </td>
           </tr>
         </table>
