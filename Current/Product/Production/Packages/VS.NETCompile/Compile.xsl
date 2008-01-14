@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet version="1.0" 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:Coverage="http://tempuri.org/CoverageExclusions.xsd"
-  xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-  xmlns:ErrorCount="urn:ErrorCountScript"
-  xmlns:WarningCount="urn:WarningCountScript">
-
-  <msxsl:script implements-prefix="ErrorCount" language="C#">
-    <![CDATA[
-    private static int InternalValue = 0;
-    
-    public string Value()
-    {
-      return InternalValue.ToString();
-    }
-    
-    public string Increment()
-    {
-      InternalValue = InternalValue + 1;
-      return InternalValue.ToString();
-    }
-    ]]>
-  </msxsl:script>
-
-  <msxsl:script implements-prefix="WarningCount" language="C#">
-    <![CDATA[
-    private static int InternalValue = 0;
-    
-    public string Value()
-    {
-      return InternalValue.ToString();
-    }
-    
-    public string Increment()
-    {
-      InternalValue = InternalValue + 1;
-      return InternalValue.ToString();
-    }
-    ]]>
-  </msxsl:script>
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:output method="html"/>
 
@@ -47,60 +9,60 @@
    		<xsl:if test="count($messages) > 0">   	
 			  <xsl:variable name="error.messages" select="$messages[(contains(text(), ' error ')) or @level='Error'] | /cruisecontrol//builderror/message | /cruisecontrol//internalerror/message" />
         <xsl:variable name="warning.messages" select="$messages[(contains(text(), ' warning ')) or @level='Warning']" />
-
-        <xsl:for-each select="$error.messages">
-          <xsl:choose>
-            <xsl:when test="contains(text(), 'warnaserror')">
-              
-            </xsl:when>
-            <xsl:when test="contains(text(), 'errorreport')">
-
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:variable name="execute1" select="ErrorCount:Increment()" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:for-each>
-
-        <xsl:for-each select="$warning.messages">
-          <xsl:choose>
-            <xsl:when test="contains(text(), 'warnaserror')">
-
-            </xsl:when>
-            <xsl:when test="contains(text(), 'errorreport')">
-
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:variable name="execute1" select="WarningCount:Increment()" />
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:for-each>
         
-        <xsl:if test="ErrorCount:Value() > 0">
-          <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <table id="VSNETCompileErrorSection" class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+          <tr>
+            <td class="sectionheader">
+              Compiler Errors: (<a id="VSNETCompileErrorCount"></a>)
+            </td>
+          </tr>
+          <tr>
+            <td id="VSNETCompileErrors">
+              <xsl:apply-templates select="$error.messages"/>
+            </td>
+          </tr>
+        </table>
+      
+        <table id="VSNETCompileWarningSection" class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
             <tr>
-              <td class="sectionheader">
-                  Compiler Errors: (<xsl:value-of select="ErrorCount:Value()"/>)
-              </td>
+                <td class="sectionheader">
+                  Compiler Warnings(<a id="VSNETCompileWarningCount"></a>)
+                </td>
             </tr>
             <tr>
-              <td>
-                <xsl:apply-templates select="$error.messages"/>
+              <td id="VSNETCompileWarnings">
+                <div>
+                  <a href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Show Warnings', '+ Hide Warnings')">
+                    <span class="dspchar">+ Show Warnings</span>
+                  </a>
+                </div>
+                <div class="dspcont">
+                  <xsl:apply-templates select="$warning.messages"/>
+                </div>
               </td>
             </tr>
-          </table>
-        </xsl:if>
-        
-        <xsl:if test="WarningCount:Value() > 0">
-            <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-                <tr>
-                    <td class="sectionheader">
-                        Compiler Warnings: (<xsl:value-of select="WarningCount:Value()"/>)
-                    </td>
-                </tr>
-                <tr><td><xsl:apply-templates select="$warning.messages"/></td></tr>
-            </table>
-        </xsl:if>
+        </table>
+
+        <script language="javascript" type="text/javascript">
+          function PaintCountForSection(idCount, idPaint){
+          var count = document.getElementById(idCount).getElementsByTagName("pre").length;
+          var mycountainer=document.getElementById(idPaint)
+          mycountainer.innerHTML=count;
+          }
+
+          function ShowIfCountSection(idCount, idSection)
+          {
+          var count = document.getElementById(idCount).getElementsByTagName("pre").length;
+          if (count == 0)
+          {
+          document.getElementById(idSection).style.display = 'none';
+          }
+          }
+          PaintCountForSection('VSNETCompileErrors', 'VSNETCompileErrorCount');
+          ShowIfCountSection('VSNETCompileErrors', 'VSNETCompileErrorSection');
+          PaintCountForSection('VSNETCompileWarnings', 'VSNETCompileWarningCount');
+          ShowIfCountSection('VSNETCompileWarnings', 'VSNETCompileWarningSection');
+        </script>
       </xsl:if>
     </xsl:template>
 
