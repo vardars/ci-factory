@@ -64,6 +64,7 @@
       <fileset basedir="${ProductDirectory}">
         <include name="Power Tools\**\*"/>
         <include name="Documentation\**\*"/>
+        <include name="Licenses\**\*"/>
       </fileset>
     </copy>
 
