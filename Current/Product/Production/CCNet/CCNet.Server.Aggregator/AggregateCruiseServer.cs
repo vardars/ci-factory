@@ -11,6 +11,10 @@ using System.Xml.Serialization;
 using System.IO;
 using ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection;
 using ThoughtWorks.CruiseControl.Core.Util;
+using System.Configuration;
+using System.Runtime.Remoting.Channels.Tcp;
+using System.Xml;
+using System.Xml.XPath;
 
 namespace CCNet.Server.Aggregator
 {
@@ -83,9 +87,9 @@ namespace CCNet.Server.Aggregator
         {
             this.ReadConfigurationFile(configPath);
             this.CruiseManagerFactory = cruiseManagerFactory;
-            RemotingConfiguration.Configure(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            RegisterForRemoting(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
             this.GrabProjects();
-			RegisterForRemoting();
+            StartRemoting();
         }
 
         public void GrabProjects()
@@ -113,22 +117,36 @@ namespace CCNet.Server.Aggregator
 
         #region Public Methods
 
-        private void RegisterForRemoting()
-		{
-			MarshalByRefObject marshalByRef = (MarshalByRefObject)this.CruiseManager;
+        private void RegisterForRemoting(string remotingConfigurationFile)
+        {
+            XmlDocument document = new XmlDocument();
+            document.Load(remotingConfigurationFile); XPathNavigator Navigator = document.CreateNavigator();
+            string StringPort = Navigator.SelectSingleNode("/configuration/appSettings/add[@key = 'Port']/@value").ToString();
+
+            if (string.IsNullOrEmpty(StringPort))
+                throw new InvalidProgramException(@"Please set the app setting key ""Port"" in the config file.");
+            int Port = int.Parse(StringPort);
+
+            TcpChannel CCNetTcpChannel = new TcpChannel(Port);
+            ChannelServices.RegisterChannel(CCNetTcpChannel, false);
+        }
+
+        private void StartRemoting()
+        {
+            MarshalByRefObject marshalByRef = (MarshalByRefObject)this.CruiseManager;
             RemotingServices.Marshal(marshalByRef, RemoteCruiseServer.URI);
- 
-			foreach (IChannel channel in ChannelServices.RegisteredChannels)
-			{
-				Log.Info("Registered channel: " + channel.ChannelName);
-				if (channel is IChannelReceiver)
-				{
+
+            foreach (IChannel channel in ChannelServices.RegisteredChannels)
+            {
+                Log.Info("Registered channel: " + channel.ChannelName);
+                if (channel is IChannelReceiver)
+                {
                     foreach (string url in ((IChannelReceiver)channel).GetUrlsForUri(RemoteCruiseServer.URI))
-					{
-						Log.Info("CruiseManager: Listening on url: " + url);
-					}
-				}
-			}
+                    {
+                        Log.Info("CruiseManager: Listening on url: " + url);
+                    }
+                }
+            }
 		}
 
         public void  Dispose()

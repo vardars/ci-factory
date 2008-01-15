@@ -148,7 +148,6 @@
     <Content Include="MSTest\MsTestSummary.xsl" />
     <Content Include="MSTest\UnitTest.Properties.xml" />
     <Content Include="MSTest\UnitTest.Target.xml" />
-    <Content Include="NCover\bin\NAnt.NCoverExplorer.Tasks.dll" />
     <Content Include="NCover\Install\Install.xml" />
     <Content Include="NCover\Install\Properties.xml" />
     <Content Include="NCover\NCover.Properties.xml" />
@@ -534,6 +533,7 @@
     <None Include="NUnit\Install\NUnit\samples\vb\syntax\vb-syntax.build" />
     <Content Include="Alerts\Simian\DiffReport.xsl" />
     <Content Include="Alerts\Simian\Simian.Script.xml" />
+    <Content Include="NCover\bin\License.txt" />
     <Content Include="VS.NETDeploy\Install\Install.xml" />
     <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>
