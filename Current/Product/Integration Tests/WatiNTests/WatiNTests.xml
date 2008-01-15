@@ -121,12 +121,12 @@
     <xmlpeek property="WatiNTests.GuestBook.Coverage"
 						 file="${WatiNTests.BuildLogPath}"
 						 xpath="/cruisecontrol/build/ncoversummary/tr/td[text() ='GuestBook.DLL']/following-sibling::td[1]" />
-		<ifnot test="${string::trim(WatiNTests.GuestBook.Coverage) == '96.8%'}">
+		<ifnot test="${string::trim(WatiNTests.GuestBook.Coverage) == '100.0%'}">
 			<copy
 				file="${BuildDirectory}\CoverageReports\${ProjectName}RawCoverage.xml"
 				todir="${path::get-directory-name(IntegrationTest.ReportFilePath)}"
 			/>
 		</ifnot>
-    <assertequal expected="96.8%" actual="${string::trim(WatiNTests.GuestBook.Coverage)}" message="Expected there to be 96.8% coverage on GuestBook ."/>
+    <assertequal expected="100.0%" actual="${string::trim(WatiNTests.GuestBook.Coverage)}" message="Expected there to be 100.0% coverage on GuestBook ."/>
 	</target>
 </project>

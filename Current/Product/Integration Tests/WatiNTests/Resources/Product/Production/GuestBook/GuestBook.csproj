@@ -90,25 +90,14 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GuestBook.aspx.cs">
       <DependentUpon>GuestBook.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Content Include="Global.asax">
-      <SubType>Component</SubType>
-    </Content>
     <Content Include="GuestBook.aspx">
       <SubType>Form</SubType>
     </Content>
     <Content Include="Web.config" />
-    <EmbeddedResource Include="Global.asax.resx">
-      <DependentUpon>Global.asax.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GuestBook.aspx.resx">
       <DependentUpon>GuestBook.aspx.cs</DependentUpon>
       <SubType>Designer</SubType>
