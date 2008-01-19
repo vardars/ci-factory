@@ -49,11 +49,14 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 
         private static void LoadStylesheet(XslCompiledTransform transform, string xslFileName)
         {
-            XsltSettings settings = new XsltSettings(false, true);
+            XsltSettings settings = new XsltSettings(true, true);
 
             try
             {
-                transform.Load(xslFileName, settings, new XmlUrlResolver());
+                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                readerSettings.ProhibitDtd = false;
+                XmlReader xslReader = XmlReader.Create(xslFileName, readerSettings);
+                transform.Load(xslReader, settings, new XmlUrlResolver());
             }
             catch (FileNotFoundException)
             {

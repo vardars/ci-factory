@@ -2,29 +2,32 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output method="html"/>
   <xsl:param name="applicationPath"/>
-  <xsl:variable name="modification.list" select="/cruisecontrol/modifications/modification"/>
-  <xsl:key name="changeset" match="/cruisecontrol/modifications/modification" use="changeNumber/text()"/>
+
+  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentWebPath']/task[@name='echo']/message"  />
+  <xsl:param name="ChangesDocPath" select="concat($URL, '/SourceModificationReport.xml')"/>
+  <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
+  
+  
+  <xsl:variable name="modification.list" select="($ChangesDoc)/Modification"/>
+  <xsl:key name="changeset" match="//Modification" use="ChangeNumber/text()"/>
 
   <xsl:template match="/">
-    <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-      <tr>
-        <td height="42" class="sectionheader-container">
-          <img src="images/SourceControl.gif" class="sectionheader-title-image" />
-          <div class="sectionheader"  >
-            Source Control Revision History For This Build
-          </div>
+    <xsl:if test="/cruisecontrol/build/@lastintegrationstatus != 'Success' and /cruisecontrol/build/@lastintegrationstatus != 'Unknown'">
+      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+        <tr>
+          <td height="42" class="sectionheader-container">
+            <img src="images/SourceControl.gif" class="sectionheader-title-image" />
+            <div class="sectionheader"  >
+              Source Control Revision History Since Last Good Build
+            </div>
           </td>
-      </tr>
-        <xsl:for-each select="/cruisecontrol/modifications/modification[generate-id(.)=generate-id(key('changeset', changeNumber/text())[1])]">
-          <xsl:sort select="changeNumber" order="descending" data-type="number"/>
+        </tr>
+        <xsl:for-each select="($ChangesDoc)//Modification[generate-id(.)=generate-id(key('changeset', ChangeNumber/text())[1])]">
+          <xsl:sort select="ChangeNumber" order="descending" data-type="number"/>
           <xsl:call-template name="changeset" />
         </xsl:for-each>
-      <xsl:if test="count($modification.list) = 0">
-        <tr>
-          <td>There were no changes made since the last build.</td>
-        </tr>
-      </xsl:if>
-    </table>
+      </table>
+    </xsl:if>
   </xsl:template>
 
   <!-- Changeset template -->
@@ -35,7 +38,7 @@
           <xsl:attribute name="style">border-top: #808286 1px dotted;</xsl:attribute>
         </xsl:if>
         <span >
-          Changeset # <xsl:value-of select="changeNumber" />
+          Changeset # <xsl:value-of select="ChangeNumber" />
         </span>
         
         
@@ -43,16 +46,16 @@
           <tbody>
             <tr >
               <th>
-                Author: <xsl:value-of select="user"/>
+                Author: <xsl:value-of select="UserName"/>
               </th>
               <th>
-                Date: <xsl:value-of select="date"/>
+                Date: <xsl:value-of select="ModifiedTime"/>
               </th>
             </tr>
             <tr>
               <td colspan="2">
                 <em>
-                  <xsl:value-of select="comment"/>
+                  <xsl:value-of select="Comment"/>
                 </em>
               </td>
             </tr>
@@ -67,7 +70,7 @@
         <div class="dspcont">
           <table rules="groups" cellpadding="2" cellspacing="0" border="0">
             <tbody>
-              <xsl:for-each select="key('changeset', changeNumber/text())">
+              <xsl:for-each select="key('changeset', ChangeNumber/text())">
                 <xsl:call-template name="modification"/>
               </xsl:for-each>
             </tbody>
@@ -86,41 +89,41 @@
       <td>
         <img class="statusimage">
           <xsl:attribute name="title">
-            <xsl:value-of select="@type"/>
+            <xsl:value-of select="Type"/>
           </xsl:attribute>
           <xsl:attribute name="src">
             <xsl:choose>
-              <xsl:when test="@type = 'Added'">
+              <xsl:when test="Type = 'Added'">
                 <xsl:value-of select="'images/add.png'"/>
               </xsl:when>
-              <xsl:when test="@type = 'Modified'">
+              <xsl:when test="Type = 'Modified'">
                 <xsl:value-of select="'images/edit.png'"/>
               </xsl:when>
-              <xsl:when test="@type = 'Deleted'">images/delete.png</xsl:when>
+              <xsl:when test="Type = 'Deleted'">images/delete.png</xsl:when>
               <xsl:otherwise>images/document_text.png</xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-        </img>&#160;<xsl:value-of select="@type"/>
+        </img>&#160;<xsl:value-of select="Type"/>
       </td>
       <td>
         <xsl:choose>
-          <xsl:when test="count(url) = 1 ">
+          <xsl:when test="count(Url) = 1 ">
             <a>
               <xsl:attribute name="href">
-                <xsl:value-of select="url" />
+                <xsl:value-of select="Url" />
               </xsl:attribute>
-              <xsl:if test="project != ''">
-                <xsl:value-of select="project"/><xsl:value-of select="'/'"/>
+              <xsl:if test="FolderName != ''">
+                <xsl:value-of select="FolderName"/><xsl:value-of select="'/'"/>
               </xsl:if>
-              <xsl:value-of select="filename"/>
+              <xsl:value-of select="FileName"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:if test="project != ''">
-                <xsl:value-of select="project"/>
+              <xsl:if test="FolderName != ''">
+                <xsl:value-of select="FolderName"/>
                 <xsl:value-of select="'/'"/>
               </xsl:if>
-              <xsl:value-of select="filename"/>
+              <xsl:value-of select="FileName"/>
           </xsl:otherwise>
         </xsl:choose>
       </td>

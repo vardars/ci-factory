@@ -48,6 +48,7 @@ namespace ThoughtWorks.CruiseControl.Core.Publishers
 			writer.WriteAttributeString("buildcondition", result.BuildCondition.ToString());
 			writer.WriteAttributeString("label", result.Label.ToString());
 			writer.WriteAttributeString("file", result.IntegrationProperties["CCNetLogFilePath"].ToString());
+            writer.WriteAttributeString("lastintegrationstatus", result.LastIntegrationStatus.ToString());
 			WriteTaskResults(result);
 			writer.WriteEndElement();
 		}

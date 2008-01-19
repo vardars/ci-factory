@@ -534,6 +534,7 @@
     <Content Include="Alerts\Simian\DiffReport.xsl" />
     <Content Include="Alerts\Simian\Simian.Script.xml" />
     <Content Include="NCover\bin\License.txt" />
+    <Content Include="SourceModificationReport\modifications.xsl" />
     <Content Include="VS.NETDeploy\Install\Install.xml" />
     <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>

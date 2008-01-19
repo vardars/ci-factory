@@ -29,6 +29,11 @@
         </value>
       </largeproperty>
       <call target="Packages.AddCleanUpActions"/>
+
+      <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+        <value xml="false"><![CDATA[<xslFile>Packages\SourceModificationReport\modifications.xsl</xslFile>]]></value>
+      </largeproperty>
+      <call target="Packages.AddbuildReportBuildPlugin"/>
     </if>
   </target>
 
