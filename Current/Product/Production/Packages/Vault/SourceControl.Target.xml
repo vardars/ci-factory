@@ -169,7 +169,15 @@
       </ifnot>
       <echo message="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
       <ifnot test="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath == '$'}" >
-        <vaultcreatefolder newFolderPath="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
+        <trycatch>
+          <try>
+            <vaultlistfolder folderPath="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
+          </try>
+          <catch property="failure">
+            <echo message="RepositoryDirectory does not exist -creating folder ${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
+            <vaultcreatefolder newFolderPath="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
+          </catch>
+        </trycatch>
       </ifnot>
     </foreach>
   </target>
