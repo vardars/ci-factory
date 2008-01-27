@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60647DBD-813B-4C1F-A771-94C38BFD1590}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="AlternateNamingTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="AlternateNamingTests\InstallationTest.xml" />
+    <Content Include="IntegrationSummaryReport.xsl" />
+    <Content Include="MbUnitTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="MbUnitTests\MbUnitTests.xml" />
+    <Content Include="MSTestTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="MSTestTests\MSTestTests.xml" />
+    <Content Include="NUnitTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="NUnitTests\NUnitTests.xml" />
+    <Content Include="PerforceTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="PerforceTests\InstallationTest.xml" />
+    <Content Include="Stubs\SourceControlStub\Install\Install.xml" />
+    <Content Include="Stubs\SourceControlStub\Install\Properties.xml" />
+    <Content Include="SubversionTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="SubversionTests\InstallationTest.xml" />
+    <Content Include="TestRunner.Build.xml" />
+    <Content Include="TestRunner.Common.xml" />
+    <Content Include="TestRunner.Properties.xml" />
+    <Content Include="Stubs\SourceControlStub\SourceControl.Target.xml" />
+    <Content Include="VaultTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VaultTests\InstallationTest.xml" />
+    <Content Include="VersioningTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VersioningTests\InstallationTest.xml" />
+    <Content Include="VersioningTests\SourceModificationReports\SourceModificationReport.xml" />
+    <Content Include="VisualSourceSafeTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VisualSourceSafeTests\InstallationTest.xml" />
+    <Content Include="VS.NETCompileTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="VS.NETCompileTests\InstallationTest.xml" />
+    <Content Include="WatiNTests\Install Resources\DefaultArguments.xml" />
+    <Content Include="WatiNTests\WatiNTests.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MbUnitTests\Resources\" />
+    <Folder Include="MSTestTests\Resources\" />
+    <Folder Include="NUnitTests\Resources\" />
+    <Folder Include="WatiNTests\Resources\" />
+  </ItemGroup>
+</Project>
