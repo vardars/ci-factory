@@ -138,8 +138,17 @@
 	<target name="Private.SourceControl.Update">
 		<call target="Private.SourceControl.EnsureWorkspace"/>
 
+    <switch value="True">
+      <case break="true" value="${directory::exists(Private.SourceControl.Update.LocalPath)}">
+        <property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
+      </case>
+      <case break="true" value="${path::has-extension(Private.SourceControl.Update.LocalPath) == false}">
+        <property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
+      </case>
+      <default></default>
+    </switch>
+
 		<ifnot test="${path::has-extension(Private.SourceControl.Update.LocalPath)}">
-			<property name="Private.SourceControl.Update.LocalPath" value="${Private.SourceControl.Update.LocalPath}/..."/>
 		</ifnot>
     
     <p4sync client="${Perforce.WorkspaceName}"
@@ -451,6 +460,7 @@ View:
       inheritall="false"
       inheritrefs="false"
       target="SourceControl.GetOfCodeLineDirectory"
+      failonerror="false"
     >
       <properties>
         <property name="CCNetBuildDate" value="2006-09-12"/>
