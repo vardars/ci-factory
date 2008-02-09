@@ -245,7 +245,7 @@
     <property name="TempSvnLogFilePath" value="${Common.TempDirectory}\log.xml"/>
     <property name="TempBatchFilePath" value="${Common.TempDirectory}\log.bat"/>
     <property name="ReleaseNotesFilePath" value="${ProductionDirectory}\CI Installer\CI Factory Release Notes.html"/>
-    <property name="RevisionToLogFrom" value="2220"/>
+    <property name="RevisionToLogFrom" value="2312"/>
     
     <echo message='svn log "${ProductDirectory}" --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; "${TempSvnLogFilePath}"' file="${TempBatchFilePath}"/>
     <exec program="${TempBatchFilePath}" workingdir="${ProductDirectory}" verbose="true" />
