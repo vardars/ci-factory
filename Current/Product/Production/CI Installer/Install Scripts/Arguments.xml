@@ -2,6 +2,9 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Arguments">
   <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
   <property name="Install.Action" value="Install.Project" />
+  
+  <!--For Help: "file://C:\Tools\CI Factory\Documentation\Index.htm"-->
+  
   <property name="ProjectName" value="TestProject" />
 	<property name="CCNET.LabelPrefix" value="1.0.0."/>
 	<property name="InitialVersion" value="1.0.0.0"/>
@@ -36,7 +39,7 @@
   <property name="CCNet.SVN.URI.ProjectCodeLine" value="${CCNet.SVN.URI.ProjectName}/&amp;ProjectCodeLineName;" />
 
   <property name="SVN.WebVisible" value="true" />
-  <property name="CCNet.SVN.WebRepoUrl" value="http://&amp;ProjectName;.googlecode.com/svn"/><!--makes shure that the case is correct, Tags or tags-->
+  <property name="CCNet.SVN.WebRepoUrl" value="http://&amp;ProjectName;.googlecode.com/svn"/>
   
   <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
   <property name="SVN.Username" value="Build" />
