@@ -290,7 +290,7 @@
           CI Factory Release Notes
         </h1>
         <h2>
-          RC ${CCNetLabel}
+          ${CCNetLabel}
         </h2>
         <h3>New/Improvements</h3>
         ${NewAndImprovedNotes}
