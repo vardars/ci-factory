@@ -1,9 +1,9 @@
-<!ENTITY HostName                 'cifactorybuild.stelligent.com' >
-<!ENTITY Port                     '21236'>
+<!ENTITY HostName      'CIFACTORYBUILD' >
+<!ENTITY Port      '21267' >
 <!ENTITY EmailHost                'localhost'>
-<!ENTITY LabelPrefix              '1.0.0.'>
+<!ENTITY LabelPrefix      '1.0.1.' >
 <!ENTITY ProjectName              'CI Factory' >
-<!ENTITY ProjectCodeLineName      'Current' >
+<!ENTITY ProjectCodeLineName      '1.0' >
 <!ENTITY ProjectsDirectory        'c:\Projects' >
 
 <!ENTITY ProductDirectoryName         'Product'>

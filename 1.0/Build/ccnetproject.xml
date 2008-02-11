@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE cruisecontrol [
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cruisecontrol[
   <!ENTITY % entities SYSTEM "Entities.xml">
 
   %entities;
@@ -63,19 +63,13 @@
     <triggers>
       <projectTriggerFilter>
         <trigger type="intervalTrigger" seconds="90" />
-        <projectFilters>
-          &DevBuilding;
-          &ReleaseBuilding;
-        </projectFilters>
+        <projectFilters>&DevBuilding;&ReleaseBuilding;</projectFilters>
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>
-          &DevBuilding;
-          &ReleaseBuilding;
-        </projectFilters>
+        <projectFilters>&DevBuilding;&ReleaseBuilding;</projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -85,7 +79,7 @@
         </allowed>
       </triggeredIntegrationFilter>
     </integrationFilter>
-    <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
+    <sourcecontrol type="svn" tagOnSuccess="false" autoGetSource="true">
       <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
       <workingDirectory>&BuildDirectory;</workingDirectory>
       <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
@@ -94,15 +88,13 @@
       </webUrlBuilder>
     </sourcecontrol>
     <labeller type="defaultlabeller">
-      <prefix>BuildScripts.</prefix>
+      <prefix>BuildScripts-1.0-</prefix>
     </labeller>
     <tasks>
-      <nullTask/>
+      <nullTask />
     </tasks>
     <publishers>
-      <xmllogger />
-      &email;
-    </publishers>
+      <xmllogger />&email;</publishers>
   </project>
   <project name="&ProjectName;-&ProjectCodeLineName; Dev">
     <webURL>&webURL;</webURL>
@@ -110,19 +102,13 @@
     <triggers>
       <projectTriggerFilter>
         <trigger type="intervalTrigger" seconds="90" />
-        <projectFilters>
-          &ScriptsBuilding;
-          &ReleaseBuilding;
-        </projectFilters>
+        <projectFilters>&ScriptsBuilding;&ReleaseBuilding;</projectFilters>
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>
-          &ScriptsBuilding;
-          &ReleaseBuilding;
-        </projectFilters>
+        <projectFilters>&ScriptsBuilding;&ReleaseBuilding;</projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -140,7 +126,7 @@
       </forcedIntegrationFilter>
     </integrationFilter>
     <sourcecontrol type="filtered">
-      <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
+      <sourceControlProvider type="svn" tagOnSuccess="true" autoGetSource="false">
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
@@ -166,87 +152,15 @@
           <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
-    </sourcecontrol>
-    &labeller;
-    <tasks>
-      <modificationWriter>
-        <filename>SourceModificationReport.xml</filename>
-        <path>&BuildDirectory;\SourceModificationReports</path>
-      </modificationWriter>
-      <nant>
-        <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
-        <logger>NAnt.Core.XmlLogger </logger>
-        <buildFile>Main.build.xml</buildFile>
-        <targetList>
-          <target>Triggered</target>
-        </targetList>
-
-        <buildTimeoutSeconds>2300</buildTimeoutSeconds>
-      </nant>
-    </tasks>
-    <publishers>
-      <merge>
-        <files>
-          <file>&BuildDirectory;\Reports\*.xml</file>
-          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
-        </files>
-      </merge>
-      <xslmerger>
-        <filepairs>
-          <filepair>
-            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
-          </filepair>
-          <filepair>
-            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
-          </filepair>
-          <filepair>
-            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
-          </filepair>
-          <filepair>
-            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
-          </filepair>
-          <filepair>
-            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
-          </filepair>
-          <filepair>
-            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
-          </filepair>
-        </filepairs>
-      </xslmerger>
-      <xmllogger />
-      &email;
-      <nant>
-        <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
-        <logger>NAnt.Core.XmlLogger </logger>
-        <buildFile>Post.Shim.xml</buildFile>
-        <targetList>
-          <target>PostBuildWrapper</target>
-        </targetList>
-
-        <buildTimeoutSeconds>300</buildTimeoutSeconds>
-      </nant>
-    </publishers>
-  </project>
+    </sourcecontrol>&labeller;<tasks><modificationWriter><filename>SourceModificationReport.xml</filename><path>&BuildDirectory;\SourceModificationReports</path></modificationWriter><nant><executable>&NantExePath;</executable><baseDirectory>&BuildDirectory;</baseDirectory><logger>NAnt.Core.XmlLogger </logger><buildFile>Main.build.xml</buildFile><targetList><target>Triggered</target></targetList><buildTimeoutSeconds>2300</buildTimeoutSeconds></nant></tasks><publishers><merge><files><file>&BuildDirectory;\Reports\*.xml</file><file>&BuildDirectory;\LinesOfCode\*.xml</file></files></merge><xslmerger><filepairs><filepair><xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile><xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile></filepair><filepair><xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile><xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile></filepair><filepair><xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile><xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile></filepair><filepair><xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile><xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile></filepair><filepair><xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile><xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile></filepair><filepair><xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile><xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile></filepair></filepairs></xslmerger><xmllogger />&email;<nant><executable>&NantExePath;</executable><baseDirectory>&BuildDirectory;</baseDirectory><logger>NAnt.Core.XmlLogger </logger><buildFile>Post.Shim.xml</buildFile><targetList><target>PostBuildWrapper</target></targetList><buildTimeoutSeconds>300</buildTimeoutSeconds></nant></publishers></project>
   <project name="&ProjectName;-&ProjectCodeLineName; Heavy">
     <webURL>&webURL;</webURL>
     <state type="state" />
-    <triggers/>
+    <triggers />
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>
-          &ScriptsBuilding;
-          &DevBuilding;
-          &ReleaseBuilding;
-        </projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&ReleaseBuilding;</projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -264,7 +178,7 @@
       </forcedIntegrationFilter>
     </integrationFilter>
     <sourcecontrol type="filtered">
-      <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+      <sourceControlProvider type="svn" tagOnSuccess="false" autoGetSource="false">
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
@@ -307,7 +221,6 @@
         <targetList>
           <target>Heavy</target>
         </targetList>
-
         <buildTimeoutSeconds>4200</buildTimeoutSeconds>
       </nant>
     </tasks>
@@ -346,20 +259,7 @@
           </filepair>
         </filepairs>
       </xslmerger>
-      <xmllogger />
-      &email;
-      <nant>
-        <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
-        <logger>NAnt.Core.XmlLogger </logger>
-        <buildFile>Post.Shim.xml</buildFile>
-        <targetList>
-          <target>PostBuildWrapper</target>
-        </targetList>
-
-        <buildTimeoutSeconds>300</buildTimeoutSeconds>
-      </nant>
-    </publishers>
+      <xmllogger />&email;<nant><executable>&NantExePath;</executable><baseDirectory>&BuildDirectory;</baseDirectory><logger>NAnt.Core.XmlLogger </logger><buildFile>Post.Shim.xml</buildFile><targetList><target>PostBuildWrapper</target></targetList><buildTimeoutSeconds>300</buildTimeoutSeconds></nant></publishers>
   </project>
   <project name="&ProjectName;-&ProjectCodeLineName; Release">
     <webURL>&webURL;</webURL>
@@ -367,21 +267,13 @@
     <triggers>
       <projectTriggerFilter>
         <trigger type="scheduleTrigger" time="23:30" buildCondition="IfModificationExists" />
-        <projectFilters>
-          &ScriptsBuilding;
-          &DevBuilding;
-          &DevFailed;
-        </projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;</projectFilters>
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>
-          &ScriptsBuilding;
-          &DevBuilding;
-          &DevFailed;
-        </projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;</projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -399,7 +291,7 @@
       </forcedIntegrationFilter>
     </integrationFilter>
     <sourcecontrol type="filtered">
-      <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+      <sourceControlProvider type="svn" tagOnSuccess="false" autoGetSource="false">
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
@@ -442,7 +334,6 @@
         <targetList>
           <target>Release</target>
         </targetList>
-
         <buildTimeoutSeconds>7800</buildTimeoutSeconds>
       </nant>
     </tasks>
@@ -481,19 +372,6 @@
           </filepair>
         </filepairs>
       </xslmerger>
-      <xmllogger />
-      &email;
-      <nant>
-        <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
-        <logger>NAnt.Core.XmlLogger </logger>
-        <buildFile>Post.Shim.xml</buildFile>
-        <targetList>
-          <target>PostBuildWrapper</target>
-        </targetList>
-
-        <buildTimeoutSeconds>300</buildTimeoutSeconds>
-      </nant>
-    </publishers>
+      <xmllogger />&email;<nant><executable>&NantExePath;</executable><baseDirectory>&BuildDirectory;</baseDirectory><logger>NAnt.Core.XmlLogger </logger><buildFile>Post.Shim.xml</buildFile><targetList><target>PostBuildWrapper</target></targetList><buildTimeoutSeconds>300</buildTimeoutSeconds></nant></publishers>
   </project>
 </cruisecontrol>
