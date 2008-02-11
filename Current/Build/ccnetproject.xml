@@ -55,6 +55,24 @@
               </activities>
             </exclusionFilters>
           </projectFilter>'>
+  <!ENTITY Dev1.0Building '<projectFilter
+               serverUri="tcp://localhost:21267/CruiseManager.rem"
+               project="&ProjectName;-Current Dev">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY Release1.0Building '<projectFilter
+               serverUri="tcp://localhost:21267/CruiseManager.rem"
+               project="&ProjectName;-Current Release">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
 ]>
 <cruisecontrol>
   <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
@@ -66,6 +84,8 @@
         <projectFilters>
           &DevBuilding;
           &ReleaseBuilding;
+          &Dev1.0Building;
+          &Release1.0Building;
         </projectFilters>
       </projectTriggerFilter>
     </triggers>
@@ -75,6 +95,8 @@
         <projectFilters>
           &DevBuilding;
           &ReleaseBuilding;
+          &Dev1.0Building;
+          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
@@ -246,6 +268,8 @@
           &ScriptsBuilding;
           &DevBuilding;
           &ReleaseBuilding;
+          &Dev1.0Building;
+          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
@@ -371,6 +395,8 @@
           &ScriptsBuilding;
           &DevBuilding;
           &DevFailed;
+          &Dev1.0Building;
+          &Release1.0Building;
         </projectFilters>
       </projectTriggerFilter>
     </triggers>
@@ -381,6 +407,8 @@
           &ScriptsBuilding;
           &DevBuilding;
           &DevFailed;
+          &Dev1.0Building;
+          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
