@@ -135,6 +135,7 @@
 			  tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
 			  verbose="true"
 		/>
+    <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
 	</target>
 
 	<target name="SourceModificationReport.PublishOldSource">
@@ -199,7 +200,6 @@
 		<mkdir unless="${directory::exists(SourceModificationReport.ReportDirectory)}" dir="${SourceModificationReport.ReportDirectory}"/>
 		<property name="Common.FilesToDelete" value="${SourceModificationReport.FilesToDeleteAtSetup}"/>
 		<call target="Common.DeleteFiles"/>
-		<copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
 
 		<call target="SourceModificationReport.CreateModificationList"/>
 	</target>
