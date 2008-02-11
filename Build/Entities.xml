@@ -1,0 +1,32 @@
+<!ENTITY HostName      'CIFACTORYBUILD' >
+<!ENTITY Port      '21267' >
+<!ENTITY EmailHost                'localhost'>
+<!ENTITY LabelPrefix      '1.0.1.' >
+<!ENTITY ProjectName              'CI Factory' >
+<!ENTITY ProjectCodeLineName      '1.0' >
+<!ENTITY ProjectsDirectory        'c:\Projects' >
+
+<!ENTITY ProductDirectoryName         'Product'>
+<!ENTITY ThirdPartyDirectoryName      'Third Party' >
+<!ENTITY ProductionDirectoryName      'Production' >
+<!ENTITY BuildDirectoryName           'Build' >
+<!ENTITY ArtifactRootDirectoryName    'Artifacts' >
+<!ENTITY PackagesDirectoryName        'Packages' >
+<!ENTITY UnitTestDirectoryName        'Unit Test' >
+<!ENTITY InstallDirectoryName         'Install' >
+
+<!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
+<!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&ProductDirectoryName;' >
+<!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
+<!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
+<!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
+<!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&ArtifactRootDirectoryName;' >
+<!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
+<!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >
+<!ENTITY InstallDirectory      '&ProductDirectory;\&InstallDirectoryName;' >
+
+<!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
+<!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
+
+<!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
