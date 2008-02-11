@@ -60,7 +60,7 @@
 
 
 	<target name="CreateBranch">
-		<property name="CCNetProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
+		<property name="CCNetProjectName" value="CIFactory-CurrentDev"/>
 		<property name="CCNetServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
 
 		<property name="StateFilePath" value="${BuildDirectory}\server\${CCNetProjectName}.state"/>
@@ -96,15 +96,15 @@
 
 		<call target="SetBranchProperties"/>
 
-    <call target="SourceControl.GetOfCodeLineDirectory"/>
+    <!--<call target="SourceControl.GetOfCodeLineDirectory"/>-->
 
 		<property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
-		<call target="SourceControl.StartCreateBranch"/>
+		<!--<call target="SourceControl.StartCreateBranch"/>
 
 		<call target="EditBranchXmlEntities"/>
 		<call target="SetBranchCCNetLabels"/>
     
-		<call target="SetBranchParentCCNetLabels"/>
+		<call target="SetBranchParentCCNetLabels"/>-->
 
     <nant buildfile="${BranchPackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml" target="SourceControl.Rename" inheritall="false" inheritrefs="false" >
       <properties>
