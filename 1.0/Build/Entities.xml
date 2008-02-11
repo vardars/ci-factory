@@ -1,4 +1,4 @@
-<!ENTITY HostName      'CIFACTORYBUILD' >
+<!ENTITY HostName      'cifactorybuild.stelligent.com' >
 <!ENTITY Port      '21267' >
 <!ENTITY EmailHost                'localhost'>
 <!ENTITY LabelPrefix      '1.0.1.' >
