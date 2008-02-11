@@ -55,6 +55,24 @@
               </activities>
             </exclusionFilters>
           </projectFilter>'>
+  <!ENTITY DevCurrentBuilding '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="&ProjectName;-Current Dev">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
+  <!ENTITY ReleaseCurrentBuilding '<projectFilter
+               serverUri="tcp://localhost:21236/CruiseManager.rem"
+               project="&ProjectName;-Current Release">
+            <exclusionFilters>
+              <activities>
+                <activity>Building</activity>
+              </activities>
+            </exclusionFilters>
+          </projectFilter>'>
 ]>
 <cruisecontrol>
   <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
@@ -63,13 +81,21 @@
     <triggers>
       <projectTriggerFilter>
         <trigger type="intervalTrigger" seconds="90" />
-        <projectFilters>&DevBuilding;&ReleaseBuilding;</projectFilters>
+        <projectFilters>
+          &DevBuilding;
+          &ReleaseBuilding;
+          &DevCurrentBuilding;
+          &ReleaseCurrentBuilding;
+        </projectFilters>
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>&DevBuilding;&ReleaseBuilding;</projectFilters>
+        <projectFilters>&DevBuilding;&ReleaseBuilding;
+          &DevCurrentBuilding;
+          &ReleaseCurrentBuilding;
+        </projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -160,7 +186,10 @@
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>&ScriptsBuilding;&DevBuilding;&ReleaseBuilding;</projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&ReleaseBuilding;
+          &DevCurrentBuilding;
+          &ReleaseCurrentBuilding;
+        </projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
@@ -267,13 +296,19 @@
     <triggers>
       <projectTriggerFilter>
         <trigger type="scheduleTrigger" time="23:30" buildCondition="IfModificationExists" />
-        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;</projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;
+          &DevCurrentBuilding;
+          &ReleaseCurrentBuilding;
+        </projectFilters>
       </projectTriggerFilter>
     </triggers>
     <forceFilters>
       <passwordForceFilter password="automa" />
       <projectForceFilter>
-        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;</projectFilters>
+        <projectFilters>&ScriptsBuilding;&DevBuilding;&DevFailed;
+          &DevCurrentBuilding;
+          &ReleaseCurrentBuilding;
+        </projectFilters>
       </projectForceFilter>
     </forceFilters>
     <integrationFilter>
