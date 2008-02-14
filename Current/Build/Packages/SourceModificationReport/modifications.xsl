@@ -3,8 +3,8 @@
   <xsl:output method="html"/>
   <xsl:param name="applicationPath"/>
 
-  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentWebPath']/task[@name='echo']/message"  />
-  <xsl:param name="ChangesDocPath" select="concat($URL, '/SourceModificationReport.xml')"/>
+  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentArtifactPath']/task[@name='echo']/message"  />
+  <xsl:param name="ChangesDocPath" select="concat($URL, '\SourceModificationReport.xml')"/>
   <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
   
   
