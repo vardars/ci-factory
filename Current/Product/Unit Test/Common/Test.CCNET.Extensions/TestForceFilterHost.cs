@@ -11,6 +11,12 @@ namespace CCNET.Extensions.Test
     [TestFixture]
     public class TestsPasswordForceFilter
     {
+        [Test]
+        public void TestToFailTheBuild()
+        {
+            Assert.Fail("Fail the build to test an xsl report.");
+        }
+
         [Row("frog", "frog", true)]
         [Row("frog", "toad", false)]
         [RowTest]
