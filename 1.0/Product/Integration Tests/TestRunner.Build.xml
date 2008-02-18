@@ -40,7 +40,7 @@
     <delete dir="${Deployment.Directory.Path}" if="${directory::exists(Deployment.Directory.Path)}" />
     <mkdir dir="${Deployment.Directory.Path}"/>
     <copy todir="${Deployment.Directory.Path}">
-      <fileset basedir="C:\Projects\CI Factory\Current\Product\Install\CI Factory\CI Factory">
+      <fileset basedir="C:\Projects\CI Factory\1.0\Product\Install\CI Factory\CI Factory">
         <include name="**\*"/>
       </fileset>
     </copy>

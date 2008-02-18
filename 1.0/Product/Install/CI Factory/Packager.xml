@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Factory Packager" default="Packager.Create">
 
-  <property name="ThirdPartyDirectory" value="C:\Projects\CI Factory\Current\Third Party"/>
-  <property name="ProductDirectory" value="C:\Projects\CI Factory\Current\Product"/>
+  <property name="ThirdPartyDirectory" value="C:\Projects\CI Factory\1.0\Third Party"/>
+  <property name="ProductDirectory" value="C:\Projects\CI Factory\1.0\Product"/>
 	<property name="InstallDirectory" value="${ProductDirectory}\Install\CI Factory"/>
   <property name="ZipDirectory" value="${InstallDirectory}\CI Factory"/>
 
