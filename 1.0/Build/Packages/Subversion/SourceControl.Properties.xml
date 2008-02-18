@@ -3,7 +3,7 @@
 
   <property name="SVN.URI.Root" value="https://ci-factory.googlecode.com/svn" overwrite="false" />
   <property name="SVN.URI.ProjectName" value="https://ci-factory.googlecode.com/svn" overwrite="false" />
-  <property name="SVN.URI.ProjectCodeLine" value="https://ci-factory.googlecode.com/svn/Current" overwrite="false" />
+  <property name="SVN.URI.ProjectCodeLine" value="https://ci-factory.googlecode.com/svn/${ProjectCodeLineName}" overwrite="false" />
   
   <ifthenelse test="${file::exists(PackagesDirectory + '\Subversion\SourceControl.Credentials.xml')}">
     <then>

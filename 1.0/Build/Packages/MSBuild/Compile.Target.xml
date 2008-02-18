@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile">
 
-  <property name="Compile.LogFileDirectory" value="c:\Projects\CI Factory\Current\Build\CompileLogs" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
 	
   <include buildfile="Compile.Properties.xml" />
 
