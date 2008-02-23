@@ -3,30 +3,34 @@
   <xsl:output method="html"/>
   <xsl:param name="applicationPath"/>
 
-  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentArtifactPath']/task[@name='echo']/message"  />
-  <xsl:param name="ChangesDocPath" select="concat($URL, '\SourceModificationReport.xml')"/>
-  <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
-  
-  
-  <xsl:variable name="modification.list" select="($ChangesDoc)/Modification"/>
   <xsl:key name="changeset" match="//Modification" use="ChangeNumber/text()"/>
 
   <xsl:template match="/">
-    <xsl:if test="/cruisecontrol/build/@lastintegrationstatus != 'Success' and /cruisecontrol/build/@lastintegrationstatus != 'Unknown'">
-      <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-        <tr>
-          <td height="42" class="sectionheader-container">
-            <img src="images/SourceControl.gif" class="sectionheader-title-image" />
-            <div class="sectionheader"  >
-              Source Control Revision History Since Last Good Build
-            </div>
-          </td>
-        </tr>
-        <xsl:for-each select="($ChangesDoc)//Modification[generate-id(.)=generate-id(key('changeset', ChangeNumber/text())[1])]">
-          <xsl:sort select="ChangeNumber" order="descending" data-type="number"/>
-          <xsl:call-template name="changeset" />
-        </xsl:for-each>
-      </table>
+    <xsl:variable name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentWebPath']/task[@name='echo']/message"  />
+
+    <xsl:if test="boolean($URL)">
+      <xsl:variable name="ChangesDocPath" select="concat($URL, '/SourceModificationReport.xml')"/>
+      <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
+
+
+      <xsl:variable name="modification.list" select="($ChangesDoc)/Modification"/>
+
+      <xsl:if test="/cruisecontrol/build/@lastintegrationstatus != 'Success' and /cruisecontrol/build/@lastintegrationstatus != 'Unknown'">
+        <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+          <tr>
+            <td height="42" class="sectionheader-container">
+              <img src="images/SourceControl.gif" class="sectionheader-title-image" />
+              <div class="sectionheader"  >
+                Source Control Revision History Since Last Good Build
+              </div>
+            </td>
+          </tr>
+          <xsl:for-each select="($ChangesDoc)//Modification[generate-id(.)=generate-id(key('changeset', ChangeNumber/text())[1])]">
+            <xsl:sort select="ChangeNumber" order="descending" data-type="number"/>
+            <xsl:call-template name="changeset" />
+          </xsl:for-each>
+        </table>
+      </xsl:if>      
     </xsl:if>
   </xsl:template>
 
