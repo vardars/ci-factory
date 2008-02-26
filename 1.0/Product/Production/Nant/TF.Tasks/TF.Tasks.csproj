@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alerts\QueryAlertSubscriptionsTask.cs" />
-    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+    <Compile Include="c:\Projects\CI Factory\1.0\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

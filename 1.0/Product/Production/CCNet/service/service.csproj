@@ -149,6 +149,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>copy "$(TargetPath)" "C:\Projects\CI Factory\Current\Product\Power Tools"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "c:\Projects\CI Factory\1.0\Product\Power Tools"</PostBuildEvent>
   </PropertyGroup>
 </Project>
