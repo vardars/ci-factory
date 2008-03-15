@@ -102,6 +102,12 @@
             This attribute is <b>required</b>.
             </summary>
         </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultaddfortressitemcomment.useHtml">
+            <summary>
+            True to use html, false otherwise.
+            This attribute is optional.  The default value is false.
+            </summary>
+        </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultaddrepository">
             <summary>
             
@@ -225,6 +231,12 @@
             
                         Commit pending operations at or underneath an array of Vault object paths.
                         
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.comment">
+            <summary>
+            The comment that will be included with this transaction
+            This attribute is optional.  The default value is "".
             </summary>
         </member>
         <member name="P:NAnt.Contrib.Tasks.SourceGearVault.vaultcheckin.objectPaths">
@@ -617,6 +629,14 @@
                         The milestone to which the item will belong.
                         
             This attribute is optional.  The default value is "".
+            </summary>
+        </member>
+        <member name="P:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded.UseHtmlInDetails">
+            <summary>
+            
+                        True to use html in the details section, false otherwise.
+                        
+            This attribute is optional.  The default value is false.
             </summary>
         </member>
         <member name="T:NAnt.Contrib.Tasks.SourceGearVault.vaultfortresslistataglance">

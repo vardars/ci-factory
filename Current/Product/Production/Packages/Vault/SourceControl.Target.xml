@@ -143,7 +143,17 @@
   </target>
 
   <target name="Private.SourceControl.AddLocalDirectory">
+<trycatch>
+  <try>
+    <vaultlistfolder folderPath="${Private.SourceControl.AddLocalDirectory}" />
+  </try>
+  <catch property="failure">
+    <echo message="Directory does not exist - creating ${Private.SourceControl.AddLocalDirectory}" />
     <vaultcreatefolder newFolderPath="${Private.SourceControl.AddLocalDirectory}" />
+  </catch>
+</trycatch>
+
+
     <vaultadd folderPath="${Private.SourceControl.AddLocalDirectory}" failonerror="false">
       <fileset>
         <include name="${Private.SourceControl.AddLocalDirectory}\*.*" />
@@ -167,14 +177,13 @@
       <ifnot  test="${Private.SourceControl.Repository.CreateRepositoryDirectory.PathPart == '$'}" >
         <property name="Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath" value="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}/${Private.SourceControl.Repository.CreateRepositoryDirectory.PathPart}" />
       </ifnot>
-      <echo message="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
       <ifnot test="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath == '$'}" >
         <trycatch>
           <try>
             <vaultlistfolder folderPath="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
           </try>
           <catch property="failure">
-            <echo message="RepositoryDirectory does not exist -creating folder ${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
+            <echo message="RepositoryDirectory does not exist - creating folder ${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
             <vaultcreatefolder newFolderPath="${Private.SourceControl.Repository.CreateRepositoryDirectory.CurrentPath}" />
           </catch>
         </trycatch>
