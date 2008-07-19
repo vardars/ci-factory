@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Install" default="Alerts.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Alerts.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+      <![CDATA[<call target="Alerts.Run" failonerror="false"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="Alerts.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Alerts"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Alerts.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Alerts"/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+  </target>
+
+  <target name="Alerts.ValidateParameters">
+    <property name="XmlDiffPath" value="${environment::get-variable('ProgramFiles')}\XmlDiffPatch\Bin\XmlDiff.exe"/>
+    <if test="${stringlist::contains('Packages.InstallList', 'Simian')}">
+      <call target="Alerts.InsureXmlDiffInstallationExists"/>
+    </if>
+  </target>
+
+  <target name="Alerts.InsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">
+    <ask answer="Answer"
+           question="It looks like XmlDiff is not installed.  This software is required.  Do you wish to install the software?"
+           caption="XmlDiff is Required Software!"
+           showdialog="true" >
+      <options>
+        <string value="Install"/>
+        <string value="Exit"/>
+      </options>
+    </ask>
+    <ifthenelse test="${Answer == 'Install'}">
+      <then>
+        <mkdir dir="C:\Temp" unless="${directory::exists('C:\Temp')}"/>
+        <get dest="C:\Temp\xmldiffpatch.exe" src="http://download.microsoft.com/download/xml/Patch/1.0/WXP/EN-US/xmldiffpatch.exe"></get>
+        <exec program="C:\Temp\xmldiffpatch.exe" verbose="true" />
+      </then>
+      <elseif if="${Answer == 'Exit'}">
+        <fail message="Please install XmlDiff!" />
+      </elseif>
+    </ifthenelse>
+  </target>
+
+
+</project>
