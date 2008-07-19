@@ -180,7 +180,7 @@
 
 				<trycatch>
 					<try>
-						<regex input="${DirtySCPath}" pattern=".*${ProjectCodeLineName}(/|\\)Product(/|\\|)(?'CleanSCPath'.*)"/>
+						<regex input="${DirtySCPath}" pattern=".*${ProjectCodeLineName}(/|\\)${ProductDirectoryName}(/|\\|)(?'CleanSCPath'.*)"/>
 						<property name="PartialModificationFilePath" value="${path::combine(CleanSCPath, FileName)}"/>
 						<property name="ModificationFilePath" value="${path::combine(ProductDirectory, PartialModificationFilePath)}"/>
 
