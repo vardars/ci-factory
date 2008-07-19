@@ -4,6 +4,16 @@
   <include buildfile = "FxCop.Properties.xml"/>
 
   <fileset id = "FxCop.AssembliesFileSet"/>
+  <fileset id="FxCop.ReferenceAssembliesFileSet">
+    <include name="${ThirdPartyDirectory}\**\*.dll"/>
+    <include name="${ThirdPartyDirectory}\**\*.pdb"/>
+    <!--<include name="${ThirdPartyDirectory}\**\*.xml"/>-->
+  </fileset>
+  <fileset id="FxCop.ProductionAssembliesFileSet">
+    <include name="${ProductionDirectory}\**\*.dll"/>
+    <include name="${ProductionDirectory}\**\*.pdb"/>
+    <!--<include name="${ProductionDirectory}\**\*.xml"/>-->
+  </fileset>
 
   <property name = "Private.FxCop.HaveAssemblies" value = "false"/>
 
@@ -13,17 +23,45 @@
       <echo level = "Warning" message = "No assemblies found to analyze for FxCop!"/>
     </ifnot>
     <if test = "${Private.FxCop.HaveAssemblies}">
-      <copy todir = "${FxCop.AssembliesFolder}" verbose = "true">
-        <fileset refid = "FxCop.AssembliesFileSet"/>
+      <echo message="Copying target assemblies."/>
+      <copy todir="${FxCop.AssembliesFolder}" verbose="true">
+        <fileset refid="FxCop.AssembliesFileSet"/>
       </copy>
+      <echo message="Copying reference assemblies and dependencies."/>
+      <echo level="Debug" message="Copy production assemblies and dependencies first as a quick and dirty way to try to prevent 'older' assemblies from overwriting 'newer' assemblies."/>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true">
+        <fileset refid="FxCop.ProductionAssembliesFileSet"/>
+      </copy>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true" overwrite="false">
+        <fileset refid="FxCop.ReferenceAssembliesFileSet"/>
+      </copy>
+      <echo level="Debug" message="Re-Copy production assemblies and dependencies last as a quick and dirty way to try to ensure 'newer' assemblies overwrite 'older' assemblies."/>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true" overwrite="true">
+        <fileset refid="FxCop.ProductionAssembliesFileSet"/>
+      </copy>
+      <echo message='FxCop command line="${path::get-short-path(FxCop.Console)} /file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo".'/> <!--JW: added for debugging purposes-->
+
+      <ifthenelse test="${file::exists(FxCop.ProjectFile)}">
+        <then>
+          <echo level="Debug" message="Running FxCop with FxCop project file '${FxCop.ProjectFile}'."/>
+          <property name="FxCop.Console.CommandLine"  value='/project:"${FxCop.ProjectFile}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'/>
+          <!--<fail message="Running FxCop with a FxCop project file is not yet supported."/>-->
+        </then>
+        <else>
+          <echo level="Debug" message="Running FxCop without a FxCop project file."/>
+          <property name="FxCop.Console.CommandLine"  value='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'/>
+        </else>
+      </ifthenelse>
+
       <loglevel level="None">
         <do>
           <exec
             program="${path::get-short-path(FxCop.Console)}"
-            commandline='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'
+            commandline="${FxCop.Console.CommandLine}"
             failonerror="false" verbose="true"/>
         </do>
       </loglevel>
+
       <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">
 
         <style in="${FxCop.ReportFolder}\FxCopReport.xml"

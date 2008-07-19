@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop.Properties">
   
-  <property name="FxCop.BinFolder"    value = "${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35"/>
-  <property name="FxCop.DownloadUrl"  value="http://www.gotdotnet.com/Team/FxCop/FxCopInstall1.35.MSI"/>
+  <property name="FxCop.Version"      value="1.36" overwrite="false"/> <!--Valid values are: "1.36", "1.35". -->
+  <property name="FxCop.ProjectFile"  value="${ProductDirectory}/${ProjectName}.FxCop" overwrite="false"/>
 
-  <property name="FxCop.Console"                    value="${FxCop.BinFolder}\FxCopCmd.exe"/>
-  <property name="FxCop.BuildFolder"                value="${BuildDirectory}\FxCop"/>
-  <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report"/>
-  <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies"/>
-  <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules"/>
-  <property name="FxCop.ReferenceAssembliesFolder"  value="${ThirdPartyDirectory}"/>
-  <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*"/>
+  <switch value="${FxCop.Version}">
+    <case value="1.36" break="true">
+      <property name="FxCop.BinFolder"    value="${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.36" overwrite="false"/>
+      <property name="FxCop.DownloadUrl"  value="http://www.microsoft.com/downloads/details.aspx?familyid=3389F7E4-0E55-4A4D-BC74-4AEABB17997B&amp;displaylang=en" overwrite="false"/>
+    </case>
+    <case value="1.35" break="true">
+      <property name="FxCop.BinFolder"    value = "${environment::get-variable('ProgramFiles')}\Microsoft FxCop 1.35" overwrite="false"/>
+      <property name="FxCop.DownloadUrl"  value="http://www.gotdotnet.com/Team/FxCop/FxCopInstall1.35.MSI" overwrite="false"/>
+    </case>
+    <default>
+        <fail message="Invalid value '${FxCop.Version}' for Property FxCop.Version."/>
+    </default>
+  </switch>
+
+  <property name="FxCop.Console"                    value="${FxCop.BinFolder}\FxCopCmd.exe" overwrite="false"/>
+  <property name="FxCop.BuildFolder"                value="${BuildDirectory}\FxCop" overwrite="false"/>
+  <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report" overwrite="false"/>
+  <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies" overwrite="false"/>
+  <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules" overwrite="false"/>
+  <property name="FxCop.ReferenceAssembliesFolder"  value="${FxCop.BuildFolder}\ReferenceAssemblies" overwrite="false"/>
+  <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*" overwrite="false"/>
   
   <fileset id="FxCop.Target.ProjectFiles">
     <include name="${ProductionDirectory}\**\*.*proj"/>
