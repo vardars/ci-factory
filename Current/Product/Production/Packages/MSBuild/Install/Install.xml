@@ -6,6 +6,7 @@
   <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
   
   <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2005.sln.remove"/>
+  <property name="Compile.Default2008SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2008.sln.remove"/>
   
   <target name="MSBuild.Install">
     <largeproperty name="Packages.AddCompileActions.Block">
@@ -13,7 +14,17 @@
     </largeproperty>
     <call target="Packages.AddCompileActions"/>
     
-    <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
+    <ifthenelse test="${Compile.DevEnv.Version == '2005'}">
+      <then>
+        <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
+      </then>
+      <elseif if="${Compile.DevEnv.Version == '2008'}">
+        <copy file="${Compile.Default2008SolutionFile}" tofile="${Compile.SolutionFile}"/>
+      </elseif>
+      <else>
+        <fail message="The property Compile.DevEnv.Version must be of value '2005' or '2008', '${Compile.DevEnv.Version}' is not a valid value."/>
+      </else>
+    </ifthenelse>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\MSBuild\compile-msbuild.xsl</xslFile>]]></value>
