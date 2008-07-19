@@ -266,7 +266,7 @@ function refresh()
 
           BuildTimeElapsed.oncountup=function(result){
           var mycountainer=document.getElementById("clock")
-          mycountainer.innerHTML="Build Time Elpased: "+result['minutes']+":"+result['seconds']
+          mycountainer.innerHTML="Build Time Elapsed: "+result['minutes']+":"+((result['seconds'] < 10) ? "0" : "")+result['seconds']
           }
 
         </script>
