@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
+
+  <property name="nDepend.ProductionDirectoryOnly" value="true" overwrite="false"/>
+  <property name="nDepend.ExcludeEntireThirdPartyDirectory" value="false" overwrite="false"/>
+
+  <property name="nDepend.BinFolder" value="${BuildDirectory}\Packages\nDepend\bin" overwrite="false"/>
+  <property name="nDepend.Console" value="${nDepend.BinFolder}\NDepend.Console.exe" overwrite="false"/>
+
+  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend" overwrite="false"/>
+  <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" overwrite="false"/>
+  <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report" overwrite="false"/>
+  <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies" overwrite="false"/>
+
+  <ifthenelse test="${nDepend.ProductionDirectoryOnly}">
+    <then>
+      <property name="nDepend.AnalysisDirectory" value="${ProductionDirectory}"/>
+    </then>
+    <else>
+      <property name="nDepend.AnalysisDirectory" value="${ProductDirectory}"/>
+    </else>
+  </ifthenelse>
+  <fileset id="nDepend.Target.ProjectFiles" >
+    <include name="${nDepend.AnalysisDirectory}\**\*.*proj"/>
+  </fileset>
+
+  <fileset id="nDepend.DependenciesFileSet" >
+    <include name="${nDepend.AnalysisDirectory}\**\*.dll"/>
+    <include name="${nDepend.AnalysisDirectory}\**\*.exe"/>
+    <include name="${ThirdPartyDirectory}\**\*.dll"/>
+    <include name="${ThirdPartyDirectory}\**\*.exe"/>
+    <exclude name="${ThirdPartyDirectory}\MbUnit\*.*"/>
+  </fileset>
+  <if test="${nDepend.ExcludeEntireThirdPartyDirectory}">
+    <property name="nDepend.DependenciesFileSet.ThirdPartyDirectory.PathPattern" value="${ThirdPartyDirectory}\**\*.*"/>
+    <function execute="${fileset::exclude-add('nDepend.DependenciesFileSet', nDepend.DependenciesFileSet.ThirdPartyDirectory.PathPattern)}"/>
+  </if>
+
+  <property name="nDepend.FilesToDeleteAtSetup" value="${nDepend.BuildFolder}\**\*.*" overwrite="false"/>
+
+</project>
