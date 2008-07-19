@@ -309,7 +309,7 @@ if(!document.getElementById)
       <tr>
         <td>
           <p style="width: 25em;">
-            This chart displays a trend of dulplicatation.
+            This chart displays a trend of duplication.
           </p>
         </td>
         <td>
