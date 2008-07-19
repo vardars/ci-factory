@@ -42,10 +42,10 @@
           <call target="Alerts.Simian.GenerateWarning"/>
           <call target="Alerts.SendMessage"/>
         </then>
-        <elseif if="${int::parse(Alerts.Simian.Previous.DuplicateLineCount) > int::parse(Alerts.Simian.DuplicateLineCount)}">
+        <else if="${int::parse(Alerts.Simian.Previous.DuplicateLineCount) > int::parse(Alerts.Simian.DuplicateLineCount)}">
           <call target="Alerts.Simian.GenerateThankYou"/>
           <call target="Alerts.SendMessage"/>
-        </elseif>
+        </else>
       </ifthenelse>
     </if>
 
