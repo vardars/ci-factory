@@ -70,7 +70,7 @@
               </xsl:attribute>
               <img src="Packages\DotNetUnitTest\logo.gif" class="sectionheader-title-image"/>
               <div class="sectionheader-text">
-                Unit Tests (Executed: <xsl:value-of select="$stuff/@testcount"/>, Failed: <xsl:value-of select="$stuff/@failures"/>, Ignored: <xsl:value-of select="$stuff/@notrun"/>, Assert Count: <xsl:value-of select="$stuff/@AssertCount"/>, Duration: <xsl:value-of select="format-number($stuff/@time, '0.0')"/> seconds)
+                Unit Tests (Executed: <xsl:value-of select="$stuff/@testcount"/>, Failed: <xsl:value-of select="$stuff/@failures"/>, Warnings: <xsl:value-of select="$stuff/@warnings"/>, Not Run: <xsl:value-of select="$stuff/@notrun"/>, Assert Count: <xsl:value-of select="$stuff/@AssertCount"/>, Duration: <xsl:value-of select="format-number($stuff/@time, '0.0')"/> seconds)
               </div>
             </a>
           </td>

@@ -118,7 +118,7 @@
 						<xsl:with-param name="origLength" select="@run-count"/>
 						<xsl:with-param name="targetLength" select="$width"/>
 						<xsl:with-param name="value" select="@success-count+@failure-count+@skip-count"/>
-					</xsl:call-template>px;height:<xsl:value-of select="$height"/>px;background-color:orange;font-size:1px;width:<xsl:call-template name="scale">
+					</xsl:call-template>px;height:<xsl:value-of select="$height"/>px;background-color:yellow;font-size:1px;width:<xsl:call-template name="scale">
 						<xsl:with-param name="origLength" select="@run-count"/>
 						<xsl:with-param name="targetLength" select="$width"/>
 						<xsl:with-param name="value" select="@ignore-count"/>
@@ -211,7 +211,8 @@
                     MbUnit Tests run:
                     <xsl:value-of select="counter/@run-count" /> tests,
                     <xsl:value-of select="counter/@success-count" /> succeeded,
-                  <xsl:value-of select="counter/@failure-count" /> failed,
+                    <xsl:value-of select="counter/@failure-count" /> failed,
+                    <xsl:value-of select="count(//warning)"/> warnings,
                     <xsl:value-of select="counter/@skip-count" /> skipped,
                     <xsl:value-of select="counter/@ignore-count" /> ignored,
                     <xsl:value-of select="counter/@assert-count"/> asserts
@@ -300,6 +301,12 @@
 	</xsl:template>
 
     <xsl:template name="warnings">
+<div style="color:gold">
+	<h2>
+		<img src="Packages\DotNetUnitTest\warning.gif" class="sectionheader-title-image"/>
+		<xsl:value-of select="count(//warning)"/> Test Warning(s)
+	</h2>
+</div>
 <table> 
 <xsl:for-each select="//warning">
 <tr>
@@ -309,9 +316,16 @@
 		    <xsl:otherwise>failureEven</xsl:otherwise>
 		</xsl:choose>
     </xsl:attribute>
-    <td><xsl:call-template name="run-icon"/>
-        <xsl:value-of select="ancestor::run/@name" /></td>
-    <td><xsl:value-of select="text()"/></td>
+    <td><xsl:call-template name="run-icon"/></td>
+    <td><strong>Warning: </strong><xsl:value-of select="ancestor::run/@name" /></td>
+</tr>
+<tr>
+	<td></td>
+	<td>
+		<ul>
+			<li><strong>Message: </strong><xsl:value-of select="text()"/></li>
+		</ul>
+	</td>
 </tr>
 </xsl:for-each>
 </table>

@@ -194,7 +194,7 @@
         <xsl:variable name="mbunit.assertcount" select="sum($mbunit.result.list/@assert-count)"/>
         <xsl:variable name="mbunit.executedcount" select="sum($mbunit.result.list/@run-count)"/>
         <xsl:variable name="mbunit.failurecount" select="sum($mbunit.result.list/@failure-count)"/>
-        <xsl:variable name="mbunit.notrun" select="sum($mbunit.result.list/@skip-count)"/>
+        <xsl:variable name="mbunit.notrun" select="sum($mbunit.result.list/@skip-count) + sum($mbunit.result.list/@ignore-count)"/>
 
         <xsl:call-template name="AddStatistic">
           <xsl:with-param name="StatisticName" select="'Total Test Count'"/>

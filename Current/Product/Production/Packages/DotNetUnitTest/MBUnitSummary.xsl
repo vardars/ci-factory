@@ -8,7 +8,10 @@
   <xsl:variable name="UnitTest.AssertCount" select="sum($nunit2.result.list/@assert-count)"/>
   <xsl:variable name="nunit2.testcount" select="sum($nunit2.result.list/@run-count)"/>
   <xsl:variable name="nunit2.failures" select="sum($nunit2.result.list/@failure-count)"/>
-  <xsl:variable name="nunit2.notrun" select="sum($nunit2.result.list/@skip-count)"/>
+  <xsl:variable name="nunit2.warnings" select="count(//report-result//warning)"/>
+  <xsl:variable name="nunit2.notrun" select="sum($nunit2.result.list/@skip-count) + sum($nunit2.result.list/@ignore-count)"/>
+  <xsl:variable name="nunit2.skippedcount" select="sum($nunit2.result.list/@skip-count)"/>
+  <xsl:variable name="nunit2.ignoredcount" select="sum($nunit2.result.list/@ignore-count)"/>
   <xsl:variable name="nunit2.time" select="sum($nunit2.result.list/@duration)"/>
   <xsl:variable name="nunit2.case.list" select="//report-result/assemblies/assembly/namespaces/namespace/fixtures/fixture"/>
   <xsl:variable name="nunit2.suite.list" select="//report-result/assemblies/assembly/namespaces/namespace/fixtures/fixture/runs/run"/>
@@ -30,6 +33,9 @@
       </xsl:attribute>
       <xsl:attribute name="failures">
         <xsl:value-of select="$nunit2.failures"/>
+      </xsl:attribute>
+      <xsl:attribute name="warnings">
+        <xsl:value-of select="$nunit2.warnings"/>
       </xsl:attribute>
       <xsl:attribute name="notrun">
         <xsl:value-of select="$nunit2.notrun"/>
@@ -87,10 +93,10 @@
         </tr>
       </xsl:if>
 
-      <xsl:if test="$nunit2.notrun > 0">
+      <xsl:if test="$nunit2.skippedcount > 0">
         <tr>
           <td class="sectionheader" colspan="2">
-            Warning Details (<xsl:value-of select="$nunit2.notrun"/>)
+            Warning Details (<xsl:value-of select="count(//test-suite/results/test-case[.//reason])"/>)
           </td>
         </tr>
         <!-- (PENDING) Why doesn't this work if set up as variables up top? -->
