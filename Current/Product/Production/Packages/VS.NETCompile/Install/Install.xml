@@ -9,6 +9,7 @@
   
   <property name="Compile.Default2003SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2003.sln.remove"/>
   <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2005.sln.remove"/>
+  <property name="Compile.Default2008SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2008.sln.remove"/>
   <property name="Compile.DefaultOpenSolutionBat" value="${SourcePackagesDirectory}\VS.NETCompile\Install\OpenSolution.bat"/>
   <property name="Compile.DefaultScratchFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\Scratch.build.xml"/>
   
@@ -24,8 +25,11 @@
       <elseif if="${Compile.DevEnv.Version == '2005'}">
         <copy file="${Compile.Default2005SolutionFile}" tofile="${Compile.SolutionFile}"/>
       </elseif>
+      <elseif if="${Compile.DevEnv.Version == '2008'}">
+        <copy file="${Compile.Default2008SolutionFile}" tofile="${Compile.SolutionFile}"/>
+      </elseif>
       <else>
-        <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
+        <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005' or '2008', '${Compile.DevEnv.Version}' is not a valid value."/>
       </else>
     </ifthenelse>
     <copy tofile="${Compile.OpenSolutionBat}" file="${Compile.DefaultOpenSolutionBat}">
