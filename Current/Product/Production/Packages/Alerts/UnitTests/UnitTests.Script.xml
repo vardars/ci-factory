@@ -57,7 +57,7 @@
       </items>
       <do>
         <property name="Found" value=""/>
-        <regex input="${ProjectPath}" pattern="(?'Found'/${ProjectCodeLineName}/Product/Unit Test).*" options="IgnoreCase" failonerror="false"/>
+        <regex input="${ProjectPath}" pattern="(?'Found'/${ProjectCodeLineName}/${ProductDirectoryName}/${UnitTestDirectoryName}).*" options="IgnoreCase" failonerror="false"/>
         <if test="${Found != ''}">
           <property name="AreChangesFromThisBuild" value="True"/>
         </if>
