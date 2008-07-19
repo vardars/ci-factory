@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
+  <property name="NUnit.ProjectConfigFilePath" value="${ProductDirectory}\${ProjectName}UnitTest.config" overwrite="false"/>
+  <property name="NUnit.ProjectFilePath" value="${ProductDirectory}\${ProjectName}.nunit" overwrite="false"/>
+  <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll" overwrite="false"/>
+  
+  <fileset id="UnitTest.ProjectFiles">
+    <include name="${UnitTestDirectory}\**\*.*proj"/>
+  </fileset>
+
+	<property name="NUnit.ConsolePath" value="%NUnit.ConsolePath%"  overwrite="false"/>
+  
+  <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports" overwrite="false"/>
+  <property name="UnitTest.BaseReportFileName" value="${ProjectName}UnitTests.xml" overwrite="false"/>
+</project>
