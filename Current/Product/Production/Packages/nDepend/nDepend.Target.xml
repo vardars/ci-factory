@@ -11,7 +11,7 @@
     <call target="Private.nDepend.CreateConfiguration"/>
     
     <ifnot test="${Private.nDepend.HaveAssemblies}">
-      <echo level="Warning" message="No assemblies found to calcuate on for NDepend!"/>
+      <echo level="Warning" message="No assemblies found to calculate on for NDepend!"/>
     </ifnot>
 
     <if test="${Private.nDepend.HaveAssemblies}">
@@ -92,13 +92,14 @@
       </in>
       <do>
         <property name="AssemblyName" value="${vsproject::get-assemblyname(nDepend.Target.ProjectFile.Path)}"/>
+        <property name="AssemblyOutputPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}"/>
         <ifnot test="${AssemblyName == '' or stringlist::contains('nDepend.AssemblyList', AssemblyName)}" >
           <property name="Private.nDepend.HaveAssemblies" value="true"/>
-          <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
+          <property name="TargetAssemblyPath" value="${AssemblyOutputPath}\${AssemblyName}.dll"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
-          <property name="TargetAssemblyPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
+          <property name="TargetAssemblyPath" value="${AssemblyOutputPath}\${AssemblyName}.exe"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetAssemblyPath)}"/>
-          <property name="TargetPDBPath" value="${vsproject::get-output-directory(nDepend.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
+          <property name="TargetPDBPath" value="${AssemblyOutputPath}\${AssemblyName}.pdb"/>
           <function execute="${fileset::include-add('nDepend.AssembliesFileSet', TargetPDBPath)}"/>
           <function execute="${stringlist::add('nDepend.AssemblyList', AssemblyName)}" />
           <write file="${nDepend.ConfigurationFile}" append="true">
