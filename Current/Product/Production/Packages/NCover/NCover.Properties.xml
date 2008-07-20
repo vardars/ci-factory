@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd"  name="Coverage.Properties">
   
   <property name="Coverage.ReportFolder" value="${BuildDirectory}\CoverageReports" overwrite="false"/>
@@ -18,4 +18,6 @@
 
   <property name="NCover.IIS" value="%NCover.IIS%" overwrite="false"/>
   <property name="NCover.IIS.Timeout" value="%NCover.IIS.Timeout%" overwrite="false"/>
+
+  <property name="NCover.SatisfactoryCoverage" value="80" overwrite="false"/>
 </project>
