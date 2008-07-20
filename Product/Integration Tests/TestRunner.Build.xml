@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CIFactory.TestRunner" default="CIFactory.TestRunner.RunAllTests">
+
+  <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+  <include buildfile="TestRunner.Properties.xml"/>
+  <include buildfile="TestRunner.Common.xml"/>
+  
+  <include buildfile="VisualSourceSafeTests\InstallationTest.xml"/>
+  <include buildfile="SubversionTests\InstallationTest.xml"/>
+  <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
+  <include buildfile="VersioningTests\InstallationTest.xml"/>
+	<include buildfile="NUnitTests\NUnitTests.xml"/>
+  <include buildfile="MbUnitTests\MbUnitTests.xml"/>
+  <include buildfile="MSTestTests\MSTestTests.xml"/>
+  <include buildfile="PerforceTests\InstallationTest.xml"/>
+	<include buildfile="VaultTests\InstallationTest.xml"/>
+  <include buildfile="AlternateNamingTests\InstallationTest.xml"/>
+  <include buildfile="WatiNTests\WatiNTests.xml"/>
+  
+  <target name="CIFactory.TestRunner.RunAllTests">
+    <call target="CIFactory.TestRunner.Deploy"/>
+    <testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
+      <fixtures>
+        <string value="VisualSourceSafe.InstallationTest"/>
+        <string value="Subversion.InstallationTest"/>
+        <string value="VS.NETCompile.InstallationTest"/>
+        <string value="Versioning.InstallationTest"/>
+        <string value="NUnitTests"/>
+        <string value="MbUnitTests"/>
+        <string value="MSTestTests"/>
+        <string value="WatiNTests"/>
+        <string value="Perforce.InstallationTest"/>
+				<!--<string value="Vault.InstallationTest"/>-->
+        <string value="AlternateNaming.InstallationTest"/>
+      </fixtures>
+    </testrunner>
+  </target>
+
+  <target name="CIFactory.TestRunner.Deploy" >
+    <delete dir="${Deployment.Directory.Path}" if="${directory::exists(Deployment.Directory.Path)}" />
+    <mkdir dir="${Deployment.Directory.Path}"/>
+    <copy todir="${Deployment.Directory.Path}">
+      <fileset basedir="C:\Projects\CI Factory\Current\Product\Install\CI Factory\CI Factory">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+    <copy todir="${Deployment.Directory.Path}\Packages">
+      <fileset basedir="Stubs">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+  </target>
+  
+</project>
