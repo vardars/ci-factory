@@ -77,6 +77,10 @@
       <Name>CollectionGen</Name>
       <HintPath>..\..\..\..\Third Party\nAnt\bin\CollectionGen.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.StarTeam, Version=1.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\Interop.StarTeam.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
     </Reference>
@@ -247,6 +251,14 @@
     <Compile Include="Tasks\SqlTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\StarTeam\LabelTask.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamAutoLabel.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamCheckin.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamCheckout.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamLabel.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamList.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamTask.cs" />
+    <Compile Include="Tasks\StarTeam\TreeBasedTask.cs" />
     <Compile Include="Tasks\Svn\AbstractSvnTask.cs">
       <SubType>Code</SubType>
     </Compile>
