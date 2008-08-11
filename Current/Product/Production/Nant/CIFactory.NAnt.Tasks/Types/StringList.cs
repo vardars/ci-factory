@@ -41,6 +41,19 @@ namespace CIFactory.NAnt.Types
 
         #endregion
 
+        public StringList()
+        {
+        }
+
+        public StringList(params string[] args)
+        {
+            foreach (string @string in args)
+            {
+                StringItem Item = new StringItem(@string);
+                this.StringItems.Add(Item.StringValue, Item);
+            }
+        }
+
         public void Clear()
         {
             this.StringItems = new StringItemTable();

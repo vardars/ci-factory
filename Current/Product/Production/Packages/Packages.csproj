@@ -535,6 +535,11 @@
     <Content Include="Alerts\Simian\Simian.Script.xml" />
     <Content Include="NCover\bin\License.txt" />
     <Content Include="SourceModificationReport\modifications.xsl" />
+    <Content Include="TargetProcess\Install\Install.xml" />
+    <Content Include="TargetProcess\Install\Properties.xml" />
+    <Content Include="TargetProcess\TargetProcess.Properties.xml" />
+    <Content Include="TargetProcess\TargetProcess.Target.xml" />
+    <Content Include="TargetProcess\TargetProcess.xsl" />
     <Content Include="VS.NETDeploy\Install\Install.xml" />
     <Content Include="VS.NETDeploy\Install\Properties.xml" />
   </ItemGroup>
