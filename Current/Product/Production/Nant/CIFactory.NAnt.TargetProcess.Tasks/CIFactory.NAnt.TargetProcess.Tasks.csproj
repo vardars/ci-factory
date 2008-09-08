@@ -29,19 +29,19 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\CIFactory.TargetProcess.NAnt.Tasks.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+		<Reference Include="Microsoft.Web.Services3, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			<HintPath>..\..\..\..\Third Party\WSE\Microsoft.Web.Services3.dll</HintPath>
+		</Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BugService.cs" />
-    <Compile Include="ITpDto.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="ITargetProcessHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,9 +53,6 @@
     <Compile Include="TargetProcessExtractFromComment.cs" />
     <Compile Include="TargetProcessHelper.cs" />
     <Compile Include="TargetProcessReportTask.cs" />
-    <Compile Include="TaskService.cs" />
-    <Compile Include="TpIntegration.cs" />
-    <Compile Include="UserStoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">
@@ -64,6 +61,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\TargetProcess.Common\TargetProcess.Common.csproj">
+      <Project>{EFABD0B2-8D6A-4912-8EF3-C2E54FFAE8DB}</Project>
+      <Name>TargetProcess.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CIFactory.NAnt.Tasks\CIFactory.NAnt.Tasks.csproj">
       <Project>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</Project>
       <Name>CIFactory.NAnt.Tasks</Name>
@@ -74,7 +75,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="UpdatenAnt.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

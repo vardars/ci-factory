@@ -133,15 +133,25 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         public Entity RetrieveEntity(int id, string entityType)
         {
             ITpDto tpEntity = null;
+            string LinkTypePart = String.Empty;
 
             if (entityType == "Task")
+            {
                 tpEntity = TaskService.GetByID(id);
+                LinkTypePart = "Planning/" + entityType;
+            }
             else if (entityType == "UserStory")
+            {
                 tpEntity = UserStoryService.GetByID(id);
+                LinkTypePart = "Planning/" + entityType;
+            }
             else if (entityType == "Bug")
+            {
                 tpEntity = BugService.GetByID(id);
+                LinkTypePart = "QA/" + entityType;
+            }
 
-            String hyperLink = "/Project/Planning/" + entityType + "/View.aspx?" + entityType + "ID=" + tpEntity.ID;
+            String hyperLink = "/Project/" + LinkTypePart + "/View.aspx?" + entityType + "ID=" + tpEntity.ID;
             Entity entity = new Entity(tpEntity.Description, hyperLink, tpEntity.Name, entityType, id);
 
             return entity;

@@ -22,8 +22,10 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
         private readonly DateTime currentBuildStartTime;
         private readonly string buildCondition;
         private readonly TimeSpan lastBuildDuration;
+        private readonly string lastLogMessage;
+        private readonly string[] logMessages;
 
-        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, TimeSpan lastBuildDuration, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, ChangeSet[] changes, string forcee, DateTime currentBuildStartTime, string buildCondition)
+        public ProjectGridRow(string name, string serverName, string buildStatus, string buildStatusHtmlColor, DateTime lastBuildDate, TimeSpan lastBuildDuration, string lastBuildLabel, string status, string activity, string forceBuildButtonName, string url, string mostRecentBuildUrl, ChangeSet[] changes, string forcee, DateTime currentBuildStartTime, string buildCondition, string lastLogMessage, string[] logMessages)
 		{
 			this.name = name;
 			this.serverName = serverName;
@@ -41,8 +43,24 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
             this.currentBuildStartTime = currentBuildStartTime;
             this.buildCondition = buildCondition;
             this.lastBuildDuration = lastBuildDuration;
+            this.lastLogMessage = lastLogMessage;
+            this.logMessages = logMessages;
 		}
 
+        public string[] LogMessages
+        {
+            get
+            {
+                return logMessages;
+            }
+        }
+        public string LastLogMessage
+        {
+            get
+            {
+                return lastLogMessage;
+            }
+        }
         public TimeSpan LastBuildDuration
         {
             get

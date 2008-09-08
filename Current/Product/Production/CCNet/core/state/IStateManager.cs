@@ -14,7 +14,8 @@ namespace ThoughtWorks.CruiseControl.Core.State
 		/// Loads the state of the project.
 		/// </summary>
 		/// <returns></returns>
-		IIntegrationResult LoadState(string project);
+        IIntegrationResult LoadState(Project project);
+        IIntegrationResult LoadState(string project);
 
 		/// <summary>
 		/// Persists the state of the project.

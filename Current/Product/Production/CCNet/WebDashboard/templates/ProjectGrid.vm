@@ -1,5 +1,5 @@
 <script language="JavaScript">
-  <!--
+	<!--
 function confirmPrompt(form, projectName)
 {
    var msg = "";
@@ -64,298 +64,368 @@ function refresh()
 }
 //-->
 </script>
+<script type="text/javascript">
+		/***********************************************
+		* Dynamic CountUp script- © Dynamic Drive (http://www.dynamicdrive.com)
+		* This notice MUST stay intact for legal use
+		* Visit http://www.dynamicdrive.com/ for this script and 100s more.
+		***********************************************/
 
-    <form ID="RefreshForm" method="post" style="padding:0px 0px 6px 0px;margin:0px;">
-      <table width="100%" style="padding:0px;margin:0px;" border="0">
-        <tr>
-          <td>
-            #if ($forceBuildMessage.Length > 0)
-            <span id="StatusLabel">$forceBuildMessage</span>
-            #else
-            &nbsp;
-            #end
-          </td>
-          <td width="175" align="right">
-            Refresh every <input type="text" id="refreshInterval" align="right" name="refreshInterval" value="30" size="1" maxlength="10" onblur="setRefreshInterval(this.value)"/> seconds
-          </td>
-          <td align="right" width="140">
-            <input type="submit" align="right" name="$refreshButtonName" value="Refresh status" />
-          </td>
-          <tr>
-          
-      </table>
-    </form>
+		function dcountup(startingdate, serverTime){
+		this.currentTime=new Date()
+		this.startingdate=new Date(startingdate)
+		this.serverTime=new Date(serverTime)
+		this.startingdate.setSeconds(this.startingdate.getSeconds() + ((this.currentTime-this.serverTime)/1000))
+		var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
+		this.timesup=false
+		this.start(timediff)
+		}
+
+		dcountup.prototype.oncountup=function(){} //default action for "oncountup"
+
+		dcountup.prototype.start=function(timediff){
+		var thisobj=this
+		timediff += 1
+		var oneMinute=60 //minute unit in seconds
+		var oneHour=60*60 //hour unit in seconds
+		var oneDay=60*60*24 //day unit in seconds
+		var dayfield=Math.floor(timediff/oneDay)
+		var hourfield=Math.floor((timediff-dayfield*oneDay)/oneHour)
+		var minutefield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour)/oneMinute)
+		var secondfield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour-minutefield*oneMinute))
+
+		minutefield=dayfield*24*60+hourfield*60+minutefield
+
+		var result={minutes:minutefield, seconds:secondfield}
+		this.oncountup(result)
+		setTimeout(function(){thisobj.start(timediff)}, 1000) //update results every second
+		}
+
+</script>
+
+<script type="text/javascript">
+        
+function dsp(loc, showMessage, hiddenMessage){
+   if(document.getElementById){
+      var foc = loc.firstChild;
+      foc = loc.firstChild.innerHTML ? loc.firstChild : loc.firstChild.nextSibling;
+      foc.innerHTML = foc.innerHTML == showMessage ? hiddenMessage : showMessage;
+      foc = loc.parentNode.nextSibling.style ? loc.parentNode.nextSibling : loc.parentNode.nextSibling.nextSibling;
+      foc.style.display = foc.style.display == 'block' ? 'none' : 'block';
+    }
+}  
+
+if(!document.getElementById)
+   document.write('<style type="text/css"><!--\n.dspcont{display:block;}\n//--></style>');
+
+      
+      </script>
+<noscript>
+	<style type="text/css">
+		.dspcont{display:block;}
+	</style>
+</noscript>
+
+<div>
+<form ID="RefreshForm" method="post" style="padding:0px 0px 6px 0px;margin:0px;">
+	<table width="100%" style="padding:0px;margin:0px;" border="0">
+		<tr>
+			<td align="right">
+				Refresh every <input type="text" id="refreshInterval" align="right" name="refreshInterval" value="30" size="1" maxlength="10" onblur="setRefreshInterval(this.value)"/> seconds
+			</td>
+			<td align="right">
+				<input type="submit" align="right" name="$refreshButtonName" value="Refresh status" />
+			</td>
+			</tr>
+	</table>
+</form>
+</div>
 
 #if ($forceBuildMessage.Length > 0)
-<P><span id="StatusLabel"><b><font color="#4A3C8C">$forceBuildMessage</font></b></span></P>
+<P>
+	<span id="StatusLabel">
+		<b>
+			<font color="#4A3C8C">$forceBuildMessage</font>
+		</b>
+	</span>
+</P>
 #end
 
 #if ($projectGrid.Length > 0)
-<table cellspacing="0" cellpadding="3" rules="rows" border="0" id="StatusGrid" width="100%">
-  <thead>
-    <tr border="0">
-      <td>
-        <a href="$projectNameSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
-          <b>Project Name</b>
-        </a>
-      </td>
-      <td align="Center">
-        <a href="$buildStatusSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
-          <b>Last Build Status</b>
-        </a>
-      </td>
-      <td align="Center">
-        <a href="$lastBuildDateSortLink" title="sort by" STYLE="color: 403F8D; font-size: 12px;" onmouseover="this.style.color = '#7bcf15'" onmouseout="this.style.color = '#403F8D'">
-          <b>Last Build Time</b>
-        </a>
-      </td>
-      <td align="Center">
-        <span STYLE="color: 403F8D; font-size: 12px;" >
-          <b>Last Build Label</b>
-        </span>
-      </td>
-      <td align="Center">
-        <span STYLE="color: 403F8D; font-size: 12px;" >
-          <b>Build Availability</b>
-        </span>
+<div id="ProjectGrid">
+	#foreach ($projectGridRow in $projectGrid)
+		<div style="display: table; margin-left: auto; margin-right: auto; width: 100%;">
+      <div style="display: table; margin-left: auto; margin-right: auto; width: 100%;">
+			<form method="post" onsubmit="return confirm(confirmPrompt(this, '$projectGridRow.Name'))">
+				<a class="bold-link" href="$projectGridRow.MostRecentBuildUrl">
+					<span style="margin: 2px;">$projectGridRow.Name</span>
+					<span style="margin: 2px;">
+						#if ($projectGridRow.BuildStatus == "Failure")
+							<img style="border-style: none;" src="Images/Failure.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus"/>
+						#elseif ($projectGridRow.BuildStatus == "Success")
+							<img style="border-style: none;" src="Images/Success.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus"/>
+						#elseif ($projectGridRow.BuildStatus == "Exception")
+							<img style="border-style: none;" src="Images/Exception.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus"/>
+						#else
+							<img style="border-style: none;" src="Images/Unknown.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus"/>
+						#end
+					</span>
+					<span style="margin: 2px;">$projectGridRow.LastBuildDate</span>
+					<span style="margin: 2px;">$projectGridRow.LastBuildLabel</span>
+					<span style="margin: 2px;">
+						#if ($projectGridRow.Status == "Stopped")
+							Off Line
+						#elseif ($projectGridRow.Activity == "Building")
+							Building
+						#elseif ($projectGridRow.Activity == "CheckingModifications")
+							Polling for Work
+						#elseif ($projectGridRow.Status == "Stopping")
+							Going Off Line
+						#else
+							Available
+						#end
+					</span>
+				</a>
+				<input type="hidden" name="forcebuild" value="true" />
+				<input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
+				<input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
+				<input type="hidden" name="action" value=""/>
+						<!--<input type="password" name="password" maxlength="6" size="10" />-->
+						#if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
+						<input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
+						#else
+						<input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.action.value = this.value;"/>
+						#end
+			</form>
+      </div>
 
-      </td>
-      <td align="Center">
-        <span STYLE="color: 403F8D; font-size: 12px;" >
-          <b>Force Build</b>
-        </span>
+		#if ($projectGridRow.Activity == "Building")
+      <div style="display: table; margin-left: auto; margin-right: auto; width: 100%;">
+		<br />
+			#if ($projectGridRow.BuildCondition == "ForceBuild")
+				#if ($projectGridRow.Forcee.Length > 0)
+					<span style="margin: 5px; font-weight: bold;">
+						Forced by: $projectGridRow.Forcee at $projectGridRow.CurrentBuildStartTime
+					</span>
+				#else
+					<span style="margin: 5px; font-weight: bold;">
+						Build Forced at $projectGridRow.CurrentBuildStartTime
+					</span>
+			#end
+			#else
+				<span style="margin: 5px; font-weight: bold;">
+					Build Triggered at $projectGridRow.CurrentBuildStartTime
+				</span>
+			#end
+			
+			<span style="margin: 5px; font-weight: bold;">
+				Previous Build Duration $projectGridRow.LastBuildDuration
+			</span>
+			<span style="margin: 5px; font-weight: bold;" id="$projectGridRow.Name clock">&nbsp;</span>
 
-      </td>
-    </tr>
-  </thead>
+							<script type="text/javascript">
 
-  #foreach ($projectGridRow in $projectGrid)
-  <tbody bordercolor="#333399">
-	<tr>
-		<td align="Left" colspan="0">
-			<font color="Black">
-				<a href="$projectGridRow.Url">$projectGridRow.Name</a>
-			</font>
-		</td>
-		<td align="Center">
-      #if ($projectGridRow.BuildStatus == "Failure")
-        <img src="Images/Failure.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
-      #elseif ($projectGridRow.BuildStatus == "Success")
-        <img src="Images/Success.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
-      #elseif ($projectGridRow.BuildStatus == "Exception")
-        <img src="Images/Exception.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
-      #else
-        <img src="Images/Unknown.gif" alt="$projectGridRow.BuildStatus" title="$projectGridRow.BuildStatus">
-      #end
-		</td>
-		<td align="Center">
-			<font color="Black">
-        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildDate</a>
-      </font>
-		</td>
-		<td align="Center">
-			<font color="Black">
-        <a href="$projectGridRow.MostRecentBuildUrl">$projectGridRow.LastBuildLabel</a>
-      </font>
-		</td>
-		<td align="Center">
-      #if ($projectGridRow.Status == "Stopped")
-        <font color="Black">Off Line</font>
-      #elseif ($projectGridRow.Activity == "Building")
-        <font color="Black">Building</font>
-      #elseif ($projectGridRow.Activity == "CheckingModifications")
-        <font color="Black">Polling for Work</font>
-      #elseif ($projectGridRow.Status == "Stopping")
-        <font color="Black">Going Off Line</font>
-      #else
-        <font color="Black">Available</font>
-      #end
-		</td>
-    <form method="post" onsubmit="return confirm(confirmPrompt(this, '$projectGridRow.Name'))">
-      <input type="hidden" name="forcebuild" value="true" />
-      <input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
-      <input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
-      <input type="hidden" name="action" value=""/>
-      <td align="Center">
-            <font color="Black">
-              <!--<input type="password" name="password" maxlength="6" size="10" />-->
-              #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
-              <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
-              #else
-              <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.action.value = this.value;"/>
-              #end
-            </font>
-          </td>
-    </form>
-	</tr>
+								//SYNTAX: myvariable=new dcountup(past_date_and_time_string)
+								//Example: ("April 9, 2005 13:30:00")
+								var BuildTimeElapsed=new dcountup("$projectGridRow.CurrentBuildStartTime", "$serverTimeNow")
 
-  #if ($projectGridRow.Activity == "Building")
-    <tr>
-      <td>&nbsp;</td>
-      <td colspan="5">
-        <table border="0" cellpadding="2" cellspacing="0" rules="groups">
-          <tbody>    
-            #if ($projectGridRow.BuildCondition == "ForceBuild")
-              #if ($projectGridRow.Forcee.Length > 0)
-                <th>
-                  Forced by: $projectGridRow.Forcee at $projectGridRow.CurrentBuildStartTime
-                </th>
-              #else
-                <th>
-                  Build Forced at $projectGridRow.CurrentBuildStartTime
-                </th>
-              #end
-            #else
-              <th>
-                Build Triggered at $projectGridRow.CurrentBuildStartTime
-              </th>
-            #end
-            <th>&nbsp;&nbsp;&nbsp;</th>
-            <th>
-              Previous Build Duration $projectGridRow.LastBuildDuration
-            </th>
-            <th>&nbsp;&nbsp;&nbsp;</th>
-            <th>
-        <script type="text/javascript">
+								BuildTimeElapsed.oncountup=function(result){
+								var mycountainer=document.getElementById("$projectGridRow.Name clock")
+								mycountainer.innerHTML="Build Time Elpased: "+result['minutes']+":"+result['seconds']
+								}
 
-          /***********************************************
-          * Dynamic CountUp script- © Dynamic Drive (http://www.dynamicdrive.com)
-          * This notice MUST stay intact for legal use
-          * Visit http://www.dynamicdrive.com/ for this script and 100s more.
-          ***********************************************/
+							</script>
 
-          function dcountup(startingdate, serverTime){
-          this.currentTime=new Date()
-          this.startingdate=new Date(startingdate)
-          this.serverTime=new Date(serverTime)
-          this.startingdate.setSeconds(this.startingdate.getSeconds() + ((this.currentTime-this.serverTime)/1000))
-          var timediff=(this.currentTime-this.startingdate)/1000 //difference btw target date and current date, in seconds
-          this.timesup=false
-          this.start(timediff)
-          }
-
-          dcountup.prototype.oncountup=function(){} //default action for "oncountup"
-
-          dcountup.prototype.start=function(timediff){
-          var thisobj=this
-          timediff += 1
-          var oneMinute=60 //minute unit in seconds
-          var oneHour=60*60 //hour unit in seconds
-          var oneDay=60*60*24 //day unit in seconds
-          var dayfield=Math.floor(timediff/oneDay)
-          var hourfield=Math.floor((timediff-dayfield*oneDay)/oneHour)
-          var minutefield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour)/oneMinute)
-          var secondfield=Math.floor((timediff-dayfield*oneDay-hourfield*oneHour-minutefield*oneMinute))
-
-          minutefield=dayfield*24*60+hourfield*60+minutefield
-
-          var result={minutes:minutefield, seconds:secondfield}
-          this.oncountup(result)
-          setTimeout(function(){thisobj.start(timediff)}, 1000) //update results every second
-          }
-
-        </script>
-
-        <div id="clock">&nbsp;</div>
-
-        <script type="text/javascript">
-
-          //SYNTAX: myvariable=new dcountup(past_date_and_time_string)
-          //Example: ("April 9, 2005 13:30:00")
-          var BuildTimeElapsed=new dcountup("$projectGridRow.CurrentBuildStartTime", "$serverTimeNow")
-
+<<<<<<< .mine
+      </div>
+					
+			#if ($projectGridRow.LastLogMessage.Length > 0)
+				<br/>
+      <div style="display: table; margin-left: auto; margin-right: auto; width: 100%;">
+				<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+				<div class="contentb">
+					<div>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td  height="42" class="sectionheader-container">
+=======
           BuildTimeElapsed.oncountup=function(result){
           var mycountainer=document.getElementById("clock")
           mycountainer.innerHTML="Build Time Elapsed: "+result['minutes']+":"+((result['seconds'] < 10) ? "0" : "")+result['seconds']
           }
+>>>>>>> .r2479
 
-        </script>
-      </th>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    #if ($projectGridRow.Changes.Length > 0)
-    <tr>
-      <td colspan="6">
+									<img src="images/Log.gif" class="sectionheader-title-image" />
+									<div class="sectionheader"  >
+										Log Messages
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p class="LogContainer">$projectGridRow.LastLogMessage</p>
+									<div>
+										<a style="color: #7bcf15; TEXT-DECORATION: NONE;" href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Click to Show All Log Messages', '+ Click to Hide')">
+											<span class="dspchar">+ Click to Show All Log Messages</span>
+										</a>
+									</div>
+									<div class="dspcont">
+										<table border="0" cellpadding="0" cellspacing="0" >
+                      #set( $messageCount = 0 )
+											#foreach ($logMessage in $projectGridRow.LogMessages)
+												#if ($messageCount == 0)
+													<tr class="LogMessageEven">
+															<td class="LogContainer">$logMessage</td>
+													</tr>
+                          #set( $messageCount = 1)
+												#else
+													<tr class="LogMessageUneven">
+														<td class="LogContainer">$logMessage</td>
+													</tr>
+                          #set( $messageCount = 0)
+												#end
+											#end
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<b class="b4"></b><b class="b3"></b><b class="b2"></b><b class="b1"></b>
+      </div>
+			#end
+			
+			#if ($projectGridRow.Changes.Length > 0)
+				<br/>
+      <div style="display: table; margin-left: auto; margin-right: auto; width: 100%;">
+				<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+				<div class="contentb">
+					<div>
+						<table border="0" cellpadding="2" cellspacing="0" width="100%">
+							<tr>
+								<td height="42" class="sectionheader-container">
 
-				#foreach ($changeset in $projectGridRow.Changes)
-				<span>
-					Changeset # $changeset.Version
-				</span>
-          <div>
-            <table border="0" cellpadding="2" cellspacing="0" width="98%">
-              <tbody>
-                <tr>
-                  <th>
-										Author: $changeset.Author
-									</th>
-									<th>
-										Date: $changeset.ModifiedTime
-									</th>
-                </tr>
-                <tr>
-                  <td colspan="2">
-                    <em>$changeset.Comment</em>
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="2">Changes</th>
-                </tr>
-								#foreach ($change in $changeset.Changes)
-								<tr>
-                  <td>
-										#if ($change.Type == "Modified")
-										<img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$change.Type
-										#elseif ($change.Type == "Added")
-										<img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$change.Type
-										#elseif ($change.Type == "Deleted")
-										<img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$change.Type
-										#else
-										<img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$change.Type
-										#end
-									</td>
-                  <td>
-										$change.Path/$change.File
-									</td>
-                </tr>
-								#end
-              </tbody>
-            </table>
-          </div>
-          #end
-      </td>
-    </tr>
-  #end
-  #end
-</tbody>
-  #end
-</table>
+									<img src="images/SourceControl.gif" class="sectionheader-title-image" />
+									<div class="sectionheader"  >
+										Source Control Revision History For This Build
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									#foreach ($changeset in $projectGridRow.Changes)
+									<span>
+										Changeset # $changeset.Version
+									</span>
+									<div>
+										<table border="0" cellpadding="2" cellspacing="0" width="98%">
+											<tbody>
+												<tr>
+													<th>
+														Author: $changeset.Author
+													</th>
+													<th>
+														Date: $changeset.ModifiedTime
+													</th>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<em>$changeset.Comment</em>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<div>
+															<a style="color: 7bcf15; TEXT-DECORATION: NONE;" href="javascript:void(0)" class="dsphead" onclick="dsp(this, '+ Click to Show Changes', '+ Click to Hide Changes')">
+																<span class="dspchar">+ Click to Show Changes</span>
+															</a>
+														</div>
+														<div class="dspcont">
+															<table rules="groups" cellpadding="2" cellspacing="0" border="0">
+																<tbody>
+																	#foreach ($change in $changeset.Changes)
+																	<tr>
+																		<td>
+																			#if ($change.Type == "Modified")
+																			<img class="statusimage" title="Modified" src="images/edit.png"/>&nbsp;$change.Type
+																			#elseif ($change.Type == "Added")
+																			<img class="statusimage" title="Modified" src="images/add.png"/>&nbsp;$change.Type
+																			#elseif ($change.Type == "Deleted")
+																			<img class="statusimage" title="Modified" src="images/delete.png"/>&nbsp;$change.Type
+																			#else
+																			<img class="statusimage" title="Modified" src="images/document_text.png"/>&nbsp;$change.Type
+																			#end
+																		</td>
+																		<td>
+																			$change.Path/$change.File
+																		</td>
+																	</tr>
+																	#end
+																</tbody>
+															</table>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									#end
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<b class="b4"></b><b class="b3"></b><b class="b2"></b><b class="b1"></b>
+      </div>
+			#end
+		#end
+		</div>
+	#end
+</div>
 #end
 
 #if ($exceptions.Length > 0)
 <P>
-<span id="ExceptionTitleLabel">There were exceptions connecting to the following servers:</span>
+	<span id="ExceptionTitleLabel">There were exceptions connecting to the following servers:</span>
 </P>
 <table cellspacing="0" cellpadding="4" rules="all" bordercolor="#CC9966" border="1" id="ExceptionGrid" bgcolor="White" width="100%">
 	<tr bgcolor="#990000">
-		<th><font color="#FFFFCC"><b>Server Name</b></font></th>
-		<th><font color="#FFFFCC"><b>Url</b></font></th>
-		<th><font color="#FFFFCC"><b>Message</b></font></th>
+		<th>
+			<font color="#FFFFCC">
+				<b>Server Name</b>
+			</font>
+		</th>
+		<th>
+			<font color="#FFFFCC">
+				<b>Url</b>
+			</font>
+		</th>
+		<th>
+			<font color="#FFFFCC">
+				<b>Message</b>
+			</font>
+		</th>
 	</tr>
 	#foreach ($exception in $exceptions)
 	<tr bgcolor="White">
-		<td><font color="#330099">$exception.ServerName</font></td>
-		<td><font color="#330099">$exception.Url</font></td>
-		<td><font color="#330099">$exception.Message</font></td>
+		<td>
+			<font color="#330099">$exception.ServerName</font>
+		</td>
+		<td>
+			<font color="#330099">$exception.Url</font>
+		</td>
+		<td>
+			<font color="#330099">$exception.Message</font>
+		</td>
 	</tr>
 	#end
 </table>
-    #end
+#end
 
 
 <script language="JavaScript" >
-  <!--
+	<!--
 function setRefreshInterval(interval)
 {
    if (isNaN(interval))

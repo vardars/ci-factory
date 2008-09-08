@@ -72,7 +72,7 @@ namespace CIFactory.TargetProcess.NAnt
                 if (_Patterns == null)
                 {
                     _Patterns = new List<Regex>();
-                    _Patterns.Add(new Regex(this.EntityPrefix + @"{1,1}\s{0,}\#{0,}\s{0,}(?<" + CAPTURE + @">\d{4,})", RegexOptions.IgnoreCase | RegexOptions.Multiline));
+                    _Patterns.Add(new Regex(this.EntityPrefix + @"{1,1}\s{0,}[\#|\:]{0,}\s{0,}(?<" + CAPTURE + @">\d{4,})", RegexOptions.IgnoreCase | RegexOptions.Multiline));
                 }
                 return _Patterns;
             }

@@ -24,6 +24,14 @@ namespace ThoughtWorks.CruiseControl.Core
 		private ArrayList taskResults = new ArrayList();
 		private IDictionary properties = new SortedList();
 		private bool initial = false;
+        private Util.BuildProgressInformation buildProgressInformation = new BuildProgressInformation("");
+
+
+        [XmlIgnore]
+        public Util.BuildProgressInformation BuildProgressInformation
+        {
+            get { return buildProgressInformation; }
+        }
 
 		// Default constructor required for serialization
 		public IntegrationResult()
@@ -34,10 +42,12 @@ namespace ThoughtWorks.CruiseControl.Core
 			LastIntegrationStatus = IntegrationStatus.Unknown;
 		}
 
-		public IntegrationResult(string projectName, string workingDirectory) : this()
+		public IntegrationResult(string projectName, string workingDirectory, string artifactDirectory) : this()
 		{
 			ProjectName = projectName;
 			WorkingDirectory = workingDirectory;
+            ArtifactDirectory = artifactDirectory;
+            this.buildProgressInformation = new Util.BuildProgressInformation(artifactDirectory);
 		}
 
 		public string ProjectName
@@ -261,9 +271,9 @@ namespace ThoughtWorks.CruiseControl.Core
 			return (ProjectName + Label + StartTime.Ticks).GetHashCode();
 		}
 
-		public static IntegrationResult CreateInitialIntegrationResult(string project, string workingDirectory)
+        public static IntegrationResult CreateInitialIntegrationResult(string project, string workingDirectory, string artifactDirectory)
 		{
-			IntegrationResult result = new IntegrationResult(project, workingDirectory);
+			IntegrationResult result = new IntegrationResult(project, workingDirectory, artifactDirectory);
 			result.initial = true;
 			result.StartTime = DateTime.Now.AddDays(-1);
 			result.EndTime = DateTime.Now;
@@ -308,6 +318,7 @@ namespace ThoughtWorks.CruiseControl.Core
 				IDictionary fullProps = new Hashtable(properties);
 				fullProps["CCNetBuildDate"] = StartTime.ToString("yyyy-MM-dd", null);
 				fullProps["CCNetBuildTime"] = StartTime.ToString("HH:mm:ss", null);
+                fullProps["CCNetListenerFile"] = BuildProgressInformation.ListenerFile;
 				return fullProps;
 			}
 		}

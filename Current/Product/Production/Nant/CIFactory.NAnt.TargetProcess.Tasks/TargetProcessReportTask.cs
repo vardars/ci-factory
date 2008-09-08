@@ -7,6 +7,7 @@ using NAnt.Core.Attributes;
 using NAnt.Core.Util;
 using CIFactory.NAnt.Types;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace CIFactory.TargetProcess.NAnt.Tasks
 {
@@ -165,7 +166,7 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
                 Entity entity = Helper.RetrieveEntity(int.Parse(id), "Bug");
                 entities.Add(entity);
             }
-            
+
 
             XmlDocument document = new XmlDocument();
             document.LoadXml(document.CreateElement("TargetProcess").OuterXml);
@@ -180,7 +181,7 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
                 node.Attributes.Append(nameAttribute);
 
                 XmlAttribute linkAttribute = document.CreateAttribute("HyperLink");
-                linkAttribute.InnerText = this.RootServiceUrl +entity.HyperLink;
+                linkAttribute.InnerText = this.RootServiceUrl + entity.HyperLink;
                 node.Attributes.Append(linkAttribute);
 
                 XmlAttribute typeAttribute = document.CreateAttribute("Type");
@@ -191,7 +192,16 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
                 idAttribute.InnerText = entity.Id.ToString();
                 node.Attributes.Append(idAttribute);
 
-                node.InnerText = entity.Description;
+                string entityDescription = String.Empty;
+                if (entity.Description != null)
+                {
+                    entityDescription = entity.Description;
+
+                    Regex regex = new Regex(@"\</{0,}(\w+\:)\w+/{0,}\>");
+                    entityDescription = regex.Replace(entityDescription, "");
+                    entityDescription = Regex.Replace(entityDescription, @"\&nbsp\;", @"&#0160;");
+                }
+                node.InnerXml = entityDescription;
 
                 rootElement.AppendChild(node);
             }

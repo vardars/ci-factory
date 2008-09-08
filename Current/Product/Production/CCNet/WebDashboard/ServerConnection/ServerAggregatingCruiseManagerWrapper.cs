@@ -45,6 +45,24 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 			return new DefaultBuildSpecifier(projectSpecifier, GetCruiseManager(projectSpecifier.ServerSpecifier).GetLatestBuildName(projectSpecifier.ProjectName));
 		}
 
+        public string[] GetLogMessages(IProjectSpecifier projectSpecifier)
+        {
+            string HostName = this.GetCruiseManager(projectSpecifier)
+                .GetHostServerName(projectSpecifier.ProjectName);
+            String[] Messages = new String[] { };
+            if (Environment.MachineName == HostName)
+            {
+                string BuildLogDirectoryPath = GetCruiseManager(projectSpecifier)
+                    .GetBuildLogDirectory(projectSpecifier.ProjectName);
+                string LogMessagesFilePath = Path.Combine(BuildLogDirectoryPath, "LogMessages.txt");
+                if (File.Exists(LogMessagesFilePath))
+                {
+                    Messages = File.ReadAllLines(LogMessagesFilePath);
+                }
+            }
+            return Messages;
+        }
+
         public string GetLog(IBuildSpecifier buildSpecifier)
         {
             string HostName = this.GetCruiseManager(buildSpecifier).GetHostServerName(buildSpecifier.ProjectSpecifier.ProjectName);
@@ -200,17 +218,17 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 			GetCruiseManager(projectSpecifier.ServerSpecifier).UpdateProject(projectSpecifier.ProjectName, serializedProject);
 		}
 
-		private ICruiseManager GetCruiseManager(IBuildSpecifier buildSpecifier)
+		public ICruiseManager GetCruiseManager(IBuildSpecifier buildSpecifier)
 		{
 			return GetCruiseManager(buildSpecifier.ProjectSpecifier);
 		}
 
-		private ICruiseManager GetCruiseManager(IProjectSpecifier projectSpecifier)
+		public ICruiseManager GetCruiseManager(IProjectSpecifier projectSpecifier)
 		{
 			return GetCruiseManager(projectSpecifier.ServerSpecifier);
 		}
 
-		private ICruiseManager GetCruiseManager(IServerSpecifier serverSpecifier)
+		public ICruiseManager GetCruiseManager(IServerSpecifier serverSpecifier)
 		{
 			return managerFactory.GetCruiseManager(GetServerUrl(serverSpecifier));
 		}
@@ -219,5 +237,6 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 		{
 			get { return configuration.Servers; }
 		}
-	}
+
+    }
 }

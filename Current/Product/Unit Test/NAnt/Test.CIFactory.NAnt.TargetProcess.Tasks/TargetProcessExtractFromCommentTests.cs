@@ -66,7 +66,23 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 
         public void Adhoc()
         {
-            this.ExtractScrNumbersTest("task# 12345, task12346", "12345,12346");
+            string comment = "Bug 12345";
+            string expected = "12345";
+            StringList List = new StringList();
+            TargetProcessExtractFromComment TestSubject = new TargetProcessExtractFromComment();
+            TestSubject.EntityPrefix = "Bug";
+            TestSubject.GetEntityNumbers(comment, List);
+            string[] ExpectedList = new string[] { };
+            if (!string.IsNullOrEmpty(expected))
+                ExpectedList = expected.Split(',');
+            foreach (string Item in List.StringItems.Values)
+            {
+                Assert.In(Item, ExpectedList, String.Format("Should not have found: '{0}' in '{1}'.", Item, comment));
+            }
+            foreach (string Item in ExpectedList)
+            {
+                Assert.In(Item, List.StringItems.Values, String.Format("Should not have found: '{0}' in '{1}'.", Item, comment));
+            }
         }
     }
 }

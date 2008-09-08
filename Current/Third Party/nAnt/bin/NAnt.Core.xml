@@ -4,6 +4,82 @@
         <name>NAnt.Core</name>
     </assembly>
     <members>
+        <member name="T:NAnt.Core.AppendListener">
+            <summary>
+            Custom build listener for NAnt. This listener writes the X last messages to a file
+            for viewing the build progress in CCNET.
+            This assembly has to be copied in the Nant folder, where the NAnt.exe resides
+            The extra listenfile is XML-based, consisting in the hierarchy of the NAnt project
+            and the last X messages under the last target of the NAnt project.
+            </summary>
+        </member>
+        <member name="T:NAnt.Core.IBuildListener">
+            <summary>
+            Instances of classes that implement this interface can register to be 
+            notified when things happen during a build.
+            </summary>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.BuildStarted(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a build has started.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+            <remarks>
+            This event is fired before any targets have started.
+            </remarks>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.BuildFinished(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that the last target has finished.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+            <remarks>
+            This event will still be fired if an error occurred during the build.
+            </remarks>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.TargetStarted(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a target has started.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.TargetFinished(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a target has finished.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+            <remarks>
+            This event will still be fired if an error occurred during the build.
+            </remarks>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.TaskStarted(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a task has started.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.TaskFinished(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a task has finished.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+            <remarks>
+            This event will still be fired if an error occurred during the build.
+            </remarks>
+        </member>
+        <member name="M:NAnt.Core.IBuildListener.MessageLogged(System.Object,NAnt.Core.BuildEventArgs)">
+            <summary>
+            Signals that a message has been logged.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
+        </member>
         <member name="T:NAnt.Core.Attributes.BooleanValidatorAttribute">
             <summary>
             Used to indicate that a property should be able to be converted into a 
@@ -5354,73 +5430,6 @@
             </summary>
             <param name="sender">The source of the event.</param>
             <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> that contains the event data.</param>
-        </member>
-        <member name="T:NAnt.Core.IBuildListener">
-            <summary>
-            Instances of classes that implement this interface can register to be 
-            notified when things happen during a build.
-            </summary>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.BuildStarted(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a build has started.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-            <remarks>
-            This event is fired before any targets have started.
-            </remarks>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.BuildFinished(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that the last target has finished.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-            <remarks>
-            This event will still be fired if an error occurred during the build.
-            </remarks>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.TargetStarted(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a target has started.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.TargetFinished(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a target has finished.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-            <remarks>
-            This event will still be fired if an error occurred during the build.
-            </remarks>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.TaskStarted(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a task has started.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.TaskFinished(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a task has finished.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
-            <remarks>
-            This event will still be fired if an error occurred during the build.
-            </remarks>
-        </member>
-        <member name="M:NAnt.Core.IBuildListener.MessageLogged(System.Object,NAnt.Core.BuildEventArgs)">
-            <summary>
-            Signals that a message has been logged.
-            </summary>
-            <param name="sender">The source of the event.</param>
-            <param name="e">A <see cref="T:NAnt.Core.BuildEventArgs"/> object that contains the event data.</param>
         </member>
         <member name="T:NAnt.Core.IBuildLogger">
             <summary>

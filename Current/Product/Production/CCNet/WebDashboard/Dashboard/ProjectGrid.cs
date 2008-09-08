@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
+using System.IO;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 {
@@ -49,6 +51,11 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                     mostRecentBuildUrl = projectLink;
                 }
 
+                String[] logMessages = farmService.GetLogMessages(projectSpecifier);
+                String lastLogMessage = String.Empty;
+                if (logMessages.Length > 0)
+                    lastLogMessage = logMessages[logMessages.Length - 1];
+
                 rows.Add(
                     new ProjectGridRow(
                         projectName, statusOnServer.ServerSpecifier.ServerName, status.BuildStatus.ToString(),
@@ -64,7 +71,9 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
                         ChangeSet.Convert(status.Modifications), 
                         status.Forcee, 
                         status.CurrentBuildStartTime, 
-                        status.BuildCondition.ToString()
+                        status.BuildCondition.ToString(),
+                        lastLogMessage,
+                        logMessages
                     ));
             }
 

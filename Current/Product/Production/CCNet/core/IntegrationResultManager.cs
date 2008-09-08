@@ -29,14 +29,14 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		private IIntegrationResult LoadLastIntegration()
 		{
-			IIntegrationResult result = project.StateManager.LoadState(project.Name);
+			IIntegrationResult result = project.StateManager.LoadState(project);
 			result.WorkingDirectory = project.WorkingDirectory;
 			return result;
 		}
 
 		public IIntegrationResult StartNewIntegration()
 		{
-			currentResult = new IntegrationResult(project.Name, project.WorkingDirectory);
+			currentResult = new IntegrationResult(project.Name, project.WorkingDirectory, project.ArtifactDirectory);
 			currentResult.LastIntegrationStatus = LastIntegrationResult.Status;
 			currentResult.BuildCondition = DetermineBuildCondition(BuildCondition.NoBuild);
 			currentResult.Label = project.Labeller.Generate(LastIntegrationResult);

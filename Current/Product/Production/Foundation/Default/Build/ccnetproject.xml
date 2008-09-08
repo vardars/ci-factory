@@ -119,6 +119,7 @@
         <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
+				<buildArgs>-listener:NAnt.Core.AppendListener</buildArgs>
         <targetList>
           <target>Triggered</target>
         </targetList>

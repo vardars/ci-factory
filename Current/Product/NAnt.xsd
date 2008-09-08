@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 02/09/2008 19:07:36</xs:documentation>
+    <xs:documentation>NAnt schema generated at 09/03/2008 10:48:37</xs:documentation>
   </xs:annotation>
   <xs:complexType name="NAnt.Core.TaskContainer">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -177,6 +177,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -460,6 +462,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -956,6 +960,7 @@
     <xs:attribute name="Custom2" use="optional" />
     <xs:attribute name="Category" use="optional" />
     <xs:attribute name="Milestone" use="optional" />
+    <xs:attribute name="UseHtmlInDetails" use="optional" />
     <xs:attribute name="id" use="optional" />
     <xs:attribute name="refid" use="optional" />
   </xs:complexType>
@@ -1408,6 +1413,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -2848,6 +2855,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -4276,6 +4285,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -4590,6 +4601,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -5479,6 +5492,30 @@
     <xs:attribute name="if" use="optional" />
     <xs:attribute name="unless" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment">
+    <xs:attribute name="comment" use="required" />
+    <xs:attribute name="entityprefix" use="required" />
+    <xs:attribute name="listrefid" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="taskids" type="nant:CIFactory.NAnt.Types.StringList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="storyids" type="nant:CIFactory.NAnt.Types.StringList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bugids" type="nant:CIFactory.NAnt.Types.StringList" />
+    </xs:sequence>
+    <xs:attribute name="rootserviceurl" use="required" />
+    <xs:attribute name="password" use="required" />
+    <xs:attribute name="reportfilepath" use="required" />
+    <xs:attribute name="username" use="required" />
+    <xs:attribute name="failonerror" use="optional" />
+    <xs:attribute name="verbose" use="optional" />
+    <xs:attribute name="if" use="optional" />
+    <xs:attribute name="unless" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerAddNote">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
@@ -5578,6 +5615,7 @@
     <xs:attribute name="append" use="optional" />
     <xs:attribute name="bugID" use="required" />
     <xs:attribute name="comment" use="required" />
+    <xs:attribute name="useHtml" use="optional" />
     <xs:attribute name="failonerror" use="optional" />
     <xs:attribute name="verbose" use="optional" />
     <xs:attribute name="if" use="optional" />
@@ -5626,6 +5664,7 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="1" maxOccurs="1" name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
     </xs:sequence>
+    <xs:attribute name="comment" use="optional" />
     <xs:attribute name="unchanged" use="optional" />
     <xs:attribute name="keepCheckedOut" use="optional" />
     <xs:attribute name="localCopy" use="optional" />
@@ -6639,6 +6678,8 @@
       <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
       <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
       <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+      <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+      <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
       <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
       <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
       <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />
@@ -6947,6 +6988,8 @@
         <xs:element name="stlabel" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamLabel" />
         <xs:element name="stlist" type="nant:NAnt.Contrib.Tasks.StarTeam.StarTeamList" />
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerchange" type="nant:Tracker.Tasks.TrackerChange" />
         <xs:element name="trackercreate" type="nant:Tracker.Tasks.TrackerCreate" />

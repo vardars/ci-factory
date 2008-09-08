@@ -76,9 +76,9 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
             testSubject.Password = "password";
             testSubject.RootServiceUrl = "http://agilex.tpondemand.com";
 
-            testSubject.TaskIds = new StringList("1998", "4772", "4773");
-            testSubject.StoryIds = new StringList("4779");
-            testSubject.BugIds = new StringList("4765");
+            testSubject.TaskIds = new StringList("5166");
+            testSubject.StoryIds = new StringList("5127", "5125", "5084");
+            testSubject.BugIds = new StringList("4246", "3978");
 
             testSubject.ReportFilePath = ReportFilePath;
 

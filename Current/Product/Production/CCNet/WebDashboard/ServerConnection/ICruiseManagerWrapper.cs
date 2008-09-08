@@ -7,6 +7,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 	{
 		IBuildSpecifier GetLatestBuildSpecifier(IProjectSpecifier projectSpecifier);
 		string GetLog(IBuildSpecifier buildSpecifier);
+        string[] GetLogMessages(IProjectSpecifier projectSpecifier);
 		IBuildSpecifier[] GetBuildSpecifiers(IProjectSpecifier projectSpecifier);
 		string GetServerLog(IServerSpecifier serverSpecifier);
 		IServerSpecifier[] GetServerSpecifiers();

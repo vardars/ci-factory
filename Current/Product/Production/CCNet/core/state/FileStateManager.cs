@@ -21,12 +21,24 @@ namespace ThoughtWorks.CruiseControl.Core.State
 					throw new CruiseControlException(string.Format("State file directory: {0} does not exist.", value));
 				directory = value;
 			}
-		}
+        }
 
-		public IIntegrationResult LoadState(string project)
+        public IIntegrationResult LoadState(string project)
+        {
+            string stateFilePath = GetFilePath(project);
+            if (!File.Exists(stateFilePath)) return IntegrationResult.CreateInitialIntegrationResult(project, "", "");
+
+            XmlSerializer serializer = new XmlSerializer(typeof(IntegrationResult));
+            using (TextReader reader = CreateTextReader(stateFilePath))
+            {
+                return (IntegrationResult)serializer.Deserialize(reader);
+            }
+        }
+
+        public IIntegrationResult LoadState(Project project)
 		{
-			string stateFilePath = GetFilePath(project);
-			if (! File.Exists(stateFilePath)) return IntegrationResult.CreateInitialIntegrationResult(project, null);
+			string stateFilePath = GetFilePath(project.Name);
+            if (!File.Exists(stateFilePath)) return IntegrationResult.CreateInitialIntegrationResult(project.Name, project.WorkingDirectory, project.ArtifactDirectory);
 
 			XmlSerializer serializer = new XmlSerializer(typeof (IntegrationResult));
 			using (TextReader reader = CreateTextReader(stateFilePath))
