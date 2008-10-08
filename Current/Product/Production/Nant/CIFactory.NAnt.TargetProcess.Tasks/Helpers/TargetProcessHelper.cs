@@ -8,11 +8,12 @@ using NAnt.Core.Util;
 using Microsoft.Web.Services3.Configuration;
 using System.Reflection;
 using Microsoft.Web.Services3.Security.Configuration;
-using CIFactory.TargetProcess.BugWebService;
-using CIFactory.TargetProcess.TaskWebService;
-using CIFactory.TargetProcess.UserStoryWebService;
+using TargetProcess.Common.BugWebService;
+using TargetProcess.Common.TaskWebService;
+using TargetProcess.Common.UserStoryWebService;
+using TargetProcess.Common;
 
-namespace CIFactory.TargetProcess.NAnt.Tasks
+namespace CIFactory.TargetProcess.NAnt.Helpers
 {
     public class TargetProcessHelper : ITargetProcessHelper
     {

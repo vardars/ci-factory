@@ -6,10 +6,10 @@ using CIFactory.TargetProcess.NAnt.Tasks;
 using CIFactory.NAnt.Types;
 using Rhino.Mocks;
 using System.IO;
+using CIFactory.TargetProcess.NAnt.Helpers;
 
 namespace Test.CIFactory.NAnt.TargetProcess.Tasks
-{
-    
+{    
     [TestFixture]
     [TestsOn(typeof(TargetProcessReportTask))]
     public class TargetProcessReportTaskTests
@@ -24,9 +24,9 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 
             TargetProcessReportTask testSubject = new TargetProcessReportTask();
 
-            testSubject.UserName = "maria";
-            testSubject.Password = "boo";
-            testSubject.RootServiceUrl = "http://agilex.tpondemand.com";
+            testSubject.ConnectionInformation.UserName = "maria";
+            testSubject.ConnectionInformation.Password = "boo";
+            testSubject.ConnectionInformation.RootServiceUrl = "http://agilex.tpondemand.com";
 
             testSubject.TaskIds = new StringList("1", "2", "3");
 
@@ -72,9 +72,9 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 
             TargetProcessReportTask testSubject = new TargetProcessReportTask();
 
-            testSubject.UserName = "flowersj";
-            testSubject.Password = "password";
-            testSubject.RootServiceUrl = "http://agilex.tpondemand.com";
+            testSubject.ConnectionInformation.UserName = "flowersj";
+            testSubject.ConnectionInformation.Password = "password";
+            testSubject.ConnectionInformation.RootServiceUrl = "http://agilex.tpondemand.com";
 
             testSubject.TaskIds = new StringList("5166");
             testSubject.StoryIds = new StringList("5127", "5125", "5084");

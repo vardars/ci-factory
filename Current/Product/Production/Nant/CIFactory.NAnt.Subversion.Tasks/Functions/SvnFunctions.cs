@@ -4,9 +4,8 @@ using System.Text;
 using NAnt.Core;
 using NAnt.Core.Types;
 using NAnt.Core.Attributes;
-using Softec;
-using Softec.SubversionSharp;
-using Softec.AprSharp;
+using PumaCode.SvnDotNet.SubversionSharp;
+using PumaCode.SvnDotNet.AprSharp;
 
 namespace CIFactory.NAnt.Subversion.Tasks.Functions
 {
@@ -82,7 +81,7 @@ namespace CIFactory.NAnt.Subversion.Tasks.Functions
         public void AddHocTest()
         {
             bool VarName;
-            VarName = this.IsVersioned(@"C:\Projects\TestProject\Current\Product\OpenSolution.bat");
+            VarName = this.IsVersioned(@"C:\Projects\NHINC\Current\Product");
             if (!VarName)
                 throw new Exception("Expected something else!");
         }

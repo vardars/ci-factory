@@ -8,9 +8,12 @@ using NAnt.Core.Util;
 using CIFactory.NAnt.Types;
 using System.Xml;
 using System.Text.RegularExpressions;
+using CIFactory.TargetProcess.NAnt.Helpers;
+using CIFactory.TargetProcess.NAnt.DataTypes;
 
 namespace CIFactory.TargetProcess.NAnt.Tasks
 {
+
     [TaskName("targetprocessreport")]
     public class TargetProcessReportTask : Task
     {
@@ -20,24 +23,12 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         private ITargetProcessHelper _Helper;
         private StringList _StoryIds;
         private StringList _TaskIds;
-        private string _Password = String.Empty;
         private string _ReportFilePath = String.Empty;
-        private string _UserName = String.Empty;
-        private string _RootServiceUrl;
+        private ConnectionInformation _ConnectionInformation;
 
         #endregion
 
         #region Properties
-
-        [TaskAttribute("rootserviceurl", Required = true)]
-        public string RootServiceUrl
-        {
-            get { return _RootServiceUrl; }
-            set
-            {
-                _RootServiceUrl = value;
-            }
-        }
 
         public ITargetProcessHelper Helper
         {
@@ -98,19 +89,6 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
             }
         }
 
-        [TaskAttribute("password", Required = true)]
-        public string Password
-        {
-            get
-            {
-                return this._Password;
-            }
-            set
-            {
-                this._Password = value;
-            }
-        }
-
         [TaskAttribute("reportfilepath", Required = true)]
         public string ReportFilePath
         {
@@ -124,28 +102,29 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
             }
         }
 
-        [TaskAttribute("username", Required = true)]
-        public string UserName
+        [BuildElement("connectioninformation", Required = false)]
+        public ConnectionInformation ConnectionInformation
         {
             get
             {
-                return this._UserName;
+                if (this._ConnectionInformation == null)
+                    this._ConnectionInformation = new ConnectionInformation();
+                return this._ConnectionInformation;
             }
             set
             {
-                this._UserName = value;
+                this._ConnectionInformation = value;
             }
         }
-
         #endregion
 
         #region Public Methods
 
         public void GenerateReport()
         {
-            Helper.UserName = this.UserName;
-            Helper.Password = this.Password;
-            Helper.RootWebServiceUrl = this.RootServiceUrl;
+            Helper.UserName = this.ConnectionInformation.UserName;
+            Helper.Password = this.ConnectionInformation.Password;
+            Helper.RootWebServiceUrl = this.ConnectionInformation.RootServiceUrl;
 
             List<Entity> entities = new List<Entity>();
 
@@ -181,7 +160,7 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
                 node.Attributes.Append(nameAttribute);
 
                 XmlAttribute linkAttribute = document.CreateAttribute("HyperLink");
-                linkAttribute.InnerText = this.RootServiceUrl + entity.HyperLink;
+                linkAttribute.InnerText = this.ConnectionInformation.RootServiceUrl + entity.HyperLink;
                 node.Attributes.Append(linkAttribute);
 
                 XmlAttribute typeAttribute = document.CreateAttribute("Type");

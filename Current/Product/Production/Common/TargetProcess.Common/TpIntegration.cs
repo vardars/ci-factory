@@ -5,7 +5,7 @@ using Microsoft.Web.Services3.Security;
 using Microsoft.Web.Services3.Security.Tokens;
 
 
-namespace CIFactory.TargetProcess.NAnt.Tasks
+namespace TargetProcess.Common
 {
    public class TpPolicy : Policy
    {

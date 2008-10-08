@@ -6,7 +6,7 @@ using NAnt.Core.Tasks;
 using NAnt.Core.Attributes;
 using NAnt.Core.Util;
 
-namespace CIFactory.TargetProcess.NAnt.Tasks
+namespace CIFactory.TargetProcess.NAnt.Helpers
 {
     public class Entity
     {

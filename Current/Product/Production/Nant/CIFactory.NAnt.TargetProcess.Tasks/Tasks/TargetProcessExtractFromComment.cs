@@ -7,6 +7,7 @@ using NAnt.Core.Attributes;
 using NAnt.Core.Util;
 using CIFactory.NAnt.Types;
 using System.Text.RegularExpressions;
+using CIFactory.TargetProcess.NAnt.Helpers;
 
 namespace CIFactory.TargetProcess.NAnt
 {
