@@ -107,6 +107,7 @@
 					<include name="NAnt.Core.dll" />
 					<include name="*Task*.dll" />
 					<include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
+          <exclude name="${ProductionDirectory}\Packages\TargetProcess\**\*Task*.dll"/>
 				</assemblies>
 				<documenters>
 					<documenter name="NAnt">
