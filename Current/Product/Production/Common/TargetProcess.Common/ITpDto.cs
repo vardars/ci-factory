@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TargetProcess.Common
+namespace CIFactory.TargetProcess.Common
 {
     public interface ITpDto
     {

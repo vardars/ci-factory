@@ -6,7 +6,7 @@ using System.Xml;
 using NAnt.Core;
 using NAnt.Core.Attributes;
 using System.Runtime.Serialization;
-using TargetProcess.Common.UserWebService;
+using CIFactory.TargetProcess.Common.UserWebService;
 using CIFactory.TargetProcess.NAnt.Helpers;
 
 namespace CIFactory.TargetProcess.NAnt.DataTypes

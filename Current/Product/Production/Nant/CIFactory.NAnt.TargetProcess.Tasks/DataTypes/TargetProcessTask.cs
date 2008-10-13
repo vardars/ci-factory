@@ -5,20 +5,26 @@ using System.IO;
 using System.Xml;
 using NAnt.Core;
 using NAnt.Core.Attributes;
-using TargetProcess.Common.TaskWebService;
-using TargetProcess.Common;
+using CIFactory.TargetProcess.Common.TaskWebService;
+using CIFactory.TargetProcess.Common;
 using CIFactory.TargetProcess.NAnt.Helpers;
-using UserStoryWebService = TargetProcess.Common.UserStoryWebService;
+using UserStoryWebService = CIFactory.TargetProcess.Common.UserStoryWebService;
 
 namespace CIFactory.TargetProcess.NAnt.DataTypes
 {
-    [Serializable, ElementName("task")]
+    [Serializable, ElementName("targetprocesstask")]
     public class TargetProcessTask : TargetProcessEntity
     {
 
         #region Fields
 
+        private bool _IsTaskIdSet;
+
         private bool _IsUserStoryIdSet;
+
+        private int _TaskId;
+
+        private TaskService _TaskService;
 
         private string _UserStory;
 
@@ -28,12 +34,52 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Properties
 
+        protected override string EntityTypeName
+        {
+            get { return "Tp.BusinessObjects.Task"; }
+        }
+
+        public bool IsTaskIdSet
+        {
+            get { return _IsTaskIdSet; }
+            set
+            {
+                _IsTaskIdSet = value;
+            }
+        }
+
         private bool IsUserStoryIdSet
         {
             get { return _IsUserStoryIdSet; }
             set
             {
                 _IsUserStoryIdSet = value;
+            }
+        }
+
+        [TaskAttribute("taskid")]
+        public int TaskId
+        {
+            get
+            {
+                if (!IsTaskIdSet)
+                    _TaskId = this.FindTaskId();
+                return _TaskId;
+            }
+            set
+            {
+                _TaskId = value;
+                this.IsTaskIdSet = true;
+            }
+        }
+
+        public TaskService TaskService
+        {
+            get
+            {
+                if (_TaskService == null)
+                    _TaskService = ServicesCF.GetService<TaskService>();
+                return _TaskService;
             }
         }
 
@@ -67,22 +113,46 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Public Methods
 
-        public override void Create(string rootWebServiceUrl, string userName, string password)
+        public override void Create()
         {
-            TaskService taskService = ServicesCF.GetService<TaskService>();
-
-            TaskDTO taskDTO = new TaskDTO
+            TaskDTO task = new TaskDTO
             {
                 Name = this.EntityName,
-                Description = this.Description,
                 UserStoryID = this.UserStoryId,
                 ProjectID = this.ProjectId
             };
-            int taskId = taskService.Create(taskDTO);
+
+            if (!String.IsNullOrEmpty(this.Description))
+                task.Description = this.Description;
+
+            if (!String.IsNullOrEmpty(this.State))
+                task.EntityStateID = this.StateId;
+
+            int taskId = TaskService.Create(task);
 
             foreach (TargetProcessUser user in this.UsersToAssign)
             {
-                taskService.AssignUser(taskId, user.GetId());
+                TaskService.AssignUser(taskId, user.GetId());
+            }
+        }
+
+        public override void Update()
+        {
+            TaskDTO task = TaskService.GetByID(this.TaskId);
+
+            task.Name = this.EntityName;
+            task.Description = this.Description;
+            task.UserStoryID = this.UserStoryId;
+            task.ProjectID = this.ProjectId;
+
+            if (!String.IsNullOrEmpty(this.State))
+                task.EntityStateID = this.StateId;
+
+            TaskService.Update(task);
+
+            foreach (TargetProcessUser user in this.UsersToAssign)
+            {
+                TaskService.AssignUser(task.TaskID.Value, user.GetId());
             }
         }
 
@@ -113,6 +183,17 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
                 throw new BuildException(string.Format("Could not find a story named: '{0}'.", this.UserStory));
 
             return storyies[0].UserStoryID.Value;
+        }
+
+        private int FindTaskId()
+        {
+            string hqlQuery = "select from Task as task where task.Name = ?";
+            TaskDTO[] tasks = TaskService.Retrieve(hqlQuery, new object[] { this.EntityName });
+
+            if (tasks.Length == 0)
+                throw new BuildException(string.Format("Could not find a task named: '{0}'.", this.EntityName));
+
+            return tasks[0].TaskID.Value;
         }
 
         #endregion

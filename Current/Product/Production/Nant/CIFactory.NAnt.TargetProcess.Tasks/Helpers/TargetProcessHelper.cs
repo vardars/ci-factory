@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NAnt.Core;
-using NAnt.Core.Tasks;
-using NAnt.Core.Attributes;
-using NAnt.Core.Util;
-using Microsoft.Web.Services3.Configuration;
 using System.Reflection;
-using Microsoft.Web.Services3.Security.Configuration;
-using TargetProcess.Common.BugWebService;
-using TargetProcess.Common.TaskWebService;
-using TargetProcess.Common.UserStoryWebService;
-using TargetProcess.Common;
+using CIFactory.TargetProcess.Common.BugWebService;
+using CIFactory.TargetProcess.Common.TaskWebService;
+using CIFactory.TargetProcess.Common.UserStoryWebService;
+using CIFactory.TargetProcess.Common;
 
 namespace CIFactory.TargetProcess.NAnt.Helpers
 {

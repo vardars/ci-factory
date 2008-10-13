@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using CIFactory.TargetProcess.NAnt.DataTypes;
+using CIFactory.TargetProcess.Common;
 using Microsoft.Web.Services3;
-using TargetProcess.Common;
 
 namespace CIFactory.TargetProcess.NAnt.Helpers
 {

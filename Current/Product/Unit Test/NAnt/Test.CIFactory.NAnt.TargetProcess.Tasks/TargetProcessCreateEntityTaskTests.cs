@@ -12,27 +12,45 @@ using CIFactory.TargetProcess.NAnt.DataTypes;
 namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 {
     [TestFixture]
-    [TestsOn(typeof(TargetProcessCreateEntityTask))]
+    [TestsOn(typeof(TargetProcessCreateTaskTask))]
     public class TargetProcessCreateEntityTaskTests
     {
         public void AdhocTest()
         {
-            TargetProcessCreateEntityTask testSubject = new TargetProcessCreateEntityTask();
+            TargetProcessCreateTaskTask testSubject = new TargetProcessCreateTaskTask();
 
             testSubject.ConnectionInformation.UserName = "flowersj";
             testSubject.ConnectionInformation.Password = "password";
             testSubject.ConnectionInformation.RootServiceUrl = "http://agilex.tpondemand.com";
 
-            TargetProcessTask task = new TargetProcessTask();
-            testSubject.Entity = task;
-            task.EntityName = "Testing Creation";
-            task.Description = "This is a test creating a task from NAnt.";
-            task.UserStory = "EF Reference System Preparation";
-            task.TargetProcessProject = "EF Support";
-            TargetProcessUser user = new TargetProcessUser("flowersj");
-            task.UsersToAssign = new TargetProcessUser[] { user };
+            ServicesCF.ConnectionInformation = testSubject.ConnectionInformation;
 
-            testSubject.CreateEntity();
+            //TargetProcessTask task = new TargetProcessTask();
+            //testSubject.TaskEntity = task;
+            //task.EntityName = "Testing Creation";
+            //task.Description = "This is a test creating a task from NAnt.";
+            //task.UserStory = "EF Reference System Preparation";
+            //task.TargetProcessProject = "EF Support";
+
+            //testSubject.CreateEntity();
+
+            //int id = task.TaskId;
+
+            //task = new TargetProcessTask();
+            //task.TaskId = id;
+            //task.EntityName = "Testing Updating";
+            //task.Description = "This is a test updating a task from NAnt.";
+            //task.UserStory = "EF Reference System Preparation";
+            //task.TargetProcessProject = "EF Support";
+            //task.State = "Done";
+
+            //task.Update();
+
+            TargetProcessUserStory story = new TargetProcessUserStory();
+            story.EntityName = "SUPPORT: Build Improvements (Split3)";
+            story.TargetProcessProject = "NHIE-Gateway";
+            story.State = "Done";
+            story.Update();
         }
     }
 }

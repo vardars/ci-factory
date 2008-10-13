@@ -13,17 +13,10 @@ using CIFactory.TargetProcess.NAnt.DataTypes;
 
 namespace CIFactory.TargetProcess.NAnt.Tasks
 {
-    [TaskName("targetprocesscreateentity")]
-    public class TargetProcessCreateEntityTask : Task
+    public abstract class TargetProcessCreateEntityBase : Task
     {
-        #region Fields
-
-        private TargetProcessEntity _Entity;
         private ConnectionInformation _ConnectionInformation;
 
-        #endregion
-
-        #region Properties
 
         [BuildElement("connectioninformation", Required = false)]
         public ConnectionInformation ConnectionInformation
@@ -40,26 +33,14 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
             }
         }
 
-        [TaskAttribute("entity", Required = true)]
-        public TargetProcessEntity Entity
-        {
-            get
-            {
-                return this._Entity;
-            }
-            set
-            {
-                this._Entity = value;
-            }
-        }
-        #endregion
+        public abstract TargetProcessEntity Entity { get; }
 
         #region Protected Methods
 
         public void CreateEntity()
         {
             ServicesCF.ConnectionInformation = this.ConnectionInformation;
-            this.Entity.Create(this.ConnectionInformation.RootServiceUrl, this.ConnectionInformation.UserName, this.ConnectionInformation.Password);
+            this.Entity.Create();
         }
 
         protected override void ExecuteTask()
@@ -68,6 +49,5 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         }
 
         #endregion
-
     }
 }
