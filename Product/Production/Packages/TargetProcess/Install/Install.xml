@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess.Install" default="TargetProcess.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="TargetProcess.Install">
+    <largeproperty name="Packages.AddPreBuildActions.Block">
+      <value xml="false">
+			<![CDATA[<call target="TargetProcess.CreateReport" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPreBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\TargetProcess\TargetProcess.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>&BuildDirectory;\TargetProcess\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="TargetProcess.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="TargetProcess"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="TargetProcess.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="TargetProcess"/>
+  </target>
+
+  <target name="TargetProcess.ValidateParameters">
+		<fail unless="${property::exists('TargetProcess.Url')}" message="Please set the property TargetProcess.Url"/>
+		<fail unless="${property::exists('TargetProcess.UserName')}" message="Please set the property TargetProcess.UserName"/>
+		<fail unless="${property::exists('TargetProcess.Password')}" message="Please set the property TargetProcess.Password"/>
+  </target>
+  
+</project>

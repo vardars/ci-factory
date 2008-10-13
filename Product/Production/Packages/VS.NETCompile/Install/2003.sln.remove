@@ -1,0 +1,6 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Global
+	GlobalSection(SolutionItems) = postSolution
+		Scratch.build.xml = Scratch.build.xml
+	EndGlobalSection
+EndGlobal
