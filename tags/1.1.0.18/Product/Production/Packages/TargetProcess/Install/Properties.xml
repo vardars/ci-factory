@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess.Install.Properties">
+
+	<!--
+	 These properties need to be set...
+		
+	<property name="TargetProcess.Url"						value="http://something.tpondemand.com" />
+	<property name="TargetProcess.UserName" 			value="build" />
+	<property name="TargetProcess.Password" 			value="password" />
+	-->
+
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.Url%', TargetProcess.Url)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.UserName%', TargetProcess.UserName)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.Password%', TargetProcess.Password)}"/>
+	
+</project>
