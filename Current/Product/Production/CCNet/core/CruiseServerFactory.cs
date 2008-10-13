@@ -9,12 +9,6 @@ namespace ThoughtWorks.CruiseControl.Core
 {
     public class CruiseServerFactory : ICruiseServerFactory
     {
-        #region Readonly
-
-        private static readonly string RemotingConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-
-        #endregion
-
         #region Properties
 
         private static bool WatchConfigFile
@@ -49,7 +43,7 @@ namespace ThoughtWorks.CruiseControl.Core
 
         private ICruiseServer CreateRemote(string configFile)
         {
-            return new RemoteCruiseServer(CreateLocal(configFile), RemotingConfigurationFile);
+            return new RemoteCruiseServer(CreateLocal(configFile), configFile);
         }
 
         private IConfigurationService NewConfigurationService(string configFile)

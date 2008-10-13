@@ -35,7 +35,7 @@
             </exclusionFilters>
           </projectFilter>'>
 ]>
-<cruisecontrol>
+<cruisecontrol port="&Port;">
   <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
     <webURL>&webURL;</webURL>
     <state type="state" />

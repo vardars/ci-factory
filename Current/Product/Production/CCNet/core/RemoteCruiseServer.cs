@@ -30,11 +30,10 @@ namespace ThoughtWorks.CruiseControl.Core
 
         #region Constructors
 
-        public RemoteCruiseServer(ICruiseServer server, string remotingConfigurationFile)
+        public RemoteCruiseServer(ICruiseServer server, string configFile)
         {
             _server = server;
-            //RemotingConfiguration.Configure(remotingConfigurationFile);
-            RegisterForRemoting(remotingConfigurationFile);
+            RegisterForRemoting(configFile);
         }
 
         #endregion
@@ -174,11 +173,11 @@ namespace ThoughtWorks.CruiseControl.Core
             _server.Dispose();
         }
 
-        private void RegisterForRemoting(string remotingConfigurationFile)
+        private void RegisterForRemoting(string configFile)
         {
             XmlDocument document = new XmlDocument();
-            document.Load(remotingConfigurationFile); XPathNavigator Navigator = document.CreateNavigator();
-            string StringPort = Navigator.SelectSingleNode("/configuration/appSettings/add[@key = 'Port']/@value").ToString();
+            document.Load(configFile); XPathNavigator Navigator = document.CreateNavigator();
+            string StringPort = Navigator.SelectSingleNode("/cruisecontrol/@port").ToString();
 
             if (string.IsNullOrEmpty(StringPort))
                 throw new InvalidProgramException(@"Please set the app setting key ""Port"" in the config file.");
