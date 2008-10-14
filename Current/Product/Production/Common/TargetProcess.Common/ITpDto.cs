@@ -11,5 +11,6 @@ namespace CIFactory.TargetProcess.Common
         System.Nullable<int> ID { get;set;}
         string EntityTypeName { get;set;}
         string ProjectName { get;set;}
+        string EntityStateName { get; set; }
     }
 }

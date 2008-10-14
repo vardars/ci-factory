@@ -25,30 +25,35 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 
             ServicesCF.ConnectionInformation = testSubject.ConnectionInformation;
 
-            //TargetProcessTask task = new TargetProcessTask();
-            //testSubject.TaskEntity = task;
-            //task.EntityName = "Testing Creation";
-            //task.Description = "This is a test creating a task from NAnt.";
-            //task.UserStory = "EF Reference System Preparation";
-            //task.TargetProcessProject = "EF Support";
-
-            //testSubject.CreateEntity();
-
-            //int id = task.TaskId;
-
-            //task = new TargetProcessTask();
-            //task.TaskId = id;
-            //task.EntityName = "Testing Updating";
-            //task.Description = "This is a test updating a task from NAnt.";
-            //task.UserStory = "EF Reference System Preparation";
-            //task.TargetProcessProject = "EF Support";
-            //task.State = "Done";
-
-            //task.Update();
-
             TargetProcessUserStory story = new TargetProcessUserStory();
-            story.EntityName = "SUPPORT: Build Improvements (Split3)";
-            story.TargetProcessProject = "NHIE-Gateway";
+            story.EntityName = "EF Reference System Preparation";
+            story.TargetProcessProject = "EF Support";
+            story.State = "Open";
+            story.Update();
+
+            TargetProcessTask task = new TargetProcessTask();
+            testSubject.TaskEntity = task;
+            task.EntityName = "Testing Creation";
+            task.Description = "This is a test creating a task from NAnt.";
+            task.UserStory = "EF Reference System Preparation";
+            task.TargetProcessProject = "EF Support";
+
+            testSubject.CreateEntity();
+
+            int id = task.TaskId;
+
+            task = new TargetProcessTask();
+            task.TaskId = id;
+            task.EntityName = "Testing Updating2";
+            task.UserStory = "EF Reference System Preparation";
+            task.TargetProcessProject = "EF Support";
+            task.State = "Done";
+
+            task.Update();
+
+            story = new TargetProcessUserStory();
+            story.EntityName = "EF Reference System Preparation";
+            story.TargetProcessProject = "EF Support";
             story.State = "Done";
             story.Update();
         }

@@ -17,7 +17,6 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
     {
         private ConnectionInformation _ConnectionInformation;
 
-
         [BuildElement("connectioninformation", Required = false)]
         public ConnectionInformation ConnectionInformation
         {

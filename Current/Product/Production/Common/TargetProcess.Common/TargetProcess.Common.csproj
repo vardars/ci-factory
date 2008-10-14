@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BugService.cs" />
+    <Compile Include="CustomFieldService.cs" />
+    <Compile Include="IterationService.cs" />
     <Compile Include="ITpDto.cs" />
     <Compile Include="ProcessService.cs" />
     <Compile Include="ProjectService.cs" />

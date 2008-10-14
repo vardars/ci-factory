@@ -20,7 +20,6 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         #region Fields
 
         private StringList _BugIds;
-        private ITargetProcessHelper _Helper;
         private StringList _StoryIds;
         private StringList _TaskIds;
         private string _ReportFilePath = String.Empty;
@@ -29,20 +28,6 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         #endregion
 
         #region Properties
-
-        public ITargetProcessHelper Helper
-        {
-            get
-            {
-                if (_Helper == null)
-                    this._Helper = new TargetProcessHelper();
-                return _Helper;
-            }
-            set
-            {
-                _Helper = value;
-            }
-        }
 
         [BuildElement("taskids", Required = false)]
         public StringList TaskIds
@@ -122,68 +107,39 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
 
         public void GenerateReport()
         {
-            Helper.UserName = this.ConnectionInformation.UserName;
-            Helper.Password = this.ConnectionInformation.Password;
-            Helper.RootWebServiceUrl = this.ConnectionInformation.RootServiceUrl;
+            ServicesCF.ConnectionInformation = this.ConnectionInformation;
 
-            List<Entity> entities = new List<Entity>();
+            List<TargetProcessEntity> entities = new List<TargetProcessEntity>();
 
             foreach (string id in this.TaskIds)
             {
-                Entity entity = Helper.RetrieveEntity(int.Parse(id), "Task");
-                entities.Add(entity);
+                TargetProcessTask task = new TargetProcessTask() { TaskId = int.Parse(id) };
+                entities.Add(task);
             }
 
             foreach (string id in this.StoryIds)
             {
-                Entity entity = Helper.RetrieveEntity(int.Parse(id), "UserStory");
-                entities.Add(entity);
+                TargetProcessUserStory story = new TargetProcessUserStory() { UserStoryId = int.Parse(id) };
+                entities.Add(story);
             }
 
             foreach (string id in this.BugIds)
             {
-                Entity entity = Helper.RetrieveEntity(int.Parse(id), "Bug");
-                entities.Add(entity);
+                TargetProcessBug bug = new TargetProcessBug() { BugId = int.Parse(id) };
+                entities.Add(bug);
             }
-
 
             XmlDocument document = new XmlDocument();
             document.LoadXml(document.CreateElement("TargetProcess").OuterXml);
             XmlElement rootElement = document.DocumentElement;
 
-            foreach (Entity entity in entities)
+            foreach (TargetProcessEntity entity in entities)
             {
-                XmlNode node = document.CreateNode(XmlNodeType.Element, null, "Entity", null);
-
-                XmlAttribute nameAttribute = document.CreateAttribute("Name");
-                nameAttribute.InnerText = entity.Name;
-                node.Attributes.Append(nameAttribute);
-
-                XmlAttribute linkAttribute = document.CreateAttribute("HyperLink");
-                linkAttribute.InnerText = this.ConnectionInformation.RootServiceUrl + entity.HyperLink;
-                node.Attributes.Append(linkAttribute);
-
-                XmlAttribute typeAttribute = document.CreateAttribute("Type");
-                typeAttribute.InnerText = entity.Type;
-                node.Attributes.Append(typeAttribute);
-
-                XmlAttribute idAttribute = document.CreateAttribute("Id");
-                idAttribute.InnerText = entity.Id.ToString();
-                node.Attributes.Append(idAttribute);
-
-                string entityDescription = String.Empty;
-                if (entity.Description != null)
-                {
-                    entityDescription = entity.Description;
-
-                    Regex regex = new Regex(@"\</{0,}(\w+\:)\w+/{0,}\>");
-                    entityDescription = regex.Replace(entityDescription, "");
-                    entityDescription = Regex.Replace(entityDescription, @"\&nbsp\;", @"&#0160;");
-                }
-                node.InnerXml = entityDescription;
-
+                XmlDocument reportPart = entity.GenerateReport();
+                XmlNode node = document.ImportNode(reportPart.DocumentElement, true);
                 rootElement.AppendChild(node);
             }
+
             document.Save(this.ReportFilePath);
         }
 

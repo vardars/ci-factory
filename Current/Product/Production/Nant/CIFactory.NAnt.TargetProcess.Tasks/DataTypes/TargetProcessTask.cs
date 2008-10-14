@@ -34,6 +34,21 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Properties
 
+        protected override string Category
+        {
+            get { return "Planning"; }
+        }
+
+        protected override int EntityId
+        {
+            get { return this.TaskId; }
+        }
+
+        protected override string EntityType
+        {
+            get { return "Task"; }
+        }
+
         protected override string EntityTypeName
         {
             get { return "Tp.BusinessObjects.Task"; }
@@ -63,7 +78,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             get
             {
                 if (!IsTaskIdSet)
-                    _TaskId = this.FindTaskId();
+                    _TaskId = this.FindTaskIdByName(this.EntityName);
                 return _TaskId;
             }
             set
@@ -99,7 +114,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             get
             {
                 if (!IsUserStoryIdSet)
-                    _UserStoryId = this.FindUserStoryId();
+                    _UserStoryId = this.FindUserStoryIdByName(this.UserStory);
                 return _UserStoryId;
             }
             set
@@ -122,7 +137,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
                 ProjectID = this.ProjectId
             };
 
-            if (!String.IsNullOrEmpty(this.Description))
+            if (IsDescriptionSet)
                 task.Description = this.Description;
 
             if (!String.IsNullOrEmpty(this.State))
@@ -141,9 +156,11 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             TaskDTO task = TaskService.GetByID(this.TaskId);
 
             task.Name = this.EntityName;
-            task.Description = this.Description;
             task.UserStoryID = this.UserStoryId;
             task.ProjectID = this.ProjectId;
+
+            if (IsDescriptionSet)
+                task.Description = this.Description;
 
             if (!String.IsNullOrEmpty(this.State))
                 task.EntityStateID = this.StateId;
@@ -160,6 +177,11 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Protected Methods
 
+        protected override string FindEntityName()
+        {
+            return this.FindTaskNameById(this.TaskId);
+        }
+
         protected override void InitializeElement(XmlNode elementNode)
         {
             if (String.IsNullOrEmpty(this.UserStory) && !this.IsUserStoryIdSet)
@@ -172,31 +194,41 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Private Methods
 
-        private int FindUserStoryId()
-        {
-            UserStoryWebService.UserStoryService storyService = ServicesCF.GetService<UserStoryWebService.UserStoryService>();
-
-            string hqlQuery = "select from UserStory as story where story.Name = ?";
-            UserStoryWebService.UserStoryDTO[] storyies = storyService.Retrieve(hqlQuery, new object[] { this.UserStory });
-
-            if (storyies.Length == 0)
-                throw new BuildException(string.Format("Could not find a story named: '{0}'.", this.UserStory));
-
-            return storyies[0].UserStoryID.Value;
-        }
-
-        private int FindTaskId()
+        private int FindTaskIdByName(string entityName)
         {
             string hqlQuery = "select from Task as task where task.Name = ?";
-            TaskDTO[] tasks = TaskService.Retrieve(hqlQuery, new object[] { this.EntityName });
+            TaskDTO[] tasks = TaskService.Retrieve(hqlQuery, new object[] { entityName });
 
             if (tasks.Length == 0)
-                throw new BuildException(string.Format("Could not find a task named: '{0}'.", this.EntityName));
+                throw new BuildException(string.Format("Could not find a task named: '{0}'.", entityName));
 
             return tasks[0].TaskID.Value;
         }
 
+        private string FindTaskNameById(int taskId)
+        {
+            return TaskService.GetByID(taskId).Name;
+        }
+
+        private int FindUserStoryIdByName(string userStory)
+        {
+            UserStoryWebService.UserStoryService storyService = ServicesCF.GetService<UserStoryWebService.UserStoryService>();
+
+            string hqlQuery = "select from UserStory as story where story.Name = ?";
+            UserStoryWebService.UserStoryDTO[] storyies = storyService.Retrieve(hqlQuery, new object[] { userStory });
+
+            if (storyies.Length == 0)
+                throw new BuildException(string.Format("Could not find a story named: '{0}'.", userStory));
+
+            return storyies[0].UserStoryID.Value;
+        }
+
         #endregion
 
+
+        protected override string FindEntityDescription()
+        {
+            return this.TaskService.GetByID(this.TaskId).Description;
+        }
     }
 }

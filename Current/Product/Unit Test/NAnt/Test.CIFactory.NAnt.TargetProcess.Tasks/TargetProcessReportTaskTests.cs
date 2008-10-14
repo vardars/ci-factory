@@ -14,56 +14,6 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
     [TestsOn(typeof(TargetProcessReportTask))]
     public class TargetProcessReportTaskTests
     {
-
-        [Test]
-        public void TaskTest()
-        {
-            string ReportFilePath = @"C:\Temp\TpReport.xml";
-            if (File.Exists(ReportFilePath))
-                File.Delete(ReportFilePath);
-
-            TargetProcessReportTask testSubject = new TargetProcessReportTask();
-
-            testSubject.ConnectionInformation.UserName = "maria";
-            testSubject.ConnectionInformation.Password = "boo";
-            testSubject.ConnectionInformation.RootServiceUrl = "http://agilex.tpondemand.com";
-
-            testSubject.TaskIds = new StringList("1", "2", "3");
-
-            testSubject.ReportFilePath = ReportFilePath;
-
-            MockRepository mocks = new MockRepository();
-            ITargetProcessHelper helpermock = mocks.StrictMock<ITargetProcessHelper>();
-            testSubject.Helper = helpermock;
-
-            Expect.Call(helpermock.UserName).PropertyBehavior();
-            Expect.Call(helpermock.Password).PropertyBehavior();
-            Expect.Call(helpermock.RootWebServiceUrl).PropertyBehavior();
-            Expect.Call(
-                helpermock.RetrieveEntity(1, "Task")
-                ).Return(new Entity("description", "link", "name", "type", 1));
-            Expect.Call(
-                helpermock.RetrieveEntity(2, "Task")
-                ).Return(new Entity("description2", "link2", "name2", "type2", 2));
-            Expect.Call(
-                helpermock.RetrieveEntity(3, "Task")
-                ).Return(new Entity("description3", "link3", "name3", "type3", 3));
-            mocks.ReplayAll();
-
-            testSubject.GenerateReport();
-
-            mocks.VerifyAll();
-            FileAssert.Exists(ReportFilePath);
-            
-            string xml = File.ReadAllText(ReportFilePath);
-            XmlAssert.XPathEvaluatesTo(@"/TargetProcess/Entity/@Name", xml, "namename2name3");
-            XmlAssert.XPathEvaluatesTo(@"/TargetProcess/Entity/@Id", xml, "123");
-            XmlAssert.XPathEvaluatesTo(@"/TargetProcess/Entity/@Type", xml, "typetype2type3");
-            XmlAssert.XPathEvaluatesTo(@"/TargetProcess/Entity/@HyperLink", xml, "http://agilex.tpondemand.comlinkhttp://agilex.tpondemand.comlink2http://agilex.tpondemand.comlink3");
-            XmlAssert.XPathEvaluatesTo(@"/TargetProcess/Entity", xml, "descriptiondescription2description3");
-        }
-
-        
         public void IntegrationTest()
         {
             string ReportFilePath = @"C:\Temp\TpReport.xml";

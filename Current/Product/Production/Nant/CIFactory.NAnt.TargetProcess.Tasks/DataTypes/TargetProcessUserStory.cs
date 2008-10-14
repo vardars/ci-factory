@@ -15,6 +15,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
     [Serializable, ElementName("tasktargetprocessuserstory")]
     public class TargetProcessUserStory : TargetProcessEntity
     {
+
         #region Fields
 
         private bool _IsUserStoryIdSet;
@@ -26,6 +27,21 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         #endregion
 
         #region Properties
+
+        protected override string Category
+        {
+            get { return "Planning"; }
+        }
+
+        protected override int EntityId
+        {
+            get { return this.UserStoryId; }
+        }
+
+        protected override string EntityType
+        {
+            get { return "UserStory"; }
+        }
 
         protected override string EntityTypeName
         {
@@ -79,7 +95,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
                 ProjectID = this.ProjectId
             };
 
-            if (!String.IsNullOrEmpty(this.Description))
+            if (IsDescriptionSet)
                 story.Description = this.Description;
 
             if (!String.IsNullOrEmpty(this.State))
@@ -93,19 +109,27 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             }
         }
 
+        public override XmlDocument GenerateReport()
+        {
+            XmlDocument report = base.GenerateReport();
+
+            //Add the UT and IT stuff here...
+
+            return report;
+        }
+
         public override void Update()
         {
             UserStoryDTO story = StoryService.GetByID(this.UserStoryId);
 
             story.Name = this.EntityName;
-            story.Description = this.Description;
             story.ProjectID = this.ProjectId;
 
+            if (IsDescriptionSet)
+                story.Description = this.Description;
+
             if (!String.IsNullOrEmpty(this.State))
-            {
-                story.EntityStateName = this.State;
                 story.EntityStateID = this.StateId;
-            }
 
             StoryService.Update(story);
 
@@ -113,6 +137,15 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             {
                 StoryService.AssignUser(story.UserStoryID.Value, user.GetId());
             }
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override string FindEntityName()
+        {
+            return this.FindUserStoryNameById(this.UserStoryId);
         }
 
         #endregion
@@ -130,7 +163,17 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             return storyies[0].UserStoryID.Value;
         }
 
+        private string FindUserStoryNameById(int userStoryId)
+        {
+            return this.StoryService.GetByID(userStoryId).Name;
+        }
+
         #endregion
 
+
+        protected override string FindEntityDescription()
+        {
+            return this.StoryService.GetByID(this.UserStoryId).Description;
+        }
     }
 }
