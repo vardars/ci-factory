@@ -200,16 +200,20 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             idAttribute.InnerText = this.EntityId.ToString();
             rootElement.Attributes.Append(idAttribute);
 
+            XmlNode descriptionNode = document.CreateNode(XmlNodeType.Element, null, "Description", null);
+
             string entityDescription = String.Empty;
             if (this.Description != null)
             {
                 entityDescription = this.Description;
 
-                Regex regex = new Regex(@"\</{0,}(\w+\:)\w+/{0,}\>");
-                entityDescription = regex.Replace(entityDescription, "");
+
+                entityDescription = Regex.Replace(entityDescription, @"(?'pre'\</{0,})\w+\:(?'name'\w+)", "${pre}${name}");
                 entityDescription = Regex.Replace(entityDescription, @"\&nbsp\;", @"&#0160;");
+                entityDescription = Regex.Replace(entityDescription, @"namespaceuri\="".*""", "");
             }
-            rootElement.InnerXml = entityDescription;
+            descriptionNode.InnerXml = entityDescription;
+            rootElement.AppendChild(descriptionNode);
 
             return document;
         }

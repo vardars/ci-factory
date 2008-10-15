@@ -67,6 +67,7 @@
     <Compile Include="Tasks\TargetProcessCreateEntityBase.cs" />
     <Compile Include="Tasks\TargetProcessCreateTaskTask.cs" />
     <Compile Include="Tasks\TargetProcessExtractFromComment.cs" />
+    <Compile Include="Tasks\TargetProcessGetCurrentUserStoriesTask.cs" />
     <Compile Include="Tasks\TargetProcessReportTask.cs" />
     <Compile Include="Tasks\TargetProcessUpdateEntityBase.cs" />
     <Compile Include="Tasks\TargetProcessUpdateStoryTask.cs" />

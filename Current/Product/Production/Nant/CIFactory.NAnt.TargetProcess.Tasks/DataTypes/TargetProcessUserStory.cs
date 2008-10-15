@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Configuration;
 using System.IO;
@@ -9,6 +10,9 @@ using CIFactory.TargetProcess.Common.UserStoryWebService;
 using CIFactory.TargetProcess.Common;
 using CIFactory.TargetProcess.NAnt.Helpers;
 using UserStoryWebService = CIFactory.TargetProcess.Common.UserStoryWebService;
+using CustomFieldWebService = CIFactory.TargetProcess.Common.CustomFieldWebService;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace CIFactory.TargetProcess.NAnt.DataTypes
 {
@@ -112,8 +116,31 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         public override XmlDocument GenerateReport()
         {
             XmlDocument report = base.GenerateReport();
+            XmlElement rootElement = report.DocumentElement;
 
-            //Add the UT and IT stuff here...
+            UserStoryDTO story = StoryService.GetByID(this.UserStoryId);
+            this.ProjectId = story.ProjectID.Value;
+            this.TargetProcessProject = story.ProjectName;
+
+            CustomFieldWebService.CustomFieldService fieldService = ServicesCF.GetService<CustomFieldWebService.CustomFieldService>();
+
+            CustomFieldWebService.CustomFieldDTO[] allCustomFields = fieldService.RetrieveAll();
+            List<CustomFieldWebService.CustomFieldDTO> customFields = allCustomFields.Where(field => field.EntityTypeName == this.EntityTypeName && field.ProcessID == this.ProcessId).ToList<CustomFieldWebService.CustomFieldDTO>();
+            foreach (CustomFieldWebService.CustomFieldDTO customField in customFields)
+            {
+                XmlNode customFieldNode = report.CreateNode(XmlNodeType.Element, null, "CustomField", null);
+
+                XmlNode customFieldNameNode = report.CreateNode(XmlNodeType.Element, null, "Name", null);
+                customFieldNameNode.InnerText = customField.Name;
+                customFieldNode.AppendChild(customFieldNameNode);
+
+                XmlNode customFieldValueNode = report.CreateNode(XmlNodeType.Element, null, "Value", null);
+                PropertyInfo propertyInfo = story.GetType().GetProperty(customField.EntityFieldName);
+                customFieldValueNode.InnerText = (String)propertyInfo.GetValue(story, null);
+                customFieldNode.AppendChild(customFieldValueNode);
+
+                rootElement.AppendChild(customFieldNode);
+            }
 
             return report;
         }
