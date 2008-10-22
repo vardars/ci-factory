@@ -136,7 +136,12 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         [TaskAttribute("state")]
         public string State
         {
-            get { return _State; }
+            get
+            {
+                if (_State == null)
+                    _State = this.FindEntityState();
+                return _State;
+            }
             set
             {
                 _State = value;
@@ -176,6 +181,8 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         #region Public Methods
 
+        public abstract bool Exists();
+
         public abstract void Create();
 
         public virtual XmlDocument GenerateReport()
@@ -187,6 +194,10 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             XmlAttribute nameAttribute = document.CreateAttribute("Name");
             nameAttribute.InnerText = this.EntityName;
             rootElement.Attributes.Append(nameAttribute);
+
+            XmlAttribute stateAttribute = document.CreateAttribute("State");
+            stateAttribute.InnerText = this.State;
+            rootElement.Attributes.Append(stateAttribute);
 
             XmlAttribute linkAttribute = document.CreateAttribute("HyperLink");
             linkAttribute.InnerText = ServicesCF.ConnectionInformation.RootServiceUrl + this.HyperLink;
@@ -231,6 +242,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         protected abstract string FindEntityDescription();
         protected abstract string FindEntityName();
+        protected abstract string FindEntityState();
 
         protected override void InitializeElement(XmlNode elementNode)
         {

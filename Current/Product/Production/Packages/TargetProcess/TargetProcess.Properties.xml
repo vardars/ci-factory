@@ -3,8 +3,12 @@
 
 	<property name="TargetProcess.ReportDirectoryPath" value="${BuildDirectory}\TargetProcess" />
 	<property name="TargetProcess.ReportFilePath" value="${TargetProcess.ReportDirectoryPath}\${ProjectName}TargetProcesss.xml" />
-	<property name="TargetProcess.Url"						value="%TargetProcess.Url%" />
-	<property name="TargetProcess.UserName" 			value="%TargetProcess.UserName%" />
-	<property name="TargetProcess.Password" 			value="%TargetProcess.Password%" />
+
+  <connectioninformation
+    id="TargetProcess.ConnectionInformation"
+    rootserviceurl="%TargetProcess.Url%"
+    username="%TargetProcess.UserName%"
+    password="%TargetProcess.Password%"
+  />
 
 </project>

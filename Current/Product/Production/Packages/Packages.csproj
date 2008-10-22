@@ -559,6 +559,8 @@
     <Content Include="SourceModificationReport\modifications.xsl" />
     <Content Include="TargetProcess\Install\Install.xml" />
     <Content Include="TargetProcess\Install\Properties.xml" />
+    <Content Include="TargetProcess\logo.gif" />
+    <Content Include="TargetProcess\logo.ico" />
     <Content Include="TargetProcess\TargetProcess.Properties.xml" />
     <Content Include="TargetProcess\TargetProcess.Target.xml" />
     <Content Include="TargetProcess\TargetProcess.xsl" />
@@ -603,9 +605,6 @@
     <Compile Include="NUnit\Install\NUnit\samples\Extensibility\Core\SampleSuiteExtension\Tests\SampleSuiteExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Ant\Java\" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -621,5 +620,8 @@
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ant\Java\" />
   </ItemGroup>
 </Project>

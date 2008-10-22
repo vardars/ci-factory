@@ -114,19 +114,22 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
             foreach (string id in this.TaskIds)
             {
                 TargetProcessTask task = new TargetProcessTask() { TaskId = int.Parse(id) };
-                entities.Add(task);
+                if (task.Exists())
+                    entities.Add(task);
             }
 
             foreach (string id in this.StoryIds)
             {
                 TargetProcessUserStory story = new TargetProcessUserStory() { UserStoryId = int.Parse(id) };
-                entities.Add(story);
+                if (story.Exists())
+                    entities.Add(story);
             }
 
             foreach (string id in this.BugIds)
             {
                 TargetProcessBug bug = new TargetProcessBug() { BugId = int.Parse(id) };
-                entities.Add(bug);
+                if (bug.Exists())
+                    entities.Add(bug);
             }
 
             XmlDocument document = new XmlDocument();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess">
 
-  <loadtasks assembly="${PackagesDirectory}\TargetProcess\bin\CIFactory.NAnt.TargetProcess.Tasks.dll" />
+  <loadtasks assembly="${PackagesDirectory}\TargetProcess\bin\CIFactory.TargetProcess.NAnt.Tasks.dll" />
   	
   <include buildfile="TargetProcess.Properties.xml" />
 
@@ -28,6 +28,11 @@
 			entityprefix="UserStory" 
 			listrefid="UserStoryIds"
 		/>
+		<targetprocessextractfromcomment
+			comment="${Comments}"
+			entityprefix="Story"
+			listrefid="UserStoryIds"
+		/>
 
 		<strings id="TaskIds"/>
 		<targetprocessextractfromcomment
@@ -45,10 +50,8 @@
 
 		<targetprocessreport
 			reportfilepath="${TargetProcess.ReportFilePath}"
-			rootserviceurl="${TargetProcess.Url}"
-			username="${TargetProcess.UserName}"
-			password="${TargetProcess.Password}"
 		>
+      <connectioninformation refid ="TargetProcess.ConnectionInformation"/>
 			<bugids refid="BugIds"/>
 			<storyids refid="UserStoryIds"/>
 			<taskids refid="TaskIds" />

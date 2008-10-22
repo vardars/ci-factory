@@ -202,5 +202,24 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         {
             return this.StoryService.GetByID(this.UserStoryId).Description;
         }
+
+        protected override string FindEntityState()
+        {
+            return this.StoryService.GetByID(this.UserStoryId).EntityStateName;
+        }
+
+        public override bool Exists()
+        {
+            try
+            {
+                this.StoryService.GetByID(this.UserStoryId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                this.Log(Level.Error, string.Format("Could not find a {0} with id {1}: {2}", this.EntityType, this.UserStoryId, ex.Message));
+                return false;
+            }
+        }
     }
 }
