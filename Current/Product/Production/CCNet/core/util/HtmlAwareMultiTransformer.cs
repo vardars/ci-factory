@@ -19,7 +19,6 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 			foreach (string transformerFileName in transformerFileNames)
 			{
                 builder.Append(delegateTransformer.Transform(input, transformerFileName, xslParams));
-				builder.Append("<br/>");
 			}
 			return builder.ToString();
 		}
