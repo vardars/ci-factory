@@ -7,6 +7,8 @@ using System.Configuration;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Xml;
 using System.Xml.XPath;
+using System.ServiceModel.Web;
+using System.ServiceModel;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -23,8 +25,9 @@ namespace ThoughtWorks.CruiseControl.Core
         #region Fields
 
         private bool _disposed;
-
+        private WebServiceHost _Host;
         private ICruiseServer _server;
+        private static RemoteCruiseServer _self;
 
         #endregion
 
@@ -32,8 +35,22 @@ namespace ThoughtWorks.CruiseControl.Core
 
         public RemoteCruiseServer(ICruiseServer server, string configFile)
         {
+            _self = this;
             _server = server;
             RegisterForRemoting(configFile);
+
+            XmlDocument document = new XmlDocument();
+            document.Load(configFile); XPathNavigator Navigator = document.CreateNavigator();
+            string RestUri = Navigator.SelectSingleNode("/cruisecontrol/@restUri").ToString();
+
+            if (string.IsNullOrEmpty(RestUri))
+                throw new InvalidProgramException(@"Please set the attribute ""restUri"" on the root node ""cruisecontrol"" in the ccnet project file.");
+
+            Uri uri = new Uri(RestUri);
+            Host = new WebServiceHost(typeof(CIFactoryServer), uri);
+
+            Host.AddServiceEndpoint(typeof(ICIFactoryServer), new WebHttpBinding(), uri);
+            Host.Open();
         }
 
         #endregion
@@ -43,6 +60,25 @@ namespace ThoughtWorks.CruiseControl.Core
         public ICruiseManager CruiseManager
         {
             get { return _server.CruiseManager; }
+        }
+
+        public WebServiceHost Host
+        {
+            get
+            {
+                return _Host;
+            }
+            set
+            {
+                _Host = value;
+            }
+        }
+        public static RemoteCruiseServer Instance
+        {
+            get
+            {
+                return _self;
+            }
         }
 
         #endregion
@@ -170,6 +206,9 @@ namespace ThoughtWorks.CruiseControl.Core
                 Log.Info("Unregistering channel: " + channel.ChannelName);
                 ChannelServices.UnregisterChannel(channel);
             }
+
+            Host.Close();
+
             _server.Dispose();
         }
 
@@ -180,7 +219,7 @@ namespace ThoughtWorks.CruiseControl.Core
             string StringPort = Navigator.SelectSingleNode("/cruisecontrol/@port").ToString();
 
             if (string.IsNullOrEmpty(StringPort))
-                throw new InvalidProgramException(@"Please set the app setting key ""Port"" in the config file.");
+                throw new InvalidProgramException(@"Please set the attribute ""port"" on the root node ""cruisecontrol"" in the ccnet project file.");
             int Port = int.Parse(StringPort);
 
             TcpChannel CCNetTcpChannel = new TcpChannel(Port);

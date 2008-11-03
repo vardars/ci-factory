@@ -4,6 +4,7 @@
   <!-- To be repleacable tokens in the files to be installed  -->
   <!-- These should be passed on the command line
   <property name="CCNET.ServerPort" value=""/>
+  <property name="CCNET.RestPort" value=""/>
   -->
   
   <property name="CCNET.ProjectFile" value="${BuildDirectory}\ccnetproject.xml"/>
@@ -35,6 +36,7 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Email%', BuildMaster.Email)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerName%', CCNET.ServerName)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerPort%', CCNET.ServerPort)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.RestPort%', CCNET.RestPort)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.LabelPrefix%', CCNET.LabelPrefix)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ProjectFile%', CCNET.ProjectFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.BatchFile%', CCNET.BatchFile)}"  />
@@ -70,6 +72,7 @@
 
 	<target name="CCNET.ValidateParameters">
 		<fail unless="${property::exists('CCNET.ServerPort')}" message="Property CCNET.ServerPort was not set on the commandline."/>
+    <fail unless="${property::exists('CCNET.RestPort')}" message="Property CCNET.RestPort was not set on the commandline."/>
 	</target>
 
 	<target name="Private.CCNET.InstallDashboardDirectoryFiles">

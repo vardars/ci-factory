@@ -42,6 +42,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -102,11 +103,20 @@
       <Name>System</Name>
     </Reference>
     <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
     <Reference Include="System.Runtime.Remoting">
       <Name>System.Runtime.Remoting</Name>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Web">
       <Name>System.Web</Name>
@@ -122,6 +132,7 @@
     <Compile Include="ArgumentParser.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CIFactoryServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -364,6 +375,7 @@
     <Compile Include="Remote\CruiseControlStatus.cs" />
     <Compile Include="Remote\ExternalLink.cs" />
     <Compile Include="Remote\ForceFilterClientInfo.cs" />
+    <Compile Include="Remote\ICIFactoryServer.cs" />
     <Compile Include="Remote\ICruiseManager.cs" />
     <Compile Include="Remote\ICruiseServer.cs" />
     <Compile Include="Remote\IntegrationStatus.cs" />

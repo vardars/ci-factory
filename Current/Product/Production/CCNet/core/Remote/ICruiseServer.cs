@@ -1,4 +1,6 @@
 using System;
+using System.ServiceModel;
+using System.ServiceModel.Web;
 
 namespace ThoughtWorks.CruiseControl.Remote
 {
