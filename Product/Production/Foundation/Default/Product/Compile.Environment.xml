@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Environment" >
+
+  <property name="Compile.Environment.Path" value="${environment::get-variable('SystemRoot')}\system32;${environment::get-variable('SystemRoot')};${environment::get-variable('SystemRoot')}\System32\Wbem" />
+  <environment id="${Compile.Environment.RefId}">
+    <variable name="PATH" value="${Compile.Environment.Path};${NantBinPath}" />
+  </environment>
+
+</project>
