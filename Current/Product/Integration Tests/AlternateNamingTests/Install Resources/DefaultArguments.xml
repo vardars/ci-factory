@@ -17,6 +17,7 @@
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
   <property name="CCNET.ServerPort" value="21246"/>
+  <property name="CCNET.RestPort"   value="21247"/>
   <property name="CCNET.ModificationDelaySeconds" value="0"/>
   <property name="CCNET.IntervalTrigger" value="60"/>
   <property name="BuildMaster.Name" value="BuildMaster"/>
