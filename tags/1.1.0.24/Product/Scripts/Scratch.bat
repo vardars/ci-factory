@@ -1,0 +1,1 @@
+"..\Third Party\nant\bin\nant.exe" -buildfile:"nAnt Scratch\Scratch.build.xml"
