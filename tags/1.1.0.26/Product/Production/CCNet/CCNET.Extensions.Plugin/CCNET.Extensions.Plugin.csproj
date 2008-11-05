@@ -1,0 +1,110 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{160AD2B8-639E-4C91-A050-C14193D7481B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CCNET.Extensions.Plugin</RootNamespace>
+    <AssemblyName>CCNET.Extensions.Plugin</AssemblyName>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NetReflector">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Third Party\CCNET\NetReflector.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="ForceFilters\HostForceFilter.cs" />
+    <Compile Include="ForceFilters\HostInformation.cs" />
+    <Compile Include="ForceFilters\HostNameHelper.cs" />
+    <Compile Include="ForceFilters\IHostNameHelper.cs" />
+    <Compile Include="ForceFilters\ILogHelper.cs" />
+    <Compile Include="ForceFilters\IPasswordHelper.cs" />
+    <Compile Include="ForceFilters\LogHelper.cs" />
+    <Compile Include="ForceFilters\PasswordFilter\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ForceFilters\PasswordFilter\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ForceFilters\PasswordForceFilter.cs" />
+    <Compile Include="ForceFilters\PasswordGetter.cs" />
+    <Compile Include="ForceFilters\PasswordInformation.cs" />
+    <Compile Include="ForceFilters\ProjectForceFilter.cs" />
+    <Compile Include="ExclusionFilters.cs" />
+    <Compile Include="ForceFilters\UserForceFilter.cs" />
+    <Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
+    <Compile Include="InclusionFilters.cs" />
+    <Compile Include="ProjectFilter.cs" />
+    <Compile Include="ProjectFilterList.cs" />
+    <Compile Include="Triggers\ProjectTriggerFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XslFileMerge\FilePair.cs" />
+    <Compile Include="XslFileMerge\FilePairList.cs" />
+    <Compile Include="XslFileMerge\XslMerger.cs" />
+    <Compile Include="XslFileMerge\XslMergerTaskResult.cs" />
+    <Compile Include="Zation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdateFoundation.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\core\core.csproj">
+      <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
+      <Name>core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ForceFilters\PasswordFilter\PasswordForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)UpdateFoundation.bat"  "$(SolutionDir)" "$(TargetDir)" "$(TargetName)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
