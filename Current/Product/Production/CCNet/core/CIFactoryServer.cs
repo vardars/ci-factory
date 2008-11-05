@@ -39,9 +39,9 @@ namespace ThoughtWorks.CruiseControl.Core
             return RemoteCruiseServer.Instance.GetBuildNames(projectName);
         }
 
-        public string[] GetMostRecentBuildNames(string projectName, int buildCount)
+        public string[] GetMostRecentBuildNames(string projectName, string buildCount)
         {
-            return RemoteCruiseServer.Instance.GetMostRecentBuildNames(projectName, buildCount);
+            return RemoteCruiseServer.Instance.GetMostRecentBuildNames(projectName, int.Parse(buildCount));
         }
 
         public string GetLog(string projectName, string buildName)
@@ -57,6 +57,11 @@ namespace ThoughtWorks.CruiseControl.Core
         public ExternalLink[] GetExternalLinks(string projectName)
         {
             return RemoteCruiseServer.Instance.GetExternalLinks(projectName);
+        }
+
+        public ProcessInformationList GetProjectProcessInformation(string projectName)
+        {
+            return ProcessExecutor.RetrieveProcessInformation(projectName);
         }
 
         #endregion

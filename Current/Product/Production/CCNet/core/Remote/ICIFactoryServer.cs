@@ -1,12 +1,22 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace ThoughtWorks.CruiseControl.Remote
 {
     [ServiceContract]
     public interface ICIFactoryServer
     {
+
+        [OperationContract]
+        [WebGet(
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "/GetProjectProcessInformation/{projectName}"
+        )]
+        ProcessInformationList GetProjectProcessInformation(string projectName);
 
         [OperationContract]
         [WebGet(
@@ -60,7 +70,7 @@ namespace ThoughtWorks.CruiseControl.Remote
             ResponseFormat = WebMessageFormat.Xml,
             UriTemplate = "/GetMostRecentBuildNames/{projectName}/{buildCount}"
         )]
-        string[] GetMostRecentBuildNames(string projectName, int buildCount);
+        string[] GetMostRecentBuildNames(string projectName, string buildCount);
 
         [OperationContract]
         [WebGet(

@@ -93,6 +93,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
 		string GetProject(string name);
 
+        string[] GetProjectNames();
+
 		/// <summary>
 		/// Updates the specified project configuration on the server
 		/// </summary>

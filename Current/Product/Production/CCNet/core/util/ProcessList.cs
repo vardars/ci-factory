@@ -10,9 +10,9 @@ using System.Threading;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace MyConsole
+namespace ThoughtWorks.CruiseControl.Core.Util
 {
-    public class ProcessList : Collection<ProcessInformation>
+    public class ProcessInformationList : Collection<ProcessInformation>
     {
 
     }

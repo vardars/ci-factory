@@ -10,13 +10,14 @@ using System.Threading;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace MyConsole
+namespace ThoughtWorks.CruiseControl.Core.Util
 {
     public class ProcessInformation
     {
+
         #region Fields
 
-        private ProcessList _Children;
+        private ProcessInformationList _Children;
 
         private int _Id;
 
@@ -28,40 +29,15 @@ namespace MyConsole
 
         private String _ProcessorTime;
 
+        private string _StartTime;
+
         private long _VirtualMemory;
 
         #endregion
 
-        private string _StartTime;
-        public string StartTime
-        {
-            get { return _StartTime; }
-            set
-            {
-                _StartTime = value;
-            }
-        }
-
-
-        public override string ToString()
-        {
-            return String.Format("ProcessInformation: Name='{0}', Pid='{1}', ProcessorTime='{2}', PrivateMemory='{3}', VirtualMemory='{4}', PagedMemory='{5}', StartTime='{6}'.",
-                this.ProcessName,
-                this.Id,
-                this.ProcessorTime,
-                this.PrivateMemory,
-                this.VirtualMemory,
-                this.PagedMemory,
-                this.StartTime);
-        }
-
         #region Constructors
 
-        public ProcessInformation()
-        {
-        }
-
-        public ProcessInformation(ProcessList children, int id, long pagedMemory, long privateMemory, string processName, String processorTime, long virtualMemory, string startTime)
+        public ProcessInformation(ProcessInformationList children, int id, long pagedMemory, long privateMemory, string processName, String processorTime, long virtualMemory, string startTime)
         {
             _Children = children;
             _Id = id;
@@ -71,25 +47,6 @@ namespace MyConsole
             _ProcessorTime = processorTime;
             _VirtualMemory = virtualMemory;
             _StartTime = startTime;
-        }
-
-        public ProcessInformation(Process process, Process[] allProcesses)
-        {
-            this.Id = process.Id;
-            this.ProcessName = process.ProcessName;
-            this.ProcessorTime = process.TotalProcessorTime.ToString();
-            this.VirtualMemory = process.VirtualMemorySize64;
-            this.PagedMemory = process.PagedMemorySize64;
-            this.PrivateMemory = process.PrivateMemorySize64;
-            this.StartTime = process.StartTime.ToString();
-
-            foreach (Process processCanidate in allProcesses)
-            {
-                if (GetParentProcess(processCanidate.Id) == this.Id)
-                {
-                    this.Children.Add(new ProcessInformation(processCanidate, allProcesses));
-                }
-            }
         }
 
         public ProcessInformation(Process process)
@@ -112,16 +69,39 @@ namespace MyConsole
             }
         }
 
+        public ProcessInformation()
+        {
+        }
+
+        public ProcessInformation(Process process, Process[] allProcesses)
+        {
+            this.Id = process.Id;
+            this.ProcessName = process.ProcessName;
+            this.ProcessorTime = process.TotalProcessorTime.ToString();
+            this.VirtualMemory = process.VirtualMemorySize64;
+            this.PagedMemory = process.PagedMemorySize64;
+            this.PrivateMemory = process.PrivateMemorySize64;
+            this.StartTime = process.StartTime.ToString();
+
+            foreach (Process processCanidate in allProcesses)
+            {
+                if (GetParentProcess(processCanidate.Id) == this.Id)
+                {
+                    this.Children.Add(new ProcessInformation(processCanidate, allProcesses));
+                }
+            }
+        }
+
         #endregion
 
         #region Properties
 
-        public ProcessList Children
+        public ProcessInformationList Children
         {
             get
             {
                 if (_Children == null)
-                    _Children = new ProcessList();
+                    _Children = new ProcessInformationList();
                 return _Children;
             }
             set
@@ -175,6 +155,15 @@ namespace MyConsole
             }
         }
 
+        public string StartTime
+        {
+            get { return _StartTime; }
+            set
+            {
+                _StartTime = value;
+            }
+        }
+
         public long VirtualMemory
         {
             get { return _VirtualMemory; }
@@ -182,6 +171,22 @@ namespace MyConsole
             {
                 _VirtualMemory = value;
             }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public override string ToString()
+        {
+            return String.Format("ProcessInformation: Name='{0}', Pid='{1}', ProcessorTime='{2}', PrivateMemory='{3}', VirtualMemory='{4}', PagedMemory='{5}', StartTime='{6}'.",
+                this.ProcessName,
+                this.Id,
+                this.ProcessorTime,
+                this.PrivateMemory,
+                this.VirtualMemory,
+                this.PagedMemory,
+                this.StartTime);
         }
 
         #endregion

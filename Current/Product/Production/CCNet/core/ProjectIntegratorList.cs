@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
 	public class ProjectIntegratorList : IProjectIntegratorList
 	{
-		private Hashtable _integrators = new Hashtable();
+        private Dictionary<string, IProjectIntegrator> _integrators = new Dictionary<string, IProjectIntegrator>();
 
 		public void Add(IProjectIntegrator integrator)
 		{
@@ -19,7 +20,7 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		public IProjectIntegrator this[string projectName] 
 		{ 
-			get { return _integrators[projectName] as IProjectIntegrator; }
+			get { return _integrators[projectName]; }
 		}
 
 		public int Count
@@ -31,5 +32,15 @@ namespace ThoughtWorks.CruiseControl.Core
 		{
 			return _integrators.Values.GetEnumerator();
 		}
-	}
+
+        #region IProjectIntegratorList Members
+
+
+        public Dictionary<string, IProjectIntegrator> ProjectTable
+        {
+            get { return this._integrators; }
+        }
+
+        #endregion
+    }
 }

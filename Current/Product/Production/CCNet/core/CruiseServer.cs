@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.IO;
 using System.Reflection;
@@ -35,6 +36,7 @@ namespace ThoughtWorks.CruiseControl.Core
 
         public CruiseServer(IConfigurationService configurationService, IProjectIntegratorListFactory projectIntegratorListFactory, IProjectSerializer projectSerializer)
         {
+            _self = this;
             this.configurationService = configurationService;
             this.configurationService.AddConfigurationUpdateHandler(new ConfigurationUpdateHandler(Restart));
             this.projectIntegratorListFactory = projectIntegratorListFactory;
@@ -55,6 +57,14 @@ namespace ThoughtWorks.CruiseControl.Core
         public ICruiseManager CruiseManager
         {
             get { return manager; }
+        }
+        private static CruiseServer _self;
+        public static CruiseServer Instance
+        {
+            get
+            {
+                return _self;
+            }
         }
 
         #endregion
@@ -449,6 +459,16 @@ namespace ThoughtWorks.CruiseControl.Core
         public string GetHostServerName(string projectName)
         {
             return Environment.MachineName;
+        }
+
+        #endregion
+
+        #region ICruiseServer Members
+
+
+        public string[] GetProjectNames()
+        {
+            return projectIntegrators.ProjectTable.Keys.ToArray<string>();
         }
 
         #endregion

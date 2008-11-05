@@ -2,6 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace ThoughtWorks.CruiseControl.Core.Util
 {
@@ -18,12 +21,119 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 	public class ProcessExecutor
 	{
 		private const int WAIT_FOR_KILLED_PROCESS_TIMEOUT = 5000;
+        private static ReaderWriterLock readWriterLock = new ReaderWriterLock();
 
-		public virtual ProcessResult Execute(ProcessInfo processInfo, string projectName)
+        private static Dictionary<string, List<Process>> _ManagedProcesses;
+        public static Dictionary<string, List<Process>> ManagedProcesses
+        {
+            get { return _ManagedProcesses; }
+            set
+            {
+                _ManagedProcesses = value;
+            }
+        }
+
+        static ProcessExecutor()
+        {
+            foreach (string projectName in CruiseServer.Instance.GetProjectNames())
+            {
+                ManagedProcesses.Add(projectName, new List<Process>());
+                ManagedProcessInformationListCache.Add(projectName, new CacheItem(DateTime.Now, new ProcessInformationList()));
+            }
+        }
+
+        private class CacheItem
+        {
+
+            private DateTime _Age;
+            public DateTime Age
+            {
+                get { return _Age; }
+                set
+                {
+                    _Age = value;
+                }
+            }
+
+            private ProcessInformationList _ProcessInformationList;
+            public ProcessInformationList ProcessInformationList
+            {
+                get { return _ProcessInformationList; }
+                set
+                {
+                    _ProcessInformationList = value;
+                }
+            }
+
+            public CacheItem(DateTime age, ProcessInformationList processInformationList)
+            {
+                _Age = age;
+                _ProcessInformationList = processInformationList;
+            }
+            
+        }
+
+        private static Dictionary<string, CacheItem> _ManagedProcessInformationListCache;
+        private static Dictionary<string, CacheItem> ManagedProcessInformationListCache
+        {
+            get { return _ManagedProcessInformationListCache; }
+            set
+            {
+                _ManagedProcessInformationListCache = value;
+            }
+        }
+
+        public static ProcessInformationList RetrieveProcessInformation(string projectName)
+        {
+            try
+            {
+                readWriterLock.AcquireReaderLock(100);
+                if (DateTime.Now.Subtract(ManagedProcessInformationListCache[projectName].Age) >= new TimeSpan(0, 0, 10))
+                    UpdateCache(projectName);
+                return ManagedProcessInformationListCache[projectName].ProcessInformationList;
+            }
+            finally
+            {
+                readWriterLock.ReleaseReaderLock();
+            }
+        }
+
+        private static void UpdateCache(string projectName)
+        {
+            ProcessInformationList list = new ProcessInformationList();
+
+            foreach (Process process in ManagedProcesses[projectName])
+            {
+                list.Add(new ProcessInformation(process));
+            }
+
+            LockCookie lockCookie = readWriterLock.UpgradeToWriterLock(100);
+            try
+            {
+                ManagedProcessInformationListCache[projectName].ProcessInformationList = list;
+            }
+            finally
+            {
+                readWriterLock.DowngradeFromWriterLock(ref lockCookie);
+            }
+        }
+        
+        private void AddToManagedProcessList(string projectName, Process process)
+        {
+            ManagedProcesses[projectName].Add(process);
+        }
+
+        private void RemoveFromManagedProcessList(string projectName, Process process)
+        {
+            ManagedProcesses[projectName].Remove(process);
+        }
+
+        public virtual ProcessResult Execute(ProcessInfo processInfo, string projectName)
 		{
 			Log.Debug(string.Format("Executing process {0} {1} in {2}", processInfo.FileName, processInfo.Arguments, processInfo.WorkingDirectory));
 			using (Process process = Start(processInfo))
 			{
+                AddToManagedProcessList(projectName, process);
 				using (ProcessReader standardOutput = new ProcessReader(process.StandardOutput), standardError = new ProcessReader(process.StandardError))
 				{
 					WriteToStandardInput(process, processInfo);
@@ -40,6 +150,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 					}
 					return new ProcessResult(standardOutput.Output, standardError.Output, process.ExitCode, ! hasExited);
 				}
+                RemoveFromManagedProcessList(projectName, process);
 			}
 		}
 
