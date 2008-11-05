@@ -143,7 +143,7 @@ namespace CCNET.TFS.Plugin
 
             try
             {
-                ProcessResult RollBackResult = this.Executor.Execute(Info);
+                ProcessResult RollBackResult = this.Executor.Execute(Info, result.ProjectName);
                 result.AddTaskResult(new ProcessTaskResult(RollBackResult));
             }
             catch (Exception ProcessException)
