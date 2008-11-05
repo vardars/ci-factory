@@ -19,7 +19,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 	{
 		private const int WAIT_FOR_KILLED_PROCESS_TIMEOUT = 5000;
 
-		public virtual ProcessResult Execute(ProcessInfo processInfo)
+		public virtual ProcessResult Execute(ProcessInfo processInfo, string projectName)
 		{
 			Log.Debug(string.Format("Executing process {0} {1} in {2}", processInfo.FileName, processInfo.Arguments, processInfo.WorkingDirectory));
 			using (Process process = Start(processInfo))

@@ -19,7 +19,7 @@ namespace ThoughtWorks.CruiseControl.Core
             return RemoteCruiseServer.Instance.GetHostServerName(projectName);
         }
 
-        public ProjectStatus[] GetProjectStatus()
+        public ProjectStatus[] GetProjectsStatus()
         {
             return RemoteCruiseServer.Instance.GetProjectStatus();
         }

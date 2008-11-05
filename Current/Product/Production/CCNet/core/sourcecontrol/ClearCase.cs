@@ -47,7 +47,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
 		{
-			return base.GetModifications(CreateHistoryProcessInfo(from.StartTime, to.StartTime), from.StartTime, to.StartTime);
+			return base.GetModifications(CreateHistoryProcessInfo(from.StartTime, to.StartTime), from.StartTime, to.StartTime, to.ProjectName);
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 				}
 				if (UseLabel)
 				{
-					ProcessResult processResult = base.Execute(CreateLabelTypeProcessInfo(result.Label));
+					ProcessResult processResult = base.Execute(CreateLabelTypeProcessInfo(result.Label), result.ProjectName);
 					Log.Debug("standard output from label: " + processResult.StandardOutput);
 					ExecuteIgnoreNonVobObjects(CreateMakeLabelProcessInfo(result.Label));
 				}
@@ -85,7 +85,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			{
 				TempBaseline = CreateTemporaryBaselineName();
 				ValidateBaselineConfiguration();
-				base.Execute(CreateTempBaselineProcessInfo(TempBaseline));
+				base.Execute(CreateTempBaselineProcessInfo(TempBaseline), "unknown");
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private void ExecuteIgnoreNonVobObjects(ProcessInfo info)
 		{
 			info.TimeOut = Timeout.Millis;
-			ProcessResult result = executor.Execute(info);
+			ProcessResult result = executor.Execute(info, "na");
 
 			if (result.TimedOut)
 			{
@@ -238,14 +238,14 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private void RemoveBaseline()
 		{
-			base.Execute(CreateRemoveBaselineProcessInfo());
+			base.Execute(CreateRemoveBaselineProcessInfo(), "na");
 		}
 
 		private void RenameBaseline(string name)
 		{
 			ValidateBaselineConfiguration();
 			ValidateBaselineName(name);
-			base.Execute(CreateRenameBaselineProcessInfo(name));
+			base.Execute(CreateRenameBaselineProcessInfo(name), "na");
 		}
 
 		private void ValidateBaselineConfiguration()
@@ -265,7 +265,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			{
 				ProcessInfo info = new ProcessInfo(Executable, BuildGetSourceArguments());
 				Log.Info(string.Format("Getting source from ClearCase: {0} {1}", info.FileName, info.Arguments));
-				Execute(info);
+				Execute(info, result.ProjectName);
 			}
 		}
 

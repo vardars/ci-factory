@@ -104,7 +104,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		/// </summary>
 		public void AppDomain_Unload(object sender, EventArgs e)
 		{
-			Close();
+			Close("unknown");
 		}
 
 		/// <overloads>
@@ -118,7 +118,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		/// </overloads>
 		public void Dispose()
 		{
-			Close();
+			Close("unknown");
 
 			// Check to see if Dispose has already been called.
 			// If disposing equals true, close the Synergy session.
@@ -138,7 +138,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		///     Thrown if <see cref="SynergyCommandBuilder.Start"/> fails to write 
 		///     a single line containing the CCM_ADDR value.
 		/// </exception>
-		private void Open()
+		private void Open(string projectName)
 		{
 			ProcessInfo info;
 			ProcessResult result;
@@ -163,7 +163,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 					Log.Debug("Acquired lock to open a session");
 					/* Don't call this.Execute(), as it will cause an infinite loop 
                      * once this.ValidateSession is called. */
-					result = executor.Execute(info);
+					result = executor.Execute(info, projectName);
 					Log.Debug("Releasing lock to open a session");
 				}
 
@@ -191,7 +191,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 							connection.Timeout -= 60;
 
 							//recursively call the open function
-							Open();
+							Open(projectName);
 
 							// revent the timeout prior to recursion
 							connection.Timeout = originalTimeout;
@@ -220,10 +220,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 				// update the release setting of the project and all subprojects
 				info = SynergyCommandBuilder.GetSubProjects(connection, project);
 				info.EnvironmentVariables[SessionToken] = connection.SessionId;
-				executor.Execute(info);
+				executor.Execute(info, projectName);
 				info = SynergyCommandBuilder.SetProjectRelease(connection, project);
 				info.EnvironmentVariables[SessionToken] = connection.SessionId;
-				executor.Execute(info);
+                executor.Execute(info, projectName);
 
 				isOpen = true;
 			}
@@ -232,7 +232,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		/// <summary>
 		///     Stops the Synergy session, if one was previously opened.
 		/// </summary>
-		private void Close()
+        private void Close(string projectName)
 		{
 			ProcessInfo info;
 
@@ -243,7 +243,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
                  * We don't want an exception thrown if the session cannot be stopped. */
 				/* don't call this.Execute(), as it will cause an infinite loop 
                  * once this.ValidateSession is called. */
-				executor.Execute(info);
+                executor.Execute(info, projectName);
 
 				// reset the CCM_ADDR value and delimiter fields
 				connection.Reset();
@@ -327,7 +327,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		/// <summary>
 		///    Guarantees that a Synergy session is open, alive, and usable.
 		/// </summary>
-		private void ValidateSession()
+        private void ValidateSession(string projectName)
 		{
 			// check that we have a CCM Address
 			bool isValid = (null != connection.SessionId && connection.SessionId.Length > 0);
@@ -350,7 +350,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 
 				/* don't call this.Execute(), as it will cause an infinite loop 
                  * once this.ValidateSession is called. */
-				ProcessResult result = executor.Execute(info);
+                ProcessResult result = executor.Execute(info, projectName);
 
 				// reset the valid flag, if ccm status does not report the session token
 				isValid = IsSessionAlive(result.StandardOutput, connection.SessionId, connection.Database);
@@ -359,7 +359,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 				{
 					// Call the close method, since there's likely a problem with the client/server
 					// connection.  This call will not throw an exception even if it fails.
-					Close();
+                    Close(projectName);
 				}
 			}
 
@@ -367,7 +367,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 			if (! isValid)
 			{
 				// Now try to re-establish a connection
-				Open();
+                Open(projectName);
 			}
 		}
 
@@ -462,10 +462,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		///     if non-zero is returned by the command.
 		/// </param>
 		/// <returns>The result of the command.</returns>
-		public ProcessResult Execute(ProcessInfo processInfo, bool failOnError)
+        public ProcessResult Execute(ProcessInfo processInfo, bool failOnError, string projectName)
 		{
 			// require an active session
-			ValidateSession();
+            ValidateSession(projectName);
 
 			/* If the work area path is known, use it instead of the working directory.
              * This should be OK, thanks to the ProcessInfo.RepathExecutableIfItIsInWorkingDirectory

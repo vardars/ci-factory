@@ -62,7 +62,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 		/// <param name="result">For storing build output.</param>
 		public void Run(IIntegrationResult result)
 		{
-			ProcessResult processResult = AttemptExecute(CreateProcessInfo(result));
+			ProcessResult processResult = AttemptExecute(CreateProcessInfo(result), result.ProjectName);
 			result.AddTaskResult(new ProcessTaskResult(processResult));
 
 			// is this right?? or should this break the build
@@ -84,11 +84,11 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 			return result.BaseFromWorkingDirectory(ConfiguredBaseDirectory);
 		}
 
-		protected ProcessResult AttemptExecute(ProcessInfo info)
+        protected ProcessResult AttemptExecute(ProcessInfo info, string projectName)
 		{
 			try
 			{
-				return executor.Execute(info);
+				return executor.Execute(info, projectName);
 			}
 			catch (Exception e)
 			{

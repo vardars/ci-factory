@@ -106,7 +106,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			ProcessInfo info = createProcess(MODIFICATIONS_COMMAND_TEMPLATE);
 			Log.Info(string.Format("Getting Modifications on MKS: {0} {1}", info.FileName, info.Arguments));
-			return base.GetModifications(info, from.StartTime, to.StartTime);
+			return base.GetModifications(info, from.StartTime, to.StartTime, to.ProjectName);
 		}
 
 		public override void LabelSourceControl(IIntegrationResult result)
@@ -119,15 +119,15 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			{
 				ProcessInfo resynchProcess = createProcess(RESYNCH_COMMAND_TEMPLATE);
 				Log.Info(string.Format("Getting source from MKS: {0} {1}", resynchProcess.FileName, resynchProcess.Arguments));
-				Execute(resynchProcess);
-				RemoveReadOnlyAttribute();
+				Execute(resynchProcess, result.ProjectName);
+                RemoveReadOnlyAttribute(result.ProjectName);
 			}
 		}
 
-		private void RemoveReadOnlyAttribute()
+		private void RemoveReadOnlyAttribute(string projectName)
 		{
 			ProcessInfo attribProcess = new ProcessInfo("attrib", string.Format(" -R /s {0}", SandboxRoot + "\\*"));
-			new ProcessExecutor().Execute(attribProcess);
+            new ProcessExecutor().Execute(attribProcess, projectName);
 		}
 
 		private ProcessInfo createProcess(string processCommand)

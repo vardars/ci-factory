@@ -22,14 +22,14 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 			this.processInfoCreator = processInfoCreator;
 		}
 
-		public void Initialize(P4 p4, string project, string workingDirectory)
+        public void Initialize(P4 p4, string project, string workingDirectory)
 		{
 			CheckWorkingDirectoryIsValid(workingDirectory);
 			CheckViewIsValid(p4.ViewForSpecifications);
 			CreateClientNameIfOneNotSet(p4, project);
 			ProcessInfo processInfo = processInfoCreator.CreateProcessInfo(p4, "client -i");
 			processInfo.StandardInputContent = CreateClientSpecification(p4, workingDirectory);
-			ProcessResult result = executor.Execute(processInfo);
+            ProcessResult result = executor.Execute(processInfo, project);
 			if (result.ExitCode != ProcessResult.SUCCESSFUL_EXIT_CODE)
 			{
 				throw new CruiseControlException(string.Format("Failed to Initialize client (exit code was {0}).\r\nStandard output was: {1}\r\nStandard error was {2}", result.ExitCode, result.StandardOutput, result.StandardError));

@@ -48,7 +48,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private Modification[] GetModificationsFromItemHistory(IIntegrationResult from, IIntegrationResult to)
 		{
 			Log.Info(string.Format("Retrieving detailed change list for {0} in Vault Repository \"{1}\" between {2} and {3}", _shim.Folder, _shim.Repository, from.StartTime, to.StartTime));
-			ProcessResult result = ExecuteWithRetries(ForHistoryProcessInfo(from, to));
+			ProcessResult result = ExecuteWithRetries(ForHistoryProcessInfo(from, to), to.ProjectName);
 			Modification[] itemModifications = ParseModifications(result, from.StartTime, to.StartTime);
 			if (itemModifications == null || itemModifications.Length == 0)
 				Log.Warning("Item history returned no changes.  Version history is supposed to determine if changes exist.  This is usually caused by clock skew between the CC.NET server and the Vault server.");
@@ -101,7 +101,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 
 			Log.Info("Getting source from Vault");
-			Execute(GetSourceProcessInfo(result));
+			Execute(GetSourceProcessInfo(result), result.ProjectName);
 		}
 
 		public override void LabelSourceControl(IIntegrationResult result)
@@ -113,7 +113,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 			Log.Info(string.Format("Applying label \"{0}\" to version {1} of {2} in repository {3}.",
 			                       result.Label, _folderVersion, _shim.Folder, _shim.Repository));
-			Execute(LabelProcessInfo(result));
+			Execute(LabelProcessInfo(result), result.ProjectName);
 		}
 
 		private ProcessInfo LabelProcessInfo(IIntegrationResult result)
@@ -148,7 +148,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			bool bForceGetLatestVersion = (_folderVersion == 0);
 
 			// get version history
-			ProcessResult result = ExecuteWithRetries(VersionHistoryProcessInfo(from, to, bForceGetLatestVersion));
+			ProcessResult result = ExecuteWithRetries(VersionHistoryProcessInfo(from, to, bForceGetLatestVersion), to.ProjectName);
 
 			// parse out changes
 			string versionHistory = Vault3.ExtractXmlFromOutput(result.StandardOutput);

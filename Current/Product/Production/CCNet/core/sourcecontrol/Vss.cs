@@ -117,7 +117,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
         public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
         {
-            return GetModifications(CreateHistoryProcessInfo(from, to), from.StartTime, to.StartTime);
+            return GetModifications(CreateHistoryProcessInfo(from, to), from.StartTime, to.StartTime, to.ProjectName);
         }
 
         public override void GetSource(IIntegrationResult result)
@@ -127,14 +127,14 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
             if (!AutoGetSource) return;
 
             Log.Info("Getting source from VSS");
-            Execute(NewProcessInfoWith(GetSourceArgs(result), result));
+            Execute(NewProcessInfoWith(GetSourceArgs(result), result), result.ProjectName);
         }
 
         public override void LabelSourceControl(IIntegrationResult result)
         {
             if (!ApplyLabel) return;
 
-            Execute(NewProcessInfoWith(LabelProcessInfoArgs(result), result));
+            Execute(NewProcessInfoWith(LabelProcessInfoArgs(result), result), result.ProjectName);
             tempLabel = null;
         }
 
@@ -233,7 +233,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
         private void LabelSourceControlWith(string label, IIntegrationResult result)
         {
-            Execute(NewProcessInfoWith(LabelProcessInfoArgs(label, null), result));
+            Execute(NewProcessInfoWith(LabelProcessInfoArgs(label, null), result), result.ProjectName);
         }
 
         private ProcessInfo NewProcessInfoWith(string args, IIntegrationResult result)

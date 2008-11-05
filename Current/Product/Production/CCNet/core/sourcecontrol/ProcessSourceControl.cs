@@ -74,16 +74,16 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public abstract void LabelSourceControl(IIntegrationResult result);
 
-		protected Modification[] GetModifications(ProcessInfo info, DateTime from, DateTime to)
+		protected Modification[] GetModifications(ProcessInfo info, DateTime from, DateTime to, string projectName)
 		{
-			ProcessResult result = Execute(info);
+			ProcessResult result = Execute(info, projectName);
 			return ParseModifications(result, from, to);
 		}
 
-		protected ProcessResult Execute(ProcessInfo processInfo)
+		protected ProcessResult Execute(ProcessInfo processInfo, string projectName)
 		{
 			processInfo.TimeOut = Timeout.Millis;
-			ProcessResult result = executor.Execute(processInfo);
+			ProcessResult result = executor.Execute(processInfo, projectName);
 
 			if (result.TimedOut)
 			{

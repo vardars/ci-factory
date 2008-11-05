@@ -17,12 +17,12 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Telelogic
 		/// <returns>
 		///     Sanitized standard output and input.
 		/// </returns>
-		public override ProcessResult Execute(ProcessInfo processInfo)
+        public override ProcessResult Execute(ProcessInfo processInfo, string projectName)
 		{
 			char bell = (char) 0x07;
 			char empty = ' ';
 
-			ProcessResult retVal = base.Execute(processInfo);
+            ProcessResult retVal = base.Execute(processInfo, projectName);
 			string standardOutput = retVal.StandardOutput.Replace(bell, empty);
 			string standardError = retVal.StandardError.Replace(bell, empty);
 			return new ProcessResult(standardOutput, standardError, retVal.ExitCode, retVal.TimedOut);

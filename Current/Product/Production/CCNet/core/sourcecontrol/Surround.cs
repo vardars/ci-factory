@@ -57,7 +57,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			                               (SearchRegExp == 0) ? "-x-" : "-x",
 			                               ServerConnect,
 			                               ServerLogin);
-			return GetModifications(CreateSSCMProcessInfo(command), from.StartTime, to.StartTime);
+			return GetModifications(CreateSSCMProcessInfo(command), from.StartTime, to.StartTime, to.ProjectName);
 		}
 
 		private ProcessInfo CreateSSCMProcessInfo(string command)
@@ -70,7 +70,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public override void Initialize(IProject project)
 		{
-			Execute(CreateSSCMProcessInfo("workdir " + WorkingDirectory + " " + Repository + " -z" + ServerConnect + " -y" + ServerLogin));
+			Execute(CreateSSCMProcessInfo("workdir " + WorkingDirectory + " " + Repository + " -z" + ServerConnect + " -y" + ServerLogin), project.Name);
 		}
 
 		public override void GetSource(IIntegrationResult result)
@@ -82,7 +82,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			                               Repository,
 			                               ServerConnect,
 			                               ServerLogin);
-			Execute(CreateSSCMProcessInfo(command));
+			Execute(CreateSSCMProcessInfo(command), result.ProjectName);
 		}
 	}
 }

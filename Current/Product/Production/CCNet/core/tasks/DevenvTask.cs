@@ -69,7 +69,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 
 		public virtual void Run(IIntegrationResult result)
 		{
-			ProcessResult processResult = AttemptToExecute(result.WorkingDirectory);
+			ProcessResult processResult = AttemptToExecute(result.WorkingDirectory, result.ProjectName);
 			result.AddTaskResult(new DevenvTaskResult(processResult));
 			Log.Info("Devenv build complete.  Status: " + result.Status);
 			
@@ -79,7 +79,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 			}
 		}
 
-		private ProcessResult AttemptToExecute(string workingDirectory)
+		private ProcessResult AttemptToExecute(string workingDirectory, string projectName)
 		{
 			ProcessInfo processInfo = new ProcessInfo(Executable, Arguments, workingDirectory);
 			processInfo.TimeOut = BuildTimeoutSeconds * 1000;
@@ -87,7 +87,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 			Log.Info(string.Format("Starting build: {0} {1}", processInfo.FileName, processInfo.Arguments));
 			try
 			{
-				return executor.Execute(processInfo);
+				return executor.Execute(processInfo, projectName);
 			}
 			catch (Exception ex)
 			{

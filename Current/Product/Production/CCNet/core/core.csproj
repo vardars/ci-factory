@@ -109,6 +109,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Remoting">
       <Name>System.Runtime.Remoting</Name>
     </Reference>
@@ -544,33 +545,33 @@
     <Compile Include="sourcecontrol\SvnHistoryParser.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="sourcecontrol\Telelogic\ChangeSynergyUrlBuilder.cs">
+    <Content Include="sourcecontrol\Telelogic\ChangeSynergyUrlBuilder.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\ISynergyCommand.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\ISynergyCommand.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\Synergy.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\Synergy.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyCommand.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyCommand.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyCommandBuilder.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyCommandBuilder.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyConnectionInfo.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyConnectionInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyParser.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyParser.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyProcessExecutor.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyProcessExecutor.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="sourcecontrol\Telelogic\SynergyProjectInfo.cs">
+    </Content>
+    <Content Include="sourcecontrol\Telelogic\SynergyProjectInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </Content>
     <Compile Include="sourcecontrol\UserFilter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -604,9 +605,9 @@
     <Compile Include="tasks\BuilderException.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tasks\CoverageTask.cs">
+    <Content Include="tasks\CoverageTask.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </Content>
     <Compile Include="tasks\DataTaskResult.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -622,9 +623,9 @@
     <Compile Include="tasks\FileTaskResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tasks\ICoverage.cs">
+    <Content Include="tasks\ICoverage.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </Content>
     <Compile Include="tasks\MergeFilesTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -637,9 +638,9 @@
     <Compile Include="tasks\NAntTask.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tasks\NCoverCoverage.cs">
+    <Content Include="tasks\NCoverCoverage.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </Content>
     <Compile Include="tasks\NullTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -738,6 +739,8 @@
     <Compile Include="util\ProcessInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="util\ProcessInformation.cs" />
+    <Compile Include="util\ProcessList.cs" />
     <Compile Include="util\ProcessReader.cs">
       <SubType>Code</SubType>
     </Compile>

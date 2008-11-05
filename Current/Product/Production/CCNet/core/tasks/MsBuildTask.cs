@@ -45,7 +45,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 
 		public void Run(IIntegrationResult result)
 		{
-			ProcessResult processResult = executor.Execute(NewProcessInfo(result));
+			ProcessResult processResult = executor.Execute(NewProcessInfo(result), result.ProjectName);
 			string buildOutputFile = MsBuildOutputFile(result);
 			if (File.Exists(buildOutputFile))
 			{

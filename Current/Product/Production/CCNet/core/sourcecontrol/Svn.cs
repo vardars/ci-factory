@@ -79,7 +79,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
 		{
-			ProcessResult result = Execute(NewHistoryProcessInfo(from, to));
+			ProcessResult result = Execute(NewHistoryProcessInfo(from, to), to.ProjectName);
 			Modification[] modifications = ParseModifications(result, from.StartTime, to.StartTime);
 			if (UrlBuilder != null)
 			{
@@ -92,7 +92,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			if (TagOnSuccess && result.Succeeded)
 			{
-				Execute(NewLabelProcessInfo(result));
+				Execute(NewLabelProcessInfo(result), result.ProjectName);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			if (StringUtil.IsBlank(TrunkUrl))
 				throw new ConfigurationException("<trunkurl> configuration element must be specified in order to automatically checkout source from SVN.");
-			Execute(NewCheckoutProcessInfo(result));
+			Execute(NewCheckoutProcessInfo(result), result.ProjectName);
 		}
 
 		private ProcessInfo NewCheckoutProcessInfo(IIntegrationResult result)
@@ -129,7 +129,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private void UpdateSource(IIntegrationResult result)
 		{
-			Execute(NewGetSourceProcessInfo(result));
+			Execute(NewGetSourceProcessInfo(result), result.ProjectName);
 		}
 
 		private bool DoesSvnDirectoryExist(IIntegrationResult result)

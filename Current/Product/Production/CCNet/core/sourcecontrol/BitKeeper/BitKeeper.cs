@@ -55,7 +55,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.BitKeeper
 
 		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
 		{
-			ProcessResult result = Execute(NewProcessInfo(BuildHistoryProcessArgs(), to));
+			ProcessResult result = Execute(NewProcessInfo(BuildHistoryProcessArgs(), to), to.ProjectName);
 			Modification[] modifications = ParseModifications(result, from.StartTime, to.StartTime);
 			return modifications;
 		}
@@ -64,8 +64,8 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.BitKeeper
 		{
 			if (TagOnSuccess && result.Succeeded)
 			{
-				Execute(NewLabelProcessInfo(result));
-				Execute(NewProcessInfo(BuildPushProcessArgs(), result));
+				Execute(NewLabelProcessInfo(result), result.ProjectName);
+				Execute(NewProcessInfo(BuildPushProcessArgs(), result), result.ProjectName);
 			}
 		}
 
@@ -75,7 +75,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.BitKeeper
 
 			ProcessInfo info = NewProcessInfo(BuildGetSourceArguments(), result);
 			Log.Info(string.Format("Getting source from BitKeeper: {0} {1}", info.FileName, info.Arguments));
-			Execute(info);
+			Execute(info, result.ProjectName);
 
 			if (CloneTo != string.Empty) CloneSource(result);
 		}
@@ -101,7 +101,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.BitKeeper
 	
 			ProcessInfo ctInfo = NewProcessInfo(BuildCloneToArguments(), result);
 			Log.Info(string.Format("Cloning source to: {0}", clonePath));
-			Execute(ctInfo);
+			Execute(ctInfo, result.ProjectName);
 		}
 
 		private ProcessInfo NewLabelProcessInfo(IIntegrationResult result)

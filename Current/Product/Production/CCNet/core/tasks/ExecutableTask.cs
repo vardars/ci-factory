@@ -43,7 +43,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 
 		public void Run(IIntegrationResult result)
 		{
-			ProcessResult processResult = AttemptToExecute(NewProcessInfoFrom(result));
+            ProcessResult processResult = AttemptToExecute(NewProcessInfoFrom(result), result.ProjectName);
 			result.AddTaskResult(new ProcessTaskResult(processResult));
 
 			if (processResult.TimedOut)
@@ -73,11 +73,11 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 			return result.BaseFromWorkingDirectory(ConfiguredBaseDirectory);
 		}
 
-		protected ProcessResult AttemptToExecute(ProcessInfo info)
+		protected ProcessResult AttemptToExecute(ProcessInfo info, string projectName)
 		{
 			try
 			{
-				return executor.Execute(info);
+                return executor.Execute(info, projectName);
 			}
 			catch (Exception e)
 			{

@@ -26,7 +26,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 
 		private void DeleteClientSpec(P4 p4)
 		{
-			ProcessResult result = executor.Execute(infoCreator.CreateProcessInfo(p4, "client -d " + p4.Client));
+			ProcessResult result = executor.Execute(infoCreator.CreateProcessInfo(p4, "client -d " + p4.Client), "na");
 			if (result.ExitCode != ProcessResult.SUCCESSFUL_EXIT_CODE)
 			{
 				throw new CruiseControlException(string.Format("Failed to Initialize client (exit code was {0}).\r\nStandard output was: {1}\r\nStandard error was {2}", result.ExitCode, result.StandardOutput, result.StandardError));

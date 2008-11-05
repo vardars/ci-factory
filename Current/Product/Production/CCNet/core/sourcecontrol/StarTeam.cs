@@ -159,7 +159,7 @@ Author: (?<author_name>.*?) Date: (?<date_string>\d{01,2}/\d{1,2}/\d\d \d{1,2}:\
 
 		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
 		{
-			return GetModifications(CreateHistoryProcessInfo(from.StartTime, to.StartTime), from.StartTime, to.StartTime);
+			return GetModifications(CreateHistoryProcessInfo(from.StartTime, to.StartTime), from.StartTime, to.StartTime, to.ProjectName);
 		}
 
 		public override void LabelSourceControl(IIntegrationResult result)
@@ -172,7 +172,7 @@ Author: (?<author_name>.*?) Date: (?<date_string>\d{01,2}/\d{1,2}/\d\d \d{1,2}:\
 			{
 				string args = GetSourceProcessArgs();
 				ProcessInfo info = new ProcessInfo(Executable, args);
-				Execute(info);
+				Execute(info, result.ProjectName);
 			}
 		}
 

@@ -82,7 +82,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			if (LabelOnSuccess && result.Succeeded)
 			{
-				Execute(NewLabelProcessInfo(result));
+                Execute(NewLabelProcessInfo(result), result.ProjectName);
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private void UpdateSource(IIntegrationResult result, string file)
 		{
-			Execute(NewGetSourceProcessInfo(result, file));
+			Execute(NewGetSourceProcessInfo(result, file), result.ProjectName);
 		}
 
 		private ProcessInfo NewGetSourceProcessInfo(IIntegrationResult result, string dir)
@@ -113,7 +113,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		private Modification[] GetModifications(string directory, IIntegrationResult from, IIntegrationResult to)
 		{
-			return GetModifications(CreateLogProcessInfo(from, directory), from.StartTime, to.StartTime);
+			return GetModifications(CreateLogProcessInfo(from, directory), from.StartTime, to.StartTime, to.ProjectName);
 		}
 
 		private Modification[] GetModificationsUsingHistory(IIntegrationResult from, IIntegrationResult to)
@@ -152,7 +152,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
 			AppendCvsRoot(buffer);
 			buffer.AppendArgument(string.Format("history -x MAR -a -D \"{0}\"", FormatCommandDate(from.StartTime)));
-			return Execute(NewProcessInfoWithArgs(from, buffer.ToString()));
+			return Execute(NewProcessInfoWithArgs(from, buffer.ToString()), from.ProjectName);
 		}
 
 		private ProcessInfo CreateLogProcessInfo(IIntegrationResult from, string dir)

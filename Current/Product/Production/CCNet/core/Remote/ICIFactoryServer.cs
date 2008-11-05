@@ -22,9 +22,9 @@ namespace ThoughtWorks.CruiseControl.Remote
             BodyStyle = WebMessageBodyStyle.Bare,
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml,
-            UriTemplate = "/GetProjectStatus"
+            UriTemplate = "/GetProjectsStatus"
         )]
-        ProjectStatus[] GetProjectStatus();
+        ProjectStatus[] GetProjectsStatus();
 
         [OperationContract]
         [WebGet(

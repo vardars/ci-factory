@@ -37,7 +37,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			_labelApplied = false;
 			Log.Info(string.Format("Checking for modifications to {0} in Vault Repository \"{1}\" between {2} and {3}", _shim.Folder, _shim.Repository, from.StartTime, to.StartTime));
-			ProcessResult result = ExecuteWithRetries(ForHistoryProcessInfo(from, to));
+			ProcessResult result = ExecuteWithRetries(ForHistoryProcessInfo(from, to), to.ProjectName);
 			return ParseModifications(result, from.StartTime, to.StartTime);
 		}
 
@@ -60,7 +60,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 					{
 						Log.Info(string.Format(
 							"Integration failed.  Removing label \"{0}\" from {1} in repository {2}.", result.Label, _shim.Folder, _shim.Repository));
-						Execute(RemoveLabelProcessInfo(result));
+						Execute(RemoveLabelProcessInfo(result), result.ProjectName);
 					}
 					else
 						Log.Debug(string.Format(
@@ -71,7 +71,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			else
 			{
 				Log.Info(string.Format("Applying label \"{0}\" to {1} in repository {2}.", result.Label, _shim.Folder, _shim.Repository));
-				Execute(LabelProcessInfo(result));
+                Execute(LabelProcessInfo(result), result.ProjectName);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			if (_shim.ApplyLabel)
 			{
 				Log.Info(string.Format("Applying label \"{0}\" to {1} in repository {2}.", result.Label, _shim.Folder, _shim.Repository));
-				Execute(LabelProcessInfo(result));
+                Execute(LabelProcessInfo(result), result.ProjectName);
 				_labelApplied = true;
 			}
 
@@ -104,7 +104,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 
 			Log.Info("Getting source from Vault");
-			Execute(GetSourceProcessInfo(result, _shim.ApplyLabel));
+            Execute(GetSourceProcessInfo(result, _shim.ApplyLabel), result.ProjectName);
 		}
 
 		/// <summary
@@ -231,7 +231,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			AddCommonOptionalArguments(builder);
 
 			ProcessInfo processInfo = ProcessInfoFor(builder.ToString(), result);
-			ProcessResult processResult = Execute(processInfo);
+            ProcessResult processResult = Execute(processInfo, result.ProjectName);
 
 			// parse list of working folders
 			XmlDocument xml = GetVaultResponse(processResult, processInfo);
@@ -274,14 +274,14 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		/// </summary>
 		/// <param name="processInfo"></param>
 		/// <returns></returns>
-		protected ProcessResult ExecuteWithRetries(ProcessInfo processInfo)
+		protected ProcessResult ExecuteWithRetries(ProcessInfo processInfo, string projectName)
 		{
 			ProcessResult result = null;
 			for(int i=0; i < _shim.pollRetryAttempts; i++)
 			{
 				try
 				{
-					result = Execute(processInfo);
+                    result = Execute(processInfo, projectName);
 					return result;
 				}
 				catch(CruiseControlException e)

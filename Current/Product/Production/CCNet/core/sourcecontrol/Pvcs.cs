@@ -123,7 +123,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		{
 			baseModifications = null;
 
-			using (TextReader reader = ExecuteVLog(from.StartTime, to.StartTime))
+			using (TextReader reader = ExecuteVLog(from.StartTime, to.StartTime, to.ProjectName))
 			{
 				modifications = base.ParseModifications(reader, from.StartTime, to.StartTime);
 			}
@@ -135,12 +135,12 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			return Recursive == true ? "-z" : string.Empty;
 		}
 
-		private TextReader ExecuteVLog(DateTime from, DateTime to)
+        private TextReader ExecuteVLog(DateTime from, DateTime to, string projectName)
 		{
 			// required due to DayLightSavings bug in PVCS 7.5.1
 			from = AdjustForDayLightSavingsBug(from);
 			to = AdjustForDayLightSavingsBug(to);
-			Execute(CreatePcliContentsForCreatingVLog(GetDateString(from), GetDateString(to)));
+            Execute(CreatePcliContentsForCreatingVLog(GetDateString(from), GetDateString(to)), projectName);
 			return GetTextReader(LogFile);
 		}
 
@@ -158,14 +158,14 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 				return string.Empty;
 		}
 
-		private void ExecuteNonPvcsFunction(string content)
+        private void ExecuteNonPvcsFunction(string content, string projectName)
 		{
 			string filename = Path.GetTempFileName();
 			filename = filename.Substring(0, filename.Length - 3) + "cmd";
 			try
 			{
 				CreatePVCSInstructionFile(filename, content);
-				Execute(CreatePVCSProcessInfo("cmd.exe", "/c ", filename));
+                Execute(CreatePVCSProcessInfo("cmd.exe", "/c ", filename), projectName);
 			}
 			finally
 			{
@@ -174,9 +174,9 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 		}
 
-		private void Execute(string pcliContent)
+        private void Execute(string pcliContent, string projectName)
 		{
-			Execute(CreatePVCSProcessInfo(Executable, pcliContent, ""));
+            Execute(CreatePVCSProcessInfo(Executable, pcliContent, ""), projectName);
 		}
 
 		private void CreatePVCSInstructionFile(string filename, string content)
@@ -277,7 +277,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			modifications = result.Modifications;
 
 			if (LabelOnSuccess && LabelOrPromotionName.Length > 0)
-				DetermineMaxRevisions(LabelOrPromotionName);
+				DetermineMaxRevisions(LabelOrPromotionName, result.ProjectName);
 
 			// Write the revision to pull from Version Manager and close the file
 			StringDictionary createFolders = new StringDictionary();
@@ -294,7 +294,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 				}
 			}
-			ExecutePvcsGet(createFolders);
+            ExecutePvcsGet(createFolders, result.ProjectName);
 		}
 
 		private string DetermineFileLocation(string folderName)
@@ -313,7 +313,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 		}
 
-		protected void ExecutePvcsGet(StringDictionary folders)
+		protected void ExecutePvcsGet(StringDictionary folders, string projectName)
 		{
 			StringBuilder content = new StringBuilder();
 			content.Append("@echo off \r\necho Create all necessary folders first\r\n");
@@ -328,7 +328,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			content.AppendFormat("\"{0}\\Get.exe\" -W -Y -xo\"{1}\" -xe\"{2}\" @\"{3}\"\r{4}", dir, LogFile, ErrorFile, TempFile, Environment.NewLine);
 
 			// Allow us to use same logic for Executing files
-			ExecuteNonPvcsFunction(content.ToString());
+            ExecuteNonPvcsFunction(content.ToString(), projectName);
 		}
 
 		#endregion
@@ -345,13 +345,13 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 			// Ensure the Label Or Promotion Name exist
 			if (LabelOrPromotionName.Length > 0)
-				LabelSourceControl("", LabelOrPromotionName);
+				LabelSourceControl("", LabelOrPromotionName, result.ProjectName);
 			// This allows for the labeller concept to support absolute labelling
 			if (result.Label != LabelOrPromotionName)
-				LabelSourceControl(LabelOrPromotionName, result.Label);
+                LabelSourceControl(LabelOrPromotionName, result.Label, result.ProjectName);
 		}
 
-		private void LabelSourceControl(string oldLabel, string newLabel)
+		private void LabelSourceControl(string oldLabel, string newLabel, string projectName)
 		{
 			if (oldLabel.Length > 0)
 			{
@@ -359,7 +359,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 				// Determine what revisions between old label and new label
 				// Get assigned the new label
-				DetermineMaxRevisions(oldLabel);
+				DetermineMaxRevisions(oldLabel, projectName);
 			}
 			using (TextWriter stream = File.CreateText(TempFile))
 			{
@@ -370,10 +370,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 			Log.Info("Applying PVCS Label " + newLabel + " on Project " + Thread.CurrentThread.Name);
 			// Allow us to use same logic for Executing files
-			ExecuteNonPvcsFunction(CreatePcliContentsForLabeling(newLabel));
+			ExecuteNonPvcsFunction(CreatePcliContentsForLabeling(newLabel), projectName);
 		}
 
-		private void DetermineMaxRevisions(string oldLabel)
+        private void DetermineMaxRevisions(string oldLabel, string projectName)
 		{
 			// Only Execute this one-time during this process
 			// until the GetModifications is run again.
@@ -381,7 +381,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			{
 				Log.Info("Determine Revisions based on Promotion Group/Label : " + oldLabel);
 				// Execute new VLog Session to get revision for old Label
-				Execute(CreatePcliContentsForCreatingVlogByLabel(oldLabel));
+				Execute(CreatePcliContentsForCreatingVlogByLabel(oldLabel), projectName);
 
 				using (TextReader reader = GetTextReader(LogFile))
 				{
@@ -450,20 +450,20 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			tempLabel = Thread.CurrentThread.Name + "_" + Convert.ToString(dt.Ticks);
 		}
 
-		public void CreateTemporaryLabel()
+        public void CreateTemporaryLabel(string projectName)
 		{
 			CreateDateSpecificTemporaryLabel(DateTime.Now);
 
-			LabelSourceControl("", tempLabel);
+            LabelSourceControl("", tempLabel, projectName);
 
 			// Copy the revisions of the Label / Promotion Group into the temporary label
 			if (LabelOnSuccess && LabelOrPromotionName.Length > 0)
-				LabelSourceControl(LabelOrPromotionName, tempLabel);
+                LabelSourceControl(LabelOrPromotionName, tempLabel, projectName);
 		}
 
-		public void DeleteTemporaryLabel()
+        public void DeleteTemporaryLabel(string projectName)
 		{
-			Execute(CreatePcliContentsForDeletingLabel(tempLabel));
+            Execute(CreatePcliContentsForDeletingLabel(tempLabel), projectName);
 		}
 
 		#endregion

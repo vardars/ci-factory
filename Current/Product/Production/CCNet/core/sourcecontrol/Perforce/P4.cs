@@ -127,7 +127,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 		{
 			P4HistoryParser parser = new P4HistoryParser();
 			ProcessInfo process = CreateChangeListProcess(from.StartTime, to.StartTime);
-			string processResult = Execute(process);
+			string processResult = Execute(process, to.ProjectName);
 			String changes = parser.ParseChanges(processResult);
 			if (changes.Length == 0)
 			{
@@ -136,7 +136,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 			else
 			{
 				process = CreateDescribeProcess(changes);
-				Modification[] mods = parser.Parse(new StringReader(Execute(process)), from.StartTime, to.StartTime);
+				Modification[] mods = parser.Parse(new StringReader(Execute(process, to.ProjectName)), from.StartTime, to.StartTime);
 				if (! StringUtil.IsBlank(P4WebURLFormat))
 				{
 					foreach (Modification mod in mods)
@@ -176,7 +176,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 				{}
                 ProcessInfo process = CreateLabelSpecificationProcess(Label);
 
-				string processOutput = Execute(process);
+				string processOutput = Execute(process, result.ProjectName);
 				if (containsErrors(processOutput))
 				{
 					Log.Error(string.Format("Perforce labelling failed:\r\n\t process was : {0} \r\n\t output from process was: {1}", process.ToString(), processOutput));
@@ -184,7 +184,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 				}
 
                 process = CreateLabelSyncProcess(Label);
-				processOutput = Execute(process);
+				processOutput = Execute(process, result.ProjectName);
 				if (containsErrors(processOutput))
 				{
 					Log.Error(string.Format("Perforce labelling failed:\r\n\t process was : {0} \r\n\t output from process was: {1}", process.ToString(), processOutput));
@@ -249,7 +249,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 			{
 				ProcessInfo info = processInfoCreator.CreateProcessInfo(this, CreateSyncCommandLine());
 				Log.Info(string.Format("Getting source from Perforce: {0} {1}", info.FileName, info.Arguments));
-				Execute(info);
+				Execute(info, result.ProjectName);
 			}
 		}
 
@@ -263,10 +263,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol.Perforce
 			return commandline;
 		}
 
-		protected virtual string Execute(ProcessInfo p)
+		protected virtual string Execute(ProcessInfo p, string projectName)
 		{
 			Log.Debug("Perforce plugin - running:" + p.ToString());
-			ProcessResult result = processExecutor.Execute(p);
+            ProcessResult result = processExecutor.Execute(p, projectName);
 			return result.StandardOutput.Trim() + Environment.NewLine + result.StandardError.Trim();
 		}
 
