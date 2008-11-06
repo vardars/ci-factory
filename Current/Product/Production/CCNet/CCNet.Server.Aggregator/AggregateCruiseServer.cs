@@ -309,5 +309,21 @@ namespace CCNet.Server.Aggregator
 
 
 
+
+        #region ICruiseServer Members
+
+
+        public string[] GetProjectNames()
+        {
+            List<String> Names = new List<String>();
+
+            foreach (KeyValuePair<string, ICruiseManager> Pair in this.Projects)
+            {
+                Names.AddRange(Pair.Value.GetProjectNames());
+            }
+            return Names.ToArray();
+        }
+
+        #endregion
     }
 }

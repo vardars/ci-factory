@@ -149,5 +149,15 @@ namespace ThoughtWorks.CruiseControl.Core
         }
 
         #endregion
+
+        #region ICruiseManager Members
+
+
+        public string[] GetProjectNames()
+        {
+            return cruiseServer.GetProjectNames();
+        }
+
+        #endregion
     }
 }

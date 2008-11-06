@@ -13,6 +13,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		ProjectStatus [] GetProjectStatus();
         ProjectStatus GetProjectStatus(string projectName);
 
+        string[] GetProjectNames();
+
 		/// <summary>
 		/// Forces a build for the named project.
 		/// </summary>
