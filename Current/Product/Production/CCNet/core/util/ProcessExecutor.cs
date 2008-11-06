@@ -26,14 +26,19 @@ namespace ThoughtWorks.CruiseControl.Core.Util
         private static Dictionary<string, List<Process>> _ManagedProcesses;
         public static Dictionary<string, List<Process>> ManagedProcesses
         {
-            get { return _ManagedProcesses; }
+            get
+            {
+                if (_ManagedProcesses == null)
+                    PrepStaticInfo();
+                return _ManagedProcesses;
+            }
             set
             {
                 _ManagedProcesses = value;
             }
         }
 
-        static ProcessExecutor()
+        private static void PrepStaticInfo()
         {
             foreach (string projectName in CruiseServer.Instance.GetProjectNames())
             {
@@ -76,7 +81,12 @@ namespace ThoughtWorks.CruiseControl.Core.Util
         private static Dictionary<string, CacheItem> _ManagedProcessInformationListCache;
         private static Dictionary<string, CacheItem> ManagedProcessInformationListCache
         {
-            get { return _ManagedProcessInformationListCache; }
+            get
+            {
+                if (_ManagedProcessInformationListCache == null)
+                    PrepStaticInfo();
+                return _ManagedProcessInformationListCache;
+            }
             set
             {
                 _ManagedProcessInformationListCache = value;
