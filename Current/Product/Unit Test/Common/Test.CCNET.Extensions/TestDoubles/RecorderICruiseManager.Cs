@@ -1979,5 +1979,15 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
                 }
             }
         }
+
+        #region ICruiseManager Members
+
+
+        public string[] GetProjectNames()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
