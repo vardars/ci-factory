@@ -218,12 +218,21 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
             {
                 entityDescription = this.Description;
 
-
                 entityDescription = Regex.Replace(entityDescription, @"(?'pre'\</{0,})\w+\:(?'name'\w+)", "${pre}${name}");
                 entityDescription = Regex.Replace(entityDescription, @"\&nbsp\;", @"&#0160;");
                 entityDescription = Regex.Replace(entityDescription, @"namespaceuri\="".*""", "");
             }
-            descriptionNode.InnerXml = entityDescription;
+
+            try
+            {
+                descriptionNode.InnerXml = entityDescription;
+            }
+            catch (Exception ex)
+            {
+                Log(Level.Error, String.Format("The description for {0} # {1} is not well formed xml: {2}.", this.EntityType, this.EntityId, ex.Message));
+                descriptionNode.InnerText = entityDescription;
+            }
+
             rootElement.AppendChild(descriptionNode);
 
             return document;

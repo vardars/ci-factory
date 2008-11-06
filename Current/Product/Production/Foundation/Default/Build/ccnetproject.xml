@@ -35,7 +35,7 @@
             </exclusionFilters>
           </projectFilter>'>
 ]>
-<cruisecontrol port="&Port;" restUri="http://&HostName;/&RestPort;">
+<cruisecontrol port="&Port;" restUri="http://&HostName;:&RestPort;">
   <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
     <webURL>&webURL;</webURL>
     <state type="state" />

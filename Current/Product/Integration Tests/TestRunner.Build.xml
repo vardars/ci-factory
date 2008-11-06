@@ -4,19 +4,19 @@
   <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
   <include buildfile="TestRunner.Properties.xml"/>
   <include buildfile="TestRunner.Common.xml"/>
-  
+
   <include buildfile="VisualSourceSafeTests\InstallationTest.xml"/>
   <include buildfile="SubversionTests\InstallationTest.xml"/>
   <include buildfile="VS.NETCompileTests\InstallationTest.xml"/>
   <include buildfile="VersioningTests\InstallationTest.xml"/>
-	<include buildfile="NUnitTests\NUnitTests.xml"/>
+  <include buildfile="NUnitTests\NUnitTests.xml"/>
   <include buildfile="MbUnitTests\MbUnitTests.xml"/>
   <include buildfile="MSTestTests\MSTestTests.xml"/>
   <include buildfile="PerforceTests\InstallationTest.xml"/>
-	<include buildfile="VaultTests\InstallationTest.xml"/>
+  <include buildfile="VaultTests\InstallationTest.xml"/>
   <include buildfile="AlternateNamingTests\InstallationTest.xml"/>
   <include buildfile="WatiNTests\WatiNTests.xml"/>
-  
+
   <target name="CIFactory.TestRunner.RunAllTests">
     <call target="CIFactory.TestRunner.Deploy"/>
     <testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
@@ -30,7 +30,7 @@
         <string value="MSTestTests"/>
         <string value="WatiNTests"/>
         <string value="Perforce.InstallationTest"/>
-				<!--<string value="Vault.InstallationTest"/>-->
+        <!--<string value="Vault.InstallationTest"/>-->
         <string value="AlternateNaming.InstallationTest"/>
       </fixtures>
     </testrunner>
@@ -50,5 +50,5 @@
       </fileset>
     </copy>
   </target>
-  
+
 </project>

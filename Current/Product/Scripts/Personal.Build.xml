@@ -206,6 +206,13 @@
 		</exec>
 	</target>
 
+  <target name="IntegrationTest.Deploy" depends="Common.SetUp">
+    <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+      <arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
+      <arg line='CIFactory.TestRunner.Deploy' />
+    </exec>
+  </target>
+
 	<target name="Ant.Build">
 		<trycatch>
 			<try>

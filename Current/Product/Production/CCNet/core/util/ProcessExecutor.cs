@@ -40,11 +40,15 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 
         private static void PrepStaticInfo()
         {
+            Dictionary<string, List<Process>> tempManagedProcesses = new Dictionary<string, List<Process>>();
+            Dictionary<string, CacheItem> tempManagedProcessInformationListCache = new Dictionary<string, CacheItem>();
             foreach (string projectName in CruiseServer.Instance.GetProjectNames())
             {
-                ManagedProcesses.Add(projectName, new List<Process>());
-                ManagedProcessInformationListCache.Add(projectName, new CacheItem(DateTime.Now, new ProcessInformationList()));
+                tempManagedProcesses.Add(projectName, new List<Process>());
+                tempManagedProcessInformationListCache.Add(projectName, new CacheItem(DateTime.Now, new ProcessInformationList()));
             }
+            ManagedProcesses = tempManagedProcesses;
+            ManagedProcessInformationListCache = tempManagedProcessInformationListCache;
         }
 
         private class CacheItem
