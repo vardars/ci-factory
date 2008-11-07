@@ -138,6 +138,7 @@
         <property name="BranchLabelPrefix" value="1.0.1."/>
         <property name="BranchParentLabelPrefix" value="2.0.0."/>
         <property name="BranchBuildServerPort" value="21247"/>
+        <property name="BranchBuildServerRestPort" value="21258"/>
         <property name="BranchBuildServerHostName" value="${environment::get-machine-name()}"/>
         <property name="BranchName" value="${BranchName}"/>
         <property name="Branch${ProjectName}-${BranchName}BuildScriptsInitialVersion" value="BuildScripts-1.0-1"/>
