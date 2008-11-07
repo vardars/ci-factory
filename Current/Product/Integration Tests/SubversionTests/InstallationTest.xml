@@ -64,7 +64,7 @@
         <exec program="svn" commandline='list ${SVN.URI.ProjectName}' resultproperty='SVN.Delete.Result' failonerror='false' />
       </do>
     </loglevel>
-    <!--<assertequal actual="${SVN.Delete.Result}" expected="1" message="Was not able to delete ${SVN.URI.ProjectName}."/>-->
+    <assertequal actual="${SVN.Delete.Result}" expected="1" message="Was not able to delete ${SVN.URI.ProjectName}."/>
 
     <copy file="SubversionTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
