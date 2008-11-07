@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Wix.Install" default="Wix.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Wix.Install">
+		<largeproperty name="Packages.AddPostBuildActions.Block">
+		  <value xml="false"><![CDATA[<call target="Wix.BuildMsi" />]]></value>
+		</largeproperty>
+	  <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="Wix.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Wix"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Wix.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Wix"/>
+  </target>
+
+  <target name="Wix.ValidateParameters">
+    </target>
+  
+</project>
