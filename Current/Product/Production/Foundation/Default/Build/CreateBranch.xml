@@ -489,7 +489,7 @@ You may change the prefix: '${ProjectLabelPrefix}'.
 			</value>
 		</largeproperty>
     
-    <largeproperty name="BuildServerPortPattern">
+    <largeproperty name="BuildServerRestPortPattern">
       <value expand="true" xml="false">
         <![CDATA[\<\!ENTITY\s+RestPort\s+'${BuildServerRestPort}'\s{0,}\>]]>
       </value>
@@ -517,7 +517,7 @@ You may change the prefix: '${ProjectLabelPrefix}'.
 			<filterchain>
 				<regexreplace replacment="${NewCodeLineEntity}"             pattern="${CodeLinePattern}"            lines="1" />
 				<regexreplace replacment="${NewBuildServerPortEntity}"      pattern="${BuildServerPortPattern}"     lines="1" />
-        <regexreplace replacment="${NewBuildServerRestPortEntity}"  pattern="${BuildServerPortPattern}"     lines="1" />
+        <regexreplace replacment="${NewBuildServerRestPortEntity}"  pattern="${BuildServerRestPortPattern}"     lines="1" />
 				<regexreplace replacment="${NewBuildServerHostNameEntity}"  pattern="${BuildServerHostNamePattern}" lines="1" />
 			</filterchain>
 		</replace>
