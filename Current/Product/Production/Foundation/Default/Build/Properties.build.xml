@@ -8,6 +8,7 @@
 
   <property name="BuildServerHostName"        value="&HostName;"/>
   <property name="BuildServerPort"            value="&Port;"/>
+  <property name="BuildServerRestPort"        value="&RestPort;"/>
   <property name="EmailHost"                  value="&EmailHost;"/>
 	<property name="LabelPrefix"								value="&LabelPrefix;"/>
   

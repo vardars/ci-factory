@@ -9,6 +9,7 @@
   <property name="BranchLabelPrefix" value="1.0.1."/>
   <property name="BranchParentLabelPrefix" value="2.0.0."/>
   <property name="BranchBuildServerPort" value="21247"/>
+  <property name="BranchBuildServerRestPort" value="21248"/>
   <property name="BranchBuildServerHostName" value="jay-pc"/>
   <property name="BranchName" value="1.0"/>
   <property name="Branch${ProjectName}-${BranchName}BuildScriptsInitialVersion" value="BuildScripts-1.0-1"/>
@@ -94,6 +95,8 @@
 
 		<call target="AskForBuildServerPort"/>
 
+    <call target="AskForBuildServerRestPort"/>
+
 		<call target="SetBranchProperties"/>
 
     <call target="SourceControl.GetOfCodeLineDirectory"/>
@@ -115,6 +118,7 @@
 
         <property name="BuildServerHostName"        value="BranchBuildServerHostName"/>
         <property name="BuildServerPort"            value="BranchBuildServerPort"/>
+        <property name="BuildServerRestPort"        value="BranchBuildServerRestPort"/>
 
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
@@ -156,6 +160,7 @@
 
         <property name="BuildServerHostName"        value="BranchBuildServerHostName"/>
         <property name="BuildServerPort"            value="BranchBuildServerPort"/>
+        <property name="BuildServerRestPort"        value="BranchBuildServerRestPort"/>
 
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
@@ -483,6 +488,18 @@ You may change the prefix: '${ProjectLabelPrefix}'.
 				<![CDATA[<!ENTITY Port      '${BranchBuildServerPort}' >]]>
 			</value>
 		</largeproperty>
+    
+    <largeproperty name="BuildServerPortPattern">
+      <value expand="true" xml="false">
+        <![CDATA[\<\!ENTITY\s+RestPort\s+'${BuildServerRestPort}'\s{0,}\>]]>
+      </value>
+    </largeproperty>
+
+    <largeproperty name="NewBuildServerRestPortEntity">
+      <value expand="true" xml="false">
+        <![CDATA[<!ENTITY RestPort                 '${BranchBuildServerRestPort}'>]]>
+      </value>
+    </largeproperty>
 
 		<largeproperty name="BuildServerHostNamePattern">
 			<value expand="true" xml="false">
@@ -498,9 +515,10 @@ You may change the prefix: '${ProjectLabelPrefix}'.
 
 		<replace file="${BranchBuildDirectory}\Entities.xml">
 			<filterchain>
-				<regexreplace replacment="${NewCodeLineEntity}" pattern="${CodeLinePattern}" lines="1" />
-				<regexreplace replacment="${NewBuildServerPortEntity}" pattern="${BuildServerPortPattern}" lines="1" />
-				<regexreplace replacment="${NewBuildServerHostNameEntity}" pattern="${BuildServerHostNamePattern}" lines="1" />
+				<regexreplace replacment="${NewCodeLineEntity}"             pattern="${CodeLinePattern}"            lines="1" />
+				<regexreplace replacment="${NewBuildServerPortEntity}"      pattern="${BuildServerPortPattern}"     lines="1" />
+        <regexreplace replacment="${NewBuildServerRestPortEntity}"  pattern="${BuildServerPortPattern}"     lines="1" />
+				<regexreplace replacment="${NewBuildServerHostNameEntity}"  pattern="${BuildServerHostNamePattern}" lines="1" />
 			</filterchain>
 		</replace>
 	</target>
@@ -623,6 +641,25 @@ Maybe ${int::parse(BuildServerPort) + 1} is available.]]>
      unless="${property::exists('BranchBuildServerPort')}"
 		/>
 	</target>
+
+  <target name="AskForBuildServerRestPort" unless="${property::exists('BranchBuildServerRestPort')}">
+    <largeproperty name="BuildServerRestPortQuestion">
+      <value expand="true" xml="false">
+        <![CDATA[What port number should CCNet use for it's rest service?
+
+The '${CurrentVersion}' rest port is '${BuildServerRestPort}'.
+Maybe ${int::parse(BuildServerRestPort) + 1} is available.]]>
+      </value>
+    </largeproperty>
+
+    <ask answer="BranchBuildServerRestPort"
+				 caption="What port number?"
+				 dialogmode="FreeText"
+				 question="${BuildServerRestPortQuestion}"
+       showdialog="true"
+     unless="${property::exists('BranchBuildServerRestPort')}"
+		/>
+  </target>
 
 	<target name="AskForBuildServerHostName" unless="${property::exists('BranchBuildServerHostName')}">
 		<largeproperty name="BuildServerHostNameQuestion">
