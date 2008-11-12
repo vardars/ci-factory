@@ -40,18 +40,24 @@
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
     <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
 
-    <xsl:variable name="quietandrecoverytimefile" select="concat('..\..\..\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
+    <xsl:variable name="quietandrecoverytimefile" select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/Artifacts/', $ArtifactFolderName, '/quietandrecoverytimehistory.xml')"/>
     <xsl:variable name="quietandrecoverytimedoc" select="document($quietandrecoverytimefile)"/>
+
+    <xsl:variable name="simianfile" select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/Artifacts/', $ArtifactFolderName, '/Simian.Statistics.xml')"/>
+    <xsl:variable name="simiandoc" select="document($simianfile)"/>
+
+    <xsl:variable name="unittestfile" select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/Artifacts/', $ArtifactFolderName, '/UnitTests.Statistics.xml')"/>
+    <xsl:variable name="unittestdoc" select="document($unittestfile)"/>
 
     <style>
       *.pass{
-      background-color: #33ff99;
+      background-color: #7bcf15;
       }
       *.fail{
-      background-color: #ff6600;
+      background-color: #D13535;
       }
       *.unknown{
-      background-color: #ffffcc;
+      background-color: #FF7700;
       }
       *.exception{
       background-color: #000000;
@@ -215,7 +221,7 @@ if(!document.getElementById)
       <tr>
         <td>
           <p style="width: 25em;">
-            This chart displays the total number of builds over all time (Team1 begins in July and Team2 begins in late Sept).
+            This chart displays the total number of builds over all time.
             The count is not as important as the slope of the line.  You would like to see the yellow line moving up and the other lines flat.
           </p>
         </td>
@@ -324,7 +330,7 @@ if(!document.getElementById)
     <hr/>
     
     <hr/>
-		<p><pre><strong>Note: </strong>Only builds run with the statistics publisher enabled will appear on this page!</pre></p>
+		
 		<table  class="section-table" cellpadding="2" cellspacing="0" border="1" width="98%">
       <tr class="sectionheader">
 				<th>Build Label</th>
@@ -334,9 +340,12 @@ if(!document.getElementById)
 						<xsl:value-of select="./@name" />
 					</th>
 				</xsl:for-each>
+        <th>Unit Test Count</th>
+        <th>Percent Duplication</th>
 			</tr>
 			<xsl:for-each select="./integration">
 				<xsl:sort select="position()" data-type="number" order="descending"/>
+        <xsl:variable name="StartTime" select="statistic[@name = 'StartTime']/text()" />
 				<xsl:variable name="colorClass">
 					<xsl:choose>
 						<xsl:when test="./@status = 'Success'">pass</xsl:when>
@@ -345,6 +354,18 @@ if(!document.getElementById)
 						<xsl:otherwise>fail</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
+        <xsl:variable name="ProjectName" select="statistic[@name = 'ProjectName']/text()" />
+        <xsl:variable name="BuildTimeStamp" select="ms:FormatDate(statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
+        <xsl:variable name="BuildUrl">
+          <xsl:choose>
+            <xsl:when test="./@status = 'Success'">
+              <xsl:value-of select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, 'Lbuild.', @build-label, '.xml')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, '.xml')"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
 				<tr>
           <xsl:if test="(position()) mod 2 = 0">
             <xsl:attribute name="class">section-oddrow</xsl:attribute>
@@ -353,7 +374,12 @@ if(!document.getElementById)
             <xsl:attribute name="class">section-evenrow</xsl:attribute>
           </xsl:if>
 					<th>
-						<xsl:value-of select="./@build-label"/>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="$BuildUrl"/>
+              </xsl:attribute>
+						  <xsl:value-of select="./@build-label"/>
+            </a>
 					</th>
 					<th class="{$colorClass}">
 						<xsl:value-of select="./@status"/>
@@ -363,6 +389,13 @@ if(!document.getElementById)
 							<xsl:value-of select="."/>
 						</td>
 					</xsl:for-each>
+          <td>
+            <xsl:value-of select="($unittestdoc)/Builds/integration[statistic[@name = 'StartTime' and text() = $StartTime]]/statistic[@name = 'Total Test Count']/text()"/>
+          </td>
+          <td>
+            <xsl:variable name="SimianIntegration" select="($simiandoc)/Builds/integration[statistic[@name = 'StartTime' and text() = $StartTime]]"/>
+            <xsl:value-of select="format-number(($SimianIntegration/statistic[@name = 'duplicateLineCount']/text() - $SimianIntegration/statistic[@name = 'duplicateBlockLineCount']/text()) div $SimianIntegration/statistic[@name = 'totalSignificantLineCount']/text(), '#.00%')"/>
+          </td>
 				</tr>
 			</xsl:for-each>
 		</table>

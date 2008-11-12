@@ -4,7 +4,7 @@
   <property name="Simian.Directory" value="${path::get-short-path(BuildDirectory)}\SimianReport"/>
   <property name="Simian.ReportFilePath" value="${Simian.Directory}\SimianReport.xml"/>
 
-  <property name="Simian.PublishXmlReport" value="False"/>
+  <property name="Simian.PublishXmlReport" value="true"/>
 
   <if test="${file::exists(PackagesDirectory + '\Alerts\Alerts.Properties.xml')}">
     <include buildfile="${PackagesDirectory}\Alerts\Alerts.Properties.xml"/>

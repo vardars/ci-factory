@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -53,6 +53,13 @@
     <Content Include="Default\Build\ccnetproject.xml" />
     <Content Include="Default\Build\Common.Build.xml" />
     <Content Include="Default\Build\CreateBranch.xml" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.bgiframe.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.cluetip.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.delegate.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.dimensions.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.hoverIntent.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.tooltip.js" />
     <Content Include="Default\Build\Entities.xml" />
     <Content Include="Default\Product\Compile.Environment.xml" />
     <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
@@ -90,6 +97,14 @@
     <None Include="Default\Build\Build.csproj.remove" />
     <None Include="Default\Product\Test.bat" />
     <None Include="Default\Build\UpdatenAntSchema.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default\Build\Scratch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Default\Third Party\" />

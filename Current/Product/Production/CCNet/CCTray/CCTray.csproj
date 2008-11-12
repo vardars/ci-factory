@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D9040862-D7E0-4232-BBD0-CF088706E009}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -114,6 +114,12 @@
     <EmbeddedResource Include="App.ico" />
     <Content Include="CreateZip.Build.xml" />
     <Content Include="example-settings.xml" />
+    <Content Include="Sounds\broken.wav" />
+    <Content Include="Sounds\doh.wav" />
+    <Content Include="Sounds\fixed.wav" />
+    <Content Include="Sounds\still-failing.wav" />
+    <Content Include="Sounds\still-successful.wav" />
+    <Content Include="Sounds\woohoo.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cctray.exe.lnk">

@@ -12,7 +12,7 @@
     <property name="Alerts.SendMessage.ToList" value="${Alerts.Developer.Email}" />
     <property name="Alerts.SendMessage.CCList" value="${Alerts.Message.CCList}" />
 
-    <ifthenelse test="${DiskSpaceThreshold > DiskSpace}">
+    <ifthenelse test="${int::parse(DiskSpaceThreshold) > int::parse(DiskSpace)}">
       <then>
         <call target="Alerts.DiskSpace.GenerateWarning"/>
         <call target="Alerts.SendMessage"/>

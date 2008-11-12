@@ -124,68 +124,121 @@
 
   <xsl:output method="html"/>
 
+  <xsl:param name="CCNetLabel" />
+  <xsl:param name="CCNetLogFilePath" />
+  <xsl:variable name="CCNetLog" select="document($CCNetLogFilePath)"/>
+
   <xsl:template match="/">
     
     <integration>
       <xsl:attribute name="build-label">
-        <xsl:value-of select="/cruisecontrol/build/@label"/>
+        <xsl:value-of select="($CCNetLog)/cruisecontrol/build/@label"/>
       </xsl:attribute>
       
       <xsl:attribute name="day">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'dd')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'dd')"/>
       </xsl:attribute>
       <xsl:attribute name="month">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'MM')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'MM')"/>
       </xsl:attribute>
       <xsl:attribute name="year">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'yyyy')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'yyyy')"/>
       </xsl:attribute>
       <xsl:attribute name="week">
-        <xsl:value-of select="ms:WeekNumber(/cruisecontrol/build/@date)"/>
+        <xsl:value-of select="ms:WeekNumber(($CCNetLog)/cruisecontrol/build/@date)"/>
       </xsl:attribute>
       <xsl:attribute name="dayofyear">
-        <xsl:value-of select="ms:DayOfYear(/cruisecontrol/build/@date)"/>
+        <xsl:value-of select="ms:DayOfYear(($CCNetLog)/cruisecontrol/build/@date)"/>
       </xsl:attribute>
       <xsl:attribute name="hourofday">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, '%H')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, '%H')"/>
       </xsl:attribute>
 
       <xsl:call-template name="AddStatistic">
+        <xsl:with-param name="StatisticName" select="'StartTime'"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@date"/>
+      </xsl:call-template>
+
+      <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'Duration'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildtime"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@buildtime"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ProjectName'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/@project"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/@project"/>
       </xsl:call-template>
 
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'mainsubmitter'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/modifications/modification/user[1]"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/modifications/modification/user[1]"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'buildcondition'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildcondition"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@buildcondition"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'forcedby'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
       </xsl:call-template>
 
-      <xsl:variable name="UnitTestsWereExecuted" select="boolean(//task[@name='call']/target[@name='UnitTest.RunTests'])"/>
-      
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'Executed'"/>
-        <xsl:with-param name="StatisticValue" select="$UnitTestsWereExecuted"/>
-      </xsl:call-template>
-      
-      <xsl:variable name="UnitTestsDuration" select="//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
+      <xsl:choose>
+        <xsl:when test="boolean(//testsuites/testsuite/testcase)">
+          <xsl:variable name="UnitTestsWereExecuted" select="boolean(//testsuites/testsuite/testcase)"/>
 
-      <xsl:call-template name="AddStatistic">
-        <xsl:with-param name="StatisticName" select="'UnitTestsDuration'"/>
-        <xsl:with-param name="StatisticValue" select="format-number($UnitTestsDuration div 1000,'##0.00')"/>
-      </xsl:call-template>
+          <xsl:call-template name="AddStatistic">
+            <xsl:with-param name="StatisticName" select="'Executed'"/>
+            <xsl:with-param name="StatisticValue" select="$UnitTestsWereExecuted"/>
+          </xsl:call-template>
+
+          <xsl:variable name="UnitTestsDuration" select="sum(//testsuite/@time)"/>
+
+          <xsl:call-template name="AddStatistic">
+            <xsl:with-param name="StatisticName" select="'UnitTestsDuration'"/>
+            <xsl:with-param name="StatisticValue" select="$UnitTestsDuration"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="UnitTestsWereExecuted" select="boolean(($CCNetLog)//task[@name='call']/target[@name='UnitTest.RunTests'])"/>
+
+          <xsl:call-template name="AddStatistic">
+            <xsl:with-param name="StatisticName" select="'Executed'"/>
+            <xsl:with-param name="StatisticValue" select="$UnitTestsWereExecuted"/>
+          </xsl:call-template>
+
+          <xsl:variable name="UnitTestsDuration" select="($CCNetLog)//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
+
+          <xsl:call-template name="AddStatistic">
+            <xsl:with-param name="StatisticName" select="'UnitTestsDuration'"/>
+            <xsl:with-param name="StatisticValue" select="format-number($UnitTestsDuration div 1000,'##0.00')"/>
+          </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <!--Are we runnign JUnit?-->
+      <xsl:if test="boolean(//testsuites/testsuite/testcase)">
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Total Test Count'"/>
+          <xsl:with-param name="StatisticValue" select="sum(//testsuites/testsuite/@tests)"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Run Count'"/>
+          <xsl:with-param name="StatisticValue" select="sum(//testsuites/testsuite/@tests)"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Failure Count'"/>
+          <xsl:with-param name="StatisticValue" select="sum(//testsuites/testsuite/@failures) + sum(($CCNetLog)/cruisecontrol/build/testsuites/testsuite/testcase/@errors)"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="AddStatistic">
+          <xsl:with-param name="StatisticName" select="'Test Assertion Count'"/>
+          <xsl:with-param name="StatisticValue" select="0"/>
+        </xsl:call-template>
+
+      </xsl:if>
 
       <!--Are we runnign MbUnit?-->
       <xsl:if test="//report-result/counter">

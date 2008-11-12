@@ -16,7 +16,7 @@
     ]]>
   </msxsl:script>
 
-  <xsl:output method="html"/>
+  <xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:param name="PathPrefix" />
   <xsl:param name="OriginalDocPath" />

@@ -17,27 +17,27 @@
       <number>
         <xsl:value-of select="position()"/>
       </number>
-      <exsl:document href="..\..\..\Artifacts\Simian.DuplicateFileCount.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\Simian.DuplicateFileCount.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$DuplicateFileCount"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\Simian.DuplicateLineCount.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\Simian.DuplicateLineCount.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$DuplicateLineCount"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\Simian.DuplicateBlockCount.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\Simian.DuplicateBlockCount.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$DuplicateBlockCount"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\Simian.TotalFileCount.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\Simian.TotalFileCount.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$TotalFileCount"/>
         </number>
       </exsl:document>
-      <exsl:document href="..\..\..\Artifacts\Simian.TotalSignificantLineCount.xml" fragment="yes" append="yes" >
+      <exsl:document href="Artifacts\Simian.TotalSignificantLineCount.xml" fragment="yes" append="yes" >
         <number>
           <xsl:value-of select="$TotalSignificantLineCount"/>
         </number>

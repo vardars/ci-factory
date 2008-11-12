@@ -62,7 +62,10 @@ namespace CIFactory.NAnt.Tasks
                 }
                 return _ElseIfs;
             }
-            set { _ElseIfs = value; }
+            set
+            {
+                _ElseIfs = value;
+            }
         }
 
         [BuildElementArray("elseif", Required = false)]
@@ -112,10 +115,8 @@ namespace CIFactory.NAnt.Tasks
             else
             {
                 bool Executed = false;
-                TaskContainerCollection ElseIfList = new TaskContainerCollection();
-                ElseIfList.AddRange(this.ElseIfs);
-                ElseIfList.AddRange(this.OldElseIf);
-                foreach (TaskContainer Possible in ElseIfList)
+                
+                foreach (TaskContainer Possible in this.OldElseIf)
                 {
                     if (Possible.IfDefined)
                     {
@@ -124,6 +125,17 @@ namespace CIFactory.NAnt.Tasks
                         break;
                     }
                 }
+
+                foreach (IfTask ifTask in this.ElseIfs)
+                {
+                    if (bool.Parse(ifTask.Test))
+                    {
+                        ifTask.Execute();
+                        Executed = true;
+                        break;
+                    }
+                }
+
                 if (!Executed & this.Else != null)
                 {
                     this.Else.Execute();

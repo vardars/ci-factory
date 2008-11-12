@@ -6,7 +6,7 @@
   <property name="CCNetBuildTime" value="00:00:01"/>
   <property name="CCNetLabel" value=""/>
 
-  <property name="CCNetProject" value="%ProjectName%"/>
+  <property name="CCNetProject" value="%ProjectName%-%ProjectCodeLineName%"/>
     
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />

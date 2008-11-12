@@ -17,7 +17,7 @@
     
   <target name="Compile.CompileSource">
     <exec 
-	    program="${framework::get-framework-directory('net-2.0')}\msbuild.exe" workingdir="${ProductDirectory}"
+	    program="${framework::get-framework-directory('%Compile.DotNetFramework.Version%')}\msbuild.exe" workingdir="${ProductDirectory}"
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result"
       verbose="true"

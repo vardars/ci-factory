@@ -21,6 +21,6 @@
     <property name="Analytics.XmlReportFileName" value="BuildHistoryXAxis.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.BuildTimeHistory"/>
     <property name="Analytics.Append" value="false"/>
-    <call target="Analytics.CompileReport"/>
+    <call target="Analytics.CompileReport" failonerror="false"/>
   </target>
 </project>

@@ -517,6 +517,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Analytics\Install\Other\RecompileAnalytics.bat" />
+    <None Include="MSBuild\Install\2008.sln.remove" />
     <None Include="NUnit\Install\NUnit\bin\clr.bat" />
     <None Include="NUnit\Install\NUnit\bin\nunit-console-x86.exe.config" />
     <None Include="NUnit\Install\NUnit\bin\nunit-console.exe.config" />
@@ -553,6 +554,7 @@
     <None Include="NUnit\Install\NUnit\samples\vb\failures\vb-failures.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\money\vb-money.build" />
     <None Include="NUnit\Install\NUnit\samples\vb\syntax\vb-syntax.build" />
+    <None Include="VS.NETCompile\Install\2008.sln.remove" />
     <Content Include="Alerts\Simian\DiffReport.xsl" />
     <Content Include="Alerts\Simian\Simian.Script.xml" />
     <Content Include="NCover\bin\License.txt" />

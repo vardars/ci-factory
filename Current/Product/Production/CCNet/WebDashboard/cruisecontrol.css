@@ -4,6 +4,25 @@ body, table, form, input, td, th, p, textarea, select
 	font-size: 11px;
 }
 
+.ProjectGridCell
+{
+	font-size: 12px;  font-weight: bold;
+}
+
+.ProjectGridCell:hover
+{
+	cursor:pointer; color: #7bcf15; 
+}
+
+.ProjectGridRow
+{
+	cursor:pointer; color: #403F8D;
+}
+
+.ProjectGridRow:hover
+{
+	cursor:pointer; color: #7bcf15; 
+}
 
 a:link, .bold-link:link,.build-passed-link, .build-failed-link
  {text-decoration: NONE; color: #403F8D;}

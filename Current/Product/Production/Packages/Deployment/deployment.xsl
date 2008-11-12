@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
+<!DOCTYPE stylesheet [
+  <!ENTITY % entities SYSTEM "..\..\Entities.xml">
+
+  %entities;
+]>
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
     xmlns:lxslt="http://xml.apache.org/xslt">
@@ -10,7 +15,7 @@
       <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
         <tr>
           <td height="42" class="sectionheader-container">
-            <img src="Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
+            <img src="http://&HostName;/&ProjectName;-&ProjectCodeLineName;/Packages/Deployment/images/Deployment.gif" class="sectionheader-title-image" />
             <div class="sectionheader">Deployment File(s)</div>
           </td>
         </tr>
@@ -34,7 +39,7 @@
           <xsl:attribute name="href">
             <xsl:value-of select="$DeploymentWebPath"/>
           </xsl:attribute>
-          <img style="float: left; border-style: none" src="Packages/Deployment/images/file.gif" />
+          <img style="float: left; border-style: none" src="http://&HostName;/&ProjectName;-&ProjectCodeLineName;/Packages/Deployment/images/file.gif" />
           <div style="position:relative; top: 2px;">
             <xsl:value-of select="$DeploymentWebName"/>
           </div>

@@ -9,6 +9,13 @@
       <![CDATA[<call target="Alerts.Run" failonerror="false"/>]]></value>
     </largeproperty>
     <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<!-- Alerts should be the second build report plugin, behind Analytics (if you installed it). -->
+      <xslFile>Packages\Alerts\AlertsSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
   </target>
 
   <target name="Alerts.SetAsCurrentPackage">

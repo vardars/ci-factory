@@ -15,6 +15,9 @@
     </foreach>
   </target>
 
+  <property name="CCNetLogsDirectoryPath" value="${BuildDirectory}\server\${CCNetProject}\Artifacts\buildlogs" />
+  <property name="CCNetLogMessageFilePath" value="${CCNetLogsDirectoryPath}\LogMessages.txt"/>
+
   <property name="Common.ArtifactFolderName" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
   <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
   <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
@@ -36,6 +39,9 @@
       <property name="CCNetBuildTime"/>
       <property name="CCNetArtifactDirectory"/>
       <property name="CCNetWorkingDirectory"/>
+      <property name="BuildServerHostName"/>
+      <property name="BuildServerPort"/>
+      <property name="LabelPrefix"/>
       <property name="EmailHost"/>
       <property name="ProjectName"/>
       <property name="ProjectCodeLineName"/>
@@ -46,6 +52,16 @@
       <property name="ThirdPartyDirectory"/>
       <property name="ProductionDirectory"/>
       <property name="BuildDirectory"/>
+
+      <property name="ProductDirectoryName"       />
+      <property name="ThirdPartyDirectoryName"    />
+      <property name="ProductionDirectoryName"    />
+      <property name="BuildDirectoryName"         />
+      <property name="ArtifactRootDirectoryName"  />
+      <property name="PackagesDirectoryName"      />
+      <property name="UnitTestDirectoryName"      />
+      <property name="InstallDirectoryName"       />
+      
       <property name="Compile.ConfigName"/>
       <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
       <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
@@ -56,7 +72,7 @@
       <property name="Common.TempDirectory"/>
       <property name="UnitTestDirectory"/>
       <property name="InstallDirectory"/>
-    </saveproperties>
+	</saveproperties>
   </target>
 
   <target name="Common.SetUp">
@@ -112,28 +128,30 @@
       </do>
     </loopthrough>
 
-    <loopthrough property="Image">
-      <items>
-        <xmlquery
-          file="${Common.ShowReport.DetailsFilePath}"
-          query="//img/@src"
-          />
-      </items>
-      <do>
-        <xmlpoke
-          file="${Common.ShowReport.DetailsFilePath}"
-          xpath="//img[@src = '${Image}']/@src"
-          value="file://${BuildDirectory}/${string::replace(string::replace(string::trim(Image), '&#xD;', ''), '&#xA;', '')}"
-          />
-      </do>
-    </loopthrough>
+    <if test="${file::exists(Common.ShowReport.DetailsFilePath)}">
+      <loopthrough property="Image">
+        <items>
+          <xmlquery
+            file="${Common.ShowReport.DetailsFilePath}"
+            query="//img/@src"
+            />
+        </items>
+        <do>
+          <xmlpoke
+            file="${Common.ShowReport.DetailsFilePath}"
+            xpath="//img[@src = '${Image}']/@src"
+            value="file://${BuildDirectory}/${string::replace(string::replace(string::trim(Image), '&#xD;', ''), '&#xA;', '')}"
+            />
+        </do>
+      </loopthrough>
 
-    <xmlpoke
-      file="${Common.ShowReport.HtmlFile}"
-      xpath="//a[contains(@href, '/default.aspx?_action_')]/@href"
-      value="file://${Common.ShowReport.DetailsFilePath}"
-    />
-
+      <xmlpoke
+        file="${Common.ShowReport.HtmlFile}"
+        xpath="//a[contains(@href, '/default.aspx?_action_')]/@href"
+        value="file://${Common.ShowReport.DetailsFilePath}"
+      />
+    </if>
+    
     <asyncexec program="cmd" commandline='/C "${Common.ShowReport.HtmlFile}"' createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
 
@@ -178,7 +196,12 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
   </Projects>
   <PollPeriodSeconds>5</PollPeriodSeconds>
   <BuildTransitionNotification showBalloon="true">
-    <Sound />
+    <Sound>
+      <BrokenBuildSound>C:\Program Files\cctray\broken.wav</BrokenBuildSound>
+      <FixedBuildSound>C:\Program Files\cctray\fixed.wav</FixedBuildSound>
+      <StillFailingBuildSound>C:\Program Files\cctray\still-failing.wav</StillFailingBuildSound>
+      <StillSuccessfulBuildSound>C:\Program Files\cctray\still-successful.wav</StillSuccessfulBuildSound>
+    </Sound>
     <BalloonMessages>
       <BrokenBuildMessage>
         <Caption>Broken build</Caption>

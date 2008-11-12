@@ -10,7 +10,7 @@
     <simiansummary>
       <xsl:if test="$simian.version!=''">
         <xsl:attribute name="percentduplication">
-          <xsl:value-of select="format-number(sum(//set/@lineCount) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
+          <xsl:value-of select="format-number((sum(//check/summary/@duplicateLineCount) - sum(//set/@lineCount)) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
         </xsl:attribute>
         <tr>
           <td>Total number of duplicate lines</td>
@@ -45,7 +45,7 @@
         <tr>
           <td>% Duplication</td>
           <td>
-            <xsl:value-of select="format-number(sum(//set/@lineCount) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
+            <xsl:value-of select="format-number((sum(//check/summary/@duplicateLineCount) - sum(//set/@lineCount)) div sum(//check/summary/@totalSignificantLineCount), '#.00%')"/>
           </td>
         </tr>
 		  </xsl:if>

@@ -6,10 +6,6 @@
   <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
   <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
   
-  <property name="Compile.Default2003SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2003.sln.remove"/>
-  <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2005.sln.remove"/>
-  <property name="Compile.DefaultOpenSolutionBat" value="${SourcePackagesDirectory}\VS.NETCompile\Install\OpenSolution.bat"/>
-  
   <target name="VS.NETDeploy.Install">
     <largeproperty name="Packages.AddCompileActions.Block">
       <value xml="false"><![CDATA[<call target="Install.CreateSetup" />]]></value>
@@ -49,7 +45,10 @@
 
       <ifthenelse test="${Compile.DevEnv.Version == '2003'}">
         <then></then>
-        <elseif if="${Compile.DevEnv.Version == '2005'}"></elseif>
+        <elseifs>
+        <elseif test="${Compile.DevEnv.Version == '2005'}"></elseif>
+        <elseif test="${Compile.DevEnv.Version == '2008'}"></elseif>
+        </elseifs>
         <else>
           <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
         </else>
@@ -62,6 +61,10 @@
         <case value="2005" break="true">
           <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
           <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
+        </case>
+        <case value="2008" break="true">
+          <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" overwrite="false"/>
+          <property name="Compile.DevEnv" value="{'$'}${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
         </case>
       </switch>
       <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />

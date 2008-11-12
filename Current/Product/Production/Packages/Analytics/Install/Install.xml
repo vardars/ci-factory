@@ -2,19 +2,26 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.Install" default="Analytics.Install">
 
   <include buildfile="Properties.xml" />
-  
+
   <target name="Analytics.Install">
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
-      <![CDATA[<call target="Analytics.CompileReports" failonerror="false"/>]]>
-    </value>
-  </largeproperty>
-  <call target="Packages.AddPostBuildActions"/>
+        <![CDATA[<call target="Analytics.CompileReports" failonerror="false"/>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
       <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="Analytics Report" actionName="AnalyticsReport" xslFileName="Packages\Analytics\Basic\statistics.xsl" artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" xmlFileName="MainAnalyticsReport.xml"  imageFileName="Packages\Analytics\Analytics.gif" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<!-- Analytics should be the very first build report plugin -->
+      <xslFile>Packages\Analytics\Basic\SatisticsSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
 
     <copy todir="${BuildDirectory}" >
       <fileset basedir="${SourcePackagesDirectory}\Analytics\Install\Other">
@@ -34,5 +41,5 @@
   <target name="Analytics.ValidateParameters">
 
   </target>
-  
+
 </project>

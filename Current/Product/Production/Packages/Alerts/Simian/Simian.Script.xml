@@ -39,13 +39,22 @@
       <call target="Alerts.Simian.GenerateReport"/>
       <ifthenelse test="${int::parse(Alerts.Simian.DuplicateLineCount) > int::parse(Alerts.Simian.Previous.DuplicateLineCount)}">
         <then>
+          <property name="Alerts.Simian.Message" value="${int::parse(Alerts.UnitTests.Count) - int::parse(Alerts.UnitTests.Previous.Count)} test(s) have been added!"/>
+          <property name="Alerts.Simian.Message" value="Duplication was increased by ${int::parse(Alerts.Simian.DuplicateLineCount) - int::parse(Alerts.Simian.Previous.DuplicateLineCount)} lines!"/>
+          <property name="Alerts.Simian.Message.Spin" value="negative" />
+          
           <call target="Alerts.Simian.GenerateWarning"/>
           <call target="Alerts.SendMessage"/>
+          <call target="Alerts.Simian.WriteToReportAppender"/>
         </then>
-        <else if="${int::parse(Alerts.Simian.Previous.DuplicateLineCount) > int::parse(Alerts.Simian.DuplicateLineCount)}">
+        <elseif if="${int::parse(Alerts.Simian.Previous.DuplicateLineCount) > int::parse(Alerts.Simian.DuplicateLineCount)}">
+          <property name="Alerts.Simian.Message" value="Duplication was reduced by ${int::parse(Alerts.Simian.Previous.DuplicateLineCount) - int::parse(Alerts.Simian.DuplicateLineCount)} lines!"/>
+          <property name="Alerts.Simian.Message.Spin" value="positive" />
+          
           <call target="Alerts.Simian.GenerateThankYou"/>
           <call target="Alerts.SendMessage"/>
-        </else>
+          <call target="Alerts.Simian.WriteToReportAppender"/>
+        </elseif>
       </ifthenelse>
     </if>
 
@@ -81,6 +90,26 @@
     />
   </target>
 
+  <target name="Alerts.Simian.WriteToReportAppender">
+    <write
+      file="${Alerts.ReportAppenderFilePath}"
+      append="true"
+    >
+      <text expand="true" xml="true">
+        <alert name="Simian">
+          <messages>
+            <message spin="${Alerts.Simian.Message.Spin}">${Alerts.Simian.Message}</message>
+          </messages>
+          <statistics>
+            <statistic name="count" value="${Alerts.Simian.DuplicateLineCount}" />
+            <statistic name="previouscount" value="${Alerts.Simian.Previous.DuplicateLineCount}" />
+          </statistics>
+          <details>${Alerts.Simian.Report}</details>
+        </alert>
+      </text>
+    </write>
+  </target>
+  
   <target name="Alerts.Simian.GenerateThankYou">
     <property name="Alerts.SendMessage.Subject" value="${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}: Thanks For Removing Duplication" />
 

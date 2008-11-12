@@ -46,6 +46,11 @@
 	</script>
 
 	<target name="Archive.Move">
+
+		<property name="Now" value="${datetime::now()}"/>
+		<property name="Ago" value="${datetime::subtract-days(Now, Archive.WindowInDays)}"/>
+		<echo message="${Ago}"/>
+		
 		<foreach item="Folder" property="Folder">
 			<in>
 				<items>
@@ -54,36 +59,50 @@
 				</items>
 			</in>
 			<do>
-				<property name="ArchiveFolderName" value="${directory::name(Folder)}"/>
-				<echo message="${ArchiveFolderName}"/>
+				<trycatch>
+					<try>
+						<property name="ArchiveFolderName" value="${directory::name(Folder)}"/>
+						<echo message="${ArchiveFolderName}"/>
 
-				<property name="ArchiveFolderYear" value="${string::substring(ArchiveFolderName, 0, 4)}"/>
-				<property name="ArchiveFolderMonth" value="${string::substring(ArchiveFolderName, 4, 2)}"/>
-				<property name="ArchiveFolderDay" value="${string::substring(ArchiveFolderName, 6, 2)}"/>
+						<property name="ArchiveFolderYear" value="${string::substring(ArchiveFolderName, 0, 4)}"/>
+						<property name="ArchiveFolderMonth" value="${string::substring(ArchiveFolderName, 4, 2)}"/>
+						<property name="ArchiveFolderDay" value="${string::substring(ArchiveFolderName, 6, 2)}"/>
 
-				<property name="ArchiveDate" value="${ArchiveFolderMonth}/${ArchiveFolderDay}/${ArchiveFolderYear}"/>
+						<property name="ArchiveDate" value="${ArchiveFolderMonth}/${ArchiveFolderDay}/${ArchiveFolderYear}"/>
 
-				<echo message="${ArchiveDate}"/>
+						<echo message="${ArchiveDate}"/>
 
-				<property name="Now" value="${datetime::now()}"/>
-				<property name="Ago" value="${datetime::subtract-days(Now, Archive.WindowInDays)}"/>
-				<echo message="${Ago}"/>
-
-				<if test="${datetime::compare(ArchiveDate, Ago) == -1}">
-					<copy todir="${Archive.ArchiveRepositoryDirectory}" overwrite="true">
-						<fileset basedir="${ArtifactRootDirectory}">
-							<include name="${ArchiveFolderName}\**\*"/>
-						</fileset>
-					</copy>
-					<delete dir="${Folder}" />
-				</if>
-
+						<if test="${datetime::compare(ArchiveDate, Ago) == -1}">
+							<copy todir="${Backup.ArtifactsDirectory}" overwrite="true">
+								<fileset basedir="${ArtifactRootDirectory}">
+									<include name="${ArchiveFolderName}\**\*"/>
+								</fileset>
+							</copy>
+							<delete dir="${Folder}" />
+              
+              <copy todir="${Backup.CCNetServerDirectory}" overwrite="true">
+                <fileset basedir="${BuildDirectory}\server">
+                  <include name="\**\log${ArchiveFolderName}*.xml"/>
+                </fileset>
+              </copy>
+              <delete>
+                <fileset basedir="${BuildDirectory}\server">
+                  <include name="\**\log${ArchiveFolderName}*.xml"/>
+                </fileset>
+              </delete>
+						</if>
+					</try>
+					<catch property="exception">
+						<echo level="Warning" message="${exception}"/>
+					</catch>
+				</trycatch>
+				
 			</do>
 		</foreach>
 	</target>
 
   <target name="Archive.SetUp">
-		<mkdir dir="${Archive.ArchiveRepositoryDirectory}" unless="${directory::exists(Archive.ArchiveRepositoryDirectory)}"/>
+
   </target>
 
   <target name="Archive.TearDown">

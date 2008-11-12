@@ -166,6 +166,7 @@
       <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\dashboard">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
+        <exclude name="javascript\**\*"/>
       </fileset>
     </delete>
     <delete>

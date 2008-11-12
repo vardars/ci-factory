@@ -14,6 +14,9 @@
       <fileset basedir="${TargetDir}">
         <include name="**\*"/>
       </fileset>
+      <fileset basedir="${TargetDir}\..\..\Sounds">
+        <include name="*"/>
+      </fileset>
     </zip>
   </target>
 </project>

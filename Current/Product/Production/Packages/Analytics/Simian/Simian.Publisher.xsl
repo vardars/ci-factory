@@ -124,129 +124,138 @@
 
   <xsl:output method="html"/>
 
+  <xsl:param name="CCNetLabel" />
+  <xsl:param name="CCNetLogFilePath" />
+  <xsl:variable name="CCNetLog" select="document($CCNetLogFilePath)"/>
+
   <xsl:template match="/">
     
     <integration>
       <xsl:attribute name="build-label">
-        <xsl:value-of select="/cruisecontrol/build/@label"/>
+        <xsl:value-of select="($CCNetLog)/cruisecontrol/build/@label"/>
       </xsl:attribute>
       
       <xsl:attribute name="day">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'dd')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'dd')"/>
       </xsl:attribute>
       <xsl:attribute name="month">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'MM')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'MM')"/>
       </xsl:attribute>
       <xsl:attribute name="year">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, 'yyyy')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, 'yyyy')"/>
       </xsl:attribute>
       <xsl:attribute name="week">
-        <xsl:value-of select="ms:WeekNumber(/cruisecontrol/build/@date)"/>
+        <xsl:value-of select="ms:WeekNumber(($CCNetLog)/cruisecontrol/build/@date)"/>
       </xsl:attribute>
       <xsl:attribute name="dayofyear">
-        <xsl:value-of select="ms:DayOfYear(/cruisecontrol/build/@date)"/>
+        <xsl:value-of select="ms:DayOfYear(($CCNetLog)/cruisecontrol/build/@date)"/>
       </xsl:attribute>
       <xsl:attribute name="hourofday">
-        <xsl:value-of select="ms:FormatDate(/cruisecontrol/build/@date, '%H')"/>
+        <xsl:value-of select="ms:FormatDate(($CCNetLog)/cruisecontrol/build/@date, '%H')"/>
       </xsl:attribute>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'StartTime'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@date"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@date"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'Duration'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildtime"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@buildtime"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ProjectName'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/@project"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/@project"/>
       </xsl:call-template>
 
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'mainsubmitter'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/modifications/modification/user[1]"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/modifications/modification/user[1]"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'buildcondition'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/@buildcondition"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/@buildcondition"/>
       </xsl:call-template>
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'forcedby'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
+        <xsl:with-param name="StatisticValue" select="($CCNetLog)/cruisecontrol/build/ForcedBuildInformation/@UserName"/>
       </xsl:call-template>
       
       
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'failOnDuplication'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@failOnDuplication"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@failOnDuplication"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ignoreCharacterCase'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@ignoreCharacterCase"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@ignoreCharacterCase"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ignoreCurlyBraces'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@ignoreCurlyBraces"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@ignoreCurlyBraces"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ignoreIdentifierCase'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@ignoreIdentifierCase"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@ignoreIdentifierCase"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ignoreModifiers'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@ignoreModifiers"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@ignoreModifiers"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'ignoreStringCase'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@ignoreStringCase"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@ignoreStringCase"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'threshold'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/@threshold"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/@threshold"/>
       </xsl:call-template>
 
       
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'duplicateFileCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@duplicateFileCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@duplicateFileCount"/>
+      </xsl:call-template>
+
+      <xsl:call-template name="AddStatistic">
+        <xsl:with-param name="StatisticName" select="'duplicateBlockLineCount'"/>
+        <xsl:with-param name="StatisticValue" select="sum(/simian/check/set/@lineCount)"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'duplicateLineCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@duplicateLineCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@duplicateLineCount"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'duplicateBlockCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@duplicateBlockCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@duplicateBlockCount"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'totalFileCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@totalFileCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@totalFileCount"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'totalRawLineCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@totalRawLineCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@totalRawLineCount"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'totalSignificantLineCount'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@totalSignificantLineCount"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@totalSignificantLineCount"/>
       </xsl:call-template>
 
       <xsl:call-template name="AddStatistic">
         <xsl:with-param name="StatisticName" select="'processingTime'"/>
-        <xsl:with-param name="StatisticValue" select="/cruisecontrol/build/simian/check/summary/@processingTime"/>
+        <xsl:with-param name="StatisticValue" select="/simian/check/summary/@processingTime"/>
       </xsl:call-template>
     </integration>
   </xsl:template>

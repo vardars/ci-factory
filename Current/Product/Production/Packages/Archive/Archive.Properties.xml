@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Archive.Properties">
 
-	<property name="Archive.ArchiveRepositoryDirectory" value="%Archive.ArchiveRepositoryDirectory%"/>
 	<property name="Archive.WindowInDays" value="%Archive.WindowInDays%"/>
+  <ifnot test="${property::exists('Backup.ArtifactsDirectory')}">
+    <fail message="This package is dependent on the Backup package being loaded first!"/>
+  </ifnot>
   
 </project>

@@ -24,6 +24,7 @@
       append="${Analytics.Append}">
       <parameters>
         <parameter name="CCNetLabel" value="${CCNetLabel}"/>
+        <parameter name="CCNetLogFilePath" value="${CCNetLogFilePath}"/>
       </parameters>
     </xslmultiout>    
 
@@ -72,6 +73,7 @@
       </in>
       <do>
         <regex input="${Analytics.BuildLog}" pattern="log\d+Lbuild\.(?'CCNetLabel'.*)\.xml$" failonerror="false"/>
+        <property name="CCNetLogFilePath" value="${Analytics.BuildLog}"/>
 
         <regex pattern="^*.log(?'PrivateAnalyticsArtifactFolderName'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
         <property name="Common.ArtifactFolderName" value="${PrivateAnalyticsArtifactFolderName}"/>

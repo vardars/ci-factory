@@ -44,4 +44,10 @@
   <include buildfile="SuccessProgress\Script.xml"/>
   <include buildfile="UnitTests\UnitTests.Script.xml"/>
 
+  <if test="${file::exists(PackagesDirectory + '\Simian\Simian.Properties.xml')}">
+    <include buildfile="${Analytics.PackageDirectory}\Simian\Simian.Script.xml"/>
+    <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.Simian')}"/>
+    <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.SimianChart')}"/>
+  </if>
+
 </project>

@@ -5,21 +5,26 @@
     <include name="${PackagesDirectory}\Analytics\Simian\Simian.Statistics.xml"/>
   </fileset>
 
-  <target name="Analytics.Simian">
+  <property name="Analytics.Simian.ReportFilePath" value="${Common.ArtifactDirectoryPath}\SimianReport.xml" dynamic="true"/>
+  <property name="Analytics.Simian.Success" value="False"/>
+  
+  <target name="Analytics.Simian" if="${file::exists(Analytics.Simian.ReportFilePath)}">
     <echo message="Generating Simian"/>
-    <property name="Analytics.XmlInputFileName" value="${Analytics.BuildLog}"/>
+    <property name="Analytics.XmlInputFileName" value="${Analytics.Simian.ReportFilePath}"/>
     <property name="Analytics.XslFilePath" value="${PackagesDirectory}\Analytics\Simian\Simian.Publisher.xsl"/>
     <property name="Analytics.XmlReportFileName" value="SimianContent.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.Simian"/>
     <property name="Analytics.Append" value="true"/>
-    <call target="Analytics.CompileReport"/>
+    <call target="Analytics.CompileReport" failonerror="false"/>
+    <property name="Analytics.Simian.Success" value="True"/>
   </target>
 
   <fileset id="Analytics.SimianChart">
     <include name="${BuildDirectory}\Packages\Analytics\Simian\Simian.ChartData.xml"/>
   </fileset>
 
-  <target name="Analytics.SimianChart">
+  <target name="Analytics.SimianChart" if="${Analytics.Simian.Success}">
+    <property name="Analytics.Simian.Success" value="False"/>
     <echo message="Generating SimianChart"/>
     <delete>
       <fileset>
