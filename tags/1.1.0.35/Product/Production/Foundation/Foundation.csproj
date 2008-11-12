@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC89E437-9DC2-42DB-85BA-1D6FD1FAEDBE}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Foundation</RootNamespace>
+    <AssemblyName>Foundation</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Content Include="Default\Build\ccnetproject.xml" />
+    <Content Include="Default\Build\Common.Build.xml" />
+    <Content Include="Default\Build\CreateBranch.xml" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.bgiframe.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.cluetip.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.delegate.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.dimensions.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.hoverIntent.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.js" />
+    <Content Include="Default\Build\dashboard\javascript\jquery.tooltip.js" />
+    <Content Include="Default\Build\Entities.xml" />
+    <Content Include="Default\Product\Compile.Environment.xml" />
+    <Content Include="Default\Build\dashboard\xsl\compile.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\header.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\modifications.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\NAnt.xsl" />
+    <Content Include="Default\Build\dashboard\xsl\NAntTiming.xsl" />
+    <Content Include="Default\Build\Main.build.xml" />
+    <Content Include="Default\Product\OpenSolution.Script.xml" />
+    <Content Include="Default\Product\Personal.Build.xml" />
+    <Content Include="Default\Build\Post.build.xml" />
+    <Content Include="Default\Build\Post.Shim.xml" />
+    <Content Include="Default\Build\Properties.build.xml" />
+    <Content Include="Default\Build\Scratch.build.xml" />
+    <Content Include="Default\Product\Scratch.Lib.xml" />
+    <Content Include="Default\Build\server\xsl\compile.xsl" />
+    <Content Include="Default\Build\server\xsl\cruisecontrol.css" />
+    <Content Include="Default\Build\server\xsl\header.xsl" />
+    <Content Include="Default\Build\server\xsl\modifications.xsl" />
+    <Content Include="Default\Build\server\xsl\NAnt.xsl" />
+    <Content Include="Default\Build\server\xsl\NAntTiming.xsl" />
+    <Content Include="Default\Build\SetupIIS.xml" />
+    <Content Include="Default\Build\UpdatenAntSchema.xml" />
+    <Content Include="Default\Product\Scratch.build.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default\Build\OpenSolution.bat" />
+    <None Include="Default\Build\server\ccnet.exe.config" />
+    <None Include="Default\Product\Build.bat" />
+    <None Include="Default\Build\Build.sln.remove" />
+    <None Include="Default\Build\CCNETServer.Bat" />
+    <None Include="Default\Product\NoUpdateBuild.bat" />
+    <None Include="Default\Product\OpenCommandPrompt.bat" />
+    <None Include="Default\Product\OpenSolution.bat" />
+    <None Include="Default\Build\Build.csproj.remove" />
+    <None Include="Default\Product\Test.bat" />
+    <None Include="Default\Build\UpdatenAntSchema.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default\Build\Scratch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Default\Third Party\" />
+  </ItemGroup>
+</Project>

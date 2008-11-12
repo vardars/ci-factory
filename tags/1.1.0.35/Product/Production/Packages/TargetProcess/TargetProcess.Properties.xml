@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess.Properties">
+
+	<property name="TargetProcess.ReportDirectoryPath" value="${BuildDirectory}\TargetProcess" />
+	<property name="TargetProcess.ReportFilePath" value="${TargetProcess.ReportDirectoryPath}\${ProjectName}TargetProcesss.xml" />
+
+  <connectioninformation
+    id="TargetProcess.ConnectionInformation"
+    rootserviceurl="%TargetProcess.Url%"
+    username="%TargetProcess.UserName%"
+    password="%TargetProcess.Password%"
+  />
+
+</project>
