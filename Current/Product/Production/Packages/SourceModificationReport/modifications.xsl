@@ -61,9 +61,9 @@
             </tr>
             <tr>
               <td colspan="2">
-                <em>
+                <pre>
                   <xsl:value-of select="Comment"/>
-                </em>
+                </pre>
               </td>
             </tr>
           </tbody>
