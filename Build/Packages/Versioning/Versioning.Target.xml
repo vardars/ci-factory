@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Versioning">
+
+  <include buildfile="Versioning.Properties.xml" />
+
+  <!--
+	The following properties should be specified in the calling script.
+	
+  <property name="Versioning.ProjectInformationFile" value="" />
+  <property name="Versioning.ProjectInformationNewVersion" value="" />
+  
+  -->
+
+  <!-- The following properties are for internal use only -->
+  <property name="Private.Versioning.NewerThanDateTime" value="" />
+  
+  <target name="Versioning.IncrementBuildNumberOfModifiedAssemblies">
+    <mkdir unless="${directory::exists(ProductionDirectory)}" dir="${ProductionDirectory}"/>
+
+    <fileset id="AssemblyInfoSet" />
+    
+    <GenerateAssemblyInfoList rootdirectory="${ProductDirectory}">
+      <assemblyinfoset refid="AssemblyInfoSet" />
+      <changeset refid="SourceModificationReport.ModificationList" />
+    </GenerateAssemblyInfoList>
+
+    <foreach item="File" property="Private.Versioning.AssemblyInfoFile">
+      <in>
+        <items refid="AssemblyInfoSet" />
+      </in>
+      <do>
+        <property name="SourceControl.CheckOut.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+        <call target="SourceControl.CheckOut"/>
+        <IncrementAssemblyVersion File="${Private.Versioning.AssemblyInfoFile}"/>
+        <property name="SourceControl.CheckIn.File" value="${Private.Versioning.AssemblyInfoFile}"/>
+        <call target="SourceControl.CheckIn"/>
+      </do>
+    </foreach>
+
+  </target>
+
+  <target name="Versioning.IncreamentBuildNumberOfProduct">
+    <foreach item="File" property="ReplaceFile">
+      <in>
+        <items>
+          <include name="${Versioning.ProductInformationFileLocation}\**\${Versioning.ProductInformationFile}"/>
+          <exclude name="${Versioning.ProductInformationFileLocation}\**\.svn\**\${Versioning.ProductInformationFile}"/>
+        </items>
+      </in>
+      <do>
+        <property name="SourceControl.CheckOut.File" value="${ReplaceFile}"/>
+        <call target="SourceControl.CheckOut"/>
+        <UpdateProductVersion File="${ReplaceFile}" Version="${Versioning.ProductVersion}" />
+        <property name="SourceControl.CheckIn.File" value="${ReplaceFile}"/>
+        <call target="SourceControl.CheckIn"/>
+      </do>
+    </foreach>
+    
+  </target>
+
+  <target name="Versioning.FixUp">
+
+    <foreach item="File" property="Versioning.FixUp.ProjectFile" >
+      <in>
+        <items refid="${Versioning.FixUp.ProjectFile.FileSet}" />
+      </in>
+      <do>
+        <echo message="Checking ${Versioning.FixUp.ProjectFile}"/>
+        <regex input="${Versioning.FixUp.ProjectFile}" pattern=".*\.(?'ext'\w\w)proj$"/>
+        <property name="Versioning.FixUp.ProjectFile.Ext" value="${ext}"/>
+        <property name="Versioning.ProjectInfo" value="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
+        <property name="Versioning.FixUp.XPath.ProjectInfo" value="b:Project/b:ItemGroup/b:Compile[contains(@Include,'ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}')]"/>
+        <property name="Versioning.FixUp.FilterChain.${Versioning.FixUp.ProjectFile.Ext}.Created" value="false" overwrite="false"/>
+
+        <call target="Private.Versioning.FixUp.CreateFilterChain.${Versioning.FixUp.ProjectFile.Ext}" unless="${property::get-value('Versioning.FixUp.FilterChain.' + Versioning.FixUp.ProjectFile.Ext + '.Created')}"/>
+
+        <property name="Versioning.FixUp.ShouldProcess" value="true"/>
+        <trycatch>
+          <try>
+            <xmlpeek 
+              file="${Versioning.FixUp.ProjectFile}"
+              nodeindex="0"
+              property="Trash"
+              xpath="${Versioning.FixUp.XPath.ProjectInfo}"
+              >
+              <namespaces>
+                <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+              </namespaces>
+            </xmlpeek>
+            <property name="Versioning.FixUp.ShouldProcess" value="false"/>
+          </try>
+          <catch>
+            <echo message="Need to add ProjectInfo to ${Versioning.FixUp.ProjectFile}"/>
+          </catch>
+        </trycatch>
+
+        <call target="Private.Versioning.FixUp.AddProjectInfoToProjectFile" if="${Versioning.FixUp.ShouldProcess}"/>
+        <call target="Private.Versioning.FixUp.CleanUpAssemblyInfoFile" if="${Versioning.FixUp.ShouldProcess}"/>
+
+      </do>
+    </foreach>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CleanUpAssemblyInfoFile">
+    <property name="Versioning.FixUp.AssemblyInfo.FilePattern" value="${path::get-directory-name(Versioning.FixUp.ProjectFile)}\**\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
+
+    <foreach item="File" property="Versioning.FixUp.AssemblyInfo.File">
+      <in>
+        <items>
+          <include name="${Versioning.FixUp.AssemblyInfo.FilePattern}"/>
+        </items>
+      </in>
+      <do>
+        <echo message="${Versioning.FixUp.AssemblyInfo.File}"/>
+
+        <loadfile property="After" file="${Versioning.FixUp.AssemblyInfo.File}" encoding="utf-8">
+          <filterchain refid="Versioning.FixUp.AssemblyInfo.FilterChain${Versioning.FixUp.ProjectFile.Ext}"/>
+        </loadfile>
+
+        <echo message="${After}" file="${Versioning.FixUp.AssemblyInfo.File}"/>
+      </do>
+    </foreach>
+  </target>
+
+  <target name="Private.Versioning.FixUp.AddProjectInfoToProjectFile" >
+    <property name="Versioning.FixUp.XPath.AssemblyInfo" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]"/>
+    <property name="Versioning.FixUp.XPath.Items" value="b:Project/b:ItemGroup[b:Compile[contains(@Include,'Properties\AssemblyInfo.${Versioning.FixUp.ProjectFile.Ext}')]]/child::"/>
+    
+    <largeproperty name="Versioning.FixUp.XPath.Replacment" >
+      <value xml="false" expand="true">
+        <![CDATA[
+        <Compile Include="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}">
+          <Link>Properties\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}</Link>
+        </Compile>
+]]>
+      </value>
+    </largeproperty>
+    
+    <property name="Versioning.FixUp.XPath.Items.Return" value="${myxml::get-xml(Versioning.FixUp.ProjectFile, Versioning.FixUp.XPath.Items, 'b', 'http://schemas.microsoft.com/developer/msbuild/2003')}"/>
+    <xmlpoke 
+      file="${Versioning.FixUp.ProjectFile}"
+      value="${Versioning.FixUp.XPath.Replacment}${Versioning.FixUp.XPath.Items.Return}"
+      xpath="${Versioning.FixUp.XPath.AssemblyInfo}"
+          >
+      <namespaces>
+        <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+      </namespaces>
+    </xmlpoke>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CreateFilterChain.cs">
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributePrefix" >
+      <value xml="false"><![CDATA[\[assembly\: ]]></value>
+    </largeproperty>
+
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributeSuffix" >
+      <value xml="false"><![CDATA[\(\".*\"\)\]]]></value>
+    </largeproperty>
+
+    <call target="Private.Versioning.FixUp.PopulateFilterChain"/>
+    <property name="Versioning.FixUp.FilterChain.Cs.Created" value="true"/>
+  </target>
+
+  <target name="Private.Versioning.FixUp.CreateFilterChain.vb">
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributePrefix" >
+      <value xml="false"><![CDATA[\<Assembly\: ]]></value>
+    </largeproperty>
+
+    <largeproperty name="Versioning.FixUp.AssemblyInfo.AttributeSuffix" >
+      <value xml="false"><![CDATA[\(\".*\"\)\>]]></value>
+    </largeproperty>
+
+    <call target="Private.Versioning.FixUp.PopulateFilterChain"/>
+    <property name="Versioning.FixUp.FilterChain.vb.Created" value="true"/>
+  </target>
+
+  <target name="Private.Versioning.FixUp.PopulateFilterChain">
+    <regexmatch id="Versioning.ProjectInfo.Regex.FindLines" file="${Versioning.ProjectInfo}" pattern="${Versioning.FixUp.AssemblyInfo.AttributePrefix}"/>
+    <property name="Versioning.FixUp.AssemblyInfo.FilterChainName" value="Versioning.FixUp.AssemblyInfo.FilterChain${Versioning.FixUp.ProjectFile.Ext}"/>
+    <filterchain id="${Versioning.FixUp.AssemblyInfo.FilterChainName}"/>
+    
+    <loopthrough property="Versioning.ProjectInfo.Line" >
+      <items>
+        <regexmatch refid="Versioning.ProjectInfo.Regex.FindLines" />
+      </items>
+      <do>
+        <regex input="${Versioning.ProjectInfo.Line}" pattern="${Versioning.FixUp.AssemblyInfo.AttributePrefix}(?'VersioningFixUpAssemblyInfoAttributeName'\w+)${Versioning.FixUp.AssemblyInfo.AttributeSuffix}"/>
+
+        <property name="Versioning.FixUp.AssemblyInfo.AttributePattern" value="${Versioning.FixUp.AssemblyInfo.AttributePrefix}${VersioningFixUpAssemblyInfoAttributeName}${Versioning.FixUp.AssemblyInfo.AttributeSuffix}"/>
+
+        <function execute="${filterchain::regexreplace-add(Versioning.FixUp.AssemblyInfo.FilterChainName, '', Versioning.FixUp.AssemblyInfo.AttributePattern, 1)}"/>
+      </do>
+    </loopthrough>
+  </target>
+  
+  <target name="Versioning.SetUp">
+
+  </target>
+
+  <target name="Versioning.TearDown">
+
+  </target>
+
+  <script language="C#" prefix="myxml">
+    <imports >
+      <import namespace="System.Xml"/>
+      <import namespace="System.Text"/>
+    </imports >
+    <code>
+      <![CDATA[                 
+					
+          [Function("get-xml")]
+        public string GetXmlAsString(string xmlFile, string xPath, string prefix, string uri)
+        {
+            try
+            {
+                XmlDocument xd = new XmlDocument();
+                xd.PreserveWhitespace=true;
+                xd.Load(xmlFile);
+                
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+                namespaceManager.AddNamespace(prefix, uri);
+                
+                StringBuilder builder = new StringBuilder();
+                
+                foreach (XmlNode node in xd.SelectNodes(xPath, namespaceManager))
+                {
+                    builder.Append(node.OuterXml.Trim());
+                    builder.Append(System.Environment.NewLine);
+                }
+
+                return builder.ToString();
+            }
+            catch(NullReferenceException)
+            {
+                throw new BuildException("Couldn't find the node specified by the XPath " + xPath);
+            }
+            catch(Exception err)
+            {
+                throw new BuildException("Error (" + err.Message + ") getting xml of query " + xPath, err);
+            }
+        }
+          
+			]]>
+    </code>
+  </script>
+
+</project>

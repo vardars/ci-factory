@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="MSBuild.Install.Properties">
+
+  <property name="Compile.DevEnv.Version" value="2005" overwrite="false"/><!-- 2005 or 2008 -->
+
+  <switch value="${Compile.DevEnv.Version}">
+    <case value="2005" break="true">
+      <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
+      <property name="Compile.DotNetFramework.Version" value="net-2.0"/>
+    </case>
+    <case value="2008" break="true">
+      <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" overwrite="false"/>
+      <property name="Compile.DotNetFramework.Version" value="net-3.5"/>
+    </case>
+  </switch>
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+  <property name="Compile.ConfigName" value="Release" overwrite="false"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv.vsvars32bat%', Compile.DevEnv.vsvars32bat)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.ConfigName%', Compile.ConfigName)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DotNetFramework.Version%', Compile.DotNetFramework.Version)}"/>
+  
+</project>
