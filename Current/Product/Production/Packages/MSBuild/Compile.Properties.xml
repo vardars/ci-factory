@@ -3,14 +3,13 @@
   <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" overwrite="false"/>
   <property name="Compile.PublishLogFile" value="true" overwrite="false"/>
   <property name="Compile.ConfigName" value="%Compile.ConfigName%" overwrite="false"/>
-  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false"/>
-  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false"/>
+  <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false" dynamic="true"/>
+  <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false" dynamic="true"/>
   <property name="Compile.ToCopyToBin" value="true"  overwrite="false"/>
   <property name="Compile.ToDeployZip" value="true"  overwrite="false"/>
-  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false"/>
+  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false" dynamic="true"/>
 
   <fileset id="Compile.ToCopy">
-    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
     <include name="${ProductionDirectory}\**\bin\*.*"/>
   </fileset>
 

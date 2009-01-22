@@ -38,6 +38,9 @@
   </target>
     
   <target name="Private.Compile.CopyToWorkingBin" if="${Compile.ToCopyToBin}">
+    <property name="Deployment.NewCopySourceFolder" value="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*" dynamic="true" />
+    <function execute="${fileset::include-add('Compile.ToCopy', Deployment.NewCopySourceFolder)}"/>
+
     <attrib readonly="false">
       <fileset refid="Compile.ToCopy" />
     </attrib>
