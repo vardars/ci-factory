@@ -133,7 +133,7 @@
           <file>&BuildDirectory;\Reports\*.xml</file>
         </files>
       </merge>
-      <xslmerger>
+      <xslmerger dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <filepairs>
         </filepairs>
       </xslmerger>

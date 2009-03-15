@@ -28,6 +28,20 @@ namespace CCNET.Extensions.XslFileMerge
             }
         }
 
+        private string _DashboardServerName;
+        [ReflectorProperty("dashboardServerName")]
+        public string DashboardServerName
+        {
+            get
+            {
+                return _DashboardServerName;
+            }
+            set
+            {
+                _DashboardServerName = value;
+            }
+        }
+
         public void Run(IIntegrationResult result)
         {
             foreach (FilePair Pair in this.FilePairs)
@@ -64,7 +78,11 @@ namespace CCNET.Extensions.XslFileMerge
                             Contents = Reader.ReadToEnd();
                         }
                         XslTransformer Transformer = new XslTransformer();
-                        Data = Transformer.Transform(Contents, XslFilePath, new Dictionary<string, string>());
+                        Dictionary<string, string> XslParms = new Dictionary<string, string>();
+                        XslParms.Add("CCNetServer", this.DashboardServerName);
+                        XslParms.Add("CCNetBuild", new LogFile(result).Filename);
+                        XslParms.Add("CCNetProject", result.ProjectName);
+                        Data = Transformer.Transform(Contents, XslFilePath, XslParms);
                         result.AddTaskResult((new XslMergerTaskResult(Data)));
                     }
                     else
