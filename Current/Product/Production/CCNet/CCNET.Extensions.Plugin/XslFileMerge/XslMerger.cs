@@ -78,10 +78,14 @@ namespace CCNET.Extensions.XslFileMerge
                             Contents = Reader.ReadToEnd();
                         }
                         XslTransformer Transformer = new XslTransformer();
+                        
                         Dictionary<string, string> XslParms = new Dictionary<string, string>();
                         XslParms.Add("CCNetServer", this.DashboardServerName);
                         XslParms.Add("CCNetBuild", new LogFile(result).Filename);
                         XslParms.Add("CCNetProject", result.ProjectName);
+                        XslParms.Add("XmlSourceName", Path.GetFileName(XmlFilePath));
+                        XslParms.Add("XmlSourcePath", XmlFileInfo.FullName);
+
                         Data = Transformer.Transform(Contents, XslFilePath, XslParms);
                         result.AddTaskResult((new XslMergerTaskResult(Data)));
                     }
