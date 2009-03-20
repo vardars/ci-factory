@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Archive.Install" default="Archive.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Archive.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+      <![CDATA[<call target="Archive.Move" failonerror="false"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+  </target>
+
+  <target name="Archive.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Archive"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Archive.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Archive"/>
+    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+  </target>
+
+  <target name="Archive.ValidateParameters">
+    <fail unless="${property::exists('Archive.ArchiveRepositoryDirectory')}" message="Please set the property Archive.ArchiveRepositoryDirectory"/>
+		<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Archive.ArchiveRepositoryDirectory%', Archive.ArchiveRepositoryDirectory)}"/>
+
+    <ifnot test="${stringlist::contains('Packages.InstallList', 'Backup')}"></ifnot>
+  </target>
+  
+</project>
