@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Simian.Install" default="Simian.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Simian.Install">
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false"><![CDATA[<call target="Simian.Run" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Simian\SimianDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianDisplayReport.xsl" imageFileName="Packages\Simian\logo.gif" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="Simian.SetAsCurrentPackage">
+    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Simian"/>
+    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Simian.Target.xml"/>
+    <property name="Packages.CurrenctPackage.PackageName" value="Simian"/>
+  </target>
+
+  <target name="Simian.ValidateParameters">
+    <if test="${Install.Quiet}">
+      <fail message="You have to agree to the license, set Simian.AcceptLicense to true when Install.Quiet is true." unless="${Simian.AcceptLicense}"/>
+    </if>
+    <call target="Simian.Ask.Trial-OSS" unless="${Install.Quiet}"/>
+    <call target="Simian.Ask.AcceptLicense" unless="${Install.Quiet}"/>
+  </target>
+
+  <target name="Simian.Ask.Trial-OSS">
+    <largeproperty name="Simian.Ask.Question">
+      <value xml="false">
+        <![CDATA[Simian is free for non-commercial and open source use.
+Simian is also available for a period of 15 days for evaluation purposes.
+However, if you intend to use Simian commercially or within government, ie. you are not using Simian to check free software, we ask you to buy a license.
+
+More information can be found at http://www.redhillconsulting.com.au/products/simian/.]]>
+      </value>
+    </largeproperty>
+
+    <ask answer="Answer" question="${Simian.Ask.Question}" caption="Do you wish to continue?" >
+      <options>
+        <string value="No"/>
+        <string value="Yes"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'No'}">
+      <fail message="Your answer was not in the affirmative." />
+    </if>
+  </target>
+
+  <target name="Simian.Ask.AcceptLicense">
+    <call target="Simian.GetLicense"/>
+    <ask answer="Answer" question="${License.Content}" caption="Do you accept this license?">
+      <options>
+        <string value="No"/>
+        <string value="Yes"/>
+      </options>
+    </ask>
+    <if test="${Answer == 'No'}">
+      <fail message="Your answer was not in the affirmative." />
+    </if>
+    <echo message="Thanks you for accepting the license."/>
+  </target>
+
+  <target name="Simian.GetLicense">
+    <property name="License.File" value="${SourcePackagesDirectory}\Simian\bin\LICENSE.txt"/>
+    <loadfile file="${License.File}" property="License.Content" />
+  </target>
+  
+</project>

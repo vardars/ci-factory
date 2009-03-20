@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78BDB085-7006-4053-88FF-DC6353F11A9E}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="dashboard\dashboard.config" />
+    <None Include="dashboard\images\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\templates\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\Web.config" />
+    <None Include="dashboard\WorkspaceSetup\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\xsl\**\*" Exclude="**\.svn\**\*" />
+    <None Include="dashboard\cruisecontrol.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dashboard\xsl\Search.xsl" />
+  </ItemGroup>
+</Project>
