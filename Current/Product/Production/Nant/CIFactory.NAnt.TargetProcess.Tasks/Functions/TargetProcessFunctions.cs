@@ -45,55 +45,68 @@ namespace CIFactory.TargetProcess.NAnt.Functions
             IterationDTO currentIteration = currentIterationList[0];
             return currentIteration;
         }
+        
+        private static int FindProjectId(string projectName)
+        {
+            ProjectService projectService = ServicesCF.GetService<ProjectService>();
+
+            string hqlQuery = "select from Project as project where project.Name = ?";
+            ProjectDTO[] projects = projectService.Retrieve(hqlQuery, new object[] { projectName });
+
+            if (projects.Length == 0)
+                throw new BuildException(string.Format("Could not find a project named: '{0}'.", projectName));
+
+            return projects[0].ProjectID.Value;
+        }
 
         [Function("get-current-iteration-id")]
-        public int GetCurrentIterationId(String connectionRef, int projectId)
+        public int GetCurrentIterationId(String connectionRef, string projectName)
         {
             if (!this.Project.DataTypeReferences.Contains(connectionRef))
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
 
-            IterationDTO currentIteration = GetCurrentIteration(projectId, ConnectionInformation);
+            IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
             return currentIteration.ID.Value;
         }
 
         [Function("get-current-iteration-name")]
-        public string GetCurrentIterationName(String connectionRef, int projectId)
+        public string GetCurrentIterationName(String connectionRef, string projectName)
         {
             if (!this.Project.DataTypeReferences.Contains(connectionRef))
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
 
-            IterationDTO currentIteration = GetCurrentIteration(projectId, ConnectionInformation);
+            IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
             return currentIteration.Name;
         }
 
         [Function("get-current-iteration-start-date")]
-        public DateTime GetCurrentIterationStartDate(String connectionRef, int projectId)
+        public DateTime GetCurrentIterationStartDate(String connectionRef, string projectName)
         {
             if (!this.Project.DataTypeReferences.Contains(connectionRef))
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
 
-            IterationDTO currentIteration = GetCurrentIteration(projectId, ConnectionInformation);
+            IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
             return currentIteration.StartDate.Value;
         }
 
         [Function("get-current-iteration-end-date")]
-        public DateTime GetCurrentIterationEndDate(String connectionRef, int projectId)
+        public DateTime GetCurrentIterationEndDate(String connectionRef, string projectName)
         {
             if (!this.Project.DataTypeReferences.Contains(connectionRef))
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
 
-            IterationDTO currentIteration = GetCurrentIteration(projectId, ConnectionInformation);
+            IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
             return currentIteration.EndDate.Value;
         }
