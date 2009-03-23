@@ -108,25 +108,27 @@ namespace Xml.Tasks
             if (this.Verbose)
                 Log(Level.Info, string.Format("Copying {0} to {1}.", inputFilePath, outputFilePath));
 
-            XmlValidatingReader reader = new XmlValidatingReader(new XmlTextReader(inputFilePath));
-            XmlTextWriter writer = new XmlTextWriter(outputFilePath, Encoding.UTF8);
-            reader.ValidationType = ValidationType.None;
-            reader.EntityHandling = EntityHandling.ExpandEntities;
-            while (reader.Read())
+            using (XmlValidatingReader reader = new XmlValidatingReader(new XmlTextReader(inputFilePath)))
             {
-                switch (reader.NodeType)
+                using (XmlTextWriter writer = new XmlTextWriter(outputFilePath, Encoding.UTF8))
                 {
-                    case XmlNodeType.DocumentType:
-                        break;
-                    case XmlNodeType.Whitespace:
-                        break;
-                    default:
-                        writer.WriteNode(reader, true);
-                        break;
+                    reader.ValidationType = ValidationType.None;
+                    reader.EntityHandling = EntityHandling.ExpandEntities;
+                    while (reader.Read())
+                    {
+                        switch (reader.NodeType)
+                        {
+                            case XmlNodeType.DocumentType:
+                                break;
+                            case XmlNodeType.Whitespace:
+                                break;
+                            default:
+                                writer.WriteNode(reader, true);
+                                break;
+                        }
+                    }
                 }
             }
-            writer.Close();
-            reader.Close();
         }
     }
 }

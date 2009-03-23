@@ -101,28 +101,35 @@ namespace Common.Functions.MultiXslOutput
 
         protected override void ExecuteTask()
         {
-            XPathDocument doc = new XPathDocument(this.XmlInputFilePath);
-            XslTransform xslt = new XslTransform();
-            xslt.Load(this.XslTransformFilePath);
-            using (StreamWriter writer = new StreamWriter(this.OutputFilePath, this.Append, Encoding.UTF8))
+            using (TextReader InputStream = new StreamReader(this.XmlInputFilePath))
             {
-                XsltArgumentList xsltArgs = new XsltArgumentList();
+                XPathDocument doc = new XPathDocument(InputStream);
+                XslTransform xslt = new XslTransform();
 
-                // set the xslt parameters
-                foreach (XsltParameter parameter in Parameters)
+                using (XmlReader TransformStream = new XmlTextReader(this.XslTransformFilePath))
                 {
-                    if (IfDefined && !UnlessDefined)
+                    xslt.Load(TransformStream);
+                    using (StreamWriter writer = new StreamWriter(this.OutputFilePath, this.Append, Encoding.UTF8))
                     {
-                        Log(Level.Info, string.Format("Name {0}, NameSpaceUri {1}, Value {2}", parameter.ParameterName,
-                            parameter.NamespaceUri, parameter.Value));
-                        xsltArgs.AddParam(parameter.ParameterName,
-                            parameter.NamespaceUri, parameter.Value);
+                        XsltArgumentList xsltArgs = new XsltArgumentList();
+
+                        // set the xslt parameters
+                        foreach (XsltParameter parameter in Parameters)
+                        {
+                            if (IfDefined && !UnlessDefined)
+                            {
+                                Log(Level.Info, string.Format("Name {0}, NameSpaceUri {1}, Value {2}", parameter.ParameterName,
+                                    parameter.NamespaceUri, parameter.Value));
+                                xsltArgs.AddParam(parameter.ParameterName,
+                                    parameter.NamespaceUri, parameter.Value);
+                            }
+                        }
+
+                        MultiXmlTextWriter multiWriter = new MultiXmlTextWriter(writer);
+                        multiWriter.Formatting = Formatting.Indented;
+                        xslt.Transform(doc, xsltArgs, multiWriter);
                     }
                 }
-
-                MultiXmlTextWriter multiWriter = new MultiXmlTextWriter(writer);
-                multiWriter.Formatting = Formatting.Indented;
-                xslt.Transform(doc, xsltArgs, multiWriter);
             }
 	    }
 	}
