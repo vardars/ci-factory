@@ -19,9 +19,6 @@
   </target>
 
   <target name="Archive.ValidateParameters">
-    <fail unless="${property::exists('Archive.ArchiveRepositoryDirectory')}" message="Please set the property Archive.ArchiveRepositoryDirectory"/>
-		<function execute="${filterchain::replacestring-add('Common.FilterChain', '%Archive.ArchiveRepositoryDirectory%', Archive.ArchiveRepositoryDirectory)}"/>
-
     <ifnot test="${stringlist::contains('Packages.InstallList', 'Backup')}"></ifnot>
   </target>
   
