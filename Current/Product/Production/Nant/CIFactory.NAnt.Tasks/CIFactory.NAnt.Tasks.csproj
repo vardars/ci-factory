@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D63F5565-75B5-4F24-B8A3-BB94D440B2F2}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -76,6 +76,12 @@
     <Compile Include="Functions\XmlQueryFunctions.cs" />
     <Compile Include="Functions\XPathFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\MacroDef\MacroAttribute.cs" />
+    <Compile Include="Tasks\MacroDef\MacroDefInvocation.cs" />
+    <Compile Include="Tasks\MacroDef\MacroDefSequential.cs" />
+    <Compile Include="Tasks\MacroDef\MacroDefTask.cs" />
+    <Compile Include="Tasks\MacroDef\MacroElement.cs" />
+    <Compile Include="Tasks\MacroDef\SimpleCSharpCompiler.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiOutTransfrom.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiXmlTextWriter.cs" />
     <Compile Include="Tasks\MultiXslOutput\OutputState.cs" />
