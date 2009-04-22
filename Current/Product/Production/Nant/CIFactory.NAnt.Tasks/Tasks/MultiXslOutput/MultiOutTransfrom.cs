@@ -101,14 +101,13 @@ namespace Common.Functions.MultiXslOutput
 
         protected override void ExecuteTask()
         {
-            using (TextReader InputStream = new StreamReader(this.XmlInputFilePath))
+            using (XmlReader InputStream = new XmlTextReader(this.XmlInputFilePath))
             {
                 XPathDocument doc = new XPathDocument(InputStream);
                 XslTransform xslt = new XslTransform();
-
-                using (XmlReader TransformStream = new XmlTextReader(this.XslTransformFilePath))
+                using (XmlReader XslStream = new XmlTextReader(this.XslTransformFilePath))
                 {
-                    xslt.Load(TransformStream);
+                    xslt.Load(XslStream);
                     using (StreamWriter writer = new StreamWriter(this.OutputFilePath, this.Append, Encoding.UTF8))
                     {
                         XsltArgumentList xsltArgs = new XsltArgumentList();

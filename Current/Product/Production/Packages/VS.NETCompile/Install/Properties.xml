@@ -10,11 +10,11 @@
     </case>
     <case value="2005" break="true">
       <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
-      <property name="Compile.DevEnv" value="{'$'}${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
     <case value="2008" break="true">
       <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" overwrite="false"/>
-      <property name="Compile.DevEnv" value="{'$'}${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
   </switch>
   <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />

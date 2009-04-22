@@ -78,7 +78,7 @@
   </target>
 
   <target name="VS.NETCompile.InstallationTest.DefaultInstallTest">
-    <loadfile file="${Deployment.Directory.Path}\Packages\VS.NETCompile\Install\2003.sln.remove" property="Expected.SolutionFile.Content" />
+    <loadfile file="${Deployment.Directory.Path}\Packages\VS.NETCompile\Install\2008.sln.remove" property="Expected.SolutionFile.Content" />
     <loadfile file="${ProductDirectory}\${ProjectName}.sln" property="Actual.SolutionFile.Content" />
     <assertequal actual="${Actual.SolutionFile.Content}" expected="${Expected.SolutionFile.Content}" message="Something is wrong with the solution file that was installed."/>
 

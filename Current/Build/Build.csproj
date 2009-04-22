@@ -368,6 +368,7 @@
     <Content Include="Packages\Analytics\UnitTests\UnitTests.Statistics.xml" />
     <Content Include="Packages\Analytics\UnitTests\UnitTestsCountsLineChartData.Publisher.xsl" />
     <Content Include="Packages\Analytics\UnitTests\UnitTestsCountsLineChartData.xml" />
+    <Content Include="Packages\SourceModificationReport\modifications.xsl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

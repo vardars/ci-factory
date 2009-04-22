@@ -30,6 +30,8 @@
   <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
 
+  <property name="Compile.DevEnv.Version" value="2008"/>
+
   <property name="Install.Quiet" value="true"/>
   <property name="Simian.AcceptLicense" value="true"/>
   <property name="nDepend.AcceptLicense" value="true"/>

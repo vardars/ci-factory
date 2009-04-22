@@ -1,24 +1,24 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test Subject", "Production\Test Subject\Test Subject.csproj", "{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}"
-	ProjectSection(ProjectDependencies) = postProject
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB33F932-A96C-402C-A934-28359196DF85}"
+	ProjectSection(SolutionItems) = preProject
+		Scratch.build.xml = Scratch.build.xml
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug.ActiveCfg = Debug|.NET
-		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug.Build.0 = Debug|.NET
-		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release.ActiveCfg = Release|.NET
-		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release.Build.0 = Release|.NET
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD1C2F4-DD1D-4CA6-A83B-EA3008285865}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionItems) = postSolution
-		Scratch.build.xml = Scratch.build.xml
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

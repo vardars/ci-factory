@@ -72,8 +72,9 @@
     <ifthenelse test="${Compile.DevEnv.Version == '2003'}">
       <then></then>
       <elseif if="${Compile.DevEnv.Version == '2005'}"></elseif>
+      <elseif if="${Compile.DevEnv.Version == '2008'}"></elseif>
       <else>
-        <fail message="The property Compile.DevEnv.Version must be of value '2003' or '2005', '${Compile.DevEnv.Version}' is not a valid value."/>
+        <fail message="The property Compile.DevEnv.Version must be of value '2003', '2005', or '2008', '${Compile.DevEnv.Version}' is not a valid value."/>
       </else>
     </ifthenelse>
   </target>
