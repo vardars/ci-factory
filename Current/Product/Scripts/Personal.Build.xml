@@ -63,17 +63,20 @@
 
     <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${ProductDirectory}" />
   </target>
+
+  <target name="UpdateWorkspace">
+    <call target="Workspace.CheckForRequieredSoftware" />
+    <call target="Workspace.ConfigureEnvironment" />
+  </target>
   
   <target name="Build">
-    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
-    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
+    <call target="UpdateWorkspace"/>
     <call target="Compile"/>
     <call target="Test" if="${target::exists('Test')}"/>
   </target>
 
   <target name="Rebuild">
-    <call target="Workspace.CheckForRequieredSoftware"/>
-    <call target="Workspace.ConfigureEnvironment"/>
+    <call target="UpdateWorkspace"/>
     <call target="Recompile"/>
     <call target="Test"/>
   </target>

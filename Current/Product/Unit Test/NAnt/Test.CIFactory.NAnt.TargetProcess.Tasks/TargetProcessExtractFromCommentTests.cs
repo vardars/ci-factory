@@ -66,8 +66,8 @@ namespace Test.CIFactory.NAnt.TargetProcess.Tasks
 
         public void Adhoc()
         {
-            string comment = "Bug 12345";
-            string expected = "12345";
+            string comment = "Bug 12345, 23456 34567";
+            string expected = "12345,23456,34567";
             StringList List = new StringList();
             TargetProcessExtractFromComment TestSubject = new TargetProcessExtractFromComment();
             TestSubject.EntityPrefix = "Bug";

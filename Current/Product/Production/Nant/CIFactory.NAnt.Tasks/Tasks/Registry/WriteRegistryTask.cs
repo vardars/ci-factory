@@ -14,6 +14,143 @@ Unrestricted = true)]
 
 namespace CIFactory.NAnt.Tasks
 {
+    [TaskName("deleteregistry")]
+    public class DeleteRegistryTask : Task
+    {
+
+        #region Private Instance Fields
+
+        private string _regKey = null;
+        private RegistryHive[] _regHive = new RegistryHive[] { RegistryHive.LocalMachine };
+        private string _regHiveString = RegistryHive.LocalMachine.ToString();
+
+        #endregion
+
+        #region Public Instance Properties
+
+        private RegistryValueKind _Kind;
+
+        [TaskAttribute("kind")]
+        public RegistryValueKind Kind
+        {
+            get
+            {
+                return _Kind;
+            }
+            set
+            {
+                _Kind = value;
+            }
+        }
+
+        [TaskAttribute("key", Required = true)]
+        [StringValidator(AllowEmpty = false)]
+        public virtual string RegistryKey
+        {
+            get { return _regKey; }
+            set
+            {
+                string key = value;
+                if (value.StartsWith("\\"))
+                {
+                    key = value.Substring(1);
+                }
+                _regKey = key;
+            }
+        }
+
+        /// <summary>
+        /// Space separated list of registry hives to search for <see cref="RegistryKey" />.
+        /// For a list of possible values, see <see cref="RegistryHive" />. The 
+        /// default is <see cref="RegistryHive.LocalMachine" />.
+        /// </summary>
+        /// <remarks>
+        /// <seealso cref="RegistryHive" />
+        /// </remarks>
+        [TaskAttribute("hive")]
+        public virtual string RegistryHiveName
+        {
+            get { return _regHiveString; }
+            set
+            {
+                _regHiveString = value;
+                string[] tempRegHive = _regHiveString.Split(" ".ToCharArray()[0]);
+                _regHive = (RegistryHive[])Array.CreateInstance(typeof(RegistryHive), tempRegHive.Length);
+                for (int x = 0; x < tempRegHive.Length; x++)
+                {
+                    _regHive[x] = (RegistryHive)Enum.Parse(typeof(RegistryHive), tempRegHive[x], true);
+                }
+            }
+        }
+
+        #endregion Public Instance Properties
+
+        protected override void ExecuteTask()
+        {
+            if (_regKey == null)
+            {
+                throw new BuildException("Missing registry key!");
+            }
+
+            try
+            {
+                foreach (RegistryHive hive in _regHive)
+                {
+                    RegistryKey regKey = GetHiveKey(hive);
+
+                    if (regKey != null)
+                    {
+                        RegistryKey subKey = regKey.OpenSubKey(_regKey);
+
+                        if (subKey != null)
+                        {
+                            regKey.DeleteSubKeyTree(_regKey);
+
+                            string infoMessage = string.Format(CultureInfo.InvariantCulture,
+                                "{0} deleted.",
+                                _regKey);
+                            Log(Level.Info, infoMessage);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new BuildException("Writing to registry failed!", e);
+            }
+        }
+
+
+        #region Protected Instance Methods
+        /// <summary>
+        /// Returns the key for a given registry hive.
+        /// </summary>
+        /// <param name="hive">The registry hive to return the key for.</param>
+        /// <returns>
+        /// The key for a given registry hive.
+        /// </returns>
+        protected RegistryKey GetHiveKey(RegistryHive hive)
+        {
+            switch (hive)
+            {
+                case RegistryHive.LocalMachine:
+                    return Registry.LocalMachine;
+                case RegistryHive.Users:
+                    return Registry.Users;
+                case RegistryHive.CurrentUser:
+                    return Registry.CurrentUser;
+                case RegistryHive.ClassesRoot:
+                    return Registry.ClassesRoot;
+                default:
+                    Log(Level.Verbose, "Registry not found for {0}.", hive.ToString());
+                    return null;
+            }
+        }
+
+        #endregion Protected Instance Methods
+    }
+
+
     /// <summary>
     /// Writes a specified value to the Windows Registry.
     /// </summary>
