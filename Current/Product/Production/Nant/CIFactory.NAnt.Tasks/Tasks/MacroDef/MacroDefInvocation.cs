@@ -2,6 +2,8 @@ using System.Collections;
 using System.Text;
 using System.Xml;
 using NAnt.Core;
+using NAnt.Core.Util;
+using System.Globalization;
 
 namespace Macrodef
 {
@@ -13,12 +15,14 @@ namespace Macrodef
 		private readonly ArrayList attributeList;
 		private readonly MacroDefSequential sequential;
 		private readonly ArrayList elements;
+        private readonly ArrayList elementgroups;
 
 		public MacroDefInvocation(string name, Task task,
 		                          XmlNode invocationXml,
 		                          ArrayList attributeList,
 		                          MacroDefSequential sequential,
-		                          ArrayList elements)
+		                          ArrayList elements,
+                                  ArrayList elementgroups)
 		{
 			this.name = name;
 			this.task = task;
@@ -26,6 +30,7 @@ namespace Macrodef
 			this.attributeList = attributeList;
 			this.sequential = sequential;
 			this.elements = elements;
+            this.elementgroups = elementgroups;
 		}
 
 		public void Execute()
@@ -63,12 +68,59 @@ namespace Macrodef
 				{
 					ReplaceMacroElementsInInvocationXml(element.name, invocationTasks);
 				}
-
-				Log(Level.Verbose, "Effective macro definition: " + invocationTasks.InnerXml);
 			}
+            if (elementgroups.Count > 0)
+            {
+                invocationTasks = invocationTasks.CloneNode(true);
+                foreach (MacroElementGroup elementgroup in elementgroups)
+                {
+                    ReplaceMacroElementGroupsInInvocationXml(elementgroup.name, invocationTasks);
+                }
+            }
+
+            Log(Level.Verbose, "Effective macro definition: " + invocationTasks.InnerXml);
 			return invocationTasks;
 		}
 
+        private void ReplaceMacroElementGroupsInInvocationXml(string elementGroupName, XmlNode invocationTasks)
+		{
+			XmlNodeList elementGroupPlaceholders = invocationTasks.SelectNodes("//nant:elementgroup[@name='" + elementGroupName + "']", task.NamespaceManager);
+			Log(Level.Verbose,
+			    "Inserting " + elementGroupPlaceholders.Count + " call(s) of '" + elementGroupName + "' in " + invocationTasks.InnerXml);
+
+			if (elementGroupPlaceholders.Count > 0)
+			{
+				XmlElement invocationElementGroupDefinition = GetInvocationElementGroupDefinition(elementGroupName);
+
+				foreach (XmlElement elementGroupPlaceholder in elementGroupPlaceholders)
+				{
+					ReplaceElementGroupPlaceHolderWithInvocationContents(invocationElementGroupDefinition, elementGroupPlaceholder);
+				}
+			}
+		}
+
+        private XmlElement GetInvocationElementGroupDefinition(string elementGroupName)
+        {
+            XmlElement invocationElementDefinition =
+                invocationXml.SelectSingleNode("nant:" + elementGroupName, task.NamespaceManager) as XmlElement;
+            if (invocationElementDefinition == null)
+                throw new BuildException("ElementGroup '" + elementGroupName + "' must be defined");
+            return invocationElementDefinition;
+        }
+        
+        private void ReplaceElementGroupPlaceHolderWithInvocationContents(XmlElement invocationElementGroupDefinition, XmlElement elementGroupPlaceHolder)
+        {
+            XmlNode parentElement = elementGroupPlaceHolder.ParentNode;
+
+            Log(Level.Verbose, "Replacing elementgroup " + elementGroupPlaceHolder.OuterXml + " in " + parentElement.OuterXml);
+            
+            foreach (XmlNode definitionStep in invocationElementGroupDefinition.ChildNodes)
+            {
+                parentElement.InsertBefore(parentElement.OwnerDocument.ImportNode(definitionStep, true), elementGroupPlaceHolder);
+            }
+
+            parentElement.RemoveChild(elementGroupPlaceHolder);
+        }
 		private void ReplaceMacroElementsInInvocationXml(string elementName, XmlNode invocationTasks)
 		{
 			XmlNodeList elementPlaceholders = invocationTasks.SelectNodes("//nant:element[@name='" + elementName + "']", task.NamespaceManager);
@@ -101,7 +153,7 @@ namespace Macrodef
 			XmlNode parentElement = elementPlaceHolder.ParentNode;
 
 			Log(Level.Verbose, "Replacing element " + elementPlaceHolder.OuterXml + " in " + parentElement.OuterXml);
-            parentElement.InsertBefore(invocationElementDefinition.CloneNode(true), elementPlaceHolder);
+            parentElement.InsertBefore(parentElement.OwnerDocument.ImportNode(invocationElementDefinition, true), elementPlaceHolder);
 			parentElement.RemoveChild(elementPlaceHolder);
 		}
 
@@ -120,12 +172,36 @@ namespace Macrodef
 					continue;
 				}
 
-				Task childTask = CreateChildTask(childNode);
-				if (childTask != null)
-				{
-					childTask.Parent = this;
-					childTask.Execute();
-				}
+                if (TypeFactory.TaskBuilders.Contains(childNode.Name))
+                {
+                    Task childTask = CreateChildTask(childNode);
+                    if (childTask != null)
+                    {
+                        childTask.Parent = this;
+                        childTask.Execute();
+                    }
+                }
+                else if (TypeFactory.DataTypeBuilders.Contains(childNode.Name))
+                {
+                    DataTypeBase dataType = task.Project.CreateDataTypeBase(childNode);
+                    task.Project.Log(Level.Verbose, "Adding a {0} reference with id '{1}'.",
+                        childNode.Name, dataType.ID);
+                    if (!task.Project.DataTypeReferences.Contains(dataType.ID))
+                    {
+                        task.Project.DataTypeReferences.Add(dataType.ID, dataType);
+                    }
+                    else
+                    {
+                        task.Project.DataTypeReferences[dataType.ID] = dataType; // overwrite with the new reference.
+                    }
+                }
+                else
+                {
+                    throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                        ResourceUtils.GetString("NA1071"),
+                        childNode.Name));
+                }
+
 			}
 		}
 

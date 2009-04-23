@@ -27,6 +27,7 @@ using System.Xml;
 using NAnt.Core.Attributes;
 using NAnt.Core.Tasks;
 using NAnt.Core.Types;
+using NAnt.Core.Util;
 
 namespace NAnt.Core {
 
@@ -136,11 +137,35 @@ namespace NAnt.Core {
                     continue;
                 }
 
-                Task task = CreateChildTask(childNode);
-                // for now, we should assume null tasks are because of incomplete metadata about the XML.
-                if (task != null) {
-                    task.Parent = this;
-                    task.Execute();
+                
+                if (TypeFactory.TaskBuilders.Contains(childNode.Name))
+                {
+                    Task task = CreateChildTask(childNode);
+                    if (task != null)
+                    {
+                        task.Parent = this;
+                        task.Execute();
+                    }
+                }
+                else if (TypeFactory.DataTypeBuilders.Contains(childNode.Name))
+                {
+                    DataTypeBase dataType = Project.CreateDataTypeBase(childNode);
+                    Project.Log(Level.Verbose, "Adding a {0} reference with id '{1}'.",
+                        childNode.Name, dataType.ID);
+                    if (!Project.DataTypeReferences.Contains(dataType.ID))
+                    {
+                        Project.DataTypeReferences.Add(dataType.ID, dataType);
+                    }
+                    else
+                    {
+                        Project.DataTypeReferences[dataType.ID] = dataType; // overwrite with the new reference.
+                    }
+                }
+                else
+                {
+                    throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                        ResourceUtils.GetString("NA1071"),
+                        childNode.Name), Project.LocationMap.GetLocation(childNode));
                 }
                 if (BreakTask.Break)
                 {

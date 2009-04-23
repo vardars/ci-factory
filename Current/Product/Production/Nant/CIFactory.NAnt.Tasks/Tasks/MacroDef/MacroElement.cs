@@ -21,4 +21,20 @@ namespace Macrodef
 
 		private string _name;
 	}
+
+    [ElementName("elementgroup")]
+    public class MacroElementGroup : Element
+    {
+        /// <summary>
+        /// The name of the element.
+        /// </summary>
+        [TaskAttribute("name")]
+        public string name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        private string _name;
+    }
 }

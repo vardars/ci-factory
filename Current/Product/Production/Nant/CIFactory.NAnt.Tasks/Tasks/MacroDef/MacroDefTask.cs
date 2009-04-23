@@ -74,6 +74,7 @@ namespace Macrodef
 		private MacroDefSequential _sequential;
 		private ArrayList _attributes = new ArrayList();
 		private ArrayList _elements = new ArrayList();
+        private ArrayList _elementgroups = new ArrayList();
 
 		private string typeName = "nant" + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture);
 
@@ -99,13 +100,22 @@ namespace Macrodef
 		}
 
 		/// <summary>
-		/// Attributes to the task - xml child elements of the macro invocation.
+		/// Attributes to the task - xml elements of the macro invocation.
 		/// </summary>
 		[BuildElementCollection("elements", "element", ElementType=typeof (MacroElement))]
 		public ArrayList Elements
 		{
 			get { return _elements; }
-		}
+        }
+
+        /// <summary>
+        /// Attributes to the task - xml child elements of the macro invocation.
+        /// </summary>
+        [BuildElementCollection("elementgroups", "elementgroup", ElementType = typeof(MacroElementGroup))]
+        public ArrayList ElementGroups
+        {
+            get { return _elementgroups; }
+        }
 
 		/// <summary>
 		/// The name of the macro.
@@ -125,7 +135,7 @@ namespace Macrodef
 
 		private void Invoke(XmlNode xml, Task task)
 		{
-			MacroDefInvocation invocation = new MacroDefInvocation(name, task, xml, _attributes, _sequential, _elements);
+			MacroDefInvocation invocation = new MacroDefInvocation(name, task, xml, _attributes, _sequential, _elements, _elementgroups);
 			invocation.Execute();
 		}
 
@@ -193,6 +203,7 @@ namespace Macrodef
 				protected override void InitializeXml(System.Xml.XmlNode elementNode, PropertyDictionary properties, FrameworkInfo framework) 
 				{
 					_node = elementNode;
+                    this.Verbose = " + this.Verbose.ToString().ToLower() + @";
 				}
 			";
 			taskClassDeclaration.Members.Add(new CodeSnippetTypeMember(codeBody));

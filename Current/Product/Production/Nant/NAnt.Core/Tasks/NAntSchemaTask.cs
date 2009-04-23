@@ -322,7 +322,7 @@ namespace NAnt.Core.Tasks {
 
                     if (seq != null)
                     {
-                        seq.Items.Add(CreateTaskListComplexType(tasks).Particle);
+                        seq.Items.Add(CreateTaskListComplexType(tasks, dataTypes, false).Particle);
                     }
                     else
                     {
