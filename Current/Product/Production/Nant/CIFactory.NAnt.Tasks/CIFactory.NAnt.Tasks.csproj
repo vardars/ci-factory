@@ -81,6 +81,7 @@
     <Compile Include="Tasks\MacroDef\MacroDefSequential.cs" />
     <Compile Include="Tasks\MacroDef\MacroDefTask.cs" />
     <Compile Include="Tasks\MacroDef\MacroElement.cs" />
+    <Compile Include="Tasks\MacroDef\MacroElementGroup.cs" />
     <Compile Include="Tasks\MacroDef\SimpleCSharpCompiler.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiOutTransfrom.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiXmlTextWriter.cs" />

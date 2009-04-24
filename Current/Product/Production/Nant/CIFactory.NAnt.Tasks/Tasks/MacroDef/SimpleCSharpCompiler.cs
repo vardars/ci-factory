@@ -9,95 +9,112 @@ using NAnt.Core.Util;
 
 namespace Macrodef
 {
-	// adapted from <script> task
-	internal class SimpleCSharpCompiler
-	{
-		public SimpleCSharpCompiler()
-		{
-			Provider = CreateCodeDomProvider("Microsoft.CSharp.CSharpCodeProvider", "System");
-			//Compiler = provider.CreateCompiler();
-			//CodeGen = provider.CreateGenerator();
-		}
+    // adapted from <script> task
+    internal class SimpleCSharpCompiler
+    {
+        #region Fields
 
-		//public readonly ICodeCompiler Compiler;
-		//public readonly ICodeGenerator CodeGen;
-		public readonly CodeDomProvider Provider;
+        //public readonly ICodeCompiler Compiler;
+        //public readonly ICodeGenerator CodeGen;
+        public readonly CodeDomProvider Provider;
 
-		public string GetSourceCode(CodeCompileUnit compileUnit)
-		{
-			StringWriter sw = new StringWriter(CultureInfo.InvariantCulture);
+        #endregion
 
-			Provider.GenerateCodeFromCompileUnit(compileUnit, sw, null);
-			return sw.ToString();
-		}
+        #region Constructors
 
-		private static CompilerParameters CreateCompilerOptions()
-		{
-			CompilerParameters options = new CompilerParameters();
-			options.GenerateExecutable = false;
-			// <script> task uses true - and hence doesn't work properly (second script that contains task defs fails)!
-			options.GenerateInMemory = false;
+        public SimpleCSharpCompiler()
+        {
+            Provider = CreateCodeDomProvider("Microsoft.CSharp.CSharpCodeProvider", "System");
+            //Compiler = provider.CreateCompiler();
+            //CodeGen = provider.CreateGenerator();
+        }
 
-			foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-			{
-				try
-				{
-					if (!StringUtils.IsNullOrEmpty(asm.Location))
-					{
-						options.ReferencedAssemblies.Add(asm.Location);
-					}
-				}
-				catch (NotSupportedException)
-				{
-					// Ignore - this error is sometimes thrown by asm.Location 
-					// for certain dynamic assemblies
-				}
-			}
-			return options;
-		}
+        #endregion
 
-		public Assembly CompileAssembly(CodeCompileUnit compileUnit)
-		{
-			CompilerParameters options = CreateCompilerOptions();
+        #region Public Methods
 
-			CompilerResults results = Provider.CompileAssemblyFromDom(options, compileUnit);
+        public Assembly CompileAssembly(CodeCompileUnit compileUnit)
+        {
+            CompilerParameters options = CreateCompilerOptions();
 
-			Assembly compiled;
-			if (results.Errors.Count > 0)
-			{
-				string errors = "Errors:" + Environment.NewLine;
-				foreach (CompilerError err in results.Errors)
-				{
-					errors += err.ToString() + Environment.NewLine;
-				}
-				errors += GetSourceCode(compileUnit);
-				throw new BuildException(errors);
-			}
-			else
-			{
-				compiled = results.CompiledAssembly;
-			}
-			return compiled;
-		}
+            CompilerResults results = Provider.CompileAssemblyFromDom(options, compileUnit);
 
-		private static CodeDomProvider CreateCodeDomProvider(string typeName, string assemblyName)
-		{
-			Assembly providerAssembly = Assembly.Load(assemblyName);
-			if (providerAssembly == null)
-			{
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-				                                          ResourceUtils.GetString("NA2037"), assemblyName));
-			}
+            Assembly compiled;
+            if (results.Errors.Count > 0)
+            {
+                string errors = "Errors:" + Environment.NewLine;
+                foreach (CompilerError err in results.Errors)
+                {
+                    errors += err.ToString() + Environment.NewLine;
+                }
+                errors += GetSourceCode(compileUnit);
+                throw new BuildException(errors);
+            }
+            else
+            {
+                compiled = results.CompiledAssembly;
+            }
+            return compiled;
+        }
 
-			Type providerType = providerAssembly.GetType(typeName, true, true);
+        public string GetSourceCode(CodeCompileUnit compileUnit)
+        {
+            StringWriter sw = new StringWriter(CultureInfo.InvariantCulture);
 
-			object provider = Activator.CreateInstance(providerType);
-			if (!(provider is CodeDomProvider))
-			{
-				throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-				                                          ResourceUtils.GetString("NA2038"), providerType.FullName));
-			}
-			return (CodeDomProvider) provider;
-		}
-	}
+            Provider.GenerateCodeFromCompileUnit(compileUnit, sw, null);
+            return sw.ToString();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static CodeDomProvider CreateCodeDomProvider(string typeName, string assemblyName)
+        {
+            Assembly providerAssembly = Assembly.Load(assemblyName);
+            if (providerAssembly == null)
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                                                          ResourceUtils.GetString("NA2037"), assemblyName));
+            }
+
+            Type providerType = providerAssembly.GetType(typeName, true, true);
+
+            object provider = Activator.CreateInstance(providerType);
+            if (!(provider is CodeDomProvider))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                                                          ResourceUtils.GetString("NA2038"), providerType.FullName));
+            }
+            return (CodeDomProvider)provider;
+        }
+
+        private static CompilerParameters CreateCompilerOptions()
+        {
+            CompilerParameters options = new CompilerParameters();
+            options.GenerateExecutable = false;
+            // <script> task uses true - and hence doesn't work properly (second script that contains task defs fails)!
+            options.GenerateInMemory = false;
+
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                try
+                {
+                    if (!StringUtils.IsNullOrEmpty(asm.Location))
+                    {
+                        options.ReferencedAssemblies.Add(asm.Location);
+                    }
+                }
+                catch (NotSupportedException)
+                {
+                    // Ignore - this error is sometimes thrown by asm.Location 
+                    // for certain dynamic assemblies
+                }
+            }
+            return options;
+        }
+
+        #endregion
+
+    }
 }

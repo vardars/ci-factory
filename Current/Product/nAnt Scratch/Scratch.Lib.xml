@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Scratch.Lib">
 
-  <macrodef name="play" verbose="true">
+  <macrodef name="play">
     <attributes>
-      <attribute name="dir"/>
+      <attribute name="dir" type="string" require="true"/>
     </attributes>
     <elements>
-      <element name="fileset" />
+      <element name="fileset" type="NAnt.Core.Types.FileSet"/>
     </elements>
     <elementgroups>
-      <elementgroup name="includes"/>
+      <elementgroup name="includes" type="NAnt.Core.Types.FileSet.Include" elementname="include"/>
     </elementgroups>
     <sequential>
       <fileset id="files">
@@ -27,7 +27,6 @@
         </do>
       </foreach>
       <copy todir="${dir}" verbose="true">
-        <!--<element name="fileset"/>-->
         <fileset refid="files"/>
       </copy>
     </sequential>

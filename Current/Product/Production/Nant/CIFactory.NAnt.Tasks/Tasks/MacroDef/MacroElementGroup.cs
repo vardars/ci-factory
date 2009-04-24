@@ -4,11 +4,8 @@ using System;
 
 namespace Macrodef
 {
-    /// <summary>
-    /// Describe nested elements that can be supplied to the macrodef. These elements are callable by name.
-    /// </summary>
-    [ElementName("element")]
-    public class MacroElement : Element
+    [ElementName("elementgroup")]
+    public class MacroElementGroup : Element
     {
         #region Fields
 
@@ -39,6 +36,7 @@ namespace Macrodef
                 _Type = value;
             }
         }
+
         private bool _Require = false;
 
         [TaskAttribute("require", Required = false)]
@@ -50,6 +48,18 @@ namespace Macrodef
                 _Require = value;
             }
         }
+
+        private string _ElementName;
+        [TaskAttribute("elementname", Required = true)]
+        public string ElementName
+        {
+            get { return _ElementName; }
+            set
+            {
+                _ElementName = value;
+            }
+        }
+        
         #endregion
 
     }

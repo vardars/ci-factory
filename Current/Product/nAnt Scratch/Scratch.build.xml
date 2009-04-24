@@ -7,10 +7,8 @@
 	<include buildfile="..\..\Build\Properties.Build.xml"/>
 	<include buildfile="Scratch.Lib.xml"/>
   
-  
-
 	<target name="test">
-    <play dir="C:\temp\play" verbose="true">
+    <play dir="C:\temp\play">
       <fileset>
         <include name="C:\Temp\New Text Document.txt"/>
       </fileset>
