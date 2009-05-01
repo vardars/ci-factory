@@ -89,11 +89,11 @@ namespace NAnt.Core.Tasks {
     public class PropertyTask : Task {
         #region Private Instance Fields
 
-        private string _name = null;
-        private string _value = string.Empty;
-        private bool _readOnly = false;
-        private bool _dynamic = false;
-        private bool _overwrite = true;
+        protected string _name = null;
+        protected string _value = string.Empty;
+        protected bool _readOnly = false;
+        protected bool _dynamic = false;
+        protected bool _overwrite = true;
 
         #endregion Private Instance Fields
 
@@ -156,6 +156,27 @@ namespace NAnt.Core.Tasks {
         }
 
         #endregion Public Instance Properties
+
+        public PropertyTask()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the PropertyTask class.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <param name="readOnly"></param>
+        /// <param name="dynamic"></param>
+        /// <param name="overwrite"></param>
+        public PropertyTask(string name, string value, bool readOnly, bool dynamic, bool overwrite)
+        {
+            _name = name;
+            _value = value;
+            _readOnly = readOnly;
+            _dynamic = dynamic;
+            _overwrite = overwrite;
+        }
 
         #region Override implementation of Task
 

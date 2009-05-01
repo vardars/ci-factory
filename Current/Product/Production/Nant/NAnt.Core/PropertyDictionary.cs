@@ -269,6 +269,13 @@ namespace NAnt.Core {
             return Dictionary.Contains(name);
         }
 
+        public ICollection Keys
+        {
+            get{
+                return this.Dictionary.Keys;
+            }
+        }
+
         /// <summary>
         /// Removes the property with the specified name.
         /// </summary>

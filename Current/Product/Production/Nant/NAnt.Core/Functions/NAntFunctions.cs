@@ -359,6 +359,12 @@ namespace NAnt.Core.Functions {
             return Project.ExpandProperties(value, new Location(""));
         }
 
+        [Function("value")]
+        public string GetValue(string propertyName)
+        {
+            return Project.Properties[propertyName];
+        }
+
         #endregion Public Instance Methods
     }
 

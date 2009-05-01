@@ -51,8 +51,14 @@ namespace CIFactory.NAnt.Tasks
         {
             Level OldLevel = this.Project.Threshold;
             this.Project.Threshold = this.LogLevel;
-            this.Tasks.Execute();
-            this.Project.Threshold = OldLevel;
+            try
+            {
+                this.Tasks.Execute();
+            }
+            finally
+            {
+                this.Project.Threshold = OldLevel;
+            }
 
         }
 

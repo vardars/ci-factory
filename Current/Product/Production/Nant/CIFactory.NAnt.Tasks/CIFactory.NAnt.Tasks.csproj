@@ -48,6 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -86,7 +87,11 @@
     <Compile Include="Tasks\MultiXslOutput\MultiOutTransfrom.cs" />
     <Compile Include="Tasks\MultiXslOutput\MultiXmlTextWriter.cs" />
     <Compile Include="Tasks\MultiXslOutput\OutputState.cs" />
+    <Compile Include="Tasks\PropertyStructure.cs" />
     <Compile Include="Tasks\Registry\WriteRegistryTask.cs" />
+    <Compile Include="Tasks\StringAddTask.cs" />
+    <Compile Include="Tasks\StringSplitTask.cs" />
+    <Compile Include="Types\PropertyStructureIterator.cs" />
     <Compile Include="Types\SpiderUrl.cs" />
     <Compile Include="Tasks\Versioning\GenerateAssemblyInfoList.cs" />
     <Compile Include="Tasks\ApplyFilterTask.cs" />
