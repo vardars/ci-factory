@@ -6,41 +6,38 @@
 
 	<include buildfile="..\..\Build\Properties.Build.xml"/>
 	<include buildfile="Scratch.Lib.xml"/>
-  
+
 	<target name="test">
-    <propertystructure name="Common">
-      <propertystructure name="Directory">
-        <propertystructure name="ProjectsRoot">
-          <propertystructure name="Name" value="Projects"/>
-          <propertystructure name="Path" value="C:\${Common.Directory.ProjectsRoot.Name}"/>
-        </propertystructure>
-        <propertystructure name="CodeLine">
-          <propertystructure name="Name" value="trunk"/>
-          <propertystructure name="Path" value="${Common.Directory.ProjectsRoot.Path}\${Common.Directory.CodeLine.Name}"/>
-        </propertystructure>
-        <propertystructure name="Build">
-          <propertystructure name="Name" value="Build"/>
-          <propertystructure name="Path" value="${Common.Directory.CodeLine.Path}\${Common.Directory.Build.Name}"/>
-        </propertystructure>
-      </propertystructure>
+    <propertystructure>
+      <test readonly="true" dynamic="true">${person.one.lastname}</test>
+      <person>
+        <one>
+          <firstname>jay</firstname>
+          <lastname>flowers</lastname>
+        </one>
+        <two>
+          <firstname>jay</firstname>
+          <lastname>${person.one.lastname}</lastname>
+        </two>
+      </person>
+      <something>else</something>
+      <something>
+        <more>${something}</more>
+      </something>
     </propertystructure>
 
-    <echo message="${Common.Directory.Build.Path}"/>
+    <echo message="${test}"/>
+    <property name="test" value="Bye"/>
+    <echo message="${test}"/>
+    
+    <echo message="${something.more}"/>
 
-    <propertystructure name="table">
-      <propertystructure name="1" value="one"/>
-      <propertystructure name="2" value="two"/>
-      <propertystructure name="3" value="three"/>
-    </propertystructure>
-
-    <property name="table.4" value="four"/>
-
-    <loopthrough property="key">
+    <loopthrough property="property">
       <items>
-        <propertystructureiterator name="table"/>
+        <propertystructureiterator name="person"/>
       </items>
       <do>
-        <echo message="${property::value(key)}"/>
+        <echo message="${property}==${property::get-value(property)}"/>
       </do>
     </loopthrough>
 	</target>
