@@ -18,13 +18,13 @@ namespace CIFactory.TargetProcess.NAnt.Functions
         
         #region Constructors
 
-        public TargetProcessFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public TargetProcessFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 
         public TargetProcessFunctions()
-            : base(null, null)
+            : base(null, null, null)
         {
         }
 

@@ -25,13 +25,13 @@ namespace CIFactory.NAnt.Subversion.Tasks.Functions
 
         #region Constructors
 
-        public SvnFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public SvnFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 
         public SvnFunctions()
-            : base(null, null)
+            : base(null, null, null)
         {
         }
 

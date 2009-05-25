@@ -13,8 +13,8 @@ namespace TF.Tasks.SourceControl.Functions
     [FunctionSet("tfs-vc", "version control")]
     public class TfsVersionControlFunctions : FunctionSetBase
     {
-        public TfsVersionControlFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public TfsVersionControlFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 

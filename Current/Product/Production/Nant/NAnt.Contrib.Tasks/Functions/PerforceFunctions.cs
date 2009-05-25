@@ -13,8 +13,8 @@ namespace NAnt.Contrib.Functions.Perforce
     [FunctionSet("perforce", "sourcecontrol")]
     public class PerforceFunctions : FunctionSetBase
     {
-        public PerforceFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public PerforceFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
 
         }

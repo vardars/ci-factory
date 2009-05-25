@@ -20,12 +20,12 @@ namespace CIFactory.NAnt.Tracker.Functions
         #region Constructors
 
         public TrackerFunctions()
-            : base(null, null)
+            : base(null, null, null)
         {
         }
 
-        public TrackerFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public TrackerFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 

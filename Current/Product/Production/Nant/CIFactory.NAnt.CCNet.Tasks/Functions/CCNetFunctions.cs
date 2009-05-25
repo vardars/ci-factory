@@ -16,8 +16,8 @@ namespace CIFactory.NAnt.CCNet.Functions
 
         #region Constructors
 
-        public CCNetFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public CCNetFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
 
         }
