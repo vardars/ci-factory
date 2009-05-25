@@ -81,6 +81,7 @@
     <Compile Include="Functions\XmlQueryFunctions.cs" />
     <Compile Include="Functions\XPathFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\LoadPackageTask.cs" />
     <Compile Include="Tasks\MacroDef\MacroAttribute.cs" />
     <Compile Include="Tasks\MacroDef\MacroDefInvocation.cs" />
     <Compile Include="Tasks\MacroDef\MacroDefSequential.cs" />

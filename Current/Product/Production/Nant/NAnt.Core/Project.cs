@@ -1333,7 +1333,7 @@ namespace NAnt.Core {
         /// This method is only meant to be used by the <see cref="Project"/> 
         /// class and <see cref="NAnt.Core.Tasks.IncludeTask"/>.
         /// </summary>
-        internal void InitializeProjectDocument(XmlDocument doc) {
+        public void InitializeProjectDocument(XmlDocument doc) {
             // load line and column number information into position map
             LocationMap.Add(doc);
 
