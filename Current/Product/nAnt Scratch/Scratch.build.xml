@@ -8,10 +8,11 @@
 	<include buildfile="Scratch.Lib.xml"/>
   
   <target name="test">
-
     <property name="SchemaFile" value="${ProductDirectory}\NAnt.xsd"/>
-    
-    <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd"/>
+
+    <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd">
+      <propertyexclude>^nant.task.*</propertyexclude>
+    </nantschema>
     
   </target>
 

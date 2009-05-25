@@ -2,6 +2,7 @@ using System;
 using NAnt.Core;
 using NAnt.Core.Attributes;
 using CIFactory.NAnt.Types;
+using NAnt.Core.Types;
 
 namespace CIFactory.NAnt.Tasks
 {

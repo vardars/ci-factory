@@ -102,7 +102,7 @@ namespace CIFactory.NAnt.Tasks
                 Writer = this.GetWriter();
                 Writer.WriteLine("<?xml version='1.0' encoding='utf-8' ?>");
                 if (string.IsNullOrEmpty(this.ProjectName))
-                    Writer.WriteLine("<project xmlns='http://nant.sf.net/schemas/nant.xsd'>");
+                    Writer.WriteLine(string.Format("<project xmlns='http://nant.sf.net/schemas/nant.xsd'  name='{0}'>", System.Guid.NewGuid().ToString()));
                 else
                     Writer.WriteLine(string.Format("<project xmlns='http://nant.sf.net/schemas/nant.xsd'  name='{0}'>", this.ProjectName));
                 foreach (SaveProperty Property in this.PropertyList)

@@ -7,6 +7,7 @@ using NAnt.Core.Filters;
 using NAnt.Core.Attributes;
 using CIFactory.NAnt.Types;
 using System.Text;
+using NAnt.Core.Types;
 
 namespace CIFactory.NAnt.Tasks
 {

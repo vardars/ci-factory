@@ -8,7 +8,7 @@ using NAnt.Core;
 using NAnt.Core.Attributes;
 using System.Text.RegularExpressions;
 
-namespace CIFactory.NAnt.Types
+namespace NAnt.Core.Types
 {
 
     [ElementName("text")]

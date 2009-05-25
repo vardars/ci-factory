@@ -33,6 +33,8 @@ using System.Xml.Schema;
 using NAnt.Core.Attributes;
 using NAnt.Core.Util;
 using System.Collections.Generic;
+using NAnt.Core.Types;
+using System.Text.RegularExpressions;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -71,6 +73,38 @@ namespace NAnt.Core.Tasks {
 
         #region Public Instance Properties
 
+        private TextElement[] _PropertyIncludes;
+        [BuildElementArray("propertyinclude", ElementType = typeof(TextElement))]
+        public TextElement[] PropertyIncludes
+        {
+            get
+            {
+                if (_PropertyIncludes == null)
+                    _PropertyIncludes = new TextElement[] { };
+                return _PropertyIncludes;
+            }
+            set
+            {
+                _PropertyIncludes = value;
+            }
+        }
+
+        private TextElement[] _PropertyExcludes;
+        [BuildElementArray("propertyexclude", ElementType = typeof(TextElement))]
+        public TextElement[] PropertyExcludes
+        {
+            get
+            {
+                if (_PropertyExcludes == null)
+                    _PropertyExcludes = new TextElement[] { };
+                return _PropertyExcludes;
+            }
+            set
+            {
+                _PropertyExcludes = value;
+            }
+        }
+        
         public List<Type> AttributeTypes
         {
             get
@@ -130,22 +164,28 @@ namespace NAnt.Core.Tasks {
         }
 
         [ReflectionPermission(SecurityAction.Demand, Flags=ReflectionPermissionFlag.NoFlags)]
-        protected override void ExecuteTask() {
+        protected override void ExecuteTask()
+        {
             List<Type> taskTypes;
             List<Type> dataTypes;
-            
-            if (ForType == null) {
+
+            if (ForType == null)
+            {
                 taskTypes = new List<Type>(TypeFactory.TaskBuilders.Count);
                 dataTypes = new List<Type>(TypeFactory.DataTypeBuilders.Count);
 
-                foreach (TaskBuilder tb in TypeFactory.TaskBuilders) {
+                foreach (TaskBuilder tb in TypeFactory.TaskBuilders)
+                {
                     taskTypes.Add(tb.Type);
                 }
 
-                foreach (DataTypeBaseBuilder db in TypeFactory.DataTypeBuilders) {
+                foreach (DataTypeBaseBuilder db in TypeFactory.DataTypeBuilders)
+                {
                     dataTypes.Add(db.Type);
                 }
-            } else {
+            }
+            else
+            {
                 taskTypes = new List<Type>(1);
                 taskTypes.Add(Type.GetType(ForType, true, true));
                 dataTypes = new List<Type>();
@@ -154,9 +194,36 @@ namespace NAnt.Core.Tasks {
             taskTypes.ForEach(AddAttributeType);
             dataTypes.ForEach(AddAttributeType);
 
-            FileIOPermission FilePermission = new FileIOPermission(FileIOPermissionAccess.AllAccess, OutputFile.FullName);             FilePermission.Assert();
-            using (FileStream file = File.Open(OutputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, new List<String>(this.Properties.Keys.OfType<String>()), TargetNamespace);
+            FileIOPermission FilePermission = new FileIOPermission(FileIOPermissionAccess.AllAccess, OutputFile.FullName);
+            FilePermission.Assert();
+
+            using (FileStream file = File.Open(OutputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read))
+            {
+                List<string> properties = new List<String>(this.Properties.Keys.OfType<String>().Where(delegate(String name) 
+                    {
+                        bool shouldInclude = false;
+                        if (this.PropertyIncludes.Length == 0)
+                            shouldInclude = true;
+                        foreach (String pattern in this.PropertyIncludes.Select(element => element.Value))
+                        {
+                            if (Regex.IsMatch(name, pattern))
+                            {
+                                shouldInclude = true;
+                                break;
+                            }
+                        }
+
+                        foreach (String pattern in this.PropertyExcludes.Select(element => element.Value))
+                        {
+                            if (Regex.IsMatch(name, pattern))
+                            {
+                                shouldInclude = false;
+                                break;
+                            }
+                        }
+                        return shouldInclude;
+                    }));
+                WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, properties, TargetNamespace);
 
                 file.Flush();
                 file.Close();
@@ -653,6 +720,7 @@ namespace NAnt.Core.Tasks {
                     restriction.Facets.Add(enumeration);
                     enumeration.Value = "${}";
 
+                    this.PropertyNames.Sort();
                     foreach (String PropertyName in this.PropertyNames)
                     {
                         XmlSchemaEnumerationFacet property = new XmlSchemaEnumerationFacet();

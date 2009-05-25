@@ -134,7 +134,6 @@
     <Compile Include="Types\StringList.cs" />
     <Compile Include="Tasks\SwitchTask.cs" />
     <Compile Include="Types\TargetSet.cs" />
-    <Compile Include="Types\TextElement.cs" />
     <Compile Include="Tasks\WaitForExit.cs" />
     <Compile Include="Tasks\Write.cs" />
     <Compile Include="Types\XmlQuery.cs" />
