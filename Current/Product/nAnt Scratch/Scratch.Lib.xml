@@ -1,37 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Scratch.Lib">
 
-  <macrodef name="play">
-    <attributes>
-      <attribute name="dir" type="string" require="true"/>
-    </attributes>
-    <elements>
-      <element name="fileset" type="NAnt.Core.Types.FileSet"/>
-    </elements>
-    <elementgroups>
-      <elementgroup name="includes" type="NAnt.Core.Types.FileSet.Include" elementname="include"/>
-    </elementgroups>
-    <sequential>
-      <fileset id="files">
-        <elementgroup name="includes"/>
-      </fileset>
-      <echo message="${fileset::include-count('files')}"/>
-      <echo message="${fileset::file-count('files')}"/>
-      <echo message="${fileset::get-name-at-index('files', 0)}"/>
-      <foreach item="File" property="file">
-        <in>
-          <items refid="files"/>
-        </in>
-        <do>
-          <echo message="${file} exists ${file::exists(file)}"/>
-        </do>
-      </foreach>
-      <copy todir="${dir}" verbose="true">
-        <fileset refid="files"/>
-      </copy>
-    </sequential>
-  </macrodef>
-  
+
+  <target name="test2">
+    <echo message="${scriptfile::get-current-name()}"/>
+    <echo message="${scriptfile::get-current-file-path()}"/>
+    <echo message="${scriptfile::get-current-directory()}"/>
+  </target>
   <!--
   <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
   <property name="ShouldFix" value="true"/>

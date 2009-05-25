@@ -33,7 +33,7 @@ namespace NAnt.Core.Functions {
     public class AssemblyNameFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public AssemblyNameFunctions(Project project, PropertyDictionary properties) : base(project, properties) {}
+        public AssemblyNameFunctions(Project project, Location location, PropertyDictionary properties) : base(project, location, properties) { }
 
         #endregion Public Instance Constructors
 

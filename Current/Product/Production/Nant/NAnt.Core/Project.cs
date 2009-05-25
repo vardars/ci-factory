@@ -885,6 +885,12 @@ namespace NAnt.Core {
             // store calling target
             Target callingTarget = _currentTarget;
 
+            string JustTargetName = targetName;
+            if (targetName.Contains(this.Properties["ProjectTargetDelimeter"]))
+            {
+                JustTargetName = targetName.Split(this.Properties["ProjectTargetDelimeter"].ToCharArray())[2];
+            }
+
             do {
                 // determine target that should be executed
                 currentTarget = (Target) sortedTargets[currentIndex++];
@@ -897,7 +903,7 @@ namespace NAnt.Core {
                 if (forceDependencies || !currentTarget.Executed) {
                     currentTarget.Execute();
                 }
-            } while (!currentTarget.Name.Equals(targetName));
+            } while (!currentTarget.Name.Equals(JustTargetName));
 
             // restore calling target, as a <call> task might have caused the 
             // current target to be executed and when finished executing this 
@@ -1247,10 +1253,12 @@ namespace NAnt.Core {
                     ResourceUtils.GetString("NA1059"), doc.BaseURI, RootXml));
             }
 
+
+            if (!doc.DocumentElement.HasAttribute(ProjectNameAttribute))
+                throw new BuildException(String.Format("Could not load file {0}, the project name attribute is required!", doc.BaseURI));
+
             // get project attributes
-            if (doc.DocumentElement.HasAttribute(ProjectNameAttribute)) {
-                _projectName = doc.DocumentElement.GetAttribute(ProjectNameAttribute);
-            }
+            _projectName = doc.DocumentElement.GetAttribute(ProjectNameAttribute);
 
             if (doc.DocumentElement.HasAttribute(ProjectBaseDirAttribute)) {
                 newBaseDir = doc.DocumentElement.GetAttribute(ProjectBaseDirAttribute);
@@ -1306,7 +1314,7 @@ namespace NAnt.Core {
 
         private SubProjectCollection _SubProjects;
 
-        public SubProjectCollection SubProjects
+        public SubProjectCollection ScriptFileInfoList
         {
             get
             {
@@ -1329,13 +1337,13 @@ namespace NAnt.Core {
             // load line and column number information into position map
             LocationMap.Add(doc);
 
-            SubProject subProject = null;
-            if (doc.DocumentElement.HasAttribute(ProjectNameAttribute))
-            {
-                string subProjectName = doc.DocumentElement.GetAttribute(ProjectNameAttribute);
-                subProject = new SubProject(subProjectName);
-                this.SubProjects.Add(subProject);
-            }
+            if (!doc.DocumentElement.HasAttribute(ProjectNameAttribute))
+                throw new BuildException(String.Format("Could not load file {0}, the project name attribute is required!", doc.BaseURI));
+
+            ScriptFileInfo scriptFileInfo = null;
+            string scriptProjectName = doc.DocumentElement.GetAttribute(ProjectNameAttribute);
+            scriptFileInfo = new ScriptFileInfo(scriptProjectName, doc);
+            this.ScriptFileInfoList.Add(scriptFileInfo);
 
             // initialize targets first
             foreach (XmlNode childNode in doc.DocumentElement.ChildNodes) {
@@ -1346,11 +1354,29 @@ namespace NAnt.Core {
 
                     target.Project = this;
                     target.Parent = this;
+                    target.ScriptFileInfo = scriptFileInfo;
                     target.NamespaceManager = NamespaceManager;
                     target.Initialize(childNode);
-                    Targets.Add(target);
-                    if (subProject != null)
-                        subProject.Targets.Add(target);
+                    if (Targets.Contains(target.Name))
+                    {
+                        if (target.Override)
+                        {
+                            Targets.Remove(target.Name);
+                            Targets.Add(target);
+                        }
+                        else
+                        {
+                            Log(Level.Warning, "Not adding target {0} from {1} as a target of that name was loaded from {2}", target.Name, scriptFileInfo.FilePath, Targets[target.Name].ScriptFileInfo.FilePath);
+                        }
+                    }
+                    else
+                    {
+                        Targets.Add(target);
+                    }
+
+                    if (scriptFileInfo.Targets.Contains(target.Name))
+                        throw new BuildException(String.Format("The target {0} already exists in the script file {1}.", target.Name, scriptFileInfo.FilePath));
+                    scriptFileInfo.Targets.Add(target);
                 }
             }
 
@@ -1477,6 +1503,24 @@ namespace NAnt.Core {
 
         #endregion Private Instance Methods
 
+        public Target FindTarget(string name)
+        {
+            Target target = null;
+            if (name.Contains(this.Properties["ProjectTargetDelimeter"]))
+            {
+                String ScriptName = name.Split(this.Properties["ProjectTargetDelimeter"].ToCharArray())[0];
+                String TargetName = name.Split(this.Properties["ProjectTargetDelimeter"].ToCharArray())[2];
+                if (this.ScriptFileInfoList[ScriptName].Targets.Contains(TargetName))
+                    target = this.ScriptFileInfoList[ScriptName].Targets[TargetName];
+            }
+            else
+            {
+                if (this.Targets.Contains(name))
+                    target = this.Targets[name];
+            }
+            return target;
+        }
+
         /// <summary>
         /// Topologically sorts a set of targets.
         /// </summary>
@@ -1501,12 +1545,18 @@ namespace NAnt.Core {
             TopologicalTargetSort(root, targets, state, visiting, executeTargets);
             Log(Level.Debug, "Build sequence for target `" + root + "' is " + executeTargets);
             foreach (Target target in targets) {
-                string st = (string) state[target.Name];
+                if (target.Name != FindTarget(root).Name)
+                {
+                    string st = (string)state[target.Name];
 
-                if (st == null) {
-                    TopologicalTargetSort(target.Name, targets, state, visiting, executeTargets);
-                } else if (st == Project.Visiting) {
-                    throw new Exception("Unexpected node in visiting state: " + target.Name);
+                    if (st == null)
+                    {
+                        TopologicalTargetSort(target.Name, targets, state, visiting, executeTargets);
+                    }
+                    else if (st == Project.Visiting)
+                    {
+                        throw new Exception("Unexpected node in visiting state: " + target.Name);
+                    }
                 }
             }
 
@@ -1558,10 +1608,10 @@ namespace NAnt.Core {
             state[root] = Project.Visiting;
             visiting.Push(root);
 
-            Target target = (Target) targets.Find(root);
+            Target target = (Target) FindTarget(root);
             if (target == null) {
                 // check if there's a wildcard target defined
-                target = (Target) targets.Find(WildTarget);
+                target = (Target) FindTarget(WildTarget);
                 if (target != null) {
                     // if a wildcard target exists, then treat the wildcard
                     // target as the requested target

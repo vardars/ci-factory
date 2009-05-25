@@ -30,21 +30,14 @@ namespace NAnt.Core {
 
         /// <summary>
         /// Creates a new instance of the <see cref="DataTypeBaseBuilder" /> class
-        /// for the specified Element class.
-        /// </summary>
-        /// <param name="className">The class representing the Element.</param>
-        public DataTypeBaseBuilder(string className) : this(className, null) {
-        }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="DataTypeBaseBuilder" /> class
         /// for the specified Element class in the assembly specified.
         /// </summary>
         /// <param name="className">The class representing the Element.</param>
         /// <param name="assemblyFileName">The assembly containing the Element.</param>/// 
-        public DataTypeBaseBuilder(string className, string assemblyFileName) {
-            _className = className;
-            _assemblyFileName = assemblyFileName;
+        public DataTypeBaseBuilder(Type dataType) {
+            _Type = dataType;
+            _className = dataType.FullName;
+            _assemblyFileName = dataType.Assembly.Location;
 
             Assembly assembly = GetAssembly();
             // get Element name from attribute
@@ -57,6 +50,13 @@ namespace NAnt.Core {
         #endregion Public Instance Constructors
 
         #region Public Instance Properties
+
+        public Type Type{
+            get
+            {
+                return _Type;
+            }
+        }
 
         public string ClassName {
             get { return _className; }
@@ -125,6 +125,7 @@ namespace NAnt.Core {
 
         string _className;
         string _assemblyFileName;
+        private Type _Type;
         string _elementName;
 
         #endregion Private Instance Fields

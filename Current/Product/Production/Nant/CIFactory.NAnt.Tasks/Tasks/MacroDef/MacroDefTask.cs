@@ -186,7 +186,6 @@ namespace Macrodef
 
         protected override void ExecuteTask()
         {
-            //System.Diagnostics.Debugger.Break();
             macrodefs.Add(_name, this);
 
             CodeCompileUnit compileUnit = GenerateCode();

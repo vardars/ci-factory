@@ -186,6 +186,7 @@ namespace NAnt.Core {
         /// </summary>
         /// <param name="platformNode">An <see cref="XmlNode" /> representing the platform on which NAnt is running.</param>
         private void ProcessFrameworks(XmlNode platformNode) {
+
             // determine the framework family name
             string frameworkFamily = PlatformHelper.IsMono ? "mono" : "net";
             // determine the version of the current runtime framework

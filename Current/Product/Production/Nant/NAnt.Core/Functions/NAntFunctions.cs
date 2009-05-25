@@ -20,6 +20,7 @@
 // Gert Driesen (gert.driesen@ardatis.com)
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Globalization;
 using System.IO;
@@ -43,7 +44,9 @@ namespace NAnt.Core.Functions {
     public class NAntFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public NAntFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public NAntFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -82,11 +85,109 @@ namespace NAnt.Core.Functions {
         #endregion Public Instance Methods
     }
 
+
+    [FunctionSet("scriptfile", "NAnt")]
+    public class ScriptFileFunctions : FunctionSetBase
+    {
+        #region Public Instance Constructors
+
+        public ScriptFileFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
+        }
+
+        #endregion Public Instance Constructors
+
+        #region Public Instance Methods
+
+        [Function("exists")]
+        public bool Exists(string scriptName)
+        {
+            return Project.ScriptFileInfoList.Contains(scriptName);
+        }
+
+        [Function("get-file-Path")]
+        public string GetFilePath(string scriptName)
+        {
+            return Project.ScriptFileInfoList[scriptName].FilePath;
+        }
+
+        [Function("get-directory-Path")]
+        public string GetDirectoryPath(string scriptName)
+        {
+            return Path.GetDirectoryName(Project.ScriptFileInfoList[scriptName].FilePath);
+        }
+
+        [Function("get-name")]
+        public string GetName(string scriptFilePath)
+        {
+            ScriptFileInfo ScriptInfo = null;
+            try
+            {
+                ScriptInfo = this.Project.ScriptFileInfoList.Where(script => script.FilePath == scriptFilePath).Single<ScriptFileInfo>();
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException(String.Format("Could not find script {0}.", scriptFilePath), ex);
+            }
+            return StringUtils.ConvertNullToEmpty(ScriptInfo.ProjectName);
+        }
+
+        [Function("get-current-name")]
+        public string GetCurrentName()
+        {
+            ScriptFileInfo ScriptInfo = null;
+            try
+            {
+                ScriptInfo = this.Project.ScriptFileInfoList.Where(script => script.FilePath == this.Location.FileName).Single<ScriptFileInfo>();
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException("Could not find current script name.", this.Location, ex);
+            }
+            return StringUtils.ConvertNullToEmpty(ScriptInfo.ProjectName);
+        }
+
+        [Function("get-current-file-path")]
+        public string GetCurrentFilePath()
+        {
+            ScriptFileInfo ScriptInfo = null;
+            try
+            {
+                ScriptInfo = this.Project.ScriptFileInfoList.Where(script => script.FilePath == this.Location.FileName).Single<ScriptFileInfo>();
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException("Could not find current script name.", this.Location, ex);
+            }
+            return ScriptInfo.FilePath;
+        }
+
+        [Function("get-current-directory")]
+        public string GetCurrentDirectory()
+        {
+            ScriptFileInfo ScriptInfo = null;
+            try
+            {
+                ScriptInfo = this.Project.ScriptFileInfoList.Where(script => script.FilePath == this.Location.FileName).Single<ScriptFileInfo>();
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException("Could not find current script name.", this.Location, ex);
+            }
+            return Path.GetDirectoryName(ScriptInfo.FilePath);
+        }
+
+        #endregion Public Instance Methods
+    }
+
     [FunctionSet("project", "NAnt")]
     public class ProjectFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public ProjectFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public ProjectFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -164,7 +265,9 @@ namespace NAnt.Core.Functions {
     public class TargetFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public TargetFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public TargetFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -181,7 +284,7 @@ namespace NAnt.Core.Functions {
         /// </returns>
         [Function("exists")]
         public bool Exists(string name) {
-            return (Project.Targets.Find(name) != null);
+            return (Project.FindTarget(name) != null);
         }
 
         /// <summary>
@@ -212,7 +315,7 @@ namespace NAnt.Core.Functions {
         /// <exception cref="ArgumentException">Target <paramref name="name" /> does not exist.</exception>
         [Function("has-executed")]
         public bool HasExecuted(string name) {
-            Target target = Project.Targets.Find(name);
+            Target target = Project.FindTarget(name);
             if (target == null) {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     ResourceUtils.GetString("NA1097"), name));
@@ -228,7 +331,9 @@ namespace NAnt.Core.Functions {
     public class TaskFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public TaskFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public TaskFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -281,7 +386,9 @@ namespace NAnt.Core.Functions {
     public class PropertyFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public PropertyFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public PropertyFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -365,6 +472,12 @@ namespace NAnt.Core.Functions {
             return Project.Properties[propertyName];
         }
 
+        [Function("destroy")]
+        public void Destroy(string propertyName)
+        {
+            Project.Properties.Remove(propertyName);
+        }
+
         #endregion Public Instance Methods
     }
 
@@ -372,7 +485,9 @@ namespace NAnt.Core.Functions {
     public class FrameworkFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public FrameworkFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public FrameworkFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -608,7 +723,9 @@ namespace NAnt.Core.Functions {
     public class PlatformFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public PlatformFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public PlatformFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

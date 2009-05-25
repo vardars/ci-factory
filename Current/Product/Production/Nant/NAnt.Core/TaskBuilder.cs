@@ -35,9 +35,10 @@ namespace NAnt.Core {
         /// </summary>
         /// <param name="className">The class representing the task.</param>
         /// <param name="assemblyFileName">The assembly containing the task.</param>/// 
-        public TaskBuilder(string className, string assemblyFileName) {
-            _className = className;
-            _assemblyFileName = assemblyFileName;
+        public TaskBuilder(Type taskType) {
+            _Type = taskType;
+            _className = taskType.FullName;
+            _assemblyFileName = taskType.Assembly.Location;
 
             // determine from which assembly the task will be created
             Assembly assembly = GetAssembly();
@@ -53,6 +54,14 @@ namespace NAnt.Core {
 
         #region Public Instance Properties
 
+        private Type _Type;
+        public Type Type
+        {
+            get
+            {
+                return _Type;
+            }
+        }
         /// <summary>
         /// Gets the name of the task class that can be created using this
         /// <see cref="TaskBuilder" />.

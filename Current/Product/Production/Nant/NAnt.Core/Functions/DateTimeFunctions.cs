@@ -33,7 +33,9 @@ namespace NAnt.Core.Functions {
     public class DateTimeFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public DateTimeFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public DateTimeFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -210,7 +212,9 @@ namespace NAnt.Core.Functions {
     public class DateTimeConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public DateTimeConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public DateTimeConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

@@ -12,8 +12,8 @@ namespace CIFactory.NAnt.Functions
     {
         #region Constructors
 
-        public XmlQueryFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public XmlQueryFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 

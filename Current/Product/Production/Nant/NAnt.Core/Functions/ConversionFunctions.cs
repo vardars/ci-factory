@@ -34,7 +34,7 @@ namespace NAnt.Core.Functions {
 
         #region Public Instance Constructors
 
-        public ConversionFunctions(Project project, PropertyDictionary propDict ) : base(project, propDict) {}
+        public ConversionFunctions(Project project, Location location, PropertyDictionary propDict) : base(project, location, propDict) { }
 
         #endregion Public Instance Constructors
 

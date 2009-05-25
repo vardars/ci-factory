@@ -11,8 +11,8 @@ namespace CIFactory.NAnt.Functions
     {
         #region Constructors
 
-        public FilterChainFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public FilterChainFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 

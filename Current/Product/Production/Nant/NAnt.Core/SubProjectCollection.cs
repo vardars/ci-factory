@@ -14,9 +14,9 @@ using NAnt.Core.Util;
 
 namespace NAnt.Core
 {
-    public class SubProjectCollection : System.Collections.ObjectModel.KeyedCollection<string, SubProject>
+    public class SubProjectCollection : System.Collections.ObjectModel.KeyedCollection<string, ScriptFileInfo>
     {
-        protected override string GetKeyForItem(SubProject item)
+        protected override string GetKeyForItem(ScriptFileInfo item)
         {
             return item.ProjectName;
         }

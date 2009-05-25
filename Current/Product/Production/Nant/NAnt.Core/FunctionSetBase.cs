@@ -27,8 +27,11 @@ namespace NAnt.Core {
     public abstract class FunctionSetBase {
         #region Protected Instance Constructors
 
-        protected FunctionSetBase(Project project, PropertyDictionary properties) {
+        protected FunctionSetBase(Project project, Location location, PropertyDictionary properties)
+        {
             _project = project;
+            _properties = properties;
+            _location = location;
         }
         
         #endregion Protected Instance Constructors
@@ -47,11 +50,36 @@ namespace NAnt.Core {
             set { _project = value; }
         }
 
+        public virtual PropertyDictionary Properties {
+            get
+            {
+                return _properties;
+            }
+            set
+            {
+                _properties = value;
+            }
+        }
+
+        public virtual Location Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+            	_location = value;
+            }
+        }
+
         #endregion Public Instance Properties
 
         #region Private Instance Fields
 
         private Project _project = null;
+        private PropertyDictionary _properties = null;
+        private Location _location = null;
 
         #endregion Private Instance Fields
     }

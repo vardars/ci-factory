@@ -34,7 +34,7 @@ namespace NAnt.Core.Functions {
     public class FileVersionInfoFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public FileVersionInfoFunctions(Project project, PropertyDictionary properties) : base(project, properties) {}
+        public FileVersionInfoFunctions(Project project, Location location, PropertyDictionary properties) : base(project, location, properties) { }
 
         #endregion Public Instance Constructors
 

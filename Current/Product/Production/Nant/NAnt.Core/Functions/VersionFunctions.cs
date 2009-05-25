@@ -28,7 +28,9 @@ namespace NAnt.Core.Functions {
     public class VersionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public VersionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public VersionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -121,7 +123,9 @@ namespace NAnt.Core.Functions {
     public class VersionConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public VersionConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public VersionConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

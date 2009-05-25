@@ -29,7 +29,9 @@ namespace NAnt.Core.Functions {
     public class BooleanConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public BooleanConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public BooleanConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

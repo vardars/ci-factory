@@ -119,6 +119,15 @@ namespace NAnt.Core.Tasks {
 
         #region Override implementation of Task
 
+        public string JustTargetName()
+        {
+            if (this.TargetName.Contains(this.Properties["ProjectTargetDelimeter"]))
+            {
+                return this.TargetName.Split(this.Properties["ProjectTargetDelimeter"].ToCharArray())[2];
+            }
+            return this.TargetName;
+        }
+
         /// <summary>
         /// Executes the specified target.
         /// </summary>
@@ -131,10 +140,11 @@ namespace NAnt.Core.Tasks {
 
                 // check if owning target is part of list of targets that will
                 // be executed again
-                if (targets.Find(owningTarget.Name) != null) {
+                if (targets.Contains(owningTarget.Name)) {
                     // check if owning target is actually a dependency of the 
                     // target that should be executed
-                    if (targets.IndexOf(targets.Find(owningTarget.Name)) < targets.IndexOf(targets.Find(TargetName))) {
+                    if (targets.IndexOf(targets[owningTarget.Name]) < targets.IndexOf(targets[JustTargetName()]))
+                    {
                         throw new BuildException("Circular dependency: " + targets.ToString(" <- ") + " <- " + owningTarget.Name);
                     }
                 }
@@ -149,7 +159,7 @@ namespace NAnt.Core.Tasks {
         /// </summary>
         /// <param name="taskNode">The task XML node.</param>
         protected override void InitializeTask(System.Xml.XmlNode taskNode) {
-            Target target = Project.Targets.Find(TargetName);
+            Target target = Project.FindTarget(TargetName);
             if (target != null) {
                 Target owningTarget = Parent as Target;
 

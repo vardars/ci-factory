@@ -14,26 +14,48 @@ using NAnt.Core.Util;
 
 namespace NAnt.Core
 {
-    public class SubProject
+    public class ScriptFileInfo
     {
         #region Fields
 
+        private XmlDocument _Document;
+        private String _FilePath = null;
         private string _ProjectName;
-
         private TargetCollection _Targets;
 
         #endregion
 
         #region Constructors
 
-        public SubProject(string projectName)
+        public ScriptFileInfo(string projectName, XmlDocument doc)
         {
             _ProjectName = projectName;
+            _Document = doc;
         }
 
         #endregion
 
         #region Properties
+
+
+        public XmlDocument Document
+        {
+            get { return _Document; }
+            set { _Document = value; }
+        }
+
+        public String FilePath
+        {
+            get
+            {
+                if (_FilePath == null)
+                {
+                    Uri uri = new Uri(this.Document.BaseURI);
+                    _FilePath = uri.LocalPath;
+                }
+                return _FilePath;
+            }
+        }
 
         public string ProjectName
         {

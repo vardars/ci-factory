@@ -34,7 +34,9 @@ namespace NAnt.Core.Functions {
     public class PathFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public PathFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public PathFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

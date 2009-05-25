@@ -29,7 +29,9 @@ namespace NAnt.Core.Functions {
     public class DoubleConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public DoubleConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public DoubleConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

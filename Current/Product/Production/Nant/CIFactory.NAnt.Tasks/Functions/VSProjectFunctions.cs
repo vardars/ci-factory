@@ -15,13 +15,13 @@ namespace CIFactory.NAnt.Functions
 
         #region Constructors
 
-        public VSProjectFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public VSProjectFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
         }
 
         public VSProjectFunctions()
-            : base(null, null)
+            : base(null, null, null)
         {
         }
 

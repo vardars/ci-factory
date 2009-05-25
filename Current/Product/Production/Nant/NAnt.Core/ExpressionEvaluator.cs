@@ -36,13 +36,16 @@ namespace NAnt.Core {
         private Hashtable _state;
         private Stack _visiting;
         private Project _project;
+        private Location _location;
 
         #endregion Private Instance Fields
 
         #region Public Instance Constructors
 
-        public ExpressionEvaluator(Project project, PropertyDictionary properties, Hashtable state, Stack visiting) {
+        public ExpressionEvaluator(Project project, Location location, PropertyDictionary properties, Hashtable state, Stack visiting)
+        {
             _project = project;
+            _location = location;
             _properties = properties;
             _state = state;
             _visiting = visiting;
@@ -87,8 +90,8 @@ namespace NAnt.Core {
                     return methodInfo.Invoke(this, args);
                 } else {
                     // create new instance.
-                    ConstructorInfo constructor = methodInfo.DeclaringType.GetConstructor(new Type[] {typeof(Project), typeof(PropertyDictionary)});
-                    object o = constructor.Invoke(new object[] {_project, _properties});
+                    ConstructorInfo constructor = methodInfo.DeclaringType.GetConstructor(new Type[] {typeof(Project), typeof(Location), typeof(PropertyDictionary)});
+                    object o = constructor.Invoke(new object[] {_project, _location, _properties});
 
                     return methodInfo.Invoke(o, args);
                 }

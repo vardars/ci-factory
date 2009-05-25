@@ -19,6 +19,7 @@
 // Jaroslaw Kowalski (jkowalski@users.sourceforge.net)
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -31,6 +32,7 @@ using System.Xml.Schema;
 
 using NAnt.Core.Attributes;
 using NAnt.Core.Util;
+using System.Collections.Generic;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -54,6 +56,7 @@ namespace NAnt.Core.Tasks {
     public class NAntSchemaTask : Task {
         #region Private Instance Fields
 
+        private List<Type> _AttributeTypes = new List<Type>();
         private FileInfo _outputFile;
         private string _forType = null;
         private string _targetNamespace = "http://tempuri.org/nant-donotuse.xsd";
@@ -68,6 +71,17 @@ namespace NAnt.Core.Tasks {
 
         #region Public Instance Properties
 
+        public List<Type> AttributeTypes
+        {
+            get
+            {
+                return _AttributeTypes;
+            }
+            set
+            {
+                _AttributeTypes = value;
+            }
+        }
         /// <summary>
         /// The name of the output file to which the XSD should be written.
         /// </summary>
@@ -100,32 +114,49 @@ namespace NAnt.Core.Tasks {
 
         #region Override implementation of Task
 
+        public void AddAttributeType (Type elementType)
+        {
+            elementType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(property => property.GetCustomAttributes(typeof(TaskAttributeAttribute), false).Length == 1)
+                .Select(property => property.PropertyType)
+                .Distinct()
+                .ToList()
+                .ForEach(delegate(Type attributeType)
+                    {
+                        if (!this.AttributeTypes.Contains(attributeType))
+                            this.AttributeTypes.Add(attributeType);
+                    }
+                );
+        }
+
         [ReflectionPermission(SecurityAction.Demand, Flags=ReflectionPermissionFlag.NoFlags)]
         protected override void ExecuteTask() {
-            ArrayList taskTypes;
-            ArrayList dataTypes;
-
+            List<Type> taskTypes;
+            List<Type> dataTypes;
+            
             if (ForType == null) {
-                taskTypes = new ArrayList(TypeFactory.TaskBuilders.Count);
-                dataTypes = new ArrayList(TypeFactory.DataTypeBuilders.Count);
+                taskTypes = new List<Type>(TypeFactory.TaskBuilders.Count);
+                dataTypes = new List<Type>(TypeFactory.DataTypeBuilders.Count);
 
                 foreach (TaskBuilder tb in TypeFactory.TaskBuilders) {
-                    taskTypes.Add(Assembly.LoadFrom(tb.AssemblyFileName).GetType(tb.ClassName, true, true));
+                    taskTypes.Add(tb.Type);
                 }
 
                 foreach (DataTypeBaseBuilder db in TypeFactory.DataTypeBuilders) {
-                    dataTypes.Add(Assembly.LoadFrom(db.AssemblyFileName).GetType(db.ClassName, true, true));
+                    dataTypes.Add(db.Type);
                 }
             } else {
-                taskTypes = new ArrayList(1);
+                taskTypes = new List<Type>(1);
                 taskTypes.Add(Type.GetType(ForType, true, true));
-                dataTypes = new ArrayList();
+                dataTypes = new List<Type>();
             }
-            
+
+            taskTypes.ForEach(AddAttributeType);
+            dataTypes.ForEach(AddAttributeType);
+
             FileIOPermission FilePermission = new FileIOPermission(FileIOPermissionAccess.AllAccess, OutputFile.FullName);             FilePermission.Assert();
             using (FileStream file = File.Open(OutputFile.FullName, FileMode.Create, FileAccess.Write, FileShare.Read)) {
-                WriteSchema(file, (Type[]) taskTypes.ToArray(typeof(Type)), 
-                    (Type[]) dataTypes.ToArray(typeof(Type)), TargetNamespace);
+                WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, new List<String>(this.Properties.Keys.OfType<String>()), TargetNamespace);
 
                 file.Flush();
                 file.Close();
@@ -146,8 +177,9 @@ namespace NAnt.Core.Tasks {
         /// <param name="dataTypes">The list of datatypes to generate XML Schema for.</param>
         /// <param name="targetNS">The target namespace to output.</param>
         /// <returns>The new NAnt Schema.</returns>
-        public static XmlSchema WriteSchema(System.IO.Stream stream, Type[] tasks, Type[] dataTypes, string targetNS) {
-            NAntSchemaGenerator gen = new NAntSchemaGenerator(tasks, dataTypes, targetNS);
+        public static XmlSchema WriteSchema(System.IO.Stream stream, List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, string targetNS)
+        {
+            NAntSchemaGenerator gen = new NAntSchemaGenerator(tasks, dataTypes, attributeTypes, propertyNames, targetNS);
 
             if (!gen.Schema.IsCompiled) {
                 gen.Compile();
@@ -168,20 +200,61 @@ namespace NAnt.Core.Tasks {
             return type.ToString().Replace("+", "-").Replace("[", "_").Replace("]", "_");
         }
 
+        protected static string GenerateSimpleIDFromType(Type type)
+        {
+            if (type.Equals(typeof(Boolean)) || type.Equals(typeof(bool)))
+            {
+                return "CIFactory.Boolean";
+            }
+            else if (type.IsSubclassOf(typeof(Enum)))
+            {
+                return type.ToString().Replace("+", "-").Replace("[", "_").Replace("]", "_");
+            }
+            else if (type.Equals(typeof(PropertyTask)))
+            {
+                return "CIFactory.Properties";
+            }
+            else
+            {
+                return "CIFactory.String";
+            }
+            
+        }
+
         /// <summary>
         /// Creates a new <see cref="XmlSchemaAttribute" /> instance.
         /// </summary>
         /// <param name="name">The name of the attribute.</param>
         /// <param name="required">Value indicating whether the attribute should be required.</param>
         /// <returns>The new <see cref="XmlSchemaAttribute" /> instance.</returns>
-        protected static XmlSchemaAttribute CreateXsdAttribute(string name, bool required) {
+        protected static XmlSchemaAttribute CreateXsdAttribute(string name, bool required, String type, String nameSpace) {
             XmlSchemaAttribute newAttr = new XmlSchemaAttribute();
 
             newAttr.Name= name;
 
+            newAttr.SchemaTypeName = new XmlQualifiedName(type, nameSpace);
+
             if (required) {
                 newAttr.Use = XmlSchemaUse.Required;
             } else {
+                newAttr.Use = XmlSchemaUse.Optional;
+            }
+
+            return newAttr;
+        }
+
+        protected static XmlSchemaAttribute CreateXsdAttribute(string name, bool required)
+        {
+            XmlSchemaAttribute newAttr = new XmlSchemaAttribute();
+
+            newAttr.Name = name;
+
+            if (required)
+            {
+                newAttr.Use = XmlSchemaUse.Required;
+            }
+            else
+            {
                 newAttr.Use = XmlSchemaUse.Optional;
             }
 
@@ -220,8 +293,9 @@ namespace NAnt.Core.Tasks {
             #region Private Instance Fields
 
             private IDictionary _nantComplexTypes;
+            private HybridDictionary _nantSimpleTypes;
             private XmlSchemaComplexType _targetCT;
-            private ArrayList _TaskContainerComplexTypes;
+            private List<XmlSchemaComplexType> _TaskContainerComplexTypes;
             private XmlSchema _nantSchema = new XmlSchema();
 
             #endregion Private Instance Fields
@@ -237,8 +311,9 @@ namespace NAnt.Core.Tasks {
             /// <param name="targetNS">The namespace to use.
             /// <example> http://tempuri.org/nant.xsd </example>
             /// </param>
-            public NAntSchemaGenerator(Type[] tasks, Type[] dataTypes, string targetNS)
+            public NAntSchemaGenerator(List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, string targetNS)
             {
+                PropertyNames = propertyNames;
                 //setup namespace stuff
                 if (targetNS != null)
                 {
@@ -252,7 +327,8 @@ namespace NAnt.Core.Tasks {
                 _nantSchema.ElementFormDefault = XmlSchemaForm.Qualified;
 
                 // initialize stuff
-                _nantComplexTypes = new HybridDictionary(tasks.Length + dataTypes.Length);
+                _nantComplexTypes = new HybridDictionary(tasks.Count + dataTypes.Count);
+                _nantSimpleTypes = new HybridDictionary(attributeTypes.Count);
 
                 XmlSchemaAnnotation schemaAnnotation = new XmlSchemaAnnotation();
                 XmlSchemaDocumentation schemaDocumentation = new XmlSchemaDocumentation();
@@ -263,8 +339,15 @@ namespace NAnt.Core.Tasks {
                 schemaAnnotation.Items.Add(schemaDocumentation);
                 _nantSchema.Items.Add(schemaAnnotation);
 
+                FindOrCreateSimpleType(typeof(PropertyTask));
+                FindOrCreateSimpleType(typeof(String));
+                foreach (Type attributeType in attributeTypes)
+                {
+                    FindOrCreateSimpleType(attributeType);
+                }
+
                 // create temp list of taskcontainer Complex Types
-                TaskContainerComplexTypes = new ArrayList();
+                TaskContainerComplexTypes = new List<XmlSchemaComplexType>();
 
                 XmlSchemaComplexType containerCT = FindOrCreateComplexType(typeof(TaskContainer));
                 if (containerCT.Particle == null)
@@ -276,7 +359,7 @@ namespace NAnt.Core.Tasks {
                 TaskContainerComplexTypes.Add(containerCT);
 
                 // create temp list of task Complex Types
-                ArrayList dataTypeComplexTypes = new ArrayList(dataTypes.Length);
+                List<XmlSchemaComplexType> dataTypeComplexTypes = new List<XmlSchemaComplexType>(dataTypes.Count);
 
                 foreach (Type t in dataTypes)
                 {
@@ -350,6 +433,9 @@ namespace NAnt.Core.Tasks {
                 // unless attribute
                 _targetCT.Attributes.Add(CreateXsdAttribute("unless", false));
 
+
+                _targetCT.Attributes.Add(CreateXsdAttribute("override", false));
+
                 _nantSchema.Items.Add(_targetCT);
 
                 Compile();
@@ -380,7 +466,8 @@ namespace NAnt.Core.Tasks {
 
             #region Public Instance Properties
 
-            public ArrayList TaskContainerComplexTypes
+            public List<string> PropertyNames { get; set; }
+            public List<XmlSchemaComplexType> TaskContainerComplexTypes
             {
                 get
                 {
@@ -413,11 +500,12 @@ namespace NAnt.Core.Tasks {
 
             #region Protected Instance Methods
 
-            protected XmlSchemaComplexType CreateTaskListComplexType(Type[] tasks) {
-                return CreateTaskListComplexType(tasks, new Type[0], false);
+            protected XmlSchemaComplexType CreateTaskListComplexType(List<Type> tasks) {
+                return CreateTaskListComplexType(tasks, new List<Type>(), false);
             }
 
-            protected XmlSchemaComplexType CreateTaskListComplexType(Type[] tasks, Type[] dataTypes, bool includeProjectLevelItems) {
+            protected XmlSchemaComplexType CreateTaskListComplexType(List<Type> tasks, List<Type> dataTypes, bool includeProjectLevelItems)
+            {
                 XmlSchemaComplexType tasklistCT = new XmlSchemaComplexType();
                 XmlSchemaChoice choice = new XmlSchemaChoice();
                 choice.MinOccurs = 0;
@@ -475,6 +563,15 @@ namespace NAnt.Core.Tasks {
                 }
             }
 
+            protected XmlSchemaSimpleType FindSimpleTypeByID(string id)
+            {
+                if (_nantSimpleTypes.Contains(id))
+                {
+                    return (XmlSchemaSimpleType)_nantSimpleTypes[id];
+                }
+                return null;
+            }
+
             protected XmlSchemaComplexType FindComplexTypeByID(string id) {
                 if (_nantComplexTypes.Contains(id)) {
                     return (XmlSchemaComplexType)_nantComplexTypes[id];
@@ -482,23 +579,142 @@ namespace NAnt.Core.Tasks {
                 return null;
             }
 
-            protected XmlSchemaComplexType FindOrCreateComplexType(Type t)
+            protected XmlSchemaSimpleType FindOrCreateSimpleType(Type type)
             {
-                XmlSchemaComplexType ct;
-                string typeId = GenerateIDFromType(t);
+                XmlSchemaSimpleType simpleType;
+                string typeId = GenerateSimpleIDFromType(type);
 
-                ct = FindComplexTypeByID(typeId);
-                if (ct != null)
+                simpleType = FindSimpleTypeByID(typeId);
+                if (simpleType != null)
                 {
-                    return ct;
+                    return simpleType;
                 }
 
-                ct = new XmlSchemaComplexType();
-                ct.Name = typeId;
+                simpleType = new XmlSchemaSimpleType();
+                simpleType.Name = typeId;
+
+                _nantSimpleTypes.Add(typeId, simpleType);
+
+                if (type.Equals(typeof(Boolean)) || type.Equals(typeof(bool)))
+                {
+                    XmlSchemaSimpleTypeUnion union = new XmlSchemaSimpleTypeUnion();
+                    simpleType.Content = union;
+
+                    XmlSchemaSimpleType boolType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(boolType);
+                    XmlSchemaSimpleTypeRestriction boolRestriction = new XmlSchemaSimpleTypeRestriction();
+                    boolRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+                    boolType.Content = boolRestriction;
+                    XmlSchemaEnumerationFacet trueValue = new XmlSchemaEnumerationFacet();
+                    boolRestriction.Facets.Add(trueValue);
+                    trueValue.Value = "True";
+                    XmlSchemaEnumerationFacet falseValue = new XmlSchemaEnumerationFacet();
+                    boolRestriction.Facets.Add(falseValue);
+                    falseValue.Value = "False";
+
+                    XmlSchemaSimpleType propertiesType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(propertiesType);
+                    XmlSchemaSimpleTypeRestriction propertyRestriction = new XmlSchemaSimpleTypeRestriction();
+                    propertiesType.Content = propertyRestriction;
+                    propertyRestriction.BaseTypeName = new XmlQualifiedName("CIFactory.Properties", _nantSchema.TargetNamespace);
+                }
+                else if (type.IsSubclassOf(typeof(Enum)))
+                {
+                    XmlSchemaSimpleTypeUnion union = new XmlSchemaSimpleTypeUnion();
+                    simpleType.Content = union;
+
+                    XmlSchemaSimpleType boolType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(boolType);
+                    XmlSchemaSimpleTypeRestriction enumRestriction = new XmlSchemaSimpleTypeRestriction();
+                    boolType.Content = enumRestriction;
+                    enumRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+
+                    foreach (String EnumName in System.Enum.GetNames(type))
+                    {
+                        XmlSchemaEnumerationFacet enumValue = new XmlSchemaEnumerationFacet();
+                        enumRestriction.Facets.Add(enumValue);
+                        enumValue.Value = EnumName;
+                    }
+
+                    XmlSchemaSimpleType propertiesType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(propertiesType);
+                    XmlSchemaSimpleTypeRestriction propertyRestriction = new XmlSchemaSimpleTypeRestriction();
+                    propertiesType.Content = propertyRestriction;
+                    propertyRestriction.BaseTypeName = new XmlQualifiedName("CIFactory.Properties", _nantSchema.TargetNamespace);
+                }
+                else if (type.Equals(typeof(PropertyTask)))
+                {
+                    XmlSchemaSimpleTypeRestriction restriction = new XmlSchemaSimpleTypeRestriction();
+                    simpleType.Content = restriction;
+
+                    restriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+
+                    XmlSchemaEnumerationFacet enumeration = new XmlSchemaEnumerationFacet();
+                    restriction.Facets.Add(enumeration);
+                    enumeration.Value = "${}";
+
+                    foreach (String PropertyName in this.PropertyNames)
+                    {
+                        XmlSchemaEnumerationFacet property = new XmlSchemaEnumerationFacet();
+                        restriction.Facets.Add(property);
+                        property.Value = String.Format("${{{0}}}", PropertyName);
+                    }
+                }
+                else
+                {
+                    XmlSchemaSimpleTypeUnion union = new XmlSchemaSimpleTypeUnion();
+                    simpleType.Content = union;
+
+                    XmlSchemaSimpleType wildcardType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(wildcardType);
+                    XmlSchemaSimpleTypeRestriction wildcardRestriction = new XmlSchemaSimpleTypeRestriction();
+                    wildcardType.Content = wildcardRestriction;
+                    wildcardRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+                    XmlSchemaPatternFacet wildcard = new XmlSchemaPatternFacet();
+                    wildcardRestriction.Facets.Add(wildcard);
+                    wildcard.Value = ".*"; 
+
+                    XmlSchemaSimpleType propertiesType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(propertiesType);
+                    XmlSchemaSimpleTypeRestriction propertyRestriction = new XmlSchemaSimpleTypeRestriction();
+                    propertiesType.Content = propertyRestriction;
+                    propertyRestriction.BaseTypeName = new XmlQualifiedName("CIFactory.Properties", _nantSchema.TargetNamespace);
+                }
+
+                Schema.Items.Add(simpleType);
+                Compile();
+
+                return simpleType;
+            }
+
+            protected XmlSchemaComplexType FindOrCreateComplexType(Type type)
+            {
+                XmlSchemaComplexType complexType;
+                string typeId = GenerateIDFromType(type);
+
+                complexType = FindComplexTypeByID(typeId);
+                if (complexType != null)
+                {
+                    return complexType;
+                }
+
+                complexType = new XmlSchemaComplexType();
+                complexType.Name = typeId;
 
                 // add complex type to collection immediately to avoid stack 
                 // overflows, when we allow a type to be nested
-                _nantComplexTypes.Add(typeId, ct);
+                _nantComplexTypes.Add(typeId, complexType);
+
+                type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(property => property.GetCustomAttributes(typeof(TaskAttributeAttribute), false).Length == 1)
+                .Select(property => property.PropertyType)
+                .Distinct()
+                .ToList()
+                .ForEach(delegate(Type attributeType)
+                {
+                    this.FindOrCreateSimpleType(attributeType);
+                }
+                );
 
 #if NOT_IMPLEMENTED
                 //
@@ -512,9 +728,9 @@ namespace NAnt.Core.Tasks {
 #endif
 
                 XmlSchemaSequence group1 = null;
-                XmlSchemaObjectCollection attributesCollection = ct.Attributes;
+                XmlSchemaObjectCollection attributesCollection = complexType.Attributes;
 
-                foreach (MemberInfo memInfo in t.GetMembers(BindingFlags.Instance | BindingFlags.Public))
+                foreach (MemberInfo memInfo in type.GetMembers(BindingFlags.Instance | BindingFlags.Public))
                 {
                     if (memInfo.DeclaringType.Equals(typeof(object)))
                     {
@@ -533,7 +749,7 @@ namespace NAnt.Core.Tasks {
 
                     if (taskAttrAttr != null)
                     {
-                        XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required);
+                        XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, GenerateSimpleIDFromType(((PropertyInfo)memInfo).PropertyType), _nantSchema.TargetNamespace);
                         attributesCollection.Add(newAttr);
                     }
                     else if (buildElemAttr != null)
@@ -659,17 +875,17 @@ namespace NAnt.Core.Tasks {
                         if (group1 == null)
                         {
                             group1 = CreateXsdSequence(0, Decimal.MaxValue);
-                            ct.Particle = group1;
+                            complexType.Particle = group1;
                         }
 
                         group1.Items.Add(childElement);
                     }
                 }
 
-                Schema.Items.Add(ct);
+                Schema.Items.Add(complexType);
                 Compile();
 
-                return ct;
+                return complexType;
             }
 
             #endregion Protected Instance Methods

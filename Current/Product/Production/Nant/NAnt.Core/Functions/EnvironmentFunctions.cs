@@ -37,7 +37,9 @@ namespace NAnt.Core.Functions {
     public class EnvironmentFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public EnvironmentFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public EnvironmentFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

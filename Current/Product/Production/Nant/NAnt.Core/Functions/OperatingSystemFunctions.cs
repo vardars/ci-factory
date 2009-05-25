@@ -33,7 +33,7 @@ namespace NAnt.Core.Functions {
     public class OperatingSystemFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public OperatingSystemFunctions(Project project, PropertyDictionary properties) : base(project, properties) {}
+        public OperatingSystemFunctions(Project project, Location location, PropertyDictionary properties) : base(project, location, properties) { }
 
         #endregion Public Instance Constructors
 

@@ -54,6 +54,18 @@ namespace NAnt.Core {
 
         #region Public Instance Properties
 
+        private ScriptFileInfo _ScriptFileInfo;
+        public NAnt.Core.ScriptFileInfo ScriptFileInfo
+        {
+            get
+            {
+                return _ScriptFileInfo;
+            }
+            set
+            {
+                _ScriptFileInfo = value;
+            }
+        }
         /// <summary>
         /// This indicates whether the target has already executed.
         /// </summary>
@@ -180,6 +192,22 @@ namespace NAnt.Core {
                         Dependencies.Add(dependency);
                     }
                 }
+            }
+        }
+
+        private bool _override = false;
+
+        [TaskAttribute("override", Required = false)]
+        [BooleanValidator()]
+        public bool Override
+        {
+            get
+            {
+                return this._override;
+            }
+            set
+            {
+            	 this._override = value;
             }
         }
 

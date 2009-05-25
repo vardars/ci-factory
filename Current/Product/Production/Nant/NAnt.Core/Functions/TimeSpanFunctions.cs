@@ -32,7 +32,9 @@ namespace NAnt.Core.Functions {
     public class TimeSpanFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public TimeSpanFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public TimeSpanFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
@@ -276,7 +278,9 @@ namespace NAnt.Core.Functions {
     public class TimeSpanConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public TimeSpanConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public TimeSpanConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

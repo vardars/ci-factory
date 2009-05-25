@@ -71,7 +71,7 @@ namespace CIFactory.NAnt.UnitTest.Tasks
 
         #region Public Methods
 
-        public void TryRun(string targetName, SubProject fixtureProject)
+        public void TryRun(string targetName, ScriptFileInfo fixtureProject)
         {
             if (fixtureProject.Targets.Contains(targetName))
             {
@@ -94,9 +94,9 @@ namespace CIFactory.NAnt.UnitTest.Tasks
 
             foreach (String Fixture in Fixtures)
             {
-                if (!this.Project.SubProjects.Contains(Fixture))
+                if (!this.Project.ScriptFileInfoList.Contains(Fixture))
                     throw new BuildException(string.Format("There is no fixture loaded for {0}.", Fixture), this.Location);
-                SubProject FixtureProject = this.Project.SubProjects[Fixture];
+                ScriptFileInfo FixtureProject = this.Project.ScriptFileInfoList[Fixture];
 
                 FixtureReport fixtureReport = new FixtureReport(Fixture);
                 Report.FixtureReports.Add(fixtureReport);

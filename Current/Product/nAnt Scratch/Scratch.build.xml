@@ -6,41 +6,15 @@
 
 	<include buildfile="..\..\Build\Properties.Build.xml"/>
 	<include buildfile="Scratch.Lib.xml"/>
+  
+  <target name="test">
 
-	<target name="test">
-    <propertystructure>
-      <test readonly="true" dynamic="true">${person.one.lastname}</test>
-      <person>
-        <one>
-          <firstname>jay</firstname>
-          <lastname>flowers</lastname>
-        </one>
-        <two>
-          <firstname>jay</firstname>
-          <lastname>${person.one.lastname}</lastname>
-        </two>
-      </person>
-      <something>else</something>
-      <something>
-        <more>${something}</more>
-      </something>
-    </propertystructure>
-
-    <echo message="${test}"/>
-    <property name="test" value="Bye"/>
-    <echo message="${test}"/>
+    <property name="SchemaFile" value="${ProductDirectory}\NAnt.xsd"/>
     
-    <echo message="${something.more}"/>
+    <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd"/>
+    
+  </target>
 
-    <loopthrough property="property">
-      <items>
-        <propertystructureiterator name="person"/>
-      </items>
-      <do>
-        <echo message="${property}==${property::get-value(property)}"/>
-      </do>
-    </loopthrough>
-	</target>
 
 	<target name="Fail">
 		<echo message="Boo!"/>

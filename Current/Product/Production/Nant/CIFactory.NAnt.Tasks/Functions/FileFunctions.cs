@@ -16,8 +16,8 @@ namespace CIFactory.NAnt.Functions
     {
         #region Constructors
 
-        public FileFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public FileFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
 
         }

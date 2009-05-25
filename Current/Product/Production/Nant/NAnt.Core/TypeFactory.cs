@@ -445,13 +445,12 @@ namespace NAnt.Core {
         /// </returns>
         private static bool ScanTypeForTasks(Type type, Task task) {
             try {
-                TaskNameAttribute taskNameAttribute = (TaskNameAttribute) 
-                    Attribute.GetCustomAttribute(type, typeof(TaskNameAttribute));
+                TaskNameAttribute taskNameAttribute = (TaskNameAttribute) Attribute.GetCustomAttribute(type, typeof(TaskNameAttribute));
 
                 if (type.IsSubclassOf(typeof(Task)) && !type.IsAbstract && taskNameAttribute != null) {
                     task.Log(Level.Debug, "Creating TaskBuilder for \"{0}\".", 
                         type.Name);
-                    TaskBuilder tb = new TaskBuilder(type.FullName, type.Assembly.Location);
+                    TaskBuilder tb = new TaskBuilder(type);
                     if (TaskBuilders[tb.TaskName] == null) {
                         task.Log(Level.Debug, "Adding \"{0}\" from {1}:{2}.", 
                             tb.TaskName, tb.AssemblyFileName, tb.ClassName);
@@ -502,7 +501,7 @@ namespace NAnt.Core {
                 if (type.IsSubclassOf(typeof(DataTypeBase)) && !type.IsAbstract && elementNameAttribute != null) {
                     logger.Info(string.Format(CultureInfo.InvariantCulture, 
                         ResourceUtils.GetString("String_CreatingDataTypeBaseBuilder"), type.Name));
-                    DataTypeBaseBuilder dtb = new DataTypeBaseBuilder(type.FullName, type.Assembly.Location);
+                    DataTypeBaseBuilder dtb = new DataTypeBaseBuilder(type);
                     if (DataTypeBuilders[dtb.DataTypeName] == null) {
                         logger.Debug(string.Format(CultureInfo.InvariantCulture, 
                             ResourceUtils.GetString("String_AddingDataType"), dtb.DataTypeName, 

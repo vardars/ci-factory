@@ -59,21 +59,6 @@ namespace NAnt.Core {
         }
 
         /// <summary>
-        /// Finds a target by name.
-        /// </summary>
-        /// <param name="targetName">The name of the target to find.</param>
-        /// <returns>
-        /// The <see cref="Target" /> with the specified name, or 
-        /// <see langword="null" /> if no <see cref="Target" /> exists with
-        /// the given name.
-        /// </returns>
-        public Target Find(string targetName) {
-            if (this.Contains(targetName))
-                return this[targetName];
-            return null;
-        }
-
-        /// <summary>
         /// Gets the names of the targets in the <see cref="TargetCollection" />
         /// combined into one list separated by the given <see cref="string" />.
         /// </summary>

@@ -15,14 +15,14 @@ namespace CIFactory.NAnt.Functions
 
         #region Constructors
 
-        public EnvVarFunctions(Project project, PropertyDictionary properties)
-            : base(project, properties)
+        public EnvVarFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
         {
 
         }
 
         public EnvVarFunctions()
-            : base(null, null)
+            : base(null, null, null)
         {
 
         }

@@ -29,7 +29,9 @@ namespace NAnt.Core.Functions {
     public class Int32ConversionFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public Int32ConversionFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public Int32ConversionFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

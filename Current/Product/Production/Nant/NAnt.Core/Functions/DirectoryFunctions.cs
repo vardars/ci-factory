@@ -34,7 +34,9 @@ namespace NAnt.Core.Functions {
     public class DirectoryFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public DirectoryFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public DirectoryFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors

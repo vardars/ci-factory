@@ -37,7 +37,9 @@ namespace NAnt.Core.Functions {
     public class PkgConfigFunctions : FunctionSetBase {
         #region Public Instance Constructors
 
-        public PkgConfigFunctions(Project project, PropertyDictionary properties) : base(project, properties) {
+        public PkgConfigFunctions(Project project, Location location, PropertyDictionary properties)
+            : base(project, location, properties)
+        {
         }
 
         #endregion Public Instance Constructors
