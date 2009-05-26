@@ -3,7 +3,13 @@
 
   <target name="Custom.CreateDocumentation">
     <call target="Custom.DownloadDocumentation"/>
-    <call target="Custom.NAnt.CreateDocumentation"/>
+    <exec
+      program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
+      verbose="True"
+    >
+      <arg line="${ProductDirectory}\Scripts\Personal.build.xml"/>
+      <arg line="Custom.NAnt.CreateDocumentation"/>
+    </exec>
     <call target="Custom.CreateDocumentationIndex"/>
   </target>
 
