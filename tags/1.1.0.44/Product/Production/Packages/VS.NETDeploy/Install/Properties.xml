@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VS.NETDeploy.Install.Properties">
+
+  <!--
+                                             2003 or 2005
+  -->
+  <property name="Compile.DevEnv.Version" value="2005" overwrite="false"/>
+
+</project>
