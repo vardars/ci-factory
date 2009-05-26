@@ -104,6 +104,30 @@ namespace NAnt.Core.Tasks {
                 _PropertyExcludes = value;
             }
         }
+
+        private TextElement[] _TargetIncludes;
+        [BuildElementArray("targetinclude", ElementType = typeof(TextElement))]
+        public TextElement[] TargetIncludes
+        {
+            get { return _TargetIncludes; }
+            set
+            {
+                _TargetIncludes = value;
+            }
+        }
+
+        private TextElement[] _TargetExcludes;
+        [BuildElementArray("targetexclude", ElementType = typeof(TextElement))]
+        public TextElement[] TargetExcludes
+        {
+            get { return _TargetExcludes; }
+            set
+            {
+                _TargetExcludes = value;
+            }
+        }
+        
+        
         
         public List<Type> AttributeTypes
         {
@@ -161,6 +185,31 @@ namespace NAnt.Core.Tasks {
                             this.AttributeTypes.Add(attributeType);
                     }
                 );
+        }
+
+        private bool ShouldAddTarget(String name)
+        {
+            bool shouldInclude = false;
+            if (this.TargetIncludes.Length == 0)
+                shouldInclude = true;
+            foreach (String pattern in this.TargetIncludes.Select(element => element.Value))
+            {
+                if (Regex.IsMatch(name, pattern))
+                {
+                    shouldInclude = true;
+                    break;
+                }
+            }
+
+            foreach (String pattern in this.TargetExcludes.Select(element => element.Value))
+            {
+                if (Regex.IsMatch(name, pattern))
+                {
+                    shouldInclude = false;
+                    break;
+                }
+            }
+            return shouldInclude;
         }
 
         [ReflectionPermission(SecurityAction.Demand, Flags=ReflectionPermissionFlag.NoFlags)]
@@ -223,7 +272,21 @@ namespace NAnt.Core.Tasks {
                         }
                         return shouldInclude;
                     }));
-                WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, properties, TargetNamespace);
+                properties.Sort();
+
+                List<string> targets = new List<string>(this.Project.Targets.Select(target => target.Name).Where(ShouldAddTarget));
+
+                foreach (ScriptFileInfo scriptFileInfo in this.Project.ScriptFileInfoList)
+                {
+                    foreach (String targetName in scriptFileInfo.Targets.Select(target => target.Name).Where(ShouldAddTarget))
+                    {
+                        targets.Add(scriptFileInfo.ProjectName + "::" + targetName);
+                    }
+                }
+
+                targets.Sort();
+
+                WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, properties, targets, TargetNamespace);
 
                 file.Flush();
                 file.Close();
@@ -244,9 +307,9 @@ namespace NAnt.Core.Tasks {
         /// <param name="dataTypes">The list of datatypes to generate XML Schema for.</param>
         /// <param name="targetNS">The target namespace to output.</param>
         /// <returns>The new NAnt Schema.</returns>
-        public static XmlSchema WriteSchema(System.IO.Stream stream, List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, string targetNS)
+        public static XmlSchema WriteSchema(System.IO.Stream stream, List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, List<String> targetNames, string targetNS)
         {
-            NAntSchemaGenerator gen = new NAntSchemaGenerator(tasks, dataTypes, attributeTypes, propertyNames, targetNS);
+            NAntSchemaGenerator gen = new NAntSchemaGenerator(tasks, dataTypes, attributeTypes, propertyNames, targetNames, targetNS);
 
             if (!gen.Schema.IsCompiled) {
                 gen.Compile();
@@ -276,6 +339,10 @@ namespace NAnt.Core.Tasks {
             else if (type.IsSubclassOf(typeof(Enum)))
             {
                 return type.ToString().Replace("+", "-").Replace("[", "_").Replace("]", "_");
+            }
+            else if (type.Equals(typeof(CallTask)))
+            {
+                return "CIFactory.Targets";
             }
             else if (type.Equals(typeof(PropertyTask)))
             {
@@ -378,9 +445,10 @@ namespace NAnt.Core.Tasks {
             /// <param name="targetNS">The namespace to use.
             /// <example> http://tempuri.org/nant.xsd </example>
             /// </param>
-            public NAntSchemaGenerator(List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, string targetNS)
+            public NAntSchemaGenerator(List<Type> tasks, List<Type> dataTypes, List<Type> attributeTypes, List<String> propertyNames, List<String> targetNames, string targetNS)
             {
                 PropertyNames = propertyNames;
+                TargetNames = targetNames;
                 //setup namespace stuff
                 if (targetNS != null)
                 {
@@ -533,6 +601,7 @@ namespace NAnt.Core.Tasks {
 
             #region Public Instance Properties
 
+            public List<string> TargetNames { get; set; }
             public List<string> PropertyNames { get; set; }
             public List<XmlSchemaComplexType> TaskContainerComplexTypes
             {
@@ -690,10 +759,10 @@ namespace NAnt.Core.Tasks {
                     XmlSchemaSimpleTypeUnion union = new XmlSchemaSimpleTypeUnion();
                     simpleType.Content = union;
 
-                    XmlSchemaSimpleType boolType = new XmlSchemaSimpleType();
-                    union.BaseTypes.Add(boolType);
+                    XmlSchemaSimpleType enumType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(enumType);
                     XmlSchemaSimpleTypeRestriction enumRestriction = new XmlSchemaSimpleTypeRestriction();
-                    boolType.Content = enumRestriction;
+                    enumType.Content = enumRestriction;
                     enumRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
 
                     foreach (String EnumName in System.Enum.GetNames(type))
@@ -701,6 +770,30 @@ namespace NAnt.Core.Tasks {
                         XmlSchemaEnumerationFacet enumValue = new XmlSchemaEnumerationFacet();
                         enumRestriction.Facets.Add(enumValue);
                         enumValue.Value = EnumName;
+                    }
+
+                    XmlSchemaSimpleType propertiesType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(propertiesType);
+                    XmlSchemaSimpleTypeRestriction propertyRestriction = new XmlSchemaSimpleTypeRestriction();
+                    propertiesType.Content = propertyRestriction;
+                    propertyRestriction.BaseTypeName = new XmlQualifiedName("CIFactory.Properties", _nantSchema.TargetNamespace);
+                }
+                else if (type.Equals(typeof(CallTask)))
+                {
+                    XmlSchemaSimpleTypeUnion union = new XmlSchemaSimpleTypeUnion();
+                    simpleType.Content = union;
+
+                    XmlSchemaSimpleType targetType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(targetType);
+                    XmlSchemaSimpleTypeRestriction targetRestriction = new XmlSchemaSimpleTypeRestriction();
+                    targetType.Content = targetRestriction;
+                    targetRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+
+                    foreach (String TargetName in this.TargetNames)
+                    {
+                        XmlSchemaEnumerationFacet target = new XmlSchemaEnumerationFacet();
+                        targetRestriction.Facets.Add(target);
+                        target.Value = TargetName;
                     }
 
                     XmlSchemaSimpleType propertiesType = new XmlSchemaSimpleType();
@@ -720,7 +813,6 @@ namespace NAnt.Core.Tasks {
                     restriction.Facets.Add(enumeration);
                     enumeration.Value = "${}";
 
-                    this.PropertyNames.Sort();
                     foreach (String PropertyName in this.PropertyNames)
                     {
                         XmlSchemaEnumerationFacet property = new XmlSchemaEnumerationFacet();
@@ -817,8 +909,17 @@ namespace NAnt.Core.Tasks {
 
                     if (taskAttrAttr != null)
                     {
-                        XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, GenerateSimpleIDFromType(((PropertyInfo)memInfo).PropertyType), _nantSchema.TargetNamespace);
-                        attributesCollection.Add(newAttr);
+                        if (taskAttrAttr.Name == "target" && type.Equals(typeof(CallTask)))
+                        {
+                            XmlSchemaSimpleType callTaskType = FindOrCreateSimpleType(typeof(CallTask));
+                            XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, callTaskType.Name, _nantSchema.TargetNamespace);
+                            attributesCollection.Add(newAttr);
+                        }
+                        else
+                        {
+                            XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, GenerateSimpleIDFromType(((PropertyInfo)memInfo).PropertyType), _nantSchema.TargetNamespace);
+                            attributesCollection.Add(newAttr);
+                        }
                     }
                     else if (buildElemAttr != null)
                     {
