@@ -832,7 +832,10 @@ namespace NAnt.Core {
             if(sb.Length > 0) {
                 Log(Level.Info, "Target(s) specified: " + sb.ToString());
                 Log(Level.Info, string.Empty);
-                this.Properties.Add("Targets.Specified", sb.ToString());
+                if (this.Properties.Contains("Targets.Specified"))
+                    this.Properties["Targets.Specified"] = this.Properties["Targets.Specified"] + " " + sb.ToString();
+                else
+                    this.Properties.Add("Targets.Specified", sb.ToString());
             } else {
                 Log(Level.Info, string.Empty);
             }

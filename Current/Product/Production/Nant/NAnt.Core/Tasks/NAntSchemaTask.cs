@@ -35,6 +35,7 @@ using NAnt.Core.Util;
 using System.Collections.Generic;
 using NAnt.Core.Types;
 using System.Text.RegularExpressions;
+using NAnt.Core.Filters;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -242,6 +243,7 @@ namespace NAnt.Core.Tasks {
 
             taskTypes.ForEach(AddAttributeType);
             dataTypes.ForEach(AddAttributeType);
+            TypeFactory.FilterBuilders.OfType<FilterBuilder>().Select(filter => filter.Type).ToList<Type>().ForEach(AddAttributeType);
 
             FileIOPermission FilePermission = new FileIOPermission(FileIOPermissionAccess.AllAccess, OutputFile.FullName);
             FilePermission.Assert();
@@ -283,7 +285,6 @@ namespace NAnt.Core.Tasks {
                         targets.Add(scriptFileInfo.ProjectName + "::" + targetName);
                     }
                 }
-
                 targets.Sort();
 
                 WriteSchema(file, taskTypes, dataTypes, this.AttributeTypes, properties, targets, TargetNamespace);
@@ -785,6 +786,16 @@ namespace NAnt.Core.Tasks {
 
                     XmlSchemaSimpleType targetType = new XmlSchemaSimpleType();
                     union.BaseTypes.Add(targetType);
+
+                    XmlSchemaSimpleType wildcardType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(wildcardType);
+                    XmlSchemaSimpleTypeRestriction wildcardRestriction = new XmlSchemaSimpleTypeRestriction();
+                    wildcardType.Content = wildcardRestriction;
+                    wildcardRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+                    XmlSchemaPatternFacet wildcard = new XmlSchemaPatternFacet();
+                    wildcardRestriction.Facets.Add(wildcard);
+                    wildcard.Value = ".*";
+
                     XmlSchemaSimpleTypeRestriction targetRestriction = new XmlSchemaSimpleTypeRestriction();
                     targetType.Content = targetRestriction;
                     targetRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
@@ -917,7 +928,8 @@ namespace NAnt.Core.Tasks {
                         }
                         else
                         {
-                            XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, GenerateSimpleIDFromType(((PropertyInfo)memInfo).PropertyType), _nantSchema.TargetNamespace);
+                            XmlSchemaSimpleType attributeType = FindOrCreateSimpleType(((PropertyInfo)memInfo).PropertyType);
+                            XmlSchemaAttribute newAttr = CreateXsdAttribute(taskAttrAttr.Name, taskAttrAttr.Required, attributeType.Name, _nantSchema.TargetNamespace);
                             attributesCollection.Add(newAttr);
                         }
                     }

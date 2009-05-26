@@ -617,7 +617,7 @@ namespace NAnt.Core {
                 if (type.IsSubclassOf(typeof(Filter)) && !type.IsAbstract && elementNameAttribute != null) {
                     task.Log(Level.Debug, "Creating FilterBuilder for \"{0}\".", 
                         type.Name);
-                    FilterBuilder builder = new FilterBuilder(type.FullName, type.Assembly.Location);
+                    FilterBuilder builder = new FilterBuilder(type);
                     if (FilterBuilders[builder.FilterName] == null) {
                         FilterBuilders.Add(builder);
 

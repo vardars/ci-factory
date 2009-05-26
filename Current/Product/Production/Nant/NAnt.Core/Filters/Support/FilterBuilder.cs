@@ -30,21 +30,15 @@ namespace NAnt.Core.Filters {
 
         /// <summary>
         /// Creates a new instance of the <see cref="FilterBuilder" /> class
-        /// for the specified Element class.
-        /// </summary>
-        /// <param name="className">The class representing the Element.</param>
-        public FilterBuilder(string className) : this(className, null) {
-        }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="FilterBuilder" /> class
         /// for the specified Element class in the assembly specified.
         /// </summary>
         /// <param name="className">The class representing the Element.</param>
         /// <param name="assemblyFileName">The assembly containing the Element.</param>/// 
-        public FilterBuilder(string className, string assemblyFileName) {
-            _className = className;
-            _assemblyFileName = assemblyFileName;
+        public FilterBuilder(Type filterType)
+        {
+            _Type = filterType;
+            _className = filterType.FullName;
+            _assemblyFileName = filterType.Assembly.Location;
 
             Assembly assembly = GetAssembly();
             // get Element name from attribute
@@ -57,6 +51,15 @@ namespace NAnt.Core.Filters {
         #endregion Public Instance Constructors
 
         #region Public Instance Properties
+
+        private Type _Type;
+        public Type Type
+        {
+            get
+            {
+                return _Type;
+            }
+        }
 
         public string ClassName {
             get { return _className; }
