@@ -7,7 +7,7 @@
       program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
       verbose="True"
     >
-      <arg line="${ProductDirectory}\Scripts\Personal.build.xml"/>
+      <arg line='/f:"${ProductDirectory}\Scripts\Personal.build.xml"'/>
       <arg line="Custom.NAnt.CreateDocumentation"/>
     </exec>
     <call target="Custom.CreateDocumentationIndex"/>
