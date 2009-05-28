@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -42,12 +43,20 @@ namespace NAnt.Core {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);        private static TaskBuilderCollection _taskBuilders = new TaskBuilderCollection();
         private static DataTypeBaseBuilderCollection _dataTypeBuilders = new DataTypeBaseBuilderCollection();
         private static FilterBuilderCollection _filterBuilders = new FilterBuilderCollection();
-        private static Hashtable _methodInfoCollection = new Hashtable();
+        private static Dictionary<String, MethodInfo> _methodInfoCollection = new Dictionary<String, MethodInfo>();
         private static ArrayList _projects = new ArrayList();
 
         #endregion Private Static Fields
 
         #region Internal Static Properties
+
+        public static Dictionary<String, MethodInfo> FunctionTable
+        {
+            get
+            {
+                return _methodInfoCollection;
+            }
+        }
 
         /// <summary>
         /// Gets the list of loaded <see cref="TaskBuilder" /> instances.
@@ -257,7 +266,7 @@ namespace NAnt.Core {
         /// exist.
         /// </returns>
         public static MethodInfo LookupFunction(string methodName, Project project) {
-            MethodInfo function = (MethodInfo) _methodInfoCollection[methodName];
+            MethodInfo function = _methodInfoCollection[methodName];
             if (function != null) {
                 // check whether the function is deprecated
                 ObsoleteAttribute obsoleteAttribute = (ObsoleteAttribute) 

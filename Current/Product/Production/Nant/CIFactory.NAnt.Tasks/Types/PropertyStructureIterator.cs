@@ -12,15 +12,15 @@ namespace CIFactory.NAnt.Types
     public class PropertyStructureIterator : LoopItems
     {
 
-        private string _StructureName;
+        private string _Pattern;
 
-        [TaskAttribute("name")]
-        public string StructureName
+        [TaskAttribute("pattern")]
+        public string Pattern
         {
-            get { return _StructureName; }
+            get { return _Pattern; }
             set
             {
-                _StructureName = value;
+                _Pattern = value;
             }
         }
 
@@ -29,9 +29,11 @@ namespace CIFactory.NAnt.Types
         {
             List<String> Keys = new List<string>();
 
+            Regex regex = new Regex(this.Pattern);
+
             foreach (String Key in this.Properties.Keys)
             {
-                if (Key.StartsWith(this.StructureName))
+                if (regex.IsMatch(Key))
                     Keys.Add(Key);
             }
 

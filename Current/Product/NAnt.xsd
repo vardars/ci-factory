@@ -1,23 +1,130 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 05/25/2009 19:19:01</xs:documentation>
+    <xs:documentation>NAnt schema generated at 05/28/2009 09:02:57</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="CIFactory.Properties">
     <xs:restriction base="xs:string">
       <xs:enumeration value="${}" />
       <xs:enumeration value="${ArtifactRootDirectory}" />
       <xs:enumeration value="${ArtifactRootDirectoryName}" />
+      <xs:enumeration value="${assembly::get-full-name(assembly)}" />
+      <xs:enumeration value="${assembly::get-name(assembly)}" />
+      <xs:enumeration value="${assembly::load-from-file(assemblyFile)}" />
+      <xs:enumeration value="${assemblyname::get-assembly-name(assemblyFile)}" />
+      <xs:enumeration value="${assemblyname::get-codebase(assemblyName)}" />
+      <xs:enumeration value="${assemblyname::get-escaped-codebase(assemblyName)}" />
+      <xs:enumeration value="${assemblyname::get-full-name(assemblyName)}" />
+      <xs:enumeration value="${assemblyname::get-name(assemblyName)}" />
+      <xs:enumeration value="${assemblyname::get-version(assemblyName)}" />
+      <xs:enumeration value="${bool::parse(s)}" />
+      <xs:enumeration value="${bool::to-string(value)}" />
       <xs:enumeration value="${BuildDirectory}" />
       <xs:enumeration value="${BuildDirectoryName}" />
       <xs:enumeration value="${BuildServerHostName}" />
       <xs:enumeration value="${BuildServerPort}" />
+      <xs:enumeration value="${ccnet::get-project-activity(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::get-project-build-status(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::get-project-last-build-date(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::get-project-last-build-label(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::get-project-last-build-log(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::get-project-some-build-labels(serverUrl, projectName, numberToRetrieve, refID)}" />
+      <xs:enumeration value="${ccnet::get-project-state(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::try-get-project-activity(serverUrl, projectName)}" />
+      <xs:enumeration value="${ccnet::try-get-project-state(serverUrl, projectName)}" />
       <xs:enumeration value="${CCNetLabel}" />
       <xs:enumeration value="${CCNetProject}" />
+      <xs:enumeration value="${convert::to-boolean(value)}" />
+      <xs:enumeration value="${convert::to-datetime(value)}" />
+      <xs:enumeration value="${convert::to-double(value)}" />
+      <xs:enumeration value="${convert::to-int(value)}" />
+      <xs:enumeration value="${convert::to-string(value)}" />
+      <xs:enumeration value="${datetime::get-day(date)}" />
+      <xs:enumeration value="${datetime::get-day-of-week(date)}" />
+      <xs:enumeration value="${datetime::get-day-of-year(date)}" />
+      <xs:enumeration value="${datetime::get-days-in-month(year, month)}" />
+      <xs:enumeration value="${datetime::get-hour(date)}" />
+      <xs:enumeration value="${datetime::get-millisecond(date)}" />
+      <xs:enumeration value="${datetime::get-minute(date)}" />
+      <xs:enumeration value="${datetime::get-month(date)}" />
+      <xs:enumeration value="${datetime::get-second(date)}" />
+      <xs:enumeration value="${datetime::get-ticks(date)}" />
+      <xs:enumeration value="${datetime::get-year(date)}" />
+      <xs:enumeration value="${datetime::is-leap-year(year)}" />
+      <xs:enumeration value="${datetime::now()}" />
+      <xs:enumeration value="${datetime::parse(s)}" />
+      <xs:enumeration value="${datetime::to-string(value)}" />
+      <xs:enumeration value="${directory::exists(path)}" />
+      <xs:enumeration value="${directory::get-creation-time(path)}" />
+      <xs:enumeration value="${directory::get-current-directory()}" />
+      <xs:enumeration value="${directory::get-directory-root(path)}" />
+      <xs:enumeration value="${directory::get-last-access-time(path)}" />
+      <xs:enumeration value="${directory::get-last-write-time(path)}" />
+      <xs:enumeration value="${directory::get-parent-directory(path)}" />
+      <xs:enumeration value="${double::parse(s)}" />
+      <xs:enumeration value="${double::to-string(value)}" />
       <xs:enumeration value="${EmailHost}" />
+      <xs:enumeration value="${environment::get-folder-path(folder)}" />
+      <xs:enumeration value="${environment::get-machine-name()}" />
+      <xs:enumeration value="${environment::get-operating-system()}" />
+      <xs:enumeration value="${environment::get-user-name()}" />
+      <xs:enumeration value="${environment::get-variable(name)}" />
+      <xs:enumeration value="${environment::get-version()}" />
+      <xs:enumeration value="${environment::variable-exists(name)}" />
+      <xs:enumeration value="${envvar::change-var(refID, name, value)}" />
+      <xs:enumeration value="${file::exists(file)}" />
+      <xs:enumeration value="${file::get-creation-time(path)}" />
+      <xs:enumeration value="${file::get-last-access-time(path)}" />
+      <xs:enumeration value="${file::get-last-write-time(path)}" />
+      <xs:enumeration value="${file::get-length(file)}" />
+      <xs:enumeration value="${file::get-product-version(path)}" />
+      <xs:enumeration value="${file::get-version(path)}" />
+      <xs:enumeration value="${file::is-assembly(assemblyFile)}" />
+      <xs:enumeration value="${file::up-to-date(srcFile, targetFile)}" />
+      <xs:enumeration value="${fileset::directory-count(refID)}" />
+      <xs:enumeration value="${fileset::exclude-add(refID, name)}" />
+      <xs:enumeration value="${fileset::exclude-contains(refID, name)}" />
+      <xs:enumeration value="${fileset::exclude-count(refID)}" />
+      <xs:enumeration value="${fileset::exclude-remove(refID, name)}" />
+      <xs:enumeration value="${fileset::file-count(refID)}" />
+      <xs:enumeration value="${fileset::get-name-at-index(refID, index)}" />
+      <xs:enumeration value="${fileset::include-add(refID, name)}" />
+      <xs:enumeration value="${fileset::include-contains(refID, name)}" />
+      <xs:enumeration value="${fileset::include-count(refID)}" />
+      <xs:enumeration value="${fileset::include-remove(refID, name)}" />
+      <xs:enumeration value="${fileversioninfo::get-company-name(fileVersionInfo)}" />
+      <xs:enumeration value="${fileversioninfo::get-file-version(fileVersionInfo)}" />
+      <xs:enumeration value="${fileversioninfo::get-product-name(fileVersionInfo)}" />
+      <xs:enumeration value="${fileversioninfo::get-product-version(fileVersionInfo)}" />
+      <xs:enumeration value="${fileversioninfo::get-version-info(fileName)}" />
+      <xs:enumeration value="${filterchain::regexreplace-add(refID, replacment, pattern, lines)}" />
+      <xs:enumeration value="${filterchain::replacestring-add(refID, oldValue, newValue)}" />
+      <xs:enumeration value="${filterchain::replacestring-contains(refID, oldValue, newValue)}" />
+      <xs:enumeration value="${filterchain::replacestring-count(refID)}" />
+      <xs:enumeration value="${filterchain::replacestring-remove(refID, oldValue, newValue)}" />
+      <xs:enumeration value="${framework::exists(name)}" />
+      <xs:enumeration value="${framework::get-assembly-directory(framework)}" />
+      <xs:enumeration value="${framework::get-clr-version(framework)}" />
+      <xs:enumeration value="${framework::get-description(framework)}" />
+      <xs:enumeration value="${framework::get-family(framework)}" />
+      <xs:enumeration value="${framework::get-framework-directory(framework)}" />
+      <xs:enumeration value="${framework::get-runtime-engine(framework)}" />
+      <xs:enumeration value="${framework::get-runtime-framework()}" />
+      <xs:enumeration value="${framework::get-sdk-directory(framework)}" />
+      <xs:enumeration value="${framework::get-target-framework()}" />
+      <xs:enumeration value="${framework::get-version(framework)}" />
+      <xs:enumeration value="${framework::sdk-exists(name)}" />
       <xs:enumeration value="${InstallDirectory}" />
       <xs:enumeration value="${InstallDirectoryName}" />
+      <xs:enumeration value="${int::parse(s)}" />
+      <xs:enumeration value="${int::to-string(value)}" />
       <xs:enumeration value="${LabelPrefix}" />
+      <xs:enumeration value="${long::parse(s)}" />
+      <xs:enumeration value="${long::to-string(value)}" />
+      <xs:enumeration value="${math::abs(value)}" />
+      <xs:enumeration value="${math::ceiling(value)}" />
+      <xs:enumeration value="${math::floor(value)}" />
+      <xs:enumeration value="${math::round(value)}" />
       <xs:enumeration value="${nant.filename}" />
       <xs:enumeration value="${nant.location}" />
       <xs:enumeration value="${nant.platform.name}" />
@@ -35,27 +142,145 @@
       <xs:enumeration value="${nant.settings.currentframework.sdkdirectory}" />
       <xs:enumeration value="${nant.settings.currentframework.version}" />
       <xs:enumeration value="${nant.version}" />
+      <xs:enumeration value="${nant::get-assembly()}" />
+      <xs:enumeration value="${nant::get-base-directory()}" />
       <xs:enumeration value="${NantBinPath}" />
       <xs:enumeration value="${NantExePath}" />
+      <xs:enumeration value="${operating-system::get-platform(operatingSystem)}" />
+      <xs:enumeration value="${operating-system::get-version(operatingSystem)}" />
+      <xs:enumeration value="${operating-system::to-string(operatingSystem)}" />
       <xs:enumeration value="${PackagesDirectory}" />
       <xs:enumeration value="${PackagesDirectoryName}" />
+      <xs:enumeration value="${path::change-extension(path, extension)}" />
+      <xs:enumeration value="${path::combine(path1, path2)}" />
+      <xs:enumeration value="${path::get-directory-name(path)}" />
+      <xs:enumeration value="${path::get-extension(path)}" />
+      <xs:enumeration value="${path::get-file-name(path)}" />
+      <xs:enumeration value="${path::get-file-name-without-extension(path)}" />
+      <xs:enumeration value="${path::get-full-path(path)}" />
+      <xs:enumeration value="${path::get-path-root(path)}" />
+      <xs:enumeration value="${path::get-relative-path(absoluteFilePath, absoluteDirectoryPath)}" />
+      <xs:enumeration value="${path::get-short-path(longName)}" />
+      <xs:enumeration value="${path::get-temp-file-name()}" />
+      <xs:enumeration value="${path::get-temp-path()}" />
+      <xs:enumeration value="${path::has-extension(path)}" />
+      <xs:enumeration value="${path::is-path-rooted(path)}" />
+      <xs:enumeration value="${perforce::get-changelist-number(changelistName)}" />
+      <xs:enumeration value="${perforce::workspace-exists(client, port)}" />
+      <xs:enumeration value="${pkg-config::exists(package)}" />
+      <xs:enumeration value="${pkg-config::get-compile-flags(package)}" />
+      <xs:enumeration value="${pkg-config::get-link-flags(package)}" />
+      <xs:enumeration value="${pkg-config::get-mod-version(package)}" />
+      <xs:enumeration value="${pkg-config::get-variable(package, name)}" />
+      <xs:enumeration value="${pkg-config::is-atleast-version(package, version)}" />
+      <xs:enumeration value="${pkg-config::is-between-version(package, minVersion, maxVersion)}" />
+      <xs:enumeration value="${pkg-config::is-exact-version(package, version)}" />
+      <xs:enumeration value="${pkg-config::is-max-version(package, version)}" />
+      <xs:enumeration value="${platform::get-name()}" />
+      <xs:enumeration value="${platform::is-unix()}" />
+      <xs:enumeration value="${platform::is-win32()}" />
+      <xs:enumeration value="${process::get-command-line(pid)}" />
+      <xs:enumeration value="${process::get-current-pid()}" />
+      <xs:enumeration value="${process::get-parent-pid(pid)}" />
+      <xs:enumeration value="${process::isrunning(pid)}" />
       <xs:enumeration value="${ProductDirectory}" />
       <xs:enumeration value="${ProductDirectoryName}" />
       <xs:enumeration value="${ProductionDirectory}" />
       <xs:enumeration value="${ProductionDirectoryName}" />
+      <xs:enumeration value="${project::get-base-directory()}" />
+      <xs:enumeration value="${project::get-buildfile-path()}" />
+      <xs:enumeration value="${project::get-buildfile-uri()}" />
+      <xs:enumeration value="${project::get-default-target()}" />
+      <xs:enumeration value="${project::get-name()}" />
       <xs:enumeration value="${ProjectCodeLineDirectory}" />
       <xs:enumeration value="${ProjectCodeLineName}" />
       <xs:enumeration value="${ProjectName}" />
       <xs:enumeration value="${ProjectRootDirectory}" />
       <xs:enumeration value="${ProjectsDirectory}" />
       <xs:enumeration value="${ProjectTargetDelimeter}" />
+      <xs:enumeration value="${property::destroy(propertyName)}" />
+      <xs:enumeration value="${property::exists(name)}" />
+      <xs:enumeration value="${property::expand(value)}" />
+      <xs:enumeration value="${property::get-value(propertyName)}" />
+      <xs:enumeration value="${property::is-dynamic(name)}" />
+      <xs:enumeration value="${property::is-readonly(name)}" />
+      <xs:enumeration value="${property::value(propertyName)}" />
       <xs:enumeration value="${SchemaFile}" />
+      <xs:enumeration value="${scriptfile::exists(scriptName)}" />
+      <xs:enumeration value="${scriptfile::get-current-directory()}" />
+      <xs:enumeration value="${scriptfile::get-current-file-path()}" />
+      <xs:enumeration value="${scriptfile::get-current-name()}" />
+      <xs:enumeration value="${scriptfile::get-directory-Path(scriptName)}" />
+      <xs:enumeration value="${scriptfile::get-file-Path(scriptName)}" />
+      <xs:enumeration value="${scriptfile::get-name(scriptFilePath)}" />
+      <xs:enumeration value="${scriptfile::loaded(scriptFilePath)}" />
+      <xs:enumeration value="${sourcecontrol::convertlocaltoserver(local)}" />
+      <xs:enumeration value="${string::contains(source, value)}" />
+      <xs:enumeration value="${string::ends-with(s1, s2)}" />
+      <xs:enumeration value="${string::get-length(s)}" />
+      <xs:enumeration value="${string::index-of(source, value)}" />
+      <xs:enumeration value="${string::last-index-of(source, value)}" />
+      <xs:enumeration value="${string::pad-left(s, totalWidth, paddingChar)}" />
+      <xs:enumeration value="${string::pad-right(s, totalWidth, paddingChar)}" />
+      <xs:enumeration value="${string::replace(str, oldValue, newValue)}" />
+      <xs:enumeration value="${string::starts-with(s1, s2)}" />
+      <xs:enumeration value="${string::substring(str, startIndex, length)}" />
+      <xs:enumeration value="${string::to-lower(s)}" />
+      <xs:enumeration value="${string::to-upper(s)}" />
+      <xs:enumeration value="${string::trim(s)}" />
+      <xs:enumeration value="${string::trim-end(s)}" />
+      <xs:enumeration value="${string::trim-start(s)}" />
+      <xs:enumeration value="${stringlist::add(refID, name)}" />
+      <xs:enumeration value="${stringlist::clear(refID)}" />
+      <xs:enumeration value="${stringlist::contains(refID, name)}" />
+      <xs:enumeration value="${stringlist::count(refID)}" />
+      <xs:enumeration value="${stringlist::flatten(refID)}" />
+      <xs:enumeration value="${stringlist::item(refID, index)}" />
+      <xs:enumeration value="${stringlist::remove(refID, name)}" />
+      <xs:enumeration value="${stringlist::sort-assending(refID)}" />
+      <xs:enumeration value="${stringlist::sort-dessending(refID)}" />
+      <xs:enumeration value="${target::exists(name)}" />
+      <xs:enumeration value="${target::get-current-target()}" />
+      <xs:enumeration value="${target::has-executed(name)}" />
       <xs:enumeration value="${Targets.Specified}" />
+      <xs:enumeration value="${task::exists(name)}" />
       <xs:enumeration value="${ThirdPartyDirectory}" />
       <xs:enumeration value="${ThirdPartyDirectoryName}" />
+      <xs:enumeration value="${timespan::from-days(value)}" />
+      <xs:enumeration value="${timespan::from-hours(value)}" />
+      <xs:enumeration value="${timespan::from-milliseconds(value)}" />
+      <xs:enumeration value="${timespan::from-minutes(value)}" />
+      <xs:enumeration value="${timespan::from-seconds(value)}" />
+      <xs:enumeration value="${timespan::from-ticks(value)}" />
+      <xs:enumeration value="${timespan::get-days(value)}" />
+      <xs:enumeration value="${timespan::get-hours(value)}" />
+      <xs:enumeration value="${timespan::get-milliseconds(value)}" />
+      <xs:enumeration value="${timespan::get-minutes(value)}" />
+      <xs:enumeration value="${timespan::get-seconds(value)}" />
+      <xs:enumeration value="${timespan::get-ticks(value)}" />
+      <xs:enumeration value="${timespan::get-total-days(value)}" />
+      <xs:enumeration value="${timespan::get-total-hours(value)}" />
+      <xs:enumeration value="${timespan::get-total-milliseconds(value)}" />
+      <xs:enumeration value="${timespan::get-total-minutes(value)}" />
+      <xs:enumeration value="${timespan::get-total-seconds(value)}" />
+      <xs:enumeration value="${timespan::parse(s)}" />
+      <xs:enumeration value="${timespan::to-string(value)}" />
       <xs:enumeration value="${UnitTestDirectory}" />
       <xs:enumeration value="${UnitTestDirectoryName}" />
+      <xs:enumeration value="${version::get-build(version)}" />
+      <xs:enumeration value="${version::get-major(version)}" />
+      <xs:enumeration value="${version::get-minor(version)}" />
+      <xs:enumeration value="${version::get-revision(version)}" />
+      <xs:enumeration value="${version::parse(version)}" />
+      <xs:enumeration value="${version::to-string(value)}" />
+      <xs:enumeration value="${vsproject::are-bindings-correct(projectFilePath)}" />
+      <xs:enumeration value="${vsproject::fix-bindings(projectFilePath)}" />
+      <xs:enumeration value="${vsproject::get-assemblyname(projectFilePath)}" />
+      <xs:enumeration value="${vsproject::get-hint-paths(stringListRef, projectFilePath)}" />
+      <xs:enumeration value="${vsproject::get-output-directory(projectFilePath, config)}" />
+      <xs:enumeration value="${vsproject::replace-hint-path(projectFilePath, oldHintPath, newHintPath)}" />
       <xs:enumeration value="${webURL}" />
+      <xs:enumeration value="${xmlquery::count(refID)}" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CIFactory.String">
@@ -79,6 +304,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -96,6 +326,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -109,6 +344,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -119,6 +359,11 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="Options" />
           <xs:enumeration value="FreeText" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -140,6 +385,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -154,6 +404,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -164,6 +419,11 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="Normal" />
           <xs:enumeration value="Line" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -182,6 +442,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -193,6 +458,11 @@
           <xs:enumeration value="MonthDay" />
           <xs:enumeration value="Increment" />
           <xs:enumeration value="NoIncrement" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -209,6 +479,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -220,6 +495,11 @@
           <xs:enumeration value="install" />
           <xs:enumeration value="overwrite" />
           <xs:enumeration value="uninstall" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -238,6 +518,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -252,6 +537,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -263,6 +553,11 @@
           <xs:enumeration value="CSharp" />
           <xs:enumeration value="JScript" />
           <xs:enumeration value="VB" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -281,6 +576,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -292,6 +592,11 @@
           <xs:enumeration value="FindOrCreate" />
           <xs:enumeration value="Create" />
           <xs:enumeration value="Uninstall" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -309,6 +614,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -320,6 +630,11 @@
           <xs:enumeration value="NotSet" />
           <xs:enumeration value="Unicode" />
           <xs:enumeration value="MultiByte" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -338,6 +653,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -350,6 +670,11 @@
           <xs:enumeration value="End" />
           <xs:enumeration value="Start" />
           <xs:enumeration value="Both" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -374,6 +699,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -389,6 +719,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -399,6 +734,11 @@
         <xs:restriction base="xs:string">
           <xs:enumeration value="Text" />
           <xs:enumeration value="Html" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -417,6 +757,11 @@
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
         <xs:restriction base="nant:CIFactory.Properties" />
       </xs:simpleType>
     </xs:union>
@@ -430,6 +775,29 @@
           <xs:enumeration value="Restart" />
           <xs:enumeration value="Pause" />
           <xs:enumeration value="Continue" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="nant:CIFactory.Properties" />
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="ICSharpCode.NRefactory.SupportedLanguage">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CSharp" />
+          <xs:enumeration value="VBNet" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -473,7 +841,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -637,7 +1005,7 @@
     <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
   </xs:complexType>
   <xs:complexType name="CIFactory.NAnt.Types.PropertyStructureIterator">
-    <xs:attribute name="name" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="pattern" type="nant:CIFactory.String" use="optional" />
     <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
     <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
   </xs:complexType>
@@ -698,7 +1066,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1357,7 +1725,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1598,7 +1966,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -1943,9 +2311,15 @@
     <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
   </xs:complexType>
-  <xs:complexType name="CIFactory.NAnt.Tasks.LoadPackageTask">
+  <xs:complexType name="CIFactory.NAnt.Types.PackageElement">
+    <xs:attribute name="name" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="type" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.NAnt.Tasks.LoadPackagesTask">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element minOccurs="1" maxOccurs="1" name="packages" type="nant:CIFactory.NAnt.Types.StringItem" />
+      <xs:element minOccurs="1" maxOccurs="1" name="package" type="nant:CIFactory.NAnt.Types.PackageElement" />
     </xs:sequence>
     <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
@@ -2468,6 +2842,11 @@
           <xs:enumeration value="UninstallKey" />
           <xs:enumeration value="FilePath" />
           <xs:enumeration value="Opaque" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
@@ -3058,7 +3437,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4269,7 +4648,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -4427,8 +4806,48 @@
     <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
   </xs:complexType>
+  <xs:simpleType name="CIFactory.Targets">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ConvertVBToCSharp" />
+          <xs:enumeration value="Fail" />
+          <xs:enumeration value="FixProjectBindings" />
+          <xs:enumeration value="FixSolutionBindings" />
+          <xs:enumeration value="FixUpProjectInfo" />
+          <xs:enumeration value="FixUpThirdPartyRefs" />
+          <xs:enumeration value="nDepend.GetLicense" />
+          <xs:enumeration value="ReplaceNAntHeaders" />
+          <xs:enumeration value="Scratch.Lib::ConvertVBToCSharp" />
+          <xs:enumeration value="Scratch.Lib::FixProjectBindings" />
+          <xs:enumeration value="Scratch.Lib::FixSolutionBindings" />
+          <xs:enumeration value="Scratch.Lib::FixUpProjectInfo" />
+          <xs:enumeration value="Scratch.Lib::ReplaceNAntHeaders" />
+          <xs:enumeration value="Scratch.Lib::test2" />
+          <xs:enumeration value="scratch::Fail" />
+          <xs:enumeration value="scratch::FixUpThirdPartyRefs" />
+          <xs:enumeration value="scratch::nDepend.GetLicense" />
+          <xs:enumeration value="scratch::ShowStatus" />
+          <xs:enumeration value="scratch::test" />
+          <xs:enumeration value="scratch::test-ccnet" />
+          <xs:enumeration value="ShowStatus" />
+          <xs:enumeration value="test" />
+          <xs:enumeration value="test2" />
+          <xs:enumeration value="test-ccnet" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value=".*" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="nant:CIFactory.Properties" />
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
   <xs:complexType name="NAnt.Core.Tasks.CallTask">
-    <xs:attribute name="target" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="target" type="nant:CIFactory.Targets" use="required" />
     <xs:attribute name="force" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="cascade" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
@@ -4690,6 +5109,8 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="propertyinclude" type="nant:NAnt.Core.Types.TextElement" />
       <xs:element minOccurs="0" maxOccurs="1" name="propertyexclude" type="nant:NAnt.Core.Types.TextElement" />
+      <xs:element minOccurs="0" maxOccurs="1" name="targetinclude" type="nant:NAnt.Core.Types.TextElement" />
+      <xs:element minOccurs="0" maxOccurs="1" name="targetexclude" type="nant:NAnt.Core.Types.TextElement" />
     </xs:sequence>
     <xs:attribute name="output" type="nant:CIFactory.String" use="required" />
     <xs:attribute name="target-ns" type="nant:CIFactory.String" use="optional" />
@@ -4747,7 +5168,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -5097,7 +5518,7 @@
       <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
       <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
       <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-      <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+      <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
       <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
       <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
       <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />
@@ -5287,7 +5708,7 @@
         <xs:element name="waitforexit" type="nant:CIFactory.NAnt.Tasks.WaitForExit" />
         <xs:element name="UpdateAssemblyVersion" type="nant:UpdateVersion.Tasks.Tasks.UpdateAssemblyVersion" />
         <xs:element name="webspider" type="nant:CIFactory.NAnt.Tasks.WebSpider" />
-        <xs:element name="loadpackage" type="nant:CIFactory.NAnt.Tasks.LoadPackageTask" />
+        <xs:element name="loadpackages" type="nant:CIFactory.NAnt.Tasks.LoadPackagesTask" />
         <xs:element name="gunzip" type="nant:NAnt.Compression.Tasks.GUnzip" />
         <xs:element name="tar" type="nant:NAnt.Compression.Tasks.TarTask" />
         <xs:element name="unzip" type="nant:NAnt.Compression.Tasks.UnZipTask" />

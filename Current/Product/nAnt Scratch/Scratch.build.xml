@@ -13,7 +13,14 @@
     <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd">
       <propertyexclude>^nant.task.*</propertyexclude>
     </nantschema>
-    
+    <!--<nant buildfile="..\Scripts\Personal.Build.xml" target="Custom.NAnt.CreateDocumentation"/>-->
+    <exec
+      program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
+      verbose="True"
+    >
+      <arg line='/f:"${ProductDirectory}\Scripts\Personal.build.xml"'/>
+      <arg line="Custom.NAnt.CreateDocumentation"/>
+    </exec>
   </target>
 
 

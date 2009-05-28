@@ -104,7 +104,7 @@ namespace NAnt.Core.Util {
         /// </example>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static string GetString(string name) {
-            Assembly assembly = Assembly.GetCallingAssembly();
+            Assembly assembly = Assembly.GetAssembly(typeof(ResourceUtils));
             return GetString(name, null, assembly);
         }        
 

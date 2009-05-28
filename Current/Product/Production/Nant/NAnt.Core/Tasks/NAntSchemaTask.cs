@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using NAnt.Core.Types;
 using System.Text.RegularExpressions;
 using NAnt.Core.Filters;
+using System.Text;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -245,6 +246,23 @@ namespace NAnt.Core.Tasks {
             dataTypes.ForEach(AddAttributeType);
             TypeFactory.FilterBuilders.OfType<FilterBuilder>().Select(filter => filter.Type).ToList<Type>().ForEach(AddAttributeType);
 
+            List<String> Functions = new List<string>();
+            TypeFactory.FunctionTable.Keys.ToList<String>().ForEach(delegate(String functionName) 
+            {
+                StringBuilder functionSig = new StringBuilder();
+                MethodInfo function = TypeFactory.FunctionTable[functionName];
+                ParameterInfo[] parameters = function.GetParameters();
+
+                functionSig.AppendFormat("{0}(", functionName);
+                parameters.ToList<ParameterInfo>().ForEach(delegate(ParameterInfo parameter)
+                {
+                    functionSig.AppendFormat("{0}, ", parameter.Name);
+                });
+                functionSig.Append(")");
+                functionSig.Replace(", )", ")");
+                Functions.Add(functionSig.ToString());
+            });
+
             FileIOPermission FilePermission = new FileIOPermission(FileIOPermissionAccess.AllAccess, OutputFile.FullName);
             FilePermission.Assert();
 
@@ -274,6 +292,7 @@ namespace NAnt.Core.Tasks {
                         }
                         return shouldInclude;
                     }));
+                properties.AddRange(Functions);
                 properties.Sort();
 
                 List<string> targets = new List<string>(this.Project.Targets.Select(target => target.Name).Where(ShouldAddTarget));
@@ -739,6 +758,16 @@ namespace NAnt.Core.Tasks {
 
                     XmlSchemaSimpleType boolType = new XmlSchemaSimpleType();
                     union.BaseTypes.Add(boolType);
+
+                    XmlSchemaSimpleType wildcardType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(wildcardType);
+                    XmlSchemaSimpleTypeRestriction wildcardRestriction = new XmlSchemaSimpleTypeRestriction();
+                    wildcardType.Content = wildcardRestriction;
+                    wildcardRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+                    XmlSchemaPatternFacet wildcard = new XmlSchemaPatternFacet();
+                    wildcardRestriction.Facets.Add(wildcard);
+                    wildcard.Value = ".*";
+
                     XmlSchemaSimpleTypeRestriction boolRestriction = new XmlSchemaSimpleTypeRestriction();
                     boolRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
                     boolType.Content = boolRestriction;
@@ -762,6 +791,16 @@ namespace NAnt.Core.Tasks {
 
                     XmlSchemaSimpleType enumType = new XmlSchemaSimpleType();
                     union.BaseTypes.Add(enumType);
+
+                    XmlSchemaSimpleType wildcardType = new XmlSchemaSimpleType();
+                    union.BaseTypes.Add(wildcardType);
+                    XmlSchemaSimpleTypeRestriction wildcardRestriction = new XmlSchemaSimpleTypeRestriction();
+                    wildcardType.Content = wildcardRestriction;
+                    wildcardRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");
+                    XmlSchemaPatternFacet wildcard = new XmlSchemaPatternFacet();
+                    wildcardRestriction.Facets.Add(wildcard);
+                    wildcard.Value = ".*";
+
                     XmlSchemaSimpleTypeRestriction enumRestriction = new XmlSchemaSimpleTypeRestriction();
                     enumType.Content = enumRestriction;
                     enumRestriction.BaseTypeName = new XmlQualifiedName("string", "http://www.w3.org/2001/XMLSchema");

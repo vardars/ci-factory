@@ -106,6 +106,12 @@ namespace NAnt.Core.Functions {
             return Project.ScriptFileInfoList.Contains(scriptName);
         }
 
+        [Function("loaded")]
+        public bool Loaded(string scriptFilePath)
+        {
+            return this.Project.ScriptFileInfoList.Where(scriptFileInfo => scriptFileInfo.FilePath == scriptFilePath).ToList().Count == 1;
+        }
+
         [Function("get-file-Path")]
         public string GetFilePath(string scriptName)
         {

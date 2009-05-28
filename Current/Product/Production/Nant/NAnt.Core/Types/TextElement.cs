@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 
 namespace NAnt.Core.Types
 {
-
     [ElementName("text")]
     public class TextElement : Element
     {
@@ -80,5 +79,4 @@ namespace NAnt.Core.Types
 
         #endregion
     }
-
 }
