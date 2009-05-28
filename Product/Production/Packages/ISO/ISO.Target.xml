@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="ISO.Target">
+
+  <property name="ISO.ExeFile" value="CDIMAGE.EXE" />
+  <property name="ISO.BinDirectory" value="${PackagesDirectory}\ISO\bin" />
+  
+  <include buildfile="ISO.Properties.xml"/>
+
+  <target name="ISO.SetUp">
+  </target>
+
+  <target name="ISO.TearDown">
+  </target>
+
+  <target name="ISO.CreateISOImage">
+    <exec 
+      program="${ISO.ExeFile}"
+      basedir="${ISO.BinDirectory}"
+      commandline='-l"${ISO.MediaLabel}" -c -n -d -o -w1 -m "${ISO.SourceDirectory}" "${ISO.FilePath}"' />
+  </target>
+
+</project>

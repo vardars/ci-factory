@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" >
+
+	<property name="CCNetProject" value="CI Factory"/>
+	<property name="CCNetLabel" value="1.0.0.2"/>
+
+	<include buildfile="..\..\Build\Properties.Build.xml"/>
+	<include buildfile="Scratch.Lib.xml"/>
+  
+  <target name="test">
+    <property name="SchemaFile" value="${ProductDirectory}\NAnt.xsd"/>
+
+    <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd">
+      <propertyexclude>^nant.task.*</propertyexclude>
+    </nantschema>
+    <!--<nant buildfile="..\Scripts\Personal.Build.xml" target="Custom.NAnt.CreateDocumentation"/>-->
+    <exec
+      program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
+      verbose="True"
+    >
+      <arg line='/f:"${ProductDirectory}\Scripts\Personal.build.xml"'/>
+      <arg line="Custom.NAnt.CreateDocumentation"/>
+    </exec>
+  </target>
+
+
+	<target name="Fail">
+		<echo message="Boo!"/>
+		<fail/>
+	</target>
+
+	<script language="C#" prefix="sourcecontrol">
+		<code>
+			<![CDATA[                 
+					
+          [Function("convertlocaltoserver")]
+					public string ConvertLocalToServer(string local)
+          {
+            String server = local.ToLower().Replace(this.Project.Properties["ProjectsDirectory"].ToLower(), "");
+            server = server.Replace(@"\", @"/");
+            return String.Format(@"{0}{1}", this.Project.Properties["Perforce.ServerPathPrefix"], server);
+          }
+          
+			]]>
+		</code>
+	</script>
+
+	<target name="test-ccnet">
+		<property name="serverurl" value="tcp://localhost:21245/CruiseManager.rem"/>
+		<property name="projectname" value="VSSTestProject"/>
+
+		<ccnetstop serverurl="${serverurl}" failonerror="false"/>
+
+		<asyncexec program="C:\Projects\VSSTestProject\Current\Build\CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" taskname="CCNetServer" />
+
+		<waitfor condition="${ccnet::get-project-state(serverurl, projectname) == 'Running'}" timeout="10" pollinginterval="2" />
+
+		<call target="ShowStatus"/>
+
+		<ccnetstop projectname="${projectname}" serverurl="${serverurl}" if="${ccnet::get-project-state(serverurl, projectname) == 'Running'}"/>
+
+		<waitfor condition="${ccnet::get-project-state(serverurl, projectname) == 'Stopped'}" timeout="10" pollinginterval="2"/>
+
+		<call target="ShowStatus"/>
+
+		<ccnetstart projectname="${projectname}" serverurl="${serverurl}" if="${ccnet::get-project-state(serverurl, projectname) == 'Stopped'}"/>
+
+		<waitfor condition="${ccnet::get-project-state(serverurl, projectname) == 'Running'}" timeout="10" pollinginterval="2"/>
+
+		<call target="ShowStatus"/>
+
+		<ccnetstop serverurl="${serverurl}"/>
+
+		<waitforexit>
+			<tasknames>
+				<string value="CCNetServer"/>
+			</tasknames>
+		</waitforexit>
+	</target>
+
+	<target name="ShowStatus">
+		<echo message="${ccnet::get-project-activity(serverurl, projectname)}"/>
+		<echo message="${ccnet::get-project-build-status(serverurl, projectname)}"/>
+		<echo message="${ccnet::get-project-state(serverurl, projectname)}"/>
+		<echo message="${ccnet::get-project-last-build-label(serverurl, projectname)}"/>
+	</target>
+
+
+	<target name="FixUpThirdPartyRefs">
+		<strings id="ThirdPartyComponents" />
+
+		<foreach item="File" property="ThirdPartyComponent.Path">
+			<in>
+				<items basedir="${ThirdPartyDirectory}">
+					<include name="**\*.dll"/>
+					<include name="**\*.exe"/>
+				</items>
+			</in>
+			<do>
+				<property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, ThirdPartyDirectory + '\', '')}"/>
+				<echo message="${ThirdPartyComponent.Path}"/>
+				<function execute="${stringlist::add('ThirdPartyComponents', ThirdPartyComponent.Path)}"/>
+			</do>
+		</foreach>
+
+		<foreach item="File" property="ProjectFile.Path">
+			<in>
+				<items>
+					<include name="${ProductDirectory}\**\*.*proj"/>
+				</items>
+			</in>
+			<do>
+				<echo message="******************************************************"/>
+				<echo message="Looking at ${ProjectFile.Path}"/>
+
+				<property name="Index" value="0"/>
+
+				<loopthrough property="Hint.Path">
+					<items>
+						<xmlquery file="${ProjectFile.Path}" query="b:Project/b:ItemGroup/b:Reference/b:HintPath">
+							<namespaces>
+								<namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+							</namespaces>
+						</xmlquery>
+					</items>
+					<do>
+						<loopthrough property="ThirdPartyComponent.Path">
+							<items>
+								<strings refid="ThirdPartyComponents" />
+							</items>
+							<do>
+								<if test="${string::ends-with(Hint.Path, ThirdPartyComponent.Path)}">
+									<echo message="Looks like we have a match:"/>
+									<echo message="    ${Hint.Path}"/>
+									<echo message="will be changed to:"/>
+									<echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+									<!--xmlpoke it-->
+									<xmlpoke file="${ProjectFile.Path}" xpath ="b:Project/b:ItemGroup/b:Reference/b:HintPath" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
+										<namespaces>
+											<namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
+										</namespaces>
+									</xmlpoke>
+								</if>
+							</do>
+						</loopthrough>
+						<property name="Index" value="${int::parse(Index) + 1}"/>
+					</do>
+				</loopthrough>
+			</do>
+		</foreach>
+	</target>
+
+
+	<target name="nDepend.GetLicense">
+		<property name="License.File" value="C:\Projects\CI Factory\Current\Product\Production\Packages\nDepend\bin\EULA.txt"/>
+		<loadfile file="${License.File}" property="License.Content" />
+	</target>
+
+	<!--<script language="C#" prefix="vsproject">
+    <imports >
+      <import namespace="System.Xml"/>
+      <import namespace="System.Text"/>
+      <import namespace="System.Collections.Generic"/>
+    </imports >
+    <code>
+      <![CDATA[                 
+					
+          [Function("get-assemblyname")]
+          public string GetSssemblyName(string projectFilePath)
+          {
+              XmlDocument xd = new XmlDocument();
+              xd.PreserveWhitespace=true;
+              xd.Load(projectFilePath);
+              
+              XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xd.NameTable);
+              namespaceManager.AddNamespace("b", @"http://schemas.microsoft.com/developer/msbuild/2003");
+
+              XmlNode Node = null;
+              Node = xd.SelectSingleNode("//b:AssemblyName", namespaceManager);
+              return Node.InnerText;
+          }
+          
+			]]>
+    </code>
+  </script>-->
+
+</project>
