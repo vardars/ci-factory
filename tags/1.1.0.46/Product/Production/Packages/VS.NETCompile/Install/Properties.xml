@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="VS.NETCompile.Install.Properties">
+
+  <property name="Compile.DevEnv.Version" value="2003" overwrite="false"/><!-- 2003 or 2005 or 2008 -->
+
+  <switch value="${Compile.DevEnv.Version}">
+    <case value="2003" break="true">
+      <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio .NET 2003\Common7\IDE\devenv.exe" overwrite="false"/>
+    </case>
+    <case value="2005" break="true">
+      <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\VC\vcvarsall.bat" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 8\Common7\IDE\devenv.exe" overwrite="false"/>
+    </case>
+    <case value="2008" break="true">
+      <property name="Compile.DevEnv.vsvars32bat" value="${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" overwrite="false"/>
+      <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
+    </case>
+  </switch>
+  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv%', Compile.DevEnv)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv.vsvars32bat%', Compile.DevEnv.vsvars32bat)}"/>
+  
+</project>

@@ -1,0 +1,199 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B50A1067-785B-4686-8FFC-5AF424BEF163}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>NAnt.DotNetTasks</AssemblyName>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NAnt.DotNetTasks</RootNamespace>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>bin\Debug\NAnt.DotNetTasks.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>0618,1591</NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>none</ErrorReport>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>bin\Release\NAnt.DotNetTasks.xml</DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>0618,1591</NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>none</ErrorReport>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <Name>mscorlib</Name>
+    </Reference>
+    <Reference Include="NDoc.Core">
+      <Name>NDoc.Core</Name>
+      <HintPath>..\..\..\..\Third Party\nAnt\bin\lib\net\2.0\NDoc.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\NAnt.Core\NAnt.Core.csproj">
+      <Name>NAnt.Core</Name>
+      <Project>{8F5F8375-4097-4952-B860-784EB9961ABE}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+      <Link>Properties\ProjectInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\AssemblyInfoTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\AssemblyLinkerTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\CompilerBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\CscTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\DelaySignTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\IlasmTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\JscTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\LicenseTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\NDocTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\RegSvcsTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ResGenTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\ScriptTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\VbcTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\VjcTask.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\AssemblyAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\AssemblyAttributeCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\AssemblyFileSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\CompilerWarning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\CompilerWarningCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\DebugOutput.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\NamespaceImport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\NamespaceImportCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\Package.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\PackageCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\ResourceFileSet.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\ResourceFileSetCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Types\WarningAsError.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UpdatenAnt.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)UpdatenAnt.bat" "$(SolutionDir)" "$(TargetDir)" "$(TargetName)"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
