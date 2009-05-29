@@ -47,7 +47,10 @@ namespace NAnt.Core.Util {
         /// Prevents the <see cref="NAnt.Core.Util.ResourceUtils" /> class
         /// from being instantiated explicitly.
         /// </summary>
-        private ResourceUtils() {}
+        private ResourceUtils() {
+            Assembly assembly = Assembly.GetAssembly(typeof(ResourceUtils));
+            RegisterSharedAssembly(assembly);
+        }
 
         #endregion private constructors
 
@@ -104,7 +107,7 @@ namespace NAnt.Core.Util {
         /// </example>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static string GetString(string name) {
-            Assembly assembly = Assembly.GetAssembly(typeof(ResourceUtils));
+            Assembly assembly = Assembly.GetCallingAssembly();
             return GetString(name, null, assembly);
         }        
 
