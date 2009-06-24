@@ -10,7 +10,6 @@ using System.IO;
 
 namespace CIFactory.NAnt.Functions
 {
-
     [FunctionSet("file", "IO")]
     public class FileFunctions : FunctionSetBase
     {

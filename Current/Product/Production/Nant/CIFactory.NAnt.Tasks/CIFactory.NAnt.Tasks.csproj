@@ -64,6 +64,7 @@
     <Compile Include="Functions\FileFunctions.cs" />
     <Compile Include="Functions\FileSetFunctions.cs" />
     <Compile Include="Functions\FilterChainFunctions.cs" />
+    <Compile Include="Functions\PackageFunctions.cs" />
     <Compile Include="Functions\PathFunctions.cs" />
     <Compile Include="Functions\ProcessFunctions.cs" />
     <Compile Include="Functions\VSProjectFunctions.cs" />

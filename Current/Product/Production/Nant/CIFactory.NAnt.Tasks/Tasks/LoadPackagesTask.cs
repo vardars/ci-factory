@@ -15,9 +15,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// Ian MacLean (ian@maclean.ms)
-// Gerry Shaw (gerry_shaw@yahoo.com)
-// Scott Hernandez (ScottHernandez@_yeah_not_really_@hotmail.com)
 // Jay Flowers jayflowers.com
 
 
@@ -84,39 +81,51 @@ namespace CIFactory.NAnt.Tasks
             foreach (PackageElement package in this.Packages.Where(package => package.If == true && package.Unless == false))
             {
                 if (package.PackageType != null)
-                    this.SetProperty("Common.Package.Type." + package.PackageType, package.PackageName);
+                    this.SetProperty("Package.Type." + package.PackageType, package.PackageName);
+
+                this.SetProperty("Package." + package.PackageName + ".Name", package.PackageName);
 
                 String packageDirectoryPath = Path.Combine(this.PackagesDirectory, package.PackageName);
-                this.SetProperty("Common.Package." + package.PackageName + ".Directory.Path", packageDirectoryPath);
+                this.SetProperty("Package." + package.PackageName + ".Directory.Path", packageDirectoryPath);
 
                 String PropertiesFilePath = GenerateFilePath("{0}.Properties.xml", package, packageDirectoryPath);
-                this.SetProperty("Common.Package." + package.PackageName + ".Properties.File.Loaded", false.ToString());
-                this.SetProperty("Common.Package." + package.PackageName + ".Properties.File.Path", PropertiesFilePath);
+                this.SetProperty("Package." + package.PackageName + ".Properties.File.Loaded", false.ToString());
+                this.SetProperty("Package." + package.PackageName + ".Properties.File.Path", PropertiesFilePath);
                 if (File.Exists(PropertiesFilePath))
                 {
                     IncludeScriptFile(package.PackageName, PropertiesFilePath);
-                    this.Properties["Common.Package." + package.PackageName + ".Properties.File.Loaded"] = true.ToString();
+                    this.Properties["Package." + package.PackageName + ".Properties.File.Loaded"] = true.ToString();
                 }
 
                 String MacrosFilePath = GenerateFilePath("{0}.MacroDefs.xml", package, packageDirectoryPath);
-                this.SetProperty("Common.Package." + package.PackageName + ".MacroDefs.File.Loaded", false.ToString());
-                this.SetProperty("Common.Package." + package.PackageName + ".MacroDefs.File.Path", MacrosFilePath);
+                this.SetProperty("Package." + package.PackageName + ".MacroDefs.File.Loaded", false.ToString());
+                this.SetProperty("Package." + package.PackageName + ".MacroDefs.File.Path", MacrosFilePath);
                 if (File.Exists(MacrosFilePath))
                 {
                     IncludeScriptFile(package.PackageName, MacrosFilePath); ;
-                    this.Properties["Common.Package." + package.PackageName + ".MacroDefs.File.Loaded"] = true.ToString();
+                    this.Properties["Package." + package.PackageName + ".MacroDefs.File.Loaded"] = true.ToString();
                 }
 
                 String TargetsFilePath = GenerateFilePath("{0}.Targets.xml", package, packageDirectoryPath);
-                this.SetProperty("Common.Package." + package.PackageName + ".Targets.File.Loaded", false.ToString());
-                this.SetProperty("Common.Package." + package.PackageName + ".Targets.File.Path", TargetsFilePath);
+                this.SetProperty("Package." + package.PackageName + ".Targets.File.Loaded", false.ToString());
+                this.SetProperty("Package." + package.PackageName + ".Targets.File.Path", TargetsFilePath);
                 if (!File.Exists(TargetsFilePath))
                 {
                     throw new BuildException(string.Format(CultureInfo.InvariantCulture,
                         ResourceUtils.GetString("NA1127"), TargetsFilePath), Location);
                 }
                 IncludeScriptFile(package.PackageName, TargetsFilePath);
-                this.Properties["Common.Package." + package.PackageName + ".Targets.File.Loaded"] = true.ToString();
+                this.Properties["Package." + package.PackageName + ".Targets.File.Loaded"] = true.ToString();
+
+                String CustomFilePath = GenerateFilePath("{0}.Custom.xml", package, packageDirectoryPath);
+                this.SetProperty("Package." + package.PackageName + ".Custom.File.Loaded", false.ToString());
+                this.SetProperty("Package." + package.PackageName + ".Custom.File.Path", CustomFilePath);
+                if (File.Exists(CustomFilePath))
+                {
+                    IncludeScriptFile(package.PackageName, CustomFilePath); ;
+                    this.Properties["Package." + package.PackageName + ".Custom.File.Loaded"] = true.ToString();
+                }
+
             }
         }
 
