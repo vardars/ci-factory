@@ -63,7 +63,20 @@ namespace CIFactory.NAnt.Tasks
             set { _ProjectName = value; }
         }
 
-        [BuildElementArray("property", Required = true)]
+        private PropertyStructureIterator[] _PropertyIterators;
+
+        [BuildElementArray("propertystructureiterator", Required = false)]
+        public PropertyStructureIterator[] PropertyIterators
+        {
+            get { return _PropertyIterators; }
+            set
+            {
+                _PropertyIterators = value;
+            }
+        }
+        
+
+        [BuildElementArray("property", Required = false)]
         public SaveProperty[] PropertyList
         {
             get { return _PropertyList; }
@@ -83,6 +96,13 @@ namespace CIFactory.NAnt.Tasks
                 foreach (SaveProperty Property in this.PropertyList)
                 {
                     Writer.WriteLine(string.Format("-D:{0}=\"{1}\"", Property.PropertyName, Property.PropertyValue));
+                }
+                foreach (PropertyStructureIterator propertyStructureIterator in this.PropertyIterators)
+                {
+                    foreach (String propertyName in propertyStructureIterator)
+                    {
+                        Writer.WriteLine(string.Format("-D:{0}=\"{1}\"", propertyName, Properties[propertyName]));
+                    }
                 }
             }
             finally
@@ -108,6 +128,13 @@ namespace CIFactory.NAnt.Tasks
                 foreach (SaveProperty Property in this.PropertyList)
                 {
                     Writer.WriteLine(string.Format("<property name='{0}' value='{1}' />", Property.PropertyName, Property.PropertyValue));
+                }
+                foreach (PropertyStructureIterator propertyStructureIterator in this.PropertyIterators)
+                {
+                    foreach (String propertyName in propertyStructureIterator)
+                    {
+                        Writer.WriteLine(string.Format("<property name='{0}' value='{1}' />", propertyName, Properties[propertyName]));
+                    }
                 }
                 Writer.WriteLine("</project>");
             }
