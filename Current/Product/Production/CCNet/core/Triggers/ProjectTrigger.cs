@@ -62,16 +62,26 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 		private ProjectStatus GetCurrentProjectStatus()
 		{
 			Log.Debug("Retrieving ProjectStatus from server: " + ServerUri);
-			ICruiseManager cruiseManager = (ICruiseManager) remoteService.Connect(typeof(ICruiseManager), ServerUri);
-			ProjectStatus[] currentStatuses = cruiseManager.GetProjectStatus();
-			foreach (ProjectStatus currentStatus in currentStatuses)
-			{
-				if (currentStatus.Name == Project)
-				{
-					return currentStatus;
-				}
-			}
-			throw new NoSuchProjectException(Project);
+            ProjectStatus[] currentStatuses = null;
+            try
+            {
+                ICruiseManager cruiseManager = (ICruiseManager)remoteService.Connect(typeof(ICruiseManager), ServerUri);
+                currentStatuses = cruiseManager.GetProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                Log.Debug("Error connecting to server: " + ServerUri);
+                Log.Debug(ex.ToString());
+            }
+
+            foreach (ProjectStatus currentStatus in currentStatuses)
+            {
+                if (currentStatus.Name == Project)
+                {
+                    return currentStatus;
+                }
+            }
+            throw new NoSuchProjectException(Project);
 		}
 
 		public DateTime NextBuild
