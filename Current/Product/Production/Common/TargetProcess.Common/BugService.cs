@@ -127,7 +127,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         /// <remarks/>
         public BugService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/BugService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/BugService.asmx";
         }
 
         /// <remarks/>
@@ -2588,7 +2588,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private string nameField;
 
-        private System.Nullable<int> importanceField;
+        private int importanceField;
 
         private System.Nullable<bool> isDefaultField;
 
@@ -2620,8 +2620,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<int> Importance
+        public int Importance
         {
             get
             {
@@ -2767,13 +2766,13 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private System.Nullable<int> actorEffortIDField;
 
-        private System.Nullable<decimal> initialEstimateField;
+        private decimal initialEstimateField;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
@@ -2804,8 +2803,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> InitialEstimate
+        public decimal InitialEstimate
         {
             get
             {
@@ -2818,8 +2816,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -2832,8 +2829,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -2846,8 +2842,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -3479,7 +3474,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private string nameField;
 
-        private System.Nullable<int> importanceField;
+        private int importanceField;
 
         private System.Nullable<bool> isDefaultField;
 
@@ -3513,8 +3508,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<int> Importance
+        public int Importance
         {
             get
             {
@@ -3560,7 +3554,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://targetprocess.com")]
-    public partial class BugDTO : DataTransferObject, ITpDto
+    public partial class BugDTO : DataTransferObject
     {
 
         private System.Nullable<int> bugIDField;
@@ -3611,11 +3605,11 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private string customField15Field;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
@@ -3985,8 +3979,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -3999,8 +3992,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -4013,8 +4005,7 @@ namespace CIFactory.TargetProcess.Common.BugWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -4366,9 +4357,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal GetSeveritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetSeveritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4397,9 +4387,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddBugWithAttachmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddBugWithAttachmentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4428,9 +4417,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4459,9 +4447,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4490,9 +4477,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4521,9 +4507,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForEntityStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForEntityStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4556,9 +4541,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForPriorityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForPriorityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4587,9 +4571,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal GetPrioritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetPrioritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4618,9 +4601,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForIterationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForIterationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4649,9 +4631,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForReleaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForReleaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4680,9 +4661,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForSeverityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForSeverityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4711,9 +4691,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForBuildCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForBuildCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4742,9 +4721,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4773,9 +4751,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveCommentsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCommentsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4804,9 +4781,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddCommentToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddCommentToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4839,9 +4815,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAttachmentsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachmentsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4874,9 +4849,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddAttachmentToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddAttachmentToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4905,9 +4879,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAttachedRequestsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachedRequestsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4936,9 +4909,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddRequestGeneralToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddRequestGeneralToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4971,9 +4943,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveTeamsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveTeamsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5002,9 +4973,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddTeamToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddTeamToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5049,9 +5019,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveOpenForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveOpenForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5080,9 +5049,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveOpenForMeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveOpenForMeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5115,9 +5083,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveActorEffortsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveActorEffortsForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5150,9 +5117,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveRevisionAssignablesForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveRevisionAssignablesForBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5181,9 +5147,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal AddRevisionAssignableToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddRevisionAssignableToBugCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5216,9 +5181,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5247,9 +5211,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5286,9 +5249,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5317,9 +5279,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5348,9 +5309,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5379,9 +5339,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5410,9 +5369,8 @@ namespace CIFactory.TargetProcess.Common.BugWebService
 
         private object[] results;
 
-        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5427,4 +5385,5 @@ namespace CIFactory.TargetProcess.Common.BugWebService
             }
         }
     }
+
 }

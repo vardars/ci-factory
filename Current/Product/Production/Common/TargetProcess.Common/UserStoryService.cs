@@ -125,7 +125,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         /// <remarks/>
         public UserStoryService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/UserStoryService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/UserStoryService.asmx";
         }
 
         /// <remarks/>
@@ -2528,7 +2528,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://targetprocess.com")]
-    public partial class UserStoryDTO : DataTransferObject, ITpDto
+    public partial class UserStoryDTO : DataTransferObject
     {
 
         private System.Nullable<int> userStoryIDField;
@@ -2579,17 +2579,17 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private string customField15Field;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
         private System.Nullable<decimal> timeRemainField;
 
-        private System.Nullable<decimal> initialEstimateField;
+        private decimal initialEstimateField;
 
         private System.Nullable<int> lastCommentUserIDField;
 
@@ -2947,8 +2947,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -2961,8 +2960,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -2975,8 +2973,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -3017,8 +3014,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> InitialEstimate
+        public decimal InitialEstimate
         {
             get
             {
@@ -3367,11 +3363,11 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private string customField15Field;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
@@ -3733,8 +3729,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -3747,8 +3742,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -3761,8 +3755,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -4131,13 +4124,13 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private System.Nullable<int> actorEffortIDField;
 
-        private System.Nullable<decimal> initialEstimateField;
+        private decimal initialEstimateField;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
@@ -4168,8 +4161,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> InitialEstimate
+        public decimal InitialEstimate
         {
             get
             {
@@ -4182,8 +4174,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -4196,8 +4187,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -4210,8 +4200,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -4843,7 +4832,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private string nameField;
 
-        private System.Nullable<int> importanceField;
+        private int importanceField;
 
         private System.Nullable<bool> isDefaultField;
 
@@ -4877,8 +4866,7 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<int> Importance
+        public int Importance
         {
             get
             {
@@ -4931,9 +4919,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4962,9 +4949,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4993,9 +4979,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5024,9 +5009,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForEntityStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForEntityStateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5059,9 +5043,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForPriorityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForPriorityCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5090,9 +5073,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal GetPrioritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetPrioritiesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5121,9 +5103,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForIterationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForIterationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5152,9 +5133,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForReleaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForReleaseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5183,9 +5163,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllForFeatureCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForFeatureCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5214,9 +5193,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveCommentsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCommentsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5245,9 +5223,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddCommentToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddCommentToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5280,9 +5257,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAttachmentsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachmentsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5315,9 +5291,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddAttachmentToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddAttachmentToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5346,9 +5321,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAttachedRequestsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachedRequestsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5377,9 +5351,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddRequestGeneralToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddRequestGeneralToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5412,9 +5385,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveTeamsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveTeamsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5443,9 +5415,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddTeamToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddTeamToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5490,9 +5461,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveOpenForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveOpenForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5521,9 +5491,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveOpenForMeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveOpenForMeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5556,9 +5525,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveActorEffortsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveActorEffortsForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5591,9 +5559,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveRevisionAssignablesForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveRevisionAssignablesForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5622,9 +5589,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddRevisionAssignableToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddRevisionAssignableToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5657,9 +5623,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveTasksForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveTasksForUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5688,9 +5653,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal AddTaskToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddTaskToUserStoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5723,9 +5687,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5754,9 +5717,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5793,9 +5755,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5824,9 +5785,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5855,9 +5815,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5886,9 +5845,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5917,9 +5875,8 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
 
         private object[] results;
 
-        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -5934,4 +5891,5 @@ namespace CIFactory.TargetProcess.Common.UserStoryWebService
             }
         }
     }
+
 }

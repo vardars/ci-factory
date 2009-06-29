@@ -79,7 +79,7 @@ namespace CIFactory.TargetProcess.Common.ProcessWebService
         /// <remarks/>
         public ProcessService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/ProcessService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/ProcessService.asmx";
         }
 
         /// <remarks/>
@@ -1536,7 +1536,7 @@ namespace CIFactory.TargetProcess.Common.ProcessWebService
 
         private System.Nullable<bool> requiredField;
 
-        private System.Nullable<FieldTypeEnum> fieldTypeField;
+        private FieldTypeEnum fieldTypeField;
 
         private System.Nullable<bool> enabledForFilterField;
 
@@ -1614,8 +1614,7 @@ namespace CIFactory.TargetProcess.Common.ProcessWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<FieldTypeEnum> FieldType
+        public FieldTypeEnum FieldType
         {
             get
             {
@@ -1712,6 +1711,9 @@ namespace CIFactory.TargetProcess.Common.ProcessWebService
 
         /// <remarks/>
         Number,
+
+        /// <remarks/>
+        Entity,
     }
 
     /// <remarks/>

@@ -55,7 +55,7 @@ namespace CIFactory.TargetProcess.Common.UserWebService
         /// <remarks/>
         public UserService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/UserService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/UserService.asmx";
         }
 
         /// <remarks/>
@@ -975,9 +975,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal RetrieveAllForDefaultRoleCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForDefaultRoleCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1006,9 +1005,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1037,9 +1035,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1076,9 +1073,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1107,9 +1103,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1138,9 +1133,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1169,9 +1163,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1200,9 +1193,8 @@ namespace CIFactory.TargetProcess.Common.UserWebService
 
         private object[] results;
 
-        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -1217,4 +1209,5 @@ namespace CIFactory.TargetProcess.Common.UserWebService
             }
         }
     }
+
 }

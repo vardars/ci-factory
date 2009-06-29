@@ -91,7 +91,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         /// <remarks/>
         public IterationService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/IterationService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/IterationService.asmx";
         }
 
         /// <remarks/>
@@ -1084,19 +1084,19 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
 
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://targetprocess.com/RemoveBuildFromIteration", RequestNamespace = "http://targetprocess.com", ResponseNamespace = "http://targetprocess.com", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void RemoveBuildFromIteration(int iterationID, int buildID)
+        public void RemoveBuildFromIteration(int iterationID, int generalID)
         {
             this.Invoke("RemoveBuildFromIteration", new object[] {
                     iterationID,
-                    buildID});
+                    generalID});
         }
 
         /// <remarks/>
-        public System.IAsyncResult BeginRemoveBuildFromIteration(int iterationID, int buildID, System.AsyncCallback callback, object asyncState)
+        public System.IAsyncResult BeginRemoveBuildFromIteration(int iterationID, int generalID, System.AsyncCallback callback, object asyncState)
         {
             return this.BeginInvoke("RemoveBuildFromIteration", new object[] {
                     iterationID,
-                    buildID}, callback, asyncState);
+                    generalID}, callback, asyncState);
         }
 
         /// <remarks/>
@@ -1106,13 +1106,13 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        public void RemoveBuildFromIterationAsync(int iterationID, int buildID)
+        public void RemoveBuildFromIterationAsync(int iterationID, int generalID)
         {
-            this.RemoveBuildFromIterationAsync(iterationID, buildID, null);
+            this.RemoveBuildFromIterationAsync(iterationID, generalID, null);
         }
 
         /// <remarks/>
-        public void RemoveBuildFromIterationAsync(int iterationID, int buildID, object userState)
+        public void RemoveBuildFromIterationAsync(int iterationID, int generalID, object userState)
         {
             if ((this.RemoveBuildFromIterationOperationCompleted == null))
             {
@@ -1120,7 +1120,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
             }
             this.InvokeAsync("RemoveBuildFromIteration", new object[] {
                     iterationID,
-                    buildID}, this.RemoveBuildFromIterationOperationCompleted, userState);
+                    generalID}, this.RemoveBuildFromIterationOperationCompleted, userState);
         }
 
         private void OnRemoveBuildFromIterationOperationCompleted(object arg)
@@ -2170,21 +2170,71 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
 
         private string nameField;
 
-        private System.Nullable<System.DateTime> buildDateField;
+        private string descriptionField;
+
+        private System.Nullable<System.DateTime> startDateField;
+
+        private System.Nullable<System.DateTime> endDateField;
+
+        private System.Nullable<System.DateTime> createDateField;
+
+        private System.Nullable<System.DateTime> modifyDateField;
+
+        private System.Nullable<System.DateTime> lastCommentDateField;
+
+        private System.Nullable<double> numericPriorityField;
+
+        private string customField1Field;
+
+        private string customField2Field;
+
+        private string customField3Field;
+
+        private string customField4Field;
+
+        private string customField5Field;
+
+        private string customField6Field;
+
+        private string customField7Field;
+
+        private string customField8Field;
+
+        private string customField9Field;
+
+        private string customField10Field;
+
+        private string customField11Field;
+
+        private string customField12Field;
+
+        private string customField13Field;
+
+        private string customField14Field;
+
+        private string customField15Field;
+
+        private System.DateTime buildDateField;
+
+        private System.Nullable<int> lastCommentUserIDField;
+
+        private System.Nullable<int> parentProjectIDField;
+
+        private System.Nullable<int> ownerIDField;
+
+        private System.Nullable<int> lastEditorIDField;
 
         private System.Nullable<int> iterationIDField;
 
         private System.Nullable<int> releaseIDField;
 
-        private System.Nullable<int> ownerIDField;
+        private string parentProjectNameField;
 
-        private System.Nullable<int> projectIDField;
+        private string entityTypeNameField;
 
         private string iterationNameField;
 
         private string releaseNameField;
-
-        private string projectNameField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
@@ -2214,8 +2264,299 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
+        public string Description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<System.DateTime> BuildDate
+        public System.Nullable<System.DateTime> StartDate
+        {
+            get
+            {
+                return this.startDateField;
+            }
+            set
+            {
+                this.startDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<System.DateTime> EndDate
+        {
+            get
+            {
+                return this.endDateField;
+            }
+            set
+            {
+                this.endDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<System.DateTime> CreateDate
+        {
+            get
+            {
+                return this.createDateField;
+            }
+            set
+            {
+                this.createDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<System.DateTime> ModifyDate
+        {
+            get
+            {
+                return this.modifyDateField;
+            }
+            set
+            {
+                this.modifyDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<System.DateTime> LastCommentDate
+        {
+            get
+            {
+                return this.lastCommentDateField;
+            }
+            set
+            {
+                this.lastCommentDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<double> NumericPriority
+        {
+            get
+            {
+                return this.numericPriorityField;
+            }
+            set
+            {
+                this.numericPriorityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField1
+        {
+            get
+            {
+                return this.customField1Field;
+            }
+            set
+            {
+                this.customField1Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField2
+        {
+            get
+            {
+                return this.customField2Field;
+            }
+            set
+            {
+                this.customField2Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField3
+        {
+            get
+            {
+                return this.customField3Field;
+            }
+            set
+            {
+                this.customField3Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField4
+        {
+            get
+            {
+                return this.customField4Field;
+            }
+            set
+            {
+                this.customField4Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField5
+        {
+            get
+            {
+                return this.customField5Field;
+            }
+            set
+            {
+                this.customField5Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField6
+        {
+            get
+            {
+                return this.customField6Field;
+            }
+            set
+            {
+                this.customField6Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField7
+        {
+            get
+            {
+                return this.customField7Field;
+            }
+            set
+            {
+                this.customField7Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField8
+        {
+            get
+            {
+                return this.customField8Field;
+            }
+            set
+            {
+                this.customField8Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField9
+        {
+            get
+            {
+                return this.customField9Field;
+            }
+            set
+            {
+                this.customField9Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField10
+        {
+            get
+            {
+                return this.customField10Field;
+            }
+            set
+            {
+                this.customField10Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField11
+        {
+            get
+            {
+                return this.customField11Field;
+            }
+            set
+            {
+                this.customField11Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField12
+        {
+            get
+            {
+                return this.customField12Field;
+            }
+            set
+            {
+                this.customField12Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField13
+        {
+            get
+            {
+                return this.customField13Field;
+            }
+            set
+            {
+                this.customField13Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField14
+        {
+            get
+            {
+                return this.customField14Field;
+            }
+            set
+            {
+                this.customField14Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CustomField15
+        {
+            get
+            {
+                return this.customField15Field;
+            }
+            set
+            {
+                this.customField15Field = value;
+            }
+        }
+
+        /// <remarks/>
+        public System.DateTime BuildDate
         {
             get
             {
@@ -2224,6 +2565,62 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
             set
             {
                 this.buildDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> LastCommentUserID
+        {
+            get
+            {
+                return this.lastCommentUserIDField;
+            }
+            set
+            {
+                this.lastCommentUserIDField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> ParentProjectID
+        {
+            get
+            {
+                return this.parentProjectIDField;
+            }
+            set
+            {
+                this.parentProjectIDField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> OwnerID
+        {
+            get
+            {
+                return this.ownerIDField;
+            }
+            set
+            {
+                this.ownerIDField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> LastEditorID
+        {
+            get
+            {
+                return this.lastEditorIDField;
+            }
+            set
+            {
+                this.lastEditorIDField = value;
             }
         }
 
@@ -2256,30 +2653,28 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<int> OwnerID
+        public string ParentProjectName
         {
             get
             {
-                return this.ownerIDField;
+                return this.parentProjectNameField;
             }
             set
             {
-                this.ownerIDField = value;
+                this.parentProjectNameField = value;
             }
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<int> ProjectID
+        public string EntityTypeName
         {
             get
             {
-                return this.projectIDField;
+                return this.entityTypeNameField;
             }
             set
             {
-                this.projectIDField = value;
+                this.entityTypeNameField = value;
             }
         }
 
@@ -2306,19 +2701,6 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
             set
             {
                 this.releaseNameField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string ProjectName
-        {
-            get
-            {
-                return this.projectNameField;
-            }
-            set
-            {
-                this.projectNameField = value;
             }
         }
     }
@@ -2380,17 +2762,17 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
 
         private string customField15Field;
 
-        private System.Nullable<decimal> effortField;
+        private decimal effortField;
 
-        private System.Nullable<decimal> effortCompletedField;
+        private decimal effortCompletedField;
 
-        private System.Nullable<decimal> effortToDoField;
+        private decimal effortToDoField;
 
         private System.Nullable<decimal> timeSpentField;
 
         private System.Nullable<decimal> timeRemainField;
 
-        private System.Nullable<decimal> initialEstimateField;
+        private decimal initialEstimateField;
 
         private System.Nullable<int> lastCommentUserIDField;
 
@@ -2748,8 +3130,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> Effort
+        public decimal Effort
         {
             get
             {
@@ -2762,8 +3143,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortCompleted
+        public decimal EffortCompleted
         {
             get
             {
@@ -2776,8 +3156,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> EffortToDo
+        public decimal EffortToDo
         {
             get
             {
@@ -2818,8 +3197,7 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
-        public System.Nullable<decimal> InitialEstimate
+        public decimal InitialEstimate
         {
             get
             {
@@ -4139,4 +4517,5 @@ namespace CIFactory.TargetProcess.Common.IterationWebService
             }
         }
     }
+
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:nant="http://nant.sf.net/schemas/nant.xsd" elementFormDefault="qualified" targetNamespace="http://nant.sf.net/schemas/nant.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>NAnt schema generated at 06/24/2009 16:27:20</xs:documentation>
+    <xs:documentation>NAnt schema generated at 06/29/2009 10:41:24</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="CIFactory.Properties">
     <xs:restriction base="xs:string">
@@ -419,6 +419,18 @@
       <xs:enumeration value="${nant.tasks.sysinfo.location}" />
       <xs:enumeration value="${nant.tasks.tar}" />
       <xs:enumeration value="${nant.tasks.tar.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocesscreatetask}" />
+      <xs:enumeration value="${nant.tasks.targetprocesscreatetask.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocessextractfromcomment}" />
+      <xs:enumeration value="${nant.tasks.targetprocessextractfromcomment.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocessgetcurrentuserstories}" />
+      <xs:enumeration value="${nant.tasks.targetprocessgetcurrentuserstories.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocessreport}" />
+      <xs:enumeration value="${nant.tasks.targetprocessreport.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocessupdatestory}" />
+      <xs:enumeration value="${nant.tasks.targetprocessupdatestory.location}" />
+      <xs:enumeration value="${nant.tasks.targetprocessupdatetask}" />
+      <xs:enumeration value="${nant.tasks.targetprocessupdatetask.location}" />
       <xs:enumeration value="${nant.tasks.testrunner}" />
       <xs:enumeration value="${nant.tasks.testrunner.location}" />
       <xs:enumeration value="${nant.tasks.tlbexp}" />
@@ -767,6 +779,10 @@
       <xs:enumeration value="${timespan::get-total-seconds(value)}" />
       <xs:enumeration value="${timespan::parse(s)}" />
       <xs:enumeration value="${timespan::to-string(value)}" />
+      <xs:enumeration value="${tp::get-current-iteration-end-date(connectionRef, projectName)}" />
+      <xs:enumeration value="${tp::get-current-iteration-id(connectionRef, projectName)}" />
+      <xs:enumeration value="${tp::get-current-iteration-name(connectionRef, projectName)}" />
+      <xs:enumeration value="${tp::get-current-iteration-start-date(connectionRef, projectName)}" />
       <xs:enumeration value="${tracker::extract-scr-numbers(refID, comment)}" />
       <xs:enumeration value="${version::get-build(version)}" />
       <xs:enumeration value="${version::get-major(version)}" />
@@ -1504,6 +1520,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -1611,9 +1633,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -1843,6 +1868,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -1950,9 +1981,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -2272,6 +2306,59 @@
     <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
     <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
   </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUser">
+    <xs:attribute name="loginname" type="nant:CIFactory.String" use="required" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="users" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUser" />
+    </xs:sequence>
+    <xs:attribute name="userstoryid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="description" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="name" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="projectid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="state" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="project" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="users" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUser" />
+    </xs:sequence>
+    <xs:attribute name="taskid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="userstory" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="userstoryid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="description" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="name" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="projectid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="state" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="project" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="users" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUser" />
+    </xs:sequence>
+    <xs:attribute name="bugid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="userstory" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="userstoryid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="description" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="name" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="projectid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="state" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="project" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation">
+    <xs:attribute name="username" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="password" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="rootserviceurl" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
+  </xs:complexType>
   <xs:complexType name="Tracker.Tasks.ReadField">
     <xs:attribute name="name" type="nant:CIFactory.String" use="required" />
   </xs:complexType>
@@ -2292,18 +2379,6 @@
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element minOccurs="0" maxOccurs="1" name="field" type="nant:Tracker.Tasks.WriteField" />
     </xs:sequence>
-    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
-  </xs:complexType>
-  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
-    <xs:attribute name="dbmsloginmode" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="dbmspassword" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="dbmsserver" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="dbmstype" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="dbmsusername" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="projectname" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="username" type="nant:CIFactory.String" use="optional" />
-    <xs:attribute name="password" type="nant:CIFactory.String" use="optional" />
     <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
     <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
   </xs:complexType>
@@ -2720,6 +2795,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -2827,9 +2908,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -3075,6 +3159,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -3182,9 +3272,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -4660,6 +4753,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -4767,9 +4866,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -5985,6 +6087,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -6092,9 +6200,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -6597,6 +6708,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -6704,9 +6821,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -7408,6 +7528,82 @@
     <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
     <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="projectid" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="project" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="userstorylistref" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment">
+    <xs:attribute name="comment" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="entityprefix" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="listrefid" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="task" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="0" maxOccurs="1" name="taskids" type="nant:CIFactory.NAnt.Types.StringList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="storyids" type="nant:CIFactory.NAnt.Types.StringList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="bugids" type="nant:CIFactory.NAnt.Types.StringList" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="reportfilepath" type="nant:CIFactory.String" use="required" />
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="task" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element minOccurs="1" maxOccurs="1" name="story" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+      <xs:element minOccurs="0" maxOccurs="1" name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
+    </xs:sequence>
+    <xs:attribute name="failonerror" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="verbose" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="if" type="nant:CIFactory.Boolean" use="optional" />
+    <xs:attribute name="unless" type="nant:CIFactory.Boolean" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="Tracker.Tasks.ConnectionInformation">
+    <xs:attribute name="dbmsloginmode" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="dbmspassword" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="dbmsserver" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="dbmstype" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="dbmsusername" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="projectname" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="username" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="password" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="id" type="nant:CIFactory.String" use="optional" />
+    <xs:attribute name="refid" type="nant:CIFactory.String" use="optional" />
   </xs:complexType>
   <xs:complexType name="Tracker.Tasks.TrackerGetField">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -8434,6 +8630,12 @@
       <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
       <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
       <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+      <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+      <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+      <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+      <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+      <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+      <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
       <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
       <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
       <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -8541,9 +8743,12 @@
       <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
       <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
       <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+      <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+      <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+      <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+      <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
       <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
       <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-      <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
       <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
       <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
       <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />
@@ -8738,6 +8943,12 @@
         <xs:element name="svncleantree" type="nant:CIFactory.NAnt.Tasks.SvnCleanTree" />
         <xs:element name="svncheckout" type="nant:CIFactory.NAnt.Tasks.SvnCheckout" />
         <xs:element name="svnupdate" type="nant:CIFactory.NAnt.Tasks.SvnUpdate" />
+        <xs:element name="targetprocessgetcurrentuserstories" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessGetCurrentUserStoriesTask" />
+        <xs:element name="targetprocessextractfromcomment" type="nant:CIFactory.TargetProcess.NAnt.TargetProcessExtractFromComment" />
+        <xs:element name="targetprocesscreatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessCreateTaskTask" />
+        <xs:element name="targetprocessreport" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessReportTask" />
+        <xs:element name="targetprocessupdatetask" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateTaskTask" />
+        <xs:element name="targetprocessupdatestory" type="nant:CIFactory.TargetProcess.NAnt.Tasks.TargetProcessUpdateStoryTask" />
         <xs:element name="trackergetfield" type="nant:Tracker.Tasks.TrackerGetField" />
         <xs:element name="trackeraddnote" type="nant:Tracker.Tasks.TrackerAddNote" />
         <xs:element name="trackerquery" type="nant:Tracker.Tasks.TrackerQuery" />
@@ -8845,9 +9056,12 @@
         <xs:element name="filterchain" type="nant:NAnt.Core.Filters.FilterChain" />
         <xs:element name="environment" type="nant:NAnt.Core.Types.EnvironmentSet" />
         <xs:element name="cvsfileset" type="nant:NAnt.SourceControl.Types.CvsFileSet" />
+        <xs:element name="tasktargetprocessuserstory" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessUserStory" />
+        <xs:element name="targetprocesstask" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessTask" />
+        <xs:element name="targetprocessbug" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.TargetProcessBug" />
+        <xs:element name="connectioninformation" type="nant:CIFactory.TargetProcess.NAnt.DataTypes.ConnectionInformation" />
         <xs:element name="readfieldset" type="nant:Tracker.Tasks.ReadFieldSet" />
         <xs:element name="writefieldset" type="nant:Tracker.Tasks.WriteFieldSet" />
-        <xs:element name="connectioninformation" type="nant:Tracker.Tasks.ConnectionInformation" />
         <xs:element name="vaultfileset" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFileSet" />
         <xs:element name="vaultfortressitemexpanded" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultFortressItemExpanded" />
         <xs:element name="vaultgetoptions" type="nant:NAnt.Contrib.Tasks.SourceGearVault.VaultGetOptions" />

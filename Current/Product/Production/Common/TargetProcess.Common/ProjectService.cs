@@ -96,7 +96,7 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
         /// <remarks/>
         public ProjectService()
         {
-            this.Url = "http://agilex.tpondemand.com/Services/ProjectService.asmx";
+            this.Url = "http://tp.agilexhealth.com/Services/ProjectService.asmx";
         }
 
         /// <remarks/>
@@ -3639,9 +3639,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForLastCommentUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3670,9 +3669,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3701,9 +3699,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3732,9 +3729,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForProgramOfProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForProgramOfProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3763,9 +3759,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForProcessCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForProcessCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3794,9 +3789,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllForCompanyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllForCompanyCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3825,9 +3819,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveCommentsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCommentsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3856,9 +3849,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal AddCommentToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddCommentToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3891,9 +3883,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAttachmentsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachmentsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3926,9 +3917,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal AddAttachmentToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddAttachmentToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3957,9 +3947,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAttachedRequestsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAttachedRequestsForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -3988,9 +3977,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal AddRequestGeneralToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddRequestGeneralToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4023,9 +4011,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveReleasesForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveReleasesForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4054,9 +4041,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal AddReleaseToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddReleaseToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4089,9 +4075,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveProjectMembersForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveProjectMembersForProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4120,9 +4105,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal AddProjectMemberToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal AddProjectMemberToProjectCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4155,9 +4139,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetByIDCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4186,9 +4169,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal CreateCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4225,9 +4207,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveAllCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4256,9 +4237,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4287,9 +4267,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal GetIDsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4318,9 +4297,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrievePageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4349,9 +4327,8 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
 
         private object[] results;
 
-        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState)
-            :
-                base(exception, cancelled, userState)
+        internal RetrieveCountCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) :
+            base(exception, cancelled, userState)
         {
             this.results = results;
         }
@@ -4366,4 +4343,5 @@ namespace CIFactory.TargetProcess.Common.ProjectWebService
             }
         }
     }
+
 }
