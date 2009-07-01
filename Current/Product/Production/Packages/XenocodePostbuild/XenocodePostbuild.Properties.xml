@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="XenocodePostbuild.Properties">
 
-	<property name="XenocodePostbuild.PostbuildSourcePath" value="${InstallDirectory}"/>
-	<property name="XenocodePostbuild.BinDir" value="${ThirdPartyDirectory}\PostBuild2007"/>
+	<property name="XenocodePostbuild.PostbuildSourcePath" value="${Common.Directory.Install.Path}"/>
+	<property name="XenocodePostbuild.BinDir" value="${Common.Directory.ThirdParty.Path}\PostBuild2007"/>
 
 	<property name="XenocodePostbuild.XBuildExe" value="${XenocodePostbuild.BinDir}\XBuild.exe"/>
 	

@@ -9,7 +9,7 @@
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol  type="CVS" applyLabel="false" autoGetSource="true" >
         <folder >${???}/Build</folder >
-        <workingDirectory>${BuildDirectory}</workingDirectory>
+        <workingDirectory>${Common.Directory.Build.Path}</workingDirectory>
         <username>${Vault.Username}</username>
         <password>${Vault.Password}</password>
       </sourcecontrol>]]>
@@ -21,7 +21,7 @@
       <![CDATA[<sourcecontrol type="filtered">
         <sourceControlProvider  type="CVS" applyLabel="true" autoGetSource="false" >
           <folder >${???}</folder >
-          <workingDirectory>${ProjectCodeLineDirectory}</workingDirectory>
+          <workingDirectory>${Common.Directory.CodeLine.Path}</workingDirectory>
           <username>${Vault.Username}</username>
           <password>${Vault.Password}</password>
         </sourceControlProvider>

@@ -10,62 +10,61 @@
     </largeproperty>
     <call target="Packages.AddCleanUpActions"/>
 
-    <copy todir="${BuildDirectory}\server">
+    <copy todir="${Common.Directory.Build.Path}\server">
       <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
-    <copy todir="${BuildDirectory}\dashboard\bin">
+    <copy todir="${Common.Directory.Build.Path}\dashboard\bin">
       <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
-    <zip append="true" zipfile="${BuildDirectory}\dashboard\cctray\cctray.zip" >
+    <zip append="true" zipfile="${Common.Directory.Build.Path}\dashboard\cctray\cctray.zip" >
       <fileset basedir="${SourcePackagesDirectory}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </zip>
 
     <xmlpeek
-      file="${BuildDirectory}\ccnetproject.xml"
+      file="${Common.Directory.Build.Path}\ccnetproject.xml"
       xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/triggers/projectTriggerFilter/*[not(self::trigger)]"
       property="SourceControl.BuildUpdateTrigger.ToSave"
       outerxml="true"
     />
 
     <xmlpoke pokemode="Replace"
-             file="${BuildDirectory}\ccnetproject.xml"
+             file="${Common.Directory.Build.Path}\ccnetproject.xml"
              xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/triggers/projectTriggerFilter[trigger[@type='intervalTrigger']]"
              value="${SourceControl.BuildUpdateTrigger}${SourceControl.BuildUpdateTrigger.ToSave}" />
 
-    <xmlpoke file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpoke file="${Common.Directory.Build.Path}\ccnetproject.xml"
              xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName} Build Scripts']/modificationDelaySeconds"
              value="0" />
 
 
     <xmlpeek
-      file="${BuildDirectory}\ccnetproject.xml"
+      file="${Common.Directory.Build.Path}\ccnetproject.xml"
       xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers/projectTriggerFilter/*[not(self::trigger)]"
       property="SourceControl.MainBuildTrigger.ToSave"
       outerxml="true"
     />
 
     <xmlpoke pokemode="Replace"
-             file="${BuildDirectory}\ccnetproject.xml"
+             file="${Common.Directory.Build.Path}\ccnetproject.xml"
              xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/triggers/projectTriggerFilter[trigger[@type='intervalTrigger']]"
              value="${SourceControl.MainBuildTrigger}${SourceControl.MainBuildTrigger.ToSave}" />
 
-    <xmlpoke file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpoke file="${Common.Directory.Build.Path}\ccnetproject.xml"
              xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/modificationDelaySeconds"
              value="0" />
   </target> 
 
   <target name="VSTSVersionControl.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VSTSVersionControl"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+    <property name="Packages.CurrentPackage.PackageName" value="VSTSVersionControl"/>
+    <property name="Packages.CurrentPackage.PackageType" value="SourceControl"/>
   </target>
 
   <target name="VSTSVersionControl.ValidateParameters">

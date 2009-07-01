@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Install.Properties">
   
-  <property name="Install.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" />
+  <property name="Install.SolutionFile" value="${Common.Directory.Product.Path}/${ProjectName}.sln" />
   <property name="Install.ToConvertLogFile" value="true" />
   <property name="Install.XmlLogFileName" value="${Compile.ConfigName}.xml" />
   <property name="Install.ConfigName" value="${Compile.ConfigName}"/>
@@ -9,12 +9,12 @@
   <property name="Install.ToDeployZip" value="false"   overwrite="false"/>
 
   <property name="Install.MsiSourceFile"        value="${ProjectName}Setup.msi" />
-  <property name="Install.MsiSourceDir"        value="${InstallDirectory}\${ProjectName}Setup\${Compile.ConfigName}" />
+  <property name="Install.MsiSourceDir"        value="${Common.Directory.Install.Path}\${ProjectName}Setup\${Compile.ConfigName}" />
   <property name="Install.MsiTargetFile"        value="${ProjectName}${CCNetLabel}.msi" />
-  <property name="Install.MsiTargetDir"        value="${Common.ArtifactDirectoryPath}" />
-  <property name="Install.MsiTargetFileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${ProjectName}${CCNetLabel}.msi" dynamic="true" />
+  <property name="Install.MsiTargetDir"        value="${Common.Directory.Artifact.Path}" />
+  <property name="Install.MsiTargetFileWebPath" value="${Publish.WebPathRoot}/${Common.Directory.Artifact.Name}/${ProjectName}${CCNetLabel}.msi" dynamic="true" />
   <property name="Install.MsiTargetFileWebName" value="${ProjectName}${CCNetLabel}.msi" />
 
-  <property name="Install.CommonPropertiesFile" value="${Common.TempDirectory}\Install.Properties.txt"/>
+  <property name="Install.CommonPropertiesFile" value="${Common.Project.TempDirectory}\Install.Properties.txt"/>
 
 </project>

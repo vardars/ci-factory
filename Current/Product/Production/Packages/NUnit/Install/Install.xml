@@ -4,19 +4,19 @@
   <include buildfile="Properties.xml" />
   
   <target name="NUnit.Install">
-    <copy todir="${ThirdPartyDirectory}\NUnit" overwrite="true">
+    <copy todir="${Common.Directory.ThirdParty.Path}\NUnit" overwrite="true">
       <fileset basedir="${SourcePackagesDirectory}\NUnit\Install\NUnit">
         <include name="**\*" />
       </fileset>
     </copy>
 
-    <copy file="${SourcePackagesDirectory}\NUnit\Install\NUnit\Logo.ico" tofile="${PackagesDirectory}\NUnit\Logo.ico"  overwrite="true"/>
+    <copy file="${SourcePackagesDirectory}\NUnit\Install\NUnit\Logo.ico" tofile="${Common.Directory.Packages.Path}\NUnit\Logo.ico"  overwrite="true"/>
 
     <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
       <then>
         <property name="Private.Packages.MainBuild.Replace.To" value=""/>
         <largeproperty name="Private.Packages.MainBuild.Replace.From">
-          <value xml="false"><![CDATA[<include buildfile="${PackagesDirectory}\NUnit\UnitTest.Target.xml" />]]></value>
+          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\NUnit\UnitTest.Target.xml" />]]></value>
         </largeproperty>
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>
@@ -39,16 +39,15 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\Unit Test Reports\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="NUnit.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="NUnit"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="UnitTest.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
-    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+    <property name="Packages.CurrentPackage.PackageName" value="NUnit"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
   </target>
 
   <target name="NUnit.ValidateParameters">

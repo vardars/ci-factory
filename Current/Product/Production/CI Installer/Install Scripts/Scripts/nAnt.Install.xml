@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nAntInstaller" >
 
-  <property name="nAnt.BuildDirectory" value="${BuildDirectory}\nAnt"/>
+  <property name="NAnt.Target.Directory.Path" value="${Common.Directory.Tools.Path}\nAnt"/>
 
   <!-- These are private... -->
   
@@ -9,24 +9,33 @@
 
   <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
 
-    <copy todir="${BuildDirectory}" overwrite="true">
+    <copy todir="${Common.Directory.Tools.Path}" overwrite="True">
+      <fileset basedir="${SourceBuildDirectory}\Tools">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${Common.Directory.Build.Path}" overwrite="true">
 			<fileset basedir="${SourceBuildDirectory}">
 				<include name="Main.build.xml"/>
 				<include name="Properties.build.xml"/>
         <include name="Entities.xml"/>
 				<include name="Common.build.xml"/>
+        <include name="Custom.build.xml"/>
 				<include name="Scratch.build.xml"/>
+        <include name="Scratch.cs"/>
 				<include name="UpdatenAntSchema.bat"/>
 				<include name="UpdatenAntSchema.xml"/>
 				<include name="Post.build.xml"/>
 				<include name="Post.Shim.xml"/>
 				<include name="SetupIIS.xml"/>
         <include name="CreateBranch.xml"/>
+        <include name="EnvironmentVariables\EnvironmentVariables.xml"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
 		</copy>
 
-		<copy todir="${ProductDirectory}" overwrite="true">
+		<copy todir="${Common.Directory.Product.Path}" overwrite="true">
       <fileset basedir="${SourceProductDirectory}">
         <include name="*.*"/>
       </fileset>
@@ -34,7 +43,6 @@
     </copy>
     
     <call target="Private.nAnt.CopyToBuild"/>
-    <exec program="${BuildDirectory}\UpdatenAntSchema.bat" workingdir="${BuildDirectory}"/>
   </target>
 
   <target name="nAnt.ValidateParameters">
@@ -42,7 +50,7 @@
   </target>
 
   <target name="Private.nAnt.CopyToBuild">
-    <copy todir="${nAnt.BuildDirectory}" overwrite="true">
+    <copy todir="${NAnt.Target.Directory.Path}" overwrite="true">
       <fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
         <include name="**/*" />
       </fileset>

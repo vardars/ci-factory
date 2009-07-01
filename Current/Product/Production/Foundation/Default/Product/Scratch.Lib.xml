@@ -2,13 +2,13 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Scratch.Lib">
 
   <!--
-  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="Common.Directory.Product.Path" value="C:\Projects\dod.ahlta\Current\Product"/>
   <property name="ShouldFix" value="true"/>
   -->
   <target name="FixProjectBindings" >
     <property name="ShouldFix" value="false" overwrite="false"/>
     <fileset id="ProjectFiles">
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
 
     <property name="count" value="0"/>
@@ -37,7 +37,7 @@
             <property name="VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual" value="not set"/>
             <regex input="${VSPSCCFile.Contents}" pattern="&quot;PROJECT_FILE_RELATIVE_PATH&quot;\s+=\s+&quot;(?'VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual'.*)&quot;" failonerror="false"/>
 
-            <property name="VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected" value="relative:${string::replace(string::replace(path::get-directory-name(ProjectFile.Path), ProductDirectory + '\', ''), '\', '\\')}"/>
+            <property name="VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected" value="relative:${string::replace(string::replace(path::get-directory-name(ProjectFile.Path), Common.Directory.Product.Path + '\', ''), '\', '\\')}"/>
 
             <property name="VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual" value="not set"/>
             <regex input="${VSPSCCFile.Contents}" pattern="&quot;SOURCE_CONTROL_SETTINGS_PROVIDER&quot;\s+=\s+&quot;(?'VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual'.*)&quot;" failonerror="false"/>
@@ -161,8 +161,8 @@
   </script>
 
   <!--
-  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
-  <property name="SolutionFile.Path" value="${ProductDirectory}\dod.ahlta.sln"/>
+  <property name="Common.Directory.Product.Path" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="SolutionFile.Path" value="${Common.Directory.Product.Path}\dod.ahlta.sln"/>
   <property name="ShouldFix" value="true"/>
   -->
   <target name="FixSolutionBindings">
@@ -208,8 +208,8 @@
     <property name="Versioning.FixUp.ProjectFile.FileSet" value="My.Versioning.FixUp.ProjectFile.FileSet"/>
 
     <fileset id="${Versioning.FixUp.ProjectFile.FileSet}">
-      <include name="${ProductionDirectory}\**\*.csproj"/>
-      <include name="${ProductionDirectory}\**\*.vbproj"/>
+      <include name="${Common.Directory.Production.Path}\**\*.csproj"/>
+      <include name="${Common.Directory.Production.Path}\**\*.vbproj"/>
     </fileset>
     <call target="Versioning.FixUp"/>
   </target>
@@ -219,13 +219,13 @@
 
     <foreach item="File" property="ThirdPartyComponent.Path">
       <in>
-        <items basedir="${ThirdPartyDirectory}">
+        <items basedir="${Common.Directory.ThirdParty.Path}">
           <include name="**\*.dll"/>
           <include name="**\*.exe"/>
         </items>
       </in>
       <do>
-        <property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, ThirdPartyDirectory + '\', '')}"/>
+        <property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, Common.Directory.ThirdParty.Path + '\', '')}"/>
         <echo message="${ThirdPartyComponent.Path}"/>
         <function execute="${stringlist::add('ThirdPartyComponents', ThirdPartyComponent.Path)}"/>
       </do>
@@ -234,7 +234,7 @@
     <foreach item="File" property="ProjectFile.Path">
       <in>
         <items>
-          <include name="${ProductDirectory}\**\*.*proj"/>
+          <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
         </items>
       </in>
       <do>
@@ -261,9 +261,9 @@
                   <echo message="Looks like we have a match:"/>
                   <echo message="    ${Hint.Path}"/>
                   <echo message="will be changed to:"/>
-                  <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+                  <echo message="    ${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}"/>
                   <!--xmlpoke it-->
-                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
+                  <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/b:HintPath)[${Index}]" value="${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}">
                     <namespaces>
                       <namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
                     </namespaces>
@@ -297,7 +297,7 @@
                   <echo message="    ${IncludeName}"/>
                   <echo message="will be changed to:"/>
                   <echo message="    ${ThirdPartyComponent.Name}"/>
-                  <echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+                  <echo message="    ${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}"/>
                   <!--xmlpoke it-->
 
                   <xmlpoke file="${ProjectFile.Path}" xpath ="(b:Project/b:ItemGroup/b:Reference/@Include)[${Index}]" value="${ThirdPartyComponent.Name}">
@@ -309,7 +309,7 @@
                   <largeproperty name="Reference.Info" >
                     <value xml="false" expand="true">
                       <![CDATA[<Name>${ThirdPartyComponent.Name}</Name>
-  <HintPath>${ThirdPartyDirectory}\${ThirdPartyComponent.Path}</HintPath>]]>
+  <HintPath>${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}</HintPath>]]>
                     </value>
                   </largeproperty>
                   
@@ -334,7 +334,7 @@
   <target name="SetConfigPropertyValue">
 
     <fileset id="Subjects">
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
 
     <foreach item="File" property="ProjectFile.Path">
@@ -359,12 +359,12 @@
   </target>
 
   <target name="SetProjectOutputDirectory">
-    <property name="OutputDirectory" value="${ProductDirectory}\CommonBin" overwrite="false"/>
+    <property name="OutputDirectory" value="${Common.Directory.Product.Path}\CommonBin" overwrite="false"/>
     <property name="Switch" value="Per" overwrite="false"/>
     <!--Common-->
 
     <fileset id="Subjects">
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
 
     <foreach item="File" property="ProjectFile.Path">
@@ -412,12 +412,12 @@
   </target>
 
   <target name="SwitchToMuchBetterUnit">
-    <property name="MbUnit.Framework.RefPath" value="${ThirdPartyDirectory}\MbUnit\MbUnit.Framework.dll"/>
+    <property name="MbUnit.Framework.RefPath" value="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.Framework.dll"/>
 
     <foreach item="File" property="ProjectFile.Path">
       <in>
         <items>
-          <include name="${ProductDirectory}\Unit Test\**\*.*proj"/>
+          <include name="${Common.Directory.Product.Path}\Unit Test\**\*.*proj"/>
         </items>
       </in>
       <do>

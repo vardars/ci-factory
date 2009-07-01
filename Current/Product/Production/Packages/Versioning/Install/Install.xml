@@ -14,9 +14,7 @@
   </target>
 
   <target name="Versioning.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Versioning"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Versioning.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Versioning"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Versioning"/>
   </target>
 
   <target name="Versioning.ValidateParameters">

@@ -4,7 +4,7 @@
   <include buildfile="Properties.xml" />
   
   <target name="DotNetUnitTest.Install">
-    <copy todir="${ThirdPartyDirectory}\MbUnit">
+    <copy todir="${Common.Directory.ThirdParty.Path}\MbUnit">
       <fileset basedir="${SourcePackagesDirectory}\DotNetUnitTest\Install\bin">
         <include name="**\*" />
       </fileset>
@@ -14,7 +14,7 @@
       <then>
         <property name="Private.Packages.MainBuild.Replace.To" value=""/>
         <largeproperty name="Private.Packages.MainBuild.Replace.From">
-          <value xml="false"><![CDATA[<include buildfile="${PackagesDirectory}\DotNetUnitTest\UnitTest.Target.xml" />]]></value>
+          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\DotNetUnitTest\UnitTest.Target.xml" />]]></value>
         </largeproperty>
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>
@@ -39,8 +39,8 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>
@@ -48,10 +48,9 @@
   </target>
 
   <target name="DotNetUnitTest.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="DotNetUnitTest"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="UnitTest.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
-    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+    <property name="Packages.CurrentPackage.PackageName" value="DotNetUnitTest"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
   </target>
 
   <target name="DotNetUnitTest.ValidateParameters">

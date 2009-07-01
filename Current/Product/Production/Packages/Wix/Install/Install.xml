@@ -11,9 +11,7 @@
   </target>
 
   <target name="Wix.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Wix"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Wix.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Wix"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Wix"/>
   </target>
 
   <target name="Wix.ValidateParameters">

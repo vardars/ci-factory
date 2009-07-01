@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess.Properties">
 
-	<property name="TargetProcess.ReportDirectoryPath" value="${BuildDirectory}\TargetProcess" />
+  <loadtasks assembly="${Common.Directory.Packages.Path}\TargetProcess\bin\CIFactory.TargetProcess.NAnt.Tasks.dll" />
+
+  <property name="TargetProcess.ReportDirectoryPath" value="${Common.Project.Common.Directory.Transient.Path}\TargetProcess" />
 	<property name="TargetProcess.ReportFilePath" value="${TargetProcess.ReportDirectoryPath}\${ProjectName}TargetProcesss.xml" />
+
+  <property name="TargetProcess.ProjectName" value="%TargetProcess.ProjectName%"/>
 
   <connectioninformation
     id="TargetProcess.ConnectionInformation"

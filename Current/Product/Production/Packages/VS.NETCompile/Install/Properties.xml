@@ -17,7 +17,7 @@
       <property name="Compile.DevEnv" value="${'$'}{environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
     </case>
   </switch>
-  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="${Common.Directory.Build.Path}\CompileLogs" overwrite="false" />
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv%', Compile.DevEnv)}"/>

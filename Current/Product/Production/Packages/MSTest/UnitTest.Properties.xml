@@ -3,8 +3,8 @@
   <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll"/>
   
   <fileset id="UnitTest.ProjectFiles">
-    <include name="${UnitTestDirectory}\**\*.*proj"/>
+    <include name="${Common.Directory.UnitTest.Path}\**\*.*proj"/>
   </fileset>
-  <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
+  <property name="UnitTest.ReportFolder" value="${Common.Directory.Build.Path}\Unit Test Reports"/>
   <property name="UnitTest.ReportFile" value="${ProjectName}UnitTests.xml"/>
 </project>

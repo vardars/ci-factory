@@ -22,8 +22,8 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>
@@ -31,9 +31,7 @@
   </target>
 
   <target name="Simian.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Simian"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Simian.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Simian"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Simian"/>
   </target>
 
   <target name="Simian.ValidateParameters">

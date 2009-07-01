@@ -8,9 +8,7 @@
   </target>
 
   <target name="Workspace.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Workspace"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Workspace.Targets.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Workspace"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Workspace"/>
   </target>
 
   <target name="Workspace.ValidateParameters">

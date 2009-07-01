@@ -12,9 +12,8 @@
   </target>
 
   <target name="Vault.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Vault"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Vault"/>
+    <property name="Packages.CurrentPackage.PackageType" value="SourceControl"/>
   </target>
 
   <target name="Vault.ValidateParameters">

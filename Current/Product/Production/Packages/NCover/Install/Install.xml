@@ -24,8 +24,8 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>
@@ -33,9 +33,8 @@
   </target>
 
   <target name="NCover.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="NCover"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="NCover.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.PackageName" value="NCover"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
   </target>
 
   <target name="NCover.ValidateParameters">

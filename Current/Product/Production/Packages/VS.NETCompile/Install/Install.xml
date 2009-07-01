@@ -3,9 +3,9 @@
 
   <include buildfile="Properties.xml" />
 
-  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
-  <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
-  <property name="Compile.ScratchFile" value="${ProductDirectory}\Scratch.build.xml"/>
+  <property name="Compile.SolutionFile" value="${Common.Directory.Product.Path}\${ProjectName}.sln"/>
+  <property name="Compile.OpenSolutionBat" value="${Common.Directory.Product.Path}\OpenSolution.bat"/>
+  <property name="Compile.ScratchFile" value="${Common.Directory.Product.Path}\Scratch.build.xml"/>
   
   <property name="Compile.Default2003SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2003.sln.remove"/>
   <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\VS.NETCompile\Install\2005.sln.remove"/>
@@ -47,11 +47,11 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\CompileLogs\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\CompileLogs\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
 
-		<replace file="${ProductDirectory}\OpenSolution.bat">
+		<replace file="${Common.Directory.Product.Path}\OpenSolution.bat">
 			<filterchain>
 				<regexreplace 
 					replacment="Microsoft Visual Studio .NET 2003\Common7\Tools\vsvars32.bat" 
@@ -63,9 +63,8 @@
   </target>
 
   <target name="VS.NETCompile.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VS.NETCompile"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Compile.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Compile"/>
+    <property name="Packages.CurrentPackage.PackageName" value="VS.NETCompile"/>
+    <property name="Packages.CurrentPackage.PackageType" value="Compile"/>
   </target>
 
   <target name="VS.NETCompile.ValidateParameters">

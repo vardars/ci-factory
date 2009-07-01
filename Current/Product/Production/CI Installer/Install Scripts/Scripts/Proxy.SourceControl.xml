@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Proxy.SourceControl">
 
-  <include buildfile="${BuildDirectory}\Properties.build.xml"/>
-  <include buildfile="${BuildDirectory}\Common.Build.xml"/>
+  <include buildfile="${Common.Directory.Build.Path}\Properties.build.xml"/>
+  <include buildfile="${Common.Directory.Build.Path}\Common.Build.xml"/>
 
 
   <script language="C#" prefix="directory" >
@@ -28,10 +28,10 @@
   
   <fileset id="PacakgeFinder" />
   <ifnot test="${property::exists('SourceControl.PackageName')}">
-    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
     <echo message="${PackagePathPattern}" />
     <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-    <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${PackagesDirectory}." />
+    <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${Common.Directory.Packages.Path}." />
     <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
     <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
   </ifnot>
@@ -41,10 +41,10 @@
   <property name="SourceControl.Update.MakeWritable" value="False"/>
   <property name="SourceControl.Update.Interactive" value="True"/>
 
-  <include buildfile="${PackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml"/>
+  <include buildfile="${Common.Directory.Packages.Path}\${SourceControl.PackageName}\SourceControl.Target.xml"/>
 
   <target name="Proxy.SourceControl.CheckoutAll">
-    <property name="SourceControl.CheckOut.File" value="${ProjectCodeLineDirectory}"/>
+    <property name="SourceControl.CheckOut.File" value="${Common.Directory.CodeLine.Path}"/>
     <call target="SourceControl.CheckOut" failonerror="false"/>
   </target>
 

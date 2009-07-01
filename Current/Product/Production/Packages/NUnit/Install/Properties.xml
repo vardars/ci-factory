@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NUnit.Install.Properties">
 
-	<property name="NUnit.ConsolePath" value="${ThirdPartyDirectory}\NUnit\bin\nunit-console.exe" overwrite="false"/>
+	<property name="NUnit.ConsolePath" value="${Common.Directory.ThirdParty.Path}\NUnit\bin\nunit-console.exe" overwrite="false"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%NUnit.ConsolePath%', NUnit.ConsolePath)}"/>
 
 	<property name="NCover.ProcessToMonitor" value="nunit-console.exe" overwrite="false"/>

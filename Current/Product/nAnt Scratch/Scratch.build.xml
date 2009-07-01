@@ -8,17 +8,17 @@
 	<include buildfile="Scratch.Lib.xml"/>
   
   <target name="test">
-    <property name="SchemaFile" value="${ProductDirectory}\NAnt.xsd"/>
+    <property name="SchemaFile" value="${Common.Directory.Product.Path}\NAnt.xsd"/>
 
     <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd">
       <propertyexclude>^nant.task.*</propertyexclude>
     </nantschema>
     <!--<nant buildfile="..\Scripts\Personal.Build.xml" target="Custom.NAnt.CreateDocumentation"/>-->
     <exec
-      program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
+      program="${Common.Directory.ThirdParty.Path}\nAnt\bin\nant.exe"
       verbose="True"
     >
-      <arg line='/f:"${ProductDirectory}\Scripts\Personal.build.xml"'/>
+      <arg line='/f:"${Common.Directory.Product.Path}\Scripts\Personal.build.xml"'/>
       <arg line="Custom.NAnt.CreateDocumentation"/>
     </exec>
   </target>
@@ -36,7 +36,7 @@
           [Function("convertlocaltoserver")]
 					public string ConvertLocalToServer(string local)
           {
-            String server = local.ToLower().Replace(this.Project.Properties["ProjectsDirectory"].ToLower(), "");
+            String server = local.ToLower().Replace(this.Project.Properties["Common.Directory.ProjectsRoot.Path"].ToLower(), "");
             server = server.Replace(@"\", @"/");
             return String.Format(@"{0}{1}", this.Project.Properties["Perforce.ServerPathPrefix"], server);
           }
@@ -91,13 +91,13 @@
 
 		<foreach item="File" property="ThirdPartyComponent.Path">
 			<in>
-				<items basedir="${ThirdPartyDirectory}">
+				<items basedir="${Common.Directory.ThirdParty.Path}">
 					<include name="**\*.dll"/>
 					<include name="**\*.exe"/>
 				</items>
 			</in>
 			<do>
-				<property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, ThirdPartyDirectory + '\', '')}"/>
+				<property name="ThirdPartyComponent.Path" value="${string::replace(ThirdPartyComponent.Path, Common.Directory.ThirdParty.Path + '\', '')}"/>
 				<echo message="${ThirdPartyComponent.Path}"/>
 				<function execute="${stringlist::add('ThirdPartyComponents', ThirdPartyComponent.Path)}"/>
 			</do>
@@ -106,7 +106,7 @@
 		<foreach item="File" property="ProjectFile.Path">
 			<in>
 				<items>
-					<include name="${ProductDirectory}\**\*.*proj"/>
+					<include name="${Common.Directory.Product.Path}\**\*.*proj"/>
 				</items>
 			</in>
 			<do>
@@ -133,9 +133,9 @@
 									<echo message="Looks like we have a match:"/>
 									<echo message="    ${Hint.Path}"/>
 									<echo message="will be changed to:"/>
-									<echo message="    ${ThirdPartyDirectory}\${ThirdPartyComponent.Path}"/>
+									<echo message="    ${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}"/>
 									<!--xmlpoke it-->
-									<xmlpoke file="${ProjectFile.Path}" xpath ="b:Project/b:ItemGroup/b:Reference/b:HintPath" value="${ThirdPartyDirectory}\${ThirdPartyComponent.Path}">
+									<xmlpoke file="${ProjectFile.Path}" xpath ="b:Project/b:ItemGroup/b:Reference/b:HintPath" value="${Common.Directory.ThirdParty.Path}\${ThirdPartyComponent.Path}">
 										<namespaces>
 											<namespace prefix="b" uri="http://schemas.microsoft.com/developer/msbuild/2003"/>
 										</namespaces>

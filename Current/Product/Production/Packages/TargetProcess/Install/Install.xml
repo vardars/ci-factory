@@ -16,15 +16,13 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\TargetProcess\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\TargetProcess\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="TargetProcess.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="TargetProcess"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="TargetProcess.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="TargetProcess"/>
+    <property name="Packages.CurrentPackage.PackageName" value="TargetProcess"/>
   </target>
 
   <target name="TargetProcess.ValidateParameters">

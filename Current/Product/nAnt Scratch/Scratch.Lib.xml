@@ -8,13 +8,13 @@
     <echo message="${scriptfile::get-current-directory()}"/>
   </target>
   <!--
-  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="Common.Directory.Product.Path" value="C:\Projects\dod.ahlta\Current\Product"/>
   <property name="ShouldFix" value="true"/>
   -->
   <target name="FixProjectBindings" >
     <property name="ShouldFix" value="false" overwrite="false"/>
     <fileset id="ProjectFiles">
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
 
     <property name="count" value="0"/>
@@ -43,7 +43,7 @@
             <property name="VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual" value="not set"/>
             <regex input="${VSPSCCFile.Contents}" pattern="&quot;PROJECT_FILE_RELATIVE_PATH&quot;\s+=\s+&quot;(?'VSPSCCFile_PROJECT_FILE_RELATIVE_PATH_Actual'.*)&quot;" failonerror="false"/>
 
-            <property name="VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected" value="relative:${string::replace(string::replace(path::get-directory-name(ProjectFile.Path), ProductDirectory + '\', ''), '\', '\\')}"/>
+            <property name="VSPSCCFile.PROJECT_FILE_RELATIVE_PATH.Expected" value="relative:${string::replace(string::replace(path::get-directory-name(ProjectFile.Path), Common.Directory.Product.Path + '\', ''), '\', '\\')}"/>
 
             <property name="VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual" value="not set"/>
             <regex input="${VSPSCCFile.Contents}" pattern="&quot;SOURCE_CONTROL_SETTINGS_PROVIDER&quot;\s+=\s+&quot;(?'VSPSCCFile_SOURCE_CONTROL_SETTINGS_PROVIDER_Actual'.*)&quot;" failonerror="false"/>
@@ -168,8 +168,8 @@
 
 
   <!--
-  <property name="ProductDirectory" value="C:\Projects\dod.ahlta\Current\Product"/>
-  <property name="SolutionFile.Path" value="${ProductDirectory}\dod.ahlta.sln"/>
+  <property name="Common.Directory.Product.Path" value="C:\Projects\dod.ahlta\Current\Product"/>
+  <property name="SolutionFile.Path" value="${Common.Directory.Product.Path}\dod.ahlta.sln"/>
   <property name="ShouldFix" value="true"/>
   -->
   <target name="FixSolutionBindings">
@@ -279,8 +279,8 @@
     <property name="Versioning.FixUp.ProjectFile.FileSet" value="My.Versioning.FixUp.ProjectFile.FileSet"/>
 
     <fileset id="${Versioning.FixUp.ProjectFile.FileSet}">
-      <include name="${ProductionDirectory}\**\*.csproj"/>
-      <include name="${ProductionDirectory}\**\*.vbproj"/>
+      <include name="${Common.Directory.Production.Path}\**\*.csproj"/>
+      <include name="${Common.Directory.Production.Path}\**\*.vbproj"/>
     </fileset>
     <call target="Versioning.FixUp"/>
   </target>

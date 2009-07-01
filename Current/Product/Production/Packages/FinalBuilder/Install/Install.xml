@@ -16,9 +16,7 @@
   </target>
 
   <target name="FinalBuilder.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="FinalBuilder"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="FinalBuilder.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="FinalBuilder"/>
+    <property name="Packages.CurrentPackage.PackageName" value="FinalBuilder"/>
   </target>
 
   <target name="FinalBuilder.ValidateParameters">

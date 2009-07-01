@@ -3,7 +3,7 @@
 
   <include buildfile="Properties.xml" />
 
-  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
+  <property name="Compile.SolutionFile" value="${Common.Directory.Product.Path}\${ProjectName}.sln"/>
   
   <property name="Compile.Default2005SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2005.sln.remove"/>
   <property name="Compile.Default2008SolutionFile" value="${SourcePackagesDirectory}\MSBuild\Install\2008.sln.remove"/>
@@ -39,17 +39,16 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
           </filepair>]]></value>
     </largeproperty>
     <call target="Packages.AddXslMerger"/>
   </target>
 
   <target name="MSBuild.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="MSBuild"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Compile.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Compile"/>
+    <property name="Packages.CurrentPackage.PackageName" value="MSBuild"/>
+    <property name="Packages.CurrentPackage.PackageType" value="Compile"/>
   </target>
 
   <target name="MSBuild.ValidateParameters">

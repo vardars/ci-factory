@@ -64,8 +64,8 @@
   <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
           <![CDATA[<sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}/&BuildDirectoryName;</trunkUrl>
-        <workingDirectory>&BuildDirectory;</workingDirectory>
+        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}/&Common.Directory.Build.Name;</trunkUrl>
+        <workingDirectory>&Common.Directory.Build.Path;</workingDirectory>
         <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
         ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
@@ -77,7 +77,7 @@
             <![CDATA[<sourcecontrol type="filtered">
         <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
           <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}</trunkUrl>
-          <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+          <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
           <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
           ${SourceControl.CCNet.Credentials}
         ${SourceControl.BuildUpdateBlock.WebRepoUrl}
@@ -85,19 +85,19 @@
         </sourceControlProvider>
         <exclusionFilters>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
           </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>

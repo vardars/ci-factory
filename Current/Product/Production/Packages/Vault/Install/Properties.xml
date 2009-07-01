@@ -11,11 +11,11 @@
 	 <largeproperty name="SourceControl.BuildUpdateBlock">
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol  type="vault" applyLabel="false" autoGetSource="true" >
-        <workingDirectory>&BuildDirectory;</workingDirectory>
+        <workingDirectory>&Common.Directory.Build.Path;</workingDirectory>
         <username>${Vault.Username}</username>
         <password>${Vault.Password}</password>        
         <host>${Vault.Host}</host>
-        <folder>${Vault.Repository.BasePath}/&ProjectCodeLineName;/&BuildDirectoryName;</folder>
+        <folder>${Vault.Repository.BasePath}/&ProjectCodeLineName;/&Common.Directory.Build.Name;</folder>
         <repository>${Vault.Repository}</repository>
       </sourcecontrol>]]></value>
   </largeproperty>
@@ -24,7 +24,7 @@
     <value xml="false" expand="true">
       <![CDATA[<sourcecontrol type="filtered">
         <sourceControlProvider  type="vault" applyLabel="true" autoGetSource="false" >
-         <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+         <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
           <username>${Vault.Username}</username>
           <password>${Vault.Password}</password>
           <host>${Vault.Host}</host>
@@ -33,19 +33,19 @@
         </sourceControlProvider>
         <exclusionFilters>
           <pathFilter>
-            <pattern>**/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+            <pattern>**/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProductDirectoryName;/ProjectInfo.*</pattern>
+            <pattern>**/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+            <pattern>**/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&BuildDirectoryName;/*.*</pattern>
+            <pattern>**/&Common.Directory.Build.Name;/*.*</pattern>
           </pathFilter>
           <pathFilter>
-            <pattern>**/&BuildDirectoryName;/**/*.*</pattern>
+            <pattern>**/&Common.Directory.Build.Name;/**/*.*</pattern>
           </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>

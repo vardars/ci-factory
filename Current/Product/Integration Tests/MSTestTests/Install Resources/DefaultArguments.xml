@@ -3,16 +3,16 @@
   <!--Use Install.Package to install one or more Packages to an existing CI Factory Project.-->
   <property name="Install.Action" value="Install.Project" />
   <property name="ProjectName" value="MSTestTestProject" />
-	<property name="CCNET.LabelPrefix" value="1.0.0."/>
+	<property name="CCNet.LabelPrefix" value="1.0.0."/>
 	<property name="InitialVersion" value="1.0.0.0"/>
 
-  <property name="ProjectsDirectory"        value="c:\Projects" overwrite="false"/>
+  <property name="Common.Directory.ProjectsRoot.Path"        value="c:\Projects" overwrite="false"/>
   <property name="ProjectCodeLineName"      value="Current" overwrite="false"/>
-  <property name="ProductDirectoryName"       value="Product"/>
-  <property name="ThirdPartyDirectoryName"    value="Third Party"/>
-  <property name="ProductionDirectoryName"    value="Production"/>
-  <property name="UnitTestDirectoryName"    value="Unit Test"/>
-  <property name="InstallDirectoryName"     value="Install"/>
+  <property name="Common.Directory.Product.Name"       value="Product"/>
+  <property name="Common.Directory.ThirdParty.Name"    value="Third Party"/>
+  <property name="Common.Directory.Production.Name"    value="Production"/>
+  <property name="Common.Directory.UnitTest.Name"    value="Unit Test"/>
+  <property name="Common.Directory.Install.Name"     value="Install"/>
 
   <include buildfile="Properties.Install.xml"/>
   <property name="CCNET.ServerName" value="${environment::get-machine-name()}"/>
@@ -27,15 +27,15 @@
   <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
   <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
 
-  <property name="Coverage.UnitTestPackageInclude" value="${PackagesDirectory.Ref}\MSTest\UnitTest.Target.xml" />
-  <property name="Coverage.UnitTestPropertiesInclude" value="${PackagesDirectory.Ref}\MSTest\UnitTest.Properties.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\MSTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="${Common.Directory.Packages.Path.Ref}\MSTest\UnitTest.Properties.xml" />
 
   <strings id="Packages.InstallList">
 		<string value="MSBuild" />
     <string value="NCover" />
     <string value="MSTest" />
     <string value="SourceControlStub"/>
-    <string value="Deployment"/>
+    <string value="Publish"/>
   </strings>
 
   <target name="Post.Install">

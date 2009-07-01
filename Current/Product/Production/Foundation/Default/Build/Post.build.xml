@@ -5,6 +5,8 @@
   <include buildfile="Common.Build.xml" />
 
   <description>Begin Package Includes</description>
+  <loadpackages>
+  </loadpackages>
   <description>End Package Includes</description>
 
   <target name="PostBuild" >
@@ -17,6 +19,53 @@
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
       </try>
+      <catch property="exception">
+        <echo level="Error" message="${exception}"/>
+        <property name="UrlToPostBuildReport" value="https://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/default.aspx?_action_PostBuildNAntOutputBuildReport=true&amp;server=${ProjectName}-${ProjectCodeLineName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+        <property name="UrlToThisBuild" value="https://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/default.aspx?_action_ViewBuildReport=true&amp;server=${ProjectName}-${ProjectCodeLineName}&amp;project=${CCNetProject}&amp;build=${path::get-file-name(CCNetLogFilePath)}"/>
+        
+        <largeproperty name="Content">
+          <value expand="true" xml="true">
+            <html>
+              <head>
+                <link type="text/css" rel="stylesheet" href="https://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/cruisecontrol.css"/>
+              </head>
+              <body>
+                <p>
+                  <a onmouseover="this.style.color = '#7bcf15'"
+										 style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
+										 href="${UrlToThisBuild}">${ProjectName} ${ProjectCodeLineName} ${CCNetLabel}</a>
+                </p>
+                <p>${datetime::now()}</p>
+
+                <p>Build Master,</p>
+                <p>The Post Build failed.</p>
+                <br/>
+                <a
+									onmouseover="this.style.color = '#7bcf15'"
+									style="text-decoration: none; color: rgb(64, 63, 141); color:#403F8D; font-size:14px; font-weight:bold;"
+									href="${UrlToPostBuildReport}"
+            >
+                  <img style="float: left; border-style: none; height: 25px;" src="https://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/images/NAntOutput.gif"/>
+                  <div>Exception</div>
+                </a>
+                <br/>
+                <p>${exception}</p>
+                <br/>
+                <p>Cheers,</p>
+                <p>Your pal, the build server.</p>
+              </body>
+            </html>
+          </value>
+        </largeproperty>
+
+        <mail
+              tolist="jay.flowers@agilex.com"
+              from="TriServ.Build@agilex-hc-5155.com"
+              mailhost="127.0.0.1"
+              subject="${CCNetProject} Post Build Failed ${CCNetLabel}"
+              message="${Content}" format="Html" />
+      </catch>
       <finally>
 
         <call target="TearDowns"/>

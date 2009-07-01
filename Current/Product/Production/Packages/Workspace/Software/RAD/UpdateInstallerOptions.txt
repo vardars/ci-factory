@@ -1,0 +1,1 @@
+-W product.location="C:\Program Files\IBM\SDP\runtimes\base_v7"

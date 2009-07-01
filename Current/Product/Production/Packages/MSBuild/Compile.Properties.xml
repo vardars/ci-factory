@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Compile.Properties">
-  <property name="Compile.SolutionFile" value="${ProductDirectory}/${ProjectName}.sln" overwrite="false"/>
+  <property name="Compile.SolutionFile" value="${Common.Directory.Product.Path}/${ProjectName}.sln" overwrite="false"/>
   <property name="Compile.PublishLogFile" value="true" overwrite="false"/>
   <property name="Compile.ConfigName" value="%Compile.ConfigName%" overwrite="false"/>
   <property name="Compile.XmlLogFileName" value="${Compile.ConfigName}.xml" overwrite="false" dynamic="true"/>
   <property name="Compile.ZipFileName" value="${ProjectName}-${Compile.ConfigName}-${CCNetLabel}.zip" overwrite="false" dynamic="true"/>
   <property name="Compile.ToCopyToBin" value="true"  overwrite="false"/>
   <property name="Compile.ToDeployZip" value="true"  overwrite="false"/>
-  <property name="Compile.Bin" value="${ProductDirectory}\${Compile.ConfigName}Bin" overwrite="false" dynamic="true"/>
+  <property name="Compile.Bin" value="${Common.Directory.Product.Path}\${Compile.ConfigName}Bin" overwrite="false" dynamic="true"/>
 
   <fileset id="Compile.ToCopy">
-    <include name="${ProductionDirectory}\**\bin\*.*"/>
+    <include name="${Common.Directory.Production.Path}\**\bin\*.*"/>
   </fileset>
 
-  <property name="Compile.Environment.ConfigFilePath" value="${ProductDirectory}\Compile.Environment.xml" overwrite="false"/>
+  <property name="Compile.Environment.ConfigFilePath" value="${Common.Directory.Product.Path}\Compile.Environment.xml" overwrite="false"/>
 
   <property name="Compile.Environment.RefId" value="MSBuild.Environment" overwrite="false"/>
 

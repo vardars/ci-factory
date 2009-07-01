@@ -8,20 +8,21 @@
   <filterchain id="Common.FilterChain">
     <replacestring from="%ProjectName%"                 to="${ProjectName}"   />
     <replacestring from="%ProjectCodeLineName%"         to="${ProjectCodeLineName}"  />
-
     <replacestring from="%EmailHost%"                   to="${EmailHost}"  />
 
-    <replacestring from="%ProjectsDirectory%"           to="${ProjectsDirectory}"  />
-    <replacestring from="%ProjectRootDirectory%"        to="${ProjectRootDirectory}"  />
+    <replacestring from="%Common.Directory.ProjectsRoot.Path%"   to="${Common.Directory.ProjectsRoot.Path}"  />
     
-    <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
-    <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
-    <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />
-    <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
-    <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
-    <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
-    <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
-    <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
+    <replacestring from="%Common.Directory.Build.Name%"          to="${Common.Directory.Build.Name}"  />
+    <replacestring from="%Common.Directory.ArtifactRoot.Name%"   to="${Common.Directory.ArtifactRoot.Name}"  />
+    <replacestring from="%Common.Directory.Packages.Name%"       to="${Common.Directory.Packages.Name}"  />
+    <replacestring from="%Common.Directory.Product.Name%"        to="${Common.Directory.Product.Name}"  />
+    <replacestring from="%Common.Directory.ThirdParty.Name%"     to="${Common.Directory.ThirdParty.Name}"  />
+    <replacestring from="%Common.Directory.Production.Name%"     to="${Common.Directory.Production.Name}"  />
+    <replacestring from="%Common.Directory.UnitTest.Name%"       to="${Common.Directory.UnitTest.Name}"  />
+    <replacestring from="%Common.Directory.Install.Name%"        to="${Common.Directory.Install.Name}"  />
+    <replacestring from="%Common.Directory.Transient.Name%"      to="${Common.Directory.Transient.Name}"  />
+    <replacestring from="%Common.Directory.Tools.Name%"          to="${Common.Directory.Tools.Name}"  />
+
     <regexreplace replacment="${'$'}{environment::get-variable('ProgramFiles')}" pattern="(?i)C\:\\Program Files" lines="1" />
   </filterchain>
   
@@ -59,16 +60,16 @@
   </target>
 
   <target name="Private.Install.CreateDirectoryStructure">
-    <mkdir unless="${directory::exists(ProjectsDirectory)}"        dir="${ProjectsDirectory}"/>
-    <mkdir unless="${directory::exists(ProjectRootDirectory)}"     dir="${ProjectRootDirectory}"/>
-    <mkdir unless="${directory::exists(ProjectCodeLineDirectory)}" dir="${ProjectCodeLineDirectory}"/>
-    <mkdir unless="${directory::exists(ProductDirectory)}"         dir="${ProductDirectory}"/>
-    <mkdir unless="${directory::exists(ThirdPartyDirectory)}"      dir="${ThirdPartyDirectory}"/>
-    <mkdir unless="${directory::exists(ProductionDirectory)}"      dir="${ProductionDirectory}"/>
-    <mkdir unless="${directory::exists(BuildDirectory)}"           dir="${BuildDirectory}"/>
-    <mkdir unless="${directory::exists(PackagesDirectory)}"        dir="${PackagesDirectory}"/>
-    <mkdir unless="${directory::exists(UnitTestDirectory)}"        dir="${UnitTestDirectory}"/>
-    <mkdir unless="${directory::exists(InstallDirectory)}"         dir="${InstallDirectory}"/>
+    <mkdir unless="${directory::exists(Common.Directory.ProjectsRoot.Path)}"        dir="${Common.Directory.ProjectsRoot.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.ProjectRoot.Path)}"     dir="${Common.Directory.ProjectRoot.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.CodeLine.Path)}" dir="${Common.Directory.CodeLine.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Product.Path)}"         dir="${Common.Directory.Product.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.ThirdParty.Path)}"      dir="${Common.Directory.ThirdParty.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Production.Path)}"      dir="${Common.Directory.Production.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Build.Path)}"           dir="${Common.Directory.Build.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Packages.Path)}"        dir="${Common.Directory.Packages.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.UnitTest.Path)}"        dir="${Common.Directory.UnitTest.Path}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Install.Path)}"         dir="${Common.Directory.Install.Path}"/>
   </target>
   
 </project>

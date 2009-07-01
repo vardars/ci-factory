@@ -4,37 +4,57 @@
 
   %entities;
 ]>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+  xmlns:ms="urn:Scripts"
+  exclude-result-prefixes="ms msxsl"
+>
   <xsl:output method="html"/>
+
+  <msxsl:script implements-prefix="ms" language="C#">
+    <![CDATA[
+    
+    public bool FileExists(string filePath)
+    {
+      System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+      return file.Exists && file.Length > 0;
+    }
+    ]]>
+  </msxsl:script>
   <xsl:param name="applicationPath"/>
 
-  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentArtifactPath']/task[@name='echo']/message"  />
-  <xsl:param name="ChangesDocPath" select="concat($URL, '\SourceModificationReport.xml')"/>
-  <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
-  
-  
-  <xsl:variable name="modification.list" select="($ChangesDoc)/Modification"/>
+  <xsl:param name="URL" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Publish.EchoArtifactPath']/task[@name='echo']/message"  />
   <xsl:key name="changeset" match="//Modification" use="ChangeNumber/text()"/>
 
   <xsl:template match="/">
-    <xsl:if test="/cruisecontrol/build/@lastintegrationstatus != 'Success' and /cruisecontrol/build/@lastintegrationstatus != 'Unknown'">
-			<xsl:if test="count(/cruisecontrol/modifications/modification) &lt; count(($ChangesDoc)//Modification)">
-				<table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
-					<tr>
-						<td height="42" class="sectionheader-container">
-							<img src="http://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/SourceControl.gif" class="sectionheader-title-image" />
-							<div class="sectionheader"  >
-								Source Control Revision History Since Last Good Build
-							</div>
-						</td>
-					</tr>
-					<xsl:for-each select="($ChangesDoc)//Modification[generate-id(.)=generate-id(key('changeset', ChangeNumber/text())[1])]">
-						<xsl:sort select="ChangeNumber" order="descending" data-type="number"/>
-						<xsl:call-template name="changeset" />
-					</xsl:for-each>
-				</table>
-			</xsl:if>
-		</xsl:if>
+
+    <xsl:if test="$URL != ''">
+      <xsl:variable name="ChangesDocPath" select="concat($URL, '\SourceModificationReport.xml')"/>
+
+      <xsl:if test="ms:FileExists($ChangesDocPath)">
+        <xsl:variable name="ChangesDoc" select="document($ChangesDocPath)"/>
+        <xsl:variable name="modification.list" select="($ChangesDoc)/Modification"/>
+
+        <xsl:if test="/cruisecontrol/build/@lastintegrationstatus != 'Success' and /cruisecontrol/build/@lastintegrationstatus != 'Unknown'">
+          <xsl:if test="count(/cruisecontrol/modifications/modification) &lt; count(($ChangesDoc)//Modification)">
+            <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
+              <tr>
+                <td height="42" class="sectionheader-container">
+                  <img src="https://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/SourceControl.gif" class="sectionheader-title-image" />
+                  <div class="sectionheader"  >
+                    Source Control Revision History Since Last Good Build
+                  </div>
+                </td>
+              </tr>
+              <xsl:for-each select="($ChangesDoc)//Modification[generate-id(.)=generate-id(key('changeset', ChangeNumber/text())[1])]">
+                <xsl:sort select="ChangeNumber" order="descending" data-type="number"/>
+                <xsl:call-template name="changeset" />
+              </xsl:for-each>
+            </table>
+          </xsl:if>
+        </xsl:if>
+      </xsl:if>
+    </xsl:if>
   </xsl:template>
 
   <!-- Changeset template -->
@@ -47,8 +67,8 @@
         <span >
           Changeset # <xsl:value-of select="ChangeNumber" />
         </span>
-        
-        
+
+
         <table rules="groups" cellpadding="2" cellspacing="0" border="0">
           <tbody>
             <tr >
@@ -61,9 +81,9 @@
             </tr>
             <tr>
               <td colspan="2">
-                <pre>
+                <em>
                   <xsl:value-of select="Comment"/>
-                </pre>
+                </em>
               </td>
             </tr>
           </tbody>
@@ -101,13 +121,13 @@
           <xsl:attribute name="src">
             <xsl:choose>
               <xsl:when test="Type = 'Added'">
-                <xsl:value-of select="'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/add.png'"/>
+                <xsl:value-of select="'https://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/add.png'"/>
               </xsl:when>
               <xsl:when test="Type = 'Modified'">
-                <xsl:value-of select="'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/edit.png'"/>
+                <xsl:value-of select="'https://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/edit.png'"/>
               </xsl:when>
-              <xsl:when test="Type = 'Deleted'">http://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/delete.png</xsl:when>
-              <xsl:otherwise>http://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/document_text.png</xsl:otherwise>
+              <xsl:when test="Type = 'Deleted'">https://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/delete.png</xsl:when>
+              <xsl:otherwise>https://&HostName;/&ProjectName;-&ProjectCodeLineName;/images/document_text.png</xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
         </img>&#160;<xsl:value-of select="Type"/>

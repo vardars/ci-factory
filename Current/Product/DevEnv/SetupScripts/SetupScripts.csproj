@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{07F2507D-836F-4C41-87A6-9498222A65A8}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -45,6 +45,13 @@
     <Content Include="SetUp.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\NAnt.xsd">
+      <Link>NAnt.xsd</Link>
+    </None>
+    <None Include="..\..\NAnt.xsx">
+      <Link>NAnt.xsx</Link>
+      <DependentUpon>NAnt.xsd</DependentUpon>
+    </None>
     <None Include="run.bat" />
   </ItemGroup>
 </Project>

@@ -17,18 +17,18 @@
 
   <target name="Subversion.InstallationTest.SetProperties">
     <property name="ProjectName" value="SVNTestProject"/>
-    <property name="ProjectsDirectory" value="c:\Projects" />
-    <property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}"/>
+    <property name="Common.Directory.ProjectsRoot.Path" value="c:\Projects" />
+    <property name="Common.Directory.ProjectRoot.Path" value="${Common.Directory.ProjectsRoot.Path}\${ProjectName}"/>
     <property name="ProjectCodeLineName" value="Current" />
-    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
-    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
-    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
-    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
-    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
-    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
-    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
-    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+    <property name="Common.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${ProjectCodeLineName}" />
+    <property name="Common.Directory.Product.Path" value="${Common.Directory.CodeLine.Path}\Product" />
+    <property name="Common.Directory.ThirdParty.Path" value="${Common.Directory.CodeLine.Path}\Third Party" />
+    <property name="Common.Directory.Production.Path"  value="${Common.Directory.Product.Path}\Production" />
+    <property name="Common.Directory.Build.Path" value="${Common.Directory.CodeLine.Path}\Build" />
+    <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
+    <property name="NantBinPath" value="${Common.Directory.Build.Path}\nAnt\bin"/>
+    <property name="Tools.NAnt.Exe" value="${NantBinPath}\nant.exe"/>
+    <property name="Common.Directory.Packages.Path" value="${Common.Directory.Build.Path}\Packages"/>
 
     <property name="SVN.URI.Root" value="http://localhost:81/svn"  />
     <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" />
@@ -37,7 +37,7 @@
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
-    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+    <property name="CCNET.BatchFile" value="${Common.Directory.Build.Path}\CCNETServer.Bat"/>
 
     <property name="BranchName" value="1.0"/>
   </target>
@@ -51,12 +51,12 @@
 
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
-    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(Common.Directory.ProjectRoot.Path)}" failonerror="false"/>
 
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${BranchName}" />
-    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
-    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
-    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(Common.Directory.ProjectRoot.Path)}" failonerror="false"/>
+    <delete dir="${Common.Directory.ProjectRoot.Path}" if="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
+    <assertequal actual="${directory::exists(Common.Directory.ProjectRoot.Path)}" expected="False" message="Was not able to delete ${Common.Directory.ProjectRoot.Path}."/>
 
     <loglevel level="None">
       <do>
@@ -69,13 +69,13 @@
     <copy file="SubversionTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
 
-    <copy todir="${ProductDirectory}" overwrite="true">
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
       <fileset basedir="SubversionTests\Resources">
         <include name="**\*"/>
       </fileset>
     </copy>
 
-    <exec program="${BuildDirectory}\nAnt\bin\nant.exe" workingdir="${BuildDirectory}" verbose="true">
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe" workingdir="${Common.Directory.Build.Path}" verbose="true">
       <arg line="/f:Main.build.xml"/>
       <arg line="SourceControl.Repository.Load" />
       <arg line='-D:CCNetBuildDate="2006-09-12"' />
@@ -126,7 +126,7 @@
   </target>
 
   <target name="Subversion.InstallationTest.DefaultInstallTest">
-    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
+    <delete dir="${Common.Directory.ProjectRoot.Path}" if="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
     <property name="TempDirectory" value="C:\Temp"/>
     <mkdir dir="${TempDirectory}" unless="${directory::exists(TempDirectory)}"/>
     <exec program="svn" commandline="export --force --non-interactive ${SVN.URI.ProjectName}/${ProjectCodeLineName}/Build/dashboard/WorkspaceSetup/${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe" workingdir='${TempDirectory}' verbose="true" />
@@ -143,14 +143,14 @@
       <arg line='-D:SVN.Password="password"' />
     </exec>
     
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
 
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Building'}" timeout="20" pollinginterval="3"/>
     <waitfor condition="${ccnet::get-project-activity(CCNET.ServerUrl, CCNET.ProjectName) == 'Sleeping'}" timeout="300" pollinginterval="10"/>
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
 
-    <nant buildfile="${BuildDirectory}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
+    <nant buildfile="${Common.Directory.Build.Path}\CreateBranch.xml" inheritall="false" inheritrefs="false" >
       <properties>
         <property name="BranchLabelPrefix" value="1.0.1."/>
         <property name="BranchParentLabelPrefix" value="2.0.0."/>
@@ -165,14 +165,14 @@
       </properties>
     </nant>
 
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == 'Running'}" timeout="20" pollinginterval="3"/>
     <waitfor condition="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName + ' Build Scripts') == '2.0.0.1'}" timeout="30" pollinginterval="3"/>
     <waitfor condition="${ccnet::try-get-project-state(CCNET.ServerUrl, CCNET.ProjectName) == 'Running'}" timeout="20" pollinginterval="3"/>
 
     <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
       <ccnetplugins>
-        <include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
+        <include name="${Common.Directory.Build.Path}\server\CCNET.Extensions.Plugin.dll"/>
       </ccnetplugins>
     </ccnetforce>
 
@@ -182,9 +182,9 @@
     <assertequal actual="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName)}" expected="Success" message="Expected build to be successful."/>
     <assertequal actual="${ccnet::get-project-last-build-label(CCNET.ServerUrl, CCNET.ProjectName)}" expected="2.0.0.1" message="Expected the version to be '2.0.0.1'."/>
 
-    <delete dir="${ThirdPartyDirectory}\MbUnit" />
+    <delete dir="${Common.Directory.ThirdParty.Path}\MbUnit" />
 
-    <asyncexec workingdir="${ProjectRootDirectory}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.ProjectRoot.Path}\${BranchName}\Build" program="CCNETServer.Bat" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="BranchCCNet.Pid" />
     <sleep seconds="5"/>
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>

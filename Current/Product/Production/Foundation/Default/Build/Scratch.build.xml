@@ -11,29 +11,28 @@
   
   <property name="CCNetLabel" value="1.0.0.2"/>
   <property name="CCNetProject" value="%ProjectName%"/>
-  <property name="CCNetLogFilePath" value=""/>
+  <property name="CCNetLogFilePath" value="C:\Temp\junk.xml"/>
+  <property name="CCNetListenerFile" value="C:\Temp\AntListener.txt"/>
   
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
+  <include buildfile="Custom.Build.xml" />
   
   <property name="Compile.ConfigName" value="Debug"/>
-  
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml"/>
-  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
+
+  <loadpackages>
+  </loadpackages>
 
   <target name="test">
-    <property name="Compile.ConfigName" value="Release"/>
-    <property name="Compile.Bin" value="${ProductDirectory}\ReleaseBin" />
-    <property name="Compile.ToCopyToBin" value="true" />
-    <property name="Compile.ToDeployZip" value="true"/>
-    <property name="Compile.ZipFileName" value="Doubler.zip"/>
-    <delete>
-      <fileset>
-        <include name="${Compile.Bin}\*.*"/>
-      </fileset>
-    </delete>
-    <call target="Private.Compile.CopyToWorkingBin" />
-    <call target="Private.Compile.DeployZip" />
+  </target>
+
+
+  <target name="rebuild-setups">
+    <call target="Common.WriteSetEnvBatchFile"/>
+    <nant buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <property name="CCNetProject" value="${ProjectName}-${ProjectCodeLineName}"/>
+    <call target="Common.CreateCCTraySfx"/>
   </target>
 
 </project>

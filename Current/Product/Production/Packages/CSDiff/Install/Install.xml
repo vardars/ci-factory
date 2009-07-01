@@ -18,15 +18,13 @@
   </target>
 
   <target name="CSDiff.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="CSDiff"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="CSDiff.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="CSDiff"/>
-    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+    <property name="Packages.CurrentPackage.PackageName" value="CSDiff"/>
+    <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Post.Build.xml"/>
   </target>
 
   <target name="CSDiff.ValidateParameters">
     <fail unless="${stringlist::contains('Packages.InstallList', 'SourceModificationReport')}" message="Please inlcude the package SourceModificationReport.  The CSDiff package is dependent on it."/>
-    <fail unless="${stringlist::contains('Packages.InstallList', 'Deployment')}" message="Please inlcude the package Deployment.  The CSDiff package is dependent on it."/>
+    <fail unless="${stringlist::contains('Packages.InstallList', 'Publish')}" message="Please inlcude the package Publish.  The CSDiff package is dependent on it."/>
   </target>
   
 </project>

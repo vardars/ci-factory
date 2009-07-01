@@ -22,8 +22,8 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>
@@ -31,9 +31,7 @@
   </target>
 
   <target name="nDepend.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="nDepend"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="nDepend.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="nDepend"/>
+    <property name="Packages.CurrentPackage.PackageName" value="nDepend"/>
   </target>
 
   <target name="nDepend.ValidateParameters">

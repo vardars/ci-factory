@@ -4,7 +4,7 @@
 	<property name="IsUpgrade" value="true" readonly="true"/>
   <property name="Install.Quiet" value="false" overwrite="false"/>
 
-	<property name="ProjectsDirectory" value="c:\Projects" overwrite="false"/>
+	<property name="Common.Directory.ProjectsRoot.Path" value="c:\Projects" overwrite="false"/>
 
 	<property name="SourceRoot" value="${path::get-full-path('..')}"/>
 	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
@@ -20,20 +20,20 @@
 				 question="What is the name of the project to be upgraded?" 
 				 showdialog="true" dialogmode="FreeText"></ask>
 
-		<property name="ProjectRootDirectory" value="${ProjectsDirectory}\${ProjectName}" />
+		<property name="Common.Directory.ProjectRoot.Path" value="${Common.Directory.ProjectsRoot.Path}\${ProjectName}" />
 		
-		<fail message="I can't find the project ${ProjectName} in ${ProjectsDirectory}." 
-					unless="${directory::exists(ProjectRootDirectory)}"/>
+		<fail message="I can't find the project ${ProjectName} in ${Common.Directory.ProjectsRoot.Path}." 
+					unless="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
 
-		<property name="NumberOfCodelines" value="${directory::number-of-children(ProjectRootDirectory)}"/>
+		<property name="NumberOfCodelines" value="${directory::number-of-children(Common.Directory.ProjectRoot.Path)}"/>
 		<strings id="Codelines" />
 		<ifthenelse test="${NumberOfCodelines == '1'}">
 			<then>
 				<foreach item="Folder" property="CodelineName">
 					<in>
 						<items>
-							<include name="${ProjectRootDirectory}\*"/>
-							<exclude name="${ProjectRootDirectory}"/>
+							<include name="${Common.Directory.ProjectRoot.Path}\*"/>
+							<exclude name="${Common.Directory.ProjectRoot.Path}"/>
 						</items>
 					</in>
 					<do>
@@ -49,8 +49,8 @@
 				<foreach item="Folder" property="CodelineName">
 					<in>
 						<items>
-							<include name="${ProjectRootDirectory}\*"/>
-							<exclude name="${ProjectRootDirectory}"/>
+							<include name="${Common.Directory.ProjectRoot.Path}\*"/>
+							<exclude name="${Common.Directory.ProjectRoot.Path}"/>
 						</items>
 					</in>
 					<do>
@@ -66,41 +66,41 @@
 			</else>
 		</ifthenelse>
 
-    <property name="BuildDirectoryName" value="Build"/>
-    <ifnot test="${directory::exists(ProjectsDirectory + '\' + ProjectName + '\' + ProjectCodeLineName + '\Build')}">
-      <ask answer="BuildDirectoryName" caption="Can't Find the Build Directory" dialogmode="FreeText" question="What is the name of the Build directory?" showdialog="true"></ask>
+    <property name="Common.Directory.Build.Name" value="Build"/>
+    <ifnot test="${directory::exists(Common.Directory.ProjectsRoot.Path + '\' + ProjectName + '\' + ProjectCodeLineName + '\Build')}">
+      <ask answer="Common.Directory.Build.Name" caption="Can't Find the Build Directory" dialogmode="FreeText" question="What is the name of the Build directory?" showdialog="true"></ask>
     </ifnot>
 
-    <property name="BuildDirectory" value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}"/>
+    <property name="Common.Directory.Build.Path" value="${Common.Directory.ProjectsRoot.Path}\${ProjectName}\${ProjectCodeLineName}\${Common.Directory.Build.Name}"/>
 
     <property name="CCNetProject" value="${ProjectName}"/>
-    <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
+    <exec program="${Common.Directory.Build.Path}\nant\bin\nant.exe" workingdir="${Common.Directory.Build.Path}">
       <arg line='/f:"${SourceRoot}\Install Scripts\Scripts\Proxy.SourceControl.xml"'/>
       <arg line='Proxy.SourceControl.UpdateTarget' />
-      <arg line='-D:"BuildDirectory=${BuildDirectory}"' />
+      <arg line='-D:"Common.Directory.Build.Path=${Common.Directory.Build.Path}"' />
       <arg line='-D:"CCNetProject=${CCNetProject}"' />
       <arg line='-D:CCNetBuildDate="2006-09-12"' />
       <arg line='-D:CCNetBuildTime="11:10:00"' />
     </exec>
 
-    <include buildfile="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}\Properties.build.xml" />
+    <include buildfile="${Common.Directory.ProjectsRoot.Path}\${ProjectName}\${ProjectCodeLineName}\${Common.Directory.Build.Name}\Properties.build.xml" />
 
-    <property name="ProductDirectoryName"       value="Product" overwrite="false"/>
-    <property name="ThirdPartyDirectoryName"    value="Third Party" overwrite="false"/>
-    <property name="ProductionDirectoryName"    value="Production" overwrite="false"/>
-    <property name="ArtifactRootDirectoryName"  value="Artifacts" overwrite="false"/>
-    <property name="PackagesDirectoryName"      value="Packages" overwrite="false"/>
-    <property name="UnitTestDirectoryName"      value="Unit Test" overwrite="false"/>
-    <property name="InstallDirectoryName"       value="Install" overwrite="false"/>
+    <property name="Common.Directory.Product.Name"       value="Product" overwrite="false"/>
+    <property name="Common.Directory.ThirdParty.Name"    value="Third Party" overwrite="false"/>
+    <property name="Common.Directory.Production.Name"    value="Production" overwrite="false"/>
+    <property name="Common.Directory.ArtifactRoot.Name"  value="Artifacts" overwrite="false"/>
+    <property name="Common.Directory.Packages.Name"      value="Packages" overwrite="false"/>
+    <property name="Common.Directory.UnitTest.Name"      value="Unit Test" overwrite="false"/>
+    <property name="Common.Directory.Install.Name"       value="Install" overwrite="false"/>
 
-    <property name="UnitTestDirectory"        value="${ProductDirectory}\${UnitTestDirectoryName}"  overwrite="false"/>
-    <property name="InstallDirectory"         value="${ProductDirectory}\${InstallDirectoryName}"  overwrite="false"/>
+    <property name="Common.Directory.UnitTest.Path"        value="${Common.Directory.Product.Path}\${Common.Directory.UnitTest.Name}"  overwrite="false"/>
+    <property name="Common.Directory.Install.Path"         value="${Common.Directory.Product.Path}\${Common.Directory.Install.Name}"  overwrite="false"/>
 
-    <property name="Common.ArtifactFolderName" value="bogas"/>
-    <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
-    <property name="Common.ReportDirectory" value="${BuildDirectory}\Reports"/>
-    <property name="Common.TempDirectory" value="${BuildDirectory}\Temp"/>
-    <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
+    <property name="Common.Directory.Artifact.Name" value="bogas"/>
+    <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
+    <property name="Common.Project.ReportDirectory" value="${Common.Directory.Build.Path}\Reports"/>
+    <property name="Common.Project.TempDirectory" value="${Common.Directory.Build.Path}\Temp"/>
+    <property name="Common.PropertiesFile" value="${Common.Project.TempDirectory}\Properties.txt"/>
 
     <property name="CCNetBuildCondition" value="ForceBuild "/>
     <property name="CCNetIntegrationStatus" value="Success"/>
@@ -115,26 +115,26 @@
     <property name="CCNetLogFilePath" value=""/>
 
     <ifnot test="${property::exists('LabelPrefix')}">
-      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+      <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
                property="CCNetProjectCount"
                xpath="count(/cruisecontrol/project)"
                failonerror="false" />
       
-      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
-               property="LabelPrefix"
+      <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
+               property="CCNet.LabelPrefix"
                xpath="/cruisecontrol/project[@name = '${ProjectName}']/labeller/prefix" 
                failonerror="false"
                if="${property::exists('CCNetProjectCount') and CCNetProjectCount == '2'}"/>
     </ifnot>
 
     <ifnot test="${property::exists('LabelPrefix')}">
-      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+      <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
                property="CCNetProjectCount"
                xpath="count(/cruisecontrol/project)"
                failonerror="false" />
 
-      <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
-               property="LabelPrefix"
+      <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
+               property="CCNet.LabelPrefix"
                xpath="/cruisecontrol/project[@name = '${ProjectName}-${ProjectCodeLineName}']/labeller/prefix"
                failonerror="false"
                if="${property::exists('CCNetProjectCount') and CCNetProjectCount == '2'}"/>
@@ -147,17 +147,17 @@
 When CI Factory first installed your project it was set to '1.0.0.' in the file ccnetproject.xml.]]>
         </value>
       </largeproperty>
-      <ask answer="LabelPrefix"
+      <ask answer="CCNet.LabelPrefix"
            caption="What is the version prefix?"
            dialogmode="FreeText"
            question="${LabelPrefixQuestion}"
            showdialog="true" />
     </ifnot>
     
-    <property name="CCNET.LabelPrefix" value="${LabelPrefix}"/>
+    <property name="CCNet.LabelPrefix" value="${LabelPrefix}"/>
 
     <property name="EmailHost" value="127.0.0.1"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="EmailHost"
              nodeindex="1"
              xpath="/cruisecontrol/project//email/@mailhost"
@@ -168,17 +168,16 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
 			<replacestring from="%ProjectCodeLineName%" to="${ProjectCodeLineName}"  />
       <replacestring from="%EmailHost%"                   to="${EmailHost}"  /> 
 
-      <replacestring from="%ProjectsDirectory%"        to="${ProjectsDirectory}"  />
-      <replacestring from="%ProjectRootDirectory%"     to="${ProjectRootDirectory}"  />
+      <replacestring from="%Common.Directory.ProjectsRoot.Path%"        to="${Common.Directory.ProjectsRoot.Path}"  />
 
-      <replacestring from="%BuildDirectoryName%"          to="${BuildDirectoryName}"  />
-      <replacestring from="%ArtifactRootDirectoryName%"   to="${ArtifactRootDirectoryName}"  />
-      <replacestring from="%PackagesDirectoryName%"       to="${PackagesDirectoryName}"  />
-      <replacestring from="%ProductDirectoryName%"        to="${ProductDirectoryName}"  />
-      <replacestring from="%ThirdPartyDirectoryName%"     to="${ThirdPartyDirectoryName}"  />
-      <replacestring from="%ProductionDirectoryName%"     to="${ProductionDirectoryName}"  />
-      <replacestring from="%UnitTestDirectoryName%"       to="${UnitTestDirectoryName}"  />
-      <replacestring from="%InstallDirectoryName%"        to="${InstallDirectoryName}"  />
+      <replacestring from="%Common.Directory.Build.Name%"          to="${Common.Directory.Build.Name}"  />
+      <replacestring from="%Common.Directory.ArtifactRoot.Name%"   to="${Common.Directory.ArtifactRoot.Name}"  />
+      <replacestring from="%Common.Directory.Packages.Name%"       to="${Common.Directory.Packages.Name}"  />
+      <replacestring from="%Common.Directory.Product.Name%"        to="${Common.Directory.Product.Name}"  />
+      <replacestring from="%Common.Directory.ThirdParty.Name%"     to="${Common.Directory.ThirdParty.Name}"  />
+      <replacestring from="%Common.Directory.Production.Name%"     to="${Common.Directory.Production.Name}"  />
+      <replacestring from="%Common.Directory.UnitTest.Name%"       to="${Common.Directory.UnitTest.Name}"  />
+      <replacestring from="%Common.Directory.Install.Name%"        to="${Common.Directory.Install.Name}"  />
       <regexreplace replacment="${'$'}{environment::get-variable('ProgramFiles')}" pattern="(?i)C\:\\Program Files" lines="1" />
 		</filterchain>
 		
@@ -187,12 +186,12 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
   <![CDATA[Please review the following upgrade:
 Project Name:     ${ProjectName}
 Codeline Name:    ${ProjectCodeLineName}
-Current Version:  ${file::get-product-version(BuildDirectory + '\server\ThoughtWorks.CruiseControl.Core.dll')}
+Current Version:  ${file::get-product-version(Common.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
 Upgrade Version:  ${file::get-product-version(SourceBuildDirectory + '\server\ThoughtWorks.CruiseControl.Core.dll')}
 
-ProductDirectory    = ${ProductDirectory}
-ThirdPartyDirectory = ${ThirdPartyDirectory}
-BuildDirectory      = ${BuildDirectory}
+Common.Directory.Product.Path    = ${Common.Directory.Product.Path}
+Common.Directory.ThirdParty.Path = ${Common.Directory.ThirdParty.Path}
+Common.Directory.Build.Path      = ${Common.Directory.Build.Path}
 ]]></value>
 		</largeproperty>
 
@@ -208,10 +207,10 @@ BuildDirectory      = ${BuildDirectory}
 
 		<fail message="Upgrade canceled." if="${Answer == 'Cancel Upgrade'}"/>
 
-    <exec program="${BuildDirectory}\nant\bin\nant.exe" workingdir="${BuildDirectory}">
+    <exec program="${Common.Directory.Build.Path}\nant\bin\nant.exe" workingdir="${Common.Directory.Build.Path}">
       <arg line='/f:"${SourceRoot}\Install Scripts\Scripts\Proxy.SourceControl.xml"'/>
       <arg line='Proxy.SourceControl.CheckoutAll' />
-      <arg line='-D:"BuildDirectory=${BuildDirectory}"' />
+      <arg line='-D:"Common.Directory.Build.Path=${Common.Directory.Build.Path}"' />
       <arg line='-D:"CCNetProject=${CCNetProject}"' />
       <arg line='-D:CCNetBuildDate="2006-09-12"' />
       <arg line='-D:CCNetBuildTime="11:10:00"' />
@@ -221,20 +220,20 @@ BuildDirectory      = ${BuildDirectory}
 		<call target="Upgrade.Foundation"/>
 		<call target="Upgrade.Packages"/>
 
-    <nant buildfile="${PackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+    <nant buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
 
     <ifnot test="${string::starts-with(WinRarProgramPath, '${')}">
       <property name="WinRarProgramPath" value="${property::expand(WinRarProgramPath)}"/>
     </ifnot>
 
-    <nant buildfile="${BuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx">
+    <nant buildfile="${Common.Directory.Build.Path}\Common.Build.xml" target="Common.CreateCCTraySfx">
       <properties>
         <property name="WinRarProgramPath" value="${WinRarProgramPath}" />
         <property name="BuildServerHostName" value="${CCNET.ServerName}"/>
-        <property name="BuildServerPort" value="${CCNET.ServerPort}"/>
+        <property name="CCNet.Server.Remoting.Port" value="${CCNET.ServerPort}"/>
         <property name="CCNetBuildDate" value="2006-09-12"/>
         <property name="CCNetBuildTime" value="11:10:00"/>
-        <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
+        <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
       </properties>
     </nant>
 
@@ -278,23 +277,23 @@ A brute force approach is to diff the tree, to identify which if any files need 
     <strings id="Packages.InstallList" />
 		<fileset id="PacakgeFinder" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\SourceModificationReport" />
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\SourceModificationReport" />
     <call target="Upgrade.Package.ValidateParameters" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Deployment" />
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\Publish" />
     <call target="Upgrade.Package.ValidateParameters" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Workspace" />
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\Workspace" />
     <call target="Upgrade.Package.ValidateParameters" />
     
 		<foreach item="Folder" property="TargetPackageDirectory">
 			<in>
-				<items basedir="${PackagesDirectory}">
+				<items basedir="${Common.Directory.Packages.Path}">
 					<include name="*"/>
-					<exclude name="${PackagesDirectory}"/>
-          <exclude name="${PackagesDirectory}\SourceModificationReport"/>
-          <exclude name="${PackagesDirectory}\Deployment"/>
-          <exclude name="${PackagesDirectory}\Workspace"/>
+					<exclude name="${Common.Directory.Packages.Path}"/>
+          <exclude name="${Common.Directory.Packages.Path}\SourceModificationReport"/>
+          <exclude name="${Common.Directory.Packages.Path}\Publish"/>
+          <exclude name="${Common.Directory.Packages.Path}\Workspace"/>
 				</items>
 			</in>
 			<do>
@@ -322,7 +321,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
           <call target="${SourcePackageName}.UpgradeValidateParameters" />
         </then>
         <else>
-          <property name="PackagePathPattern" value="${PackagesDirectory}\${SourcePackageName}\*.Properties.xml"/>
+          <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\${SourcePackageName}\*.Properties.xml"/>
           <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
           <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
           <if test="${fileset::file-count('PacakgeFinder') > 0}">
@@ -345,14 +344,14 @@ A brute force approach is to diff the tree, to identify which if any files need 
 	</target>
 
 	<target name="Upgrade.NAnt">
-		<property name="nAnt.BuildDirectory" value="${BuildDirectory}\nAnt"/>
+		<property name="NAnt.Target.Directory.Path" value="${Common.Directory.Build.Path}\nAnt"/>
 		<property name="Private.nAnt.DefaultBuildDirectory" value="${SourceRoot}\nAnt"/>
-		<copy todir="${nAnt.BuildDirectory}" overwrite="true">
+		<copy todir="${NAnt.Target.Directory.Path}" overwrite="true">
 			<fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
-		<exec program="${BuildDirectory}\UpdatenAntSchema.bat" workingdir="${BuildDirectory}"/>	
+		<exec program="${Common.Directory.Build.Path}\UpdatenAntSchema.bat" workingdir="${Common.Directory.Build.Path}"/>	
 	</target>
 
   <target name="Upgrade.Base">
@@ -383,7 +382,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
     <property name="Files" value="BuildFiles"/>
     <property name="SourceDirectoryName" value="Build"/>
-    <property name="TargetDirectoryName" value="${BuildDirectoryName}"/>
+    <property name="TargetDirectoryName" value="${Common.Directory.Build.Name}"/>
     <call target="Upgrade.Base.Files"/>
 
 
@@ -399,7 +398,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
     <property name="Files" value="ProductFiles"/>
     <property name="SourceDirectoryName" value="Product"/>
-    <property name="TargetDirectoryName" value="${ProductDirectoryName}"/>
+    <property name="TargetDirectoryName" value="${Common.Directory.Product.Name}"/>
     <call target="Upgrade.Base.Files"/>
   </target>
   
@@ -423,7 +422,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
   <property name="SourceBaseFile" value=""/>
   -->
   <target name="Upgrade.Base.File">
-    <copy tofile='${ProjectCodeLineDirectory}\${TargetDirectoryName}\${TargetBaseFile}'
+    <copy tofile='${Common.Directory.CodeLine.Path}\${TargetDirectoryName}\${TargetBaseFile}'
           file='${SourceDefaultDirectory}\${SourceDirectoryName}\${SourceBaseFile}'
           overwrite="true">
       <filterchain refid="Common.FilterChain" />
@@ -433,19 +432,19 @@ A brute force approach is to diff the tree, to identify which if any files need 
   <target name="Upgrade.CCNet">
     <property name="CCNET.ServerPort" value=""/>
 
-    <if test="${property::exists('BuildServerPort')}">
-      <property name="CCNET.ServerPort" value="${BuildServerPort}"/>  
+    <if test="${property::exists('CCNet.Server.Remoting.Port')}">
+      <property name="CCNET.ServerPort" value="${CCNet.Server.Remoting.Port}"/>  
     </if>
     
-		<xmlpeek file="${BuildDirectory}\server\ccnet.exe.config"
+		<xmlpeek file="${Common.Directory.Build.Path}\server\ccnet.exe.config"
 						property="CCNET.ServerPort"
 						xpath="/configuration/system.runtime.remoting/application/channels/channel/@port"
             failonerror="false"/>
 
     <if test="${CCNET.ServerPort == ''}">
-      <xmlpeek file="${BuildDirectory}\Properties.build.xml"
+      <xmlpeek file="${Common.Directory.Build.Path}\Properties.build.xml"
 						property="CCNET.ServerPort"
-						xpath="/project/property[@name='BuildServerPort']/@value"
+						xpath="/project/property[@name='CCNet.Server.Remoting.Port']/@value"
             failonerror="false"/>
     </if>
 
@@ -465,7 +464,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
       <property name="CCNET.ServerName" value="${BuildServerHostName}"/>
     </if>
     
-    <xmlpeek file="${BuildDirectory}\Properties.build.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\Properties.build.xml"
 						property="CCNET.ServerName"
 						xpath="/project/property[@name='BuildServerHostName']/@value"
             failonerror="false"/>
@@ -481,28 +480,28 @@ A brute force approach is to diff the tree, to identify which if any files need 
     </if>
 
     <property name="CCNET.ModificationDelaySeconds" value="120"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="CCNET.ModificationDelaySeconds"
              nodeindex="1"
              xpath="/cruisecontrol/project/modificationDelaySeconds"
              failonerror="false"/>
     
     <property name="CCNET.IntervalTrigger" value="90"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="CCNET.IntervalTrigger"
              nodeindex="1"
              xpath="/cruisecontrol/project//trigger[@type='intervalTrigger']/@seconds"
              failonerror="false"/>
     
     <property name="BuildMaster.Name" value="BuildMaster"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="BuildMaster.Name"
              nodeindex="1"
              xpath="/cruisecontrol/project//user[@group='buildmaster']/@name"
              failonerror="false"/>
     
     <property name="BuildMaster.Email" value="fake@bogas.com"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="BuildMaster.Email"
              nodeindex="1"
              xpath="/cruisecontrol/project//user[@group='buildmaster']/@address"
@@ -510,7 +509,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
     <property name="Developer.List" value=""/>
     <property name="Developer.List.Count" value="0"/>
-    <xmlpeek file="${BuildDirectory}\ccnetproject.xml"
+    <xmlpeek file="${Common.Directory.Build.Path}\ccnetproject.xml"
              property="Developer.List.Count"
              xpath="count(/cruisecontrol/project//user[@group!='buildmaster' and @name!='${BuildMaster.Name}'])"
              outerxml="true"
@@ -522,7 +521,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
       <do>
         <property name="Developer.List.Count" value="${int::parse(Developer.List.Count) - 1}"/>
         <xmlpeek
-          file="${BuildDirectory}\ccnetproject.xml"
+          file="${Common.Directory.Build.Path}\ccnetproject.xml"
           property="Developer.List.Item"
           xpath="/cruisecontrol/project//user[@group!='buildmaster' and @name!='${BuildMaster.Name}']"
           outerxml="true"
@@ -543,10 +542,10 @@ A brute force approach is to diff the tree, to identify which if any files need 
 		
 		<delete>
 			<fileset>
-				<include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Remote.dll"/>
-				<include name="${BuildDirectory}\server\ThoughtWorks.CruiseControl.Remote.pdb"/>
-				<include name="${BuildDirectory}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.dll"/>
-				<include name="${BuildDirectory}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.pdb"/>
+				<include name="${Common.Directory.Build.Path}\server\ThoughtWorks.CruiseControl.Remote.dll"/>
+				<include name="${Common.Directory.Build.Path}\server\ThoughtWorks.CruiseControl.Remote.pdb"/>
+				<include name="${Common.Directory.Build.Path}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.dll"/>
+				<include name="${Common.Directory.Build.Path}\dashboard\bin\ThoughtWorks.CruiseControl.Remote.pdb"/>
 			</fileset>
 		</delete>
 	</target>
@@ -555,23 +554,23 @@ A brute force approach is to diff the tree, to identify which if any files need 
 		<include buildfile="Scripts\Packages.Install.xml"/>
 		<fileset id="PacakgeFinder" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\SourceModificationReport" />
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\SourceModificationReport" />
     <call target="Upgrade.Package" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Deployment" />
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\Publish" />
     <call target="Upgrade.Package" />
 
-    <property name="TargetPackageDirectory" value="${PackagesDirectory}\Workspace"/>
+    <property name="TargetPackageDirectory" value="${Common.Directory.Packages.Path}\Workspace"/>
     <call target="Upgrade.Package"/>
     
 		<foreach item="Folder" property="TargetPackageDirectory">
 			<in>
-				<items basedir="${PackagesDirectory}">
+				<items basedir="${Common.Directory.Packages.Path}">
           <include name="*"/>
-          <exclude name="${PackagesDirectory}"/>
-          <exclude name="${PackagesDirectory}\SourceModificationReport"/>
-          <exclude name="${PackagesDirectory}\Deployment"/>
-          <exclude name="${PackagesDirectory}\Workspace"/>
+          <exclude name="${Common.Directory.Packages.Path}"/>
+          <exclude name="${Common.Directory.Packages.Path}\SourceModificationReport"/>
+          <exclude name="${Common.Directory.Packages.Path}\Publish"/>
+          <exclude name="${Common.Directory.Packages.Path}\Workspace"/>
 				</items>
 			</in>
 			<do>

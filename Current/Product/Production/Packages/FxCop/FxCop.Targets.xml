@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop">
+
+  <include buildfile = "FxCop.Properties.xml"/>
+
+  <fileset id = "FxCop.AssembliesFileSet"/>
+  <fileset id="FxCop.ReferenceAssembliesFileSet">
+    <include name="${Common.Directory.ThirdParty.Path}\**\*.dll"/>
+    <include name="${Common.Directory.ThirdParty.Path}\**\*.pdb"/>
+    <!--<include name="${Common.Directory.ThirdParty.Path}\**\*.xml"/>-->
+  </fileset>
+  <fileset id="FxCop.ProductionAssembliesFileSet">
+    <include name="${Common.Directory.Production.Path}\**\*.dll"/>
+    <include name="${Common.Directory.Production.Path}\**\*.pdb"/>
+    <!--<include name="${Common.Directory.Production.Path}\**\*.xml"/>-->
+  </fileset>
+
+  <property name = "Private.FxCop.HaveAssemblies" value = "false"/>
+
+  <target name = "FxCop.Calculate">
+    <call target = "Private.FxCop.CollectAssemblies"/>
+    <ifnot test = "${Private.FxCop.HaveAssemblies}">
+      <echo level = "Warning" message = "No assemblies found to analyze for FxCop!"/>
+    </ifnot>
+    <if test = "${Private.FxCop.HaveAssemblies}">
+      <echo message="Copying target assemblies."/>
+      <copy todir="${FxCop.AssembliesFolder}" verbose="true">
+        <fileset refid="FxCop.AssembliesFileSet"/>
+      </copy>
+      <echo message="Copying reference assemblies and dependencies."/>
+      <echo level="Debug" message="Copy production assemblies and dependencies first as a quick and dirty way to try to prevent 'older' assemblies from overwriting 'newer' assemblies."/>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true">
+        <fileset refid="FxCop.ProductionAssembliesFileSet"/>
+      </copy>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true" overwrite="false">
+        <fileset refid="FxCop.ReferenceAssembliesFileSet"/>
+      </copy>
+      <echo level="Debug" message="Re-Copy production assemblies and dependencies last as a quick and dirty way to try to ensure 'newer' assemblies overwrite 'older' assemblies."/>
+      <copy todir="${FxCop.ReferenceAssembliesFolder}" verbose="true" flatten="true" overwrite="true">
+        <fileset refid="FxCop.ProductionAssembliesFileSet"/>
+      </copy>
+      <echo message='FxCop command line="${path::get-short-path(FxCop.Console)} /file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo".'/> <!--JW: added for debugging purposes-->
+
+      <ifthenelse test="${file::exists(FxCop.ProjectFile)}">
+        <then>
+          <echo level="Debug" message="Running FxCop with FxCop project file '${FxCop.ProjectFile}'."/>
+          <property name="FxCop.Console.CommandLine"  value='/project:"${FxCop.ProjectFile}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'/>
+          <!--<fail message="Running FxCop with a FxCop project file is not yet supported."/>-->
+        </then>
+        <else>
+          <echo level="Debug" message="Running FxCop without a FxCop project file."/>
+          <property name="FxCop.Console.CommandLine"  value='/file:"${FxCop.AssembliesFolder}" /out:"${FxCop.ReportFolder}\FxCopReport.xml" /rule:"${FxCop.RulesFolder}" /directory:"${FxCop.ReferenceAssembliesFolder}" /searchgac  /fo'/>
+        </else>
+      </ifthenelse>
+
+      <loglevel level="None">
+        <do>
+          <exec
+            program="${path::get-short-path(FxCop.Console)}"
+            commandline="${FxCop.Console.CommandLine}"
+            failonerror="false" verbose="true"/>
+        </do>
+      </loglevel>
+
+      <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">
+
+        <style in="${FxCop.ReportFolder}\FxCopReport.xml"
+               out="${Common.Directory.Artifact.Path}\FxCopReport.html"
+               style="${Common.Directory.Packages.Path}\FxCop\FxCopReport.xsl"/>
+      </if>
+    </if>
+  </target>
+
+  <target name = "Private.FxCop.CollectAssemblies">
+    <strings id = "FxCop.AssemblyList"/>
+    <foreach item = "File" property = "FxCop.Target.ProjectFile.Path">
+      <in>
+        <items refid = "FxCop.Target.ProjectFiles"/>
+      </in>
+      <do>
+        <property name = "AssemblyName" value = "${vsproject::get-assemblyname(FxCop.Target.ProjectFile.Path)}"/>
+        <ifnot test = "${AssemblyName == '' or stringlist::contains('FxCop.AssemblyList', AssemblyName)}">
+          <property name = "Private.FxCop.HaveAssemblies" value = "true"/>
+          <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.dll"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name = "TargetAssemblyPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.exe"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetAssemblyPath)}"/>
+          <property name = "TargetPDBPath" value = "${vsproject::get-output-directory(FxCop.Target.ProjectFile.Path, Compile.ConfigName)}\${AssemblyName}.pdb"/>
+          <function execute = "${fileset::include-add('FxCop.AssembliesFileSet', TargetPDBPath)}"/>
+          <function execute = "${stringlist::add('FxCop.AssemblyList', AssemblyName)}"/>
+        </ifnot>
+      </do>
+    </foreach>
+  </target>
+
+  <target name = "FxCop.SetUp">
+    <mkdir if = "${directory::exists(FxCop.BuildFolder) == false}" dir = "${FxCop.BuildFolder}"/>
+    <property name = "Common.FilesToDelete" value = "${FxCop.FilesToDeleteAtSetup}"/>
+    <call target = "Common.DeleteFiles"/>
+    <mkdir if = "${directory::exists(FxCop.ReportFolder) == false}" dir = "${FxCop.ReportFolder}"/>
+    <mkdir if = "${directory::exists(FxCop.AssembliesFolder) == false}" dir = "${FxCop.AssembliesFolder}"/>
+  </target>
+
+  <target name = "FxCop.TearDown"></target>
+
+</project>

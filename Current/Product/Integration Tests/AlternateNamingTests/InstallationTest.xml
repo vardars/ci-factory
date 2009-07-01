@@ -8,7 +8,7 @@
   </ifnot>
   
   <target name="AlternateNaming.InstallationTest.RunAllTests">
-    <testrunner>
+    <testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
       <fixtures>
         <string value="AlternateNaming.InstallationTest"/>
       </fixtures>
@@ -17,17 +17,17 @@
 
   <target name="AlternateNaming.InstallationTest.SetProperties">
     <property name="ProjectName" value="AlternateNamingTestProject"/>
-    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="Common.Directory.ProjectRoot.Path" value="C:\Projects\${ProjectName}"/>
     <property name="ProjectCodeLineName" value="trunk" />
-    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
-    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\src" />
-    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\lib" />
-    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
-    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
-    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
-    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
-    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+    <property name="Common.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${ProjectCodeLineName}" />
+    <property name="Common.Directory.Product.Path" value="${Common.Directory.CodeLine.Path}\src" />
+    <property name="Common.Directory.ThirdParty.Path" value="${Common.Directory.CodeLine.Path}\lib" />
+    <property name="Common.Directory.Production.Path"  value="${Common.Directory.Product.Path}\Production" />
+    <property name="Common.Directory.Build.Path" value="${Common.Directory.CodeLine.Path}\Build" />
+    <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
+    <property name="NantBinPath" value="${Common.Directory.Build.Path}\nAnt\bin"/>
+    <property name="Tools.NAnt.Exe" value="${NantBinPath}\nant.exe"/>
+    <property name="Common.Directory.Packages.Path" value="${Common.Directory.Build.Path}\Packages"/>
 
     <property name="SVN.URI.Root" value="http://localhost:81/svn"  />
     <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}/${ProjectName}" />
@@ -36,24 +36,24 @@
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
-    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+    <property name="CCNET.BatchFile" value="${Common.Directory.Build.Path}\CCNETServer.Bat"/>
   </target>
   
   <target name="AlternateNaming.InstallationTest.FixtureSetUp">
     <call target="AlternateNaming.InstallationTest.SetProperties"/>
 
+    <property name="SvnBinPath" value="${environment::get-variable('ProgramFiles')}\Subversion\bin"/>
+    <setenv name="PATH" value="${environment::get-variable('PATH')};${SvnBinPath}" unless="${string::contains(environment::get-variable('PATH'), SvnBinPath)}" />
+
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
-    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
-    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
-    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(Common.Directory.ProjectRoot.Path)}" failonerror="false"/>
+    <delete dir="${Common.Directory.ProjectRoot.Path}" if="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
+    <assertequal actual="${directory::exists(Common.Directory.ProjectRoot.Path)}" expected="False" message="Was not able to delete ${Common.Directory.ProjectRoot.Path}."/>
 
-    <loglevel level="None">
-      <do>
         <exec program="svn" commandline='delete -m "Subversion.InstallationTest.FixtureSetUp" ${SVN.URI.ProjectName}' failonerror='false' />
         <exec program="svn" commandline='list ${SVN.URI.ProjectName}' resultproperty='SVN.Delete.Result' failonerror='false' />
-      </do>
-    </loglevel>
+      
     <assertequal actual="${SVN.Delete.Result}" expected="1" message="Was not able to delete ${SVN.URI.ProjectName}."/>
 
     <copy file="AlternateNamingTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
@@ -66,7 +66,7 @@
     </loglevel>
     <sleep seconds="2"/>
 
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
   </target>
 
   <target name="AlternateNaming.InstallationTest.FixtureTearDown">

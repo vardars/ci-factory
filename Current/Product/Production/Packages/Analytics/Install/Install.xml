@@ -23,7 +23,7 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
 
-    <copy todir="${BuildDirectory}" >
+    <copy todir="${Common.Directory.Build.Path}" >
       <fileset basedir="${SourcePackagesDirectory}\Analytics\Install\Other">
         <include name="*.*"/>
       </fileset>
@@ -32,10 +32,8 @@
   </target>
 
   <target name="Analytics.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Analytics"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Analytics.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Analytics"/>
-    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Analytics"/>
+    <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Post.Build.xml"/>
   </target>
 
   <target name="Analytics.ValidateParameters">

@@ -16,15 +16,13 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
     
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\LinesOfCode\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="LinesOfCode.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="LinesOfCode"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="LinesOfCode.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="LinesOfCode"/>
+    <property name="Packages.CurrentPackage.PackageName" value="LinesOfCode"/>
   </target>
 
   <target name="LinesOfCode.ValidateParameters">

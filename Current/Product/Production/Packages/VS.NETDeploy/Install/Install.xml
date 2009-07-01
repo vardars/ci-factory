@@ -3,8 +3,8 @@
 
   <include buildfile="Properties.xml" />
 
-  <property name="Compile.SolutionFile" value="${ProductDirectory}\${ProjectName}.sln"/>
-  <property name="Compile.OpenSolutionBat" value="${ProductDirectory}\OpenSolution.bat"/>
+  <property name="Compile.SolutionFile" value="${Common.Directory.Product.Path}\${ProjectName}.sln"/>
+  <property name="Compile.OpenSolutionBat" value="${Common.Directory.Product.Path}\OpenSolution.bat"/>
   
   <target name="VS.NETDeploy.Install">
     <largeproperty name="Packages.AddCompileActions.Block">
@@ -28,16 +28,15 @@
       <call target="Packages.AddbuildPlugins"/>
 
       <largeproperty name="Packages.AddMergeFiles.Block">
-        <value expand="true"><![CDATA[<file>&BuildDirectory;\CompileLogs\*.xml</file>]]></value>
+        <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\CompileLogs\*.xml</file>]]></value>
       </largeproperty>
       <call target="Packages.AddMergeFiles"/>
     </ifnot>
   </target>
 
   <target name="VS.NETDeploy.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VS.NETDeploy"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Install.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Install"/>
+    <property name="Packages.CurrentPackage.PackageName" value="VS.NETDeploy"/>
+    <property name="Packages.CurrentPackage.PackageType" value="Install"/>
   </target>
 
   <target name="VS.NETDeploy.ValidateParameters">
@@ -67,7 +66,7 @@
           <property name="Compile.DevEnv" value="{'$'}${environment::get-variable('ProgramFiles')}\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" overwrite="false"/>
         </case>
       </switch>
-      <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+      <property name="Compile.LogFileDirectory" value="${Common.Directory.Build.Path}\CompileLogs" overwrite="false" />
 
       <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>
       <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.DevEnv%', Compile.DevEnv)}"/>

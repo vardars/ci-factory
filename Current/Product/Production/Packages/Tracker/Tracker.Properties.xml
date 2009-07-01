@@ -10,7 +10,7 @@
   <property name="Tracker.Query" value="%Tracker.Query%" />
   <property name="Tracker.ReportFile" value="${ProjectName}Trackers.xml" />
   <property name="Tracker.QueryScrList" value="%Tracker.QueryScrList%"/>
-  <property name="Tracker.DailyScrFile" value="${BuildDirectory}\Tracker Reports\DailySCRList.txt"/>
+  <property name="Tracker.DailyScrFile" value="${Common.Directory.Build.Path}\Tracker Reports\DailySCRList.txt"/>
 
   %Tracker.ChangeFields%
   

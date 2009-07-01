@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp" basedir="..\%BuildDirectoryName%">
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="OpenSolution" default="SetUp" basedir="..\%Common.Directory.Build.Name%">
 
   <property name="CCNetLabel" value="1.0.0.2"/>
   <property name="CCNetLogFilePath" value=""/>
@@ -15,7 +15,7 @@
   <property name="CCNetProject" value="${ProjectName}"/>
   <include buildfile="Common.Build.xml" />
 
-  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml"/>
+  <include buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Targets.xml"/>
   
   <target name="SetUp">
     <call target="Workspace.CheckForRequieredSoftware"/>

@@ -15,15 +15,13 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\AntLogs\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\AntLogs\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="Ant.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Ant"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Ant.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Ant"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Ant"/>
   </target>
 
   <target name="Ant.ValidateParameters">

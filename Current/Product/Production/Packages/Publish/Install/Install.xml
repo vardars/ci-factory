@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Publish.Install" default="Publish.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Publish.Install">
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Publish\Publish.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+  </target>
+
+  <target name="Publish.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="Publish"/>
+  </target>
+
+  <target name="Publish.ValidateParameters">
+
+  </target>
+  
+</project>

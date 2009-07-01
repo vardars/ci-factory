@@ -43,7 +43,7 @@
       <![CDATA[
       <trigger type="vstsbychangesetTrigger"
           port="${TFS.Listener.Port}"
-          statefilepath="&BuildDirectory;\server\${ProjectName}.tfs.state.xml"
+          statefilepath="&Common.Directory.Build.Path;\server\${ProjectName}.tfs.state.xml"
           project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;"
           server="${TFS.ServerUrl}"
           workspace="${TFS.WorkspaceNameBase}-{0}"
@@ -59,29 +59,29 @@
         applyLabel="true" 
         autoGetSource="false"
         port="${TFS.Listener.Port}"
-        statefilepath="&BuildDirectory;\server\${ProjectName}.tfs.state.xml"
+        statefilepath="&Common.Directory.Build.Path;\server\${ProjectName}.tfs.state.xml"
         project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;"
         server="${TFS.ServerUrl}"
         workspace="${TFS.WorkspaceNameBase}-{0}"
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/~*</pattern>
+          <pattern>${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/~*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]></value>
@@ -94,10 +94,10 @@
       applyLabel="false" 
       autoGetSource="true"
       port="${TFS.BuildScripts.Listener.Port}"
-      statefilepath="&BuildDirectory;\server\${ProjectName}BuildScripts.tfs.state.xml"
-      project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
+      statefilepath="&Common.Directory.Build.Path;\server\${ProjectName}BuildScripts.tfs.state.xml"
+      project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;"
       server="${TFS.ServerUrl}"
-      workingDirectory="&BuildDirectory;"
+      workingDirectory="&Common.Directory.Build.Path;"
       workspace="${TFS.WorkspaceNameBase}-{0}"
       />]]></value>
   </largeproperty>
@@ -106,10 +106,10 @@
     <value expand="true" xml="false" >
       <![CDATA[<trigger type="vstsbychangesetTrigger"
           port="${TFS.BuildScripts.Listener.Port}"
-          statefilepath="&BuildDirectory;\server\${ProjectName}BuildScripts.tfs.state.xml"
-          project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;"
+          statefilepath="&Common.Directory.Build.Path;\server\${ProjectName}BuildScripts.tfs.state.xml"
+          project="${TFS.ServerPathPrefix}&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;"
           server="${TFS.ServerUrl}"
-          workingDirectory="${BuildDirectory}"
+          workingDirectory="${Common.Directory.Build.Path}"
           />]]>
     </value>
   </largeproperty>

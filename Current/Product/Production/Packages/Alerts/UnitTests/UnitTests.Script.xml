@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
-  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\UnitTests\Previous.Properties.xml"/>
+  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${Common.Directory.Packages.Path}\Alerts\UnitTests\${CCNetProject}.Previous.Properties.xml"/>
   <ifthenelse test="${file::exists(Alerts.UnitTests.PreviousPropertiesFilePath)}">
     <then>
       <include buildfile="${Alerts.UnitTests.PreviousPropertiesFilePath}" />
@@ -24,7 +24,7 @@
     <property name="Alerts.UnitTests.GenerateReport.Target" value="notset"/>
 
 		<switch value="True">
-			<case value="${directory::exists(PackagesDirectory + '\MSTest')}" break="true">
+			<case value="${directory::exists(Common.Directory.Packages.Path + '\MSTest')}" break="true">
         <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MSTest"/>
         <xmlpeek
 					file="${Alerts.BuildLog}"
@@ -34,8 +34,8 @@
 					failonerror="false"
 				/>			 
 			</case>
-			<case value="${directory::exists(PackagesDirectory + '\DotNetUnitTest')}" break="true">
-        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.ArtifactDirectoryPath}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"/>
+			<case value="${directory::exists(Common.Directory.Packages.Path + '\DotNetUnitTest')}" break="true">
+        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"/>
         <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MbUnit"/>
 				<xmlpeek
 					file="${Alerts.UnitTests.ReportFilePath}"
@@ -45,8 +45,8 @@
 					failonerror="false"
 				/>
 			</case>
-      <case value="${directory::exists(PackagesDirectory + '\JUnit')}" break="true">
-        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.ArtifactDirectoryPath}\unittests.xml"/>
+      <case value="${directory::exists(Common.Directory.Packages.Path + '\JUnit')}" break="true">
+        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\unittests.xml"/>
         <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.JUnit"/>
         <xmlpeek
 					file="${Alerts.UnitTests.ReportFilePath}"

@@ -25,9 +25,7 @@
   </target>
 
   <target name="InstallShield.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="InstallShield"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="InstallShield.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="InstallShield"/>
+    <property name="Packages.CurrentPackage.PackageName" value="InstallShield"/>
   </target>
 
   <target name="InstallShield.ValidateParameters">

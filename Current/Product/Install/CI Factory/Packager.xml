@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CI Factory Packager" default="Packager.Create">
 
-  <property name="ThirdPartyDirectory" value="C:\Projects\CI Factory\Current\Third Party"/>
-  <property name="ProductDirectory" value="C:\Projects\CI Factory\Current\Product"/>
-	<property name="InstallDirectory" value="${ProductDirectory}\Install\CI Factory"/>
-  <property name="ZipDirectory" value="${InstallDirectory}\CI Factory"/>
+  <property name="Common.Directory.ThirdParty.Path" value="C:\Projects\CI Factory\Current\Third Party"/>
+  <property name="Common.Directory.Product.Path" value="C:\Projects\CI Factory\Current\Product"/>
+	<property name="Common.Directory.Install.Path" value="${Common.Directory.Product.Path}\Install\CI Factory"/>
+  <property name="ZipDirectory" value="${Common.Directory.Install.Path}\CI Factory"/>
 
   <target name="Packager.Create">
 
     <delete dir="${ZipDirectory}" if="${directory::exists(ZipDirectory)}"/>
     <mkdir dir="${ZipDirectory}"/>
 
-    <copy file="${ProductDirectory}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" />
-    <copy file="${ProductDirectory}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" />
-    <copy file="${ProductDirectory}\Production\CI Installer\run.bat" tofile="${ZipDirectory}\run.bat" />
-    <copy file="${ProductDirectory}\Production\CI Installer\upgrade.bat" tofile="${ZipDirectory}\upgrade.bat" />
-    <copy file="${ProductDirectory}\Production\CI Installer\CI Factory.URL" tofile="${ZipDirectory}\CI Factory.URL" />
-    <copy file="${ProductDirectory}\Production\CI Installer\CI Factory Release Notes.html" tofile="${ZipDirectory}\CI Factory Release Notes.html" failonerror="false" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\run.bat" tofile="${ZipDirectory}\run.bat" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\upgrade.bat" tofile="${ZipDirectory}\upgrade.bat" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.URL" tofile="${ZipDirectory}\CI Factory.URL" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory Release Notes.html" tofile="${ZipDirectory}\CI Factory Release Notes.html" failonerror="false" />
 
     <copy todir="${ZipDirectory}" includeemptydirs="true">
-      <fileset basedir="${ProductDirectory}\Production\CI Installer" >
+      <fileset basedir="${Common.Directory.Product.Path}\Production\CI Installer" >
         <include name="Install Scripts\**\*"/>
       </fileset>
     </copy>
     
     <copy todir="${ZipDirectory}" includeemptydirs="true">
-      <fileset basedir="${ProductDirectory}\Production\Foundation">
+      <fileset basedir="${Common.Directory.Product.Path}\Production\Foundation">
         <include name="Default\**\*"/>
         <exclude name="Default\Build\nAnt\**\*"/>
       </fileset>
     </copy>
       
     <copy todir="${ZipDirectory}\nAnt" includeemptydirs="true" >
-      <fileset basedir="${ThirdPartyDirectory}\nAnt">
+      <fileset basedir="${Common.Directory.ThirdParty.Path}\nAnt">
         <include name="**\*"/>
       </fileset>
     </copy>
 
     <copy todir="${ZipDirectory}" includeemptydirs="true">
-      <fileset basedir="${ProductDirectory}\Production" defaultexcludes="false">
+      <fileset basedir="${Common.Directory.Product.Path}\Production" defaultexcludes="false">
         <include name="Packages\**\*"/>
         <exclude name="Packages\CoverageEye"/>
         <exclude name="Packages\CoverageEye\**\*"/>
@@ -61,7 +61,7 @@
     </copy>
 
     <copy todir="${ZipDirectory}">
-      <fileset basedir="${ProductDirectory}">
+      <fileset basedir="${Common.Directory.Product.Path}">
         <include name="Power Tools\**\*"/>
         <include name="Documentation\**\*"/>
         <include name="Licenses\**\*"/>
@@ -85,16 +85,16 @@ Title=Extract CI Factory
 			</value>
 		</largeproperty>
 
-		<property name="SfxConfig.FilePath" value="${InstallDirectory}\SfxConfig.txt"/>
+		<property name="SfxConfig.FilePath" value="${Common.Directory.Install.Path}\SfxConfig.txt"/>
 		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
 		<property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
-		<property name="CIFactorySetupExe.FilePath" value="${InstallDirectory}\CIFactorySetup.exe"/>
+		<property name="CIFactorySetupExe.FilePath" value="${Common.Directory.Install.Path}\CIFactorySetup.exe"/>
 
 		<delete file="${CIFactorySetupExe.FilePath}" if="${file::exists(CIFactorySetupExe.FilePath)}" />
 		<exec program="${WinRarProgramPath}"
-					commandline='a -m5 -iicon"${ProductDirectory}\Images\cifactory.ico" -iimg"${ProductDirectory}\Images\CIFactoryInstall.bmp" -r "${CIFactorySetupExe.FilePath}" "CI Factory" c -z"${SfxConfig.FilePath}" -sfx'
-					workingdir='${InstallDirectory}'/>
+					commandline='a -m5 -iicon"${Common.Directory.Product.Path}\Images\cifactory.ico" -iimg"${Common.Directory.Product.Path}\Images\CIFactoryInstall.bmp" -r "${CIFactorySetupExe.FilePath}" "CI Factory" c -z"${SfxConfig.FilePath}" -sfx'
+					workingdir='${Common.Directory.Install.Path}'/>
 
 		<delete file="${SfxConfig.FilePath}" />
   </target>

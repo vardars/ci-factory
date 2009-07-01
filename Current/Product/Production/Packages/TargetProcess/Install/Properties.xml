@@ -3,12 +3,14 @@
 
 	<!--
 	 These properties need to be set...
-		
+
+  <property name="TargetProcess.ProjectName"    value="My Project"/>
 	<property name="TargetProcess.Url"						value="http://something.tpondemand.com" />
 	<property name="TargetProcess.UserName" 			value="build" />
 	<property name="TargetProcess.Password" 			value="password" />
 	-->
 
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.ProjectName%', TargetProcess.ProjectName)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.Url%', TargetProcess.Url)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.UserName%', TargetProcess.UserName)}"/>
 	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%TargetProcess.Password%', TargetProcess.Password)}"/>

@@ -8,9 +8,8 @@
   </target>
 
   <target name="SourceControlStub.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="SourceControlStub"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+    <property name="Packages.CurrentPackage.PackageName" value="SourceControlStub"/>
+    <property name="Packages.CurrentPackage.PackageType" value="SourceControl"/>
   </target>
 
   <target name="SourceControlStub.ValidateParameters">

@@ -20,15 +20,14 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\Coverage Reports\ConsolidatedReport.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\Coverage Reports\ConsolidatedReport.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>
 
   <target name="CoverageEye.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="CoverageEye"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="CoverageEye.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.PackageName" value="CoverageEye"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
   </target>
 
   <target name="CoverageEye.ValidateParameters">

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.MbUnit.Scripts">
 
 	<target name="Workspace.Configuration.MbUnit">
@@ -7,13 +7,13 @@
                    value="10"/>
 		<writeregistry hive="LocalMachine"
                    key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\(Default)"
-                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+                   value="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.GUI.exe"/>
 		<writeregistry hive="LocalMachine"
                    key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\Application"
                    value="MbUnit.Framework"/>
 		<writeregistry hive="LocalMachine"
                    key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TargetFrameworkAssemblyName"
-                   value="${ThirdPartyDirectory}\MbUnit\MbUnit.GUI.exe"/>
+                   value="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.GUI.exe"/>
 		<writeregistry hive="LocalMachine"
                    key="SOFTWARE\MutantDesign\TestDriven.NET\TestRunners\MbUnit\TypeName"
                    value="MbUnit.AddIn.MbUnitTestRunner"/>

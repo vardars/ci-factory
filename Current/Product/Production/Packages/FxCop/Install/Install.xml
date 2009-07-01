@@ -22,8 +22,8 @@
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>
@@ -31,9 +31,7 @@
   </target>
 
   <target name="FxCop.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="FxCop"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="FxCop.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="FxCop"/>
+    <property name="Packages.CurrentPackage.PackageName" value="FxCop"/>
   </target>
 
   <target name="FxCop.ValidateParameters">

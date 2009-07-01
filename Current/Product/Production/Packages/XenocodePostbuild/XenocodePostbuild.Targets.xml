@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="XenocodePostbuild">
+
+	<include buildfile="XenocodePostbuild.Properties.xml"/>
+
+	<target name="XenocodePostbuild.SetUp">
+
+	</target>
+
+	<target name="XenocodePostbuild.TearDown">
+
+	</target>
+
+	<target name="XenocodePostbuild.DoObfuscate">
+		<foreach item="File" property="XenocodePostbuild.ProjectFile.Path">
+			<in>
+				<items refid="XenocodePostbuild.ProjectFiles" />
+			</in>
+			<do>
+				<property name="XenocodePostbuild.Name" value="${path::get-file-name-without-extension(XenocodePostbuild.ProjectFile.Path)}" />
+				<property name="XenocodePostbuild.OutputDir" value="${path::get-directory-name(XenocodePostbuild.ProjectFile.Path)}\Output\" />
+				<property name="XenocodePostbuild.FinalOutputDir" value="${Common.Directory.Artifact.Path}\Obfuscated\${XenocodePostbuild.Name}\" />
+
+				<echo message="Running XenoCode PostBuild on ${XenocodePostbuild.Name}" />
+
+				<!-- Create output directory and clean it-->
+				<mkdir dir="${XenocodePostbuild.FinalOutputDir}\" />
+				<delete>
+					<fileset>
+						<include name="${XenocodePostbuild.OutputDir}\**" />
+					</fileset>
+				</delete>
+				<mkdir dir="${XenocodePostbuild.OutputDir}\" />
+
+				<exec program="${XenocodePostbuild.XBuildExe}" workingdir="${Common.Directory.CodeLine.Path}" verbose="true">
+					<!-- Project file-->
+					<arg value="${XenocodePostbuild.ProjectFile.Path}" />
+
+					<!-- Mapping (decoding) file -->
+					<arg value="/m" />
+					<arg value="${XenocodePostbuild.OutputDir}\${XenocodePostbuild.Name}.xcmap" />
+
+					<!-- Output Directory -->
+					<arg value="/o" />
+					<arg value="${XenocodePostbuild.OutputDir}\" />
+
+					<!-- Remap source directories -->
+					<!-- C:\projects\${ProjectName} -> ProjectRoot\Current -->
+					<!-- Are others needed? -->
+					<arg value="/pathmap" />
+					<arg value="${ProjectDirectory}\" />
+					<arg value="${Common.Directory.CodeLine.Path}\" />
+				</exec>
+
+				<copy todir="${XenocodePostbuild.FinalOutputDir}">
+					<fileset>
+						<include name="${XenocodePostbuild.OutputDir}\**" />
+					</fileset>
+				</copy>
+			</do>
+		</foreach>
+	</target>
+</project>

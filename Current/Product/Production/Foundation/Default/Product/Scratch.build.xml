@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\%BuildDirectoryName%" >
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="scratch" default="test" basedir="..\%Common.Directory.Build.Name%" >
 
   <property name="CCNetProject" value="%ProjectName%"/>
   <property name="CCNetBuildCondition" value="ForceBuild "/>
@@ -11,20 +11,23 @@
   <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
 
   <property name="CCNetLabel" value="1.0.0.2"/>
-  <property name="CCNetLogFilePath" value=""/>
+  <property name="CCNetProject" value="%ProjectName%"/>
+  <property name="CCNetLogFilePath" value="C:\Temp\junk.xml"/>
+  <property name="CCNetListenerFile" value="C:\Temp\AntListener.txt"/>
 
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
+  <include buildfile="Custom.Build.xml" />
 
   <property name="Compile.ConfigName" value="Debug"/>
 
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml"/>
-  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
-  <include buildfile="${ProductDirectory}\Scratch.Lib.xml"/>
+  <loadpackages>
+  </loadpackages>
+  <include buildfile="${Common.Directory.Product.Path}\Scratch.Lib.xml"/>
 
   <target name="test">
     <property name="Compile.ConfigName" value="Release"/>
-    <property name="Compile.Bin" value="${ProductDirectory}\ReleaseBin" />
+    <property name="Compile.Bin" value="${Common.Directory.Product.Path}\ReleaseBin" />
     <property name="Compile.ToCopyToBin" value="true" />
     <property name="Compile.ToDeployZip" value="true"/>
     <property name="Compile.ZipFileName" value="Doubler.zip"/>

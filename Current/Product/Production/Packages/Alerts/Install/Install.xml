@@ -19,10 +19,8 @@
   </target>
 
   <target name="Alerts.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Alerts"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Alerts.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Alerts"/>
-    <property name="Current.BuildFile" value="${BuildDirectory}\Post.Build.xml"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Alerts"/>
+    <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Post.Build.xml"/>
   </target>
 
   <target name="Alerts.ValidateParameters">

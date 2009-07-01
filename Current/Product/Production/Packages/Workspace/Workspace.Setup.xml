@@ -33,17 +33,19 @@
 	
   <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
+  <include buildfile="Packages\Workspace\Workspace.Properties.xml" />
 	<include buildfile="Packages\Workspace\Workspace.Targets.xml" />
 
-<fileset id="PacakgeFinder" />
+<fileset id="PackageFinder" />
 <ifnot test="${property::exists('SourceControl.PackageName')}">
-    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
-    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
+    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Targets.xml"/>
+    <function execute="${fileset::include-add('PackageFinder', PackagePathPattern)}"/>
+    <property name="PackagePath" value="${fileset::get-name-at-index('PackageFinder', 0)}"/>
     <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
 </ifnot>
 
-	<include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Target.xml" />
+  <include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Properties.xml" />
+	<include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Targets.xml" />
 	
 	<target name="Setup">
     <ifnot test="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}">
@@ -51,12 +53,20 @@
     </ifnot>
     <include buildfile="Software\${SourceControl.PackageName}\${SourceControl.PackageName}.Script.xml"
              unless="${target::exists('Workspace.RequieredSoftware.' + SourceControl.PackageName)}"/>
-    
-		<call target="Workspace.CheckForRequieredSoftware"/>
-		<call target="Workspace.Setup"/>
-		<call target="Workspace.ConfigureEnvironment"/>
 
-		<ask answer="ToBuild" caption="Do you want to build?" question="Do you want to build?" showdialog="true" unless="${Silent}">
+    <call target="Workspace.RequieredSoftware.${SourceControl.PackageName}"/>
+    <call target="Workspace.Setup"/>
+
+    <nant buildfile="${Common.Directory.Product.Path}\Personal.Build.xml"
+          inheritall="false"
+          inheritrefs="false"
+          target="Workspace.CheckForRequieredSoftware" />
+    <nant buildfile="${Common.Directory.Product.Path}\Personal.Build.xml"
+          inheritall="false"
+          inheritrefs="false"
+          target="Workspace.ConfigureEnvironment" />
+
+    <ask answer="ToBuild" caption="Do you want to build?" question="Do you want to build?" showdialog="true" unless="${Silent}">
 			<options>
 				<string value="Yes"/>
 				<string value="No"/>
@@ -64,7 +74,7 @@
 		</ask>
 
 		<if test="${ToBuild == 'Yes'}">
-			<nant buildfile="${ProductDirectory}\Personal.Build.xml"
+			<nant buildfile="${Common.Directory.Product.Path}\Personal.Build.xml"
 						inheritall="false"
 						inheritrefs="false"
 						target="Build" />
@@ -72,7 +82,7 @@
 	</target>
 
 	<target name="Workspace.Setup">
-		<mkdir dir="${ProjectCodeLineDirectory}"/>
+		<mkdir dir="${Common.Directory.CodeLine.Path}"/>
 
 		<property name="SourceControl.Update.FileTimeStamp" value="Current"/>
 		<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
@@ -85,13 +95,15 @@
     
     <largeproperty name="Batch.Content">
       <value expand="true" xml="false">
-        <![CDATA[nant\bin\nant.exe /f:Packages\Workspace\Workspace.Setup.xml -D:SourceControl.PackageName="${SourceControl.PackageName}"
+        <![CDATA[
+FOR /F %%A IN ('cd') DO set CurrentDirectory=%%A
+${Common.Directory.Tools.Name}\nant\bin\nant.exe /f:Packages\Workspace\Workspace.Setup.xml -D:SourceControl.PackageName="${SourceControl.PackageName}" -D:Common.Directory.Build.Path=%CurrentDirectory%
 SET /P variable="Hit [Enter] exit."]]>
       </value>
     </largeproperty>
 
     <property name="Batch.FileName" value="WorkspaceSetup.bat"/>
-    <property name="Batch.FilePath" value="${BuildDirectory}\${Batch.FileName}"/>
+    <property name="Batch.FilePath" value="${Common.Directory.Build.Path}\${Batch.FileName}"/>
     <echo message="${Batch.Content}" file="${Batch.FilePath}"/> 
     
 		<largeproperty name="SfxConfig.Content">
@@ -105,36 +117,39 @@ Title=Setup CI Factory Workspace]]>
 			</value>
 		</largeproperty>
 
-		<property name="SfxConfig.FilePath" value="${BuildDirectory}\SfxConfig.txt"/>
+		<property name="SfxConfig.FilePath" value="${Common.Directory.Build.Path}\SfxConfig.txt"/>
 		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
-    <property name="WinRarProgramPath" value="%WinRarProgramPath%" overwrite="false"/>
+    <property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
 
-		<mkdir dir="${BuildDirectory}\dashboard\WorkspaceSetup" />
-		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+		<mkdir dir="${CCNet.Dashboard.Directory.Path}\WorkspaceSetup" />
+		<property name="WorkspaceSetupExe.FilePath" value="${CCNet.Dashboard.Directory.Path}\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
 		
 		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
 		<exec program="${WinRarProgramPath}" 
 					commandline='a -ibck -r "${WorkspaceSetupExe.FilePath}" nAnt c -z"${SfxConfig.FilePath}" -sfx'
-					workingdir='${BuildDirectory}'/>
+					workingdir='${Common.Directory.Build.Path}'/>
 
 		<foreach item='File' property='File'>
 			<in>
-				<items basedir='${BuildDirectory}'>
+				<items basedir='${Common.Directory.Build.Path}'>
           <include name='Entities.xml'/>
 					<include name='Properties.build.xml'/>
-					<include name='DevEnv.Targets.xml'/>
 					<include name='Common.build.xml'/>
+          <include name='${Common.File.EnvironmentVariables.Path}'/>
           <include name='${Batch.FileName}'/>
 					<include name='Packages\${SourceControl.PackageName}\**\*'/>
           <include name='Packages\Workspace\**\*'/>
 				</items>
 			</in>
 			<do>
-				<property name='FileToAdd' value=".\${string::replace(File, BuildDirectory, '')}"/>
-				<exec program="${WinRarProgramPath}"
-				commandline='u -ibck -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
-				workingdir='${BuildDirectory}'/>
+				<property name='FileToAdd' value=".\${string::replace(File, Common.Directory.Build.Path, '')}"/>
+				<exec 
+          program="${WinRarProgramPath}"
+				  commandline='u -ibck -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
+				  workingdir='${Common.Directory.Build.Path}'
+          verbose='true'
+        />
 			</do>
 		</foreach>
 

@@ -2,7 +2,7 @@
 <project xmlns = "http://nant.sf.net/schemas/nant.xsd" name = "FxCop.Properties">
   
   <property name="FxCop.Version"      value="1.36" overwrite="false"/> <!--Valid values are: "1.36", "1.35". -->
-  <property name="FxCop.ProjectFile"  value="${ProductDirectory}/${ProjectName}.FxCop" overwrite="false"/>
+  <property name="FxCop.ProjectFile"  value="${Common.Directory.Product.Path}/${ProjectName}.FxCop" overwrite="false"/>
 
   <switch value="${FxCop.Version}">
     <case value="1.36" break="true">
@@ -19,7 +19,7 @@
   </switch>
 
   <property name="FxCop.Console"                    value="${FxCop.BinFolder}\FxCopCmd.exe" overwrite="false"/>
-  <property name="FxCop.BuildFolder"                value="${BuildDirectory}\FxCop" overwrite="false"/>
+  <property name="FxCop.BuildFolder"                value="${Common.Directory.Build.Path}\FxCop" overwrite="false"/>
   <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report" overwrite="false"/>
   <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies" overwrite="false"/>
   <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules" overwrite="false"/>
@@ -27,7 +27,7 @@
   <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*" overwrite="false"/>
   
   <fileset id="FxCop.Target.ProjectFiles">
-    <include name="${ProductionDirectory}\**\*.*proj"/>
+    <include name="${Common.Directory.Production.Path}\**\*.*proj"/>
   </fileset>
   
 </project>

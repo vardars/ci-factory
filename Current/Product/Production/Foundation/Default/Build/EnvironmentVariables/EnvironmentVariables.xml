@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Common.EnvironmentVariables" >
+
+  <property name="Common.EnvironmentVariables.Path" value="${environment::get-variable('SystemRoot')}\system32;${environment::get-variable('SystemRoot')};${environment::get-variable('SystemRoot')}\System32\Wbem" />
+
+  <property name="Oracle.Bin" value="C:\Oracle\OracleXE\app\oracle\product\10.2.0\server\bin"/>
+  <property name="Oracle.SID" value="XE"/>
+  <property name="Oracle.TnsNames.FilePath" value="C:\Oracle\OracleXE\app\oracle\product\10.2.0\server\NETWORK\ADMIN\tnsnames.ora"/>
+
+  <property name="Ant.Home"   value="${Common.Directory.Packages.Path}\Ant\Ant" />
+  <property name="Ant.Bin"     value="${Ant.Home}\bin" />
+  <property name="Ant.Bat"     value="${Ant.Bin}\ant.bat" />
+
+  <property name="Eclipse.ExePath"                value="C:\Program Files\eclipse\eclipse.exe"/>
+  <property name="Eclipse.Workspace.Directory"        value="${Common.Directory.Product.Path}"/>
+
+  <property name="Java.Home"                      value="C:\Java\jdk1.6.0_11" />
+  <property name="Java.Exe"                       value="${Java.Home}\bin\javaw.exe"/>
+
+  <property name="Corbertura.Bin" value="${Common.Directory.Packages.Path}\Corbertura\bin"/>
+
+  <loopthrough property="Tool.Bin.Path">
+    <items>
+      <propertystructureiterator pattern="^Tools\.\w+\.Bin$"/>
+    </items>
+    <do>
+      <property name="Common.EnvironmentVariables.Path" value="${Common.EnvironmentVariables.Path};${property::value(Tool.Bin.Path)}"/>
+    </do>
+  </loopthrough>
+
+  <environment id="${Common.EnvironmentVariables.RefId}">
+    <variable name="TNS_ADMIN" value="${Oracle.TnsNames.FilePath}" />
+    <variable name="ORACLE_SID" value="${Oracle.SID}" />
+    <variable name="JAVA_HOME" value="${Java.Home}" />
+    <variable name="ANT_HOME" value="${Ant.Home}" />
+    <variable name="ANT_OPTS" value="-Xmx512m -XX:MaxPermSize=256m"/>
+    <variable name="PATH" path="${Java.Home}\bin;${Java.Home};${Ant.Bin};${Common.EnvironmentVariables.Path};${environment::get-variable('ProgramFiles')}\Subversion\bin;${Oracle.Bin}" />
+    <variable name="JAVAEXE" value="${Java.Exe}"/>
+    <variable name="WORKSPACE" value="${Eclipse.Workspace.Directory}"/>
+    <variable name="CORBERTURA_BIN" value="${Corbertura.Bin}"/>
+  </environment>
+
+</project>

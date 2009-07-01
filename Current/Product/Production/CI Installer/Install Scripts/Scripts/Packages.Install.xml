@@ -3,10 +3,9 @@
 
 	<property name="IsUpgrade" value="false" overwrite="false"/>
 
-  <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
-  <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
-  <property name="Packages.CurrenctPackage.PackageName" value=""/>
-  <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
+  <property name="Packages.CurrentPackage.PackageType" value=""/>
+  <property name="Packages.CurrentPackage.PackageName" value=""/>
+  <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="false" />
 
   <largeproperty name="Private.Packages.PreBuildActions.EndTag">
     <value xml="false"><![CDATA[<description>End Pre Build Actions</description>]]></value>
@@ -37,7 +36,7 @@
   </largeproperty>
 
   <largeproperty name="Private.Packages.Include.EndTag">
-    <value xml="false"><![CDATA[<description>End Package Includes</description>]]></value>
+    <value xml="false"><![CDATA[</loadpackages>]]></value>
   </largeproperty>
 
   <largeproperty name="Private.Packages.AddSetUp.EndTag">
@@ -110,9 +109,9 @@
         <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
         <call target="Private.Packages.CopyPackage"/>
 
-        <call target="Private.Packages.AddInclude" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
-        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
-        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrenctPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddInclude" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
 
         <call target="${Private.Packages.Install.PackageName}.Install"/>
       </do>
@@ -120,24 +119,21 @@
   </target>
 
   <target name="Packages.Reset.CurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value=""/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value=""/>
-    <property name="Packages.CurrenctPackage.PackageName" value=""/>
-    <property name="Current.BuildFile" value="${BuildDirectory}\Main.Build.xml"/>
-    <property name="Packages.CurrenctPackage.SkipMainBuildInclucion" value="false" />
+    <property name="Packages.CurrentPackage.PackageType" value=""/>
+    <property name="Packages.CurrentPackage.PackageName" value=""/>
+    <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Main.Build.xml"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="false" />
   </target>
 
   <target name="Packages.Validate.CurrentSetPackage">
-    <fail if="${Packages.CurrenctPackage.PackageDirectoryName == ''}" message="PackageDirectoryName was not set as the current package."/>
-    <fail if="${Packages.CurrenctPackage.PackageTargetFileName == ''}" message="PackageTargetFileName was not set as the current package."/>
-    <fail if="${Packages.CurrenctPackage.PackageName == ''}" message="PackageName was not set as the current package."/>
+    <fail if="${Packages.CurrentPackage.PackageName == ''}" message="PackageName was not set as the current package."/>
   </target>
 
   <property name="Packages.CopyPackage.PackageName" value=""/>
 
   <target name="Private.Packages.CopyPackage" >
-    <mkdir dir="${PackagesDirectory}\${Packages.CopyPackage.PackageName}"/>
-    <copy todir="${PackagesDirectory}" overwrite="true" >
+    <mkdir dir="${Common.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}"/>
+    <copy todir="${Common.Directory.Packages.Path}" overwrite="true" >
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install" />
@@ -149,7 +145,7 @@
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
       </fileset>
     </copy>
-    <copy todir="${PackagesDirectory}" overwrite="true">
+    <copy todir="${Common.Directory.Packages.Path}" overwrite="true">
       <fileset basedir="${SourcePackagesDirectory}">
         <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
@@ -214,22 +210,46 @@
 
 
   <target name="Private.Packages.AddInclude" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[<include buildfile="${PackagesDirectory.Ref}\${Packages.CurrenctPackage.PackageDirectoryName}\${Packages.CurrenctPackage.PackageTargetFileName}" />]]>
-      </value>
-    </largeproperty>
+    <ifthenelse test="${Packages.CurrentPackage.PackageType!=''}">
+      <then>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<package name="${Packages.CurrentPackage.PackageName}" type="${Packages.CurrentPackage.PackageType}"/>]]>
+          </value>
+        </largeproperty>
+      </then>
+      <else>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<package name="${Packages.CurrentPackage.PackageName}" />]]>
+          </value>
+        </largeproperty>
+      </else>
+    </ifthenelse>
 
     <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.Include.EndTag}"/>
 
     <call target="Private.Packages.MainBuild.SmartAddString"/>
+
+    <if test="${Current.BuildFile == Common.Directory.Build.Path + '\Main.Build.xml'}">
+      <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Scratch.build.xml"/>
+      <call target="Private.Packages.MainBuild.SmartAddString"/>
+      
+      <property name="Current.BuildFile" value="${Common.Directory.Product.Path}\Scratch.build.xml"/>
+      <call target="Private.Packages.MainBuild.SmartAddString"/>
+
+      <property name="Current.BuildFile" value="${Common.Directory.Product.Path}\Personal.Build.xml"/>
+      <call target="Private.Packages.MainBuild.SmartAddString"/>
+      
+      <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Main.Build.xml"/>
+    </if>
   </target>
 
 
   <target name="Private.Packages.AddSetUp" unless="${IsUpgrade}">
 		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
 			<value xml="false" expand="true">
-				<![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.SetUp" />]]>
+				<![CDATA[<call target="${Packages.CurrentPackage.PackageName}.SetUp" />]]>
 			</value>
 		</largeproperty>
 
@@ -242,7 +262,7 @@
   <target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
     <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
       <value xml="false" expand="true">
-        <![CDATA[<call target="${Packages.CurrenctPackage.PackageName}.TearDown" />]]>
+        <![CDATA[<call target="${Packages.CurrentPackage.PackageName}.TearDown" />]]>
       </value>
     </largeproperty>
 
@@ -415,7 +435,7 @@ static string Normalize(string input)
   <property name="Private.Packages.DashboardConfig.Replace.To" value=""/>
   <property name="Private.Packages.DashboardConfig.Replace.From" value=""/>
   <target name="Private.Packages.DashboardConfig.Replace" >
-    <replace file="${BuildDirectory}\dashboard\dashboard.config">
+    <replace file="${Common.Directory.Build.Path}\dashboard\dashboard.config">
       <filterchain>
         <replacestring from="${Private.Packages.DashboardConfig.Replace.From}" to="${Private.Packages.DashboardConfig.Replace.To}" />
       </filterchain>
@@ -425,7 +445,7 @@ static string Normalize(string input)
   <property name="Private.Packages.CCNETProjectConfig.Replace.To" value=""/>
   <property name="Private.Packages.CCNETProjectConfig.Replace.From" value=""/>
   <target name="Private.Packages.CCNETProjectConfig.Replace" >
-    <replace file="${BuildDirectory}\ccnetproject.xml">
+    <replace file="${Common.Directory.Build.Path}\ccnetproject.xml">
       <filterchain>
         <replacestring from="${Private.Packages.CCNETProjectConfig.Replace.From}" to="${Private.Packages.CCNETProjectConfig.Replace.To}" />
       </filterchain>

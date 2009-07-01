@@ -22,23 +22,23 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block">
-      <value expand="true"><![CDATA[<file>&BuildDirectory;\Tracker Reports\*.xml</file>]]></value>
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\Tracker Reports\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
 
-    <copy todir="${BuildDirectory}\server">
+    <copy todir="${Common.Directory.Build.Path}\server">
       <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
-    <copy todir="${BuildDirectory}\dashboard\bin">
+    <copy todir="${Common.Directory.Build.Path}\dashboard\bin">
       <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
-    <zip append="true" zipfile="${BuildDirectory}\dashboard\cctray\cctray.zip" >
+    <zip append="true" zipfile="${Common.Directory.Build.Path}\dashboard\cctray\cctray.zip" >
       <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
@@ -46,9 +46,7 @@
   </target>
 
   <target name="Tracker.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="Tracker"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="Tracker.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="Tracker"/>
+    <property name="Packages.CurrentPackage.PackageName" value="Tracker"/>
   </target>
 
   <target name="Tracker.ValidateParameters">

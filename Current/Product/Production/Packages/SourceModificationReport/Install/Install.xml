@@ -4,7 +4,7 @@
   <include buildfile="Properties.xml" />
   
   <target name="SourceModificationReport.Install">
-    <mkdir unless="${directory::exists(BuildDirectory + '\SourceModificationReports')}" dir="${BuildDirectory}\SourceModificationReports"/>
+    <mkdir unless="${directory::exists(Common.Directory.Build.Path + '\SourceModificationReports')}" dir="${Common.Directory.Build.Path}\SourceModificationReports"/>
 
     <largeproperty name="Packages.AddPreBuildActions.Block">
       <value xml="false"><![CDATA[<call target="SourceModificationReport.ConsolidateReports" />]]></value>
@@ -38,9 +38,7 @@
   </target>
 
   <target name="SourceModificationReport.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="SourceModificationReport"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceModificationReport.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="SourceModificationReport"/>
+    <property name="Packages.CurrentPackage.PackageName" value="SourceModificationReport"/>
   </target>
 
   <target name="SourceModificationReport.ValidateParameters">

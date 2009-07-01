@@ -13,7 +13,7 @@
       <property name="Compile.DotNetFramework.Version" value="net-3.5"/>
     </case>
   </switch>
-  <property name="Compile.LogFileDirectory" value="${BuildDirectory}\CompileLogs" overwrite="false" />
+  <property name="Compile.LogFileDirectory" value="${Common.Directory.Build.Path}\CompileLogs" overwrite="false" />
   <property name="Compile.ConfigName" value="Release" overwrite="false"/>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Compile.LogFileDirectory%', Compile.LogFileDirectory)}"/>

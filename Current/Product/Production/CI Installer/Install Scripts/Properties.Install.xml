@@ -11,21 +11,26 @@
 
   <property name="Install.Quiet" value="false" />
 
-  <property name="BuildDirectoryName"         value="Build"/>
-  <property name="ArtifactRootDirectoryName"  value="Artifacts"/>
-  <property name="PackagesDirectoryName"      value="Packages"/>
+  <property name="Common.Directory.Build.Name"         value="Build"/>
+  <property name="Common.Directory.ArtifactRoot.Name"  value="Artifacts"/>
+  <property name="Common.Directory.Packages.Name"      value="Packages"/>
+  <property name="Common.Directory.Transient.Name"     value="Transient"/>
+  <property name="Common.Directory.Tools.Name"         value="Tools"/>
+
+  <property name="Common.Directory.ProjectRoot.Path"    value="${Common.Directory.ProjectsRoot.Path}\${ProjectName}"                  overwrite="False"/>
+  <property name="Common.Directory.CodeLine.Path"       value="${Common.Directory.ProjectRoot.Path}\${ProjectCodeLineName}"           overwrite="False"/>
+  <property name="Common.Directory.Product.Path"        value="${Common.Directory.CodeLine.Path}\${Common.Directory.Product.Name}"    overwrite="False"/>
+  <property name="Common.Directory.ThirdParty.Path"     value="${Common.Directory.CodeLine.Path}\${Common.Directory.ThirdParty.Name}" overwrite="False"/>
+  <property name="Common.Directory.Production.Path"     value="${Common.Directory.Product.Path}\${Common.Directory.Production.Name}"  overwrite="False"/>
+  <property name="Common.Directory.Build.Path"          value="${Common.Directory.CodeLine.Path}\${Common.Directory.Build.Name}"      overwrite="False"/>
+  <property name="Common.Directory.ArtifactRoot.Path"   value="${Common.Directory.Build.Path}\${Common.Directory.ArtifactRoot.Name}"  overwrite="False"/>
+  <property name="Common.Directory.Packages.Path"       value="${Common.Directory.Build.Path}\${Common.Directory.Packages.Name}"      overwrite="False"/>
+  <property name="Common.Directory.UnitTest.Path"       value="${Common.Directory.Product.Path}\${Common.Directory.UnitTest.Name}"    overwrite="False"/>
+  <property name="Common.Directory.Install.Path"        value="${Common.Directory.Product.Path}\${Common.Directory.Install.Name}"     overwrite="False"/>
+  <property name="Common.Directory.Transient.Path"      value="${Common.Directory.Build.Path}\${Common.Directory.Transient.Name}"     overwrite="False"/>
+  <property name="Common.Directory.Tools.Path"          value="${Common.Directory.Build.Path}\${Common.Directory.Tools.Name}"         overwrite="False"/>
   
-  <property name="ProjectRootDirectory"     value="${ProjectsDirectory}\${ProjectName}"  overwrite="false"/>
-  <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" overwrite="false"/>
-  <property name="ProductDirectory"         value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ProductDirectoryName}"  overwrite="false"/>
-  <property name="ThirdPartyDirectory"      value="${ProjectRootDirectory}\${ProjectCodeLineName}\${ThirdPartyDirectoryName}"  overwrite="false"/>
-  <property name="ProductionDirectory"      value="${ProductDirectory}\${ProductionDirectoryName}"  overwrite="false"/>
-  <property name="UnitTestDirectory"        value="${ProductDirectory}\${UnitTestDirectoryName}"  overwrite="false"/>
-  <property name="InstallDirectory"         value="${ProductDirectory}\${InstallDirectoryName}"  overwrite="false"/>
-  <property name="BuildDirectory"           value="${ProjectsDirectory}\${ProjectName}\${ProjectCodeLineName}\${BuildDirectoryName}"  overwrite="false"/>
-  <property name="PackagesDirectory"        value="${BuildDirectory}\${PackagesDirectoryName}"  overwrite="false"/>
-  
-  <property name="PackagesDirectory.Ref"    value="${string::replace('${PackagesDirectory}/', '/', '')}" />
+  <property name="Common.Directory.Packages.Path.Ref"    value="${string::replace('${Common.Directory.Packages.Path}/', '/', '')}" />
 
   <property name="SourceRoot" value="${path::get-full-path('..')}"/>
   <property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>

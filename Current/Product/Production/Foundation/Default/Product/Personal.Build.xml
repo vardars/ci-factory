@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\%BuildDirectoryName%" >
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Personal Build" default="Build" basedir="..\%Common.Directory.Build.Name%" >
 
   <property name="CCNetBuildCondition" value="ForceBuild "/>
   <property name="CCNetIntegrationStatus" value="Success"/>
@@ -18,35 +18,8 @@
   <include buildfile="Common.Build.xml" />
 
   <description>Begin Package Includes</description>
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
-  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
-  
-  <fileset id="PacakgeFinder" />
-  <loopthrough property="PackageType">
-    <items>
-      <strings>
-        <string value="SourceControl" />
-        <string value="Compile" />
-        <string value="UnitTest" />
-      </strings>
-    </items>
-    <do>
-      <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
-      <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-      <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
-      <if test="${fileset::file-count('PacakgeFinder') > 0}">
-        <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-        <include buildfile="${PackagePath}"/>
-      </if>
-      <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
-    </do>
-  </loopthrough>
-
-  <property name="Ant.Included" value="false"/>
-  <if test="${file::exists(PackagesDirectory + '\Ant\Ant.Target.xml')}" >
-    <include buildfile="${PackagesDirectory}\Ant\Ant.Target.xml" />
-    <property name="Ant.Included" value="true"/>
-  </if>
+  <loadpackages>
+  </loadpackages>
   <description>End Package Includes</description>
 
   <target name="CreateCommandPrompt">
@@ -59,7 +32,7 @@
       <environment refid="${Compile.Environment.RefId}" />
     </setenv>
 
-    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${ProductDirectory}" />
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${Common.Directory.Product.Path}" />
   </target>
   
   <target name="Build">
@@ -89,8 +62,8 @@
       <call target="Ant.Build"/>
     </if>
     <fileset id="InfoFiles">
-      <include name="${ProductDirectory}\ProjectInfo.*"/>
-      <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
+      <include name="${Common.Directory.Product.Path}\ProjectInfo.*"/>
+      <include name="${Common.Directory.Product.Path}\**\AssemblyInfo.*"/>
     </fileset>
     <trycatch>
       <try>
@@ -124,7 +97,7 @@
 
   <target name="Recompile">
     <fileset id="ProjectFiles">
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
     <foreach item="File" property="ProjectFile.Path">
       <in>
@@ -138,7 +111,7 @@
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
         <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}">
+        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, Common.Directory.Product.Path)}">
           <delete verbose="true">
             <fileset basedir="${Output.Path}">
               <include name="**\*"/>
@@ -177,8 +150,8 @@
       </try>
       <catch property="ExceptionMessage">
         <property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
-        <property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
-        <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
+        <property name="Common.ShowReport.HtmlFile" value="${Common.Directory.Build.Path}\AntLogs\AntReport.html"/>
+        <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\Ant\AntReport.xsl"/>
         <property name="Common.ShowReport.DetailsFilePath" value=""/>
         <call target="Common.ShowReport"/>
 

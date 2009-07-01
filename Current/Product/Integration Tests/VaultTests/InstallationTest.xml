@@ -19,17 +19,17 @@
 
   <target name="Vault.InstallationTest.SetProperties">
     <property name="ProjectName" value="VaultTestProject"/>
-    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="Common.Directory.ProjectRoot.Path" value="C:\Projects\${ProjectName}"/>
     <property name="ProjectCodeLineName" value="Current" />
-    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
-    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
-    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
-    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
-    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
-    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
-    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
-    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+    <property name="Common.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${ProjectCodeLineName}" />
+    <property name="Common.Directory.Product.Path" value="${Common.Directory.CodeLine.Path}\Product" />
+    <property name="Common.Directory.ThirdParty.Path" value="${Common.Directory.CodeLine.Path}\Third Party" />
+    <property name="Common.Directory.Production.Path"  value="${Common.Directory.Product.Path}\Production" />
+    <property name="Common.Directory.Build.Path" value="${Common.Directory.CodeLine.Path}\Build" />
+    <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
+    <property name="NantBinPath" value="${Common.Directory.Build.Path}\nAnt\bin"/>
+    <property name="Tools.NAnt.Exe" value="${NantBinPath}\nant.exe"/>
+    <property name="Common.Directory.Packages.Path" value="${Common.Directory.Build.Path}\Packages"/>
 
     <property name="Vault.Username" value="admin"  />
     <property name="Vault.Password" value=""  />
@@ -40,7 +40,7 @@
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21246/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
-    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+    <property name="CCNET.BatchFile" value="${Common.Directory.Build.Path}\CCNETServer.Bat"/>
   </target>
   
   <target name="Vault.InstallationTest.FixtureSetUp">
@@ -48,9 +48,9 @@
 
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
-    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
-    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
-    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(Common.Directory.ProjectRoot.Path)}" failonerror="false"/>
+    <delete dir="${Common.Directory.ProjectRoot.Path}" if="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
+    <assertequal actual="${directory::exists(Common.Directory.ProjectRoot.Path)}" expected="False" message="Was not able to delete ${Common.Directory.ProjectRoot.Path}."/>
 
     <vaultsetloginoptions
 			URL="${Vault.URL}"
@@ -73,7 +73,7 @@
     </loglevel>
     <sleep seconds="2"/>
 
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
   </target>
 
   <target name="Vault.InstallationTest.FixtureTearDown">

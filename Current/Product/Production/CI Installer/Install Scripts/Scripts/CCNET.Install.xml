@@ -7,13 +7,13 @@
   <property name="CCNET.RestPort" value=""/>
   -->
   
-  <property name="CCNET.ProjectFile" value="${BuildDirectory}\ccnetproject.xml"/>
-  <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
-  <property name="CCNET.ExeConfigFile" value="${BuildDirectory}\server\ccnet.exe.config"/>
-  <property name="CCNET.ServerDirectory" value="${BuildDirectory}\server"/>
+  <property name="CCNET.ProjectFile" value="${Common.Directory.Build.Path}\ccnetproject.xml"/>
+  <property name="CCNET.BatchFile" value="${Common.Directory.Build.Path}\CCNETServer.Bat"/>
+  <property name="CCNET.ExeConfigFile" value="${Common.Directory.Build.Path}\server\ccnet.exe.config"/>
+  <property name="CCNET.ServerDirectory" value="${Common.Directory.Build.Path}\server"/>
   <property name="CCNET.ServerXslDirectory" value="${CCNET.ServerDirectory}\xsl"/>
   <property name="CCNET.ServerExe" value="${CCNET.ServerDirectory}\CCNET.exe"/>
-  <property name="CCNET.DashboardDirectory" value="${BuildDirectory}\dashboard"/>
+  <property name="CCNET.DashboardDirectory" value="${Common.Directory.Build.Path}\dashboard"/>
   <property name="CCNET.ConfigFile" value="${CCNET.DashboardDirectory}\dashboard.config"/>
   <property name="BuildMaster.Name" value="BuildMaster" overwrite="false"/>
   <property name="BuildMaster.Email" value="fake@bogas.com" overwrite="false"/>
@@ -34,10 +34,10 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Name%', BuildMaster.Name)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%BuildMaster.Email%', BuildMaster.Email)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerName%', CCNET.ServerName)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ServerPort%', CCNET.ServerPort)}"/>
-  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.RestPort%', CCNET.RestPort)}"/>
-	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.LabelPrefix%', CCNET.LabelPrefix)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%HostName%', CCNET.ServerName)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNet.Server.Remoting.Port%', CCNET.ServerPort)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNet.Server.Rest.Port%', CCNET.RestPort)}"/>
+	<function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNet.LabelPrefix%', CCNet.LabelPrefix)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ProjectFile%', CCNET.ProjectFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.BatchFile%', CCNET.BatchFile)}"  />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.ExeConfigFile%', CCNET.ExeConfigFile)}"  />
@@ -63,11 +63,11 @@
 			</largeproperty>
 
 		<write append="false" encoding="utf-16" 
-					 file="${BuildDirectory}\server\${ProjectName}-${ProjectCodeLineName}.state">
+					 file="${Common.Directory.Build.Path}\server\${ProjectName}-${ProjectCodeLineName}.state">
 			<text expand="true" xml="false">${StateFile.Content}</text>
 		</write>
 
-		<mkdir unless="${directory::exists(BuildDirectory + '\Artifacts')}" dir="${BuildDirectory}\Artifacts"/>
+		<mkdir unless="${directory::exists(Common.Directory.Build.Path + '\Artifacts')}" dir="${Common.Directory.Build.Path}\Artifacts"/>
 	</target>
 
 	<target name="CCNET.ValidateParameters">

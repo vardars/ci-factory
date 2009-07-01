@@ -17,21 +17,21 @@
 
   <target name="VS.NETCompile.InstallationTest.SetProperties" >
     <property name="ProjectName" value="VS.NETTestProject"/>
-    <property name="ProjectRootDirectory" value="C:\Projects\${ProjectName}"/>
+    <property name="Common.Directory.ProjectRoot.Path" value="C:\Projects\${ProjectName}"/>
     <property name="ProjectCodeLineName" value="Current" />
-    <property name="ProjectCodeLineDirectory" value="${ProjectRootDirectory}\${ProjectCodeLineName}" />
-    <property name="ProductDirectory" value="${ProjectCodeLineDirectory}\Product" />
-    <property name="ThirdPartyDirectory" value="${ProjectCodeLineDirectory}\Third Party" />
-    <property name="ProductionDirectory"  value="${ProductDirectory}\Production" />
-    <property name="BuildDirectory" value="${ProjectCodeLineDirectory}\Build" />
-    <property name="ArtifactRootDirectory" value="${BuildDirectory}\Artifacts"/>
-    <property name="NantBinPath" value="${BuildDirectory}\nAnt\bin"/>
-    <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
-    <property name="PackagesDirectory" value="${BuildDirectory}\Packages"/>
+    <property name="Common.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${ProjectCodeLineName}" />
+    <property name="Common.Directory.Product.Path" value="${Common.Directory.CodeLine.Path}\Product" />
+    <property name="Common.Directory.ThirdParty.Path" value="${Common.Directory.CodeLine.Path}\Third Party" />
+    <property name="Common.Directory.Production.Path"  value="${Common.Directory.Product.Path}\Production" />
+    <property name="Common.Directory.Build.Path" value="${Common.Directory.CodeLine.Path}\Build" />
+    <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
+    <property name="NantBinPath" value="${Common.Directory.Build.Path}\nAnt\bin"/>
+    <property name="Tools.NAnt.Exe" value="${NantBinPath}\nant.exe"/>
+    <property name="Common.Directory.Packages.Path" value="${Common.Directory.Build.Path}\Packages"/>
 
     <property name="CCNET.ServerUrl" value="tcp://localhost:21247/CruiseManager.rem"/>
     <property name="CCNET.ProjectName" value="${ProjectName}-${ProjectCodeLineName}"/>
-    <property name="CCNET.BatchFile" value="${BuildDirectory}\CCNETServer.Bat"/>
+    <property name="CCNET.BatchFile" value="${Common.Directory.Build.Path}\CCNETServer.Bat"/>
   </target>
 
   <target name="VS.NETCompile.InstallationTest.FixtureSetUp">
@@ -39,9 +39,9 @@
     
     <property name="TestRunner.DeleteIISVirDirs.ProjectName" value="${ProjectName}"/>
     <property name="TestRunner.DeleteIISVirDirs.ProjectCodeLineName" value="${ProjectCodeLineName}" />
-    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(ProjectRootDirectory)}" failonerror="false"/>
-    <delete dir="${ProjectRootDirectory}" if="${directory::exists(ProjectRootDirectory)}"/>
-    <assertequal actual="${directory::exists(ProjectRootDirectory)}" expected="False" message="Was not able to delete ${ProjectRootDirectory}."/>
+    <call target="TestRunner.DeleteIISVirDirs" if="${directory::exists(Common.Directory.ProjectRoot.Path)}" failonerror="false"/>
+    <delete dir="${Common.Directory.ProjectRoot.Path}" if="${directory::exists(Common.Directory.ProjectRoot.Path)}"/>
+    <assertequal actual="${directory::exists(Common.Directory.ProjectRoot.Path)}" expected="False" message="Was not able to delete ${Common.Directory.ProjectRoot.Path}."/>
 
     <copy file="VS.NETCompileTests\Install Resources\DefaultArguments.xml" tofile="${Deployment.Directory.Path}\Install Scripts\Arguments.xml" overwrite="true" />
     <exec program="${Deployment.Directory.Path}\nAnt\bin\nant.exe" commandline='-buildfile:"Install Scripts\Install.xml"' workingdir="${Deployment.Directory.Path}"  />
@@ -53,7 +53,7 @@
     </loglevel>
     <sleep seconds="2"/>
 
-    <asyncexec workingdir="${BuildDirectory}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
+    <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" pid="CCNet.Pid" />
   </target>
 
   <target name="VS.NETCompile.InstallationTest.FixtureTearDown">
@@ -79,23 +79,23 @@
 
   <target name="VS.NETCompile.InstallationTest.DefaultInstallTest">
     <loadfile file="${Deployment.Directory.Path}\Packages\VS.NETCompile\Install\2008.sln.remove" property="Expected.SolutionFile.Content" />
-    <loadfile file="${ProductDirectory}\${ProjectName}.sln" property="Actual.SolutionFile.Content" />
+    <loadfile file="${Common.Directory.Product.Path}\${ProjectName}.sln" property="Actual.SolutionFile.Content" />
     <assertequal actual="${Actual.SolutionFile.Content}" expected="${Expected.SolutionFile.Content}" message="Something is wrong with the solution file that was installed."/>
 
-    <copy todir="${ProductDirectory}" overwrite="true" verbose="true">
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true" verbose="true">
       <fileset basedir="VS.NETCompileTests\Test Product">
         <include name="**\*"/>
       </fileset>
     </copy>
 
-    <assertequal actual="${directory::exists(ProductionDirectory + '\Test Subject')}" expected="True" message="Expected to have copied the test product."/>
+    <assertequal actual="${directory::exists(Common.Directory.Production.Path + '\Test Subject')}" expected="True" message="Expected to have copied the test product."/>
     
     <!--Give the ccnet server a little time to get up and running. (Need to find a better way!)-->
     <sleep seconds="5"/>
 
     <ccnetforce projectname="${CCNET.ProjectName}" serverurl="${CCNET.ServerUrl}" >
       <ccnetplugins>
-        <include name="${BuildDirectory}\server\CCNET.Extensions.Plugin.dll"/>
+        <include name="${Common.Directory.Build.Path}\server\CCNET.Extensions.Plugin.dll"/>
       </ccnetplugins>
     </ccnetforce>
     <waitfor condition="${ccnet::get-project-build-status(CCNET.ServerUrl, CCNET.ProjectName) == 'Success'}" timeout="120" pollinginterval="10"/>

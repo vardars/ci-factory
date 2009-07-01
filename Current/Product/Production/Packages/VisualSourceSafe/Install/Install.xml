@@ -12,9 +12,8 @@
   </target>
 
   <target name="VisualSourceSafe.SetAsCurrentPackage">
-    <property name="Packages.CurrenctPackage.PackageDirectoryName" value="VisualSourceSafe"/>
-    <property name="Packages.CurrenctPackage.PackageTargetFileName" value="SourceControl.Target.xml"/>
-    <property name="Packages.CurrenctPackage.PackageName" value="SourceControl"/>
+    <property name="Packages.CurrentPackage.PackageName" value="VisualSourceSafe"/>
+    <property name="Packages.CurrentPackage.PackageType" value="SourceControl"/>
   </target>
 
   <target name="VisualSourceSafe.ValidateParameters">

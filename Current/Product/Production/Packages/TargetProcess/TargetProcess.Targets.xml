@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="TargetProcess">
+
+	<target name="TargetProcess.CreateReport">
+		<xmlquery
+      file="${SourceModificationReport.ReportFile}"
+      id="Comments"
+      query="//Modification/Comment"
+    />
+
+		<property name="Comments" value=""/>
+		<loopthrough property="Comment">
+			<items>
+				<xmlquery refid="Comments" />
+			</items>
+			<do>
+				<property name="Comments" value="${Comments} ${Comment}"/>
+			</do>
+		</loopthrough> 
+		
+		<strings id="UserStoryIds"/>
+		<targetprocessextractfromcomment
+			comment="${Comments}" 
+			entityprefix="UserStory" 
+			listrefid="UserStoryIds"
+		/>
+		<targetprocessextractfromcomment
+			comment="${Comments}"
+			entityprefix="Story"
+			listrefid="UserStoryIds"
+		/>
+
+		<strings id="TaskIds"/>
+		<targetprocessextractfromcomment
+			comment="${Comments}"
+			entityprefix="Task"
+			listrefid="TaskIds"
+		/>
+
+		<strings id="BugIds"/>
+		<targetprocessextractfromcomment
+			comment="${Comments}"
+			entityprefix="Bug"
+			listrefid="BugIds"
+		/>
+
+		<targetprocessreport
+			reportfilepath="${TargetProcess.ReportFilePath}"
+		>
+      <connectioninformation refid ="TargetProcess.ConnectionInformation"/>
+			<bugids refid="BugIds"/>
+			<storyids refid="UserStoryIds"/>
+			<taskids refid="TaskIds" />
+		</targetprocessreport>
+
+    <largeproperty name="IterationInfo">
+      <value expand="true" xml="true">
+        <Iteration
+          name="${tp::get-current-iteration-name('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"
+          id="${tp::get-current-iteration-id('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"
+          startdate="${tp::get-current-iteration-start-date('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"
+          enddate="${tp::get-current-iteration-end-date('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"
+        />
+      </value>
+    </largeproperty>
+
+
+    <xmlpoke
+      file="${TargetProcess.ReportFilePath}"
+      pokemode="Add"
+      value="${IterationInfo}"
+      xpath="/TargetProcess"
+    />
+	</target>
+
+  <target name="TargetProcess.SetUp">
+		<delete dir="${TargetProcess.ReportDirectoryPath}" if="${directory::exists(TargetProcess.ReportDirectoryPath)}" />
+		<mkdir dir="${TargetProcess.ReportDirectoryPath}"/>
+  </target>
+
+  <target name="TargetProcess.TearDown">
+
+  </target>
+
+</project>

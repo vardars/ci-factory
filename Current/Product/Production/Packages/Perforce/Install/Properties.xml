@@ -22,19 +22,19 @@
         />
       <exclusionFilters>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>]]>
@@ -48,7 +48,7 @@
       applyLabel="false" 
       autoGetSource="true"
       port="${Perforce.ServerName}:${Perforce.ServerPort}"
-			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&BuildDirectoryName;/..."
+			view="${Perforce.ServerPathPrefix}/&ProjectName;/&ProjectCodeLineName;/&Common.Directory.Build.Name;/..."
 			client="'&ProjectName;-&ProjectCodeLineName;-&HostName;'"
 			executable="${property::expand(Perforce.BinPath)}\p4.exe"
       />]]>

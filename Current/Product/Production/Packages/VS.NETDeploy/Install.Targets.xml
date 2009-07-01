@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Install" xmlns="http://nant.sf.net/schemas/nant.xsd">
+
+	<property name="Install.ToCopyToBin" value="false" overwrite="false" />
+  <property name="Install.ToDeployZip" value="false"   overwrite="false"/>
+
+  <property name="Install.CompilePackageInclude" value="${Common.Directory.Packages.Path}\VS.NetCompile\Compile.Target.xml"/>
+	
+  <include buildfile="Install.Properties.xml" />
+
+  <target name="Private.Install.CreatePropertiesFile">
+    <saveproperties file="${Install.CommonPropertiesFile}" format="CommandLine" >
+      <property name="CCNetBuildCondition"/>
+      <property name="CCNetIntegrationStatus"/>
+      <property name="CCNetLabel"/>
+      <property name="CCNetLastIntegrationStatus"/>
+      <property name="CCNetProject"/>
+      <property name="CCNetBuildDate"/>
+      <property name="CCNetBuildTime"/>
+      <property name="CCNetArtifactDirectory"/>
+      <property name="CCNetWorkingDirectory"/>
+      <property name="ProjectName"/>
+      <property name="ProjectCodeLineName"/>
+      <property name="Common.Directory.ProjectsRoot.Path"/>
+      <property name="Common.Directory.ProjectRoot.Path"/>
+      <property name="Common.Directory.CodeLine.Path"/>
+      <property name="Common.Directory.Product.Path"/>
+      <property name="Common.Directory.ThirdParty.Path"/>
+      <property name="Common.Directory.Production.Path"/>
+      <property name="Common.Directory.Build.Path"/>
+      <property name="Common.Directory.ArtifactRoot.Path"/>
+      <property name="NantBinPath"/>
+      <property name="Tools.NAnt.Exe"/>
+      <property name="Common.Directory.Packages.Path"/>
+      <property name="Common.Directory.Artifact.Path"/>
+      <property name="Common.Directory.Artifact.Name"/>
+      <property name="Common.Project.ReportDirectory"/>
+      <property name="Common.Project.TempDirectory"/>
+      <property name="Common.Directory.UnitTest.Path"/>
+      <property name="Common.Directory.Install.Path"/>
+
+      <property name="Compile.SolutionFile"     value="${Install.SolutionFile}"/>
+      <property name="Compile.ToConvertLogFile" value="${Install.ToConvertLogFile}" />
+      <property name="Compile.ConfigName"       value="${Install.ConfigName}" />
+      <property name="Compile.XmlLogFileName"   value="${Install.XmlLogFileName}" />
+      <property name="Compile.ToCopyToBin"      value="${Install.ToCopyToBin}" />
+      <property name="Compile.ToDeployZip"      value="${Install.ToDeployZip}" />
+    </saveproperties>
+  </target>
+
+	<target name="Install.CreateSetup">
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Install.CompilePackageInclude}"'/>
+      <arg line='@"${Install.CommonPropertiesFile}"' />
+      <arg line="Compile.CompileSource"/>
+    </exec>
+
+    <property name="Publish.Source.File.Name"  value="${Install.MsiSourceFile}"/>
+    <property name="Publish.Source.Directory.Path"	      value="${Install.MsiSourceDir}"/>
+    <property name="Publish.Target.Directory.Path"	      value="${Install.MsiTargetDir}"/>
+    <property name="Publish.Target.File.Name"	    value="${Install.MsiTargetFile}"/>
+    <property name="Publish.Web.File.Path"	    value="${Install.MsiTargetFileWebPath}"/>
+    <property name="Publish.Web.File.Name"	    value="${Install.MsiTargetFileWebName}"/>
+    <call target="Publish.File"/>
+  </target>
+
+  <target name="Install.SetUp">
+    <call target="Private.Install.CreatePropertiesFile"/>
+
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Install.CompilePackageInclude}"'/>
+      <arg line='@"${Install.CommonPropertiesFile}"' />
+      <arg line="Compile.SetUp"/>
+    </exec>
+  </target>
+
+  <target name="Install.TearDown">
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
+      <arg line='-buildfile:"${Install.CompilePackageInclude}"'/>
+      <arg line='@"${Install.CommonPropertiesFile}"' />
+      <arg line="Compile.TearDown"/>
+    </exec>
+  </target>
+
+</project>
