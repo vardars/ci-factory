@@ -1,0 +1,22 @@
+!****> Variables
+
+!path *.jar
+
+!define COLLAPSE_SETUP {true}
+!define COLLAPSE_TEARDOWN {true}
+
+!define today {!sysdate(yyyy-MM-dd)}
+!define tomorrow {!sysdate(yyyy-MM-dd)+1}
+
+!define Selenium.Browser {*chrome}
+!define Selenium.Server {localhost}
+!define Selenium.Port {4488}
+
+!define DBUSER {portal}
+!define DBPASSWORD {oracle}
+
+!define Portal.ProviderSearch.Path {/provider/search}
+!define WCM.Server {http://192.168.25.173:10039}
+
+****!
+!contents -R2 -g -p -f -h

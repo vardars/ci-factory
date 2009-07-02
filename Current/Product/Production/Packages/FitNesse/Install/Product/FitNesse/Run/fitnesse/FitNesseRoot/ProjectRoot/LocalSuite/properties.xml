@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<properties>
+	<Edit/>
+	<Files/>
+	<Help/>
+	<LastModified>20090610175149</LastModified>
+	<Properties/>
+	<RecentChanges/>
+	<Refactor/>
+	<Search/>
+	<Suite/>
+	<Suites/>
+	<SymbolicLinks>
+		<RegressionSuite>.ProjectRoot.RegressionSuite</RegressionSuite>
+		<BugSuite>.ProjectRoot.BugSuite</BugSuite>
+		<DevelopmentIterationSuite>.ProjectRoot.DevelopmentIterationSuite</DevelopmentIterationSuite>
+	</SymbolicLinks>
+	<Versions/>
+	<WhereUsed/>
+	<saveId>1244670709952</saveId>
+	<ticketId>3569823553692591788</ticketId>
+</properties>

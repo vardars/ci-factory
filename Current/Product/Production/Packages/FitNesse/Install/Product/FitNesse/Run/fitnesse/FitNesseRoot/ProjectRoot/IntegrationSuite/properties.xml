@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<properties>
+	<Edit>true</Edit>
+	<Files>true</Files>
+	<LastModified>20090610175237</LastModified>
+	<Properties>true</Properties>
+	<RecentChanges>true</RecentChanges>
+	<Refactor>true</Refactor>
+	<Search>true</Search>
+	<Suite>true</Suite>
+	<SymbolicLinks>
+		<BugSuite>.ProjectRoot.BugSuite</BugSuite>
+		<RegressionSuite>.ProjectRoot.RegressionSuite</RegressionSuite>
+		<DevelopmentIterationSuite>.ProjectRoot.DevelopmentIterationSuite</DevelopmentIterationSuite>
+	</SymbolicLinks>
+	<Versions>true</Versions>
+	<WhereUsed>true</WhereUsed>
+	<saveId>1244670756998</saveId>
+	<ticketId>8302920699521250338</ticketId>
+</properties>

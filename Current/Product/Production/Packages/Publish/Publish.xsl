@@ -15,7 +15,7 @@
       <table class="section-table" cellpadding="2" cellspacing="0" border="0" width="98%">
         <tr>
           <td height="42" class="sectionheader-container">
-            <img src="https://&HostName;/&ProjectName;-&ProjectCodeLineName;/Packages/Deployment/images/Publish.gif" class="sectionheader-title-image" />
+            <img src="https://&HostName;/&ProjectName;-&ProjectCodeLineName;/Packages/Publish/images/Publish.gif" class="sectionheader-title-image" />
             <div class="sectionheader">Deployment File(s)</div>
           </td>
         </tr>

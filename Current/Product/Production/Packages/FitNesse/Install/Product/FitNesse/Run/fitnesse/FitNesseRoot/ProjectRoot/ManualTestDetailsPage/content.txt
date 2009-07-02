@@ -1,0 +1,129 @@
+!contents -R2 -g -p -f -h
+
+!2 Test Case: To Verify the attributes applied, if the Beneficiary is logged in
+This is Manual TC because the functionality is not built in yet and this serves as reminder later
+!|Validation Steps|Expected Results|Build#|Status|
+|- Log in as beneficiary|- User has logged in successfully as beneficiary|||
+|- Click on "Provider Search" link|- The default provider search form opens up with all the fields disabled|||
+|- Select any of the entity type|- Beneficiary's address is pre-populated with his address on file (Verify this with DEERS database)|||
+|- Select any of the entity type|- "Have I seen before" option is enabled (along with other selections) for the beneficiary to check the box for|||
+
+!2 Test Case: To Verify if the results can be viewed in pdf format
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the results Page through a valid search|- User is able to click the "Create PDF" option on results page|||
+|- Click "Create PDF"|- The results displayed on the page are viewed in pdf document|||
+|- User does not have Adobe Acrobat Reader installed on their machine|- The system displays a message to the user that Adobe Acrobat Reader must be installed and asks if the user would like to install it.|||
+|- The user responds Yes.|- Link to the Adobe Acrobat Reader install software appears|||
+|- Installation for Adobe Acrobat Reader finishes|- The system opens the PDF file for the user to view.|||
+
+!2 Test Case: To Verify if the results can be printed
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the results Page through a valid search (He can select any page with pagination available)|- User is able to click the "print results" option on results page|||
+|- Click "print results" on results page|- The printer dialog appears for user to print the results and user clicks OK to print|||
+|- User  has Printer installed on local machine|- User successfully prints the document|||
+|- User does not have Printer installed on local machine|- System promts for installing a valid printer displaying the settings needed for the installation|||
+|- Install Printer and Print the Results|- The printer dialog appears for user to print the results|||
+
+!2 Test Case: To Verify if the results can be e-mailed
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the results Page through a valid search|- User is able to click the "email results" option on results page|||
+|- Click "email results" on results page|- A mail dialogue pop-up opens up for the user to enter the e-mail Address and his name and message if any|||
+|- Enter e-mail address and Name and Click Send button|- The results are all e-mailed successfully|||
+|- Do not enter e-mail address or Name and Click Send button|- There is an error message prompting to enter e-mail address and Name and also results are not e-mailed|||
+
+!2 Test Case: Verify the number of result rows and pagination on the results Page
+!|Validation Steps |Expected Results|Build#|Status|
+|- User is on the results Page through a valid search|- User is able to view all the results from his search that he performed on the form page|||
+|- User is on the results Page through a valid search|- User is able to click on the pagination links on the results page|||
+|- Click on each of the pagination links|- Verify that there are no more than 10 results per page as he navigates on pagination links (excluding the last page which could have less rows not more)|||
+|- Navigate to the result entries|- Verify that all the pages have first 2 rows of results as nearest MTFs to his chosen location|||
+
+!2 Test Case: Verify the Map pointers on the results Page
+!|Validation Steps |Expected Results|Build#|Status|
+|- User is on the results Page through a valid search|- User is able to view no more than 10 results on that page (excluding the first 2 rows on MTFs)|||
+|- View the map|- User is able to view each of the result's location Pointers on the Map accurately as the map loads on to the page|||
+|- Click on "Hide Map"|- User is able to collapse the map and is not visible on the page|||
+|- Click on "Show Map" again|- User is able to view back the map and is now visible on the page|||
+
+!2 Test Case: Verify Show/Hide search on Results Page
+!|Validation Steps |Expected Results|Build#|Status|
+|- User is on the results Page through a valid search|- User is able to click the "Show Search" option on results page|||
+|- Click on "Show Search" option on results page|- The provider search form is displayed with his previous selections and options|||
+|- Click on "Clear" or "Reset" button on the window|- The form clears all the selection and default page appears with all fields disabled until an entity is chosen|||
+
+!2 Test Case: Verify the Map trace on the details Page given the address
+|Validation Steps |Expected Results|Build#|Status|
+|Select a provider type from entity selections on Search form|All the relevant options are enabled|||
+|Type a valid address, selecting other options if needed, and hit Submit button|User is navigated to the page where the results are displayed matching his search criteria|||
+|- User is on the results Page through this valid search|- User is able to click the Map link for any of the result row against 'Drive Time/Map' in the results displayed|||
+|- Click on Map link for any of the result row against Drive Time/Map|User is taken to Details page with the Map on right corner|||
+|User is on details page| There is a map with 2 pointers, one for the address he typed and the other for the provider he chose from results|||
+|View the map on the details page|There is a trace between 'To' and 'From' addresses showing the route|||
+|Click on either of the balloons|The address of that position is displayed on small map window with link to get directions|||
+
+!2 Test Case: Verify the 'Get directions' attribute on the details Page given the address
+|Validation Steps |Expected Results|Build#|Status|
+|Select a provider type from entity selections on Search form|All the relevant options are enabled|||
+|Type a valid address, selecting other options if needed, and hit Submit button|User is navigated to the page where the results are displayed matching his search criteria|||
+|- User is on the results Page through this valid search|- User is able to click the Map link for any of the result row against 'Drive Time/Map' in the results displayed|||
+|- Click on Map link for any of the result row against Drive Time/Map|User is taken to Details page with the Map on right corner|||
+|Click on "Get Directions"/"View larger map" links near the Map|User is re-directed to a page with actual directions to-from the locations of intent with both the addresses being editable|||
+
+!2 Test Case: Verify the Map trace on the details Page without the address or with name of the entity
+|Validation Steps |Expected Results|Build#|Status|
+|Select a provider type from entity selections on Search form|All the relevant options are enabled|||
+|Type the name of the Provider, selecting other options if needed, and hit Submit button|User is navigated to the page where the results are displayed matching his search criteria|||
+|User is on the results Page through this valid search|User is able to click the Map link for any of the result row against 'Drive Time/Map' in the results displayed|||
+|Click on Map link for any of the result row against Drive Time/Map|User is taken to Details page with the Map on right corner|||
+|User is on details page| There is a map with only one balloon, at the address of the provider he chose from results|||
+
+!2 Test Case: Verify the 'Get directions' attribute on the details Page without the address
+|Validation Steps |Expected Results|Build#|Status|
+|Select a provider type from entity selections on Search form|All the relevant options are enabled|||
+|Type the name of the Provider, selecting other options if needed, and hit Submit button|User is navigated to the page where the results are displayed matching his search criteria|||
+|User is on the results Page through this valid search|User is able to click the Map link for any of the result row against 'Drive Time/Map' in the results displayed|||
+|Click on Map link for any of the result row against Drive Time/Map|User is taken to Details page with the Map on right corner|||
+|Click on "Get Directions"/"View larger map" links near the Map|User is re-directed to a page with an empty 'from' location and prefilled 'to' location with provider's address|||
+|Enter a valid address in Start Address text space and click Get Directions|System displays actual directions to-from the locations of intent|||
+
+!2 Test Case: Verify the details Page Look and feel for Individual Provider
+|Validation Steps|Expected Results|Build#|Status|
+|User is on Results page from the search performed by selecting a Network or Behavioral provider|User is able to click on any of provider names displayed in result set|
+|View the details page opened|The Page has Group Name; Specialty ; Gender; Primary Care Manager; Have I Seen Before; Languages Spoken; Board Certified; Accepting Type  of Patients; Hospital Affiliations; License Number; Category; Population; Areas of Interest under the banner of provider name|||
+|View the details page opened|The page has information to following specifics for different locations of the provider under the "Other Locations" banner: Address; Phone; Fax; E-mail; Hours; Distance/Drive Time; Accepting New Patients; On site Parking/Near Public Transportation; Map Link.|||
+
+!2 Test Case: Verify the details Page Look and feel for a Group
+|Validation Steps|Expected Results|Build#|Status|
+|User is on Results page from the search performed by selecting a Network or Behavioral provider|User is able to click on any of group name displayed in result set|
+|View the details page opened|The Page has Address; Phone; Fax; E-mail. under the banner of that group name|||
+|View the details page opened|The page has information to following specifics for different providers under that group against "Provider Details" banner: Name; Gender; Specialty; Primary Care Manager; Have I Seen Before; Languages Spoken; Board Certified; Accepting Type of Patients; Hospital Affiliations; License Number; Category; Population; Areas of Interest.|||
+
+!2 Test Case: Verify the details Page Look and feel for Non-Individual Provider
+|Validation Steps|Expected Results|Build#|Status|
+|User is on Results page from the search performed by selecting any non-individual provider like a network facility|User is able to click on any of provider names displayed in result set|
+|View the details page opened|The Page has Address; Phone; Fax; E-mail; Facility Type; Hours; Distance/Drive Time; Onsite Parking/Near Public Transportation; Category; Population; Areas of Interest; Map Link. under the banner of Facility name|||
+
+!2 Test Case: To Verify if the details can be viewed in pdf format
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the Details Page by clicking on provider of the choice|- User is able to click the "Create PDF" option on details page|||
+|- Click "Create PDF"|- The info displayed on the page is viewed in pdf document|||
+|- User does not have Adobe Acrobat Reader installed on their machine|- The system displays a message to the user that Adobe Acrobat Reader must be installed and asks if the user would like to install it.|||
+|- The user responds Yes.|- Link to the Adobe Acrobat Reader install software appears|||
+|- Installation for Adobe Acrobat Reader finishes|- The system opens the PDF file for the user to view the details|||
+
+!2 Test Case: To Verify if the details can be printed
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the Details Page by clicking on provider of the choice|- User is able to click the "print results" option on details page|||
+|- Click "print results" on details page|- The printer dialog appears for user to print the results and user clicks OK to print|||
+|- User has Printer installed on local machine|User successfully prints the document|||
+|User does not have Printer installed on local machine|System prompts for installing a valid printer displaying the settings needed for the installation|||
+|Install Printer and Print the Results|The printer dialog appears for user to print the details|||
+
+!2 Test Case: To Verify if the details can be e-mailed
+!|Validation Steps|Expected Results|Build#|Status|
+|- User is on the details Page through a valid search|- User is able to click the "email results" option on details page|||
+|- Click "email results" on details page|A mail dialogue pop-up opens up for the user to enter the e-mail Address and his name and message if any|||
+|- Enter e-mail address and Name and Click Send button|- The details are all e-mailed successfully|||
+|- Do not enter e-mail address or Name and Click Send button|- There is an error message prompting to enter e-mail address and Name; details are not e-mailed|||
+
+!2 Test Case: Print the mapped entity ???

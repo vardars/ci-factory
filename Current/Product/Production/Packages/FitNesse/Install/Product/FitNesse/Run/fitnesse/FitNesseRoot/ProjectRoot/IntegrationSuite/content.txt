@@ -1,0 +1,4 @@
+!2 Purpose
+This suite holds symbolic links to the bug, regression, and development iteration suites.  This suite is executed by the continuous integration server, it should not be executed on your machine.  Please execute test on your machine from the .ProjectRoot.LocalSuite.
+
+!contents -R2 -g -p -f -h
