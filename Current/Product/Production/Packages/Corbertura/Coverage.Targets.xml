@@ -143,5 +143,34 @@
 	<target name="Coverage.TearDown">
 
 	</target>
+  
+  <target name="Personal.UnitTest" if="${target::exists('UnitTest::Personal.UnitTest')" override="True">
+    <trycatch>
+      <try>
+        <call target="UnitTest::Personal.UnitTest"/>
+      </try>
+      <finally>
+        <call target="Personal.Coverage"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Personal.IntegrationTest" if="${target::exists('UnitTest::Personal.IntegrationTest')" override="True">
+    <trycatch>
+      <try>
+        <call target="IntegrationTest::Personal.IntegrationTest"/>
+      </try>
+      <finally>
+        <call target="Personal.Coverage"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Personal.Coverage">
+    <call target="Coverage.SetUp"/>
+    <call target="Coverage.Check.ShowReport"/>
+    <call target="Coverage.ShowReport"/>
+    <call target="Coverage.TearDown"/>
+  </target>
 
 </project>

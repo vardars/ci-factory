@@ -6,8 +6,6 @@
 
   <property name="Install.CompilePackageInclude" value="${Common.Directory.Packages.Path}\VS.NetCompile\Compile.Target.xml"/>
 	
-  <include buildfile="Install.Properties.xml" />
-
   <target name="Private.Install.CreatePropertiesFile">
     <saveproperties file="${Install.CommonPropertiesFile}" format="CommandLine" >
       <property name="CCNetBuildCondition"/>

@@ -3,8 +3,6 @@
 
   <fileset id="UnitTest.TestAssemblies" />
   
-  <include buildfile="UnitTest.Properties.xml" />
-
 	<target name="UnitTest.LoadTasks">
 		<loadtasks assembly="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.Tasks.dll" />
 	</target>

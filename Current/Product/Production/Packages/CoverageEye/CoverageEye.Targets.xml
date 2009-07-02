@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Coverage" >
 
-  <include buildfile="CoverageEye.Properties.xml" />
-
   <!--
 	The following properties should be specified in the calling script.
 	

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Eclipse.Install" default="Eclipse.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Eclipse.Install">
+    
+  </target>
+
+  <target name="Eclipse.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="Eclipse"/>
+  </target>
+
+  <target name="Eclipse.ValidateParameters">
+
+  </target>
+  
+</project>

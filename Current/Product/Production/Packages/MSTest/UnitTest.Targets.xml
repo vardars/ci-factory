@@ -6,8 +6,6 @@
   
   <property name="UnitTest.RunConfig" value="${Common.Directory.Product.Path}\localtestrun.testrunconfig" overwrite="false"/>
 
-  <include buildfile="UnitTest.Properties.xml" />
-
 	<!--
 	The following properties should be specified in the calling script.
 	

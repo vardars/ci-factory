@@ -57,4 +57,23 @@
 
 	</target>
 
+  <target name="Personal.IntegrationTest">
+    <trycatch>
+      <try>
+        <call target="IntegrationTest.SetUp"/>
+
+        <property name="Ant.Log.File.Path" value="${Ant.Log.Directory.Path}\integrationtest_log.xml"/>
+        <call target="IntegrationTest.RunTests"/>
+      </try>
+      <catch property="ExceptionMessage">
+        <call target="IntegrationTest.ShowReport"/>
+        <call target="Ant.ShowReport"/>
+        <fail message="Please see the report opened in your browser for more detail.${NewLine}${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="IntegrationTest.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+  
 </project>

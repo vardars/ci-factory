@@ -9,8 +9,46 @@
     </largeproperty>
     <call target="Packages.AddCompileActions"/>
 
+    <strings id="NAnt.Main.Targets">
+      <string value="Heavy"/>
+      <string value="Release"/>
+    </strings>
+    <largeproperty name="Packages.AddPostBuildActions.Block">
+      <value xml="false">
+        <![CDATA[<call target="Ant.Package" />
+        <property name="Compile.Debug" value="False"/>
+        <call target="Ant.Package" />]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddPostBuildActions"/>
+    
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Ant Report" actionName="AntReport" xslFileName="Packages\Ant\AntReport.xsl" />]]></value>
+      <value xml="false">
+        <![CDATA[<xslReportBuildPlugin 
+        description="Ant Report" 
+        actionName="AntReport" 
+        xslFileName="Packages\Ant\AntReport.xsl" 
+        imageFileName="Packages\Ant\Logo.ico" 
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+        </excludedProjects>
+      </xslReportBuildPlugin>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+    
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<xslReportBuildPlugin 
+        description="Ant Timings" 
+        actionName="AntTimingsBuildReport" 
+        xslFileName="Packages\Ant\AntTiming.xsl" 
+        imageFileName="images/NAntTimings.gif"
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+        </excludedProjects>
+      </xslReportBuildPlugin>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

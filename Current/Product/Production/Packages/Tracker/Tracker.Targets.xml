@@ -7,7 +7,6 @@
 	<property name="Tracker.Debug" value="false" overwrite="false"/>
   <property name="Tracker.ReportDirectory" value="${Common.Directory.Build.Path}\Tracker Reports" />
   
-  <include buildfile="Tracker.Properties.xml" />
   <property name="Tracker.ReportFile.Path" value="${Tracker.ReportDirectory}\${Tracker.ReportFile}"/>
   <include buildfile="${Tracker.DailyScrFile}" if="${file::exists(Tracker.DailyScrFile)}" failonerror="false"/>
   <property name="Tracker.DailyScrList" value="" overwrite="false"/>

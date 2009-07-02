@@ -15,9 +15,6 @@
 
   <loadtasks assembly="${StarTeam.Task}" />
 
-  <include buildfile="SourceControl.Properties.xml" />
-
-
   <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
     <property name="SourceControl.CleanGetOf" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="SourceControl.CleanGetOf"/>

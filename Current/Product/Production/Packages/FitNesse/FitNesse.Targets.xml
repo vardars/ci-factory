@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="FitNesse">
 
+  <stringadd refid="Personal.UpdateSource.Before.Target.List">
+    <string value="FitNesse.StopServer"/>
+    <string value="FitNesse.PrepForCommitToSubversion"/>
+  </stringadd>
+
+  <stringadd refid="Personal.UpdateSource.After.Target.List">
+    <string value="FitNesse.PrepForCommitToSubversion"/>
+    <string value="FitNesse.RestartServer"/>
+  </stringadd>
+  
   <target name="FitNesse.RunTests">
     <trycatch>
       <try>
@@ -95,6 +105,10 @@
       if="${int::parse(FitNesse.FailedTestCount) != 0}"
       message="Atleast one FitNesse test failed in the suite ${FitNesse.IntegrationSuitePath}!"
     />
+  </target>
+
+  <target name="FitNesse.RestartServer">
+    <call target="FitNesse.StartServer" if="${FitNesse.Status=='Started'}"/>
   </target>
   
   <target name="FitNesse.StartServer">

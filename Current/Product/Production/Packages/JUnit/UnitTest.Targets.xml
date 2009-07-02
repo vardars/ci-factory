@@ -56,5 +56,24 @@
 	<target name="UnitTest.TearDown">
 
 	</target>
+  
+  <target name="Personal.UnitTest">
+    <trycatch>
+      <try>
+        <call target="UnitTest.SetUp"/>
+
+        <property name="Ant.Log.File.Path" value="${Ant.Log.Directory.Path}\unittest_log.xml"/>
+        <call target="UnitTest.RunTests"/>
+      </try>
+      <catch property="ExceptionMessage">
+        <call target="UnitTest.ShowReport"/>
+        <call target="Ant.ShowReport"/>
+        <fail message="Please see the report opened in your browser for more detail.${NewLine}${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="UnitTest.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
 
 </project>

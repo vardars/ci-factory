@@ -24,22 +24,35 @@
         <include name="Custom.build.xml"/>
 				<include name="Scratch.build.xml"/>
         <include name="Scratch.cs"/>
-				<include name="UpdatenAntSchema.bat"/>
 				<include name="UpdatenAntSchema.xml"/>
 				<include name="Post.build.xml"/>
 				<include name="Post.Shim.xml"/>
 				<include name="SetupIIS.xml"/>
         <include name="CreateBranch.xml"/>
         <include name="EnvironmentVariables\EnvironmentVariables.xml"/>
+        <exclude name="*.bat"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
 		</copy>
 
+    <copy todir="${Common.Directory.Build.Path}" overwrite="true">
+      <fileset basedir="${SourceBuildDirectory}">
+        <include name="*.bat"/>
+      </fileset>
+    </copy>
+
 		<copy todir="${Common.Directory.Product.Path}" overwrite="true">
       <fileset basedir="${SourceProductDirectory}">
         <include name="*.*"/>
+        <exclude name="*.bat"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
+    </copy>
+
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
+      <fileset basedir="${SourceProductDirectory}">
+        <include name="*.bat"/>
+      </fileset>
     </copy>
     
     <call target="Private.nAnt.CopyToBuild"/>

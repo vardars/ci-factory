@@ -15,9 +15,7 @@
 
   <loadtasks assembly="${TFS.Task}" />
 
-  <include buildfile="SourceControl.Properties.xml" />
-  
-	<target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
+  <target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Corbertura.Install" default="Corbertura.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Corbertura.Install">
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false"><![CDATA[<call target="Coverage.PublishReports" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Corbertura\CoverageDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<xslReportBuildPlugin
+        description="Coverage Report"
+        actionName="CoverageReport"
+        xslFileName="Packages\Corbertura\CoverageDisplayReport.xsl"
+        imageFileName="Packages\Corbertura\logo.gif"
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Deploy</projectName>
+        </excludedProjects>
+      </xslReportBuildPlugin>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block" dynamic="true">
+      <value>
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\Corbertura\CoverageSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\Coverage\CoverageReport.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="Corbertura.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="Corbertura"/>
+    <property name="Packages.CurrentPackage.PackageType" value="Coverage"/>
+  </target>
+
+  <target name="Corbertura.ValidateParameters">
+
+  </target>
+  
+</project>

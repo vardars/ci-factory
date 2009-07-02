@@ -4,9 +4,7 @@
   <property name="Compile.LogFileDirectory" value="%Compile.LogFileDirectory%" overwrite="false" />
   <property name="Compile.DevEnv" value="%Compile.DevEnv%" overwrite="false"/>
 	
-  <include buildfile="Compile.Properties.xml" />
-	
-	<!-- The following properties are for internal use only -->
+  <!-- The following properties are for internal use only -->
   <property name="Private.Compile.Pattern" value="" />
   <property name="Private.Compile.FromDirectory" value="" />
   <property name="Private.Compile.LogFileName" value="" />

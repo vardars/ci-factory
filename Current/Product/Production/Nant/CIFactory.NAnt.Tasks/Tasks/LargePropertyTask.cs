@@ -3,6 +3,7 @@ using NAnt.Core;
 using NAnt.Core.Attributes;
 using CIFactory.NAnt.Types;
 using NAnt.Core.Types;
+using NAnt.Core.Tasks;
 
 namespace CIFactory.NAnt.Tasks
 {
@@ -12,8 +13,10 @@ namespace CIFactory.NAnt.Tasks
         #region Fields
 
         private string _PropertyNameName;
-
         private TextElement _TextValue;
+        protected bool _readOnly = false;
+        protected bool _dynamic = false;
+        protected bool _overwrite = true;
 
         #endregion
 
@@ -40,13 +43,56 @@ namespace CIFactory.NAnt.Tasks
             set { _TextValue = value; }
         }
 
-        #endregion
+        /// <summary>
+        /// Specifies whether the property is read-only or not. 
+        /// The default is <see langword="false" />.
+        /// </summary>
+        [TaskAttribute("readonly", Required = false)]
+        [BooleanValidator()]
+        public bool ReadOnly
+        {
+            get { return _readOnly; }
+            set { _readOnly = value; }
+        }
+
+        /// <summary>
+        /// Specifies whether references to other properties should not be 
+        /// expanded when the value of the property is set, but expanded when
+        /// the property is actually used.  By default, properties will be
+        /// expanded when set.
+        /// </summary>
+        [TaskAttribute("dynamic", Required = false)]
+        [BooleanValidator()]
+        public bool Dynamic
+        {
+            get { return _dynamic; }
+            set { _dynamic = value; }
+        }
+
+        /// <summary>
+        /// Specifies whether the value of a property should be overwritten if
+        /// the property already exists (unless the property is read-only). 
+        /// The default is <see langword="true" />.
+        /// </summary>
+        [TaskAttribute("overwrite", Required = false)]
+        [BooleanValidator()]
+        public bool Overwrite
+        {
+            get { return _overwrite; }
+            set { _overwrite = value; }
+        }
+
+        #endregion Public Instance Properties
+
 
         #region Protected Methods
 
         protected override void ExecuteTask()
         {
-            this.Properties[this.PropertyName] = this.TextValue.Value;
+            PropertyTask Property = new PropertyTask(this.PropertyName, this.TextValue.Value, this.ReadOnly, this.Dynamic, this.Overwrite);
+            Property.Parent = this.Parent;
+            Property.Project = this.Project;
+            Property.Execute();
         }
 
         #endregion

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="IntegrationTest.Install" default="IntegrationTest.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="IntegrationTest.Install">
+    <strings id="NAnt.Main.Targets">
+      <string value="Heavy"/>
+      <string value="Release"/>
+    </strings>
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false"><![CDATA[<call target="IntegrationTest.RunTests" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\IntegrationTest\JUnitDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<artifactXslBuildPlugin
+        description="Integration Test Details"
+        actionName="IntegrationTestDetailsBuildReport"
+        xslFileName="Packages\IntegrationTest\JUnitDetails.xsl"
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+        xmlFileName="integrationtests.xml"
+        imageFileName="Packages\IntegrationTest\logo.gif"
+      >
+        <includedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Release</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Heavy</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+        </includedProjects>
+      </artifactXslBuildPlugin>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <strings id="CCNet.Build.Types">
+      <string value="Heavy"/>
+      <string value="Release"/>
+    </strings>
+    <largeproperty name="Packages.AddXslMerger.Block" dynamic="true">
+      <value>
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\IntegrationTest\JUnitSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Heavy\IntegrationTestReports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="IntegrationTest.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="IntegrationTest"/>
+  </target>
+
+  <target name="IntegrationTest.ValidateParameters">
+
+  </target>
+  
+</project>

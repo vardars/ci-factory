@@ -3,8 +3,6 @@
 
   <loadtasks assembly="${Common.Directory.Packages.Path}\Vault\bin\NAnt.VaultTasks.dll" />
 
-  <include buildfile="SourceControl.Properties.xml" />
-
   <target name="Private.SourceControl.Login">
     <vaultsetloginoptions
 			URL="${Vault.URL}"

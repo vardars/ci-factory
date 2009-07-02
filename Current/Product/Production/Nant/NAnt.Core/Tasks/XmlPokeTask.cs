@@ -98,6 +98,7 @@ namespace NAnt.Core.Tasks {
 			Replace,
 			Add,
             After,
+            Before,
             ReplaceOuter
 		}
 
@@ -303,6 +304,12 @@ namespace NAnt.Core.Tasks {
                     XmlDocumentFragment Fragment = document.CreateDocumentFragment();
                     Fragment.InnerXml = Value;
                     node.ParentNode.InsertAfter(Fragment, node);
+                }
+                else if (this.PokeMode == Mode.Before)
+                {
+                    XmlDocumentFragment Fragment = document.CreateDocumentFragment();
+                    Fragment.InnerXml = Value;
+                    node.ParentNode.InsertBefore(Fragment, node);
                 }
                 else if (this.PokeMode == Mode.ReplaceOuter)
                 {

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NUnit.Install" default="NUnit.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="NUnit.Install">
+    <copy todir="${Common.Directory.ThirdParty.Path}\NUnit" overwrite="true">
+      <fileset basedir="${SourcePackagesDirectory}\NUnit\Install\NUnit">
+        <include name="**\*" />
+      </fileset>
+    </copy>
+
+    <copy file="${SourcePackagesDirectory}\NUnit\Install\NUnit\Logo.ico" tofile="${Common.Directory.Packages.Path}\NUnit\Logo.ico"  overwrite="true"/>
+
+    <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
+      <then>
+        <property name="Private.Packages.MainBuild.Replace.To" value=""/>
+        <largeproperty name="Private.Packages.MainBuild.Replace.From">
+          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\NUnit\UnitTest.Target.xml" />]]></value>
+        </largeproperty>
+        <call target="Private.Packages.MainBuild.Replace"/>  
+      </then>
+      <else>
+        <largeproperty name="Packages.AddVarificationActions.Block">
+          <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
+        </largeproperty>
+        <call target="Packages.AddVarificationActions"/>
+      </else>
+    </ifthenelse>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\NUnit\NUnitSummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\NUnit\NUnitDetails.xsl" imageFileName="Packages\NUnit\Logo.ico" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddMergeFiles.Block">
+      <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</file>]]></value>
+    </largeproperty>
+    <call target="Packages.AddMergeFiles"/>
+  </target>
+
+  <target name="NUnit.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="NUnit"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+  </target>
+
+  <target name="NUnit.ValidateParameters">
+
+  </target>
+  
+</project>

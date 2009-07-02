@@ -10,11 +10,29 @@
     </largeproperty>
     <call target="Packages.AddPreBuildActions"/>
 
+    <strings id="NAnt.Main.Targets">
+      <string value="Deploy"/>
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddPreBuildActions.Block">
+      <value xml="false">
+        <![CDATA[<call target="TargetProcess.Get.Release.Report" />]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddPreBuildActions"/>
+
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\TargetProcess\TargetProcess.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
+    <strings id="CCNet.Build.Types">
+      <string value="Dev"/>
+      <string value="Heavy"/>
+      <string value="Release"/>
+      <string value="Deploy"/>
+      <string value="Test"/>
+    </strings>
     <largeproperty name="Packages.AddMergeFiles.Block">
       <value expand="true"><![CDATA[<file>&Common.Directory.Build.Path;\TargetProcess\*.xml</file>]]></value>
     </largeproperty>

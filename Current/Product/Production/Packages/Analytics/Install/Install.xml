@@ -12,7 +12,19 @@
     <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="Analytics Report" actionName="AnalyticsReport" xslFileName="Packages\Analytics\Basic\statistics.xsl" artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" xmlFileName="MainAnalyticsReport.xml"  imageFileName="Packages\Analytics\Analytics.gif" />]]></value>
+      <value xml="false" expand="true">
+        <![CDATA[<artifactXslBuildPlugin 
+        description="Analytics Report" 
+        actionName="AnalyticsReport" 
+        xslFileName="Packages\Analytics\Basic\statistics.xsl" 
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" 
+        xmlFileName="MainAnalyticsReport.xml"  
+        imageFileName="Packages\Analytics\Analytics.gif" 
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+        </excludedProjects>
+      </artifactXslBuildPlugin>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

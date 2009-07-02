@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Selenium.Install" default="Selenium.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Selenium.Install">
+    <strings id="NAnt.Main.Targets">
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false">
+        <![CDATA[<call target="Selenium.RunTests"/>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Simian\SimianDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<artifactXslBuildPlugin
+        description="Web Test Details"
+        actionName="WebTestDetailsBuildReport"
+        xslFileName="Packages\Selenium\SeleniumDetails.xsl"
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+        xmlFileName="webtests.xml"
+        imageFileName="Packages\Selenium\logo.gif"
+      >
+        <includedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+        </includedProjects>
+      </artifactXslBuildPlugin>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <strings id="CCNet.Build.Types">
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddXslMerger.Block" dynamic="true">
+      <value>
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\Selenium\SeleniumSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Test\WebTestReports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="Selenium.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="Selenium"/>
+  </target>
+
+  <target name="Selenium.ValidateParameters">
+
+  </target>
+  
+</project>

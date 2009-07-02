@@ -9,6 +9,9 @@
   <property name="BuildServerHostName"        value="&HostName;"/>
   <property name="EmailHost"                  value="&EmailHost;"/>
 
+  <property name="Web.Credentials.UserName" value=""/>
+  <property name="Web.Credentials.Password" value=""/>
+
   <property name="ProjectName"                value="&ProjectName;" />
   <property name="ProjectCodeLineName"        value="&ProjectCodeLineName;" />
 

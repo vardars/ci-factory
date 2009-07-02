@@ -12,7 +12,19 @@
     <call target="Packages.AddPostBuildActions"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false" expand="true"><![CDATA[<artifactXslBuildPlugin description="Diff" actionName="DiffReports" xslFileName="Packages\CSDiff\CSDiffReport.xsl" artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" xmlFileName="postbuildlog.xml" imageFileName="Packages\CSDiff\Diff.gif" />]]></value>
+      <value xml="false" expand="true">
+        <![CDATA[<artifactXslBuildPlugin 
+        description="Diff" 
+        actionName="DiffReports" 
+        xslFileName="Packages\CSDiff\CSDiffReport.xsl" 
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" 
+        xmlFileName="postbuildlog.xml" 
+        imageFileName="Packages\CSDiff\Diff.gif" 
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+        </excludedProjects>
+      </artifactXslBuildPlugin>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
   </target>

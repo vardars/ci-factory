@@ -45,4 +45,22 @@
 	<target name="Eclipse.TearDown">
 
 	</target>
+
+  <target name="OpenEclipse">
+    <setenv>
+      <environment refid="${Common.EnvironmentVariables.RefId}" />
+    </setenv>
+
+    <call target="UpdateWorkspace"/>
+
+    <asyncexec
+      createnowindow="false"
+      redirectoutput="false"
+      useshellexecute="true"
+      waitforexit="false"
+      workingdir="${path::get-directory-name(Eclipse.ExePath)}"
+      program="${Eclipse.ExePath}"
+      commandline="-data ${Common.Directory.Product.Path} -vm C:\Java\jdk1.6.0_11\bin\javaw.exe -vmargs -XX:PermSize=128M -XX:MaxPermSize=256M -Xmx1024m -Xms128m"
+    />
+  </target>
 </project>

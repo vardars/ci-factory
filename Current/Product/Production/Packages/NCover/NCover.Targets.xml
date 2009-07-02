@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Coverage" >
 
-  <include buildfile="NCover.Properties.xml" />
   <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
   <loadtasks assembly="${Common.Directory.Build.Path}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
 

@@ -137,7 +137,7 @@
     &email;
   </publishers>
 </project>
-  <project name="&ProjectName;-&ProjectCodeLineName;-Dev  ">
+  <project name="&ProjectName;-&ProjectCodeLineName;-Dev">
   <webURL>&CCNet.Dashboard.Url;</webURL>
   <state type="state" />
   <triggers>

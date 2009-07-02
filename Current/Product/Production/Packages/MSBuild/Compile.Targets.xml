@@ -3,8 +3,6 @@
 
   <property name="Compile.LogFileDirectory" value="%Compile.LogFileDirectory%" overwrite="false" />
 	
-  <include buildfile="Compile.Properties.xml" />
-
 	<!--
 	The following properties should be specified in the calling script.
 	

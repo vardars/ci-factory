@@ -56,4 +56,64 @@
 	<target name="Ant.TearDown">
 
 	</target>
+
+
+  <target name="Personal.Compile">
+    <trycatch>
+      <try>
+        <call target="Ant.SetUp"/>
+        <call target="Ant.CompileSource" />
+      </try>
+      <catch property="ExceptionMessage">
+        <echo message="${ExceptionMessage}"/>
+        <property name="Ant.Log.File.Path" value="${Ant.Log.Directory.Path}\compile_log.xml"/>
+        <call target="Ant.ShowReport"/>
+
+        <fail message="Please see the report opened in your browser for more detail.${NewLine}${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="Ant.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Personal.Recompile">
+    <trycatch>
+      <try>
+        <call target="Ant.SetUp"/>
+        <call target="Ant.Clean" />
+      </try>
+      <catch property="ExceptionMessage">
+        <echo message="${ExceptionMessage}"/>
+        <property name="Ant.Log.File.Path" value="${Ant.Log.Directory.Path}\clean_log.xml"/>
+        <call target="Ant.ShowReport"/>
+
+        <fail message="Please see the report opened in your browser for more detail.${NewLine}${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="Ant.TearDown"/>
+      </finally>
+    </trycatch>
+    <call target="Personal.Compile"/>
+  </target>
+  
+  <target name="Personal.Package">
+    <trycatch>
+      <try>
+        <call target="Ant.SetUp"/>
+        <call target="Ant.Package" />
+      </try>
+      <catch property="ExceptionMessage">
+        <echo message="${ExceptionMessage}"/>
+        <property name="Ant.Log.File.Path" value="${Ant.Log.Directory.Path}\package_log.xml"/>
+        <call target="Ant.ShowReport"/>
+
+        <fail message="Please see the report opened in your browser for more detail.${NewLine}${ExceptionMessage}"/>
+      </catch>
+      <finally>
+        <call target="Ant.TearDown"/>
+      </finally>
+    </trycatch>
+  </target>
+
 </project>

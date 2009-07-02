@@ -3,8 +3,6 @@
 
   <fileset id="UnitTest.TestAssemblies" />
 
-  <include buildfile="UnitTest.Properties.xml" />
-
   <target name="Private.UnitTest.FindTestAssemblies">
     <foreach item="File" property="UnitTest.ProjectFile.Path">
       <in>

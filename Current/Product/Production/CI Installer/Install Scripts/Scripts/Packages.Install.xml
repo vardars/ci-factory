@@ -123,6 +123,18 @@
     <property name="Packages.CurrentPackage.PackageName" value=""/>
     <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Main.Build.xml"/>
     <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="false" />
+
+    <strings id="NAnt.Main.Targets">
+      <string value="Triggered"/>
+      <string value="Heavy"/>
+      <string value="Release"/>
+    </strings>
+
+    <strings id="CCNet.Build.Types">
+      <string value="Dev"/>
+      <string value="Heavy"/>
+      <string value="Release"/>
+    </strings>
   </target>
 
   <target name="Packages.Validate.CurrentSetPackage">
@@ -140,6 +152,8 @@
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
 				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade" />
 				<exclude name="${Packages.CopyPackage.PackageName}\Upgrade\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Product" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Product\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <exclude name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
@@ -154,34 +168,60 @@
         <exclude name="${Packages.CopyPackage.PackageName}\Install" />
         <exclude name="${Packages.CopyPackage.PackageName}\Upgrade" />
         <exclude name="${Packages.CopyPackage.PackageName}\Upgrade\**\*"/>
+        <exclude name="${Packages.CopyPackage.PackageName}\Product" />
+        <exclude name="${Packages.CopyPackage.PackageName}\Product\**\*"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
+    </copy>
+
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
+      <fileset basedir="${SourcePackagesDirectory}\Product">
+        <include name="**\*"/>
+        <exclude name="**\*.bat"/>
+      </fileset>
+      <filterchain refid="Common.FilterChain" />
+    </copy>
+
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
+      <fileset basedir="${SourcePackagesDirectory}\Product">
+        <exclude name="**\*.bat"/>
+      </fileset>
     </copy>
   </target>
 
 
   <property name="Packages.AddMergeFiles.Block" value=""/>
   <target name="Packages.AddMergeFiles">
-    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddMergeFiles.Block}
-  ${Private.Packages.MergeFiles.EndTag}]]>
-      </value>
-    </largeproperty>
-    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.MergeFiles.EndTag}" />
-    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+    <loopthrough property="CCNet.Build.Type">
+      <items>
+        <strings refid="CCNet.Build.Types"/>
+      </items>
+      <do>
+        <xmlpoke
+          file="${Common.Directory.Build.Path}\ccnetproject.xml"
+          pokemode="Add"
+          xpath="/cruisecontrol/project[@name='${ProjectName}-${ProjectCodeLineName}-${CCNet.Build.Type}']/publishers/merge/files"
+          value="${Packages.AddMergeFiles.Block}"
+        />
+      </do>
+    </loopthrough>
   </target>
 
   <property name="Packages.AddXslMerger.Block" value=""/>
   <target name="Packages.AddXslMerger" >
-    <largeproperty name="Private.Packages.CCNETProjectConfig.Replace.To">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddXslMerger.Block}
-  ${Private.Packages.XslMerger.EndTag}]]>
-      </value>
-    </largeproperty>
-    <property name="Private.Packages.CCNETProjectConfig.Replace.From" value="${Private.Packages.XslMerger.EndTag}" />
-    <call target="Private.Packages.CCNETProjectConfig.Replace"/>
+    <loopthrough property="CCNet.Build.Type">
+      <items>
+        <strings refid="CCNet.Build.Types"/>
+      </items>
+      <do>
+        <xmlpoke
+          file="${Common.Directory.Build.Path}\ccnetproject.xml"
+          pokemode="Add"
+          xpath="/cruisecontrol/project[@name='${ProjectName}-${ProjectCodeLineName}-${CCNet.Build.Type}']/publishers/xslmerger/filepairs"
+          value="${Packages.AddXslMerger.Block}"
+        />
+      </do>
+    </loopthrough>
   </target>
 
   <property name="Packages.AddbuildReportBuildPlugin.Block" value=""/>
@@ -274,67 +314,47 @@
 
   <property name="Packages.AddPreBuildActions.Block" value=""/>
   <target name="Packages.AddPreBuildActions" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddPreBuildActions.Block}]]>
-      </value>
-    </largeproperty>
-
-    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PreBuildActions.EndTag}"/>
-
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <AddCallToMainScript
+      xmlfragment="${Packages.AddPreBuildActions.Block}"
+      blockname="Pre Build">
+      <strings refid="NAnt.Main.Targets"/>
+    </AddCallToMainScript>
   </target>
 
   <property name="Packages.AddCleanUpActions.Block" value=""/>
   <target name="Packages.AddCleanUpActions" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddCleanUpActions.Block}]]>
-      </value>
-    </largeproperty>
-
-    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CleanUpActions.EndTag}"/>
-
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <AddCallToMainScript
+      xmlfragment="${Packages.AddCleanUpActions.Block}"
+      blockname="Clean Up">
+      <strings refid="NAnt.Main.Targets"/>
+    </AddCallToMainScript>
   </target>
 
   <property name="Packages.AddCompileActions.Block" value=""/>
   <target name="Packages.AddCompileActions" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddCompileActions.Block}]]>
-      </value>
-    </largeproperty>
-
-    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.CompileActions.EndTag}"/>
-
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <AddCallToMainScript
+      xmlfragment="${Packages.AddCompileActions.Block}"
+      blockname="Compile">
+      <strings refid="NAnt.Main.Targets"/>
+    </AddCallToMainScript>
   </target>
 
   <property name="Packages.AddVarificationActions.Block" value=""/>
   <target name="Packages.AddVarificationActions" unless="${IsUpgrade}">
-		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-			<value xml="false" expand="true">
-				<![CDATA[${Packages.AddVarificationActions.Block}]]>
-			</value>
-		</largeproperty>
-
-		<property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.VarificationActions.EndTag}"/>
-
-		<call target="Private.Packages.MainBuild.SmartAddString"/>
+    <AddCallToMainScript
+      xmlfragment="${Packages.AddVarificationActions.Block}"
+      blockname="Varification">
+      <strings refid="NAnt.Main.Targets"/>
+    </AddCallToMainScript>
 	</target>
 
 	<property name="Packages.AddPostBuildActions.Block" value=""/>
 	<target name="Packages.AddPostBuildActions" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[${Packages.AddPostBuildActions.Block}]]>
-      </value>
-    </largeproperty>
-
-    <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.PostBuildActions.EndTag}"/>
-
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <AddCallToMainScript
+      xmlfragment="${Packages.AddPostBuildActions.Block}"
+      blockname="Post Build">
+      <strings refid="NAnt.Main.Targets"/>
+    </AddCallToMainScript>
   </target>
 
   <property name="Private.Packages.MainBuild.Replace.To" value=""/>
@@ -463,4 +483,33 @@ static string Normalize(string input)
     </loopthrough>
   </target>
 
+  <macrodef name="AddCallToMainScript">
+    <attributes>
+      <attribute name="xmlfragment" require="true" type="string"/>
+      <attribute name="blockname" require="true" type="string"/>
+    </attributes>
+    <elements>
+      <element name="strings" require="True" type="CIFactory.NAnt.Types.StringList"/>
+    </elements>
+    <sequential>
+      <loopthrough property="NAnt.Main.Target">
+        <items>
+          <element name="strings"/>
+        </items>
+        <do>
+          <xmlpoke
+            file="${Current.BuildFile}"
+            pokemode="Before"
+            xpath="/nant:project/nant:target[@name = '${NAnt.Main.Target}']/nant:trycatch/n:try/nant:description[text()='End ${blockname} Actions']"
+            value="${xmlfragment}"
+        >
+            <namespaces>
+              <namespace prefix='nant' uri='http://nant.sf.net/schemas/nant.xsd' />
+            </namespaces>
+          </xmlpoke>
+        </do>
+      </loopthrough>
+    </sequential>
+  </macrodef>
+  
 </project>

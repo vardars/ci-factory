@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Target" >
 
-	<include buildfile="SourceControl.Properties.xml" />
-
 	<target name="SourceControl.CleanGetFromFileSpecThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
 			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>

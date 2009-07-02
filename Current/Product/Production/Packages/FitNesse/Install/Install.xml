@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="FitNesse.Install" default="FitNesse.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="FitNesse.Install">
+    <strings id="NAnt.Main.Targets">
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false">
+        <![CDATA[<property name="FitNesse.IntegrationSuitePath" value="TriservRoot.IntegrationSuite.BugSuite"/>
+        <property name="FitNesse.Reports.FileName" value="BugSuiteFitNesseReport.xml"/>
+        <property name="FitNesse.FailBuildForFailingTest" value="false"/>
+        <call target="FitNesse.RunTests"/>
+
+        <property name="FitNesse.IntegrationSuitePath" value="TriservRoot.IntegrationSuite.DevelopmentIterationSuite"/>
+        <property name="FitNesse.Reports.FileName" value="DevelopmentIterationSuiteFitNesseReport.xml"/>
+        <property name="FitNesse.FailBuildForFailingTest" value="false"/>
+        <call target="FitNesse.RunTests"/>
+
+        <property name="FitNesse.IntegrationSuitePath" value="TriservRoot.IntegrationSuite.RegressionSuite"/>
+        <property name="FitNesse.Reports.FileName" value="RegressionSuiteFitNesseReport.xml"/>
+        <property name="FitNesse.FailBuildForFailingTest" value="true"/>
+        <call target="FitNesse.RunTests"/>]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\FitNesse\FitNesseDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<artifactXslBuildPlugin
+        description="FitNesse Bug Suite Details"
+        actionName="FitNesseBugSuiteDetailsBuildReport"
+        xslFileName="Packages\FitNesse\FitNesseDetails.xsl"
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+        xmlFileName="BugSuiteFitNesseReport.xml"
+        imageFileName="Packages\FitNesse\logo.gif"
+      >
+        <includedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+        </includedProjects>
+      </artifactXslBuildPlugin>
+      <artifactXslBuildPlugin
+        description="FitNesse Development Iteration Suite Details"
+        actionName="FitNesseDevelopmentIterationSuiteDetailsBuildReport"
+        xslFileName="Packages\FitNesse\FitNesseDetails.xsl"
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+        xmlFileName="DevelopmentIterationSuiteFitNesseReport.xml"
+        imageFileName="Packages\FitNesse\logo.gif"
+      >
+        <includedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+        </includedProjects>
+      </artifactXslBuildPlugin>
+      <artifactXslBuildPlugin
+        description="FitNesse Regression Suite Details"
+        actionName="FitNesseRegressionSuiteDetailsBuildReport"
+        xslFileName="Packages\FitNesse\FitNesseDetails.xsl"
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+        xmlFileName="RegressionSuiteFitNesseReport.xml"
+        imageFileName="Packages\FitNesse\logo.gif"
+      >
+        <includedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+        </includedProjects>
+      </artifactXslBuildPlugin>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <strings id="CCNet.Build.Types">
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddXslMerger.Block" dynamic="true">
+      <value>
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\FitNesse\FitNesseSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Test\FitNesseReports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="FitNesse.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="FitNesse"/>
+  </target>
+
+  <target name="FitNesse.ValidateParameters">
+
+  </target>
+  
+</project>

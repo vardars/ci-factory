@@ -506,4 +506,13 @@
       <arg line='-m "Support Branch by CI Factory Installer"'/>
     </exec>
   </target>
+
+  <target name="Personal.Commit">
+    <exec program="${TortoisePath}" workingdir="${Common.Directory.CodeLine.Path}" verbose="${SVN.Debug}" >
+      <arg line="/command:commit" />
+      <arg line='/path:"${Common.Directory.CodeLine.Path}"' />
+      <arg line='/notempfile' />
+      <arg line='/logmsg:"${SourceControl.Example.Commit.Message}"'/>
+    </exec>
+  </target>
 </project>

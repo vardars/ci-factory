@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="JUnit.Install" default="JUnit.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="JUnit.Install">
+    <largeproperty name="Packages.AddVarificationActions.Block">
+      <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddVarificationActions"/>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\JUnit\JUnitDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false">
+        <![CDATA[<artifactXslBuildPlugin 
+        description="Unit Test Details" 
+        actionName="UnitTestDetailsBuildReport" 
+        xslFileName="Packages\JUnit\junit-noframes.xsl"   
+        artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts" 
+        xmlFileName="unittests.xml"    
+        imageFileName="Packages\JUnit\logo.ico" 
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Deploy</projectName>
+        </excludedProjects>
+      </artifactXslBuildPlugin>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block" dynamic="true">
+      <value>
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\JUnit\JUnitSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Dev\UnitTestReports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="JUnit.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="JUnit"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
+  </target>
+
+  <target name="JUnit.ValidateParameters">
+
+  </target>
+  
+</project>

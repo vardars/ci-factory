@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Selenium">
 
+  <stringadd refid="Personal.UpdateSource.Before.Target.List">
+    <string value="Selenium.StopServer"/>
+  </stringadd>
+
+  <stringadd refid="Personal.UpdateSource.After.Target.List">
+    <string value="Selenium.RestartServer"/>
+  </stringadd>
+  
   <target name="Selenium.RunTests">
     <trycatch>
       <try>
@@ -41,6 +49,10 @@
     <if test="${Selenium.Failed}">
       <fail message="Atleast one web test has failed!  Please see the web test section for more details..."/>
     </if>
+  </target>
+
+  <target name="Selenium.RestartServer">
+    <call target="Selenium.StartServer" if="${Selenium.Status=='Started'}"/>
   </target>
   
   <target name="Selenium.StartServer">

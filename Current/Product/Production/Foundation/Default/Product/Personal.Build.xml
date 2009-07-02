@@ -14,152 +14,140 @@
   <include buildfile="Properties.Build.xml"/>
   <property name="CCNetProject" value="${ProjectName}"/>
   <property name="Compile.ConfigName" value="Debug"/>
-  
+  <property name="CCNetListenerFile" value="C:\Temp\antlistener.txt"/>
+
+  <property name="Workspace.Silent" value="False"/>
+
+  <strings id="Personal.UpdateSource.Before.Target.List"/>
+  <strings id="Personal.UpdateSource.After.Target.List"/>
+
   <include buildfile="Common.Build.xml" />
+  <include buildfile="Custom.Build.xml" />
 
   <description>Begin Package Includes</description>
   <loadpackages>
   </loadpackages>
   <description>End Package Includes</description>
 
+  <call target="Common.SetUp"/>
+
   <target name="CreateCommandPrompt">
-    <if test="${Ant.Included}">
-      <setenv>
-        <environment refid="${Ant.Environment.RefId}" />
-      </setenv>
-    </if>
     <setenv>
-      <environment refid="${Compile.Environment.RefId}" />
+      <environment refid="${Common.EnvironmentVariables.RefId}" />
     </setenv>
 
-    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${Common.Directory.Product.Path}" />
+    <call target="UpdateWorkspace"/>
+
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" workingdir="${Common.Directory.Product.Path}" commandline="/K title ${ProjectName} command prompt" />
   </target>
   
+  <target name="UpdateWorkspace">
+    <call target="Workspace.CheckForRequieredSoftware" />
+    <call target="Workspace.ConfigureEnvironment" />
+  </target>
+
   <target name="Build">
-    <call target="Workspace.CheckForRequieredSoftware" if="${target::exists('Workspace.CheckForRequieredSoftware')}"/>
-    <call target="Workspace.ConfigureEnvironment" if="${target::exists('Workspace.ConfigureEnvironment')}"/>
+    <call target="UpdateWorkspace"/>
     <call target="Compile"/>
-    <call target="Test" if="${target::exists('Test')}"/>
+    <call target="DatabaseRebuild"/>
+    <call target="Test"/>
+    <call target="Package"/>
+  </target>
+
+  <target name="Commit">
+    <ifthenelse test="${target::exists(Personal.Commit)}">
+      <then>
+        <call target="Build"/>
+        <call target="Personal.Commit"/>
+      </then>
+      <else>
+        <fail message="Could not find target Personal.Commit!"/>
+      </else>
+    </ifthenelse>
   </target>
 
   <target name="Rebuild">
-    <call target="Workspace.CheckForRequieredSoftware"/>
-    <call target="Workspace.ConfigureEnvironment"/>
+    <call target="UpdateWorkspace"/>
     <call target="Recompile"/>
+    <call target="DatabaseRebuild"/>
     <call target="Test"/>
+    <call target="Package"/>
   </target>
 
   <target name="UpdateSource">
+    <loopthrough property="Personal.UpdateSource.Before.Target">
+      <items>
+        <strings refid="Personal.UpdateSource.Before.Target.List" />
+      </items>
+      <do>
+        <call target="${Personal.UpdateSource.Before.Target}" />
+      </do>
+    </loopthrough>
+    
     <property name="SourceControl.Update.FileTimeStamp" value="Current"/>
     <property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
     <property name="SourceControl.Update.MakeWritable" value="False"/>
-		<property name="SourceControl.Update.Interactive" value="True"/>
+    <property name="SourceControl.Update.Interactive" value="True"/>
     <call target="SourceControl.GetOfCodeLineDirectory"/>
+
+    <loopthrough property="Personal.UpdateSource.After.Target">
+      <items>
+        <strings refid="Personal.UpdateSource.After.Target.List" />
+      </items>
+      <do>
+        <call target="${Personal.UpdateSource.After.Target}" />
+      </do>
+    </loopthrough>
   </target>
 
   <target name="Compile">
-    <if test="${Ant.Included}">
-      <call target="Ant.Build"/>
-    </if>
-    <fileset id="InfoFiles">
-      <include name="${Common.Directory.Product.Path}\ProjectInfo.*"/>
-      <include name="${Common.Directory.Product.Path}\**\AssemblyInfo.*"/>
-    </fileset>
-    <trycatch>
-      <try>
-        <call target="Compile.SetUp"/>
-
-        <attrib readonly="false">
-          <fileset refid="InfoFiles" />
-        </attrib>
-        <touch millis="1">
-          <fileset refid="InfoFiles" />
-        </touch>
-        <attrib readonly="true">
-          <fileset refid="InfoFiles" />
-        </attrib>
-
-        <property name="Compile.ToCopyToBin" value="false"  />
-        <property name="Compile.ToDeployZip" value="false"  />
-        <property name="Compile.PublishLogFile" value="false" />
-        <call target="Compile.CompileSource" />
-      </try>
-      <catch property="ExceptionMessage">
-        <call target="Compile.ShowReport"/>
-        
-        <fail message="${ExceptionMessage}"/>
-      </catch>
-      <finally>
-        <call target="Compile.TearDown"/>
-      </finally>
-    </trycatch>
+    <ifthenelse test="${target::exists(Personal.Compile)}">
+      <then>
+        <call target="Personal.Compile"/>
+      </then>
+      <else>
+        <fail message="Could not find target Personal.Compile!"/>
+      </else>
+    </ifthenelse>
   </target>
 
   <target name="Recompile">
-    <fileset id="ProjectFiles">
-      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
-    </fileset>
-    <foreach item="File" property="ProjectFile.Path">
-      <in>
-        <items refid="ProjectFiles" />
-      </in>
-      <do>
-        <echo message="******************************************************"/>
-        <echo message="Cleaning ${ProjectFile.Path}"/>
-
-        <property name="Obj.Path" value="${path::get-directory-name(ProjectFile.Path)}\obj"/>
-        <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
-
-        <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, Common.Directory.Product.Path)}">
-          <delete verbose="true">
-            <fileset basedir="${Output.Path}">
-              <include name="**\*"/>
-              <exclude name="**\*.vshost.exe"/>
-            </fileset>
-          </delete>
-        </if>
-      </do>
-    </foreach>
-    <call target="Compile"/>
+    <ifthenelse test="${target::exists(Personal.Recompile)}">
+      <then>
+        <call target="Personal.Recompile"/>
+      </then>
+      <else>
+        <fail message="Could not find target Personal.Recompile!"/>
+      </else>
+    </ifthenelse>
   </target>
 
   <target name="Test">
-    <trycatch>
-      <try>
-        <call target="UnitTest.SetUp"/>
-
-        <call target="UnitTest.RunTests"/>
-      </try>
-      <catch property="ExceptionMessage">
-        <call target="UnitTest.ShowReport"/>
-
-        <fail message="${ExceptionMessage}"/>
-      </catch>
-      <finally>
-        <call target="UnitTest.TearDown"/>
-      </finally>
-    </trycatch>
+    <call target="UnitTest"/>
+    <call target="IntegrationTest"/>
+  </target>
+  
+  <target name="UnitTest">
+    <if test="${target::exists(Personal.UnitTest)}">
+      <call target="Personal.UnitTest"/>
+    </if>
   </target>
 
-  <target name="Ant.Build">
-    <trycatch>
-      <try>
-        <call target="Ant.SetUp"/>
-        <call target="Ant.CompileSource" />
-      </try>
-      <catch property="ExceptionMessage">
-        <property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
-        <property name="Common.ShowReport.HtmlFile" value="${Common.Directory.Build.Path}\AntLogs\AntReport.html"/>
-        <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\Ant\AntReport.xsl"/>
-        <property name="Common.ShowReport.DetailsFilePath" value=""/>
-        <call target="Common.ShowReport"/>
+  <target name="IntegrationTest">
+    <if test="${target::exists(Personal.IntegrationTest)}">
+      <call target="Personal.IntegrationTest"/>
+    </if>
+  </target>
 
-        <fail message="${ExceptionMessage}"/>
-      </catch>
-      <finally>
-        <call target="Ant.TearDown"/>
-      </finally>
-    </trycatch>
+  <target name="Package">
+    <if test="${target::exists(Personal.Package)}">
+      <call target="Personal.Package"/>
+    </if>
+  </target>
+
+  <target name="DatabaseRebuild">
+    <if test="${target::exists(Personal.DatabaseRebuild)}">
+      <call target="Personal.DatabaseRebuild"/>
+    </if>
   </target>
 </project>

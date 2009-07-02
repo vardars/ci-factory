@@ -80,31 +80,84 @@
           <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
           <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
           ${SourceControl.CCNet.Credentials}
-        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+          ${SourceControl.BuildUpdateBlock.WebRepoUrl}
           <tagBaseUrl>${CCNet.SVN.URI.Tags}</tagBaseUrl>
         </sourceControlProvider>
         <exclusionFilters>
-          <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
-          </pathFilter>
-          <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
-          </pathFilter>
-          <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
-          </pathFilter>
-          <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
-          </pathFilter>
-          <pathFilter>
-            <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
-          </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse/**/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
+        </pathFilter>
         </exclusionFilters>
       </sourcecontrol>]]></value>
       </largeproperty>
 
+  <largeproperty name="SourceControl.ReleaseBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="filtered">
+      <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}</trunkUrl>
+        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
+        <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
+        ${SourceControl.CCNet.Credentials}
+        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+      </sourceControlProvider>
+      <exclusionFilters>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/FitNesse/**/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
+        </pathFilter>
+        <pathFilter>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
+        </pathFilter>
+      </exclusionFilters>
+    </sourcecontrol>]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.TestBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="filtered">
+      <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
+        <trunkUrl>${CCNet.SVN.URI.ProjectCodeLine}/FitNesse</trunkUrl>
+        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
+        <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
+        ${SourceControl.CCNet.Credentials}
+        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+      </sourceControlProvider>
+    </sourcecontrol>]]>
+    </value>
+  </largeproperty>
+
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.ReleaseBuildBlock%', SourceControl.ReleaseBuildBlock)}"/>
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.TestBuildBlock%', SourceControl.TestBuildBlock)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.URI.Root%', SVN.URI.Root)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.URI.ProjectName%', SVN.URI.ProjectName)}" />
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SVN.URI.ProjectCodeLine%', SVN.URI.ProjectCodeLine)}" />

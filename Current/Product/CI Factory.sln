@@ -30,9 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E462DBA7-A4A4-4219-B565-B055BD01606B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Power Tools", "Power Tools", "{A32167E4-D3A2-404A-A9FC-9DCDDD36F6B8}"
-	ProjectSection(SolutionItems) = preProject
-		Power Tools\Ant.Environment.xml = Power Tools\Ant.Environment.xml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAnt", "NAnt", "{58F8D7E1-A3F5-4DBE-BE90-07C2D515EE92}"
 EndProject
