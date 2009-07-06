@@ -32,11 +32,11 @@
     </value>
   </largeproperty>
   
-  <property name="SVN.URI.Root" value="https://${ProjectName}.googlecode.com/svn"  />
+  <property name="SVN.URI.Root" value="http://${ProjectName}.googlecode.com/svn"  />
   <property name="SVN.URI.ProjectName" value="${SVN.URI.Root}" /> <!--In a shared repo this might be "${SVN.URI.Root}/${ProjectName}"-->
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
 
-  <property name="CCNet.SVN.URI.ProjectName" value="https://&amp;ProjectName;.googlecode.com/svn" />
+  <property name="CCNet.SVN.URI.ProjectName" value="http://&amp;ProjectName;.googlecode.com/svn" />
   <property name="CCNet.SVN.URI.ProjectCodeLine" value="${CCNet.SVN.URI.ProjectName}/&amp;ProjectCodeLineName;" />
 
   <property name="SVN.WebVisible" value="true" />
@@ -83,53 +83,84 @@
   </strings>
 
   <target name="Post.Install">
-    <nant buildfile="${Common.Directory.Build.Path}\Scratch.build.xml" inheritall="false" inheritrefs="false" target="rebuild-setups" />
-    <exec program="${Common.Directory.Build.Path}\UpdatenAntSchema.bat" workingdir="${Common.Directory.Build.Path}"/>
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:Scratch.build.xml"/>
+      <arg line="rebuild-setups"/>
+    </exec>
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:UpdatenAntSchema.xml"/>
+    </exec>
     
     <call target="SetOrderForVersioning"/>
     <call target="SetOrderForCSDiff"/>
     <call target="CleanExtraXmlNs"/>
-    
-    <fileset id="PacakgeFinder" />
-    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
-    <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
-    <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
-    <nant target="SourceControl.Repository.Load">
-      <buildfiles>
-        <include name="${PackagePath}"/>
-      </buildfiles>
-    </nant>
-    
-    <nant buildfile="${Common.Directory.Build.Path}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:Scratch.build.xml"/>
+      <arg line="SourceControl.Repository.Load"/>
+    </exec>
+
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:SetupIIS.xml"/>
+    </exec>
 
     <asyncexec workingdir="${Common.Directory.Build.Path}" program="${CCNET.BatchFile}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
     <asyncexec workingdir="${Common.Directory.Build.Path}" program="${BuildVS.OpenSolutionBat}" createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" />
   </target>
 
   <target name='CleanExtraXmlNs'>
-    <xmlpeek
-      file="${Common.Directory.Build.Path}\Main.build.xml"
-      property="Tasks"
-      outerxml="true"
-      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/*|/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/comment()"
-    >
-      <namespaces>
-        <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
-      </namespaces>
-    </xmlpeek>
+    <loopthrough property="Target">
+      <items>
+        <strings>
+          <string value="Triggered"/>
+          <string value="Heavy"/>
+          <string value="Release"/>
+          <string value="Deploy"/>
+          <string value="Test"/>
+        </strings>
+      </items>
+      <do>
+        <xmlpeek
+          file="${Common.Directory.Build.Path}\Main.build.xml"
+          property="Tasks"
+          outerxml="true"
+          xpath="/n:project/n:target[@name = '${Target}']/n:trycatch/n:try/*|/n:project/n:target[@name = '${Target}']/n:trycatch/n:try/comment()"
+        >
+          <namespaces>
+            <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
+          </namespaces>
+        </xmlpeek>
 
-    <property name='Tasks' value="${string::replace(Tasks, 'xmlns=&quot;&quot;', '')}"/>
+        <property name='Tasks' value="${string::replace(Tasks, 'xmlns=&quot;&quot;', '')}"/>
 
-    <xmlpoke
-      file="${Common.Directory.Build.Path}\Main.build.xml"
-      pokemode='Replace'
-      value='${Tasks}'
-      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try"
-    >
-      <namespaces>
-        <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
-      </namespaces>
-    </xmlpoke>
+        <xmlpoke
+          file="${Common.Directory.Build.Path}\Main.build.xml"
+          pokemode='Replace'
+          value='${Tasks}'
+          xpath="/n:project/n:target[@name = '${Target}']/n:trycatch/n:try"
+        >
+          <namespaces>
+            <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
+          </namespaces>
+        </xmlpoke>
+      </do>
+    </loopthrough>
   </target>
 
   <target name='SetOrderForCSDiff'>

@@ -9,5 +9,5 @@ copy %3.dll "%Dest%"
 copy %3.pdb "%Dest%"
 copy %3.xml "%Dest%"
 cd %1
-where nant
+
 nant -buildfile:DevEnv\SetupScripts\SetUp.xml

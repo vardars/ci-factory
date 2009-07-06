@@ -174,17 +174,17 @@
       <filterchain refid="Common.FilterChain" />
     </copy>
 
-    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourcePackagesDirectory}\Product">
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true" >
+      <fileset basedir="${SourcePackagesDirectory}\${Packages.CopyPackage.PackageName}\Install\Product">
         <include name="**\*"/>
         <exclude name="**\*.bat"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />
     </copy>
 
-    <copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourcePackagesDirectory}\Product">
-        <exclude name="**\*.bat"/>
+    <copy todir="${Common.Directory.Product.Path}" overwrite="true" >
+      <fileset basedir="${SourcePackagesDirectory}\${Packages.CopyPackage.PackageName}\Install\Product">
+        <include name="**\*.bat"/>
       </fileset>
     </copy>
   </target>
@@ -273,9 +273,6 @@
 
     <if test="${Current.BuildFile == Common.Directory.Build.Path + '\Main.Build.xml'}">
       <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Scratch.build.xml"/>
-      <call target="Private.Packages.MainBuild.SmartAddString"/>
-      
-      <property name="Current.BuildFile" value="${Common.Directory.Product.Path}\Scratch.build.xml"/>
       <call target="Private.Packages.MainBuild.SmartAddString"/>
 
       <property name="Current.BuildFile" value="${Common.Directory.Product.Path}\Personal.Build.xml"/>
@@ -500,7 +497,7 @@ static string Normalize(string input)
           <xmlpoke
             file="${Current.BuildFile}"
             pokemode="Before"
-            xpath="/nant:project/nant:target[@name = '${NAnt.Main.Target}']/nant:trycatch/n:try/nant:description[text()='End ${blockname} Actions']"
+            xpath="/nant:project/nant:target[@name = '${NAnt.Main.Target}']/nant:trycatch/nant:try/nant:description[text()='End ${blockname} Actions']"
             value="${xmlfragment}"
         >
             <namespaces>

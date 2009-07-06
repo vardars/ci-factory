@@ -36,7 +36,7 @@
 <!ENTITY CCNet.Server.Rest.Url                 'http://&HostName;:&CCNet.Server.Rest.Port;'>
 <!ENTITY CCNet.Server.Directory.Path           '&Common.Directory.Build.Path;\server'>
 <!ENTITY CCNet.Dashboard.Directory.Path        '&Common.Directory.Build.Path;\dashboard'>
-<!ENTITY CCNet.Dashboard.Url                   'https://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
+<!ENTITY CCNet.Dashboard.Url                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>
 
 <!ENTITY Tools.NAnt.Bin                         '&Common.Directory.Tools.Path;\nAnt\bin' >
 <!ENTITY Tools.NAnt.Exe                         '&Tools.NAnt.Bin;\nant.exe' >

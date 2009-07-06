@@ -757,10 +757,10 @@ if(!document.getElementById)
         <xsl:variable name="BuildUrl">
           <xsl:choose>
             <xsl:when test="./@status = 'Success'">
-              <xsl:value-of select="concat('https://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, 'Lbuild.', @build-label, '.xml')"/>
+              <xsl:value-of select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, 'Lbuild.', @build-label, '.xml')"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="concat('https://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, '.xml')"/>
+              <xsl:value-of select="concat('http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewBuildReport=true&amp;server=&ProjectName;-&ProjectCodeLineName;&amp;project=', $ProjectName, '&amp;build=log', $BuildTimeStamp, '.xml')"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>

@@ -60,30 +60,8 @@
     <None Include="dashboard\cruisecontrol.css" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\&ProductDirectoryName;\Compile.Environment.xml">
-      <Link>Personal.Build\Compile.Environment.xml</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\OpenSolution.Script.xml">
-      <Link>Personal.Build\OpenSolution.Script.xml</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\Personal.Build.xml">
-      <Link>Personal.Build\Personal.Build.xml</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\Build.bat">
-      <Link>Personal.Build\Build.bat</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\NoUpdateBuild.bat">
-      <Link>Personal.Build\NoUpdateBuild.bat</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\OpenCommandPrompt.bat">
-      <Link>Personal.Build\OpenCommandPrompt.bat</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\OpenSolution.bat">
-      <Link>Personal.Build\OpenSolution.bat</Link>
-    </None>
-    <None Include="..\&ProductDirectoryName;\Test.bat">
-      <Link>Personal.Build\Test.bat</Link>
-    </None>
+    <None Include="..\&Common.Directory.Product.Name;\*.xml"/>
+    <None Include="..\&Common.Directory.Product.Name;\*.bat"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scratch.cs" />

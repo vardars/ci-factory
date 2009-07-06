@@ -8,19 +8,18 @@
 	<include buildfile="Scratch.Lib.xml"/>
   
   <target name="test">
-    <property name="SchemaFile" value="${Common.Directory.Product.Path}\NAnt.xsd"/>
-
-    <nantschema output="${SchemaFile}" target-ns="http://nant.sf.net/schemas/nant.xsd">
-      <propertyexclude>^nant.task.*</propertyexclude>
-    </nantschema>
-    <!--<nant buildfile="..\Scripts\Personal.Build.xml" target="Custom.NAnt.CreateDocumentation"/>-->
-    <exec
-      program="${Common.Directory.ThirdParty.Path}\nAnt\bin\nant.exe"
-      verbose="True"
-    >
-      <arg line='/f:"${Common.Directory.Product.Path}\Scripts\Personal.build.xml"'/>
-      <arg line="Custom.NAnt.CreateDocumentation"/>
-    </exec>
+    <attachdebugger/>
+    <foreach item="File" property="TaskAssembly">
+      <in>
+        <items>
+          <include name="..\Production\Packages\**\*Task*.dll"/>
+          <include name="..\Integration Tests\bin\*Task*.dll"/>
+        </items>
+      </in>
+      <do>
+        <echo message="${TaskAssembly}" />
+      </do>
+    </foreach>
   </target>
 
 

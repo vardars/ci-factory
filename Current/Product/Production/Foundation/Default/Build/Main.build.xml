@@ -70,6 +70,36 @@
     </trycatch>
   </target>
 
+  <target name="Release" depends="SetUps" >
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+        <description>End Compile Actions</description>
+
+        <description>Begin Varification Actions</description>
+        <description>End Varification Actions</description>
+
+        <description>Begin Post Build Actions</description>
+        <description>End Post Build Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+
+        <call target="TearDowns"/>
+
+      </finally>
+    </trycatch>
+  </target>
+
   <target name="Test" depends="SetUps" >
     <trycatch>
       <try>

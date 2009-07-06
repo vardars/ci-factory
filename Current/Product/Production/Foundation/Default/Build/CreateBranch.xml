@@ -111,7 +111,7 @@
         <property name="Tools.NAnt.Bin" value="${BranchCommon.Directory.Build.Path}\nant\bin"/>
         <property name="Tools.NAnt.Exe" value="${Tools.NAnt.Bin}\nant.exe"/>
 
-        <property name="CCNet.Dashboard.Url" value="https://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
+        <property name="CCNet.Dashboard.Url" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
     </nant>
     
@@ -151,7 +151,7 @@
         <property name="Tools.NAnt.Bin" value="${BranchCommon.Directory.Build.Path}\nant\bin"/>
         <property name="Tools.NAnt.Exe" value="${Tools.NAnt.Bin}\nant.exe"/>
 
-        <property name="CCNet.Dashboard.Url" value="https://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
+        <property name="CCNet.Dashboard.Url" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
     </nant>
 

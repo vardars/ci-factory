@@ -93,7 +93,8 @@
     <if test="${Ant.Included}">
       <call target="Ant.Build"/>
     </if>
-    <fileset id="InfoFiles">
+    <fileset id="InfoFiles" basedir="${ProductDirectory}">
+      <exclude name="${ProductionDirectory}\Packages\**\*"/>
       <include name="${ProductDirectory}\ProjectInfo.*"/>
       <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
     </fileset>
@@ -140,7 +141,8 @@
   </target>
 
   <target name="Clean">
-    <fileset id="ProjectFiles">
+    <fileset id="ProjectFiles" basedir="${ProductDirectory}">
+      <exclude name="${ProductionDirectory}\Packages\**\*"/>
       <include name="${ProductDirectory}\**\*.*proj"/>
     </fileset>
     <foreach item="File" property="ProjectFile.Path">

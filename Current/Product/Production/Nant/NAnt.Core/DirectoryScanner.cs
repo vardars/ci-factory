@@ -363,10 +363,7 @@ namespace NAnt.Core {
                     if (!(bool)_searchDirIsRecursive[index] && isRecursive) {
                         _searchDirIsRecursive[index] = isRecursive;
                     }
-                }
-
-                // if the directory has not been added, add it
-                if (index == -1) {
+                } else {
                     _searchDirectories.Add(searchDirectory);
                     _searchDirIsRecursive.Add(isRecursive);
                 }
@@ -462,8 +459,7 @@ namespace NAnt.Core {
         }
 
         private bool IsCaseSensitiveFileSystem(string path) {
-            // Windows (not case-sensitive) is backslash, others (e.g. Unix) are not
-            return (VolumeInfo.IsVolumeCaseSensitive(new Uri(Path.GetFullPath(path) + Path.DirectorySeparatorChar))); 
+            return PlatformHelper.IsUnix;
         }
 
         /// <summary>
@@ -554,7 +550,10 @@ namespace NAnt.Core {
 
             foreach (string directoryPath in Directory.GetDirectories(path)) 
             {
-                if (recursive) {
+                if (!ShouldRecurse(directoryPath, caseSensitive, includedPatterns, excludedPatterns))
+                {
+                    continue;
+                } else if (recursive) {
                     // scan subfolders if we are running recursively
                     ScanDirectory(directoryPath, true);
                 } else {
@@ -616,6 +615,26 @@ namespace NAnt.Core {
             } else {
                 return r.IsMatch(path.Substring(entry.BaseDirectory.Length + 1));
             }
+        }
+
+        private bool ShouldRecurse(string directoryPath, bool caseSensitive, ArrayList includedPatterns, ArrayList excludedPatterns)
+        {
+            CompareOptions compareOptions = CompareOptions.None;
+            CompareInfo compare = CultureInfo.InvariantCulture.CompareInfo;
+
+            if (!caseSensitive)
+                compareOptions |= CompareOptions.IgnoreCase;
+            
+            foreach (RegexEntry entry in excludedPatterns) {
+                //if (entry.Pattern.EndsWith(@"**/*") || entry.Pattern.EndsWith(@"**\*"))
+                //{
+                    if (TestRegex(directoryPath, entry, caseSensitive))
+                    {
+                        return false;
+                    }
+                //}
+            }
+            return true;
         }
 
         private bool IsPathIncluded(string path, bool caseSensitive, ArrayList includedPatterns, ArrayList excludedPatterns) {
@@ -940,8 +959,7 @@ namespace NAnt.Core {
         /// case-sensitive filesystem; otherwise, <see langword="false" />.
         /// </returns>
         private bool IsCaseSensitiveFileSystem(string path) {
-            return PlatformHelper.IsVolumeCaseSensitive(Path.GetFullPath(path) 
-                + Path.DirectorySeparatorChar); 
+            return PlatformHelper.IsUnix; 
         }
 
         #endregion Private Instance Methods
