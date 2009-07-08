@@ -383,8 +383,6 @@
       <merge>
         <files>
           <file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Release\Reports\*.xml</file>
-          <file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Release\AntLogs\*.xml</file>
-          <file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Release\TargetProcess\*.xml</file>
         </files>
       </merge>
       <xslmerger dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
