@@ -21,7 +21,7 @@
     </code>
   </script>
 
-  <property name="Workspace.Ftp.Url" value="ftp://username:password@server.domain.com/path/"/>
+  <property name="Workspace.Ftp.Url" value="%Workspace.Ftp.Url%"/>
   
   <strings id="Workspace.RequieredSoftware">
     <string value="CCTray"/>

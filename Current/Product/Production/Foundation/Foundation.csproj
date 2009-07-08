@@ -315,5 +315,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Default\Third Party\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

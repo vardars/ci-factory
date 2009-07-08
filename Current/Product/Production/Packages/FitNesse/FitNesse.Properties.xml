@@ -3,7 +3,7 @@
 
   <property name="FitNesse.WikiRoot" value="${Common.Directory.Product.Path}\FitNesse\Run\fitnesse\FitNesseRoot" overwrite="false"/>
   <property name="FitNesse.Port" value="8082" overwrite="false"/>
-  <property name="FitNesse.IntegrationSuitePath" value="TriservRoot.IntegrationSuite" overwrite="false"/>
+  <property name="FitNesse.IntegrationSuitePath" value="ProjectRoot.IntegrationSuite" overwrite="false"/>
   <property name="FitNesse.Host" value="http://localhost" overwrite="false"/>
   <property name="FitNesse.IntegrationSuiteUrl" value="${FitNesse.Host}:${FitNesse.Port}/${FitNesse.IntegrationSuitePath}" overwrite="false" dynamic="true"/>
 
@@ -17,7 +17,7 @@
   <environment id="${FitNesse.Environment.RefId}">
     <variable name="JAVA_HOME" value="${Java.Home}" />
     <variable name="PATH" path="${Common.EnvironmentVariables.Path};${Ant.Bin};${Java.Home}\bin;${Java.Home};${environment::get-variable('ProgramFiles')}\Subversion\bin;${Oracle.Bin}" />
-    <variable name="ProjectName" value="Triserv"/>
+    <variable name="ProjectName" value="${ProjectName}"/>
     <variable name="TP.UserName" value="flowersj"/>
     <variable name="TP.Password" value="password"/>
     <variable name="TP.Url" value="http://tp.agilexhealth.com"/>

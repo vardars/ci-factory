@@ -64,7 +64,7 @@
           </tr>
         </thead>
         <tbody>
-          <xsl:apply-templates select="//target">
+          <xsl:apply-templates select=".//target">
             <xsl:sort select="duration" order="descending" data-type="number" />
           </xsl:apply-templates>
         </tbody>

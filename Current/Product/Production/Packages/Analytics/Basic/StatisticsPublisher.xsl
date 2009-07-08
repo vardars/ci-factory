@@ -252,8 +252,8 @@
         <xsl:with-param name="StatisticValue" select="format-number($PackageTime div 1000,'##0.00')"/>
       </xsl:call-template>
       
-      <xsl:variable name="ProduceSourceUpdate"    select="//task[@name='call']/target[@name='SourceControl.GetOfCommon.Directory.Product.Path' or @name='SourceControl.CleanGetOfCommon.Directory.Product.Path']/parent::node()/duration/text()"/>
-      <xsl:variable name="ThirdPartySourceUpdate" select="//task[@name='call']/target[@name='SourceControl.GetOfCommon.Directory.ThirdParty.Path' or @name='SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path']/parent::node()/duration/text()"/>
+      <xsl:variable name="ProduceSourceUpdate"    select="//task[@name='call']/target[@name='SourceControl.GetOf.Common.Directory.Product.Path' or @name='SourceControl.CleanGetOf.Common.Directory.Product.Path']/parent::node()/duration/text()"/>
+      <xsl:variable name="ThirdPartySourceUpdate" select="//task[@name='call']/target[@name='SourceControl.GetOf.Common.Directory.ThirdParty.Path' or @name='SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path']/parent::node()/duration/text()"/>
       <xsl:variable name="UnitTests"              select="//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
 
       <xsl:call-template name="AddStatistic">

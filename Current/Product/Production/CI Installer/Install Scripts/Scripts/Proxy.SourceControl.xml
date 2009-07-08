@@ -49,14 +49,14 @@
   </target>
 
   <target name="Proxy.SourceControl.UpdateTarget">
-    <ifthenelse test="${target::exists('SourceControl.GetOfCodeLineDirectory')}">
+    <ifthenelse test="${target::exists('SourceControl.GetOf.CodeLineDirectory')}">
       <then>
-        <call target="SourceControl.GetOfCodeLineDirectory"/>
+        <call target="SourceControl.GetOf.CodeLineDirectory"/>
       </then>
       <else>
         <call target="SourceControl.GetOfBuildDirectory"/>
-        <call target="SourceControl.GetOfThirdPartyDirectory"/>
-        <call target="SourceControl.GetOfProductDirectory"/>
+        <call target="SourceControl.GetOf.Common.Directory.ThirdParty.Path"/>
+        <call target="SourceControl.GetOf.Common.Directory.Product.Path"/>
       </else>
     </ifthenelse>
   </target>

@@ -144,7 +144,7 @@
 
 	</target>
   
-  <target name="Personal.UnitTest" if="${target::exists('UnitTest::Personal.UnitTest')" override="True">
+  <target name="Personal.UnitTest" if="${target::exists('UnitTest::Personal.UnitTest')}" override="True">
     <trycatch>
       <try>
         <call target="UnitTest::Personal.UnitTest"/>
@@ -155,7 +155,7 @@
     </trycatch>
   </target>
 
-  <target name="Personal.IntegrationTest" if="${target::exists('UnitTest::Personal.IntegrationTest')" override="True">
+  <target name="Personal.IntegrationTest" if="${target::exists('UnitTest::Personal.IntegrationTest')}" override="True">
     <trycatch>
       <try>
         <call target="IntegrationTest::Personal.IntegrationTest"/>

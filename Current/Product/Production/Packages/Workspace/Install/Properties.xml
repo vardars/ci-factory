@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Install.Properties">
 
-  <property name="WinRarDownloadUrl" value="http://www.win-rar.com/index.php?id=160&amp;dl=wrar371.exe"/>
+  <property name="WinRarDownloadUrl" value="http://www.win-rar.com/index.php?id=943&dl=wrar39b4.exe"/>
   <property name="WinRarProgramPath" value="${'$'}{environment::get-variable('ProgramFiles')}\winrar\winrar.exe"/>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%WinRarProgramPath%', WinRarProgramPath)}"/>
+
+  <property name="Workspace.Ftp.Url" value="ftp://username:password@server.domain.com/path/"/>
+
+  <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Workspace.Ftp.Url%', Workspace.Ftp.Url)}"/>
 </project>

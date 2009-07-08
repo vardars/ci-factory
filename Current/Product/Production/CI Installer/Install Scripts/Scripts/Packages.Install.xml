@@ -292,7 +292,7 @@
 
     <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddSetUp.EndTag}"/>
 
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <call target="Private.Packages.MainBuild.SmartAddString" failonerror="False"/>
   </target>
 
 
@@ -305,7 +305,7 @@
 
     <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddTearDown.EndTag}"/>
 
-    <call target="Private.Packages.MainBuild.SmartAddString"/>
+    <call target="Private.Packages.MainBuild.SmartAddString" failonerror="False"/>
   </target>
 
 

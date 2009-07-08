@@ -44,7 +44,7 @@
       <value>
         <![CDATA[<filepair>
             <xslfile>&Common.Directory.Packages.Path;\Selenium\SeleniumSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Test\WebTestReports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\WebTestReports\*.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>

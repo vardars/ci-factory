@@ -83,6 +83,7 @@
 		</copy>
 
 		<copy overwrite="true" todir="${CCNET.DashboardDirectory}">
+      <filterchain refid="Common.FilterChain" />
 			<fileset basedir="${Private.CCNET.DefaultDashboardDirectory}">
 				<include name="**/*" />
 				<exclude name="${Private.CCNET.DefaultConfigFile}"/>

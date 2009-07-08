@@ -11,7 +11,7 @@
     <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
 
     <property name="CCNetLabel" value="1.0.0.2"/>
-    <property name="CCNetProject" value="triserv"/>
+    <property name="CCNetProject" value="%ProjectName%"/>
     <property name="CCNetLogFilePath" value="C:\Temp\log20060912111000Lbuild.1.0.0.2.xml"/>
     <property name="CCNetListenerFile" value="C:\Temp\AntListener.txt"/>
     

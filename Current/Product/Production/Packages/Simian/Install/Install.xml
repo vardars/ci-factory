@@ -15,7 +15,19 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Simian Report" actionName="SimianReport" xslFileName="Packages\Simian\SimianDisplayReport.xsl" imageFileName="Packages\Simian\logo.gif" />]]></value>
+      <value xml="false">
+        <![CDATA[<xslReportBuildPlugin 
+        description="Simian Report" 
+        actionName="SimianReport" 
+        xslFileName="Packages\Simian\SimianDisplayReport.xsl" 
+        imageFileName="Packages\Simian\logo.gif" 
+      >
+        <excludedProjects>
+          <projectName>&ProjectName;-&ProjectCodeLineName; Build Scripts</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Test</projectName>
+          <projectName>&ProjectName;-&ProjectCodeLineName;-Deploy</projectName>
+        </excludedProjects>
+      </xslReportBuildPlugin>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

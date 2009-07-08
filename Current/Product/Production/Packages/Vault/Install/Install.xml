@@ -5,8 +5,8 @@
 
   <target name="Vault.Install">
     <largeproperty name="Packages.AddCleanUpActions.Block">
-      <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-      <call target="SourceControl.CleanGetOfProductDirectory" />]]></value>
+      <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path" />
+      <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />]]></value>
     </largeproperty>
     <call target="Packages.AddCleanUpActions"/>
   </target>

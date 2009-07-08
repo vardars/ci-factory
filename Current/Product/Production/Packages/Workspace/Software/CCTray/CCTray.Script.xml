@@ -5,7 +5,7 @@
   <property name="CCTray.Install.Path" value="C:\Program Files\CCTray"/>
   <property name="CCTray.Installer.FileName" value="CCTraySetup.exe"/>
   <property name="CCTray.Installer.FilePath" value="C:\TEMP\${CCTray.Installer.FileName}"/>
-  <property name="CCTray.Installer.Download.URL" value="http://athc-build.agilexhealth.com/triserv-esb-trunk/default.aspx?_action_CCTrayDownload=true"/>
+  <property name="CCTray.Installer.Download.URL" value="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/default.aspx?_action_CCTrayDownload=true"/>
   
 	<target name="Workspace.RequieredSoftware.CCTray">
     <ifnot test="${directory::exists(CCTray.Install.Path)}" >

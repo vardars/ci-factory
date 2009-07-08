@@ -83,11 +83,11 @@
       <trycatch>
         <try>
           <get
-           src="http://localhost:${Selenium.Port}/selenium-server/driver/?cmd=shutDown"
+           src="http://localhost:${Selenium.Port}/selenium-server/driver/?cmd=shutDownSeleniumServer"
            dest="${environment::get-variable('TEMP')}\selenium-shutdown.txt"
           />
           <loadfile file="${environment::get-variable('TEMP')}\selenium-shutdown.txt" property="Selenium.ShutdownResult" />
-          <fail unless="${Selenium.ShutdownResult == 'OK'}" message="Failed to stop Selenium server, server returned: ${Selenium.ShutdownResult}."/>
+          <fail unless="${Selenium.ShutdownResult == 'OKOK'}" message="Failed to stop Selenium server, server returned: ${Selenium.ShutdownResult}."/>
         </try>
         <catch property="exception">
           <regex input="${exception}" pattern="(?'seleniumstatus'No connection could be made because the target machine actively refused it)" failonerror="false"/>

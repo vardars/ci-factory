@@ -5,6 +5,22 @@
   
 	<target name="Workspace.Configuration.Eclipse">
     <copy todir="${Eclipse.Worksapce.MetaData.Directory}">
+      <filterchain>
+        <replacestring from="%Java.Jdk%" to="${Java.Jdk}"   />
+        <replacestring from="%Java.Jdk.Version%" to="${string::replace(Java.Jdk, 'jdk', '')}"   />
+        <replacestring from="%Java.Home%" to="${Java.Home}"   />
+        <replacestring from="%Java.Exe%" to="${Java.Exe}"   />
+        <replacestring from="%Drive.Letter%" to="${string::substring(Common.Directory.ProjectsRoot.Path, 0, 1)}"   />
+        <replacestring from="%Common.Directory.ProjectsRoot.Name%" to="${string::substring(Common.Directory.ProjectsRoot.Path, 3, string::get-length(Common.Directory.ProjectsRoot.Path) - 3)}"   />
+        
+        <!--<replacestring from="%Java%" to="${Java}"   />-->
+
+        <replacestring from="%ProjectName%"                 to="${ProjectName}"   />
+        <replacestring from="%ProjectCodeLineName%"         to="${ProjectCodeLineName}"  />
+        <replacestring from="%Common.Directory.Product.Name%"        to="${Common.Directory.Product.Name}"  />
+        <replacestring from="%Common.Directory.ThirdParty.Name%"     to="${Common.Directory.ThirdParty.Name}"  />
+        <replacestring from="%Common.Directory.Production.Name%"     to="${Common.Directory.Production.Name}"  />
+      </filterchain>
       <fileset basedir="${Common.Directory.Packages.Path}\Workspace\Configuration\Eclipse\.metadata">
         <include name="**\*"/>
       </fileset>

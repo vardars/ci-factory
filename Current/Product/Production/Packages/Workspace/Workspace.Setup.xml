@@ -88,7 +88,7 @@
 		<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>
 		<property name="SourceControl.Update.MakeWritable" value="False"/>
 		<property name="SourceControl.Update.Interactive" value="True"/>
-		<call target="SourceControl.GetOfCodeLineDirectory"/>
+		<call target="SourceControl.GetOf.CodeLineDirectory"/>
 	</target>
 
 	<target name="WorkspaceSetup.CreateSfx">

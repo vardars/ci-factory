@@ -178,7 +178,7 @@
     <xmlpoke
       file="${Common.Directory.Build.Path}\Main.build.xml"
       pokemode="After"
-      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='SourceControl.CleanGetOfProductDirectory']"
+      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='SourceControl.CleanGetOf.Common.Directory.Product.Path']"
       value='&lt;call target="SourceModificationReport.PublishNewSource" /&gt;'
     >
       <namespaces>

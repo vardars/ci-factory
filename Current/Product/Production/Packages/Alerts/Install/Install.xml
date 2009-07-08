@@ -4,6 +4,9 @@
   <include buildfile="Properties.xml" />
   
   <target name="Alerts.Install">
+    <strings id="NAnt.Main.Targets">
+      <string value="PostBuild"/>
+    </strings>
     <largeproperty name="Packages.AddPostBuildActions.Block">
       <value xml="false">
       <![CDATA[<call target="Alerts.Run" failonerror="false"/>]]></value>

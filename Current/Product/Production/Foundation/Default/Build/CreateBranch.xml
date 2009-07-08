@@ -67,7 +67,7 @@
 
 		<call target="SetBranchProperties"/>
 
-    <call target="SourceControl.GetOfCodeLineDirectory"/>
+    <call target="SourceControl.GetOf.CodeLineDirectory"/>
 
 		<property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
 		<call target="SourceControl.StartCreateBranch"/>

@@ -39,7 +39,7 @@
     <call target="Private.SourceControl.Update"/>
   </target>
   
-  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+  <target name="SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
@@ -52,7 +52,7 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <target name="SourceControl.GetOfThirdPartyDirectory" >
+  <target name="SourceControl.GetOf.Common.Directory.ThirdParty.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
@@ -234,7 +234,7 @@
     </trycatch>
   </target>
   
-  <target name="SourceControl.CleanGetOfProductDirectory" >
+  <target name="SourceControl.CleanGetOf.Common.Directory.Product.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.Product.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
@@ -247,7 +247,7 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <target name="SourceControl.GetOfProductDirectory" >
+  <target name="SourceControl.GetOf.Common.Directory.Product.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.Product.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
@@ -274,7 +274,7 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <target name="SourceControl.GetOfCodeLineDirectory" >
+  <target name="SourceControl.GetOf.CodeLineDirectory" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.CodeLine.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 

@@ -45,7 +45,7 @@
 
     <if test="${CallPostBuildFailed}">
       <loadfile file="${CallPostBuildLogFilePath}" property="CallPostBuildLogContent" />
-      <mail tolist="%BuildMaster.Email%" from="%ProjectName%.Build@noreply.com" mailhost="127.0.0.1" subject="${CCNetProject} Post Build Failed ${CCNetLabel}" message="${CallPostBuildLogContent}" />
+      <mail tolist="%BuildMaster.Email%" from="${ProjectName}.Build@noreply.com" mailhost="127.0.0.1" subject="${CCNetProject} Post Build Failed ${CCNetLabel}" message="${CallPostBuildLogContent}" />
     </if>
   </target>
 

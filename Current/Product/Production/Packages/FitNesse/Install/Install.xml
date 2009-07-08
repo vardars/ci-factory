@@ -80,7 +80,7 @@
       <value>
         <![CDATA[<filepair>
             <xslfile>&Common.Directory.Packages.Path;\FitNesse\FitNesseSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Test\FitNesseReports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\FitNesseReports\*.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>

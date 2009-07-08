@@ -38,7 +38,7 @@
       <value>
         <![CDATA[<filepair>
             <xslfile>&Common.Directory.Packages.Path;\JUnit\JUnitSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-Dev\UnitTestReports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\UnitTestReports\*.xml</xmlfile>
           </filepair>]]>
       </value>
     </largeproperty>

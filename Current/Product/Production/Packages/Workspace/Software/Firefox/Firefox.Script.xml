@@ -2,8 +2,8 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Firefox.Scripts">
 
   <property name="Firefox.Version.Major"    value="3"/>
-  <property name="Firefox.Version.Minor"    value="0"/>
-  <property name="Firefox.Version.Revision"  value="4"/>
+  <property name="Firefox.Version.Minor"    value="5"/>
+  <property name="Firefox.Version.Revision"  value="0"/>
 
   <target name="Workspace.RequieredSoftware.Firefox">
     <ifthenelse test="${file::exists(environment::get-variable('ProgramFiles') + '\Mozilla Firefox\firefox.exe')}" >
@@ -36,7 +36,7 @@
 
         <get
           dest="${Firefox.Install}"
-          src="http://download.mozilla.org/?product=firefox-3.0.4&amp;os=win&amp;lang=en-US"
+          src="http://download.mozilla.org/?product=firefox-3.5&amp;os=win&amp;lang=en-US"
             />
 
         <write file="${Firefox.Ini}">
@@ -70,7 +70,10 @@ StartMenuDirectoryName=Mozilla Firefox
   <target name="Private.Firefox.CheckVersion">
     <property name="Firefox.IsInstallNeeded" value="false"/>
     <property name="Firefox.Exe" value="${environment::get-variable('ProgramFiles')}\Mozilla Firefox\firefox.exe"/>
-    <regex input="${file::get-product-version(Firefox.Exe)}" pattern="(?'major'\d+)\.(?'minor'\d+)\.(?'revision'\d+)"/>
+    <regex input="${file::get-product-version(Firefox.Exe)}" pattern="^(?'major'\d+)"/>
+    <regex input="${file::get-product-version(Firefox.Exe)}" pattern="^\d+\.(?'minor'\d+)"/>
+    <property name="revision" value="0"/>
+    <regex input="${file::get-product-version(Firefox.Exe)}" pattern="^\d+\.\d+\.(?'revision'\d+)" failonerror="False"/>
 
     <ifthenelse test="${int::parse(Firefox.Version.Major) > int::parse(major)}">
       <then>
@@ -111,9 +114,9 @@ StartMenuDirectoryName=Mozilla Firefox
   <target name="Workspace.RequieredSoftware.Firefox.SeleniumIDE">
     <ifnot test="${directory::exists(environment::get-variable('ProgramFiles')+ '\Mozilla Firefox\extensions\{a6fd85ed-e919-4a43-a5af-8da18bda539f}')}">
       <exec program="taskkill" commandline="/IM firefox.exe" verbose="true" failonerror="false"/>
-      <unzip 
-        todir="${environment::get-variable('ProgramFiles')}\Mozilla Firefox\extensions\{a6fd85ed-e919-4a43-a5af-8da18bda539f}" 
-        zipfile="${Common.Directory.Packages.Path}\Workspace\Software\Firefox\selenium-ide-1.0-beta-2.xpi"
+      <unzip
+        todir="${environment::get-variable('ProgramFiles')}\Mozilla Firefox\extensions\{a6fd85ed-e919-4a43-a5af-8da18bda539f}"
+        zipfile="${Common.Directory.Packages.Path}\Workspace\Software\Firefox\selenium-ide-1.0.2.xpi"
       />
     </ifnot>
   </target>

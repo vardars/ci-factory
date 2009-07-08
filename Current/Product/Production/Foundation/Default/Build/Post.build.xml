@@ -60,8 +60,8 @@
         </largeproperty>
 
         <mail
-              tolist="jay.flowers@agilex.com"
-              from="TriServ.Build@agilex-hc-5155.com"
+              tolist="%BuildMaster.Email%"
+              from="${ProjectName}.Build@noreply.com"
               mailhost="127.0.0.1"
               subject="${CCNetProject} Post Build Failed ${CCNetLabel}"
               message="${Content}" format="Html" />

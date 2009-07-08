@@ -3,7 +3,7 @@
   <!ENTITY % entities SYSTEM "Entities.xml">
 
   %entities;
-  
+
   <!ENTITY email '<email from="&ProjectName;-&ProjectCodeLineName;.Build@noreply.com" mailhost="&EmailHost;" includeDetails="true" dashboardServerName="&ProjectName;-&ProjectCodeLineName;">
         <users>
           <user name="%BuildMaster.Name%" group="buildmaster" address="%BuildMaster.Email%"/>
@@ -126,65 +126,65 @@
     </integrationFilter>
     <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
     %SourceControl.BuildUpdateBlock%
-  <labeller type="defaultlabeller">
-		<prefix>BuildScripts.</prefix>
-	</labeller>
-  <tasks>
-    <nullTask/>
-  </tasks>
-  <publishers>
-    <xmllogger />
-    &email;
-  </publishers>
-</project>
+    <labeller type="defaultlabeller">
+      <prefix>BuildScripts.</prefix>
+    </labeller>
+    <tasks>
+      <nullTask/>
+    </tasks>
+    <publishers>
+      <xmllogger />
+      &email;
+    </publishers>
+  </project>
   <project name="&ProjectName;-&ProjectCodeLineName;-Dev">
-  <webURL>&CCNet.Dashboard.Url;</webURL>
-  <state type="state" />
-  <triggers>
-    <projectTriggerFilter>
-      <trigger type="intervalTrigger" seconds="%CCNET.IntervalTrigger%" />
-      <projectFilters>
-        &ScriptsBuilding;
-        &ReleaseBuilding;
-        &HeavyBuilding;
-        &TestBuilding;
-        &DeployBuilding;
-      </projectFilters>
-    </projectTriggerFilter>
-  </triggers>
-  <forceFilters>
-    <projectForceFilter>
-      <projectFilters>
-        &ScriptsBuilding;
-        &ReleaseBuilding;
-        &HeavyBuilding;
-        &TestBuilding;
-        &DeployBuilding;
-      </projectFilters>
-    </projectForceFilter>
-    <!--<userForceFilter dontCheck="true" domainName="localhost" userName="crap" password="junk"/>-->
-  </forceFilters>
-  <integrationFilter>
-    <triggeredIntegrationFilter>
-      <allowed>
-        <modificationsRequired condition="true" />
-      </allowed>
-    </triggeredIntegrationFilter>
-    <forcedIntegrationFilter>
-      <allowed>
-        <modificationsRequired condition="false" />
-      </allowed>
-      <blocked>
-      </blocked>
-    </forcedIntegrationFilter>
-  </integrationFilter>
-  <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
-  %SourceControl.MainBuildBlock%
-  &labeller;
-  <tasks>
-    <modificationWriter>
+    <webURL>&CCNet.Dashboard.Url;</webURL>
+    <state type="state" />
+    <triggers>
+      <projectTriggerFilter>
+        <trigger type="intervalTrigger" seconds="%CCNET.IntervalTrigger%" />
+        <projectFilters>
+          &ScriptsBuilding;
+          &ReleaseBuilding;
+          &HeavyBuilding;
+          &TestBuilding;
+          &DeployBuilding;
+        </projectFilters>
+      </projectTriggerFilter>
+    </triggers>
+    <forceFilters>
+      <projectForceFilter>
+        <projectFilters>
+          &ScriptsBuilding;
+          &ReleaseBuilding;
+          &HeavyBuilding;
+          &TestBuilding;
+          &DeployBuilding;
+        </projectFilters>
+      </projectForceFilter>
+      <!--<userForceFilter dontCheck="true" domainName="localhost" userName="crap" password="junk"/>-->
+    </forceFilters>
+    <integrationFilter>
+      <triggeredIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="true" />
+        </allowed>
+      </triggeredIntegrationFilter>
+      <forcedIntegrationFilter>
+        <allowed>
+          <modificationsRequired condition="false" />
+        </allowed>
+        <blocked>
+        </blocked>
+      </forcedIntegrationFilter>
+    </integrationFilter>
+    <modificationDelaySeconds>%CCNET.ModificationDelaySeconds%</modificationDelaySeconds>
+    %SourceControl.MainBuildBlock%
+    &labeller;
+    <tasks>
+      <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-      <path>&Common.Directory.Build.Path;\SourceModificationReports\&ProjectName;-&ProjectCodeLineName;-Dev</path>
+        <path>&Common.Directory.Build.Path;\SourceModificationReports\&ProjectName;-&ProjectCodeLineName;-Dev</path>
       </modificationWriter>
       <nant>
         <executable>&Tools.NAnt.Exe;</executable>

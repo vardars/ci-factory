@@ -8,18 +8,9 @@
 	<include buildfile="Scratch.Lib.xml"/>
   
   <target name="test">
-    <attachdebugger/>
-    <foreach item="File" property="TaskAssembly">
-      <in>
-        <items>
-          <include name="..\Production\Packages\**\*Task*.dll"/>
-          <include name="..\Integration Tests\bin\*Task*.dll"/>
-        </items>
-      </in>
-      <do>
-        <echo message="${TaskAssembly}" />
-      </do>
-    </foreach>
+    <property name="Common.Directory.ProjectsRoot.Path"        value="c:\Projects"/>
+    <echo message="${string::substring(Common.Directory.ProjectsRoot.Path, 0, 1)}"/>
+    <echo message="${string::substring(Common.Directory.ProjectsRoot.Path, 3, string::get-length(Common.Directory.ProjectsRoot.Path) - 3)}"/>
   </target>
 
 

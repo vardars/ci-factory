@@ -7,6 +7,8 @@
 
     <filterchain id="Eclipse.Template">
       <replacestring from="%project.name%" to="${project.name}"   />
+      <replacestring from="%Java.Jdk%" to="${Java.Jdk}"   />
+      <replacestring from="%ProjectName%" to="${ProjectName}"   />
     </filterchain>
     <switch value="${project.type}">
       <case value ="jar" break="true">
@@ -60,7 +62,7 @@
       waitforexit="false"
       workingdir="${path::get-directory-name(Eclipse.ExePath)}"
       program="${Eclipse.ExePath}"
-      commandline="-data ${Common.Directory.Product.Path} -vm C:\Java\jdk1.6.0_11\bin\javaw.exe -vmargs -XX:PermSize=128M -XX:MaxPermSize=256M -Xmx1024m -Xms128m"
+      commandline="-data ${Common.Directory.Product.Path} -vm ${Java.Exe} -vmargs -XX:PermSize=128M -XX:MaxPermSize=256M -Xmx1024m -Xms128m"
     />
   </target>
 </project>

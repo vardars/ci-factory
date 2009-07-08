@@ -8,8 +8,8 @@
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}" overwrite="false" />
 
   <property name="CCNet.SVN.URI.ProjectName" value="${SVN.URI.Root}/&amp;ProjectName;" overwrite="false" />
-  <property name="CCNet.SVN.URI.ProjectCodeLine" value="${SVN.URI.Root}/&amp;ProjectName;/&amp;ProjectCodeLineName;" overwrite="false" />
-  <property name="CCNet.SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" overwrite="false" />
+  <property name="CCNet.SVN.URI.ProjectCodeLine" value="${Net.SVN.URI.ProjectName}/&amp;ProjectCodeLineName;" overwrite="false" />
+  <property name="CCNet.SVN.URI.Tags" value="${CCNet.SVN.URI.ProjectName}/tags" overwrite="false" />
 
   <property name="CCNet.SVN.WebRepoUrl" value="http://localhost/svn/&amp;ProjectName;" overwrite="false" />
   <property name="SVN.WebVisible" value="true" overwrite="false"/>

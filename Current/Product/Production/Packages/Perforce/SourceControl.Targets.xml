@@ -40,28 +40,28 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+	<target name="SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="true"/>
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetOfThirdPartyDirectory" >
+	<target name="SourceControl.GetOf.Common.Directory.ThirdParty.Path" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="false"/>
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetOfProductDirectory" >
+	<target name="SourceControl.CleanGetOf.Common.Directory.Product.Path" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.Product.Path}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="true"/>
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetOfProductDirectory" >
+	<target name="SourceControl.GetOf.Common.Directory.Product.Path" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.Product.Path}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="false"/>
@@ -111,7 +111,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetOfCodeLineDirectory" >
+	<target name="SourceControl.GetOf.CodeLineDirectory" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.CodeLine.Path}"/>
 		<property name="SourceControl.Update.FileSpec" value=""/>
 		<property name="SourceControl.Update.All" value="false"/>
@@ -360,7 +360,7 @@
 		<p4client clientname="Temp-${Perforce.WorkspaceName}" delete="true" />
 
     <call target="Private.SourceControl.EnsureWorkspace" />
-    <call target="SourceControl.GetOfCodeLineDirectory"/>
+    <call target="SourceControl.GetOf.CodeLineDirectory"/>
 	</target>
 
 	<target name="SourceControl.Bindings.Create">
@@ -457,7 +457,7 @@ View:
       buildfile="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}\${Common.Directory.Build.Name}\Main.Build.xml"
       inheritall="false"
       inheritrefs="false"
-      target="SourceControl.GetOfCodeLineDirectory"
+      target="SourceControl.GetOf.CodeLineDirectory"
       failonerror="false"
     >
       <properties>

@@ -10,7 +10,7 @@
       dest="${Common.Project.ReportDirectory}\${ProjectName}TargetProcesss.xml"
       src="http://${BuildServerHostName}/${ProjectName}-${ProjectCodeLineName}/Artifacts/${ReleaseArchiveFolderName}/${ProjectName}TargetProcesss.xml"
     >
-      <credentials username="${Web.Credentials.UserName}" password="${Web.Credentials.Password}" unless="${Web.Credentials.UserName == '' or Web.Credentials.Password = ''}"/>
+      <credentials username="${Web.Credentials.UserName}" password="${Web.Credentials.Password}" unless="${Web.Credentials.UserName == '' or Web.Credentials.Password == ''}"/>
     </get>
   </target>
   
@@ -83,6 +83,12 @@
       pokemode="Add"
       value="${IterationInfo}"
       xpath="/TargetProcess"
+    />
+    <copy
+      file="${TargetProcess.ReportFilePath}"
+      todir="${Common.Directory.Artifact.Path}"
+      verbose="True"
+      failonerror="True"
     />
 	</target>
 

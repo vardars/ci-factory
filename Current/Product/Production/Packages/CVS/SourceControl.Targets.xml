@@ -15,27 +15,27 @@
 
   <loadtasks assembly="${CVS.Task}" />
 
-  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
+  <target name="SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path" >
     <property name="SourceControl.CleanGetOf" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
-  <target name="SourceControl.CleanGetOfProductDirectory" >
+  <target name="SourceControl.CleanGetOf.Common.Directory.Product.Path" >
     <property name="SourceControl.CleanGetOf" value="${Common.Directory.Product.Path}"/>
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfThirdPartyDirectory" >
+  <target name="SourceControl.GetOf.Common.Directory.ThirdParty.Path" >
     <property name="SourceControl.GetOf" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfProductDirectory" >
+  <target name="SourceControl.GetOf.Common.Directory.Product.Path" >
     <property name="SourceControl.GetOf" value="${Common.Directory.Product.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfCodeLineDirectory" >
+  <target name="SourceControl.GetOf.CodeLineDirectory" >
     <property name="SourceControl.GetOf" value="${Common.Directory.CodeLine.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
