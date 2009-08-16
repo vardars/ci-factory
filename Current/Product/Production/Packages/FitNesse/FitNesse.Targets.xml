@@ -272,7 +272,7 @@
   
   <target name="FitNesse.ShowReport">
     <property name="Common.ShowReport.XmlFile" value="${Common.Directory.Artifact.Path}\${FitNesse.Reports.FileName}"/>
-    <property name="Common.ShowReport.HtmlFile" value="${Common.Project.TempDirectory}\${path::get-file-name-without-extension(FitNesse.Reports.FileName)}.html"/>
+    <property name="Common.ShowReport.HtmlFile" value="${Project.Directory.Temp.Path}\${path::get-file-name-without-extension(FitNesse.Reports.FileName)}.html"/>
     <property name="Common.ShowReport.XslFile" value="${Common.Directory.Packages.Path}\FitNesse\FitNesseDetails.xsl"/>
     <property name="Common.ShowReport.DetailsFilePath" value=""/>
 

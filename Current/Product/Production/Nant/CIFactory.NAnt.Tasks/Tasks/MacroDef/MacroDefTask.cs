@@ -186,15 +186,18 @@ namespace Macrodef
 
         protected override void ExecuteTask()
         {
-            macrodefs.Add(_name, this);
+            if (!macrodefs.Contains(this.name))
+            {
+                macrodefs.Add(_name, this);
 
-            CodeCompileUnit compileUnit = GenerateCode();
-            SimpleCSharpCompiler simpleCSharpCompiler = new SimpleCSharpCompiler();
+                CodeCompileUnit compileUnit = GenerateCode();
+                SimpleCSharpCompiler simpleCSharpCompiler = new SimpleCSharpCompiler();
 
-            compiledAssembly = simpleCSharpCompiler.CompileAssembly(compileUnit);
-            LogGeneratedCode(simpleCSharpCompiler, compileUnit);
+                compiledAssembly = simpleCSharpCompiler.CompileAssembly(compileUnit);
+                LogGeneratedCode(simpleCSharpCompiler, compileUnit);
 
-            TypeFactory.ScanAssembly(compiledAssembly, this);
+                TypeFactory.ScanAssembly(compiledAssembly, this);
+            }
         }
 
         #endregion

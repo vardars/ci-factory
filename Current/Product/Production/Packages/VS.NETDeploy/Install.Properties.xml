@@ -15,6 +15,6 @@
   <property name="Install.MsiTargetFileWebPath" value="${Publish.WebPathRoot}/${Common.Directory.Artifact.Name}/${ProjectName}${CCNetLabel}.msi" dynamic="true" />
   <property name="Install.MsiTargetFileWebName" value="${ProjectName}${CCNetLabel}.msi" />
 
-  <property name="Install.CommonPropertiesFile" value="${Common.Project.TempDirectory}\Install.Properties.txt"/>
+  <property name="Install.CommonPropertiesFile" value="${Project.Directory.Temp.Path}\Install.Properties.txt"/>
 
 </project>

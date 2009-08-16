@@ -11,33 +11,33 @@
     <delete dir="${ZipDirectory}" if="${directory::exists(ZipDirectory)}"/>
     <mkdir dir="${ZipDirectory}"/>
 
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" />
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" />
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\run.bat" tofile="${ZipDirectory}\run.bat" />
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\upgrade.bat" tofile="${ZipDirectory}\upgrade.bat" />
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.URL" tofile="${ZipDirectory}\CI Factory.URL" />
-    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory Release Notes.html" tofile="${ZipDirectory}\CI Factory Release Notes.html" failonerror="false" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\Packages.csproj.remove" tofile="${ZipDirectory}\Packages.csproj" overwrite="True" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.sln.remove" tofile="${ZipDirectory}\CI Factory.sln" overwrite="True" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\run.bat" tofile="${ZipDirectory}\run.bat" overwrite="True" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\upgrade.bat" tofile="${ZipDirectory}\upgrade.bat" overwrite="True" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory.URL" tofile="${ZipDirectory}\CI Factory.URL" overwrite="True" />
+    <copy file="${Common.Directory.Product.Path}\Production\CI Installer\CI Factory Release Notes.html" tofile="${ZipDirectory}\CI Factory Release Notes.html" failonerror="false" overwrite="True" />
 
-    <copy todir="${ZipDirectory}" includeemptydirs="true">
+    <copy todir="${ZipDirectory}" includeemptydirs="true" overwrite="True">
       <fileset basedir="${Common.Directory.Product.Path}\Production\CI Installer" >
         <include name="Install Scripts\**\*"/>
       </fileset>
     </copy>
     
-    <copy todir="${ZipDirectory}" includeemptydirs="true">
+    <copy todir="${ZipDirectory}" includeemptydirs="true" overwrite="True">
       <fileset basedir="${Common.Directory.Product.Path}\Production\Foundation">
         <include name="Default\**\*"/>
         <exclude name="Default\Build\nAnt\**\*"/>
       </fileset>
     </copy>
       
-    <copy todir="${ZipDirectory}\nAnt" includeemptydirs="true" >
+    <copy todir="${ZipDirectory}\nAnt" includeemptydirs="true" overwrite="True" >
       <fileset basedir="${Common.Directory.ThirdParty.Path}\nAnt">
         <include name="**\*"/>
       </fileset>
     </copy>
 
-    <copy todir="${ZipDirectory}" includeemptydirs="true">
+    <copy todir="${ZipDirectory}" includeemptydirs="true" overwrite="True">
       <fileset basedir="${Common.Directory.Product.Path}\Production" defaultexcludes="false">
         <include name="Packages\**\*"/>
         <exclude name="Packages\CoverageEye"/>
@@ -60,7 +60,7 @@
       </fileset>
     </copy>
 
-    <copy todir="${ZipDirectory}">
+    <copy todir="${ZipDirectory}" overwrite="True">
       <fileset basedir="${Common.Directory.Product.Path}">
         <include name="Power Tools\**\*"/>
         <include name="Documentation\**\*"/>

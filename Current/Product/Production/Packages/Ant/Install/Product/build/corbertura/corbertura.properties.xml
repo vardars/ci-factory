@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="corbertura.properties">
 	
-	<property name="corbertura.bin" value="C:\Projects\triserv\trunk\Build\Packages\Corbertura\bin"/>
+	<property name="corbertura.bin" value="c:/Projects/%ProjectName%/%ProjectCodeLineName%\Build\Packages\Corbertura\bin"/>
 
 	<if>
 		<isset property="env.CORBERTURA_BIN"/>

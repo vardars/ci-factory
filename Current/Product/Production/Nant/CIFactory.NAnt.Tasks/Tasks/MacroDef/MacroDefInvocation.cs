@@ -4,6 +4,7 @@ using System.Xml;
 using NAnt.Core;
 using NAnt.Core.Util;
 using System.Globalization;
+using System.Linq;
 
 namespace Macrodef
 {
@@ -240,13 +241,16 @@ namespace Macrodef
             PropertyDictionary projectProperties = task.Project.Properties;
             foreach (MacroAttribute macroAttribute in attributeList)
             {
-                string localPropertyName = macroAttribute.LocalPropertyName;
-                string oldValue = oldValues[localPropertyName];
+                if (macroAttribute.Ref == false)
+                {
+                    string localPropertyName = macroAttribute.LocalPropertyName;
+                    string oldValue = oldValues[localPropertyName];
 
-                if (projectProperties.Contains(localPropertyName))
-                    projectProperties.Remove(localPropertyName);
-                if (oldValue != null)
-                    projectProperties.Add(localPropertyName, oldValue);
+                    if (projectProperties.Contains(localPropertyName))
+                        projectProperties.Remove(localPropertyName);
+                    if (oldValue != null)
+                        projectProperties.Add(localPropertyName, oldValue);
+                }
             }
         }
 

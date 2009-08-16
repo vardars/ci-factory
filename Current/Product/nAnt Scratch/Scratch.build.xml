@@ -6,17 +6,33 @@
 
 	<include buildfile="..\..\Build\Properties.Build.xml"/>
 	<include buildfile="Scratch.Lib.xml"/>
-  
+
+  <loadtasks assembly="C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.TargetProcess.Tasks\bin\Debug\CIFactory.TargetProcess.NAnt.Tasks.dll" />
+
   <target name="test">
-    <property name="Common.Directory.ProjectsRoot.Path"        value="c:\Projects"/>
-    <echo message="${string::substring(Common.Directory.ProjectsRoot.Path, 0, 1)}"/>
-    <echo message="${string::substring(Common.Directory.ProjectsRoot.Path, 3, string::get-length(Common.Directory.ProjectsRoot.Path) - 3)}"/>
+
+    <connectioninformation
+      id="TargetProcess.ConnectionInformation"
+      rootserviceurl="http://ch33tp.agilexhealth.com"
+      username="flowersj"
+      password="password"
+	  />
+
+    <property name="TargetProcess.ProjectName" value="Team 1 - Search and Create"/>
+    
+    <echo message="${TargetProcess.ProjectName}"/>
+    
+    <echo message="${tp::get-current-iteration-name('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"/>
   </target>
 
+  <macrodef name="Boo">
+    <sequential>
+      <echo message="Boo!"/>
+    </sequential>
+  </macrodef>
 
-	<target name="Fail">
-		<echo message="Boo!"/>
-		<fail/>
+	<target name="Boo">
+    <Boo/>
 	</target>
 
 	<script language="C#" prefix="sourcecontrol">

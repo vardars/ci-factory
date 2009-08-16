@@ -4,11 +4,38 @@
   <include buildfile="Properties.xml" />
 
   <target name="Subversion.Install">
+    <strings id="NAnt.Main.Targets">
+      <string value="Release"/>
+      <string value="Heavy"/>
+    </strings>
     <largeproperty name="Packages.AddCleanUpActions.Block">
       <value xml="false"><![CDATA[<call target="SourceControl.CleanGetOf.Common.Directory.ThirdParty.Path" />
       <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />]]></value>
     </largeproperty>
     <call target="Packages.AddCleanUpActions"/>
+
+    <strings id="NAnt.Main.Targets">
+      <string value="Triggered"/>
+    </strings>
+    <largeproperty name="Packages.AddCleanUpActions.Block">
+      <value xml="false">
+        <![CDATA[<call target="SourceControl.GetOf.Common.Directory.ThirdParty.Path" />
+      <call target="SourceControl.GetOf.Common.Directory.Product.Path" />]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddCleanUpActions"/>
+
+    <strings id="NAnt.Main.Targets">
+      <string value="Test"/>
+    </strings>
+    <largeproperty name="Packages.AddCleanUpActions.Block">
+      <value xml="false">
+        <![CDATA[<property name="SourceControl.CleanGetOf" value="${'$'}{Common.Directory.Product.Path}\FitNesse"/>
+        <call target="SourceControl.CleanGetOf"/>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddCleanUpActions"/>
+    
     <saveproperties file="${Common.Directory.Packages.Path}\Subversion\SourceControl.Credentials.xml" format="Include" projectname="SourceControl.Credentials" >
       <property name="SVN.Username" />
       <property name="SVN.Password" />

@@ -53,7 +53,7 @@
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddMergeFiles.Block" dynamic="true">
-      <value expand="true"><![CDATA[<file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\AntLogs\*.xml</file>]]></value>
+      <value><![CDATA[<file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\AntLogs\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>

@@ -98,9 +98,9 @@
 
     <property name="Common.Directory.Artifact.Name" value="bogas"/>
     <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
-    <property name="Common.Project.ReportDirectory" value="${Common.Directory.Build.Path}\Reports"/>
-    <property name="Common.Project.TempDirectory" value="${Common.Directory.Build.Path}\Temp"/>
-    <property name="Common.PropertiesFile" value="${Common.Project.TempDirectory}\Properties.txt"/>
+    <property name="Project.Directory.Report.Path" value="${Common.Directory.Build.Path}\Reports"/>
+    <property name="Project.Directory.Temp.Path" value="${Common.Directory.Build.Path}\Temp"/>
+    <property name="Common.PropertiesFile" value="${Project.Directory.Temp.Path}\Properties.txt"/>
 
     <property name="CCNetBuildCondition" value="ForceBuild "/>
     <property name="CCNetIntegrationStatus" value="Success"/>

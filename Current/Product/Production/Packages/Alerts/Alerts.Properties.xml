@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Properties">
 
-  <property name="Alerts.ReportAppenderFilePath" value="${Common.Project.TempDirectory}\Alerts.xml" />
+  <property name="Alerts.ReportAppenderFilePath" value="${Project.Directory.Temp.Path}\Alerts.xml" />
   <property name="Alerts.Message.CCList" value=""/>
 
   <strings id="Alerts.TargetListId">

@@ -3,7 +3,7 @@
 
   <loadtasks assembly="${Common.Directory.Packages.Path}\TargetProcess\bin\CIFactory.TargetProcess.NAnt.Tasks.dll" />
 
-  <property name="TargetProcess.ReportDirectoryPath" value="${Common.Project.Common.Directory.Transient.Path}\TargetProcess" />
+  <property name="TargetProcess.ReportDirectoryPath" value="${Project.Directory.Transient.Path}\TargetProcess" />
 	<property name="TargetProcess.ReportFilePath" value="${TargetProcess.ReportDirectoryPath}\${ProjectName}TargetProcesss.xml" />
 
   <property name="TargetProcess.ProjectName" value="%TargetProcess.ProjectName%"/>

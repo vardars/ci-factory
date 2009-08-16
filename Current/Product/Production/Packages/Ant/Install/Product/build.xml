@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="triserv" default="source.compile" basedir=".">
+<project name="%ProjectName%" default="source.compile" basedir=".">
 
 	<import file="build/build.targets.xml" />
 

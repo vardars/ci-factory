@@ -27,9 +27,9 @@
   <echo message="The ArtifactFolderName is ${Common.Directory.Artifact.Name}"/>
   <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
 
-  <property name="Common.Project.Common.Directory.Transient.Path" value="${Common.Directory.Transient.Path}\${CCNetProject}"/>
-  <property name="Common.Project.ReportDirectory" value="${Common.Project.Common.Directory.Transient.Path}\Reports"/>
-  <property name="Common.Project.TempDirectory" value="${Common.Project.Common.Directory.Transient.Path}\Temp"/>
+  <property name="Project.Directory.Transient.Path" value="${Common.Directory.Transient.Path}\${CCNetProject}"/>
+  <property name="Project.Directory.Report.Path" value="${Project.Directory.Transient.Path}\Reports"/>
+  <property name="Project.Directory.Temp.Path" value="${Project.Directory.Transient.Path}\Temp"/>
 
   <largeproperty name="NewLine">
     <value>
@@ -42,7 +42,7 @@
 
   <include buildfile="${Common.File.EnvironmentVariables.Path}" />
 
-  <property name="Common.PropertiesFile" value="${Common.Project.TempDirectory}\Properties.txt"/>
+  <property name="Common.PropertiesFile" value="${Project.Directory.Temp.Path}\Properties.txt"/>
   <target name="Common.CreatePropertiesFile">
     <delete file="${Common.PropertiesFile}" if ="${file::exists(Common.PropertiesFile)}" />
     <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
@@ -92,9 +92,9 @@
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
       <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
-      <property name="Common.Project.ReportDirectory"/>
-      <property name="Common.Project.TempDirectory"/>
-      <property name="Common.Project.Common.Directory.Transient.Path"/>
+      <property name="Project.Directory.Report.Path"/>
+      <property name="Project.Directory.Temp.Path"/>
+      <property name="Project.Directory.Transient.Path"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
 
@@ -108,14 +108,14 @@
     <mkdir dir="${path::get-directory-name(CCNetListenerFile)}" unless="${directory::exists(path::get-directory-name(CCNetListenerFile))}"/>
     <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}" verbose="true"/>
 
-    <delete dir="${Common.Project.Common.Directory.Transient.Path}" if="${directory::exists(Common.Project.Common.Directory.Transient.Path)}"/>
-    <mkdir dir="${Common.Project.Common.Directory.Transient.Path}"/>
+    <delete dir="${Project.Directory.Transient.Path}" if="${directory::exists(Project.Directory.Transient.Path)}"/>
+    <mkdir dir="${Project.Directory.Transient.Path}"/>
 
-    <delete dir="${Common.Project.ReportDirectory}" if="${directory::exists(Common.Project.ReportDirectory)}"/>
-    <mkdir dir="${Common.Project.ReportDirectory}"/>
+    <delete dir="${Project.Directory.Report.Path}" if="${directory::exists(Project.Directory.Report.Path)}"/>
+    <mkdir dir="${Project.Directory.Report.Path}"/>
 
-    <delete dir="${Common.Project.TempDirectory}" if="${directory::exists(Common.Project.TempDirectory)}"/>
-    <mkdir dir="${Common.Project.TempDirectory}"/>
+    <delete dir="${Project.Directory.Temp.Path}" if="${directory::exists(Project.Directory.Temp.Path)}"/>
+    <mkdir dir="${Project.Directory.Temp.Path}"/>
 
     <call target="Common.CreatePropertiesFile"/>
   </target>

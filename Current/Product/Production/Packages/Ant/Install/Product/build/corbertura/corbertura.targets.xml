@@ -42,7 +42,7 @@
 							<path refid="instrumented.files.that.need.updating" />
 						</delete>
 						<cobertura-instrument datafile="${coverage.classes.report.file}" todir="${build.instrumented.classes.dir}">
-							<includeClasses regex=".*triserv.*" />
+							<includeClasses regex=".*${root.project.name}.*" />
 
 							<instrumentationClasspath refid="instrument.classpath" />
 						</cobertura-instrument>
@@ -84,7 +84,7 @@
 					</targetfiles>
 					<sequential>
 						<cobertura-instrument datafile="${coverage.dist.report.file}" todir="${dist.instrumented.dir}">
-							<includeClasses regex=".*triserv.*" />
+							<includeClasses regex=".*${root.project.name}.*" />
 
 							<instrumentationClasspath>
 								<pathelement location="${dist.file}" />

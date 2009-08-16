@@ -5,7 +5,7 @@
   <property name="Selenium.Timeout" value="45" overwrite="false"/>
   <property name="Selenium.BrowserSessionReuse" value="false" overwrite="false"/>
 
-  <property name="Selenium.Reports.DirectoryPath" value="${Common.Project.Common.Directory.Transient.Path}\WebTestReports"/>
+  <property name="Selenium.Reports.DirectoryPath" value="${Project.Directory.Transient.Path}\WebTestReports"/>
   <property name="Selenium.PublishXmlReport" value="true" overwrite="false"/>
   
 </project>

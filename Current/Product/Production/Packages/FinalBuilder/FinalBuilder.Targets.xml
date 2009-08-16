@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="FinalBuilder">
 
   <property name="FinalBuilder.ConsoleApp.Path" value="???"/>
-  <property name="FinalBuilder.ParametersFile.Path" value="${Common.Project.TempDirectory}\FinalBuilder.Parameters.txt"/>
+  <property name="FinalBuilder.ParametersFile.Path" value="${Project.Directory.Temp.Path}\FinalBuilder.Parameters.txt"/>
   <property name="FinalBuilder.ReportFile.Name" value="FinalBuilder.Report.html"/>
   <property name="FinalBuilder.ReportFile.Path" value="${Common.Directory.Artifact.Path}\${FinalBuilder.ReportFile.Name}"/>
 

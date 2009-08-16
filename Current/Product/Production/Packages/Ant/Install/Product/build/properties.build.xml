@@ -3,8 +3,8 @@
 
 	<property environment="env" />
 
-	<property name="root.project.name" value="triserv" />
-	<property name="root.project.directory.path" value="c:/Projects/triserv/trunk/product"/>
+	<property name="root.project.name" value="%ProjectName%" />
+	<property name="root.project.directory.path" value="c:/Projects/%ProjectName%/%ProjectCodeLineName%/%Common.Directory.Product.Name%"/>
 
 	<property name="temp.directory.path" value='/Temp' />
 	<property name="debug" value="false" />

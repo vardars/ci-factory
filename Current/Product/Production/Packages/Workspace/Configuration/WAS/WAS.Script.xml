@@ -74,7 +74,7 @@
     <property name="WAS.ServerConfig.WC_defaulthost.Expected" value="9080"/>
 
     <if test="${int::parse(WAS.ServerConfig.WC_adminhost_secure.Acutal) != int::parse(WAS.ServerConfig.WC_adminhost_secure.Expected) or int::parse(WAS.ServerConfig.WC_defaulthost.Acutal) != int::parse(WAS.ServerConfig.WC_defaulthost.Expected)}">
-      <write file="${Common.Project.TempDirectory}\appserver.props">
+      <write file="${Project.Directory.Temp.Path}\appserver.props">
         <text expand="true" xml="false">
           <![CDATA[WAS_HOME=C:/PROGRA~1/IBM/SDP/runtimes/base_v7
 was.install.root=C:/PROGRA~1/IBM/SDP/runtimes/base_v7
@@ -96,7 +96,7 @@ WC_defaulthost=${WAS.ServerConfig.WC_defaulthost.Expected}
       >
         <arg line="/C"/>
         <arg line='ws_ant.bat'/>
-        <arg line='-propertyfile "${Common.Project.TempDirectory}\appserver.props"'/>
+        <arg line='-propertyfile "${Project.Directory.Temp.Path}\appserver.props"'/>
         <arg line='-file "${WAS.Install.DirectoryPath}\profileTemplates\default\actions\updatePorts.ant"'/>
       </exec>
       

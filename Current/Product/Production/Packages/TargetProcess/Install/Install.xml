@@ -34,7 +34,7 @@
       <string value="Test"/>
     </strings>
     <largeproperty name="Packages.AddMergeFiles.Block" dynamic="true">
-      <value expand="true"><![CDATA[<file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\TargetProcess\*.xml</file>]]></value>
+      <value><![CDATA[<file>&Common.Directory.Transient.Path;\&ProjectName;-&ProjectCodeLineName;-${CCNet.Build.Type}\TargetProcess\*.xml</file>]]></value>
     </largeproperty>
     <call target="Packages.AddMergeFiles"/>
   </target>

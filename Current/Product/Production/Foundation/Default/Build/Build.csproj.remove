@@ -58,10 +58,7 @@
     <None Include="dashboard\WorkspaceSetup\**\*" Exclude="**\.svn\**\*" />
     <None Include="dashboard\xsl\*.xsl" Exclude="**\.svn\**\*" />
     <None Include="dashboard\cruisecontrol.css" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\&Common.Directory.Product.Name;\*.xml"/>
-    <None Include="..\&Common.Directory.Product.Name;\*.bat"/>
+    <None Include="EnvironmentVariables\EnvironmentVariables.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scratch.cs" />

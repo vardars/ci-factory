@@ -66,6 +66,7 @@ namespace CIFactory.TargetProcess.NAnt.Functions
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
+            ServicesCF.ConnectionInformation = ConnectionInformation;
 
             IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
@@ -79,6 +80,7 @@ namespace CIFactory.TargetProcess.NAnt.Functions
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
+            ServicesCF.ConnectionInformation = ConnectionInformation;
 
             IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
@@ -92,6 +94,7 @@ namespace CIFactory.TargetProcess.NAnt.Functions
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
+            ServicesCF.ConnectionInformation = ConnectionInformation;
 
             IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 
@@ -105,6 +108,7 @@ namespace CIFactory.TargetProcess.NAnt.Functions
                 throw new BuildException(String.Format("The refid {0} is not defined.", connectionRef));
 
             ConnectionInformation ConnectionInformation = (ConnectionInformation)this.Project.DataTypeReferences[connectionRef];
+            ServicesCF.ConnectionInformation = ConnectionInformation;
 
             IterationDTO currentIteration = GetCurrentIteration(FindProjectId(projectName), ConnectionInformation);
 

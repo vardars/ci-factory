@@ -26,11 +26,11 @@
 
 				<echo message="Running candle.exe -out ${Common.Directory.Install.Path}\${ProjectName}\${path::get-file-name-without-extension(Wix.ProjectFile.Path)}.wixobj ${Wix.ProjectFile.Path}" />
 
-				<mkdir dir="${Common.Project.TempDirectory}\Wix\" />
+				<mkdir dir="${Project.Directory.Temp.Path}\Wix\" />
 
 				<exec program="candle.exe"  basedir="${Wix.BinDir}" verbose="true">
 					<arg value="-out" />
-					<arg value="${Common.Project.TempDirectory}\Wix\${Wix.Name}.wixobj" />
+					<arg value="${Project.Directory.Temp.Path}\Wix\${Wix.Name}.wixobj" />
 					<arg value="${Wix.ProjectFile.Path}" />
 				</exec>
 
@@ -39,7 +39,7 @@
 					<arg value="-b" />
 					<arg value="${Common.Directory.CodeLine.Path}" />
 					<!-- Source -->
-					<arg value="${Common.Project.TempDirectory}\Wix\${Wix.Name}.wixobj" />
+					<arg value="${Project.Directory.Temp.Path}\Wix\${Wix.Name}.wixobj" />
 					<!-- UI Library-->
 					<arg value="${Wix.BinDir}\WixUI.wixlib" />
 					<!-- Localization -->

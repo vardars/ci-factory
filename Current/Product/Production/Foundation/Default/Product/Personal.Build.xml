@@ -11,7 +11,6 @@
   <property name="CCNetLabel" value="Personal.1"/>
   <property name="CCNetLogFilePath" value=""/>
 
-  <include buildfile="Properties.Build.xml"/>
   <property name="CCNetProject" value="${ProjectName}"/>
   <property name="Compile.ConfigName" value="Debug"/>
   <property name="CCNetListenerFile" value="C:\Temp\antlistener.txt"/>
@@ -21,6 +20,7 @@
   <strings id="Personal.UpdateSource.Before.Target.List"/>
   <strings id="Personal.UpdateSource.After.Target.List"/>
 
+  <include buildfile="Properties.Build.xml"/>
   <include buildfile="Common.Build.xml" />
   <include buildfile="Custom.Build.xml" />
 
@@ -55,7 +55,7 @@
   </target>
 
   <target name="Commit">
-    <ifthenelse test="${target::exists(Personal.Commit)}">
+    <ifthenelse test="${target::exists('Personal.Commit')}">
       <then>
         <call target="Build"/>
         <call target="Personal.Commit"/>
@@ -101,7 +101,7 @@
   </target>
 
   <target name="Compile">
-    <ifthenelse test="${target::exists(Personal.Compile)}">
+    <ifthenelse test="${target::exists('Personal.Compile')}">
       <then>
         <call target="Personal.Compile"/>
       </then>
@@ -112,7 +112,7 @@
   </target>
 
   <target name="Recompile">
-    <ifthenelse test="${target::exists(Personal.Recompile)}">
+    <ifthenelse test="${target::exists('Personal.Recompile')}">
       <then>
         <call target="Personal.Recompile"/>
       </then>
@@ -128,25 +128,25 @@
   </target>
   
   <target name="UnitTest">
-    <if test="${target::exists(Personal.UnitTest)}">
+    <if test="${target::exists('Personal.UnitTest')}">
       <call target="Personal.UnitTest"/>
     </if>
   </target>
 
   <target name="IntegrationTest">
-    <if test="${target::exists(Personal.IntegrationTest)}">
+    <if test="${target::exists('Personal.IntegrationTest')}">
       <call target="Personal.IntegrationTest"/>
     </if>
   </target>
 
   <target name="Package">
-    <if test="${target::exists(Personal.Package)}">
+    <if test="${target::exists('Personal.Package')}">
       <call target="Personal.Package"/>
     </if>
   </target>
 
   <target name="DatabaseRebuild">
-    <if test="${target::exists(Personal.DatabaseRebuild)}">
+    <if test="${target::exists('Personal.DatabaseRebuild')}">
       <call target="Personal.DatabaseRebuild"/>
     </if>
   </target>

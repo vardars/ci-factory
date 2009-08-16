@@ -12,10 +12,11 @@
   <property name="Private.BuildVS.DefaultOpenSolutionBat" value="${SourceBuildDirectory}\OpenSolution.bat"/>
   
   <target name="BuildVS.Install" depends="BuildVS.ValidateParameters" >
-    <copy file="${Private.BuildVS.DefaultSolutionFile}" tofile="${BuildVS.SolutionFile}" />
-    <copy file="${Private.BuildVS.DefaultPackagesProjectFile}" tofile="${BuildVS.PackagesProjectFile}" />
+    <copy file="${Private.BuildVS.DefaultSolutionFile}" tofile="${BuildVS.SolutionFile}" overwrite="True"/>
+    <copy file="${Private.BuildVS.DefaultPackagesProjectFile}" tofile="${BuildVS.PackagesProjectFile}"  overwrite="True"/>
+    <copy file="${SourceBuildDirectory}\Personal.Build.csproj.remove" tofile="${Common.Directory.Build.Path}\Personal.Build.csproj"  overwrite="True"/>
     
-    <copy tofile="${BuildVS.OpenSolutionBat}" file="${Private.BuildVS.DefaultOpenSolutionBat}">
+    <copy tofile="${BuildVS.OpenSolutionBat}" file="${Private.BuildVS.DefaultOpenSolutionBat}" overwrite="True">
       <filterchain refid="Common.FilterChain" />
     </copy>
   </target>

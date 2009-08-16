@@ -55,8 +55,8 @@
 		<mkdir dir="${build.dist.meta-inf.dir}" />
 
 		<manifest file="${build.dist.manifest.file}" mode="update">
-			<attribute name="Implementation-Vendor" value="Agilex inc." />
-			<attribute name="Implementation-Title" value="TriServ" />
+			<attribute name="Implementation-Vendor" value="My Company" />
+			<attribute name="Implementation-Title" value="${root.project.name}" />
 			<attribute name="Implementation-Version" value="${ProductVersion}" />
 		</manifest>
 

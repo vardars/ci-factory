@@ -85,6 +85,19 @@ namespace Macrodef
                 _Require = value;
             }
         }
+
+        private bool _Ref = false;
+
+        [TaskAttribute("ref", Required = false)]
+        [BooleanValidator()]
+        public bool Ref
+        {
+            get { return _Ref; }
+            set
+            {
+                _Ref = value;
+            }
+        }
         
         #endregion
 

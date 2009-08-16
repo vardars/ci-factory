@@ -2,6 +2,6 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="IntegrationTest.Properties">
 
   <property name="IntegrationTest.PublishXmlReport" value="true" overwrite="false"/>
-  <property name="IntegrationTestReportsDirectoryPath" value="${Common.Project.Common.Directory.Transient.Path}\IntegrationTestReports"/>
+  <property name="IntegrationTestReportsDirectoryPath" value="${Project.Directory.Transient.Path}\IntegrationTestReports"/>
   
 </project>
