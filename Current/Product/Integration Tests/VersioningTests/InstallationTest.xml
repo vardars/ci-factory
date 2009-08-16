@@ -59,7 +59,7 @@
       </fileset>
     </copy>
 
-    <copy file="VersioningTests\SourceModificationReports\SourceModificationReport.xml" todir="${Common.Directory.Build.Path}\SourceModificationReports" />
+    <copy file="VersioningTests\SourceModificationReports\SourceModificationReport.xml" todir="${Common.Directory.Build.Path}\SourceModificationReports\${ProjectName}" />
 
     <nant buildfile="${Common.Directory.Build.Path}\Main.Build.xml" inheritall="false" inheritrefs="false" target="Triggered" >
       <properties>
@@ -70,6 +70,7 @@
         <property name="CCNetBuildTime" value="11:10:00"/>
         <property name="CCNetArtifactDirectory" value="C:\Temp\CCNetArtifactDirectory"/>
         <property name="CCNetWorkingDirectory" value="C:\Temp\CCNetWorkingDirectory"/>
+        <property name="CCNetListenerFile" value="C:\Temp\CCNetListenerFile.txt"/>
 
         <property name="CCNetLabel" value="1.0.0.2"/>
         <property name="CCNetProject" value="${ProjectName}"/>

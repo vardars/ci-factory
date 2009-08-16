@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Common">
 
+  <ifthenelse test="${environment::variable-exists('ProgramFiles(x86)')}">
+    <then>
+      <property name="Processor.Type" value="64"/>
+      <property name="ProgramFiles.Default.Path" value="${environment::get-variable('ProgramFiles(x86)')}"/>
+
+      <ifthenelse test="${environment::variable-exists('ProgramW6432')}">
+        <then>
+          <property name="ProgramFiles.64.Path" value="${environment::get-variable('ProgramW6432')}"/>
+        </then>
+        <else>
+          <property name="ProgramFiles.64.Path" value="${environment::get-variable('ProgramFiles')}"/>
+        </else>
+      </ifthenelse>
+
+      <property name="ProgramFiles.32.Path" value="${environment::get-variable('ProgramFiles(x86)')}"/>
+    </then>
+    <else>
+      <property name="Processor.Type" value="32"/>
+      <property name="ProgramFiles.Default.Path" value="${environment::get-variable('ProgramFiles')}"/>
+      <property name="ProgramFiles.32.Path" value="${environment::get-variable('ProgramFiles')}"/>
+    </else>
+  </ifthenelse>
+
   <foreach item="File" property="Tools.Canidate">
     <in>
       <items>
@@ -27,9 +50,9 @@
   <echo message="The ArtifactFolderName is ${Common.Directory.Artifact.Name}"/>
   <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
 
-  <property name="Project.Directory.Transient.Path" value="${Common.Directory.Transient.Path}\${CCNetProject}"/>
-  <property name="Project.Directory.Report.Path" value="${Project.Directory.Transient.Path}\Reports"/>
-  <property name="Project.Directory.Temp.Path" value="${Project.Directory.Transient.Path}\Temp"/>
+  <property name="Common.Project.Common.Directory.Transient.Path" value="${Common.Directory.Transient.Path}\${CCNetProject}"/>
+  <property name="Common.Project.ReportDirectory" value="${Common.Project.Common.Directory.Transient.Path}\Reports"/>
+  <property name="Common.Project.TempDirectory" value="${Common.Project.Common.Directory.Transient.Path}\Temp"/>
 
   <largeproperty name="NewLine">
     <value>
@@ -42,7 +65,7 @@
 
   <include buildfile="${Common.File.EnvironmentVariables.Path}" />
 
-  <property name="Common.PropertiesFile" value="${Project.Directory.Temp.Path}\Properties.txt"/>
+  <property name="Common.PropertiesFile" value="${Common.Project.TempDirectory}\Properties.txt"/>
   <target name="Common.CreatePropertiesFile">
     <delete file="${Common.PropertiesFile}" if ="${file::exists(Common.PropertiesFile)}" />
     <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
@@ -92,9 +115,9 @@
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
       <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
-      <property name="Project.Directory.Report.Path"/>
-      <property name="Project.Directory.Temp.Path"/>
-      <property name="Project.Directory.Transient.Path"/>
+      <property name="Common.Project.ReportDirectory"/>
+      <property name="Common.Project.TempDirectory"/>
+      <property name="Common.Project.Common.Directory.Transient.Path"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
 
@@ -108,14 +131,14 @@
     <mkdir dir="${path::get-directory-name(CCNetListenerFile)}" unless="${directory::exists(path::get-directory-name(CCNetListenerFile))}"/>
     <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}" verbose="true"/>
 
-    <delete dir="${Project.Directory.Transient.Path}" if="${directory::exists(Project.Directory.Transient.Path)}"/>
-    <mkdir dir="${Project.Directory.Transient.Path}"/>
+    <delete dir="${Common.Project.Common.Directory.Transient.Path}" if="${directory::exists(Common.Project.Common.Directory.Transient.Path)}"/>
+    <mkdir dir="${Common.Project.Common.Directory.Transient.Path}"/>
 
-    <delete dir="${Project.Directory.Report.Path}" if="${directory::exists(Project.Directory.Report.Path)}"/>
-    <mkdir dir="${Project.Directory.Report.Path}"/>
+    <delete dir="${Common.Project.ReportDirectory}" if="${directory::exists(Common.Project.ReportDirectory)}"/>
+    <mkdir dir="${Common.Project.ReportDirectory}"/>
 
-    <delete dir="${Project.Directory.Temp.Path}" if="${directory::exists(Project.Directory.Temp.Path)}"/>
-    <mkdir dir="${Project.Directory.Temp.Path}"/>
+    <delete dir="${Common.Project.TempDirectory}" if="${directory::exists(Common.Project.TempDirectory)}"/>
+    <mkdir dir="${Common.Project.TempDirectory}"/>
 
     <call target="Common.CreatePropertiesFile"/>
   </target>
@@ -272,10 +295,10 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
   <PollPeriodSeconds>5</PollPeriodSeconds>
   <BuildTransitionNotification showBalloon="true">
     <Sound>
-      <BrokenBuildSound>${environment::get-variable('ProgramFiles')}\cctray\broken.wav</BrokenBuildSound>
-      <FixedBuildSound>${environment::get-variable('ProgramFiles')}\cctray\fixed.wav</FixedBuildSound>
-      <StillFailingBuildSound>${environment::get-variable('ProgramFiles')}\cctray\still-failing.wav</StillFailingBuildSound>
-      <StillSuccessfulBuildSound>${environment::get-variable('ProgramFiles')}\cctray\still-successful.wav</StillSuccessfulBuildSound>
+      <BrokenBuildSound>${ProgramFiles.Default.Path}\cctray\broken.wav</BrokenBuildSound>
+      <FixedBuildSound>${ProgramFiles.Default.Path}\cctray\fixed.wav</FixedBuildSound>
+      <StillFailingBuildSound>${ProgramFiles.Default.Path}\cctray\still-failing.wav</StillFailingBuildSound>
+      <StillSuccessfulBuildSound>${ProgramFiles.Default.Path}\cctray\still-successful.wav</StillSuccessfulBuildSound>
     </Sound>
     <BalloonMessages>
       <BrokenBuildMessage>
@@ -311,7 +334,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
     <property name="CCTraySettings.FilePath" value="${Common.Directory.Build.Path}\${CCTraySettings.FileName}"/>
     <echo message="${CCTraySettings.Content}" file="${CCTraySettings.FilePath}"/>
 
-    <property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
+    <property name="WinRarProgramPath" value="${ProgramFiles.Default.Path}\winrar\winrar.exe" overwrite="false"/>
     <property name="CCTraySetupExe.FilePath" value="${CCNet.Dashboard.Directory.Path}\cctray\CCTraySetup.exe"/>
 
     <property name="CCTrayZip.FilePath" value="${CCNet.Dashboard.Directory.Path}\cctray\cctray.zip"/>
@@ -332,4 +355,67 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
     <delete file="${SfxConfig.FilePath}" />
     <delete file="${CCTraySettings.FilePath}" />
   </target>
+
+  <macrodef name="findprogram">
+    <attributes>
+      <attribute name="program" require="True" type="string"/>
+      <attribute name="returnpropertyname" default="Found.Program.File.Path" type="string" require="False"/>
+    </attributes>
+    <sequential>
+      <property name="exit" value="false"/>
+
+      <ifnot test="${exit}">
+        <echo message="Searching in ${ProgramFiles.32.Path}\${program}..."/>
+        <foreach item="File" property="program.file.path">
+          <in>
+            <items>
+              <include name="${ProgramFiles.32.Path}\${program}"/>
+            </items>
+          </in>
+          <do>
+            <echo message="Found ${program.file.path}"/>
+            <property name="${returnpropertyname}" value="${program.file.path}"/>
+            <property name="exit" value="true"/>
+          </do>
+        </foreach>
+      </ifnot>
+
+      <ifnot test="${exit}">
+        <if test="${int::parse(Processor.Type) == 64}">
+          <echo message="Searching in ${ProgramFiles.64.Path}\${program}..."/>
+          <foreach item="File" property="program.file.path">
+            <in>
+              <items>
+                <include name="${ProgramFiles.64.Path}\${program}"/>
+              </items>
+            </in>
+            <do>
+              <echo message="Found ${program.file.path}"/>
+              <property name="${returnpropertyname}" value="${program.file.path}"/>
+              <property name="exit" value="true"/>
+            </do>
+          </foreach>
+        </if>
+      </ifnot>
+
+      <echo message="${returnpropertyname} == ${property::get-value(returnpropertyname)}"/>
+      <fail unless="${property::exists(returnpropertyname)}" message="Could not find ${program}."/>
+    </sequential>
+  </macrodef>
+
+  <script language="C#" prefix="regex" >
+    <imports>
+      <import namespace="System.Text.RegularExpressions" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("match")]
+         public static bool match(string input, string pattern)
+         {
+            return Regex.IsMatch(input, pattern);
+         }
+      ]]>
+    </code>
+  </script>
 </project>

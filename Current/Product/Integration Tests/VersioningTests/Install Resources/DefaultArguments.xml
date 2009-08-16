@@ -31,7 +31,75 @@
   </strings>
 
   <target name="Post.Install">
-    
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:Scratch.build.xml"/>
+      <arg line="Common.WriteSetEnvBatchFile"/>
+    </exec>
+    <exec
+      program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"
+      workingdir="${Common.Directory.Build.Path}"
+      verbose="True"
+    >
+      <arg line="/f:UpdatenAntSchema.xml"/>
+    </exec>
+
+    <call target="CleanExtraXmlNs"/>
   </target>
-  
+
+  <target name='CleanExtraXmlNs'>
+    <property name="BuildScript.File.Path" value="${Common.Directory.Build.Path}\Main.build.xml"/>
+    <strings id="Build.Targets">
+      <string value="Triggered"/>
+      <string value="Heavy"/>
+      <string value="Release"/>
+      <string value="Deploy"/>
+      <string value="Test"/>
+    </strings>
+    <call target="DoCleanExtraXmlNs"/>
+
+    <property name="BuildScript.File.Path" value="${Common.Directory.Build.Path}\Post.build.xml"/>
+    <strings id="Build.Targets">
+      <string value="PostBuild"/>
+    </strings>
+    <call target="DoCleanExtraXmlNs"/>
+  </target>
+
+  <target name='DoCleanExtraXmlNs'>
+    <loopthrough property="Target">
+      <items>
+        <strings refid="Build.Targets"/>
+      </items>
+      <do>
+        <xmlpeek
+          file="${BuildScript.File.Path}"
+          property="Tasks"
+          outerxml="true"
+          xpath="/n:project/n:target[@name = '${Target}']/n:trycatch/n:try/*|/n:project/n:target[@name = '${Target}']/n:trycatch/n:try/comment()"
+        >
+          <namespaces>
+            <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
+          </namespaces>
+        </xmlpeek>
+
+        <property name='Tasks' value="${string::replace(Tasks, 'xmlns=&quot;&quot;', '')}"/>
+
+        <xmlpoke
+          file="${BuildScript.File.Path}"
+          pokemode='Replace'
+          value='${Tasks}'
+          xpath="/n:project/n:target[@name = '${Target}']/n:trycatch/n:try"
+        >
+          <namespaces>
+            <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
+          </namespaces>
+        </xmlpoke>
+      </do>
+    </loopthrough>
+  </target>
+
+
 </project>

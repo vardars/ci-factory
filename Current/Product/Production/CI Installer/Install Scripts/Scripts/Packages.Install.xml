@@ -284,11 +284,22 @@
 
 
   <target name="Private.Packages.AddSetUp" unless="${IsUpgrade}">
-		<largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-			<value xml="false" expand="true">
-				<![CDATA[<call target="${Packages.CurrentPackage.PackageName}.SetUp" />]]>
-			</value>
-		</largeproperty>
+    <ifthenelse test="${Packages.CurrentPackage.PackageType!=''}">
+      <then>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<call target="${Packages.CurrentPackage.PackageType}.SetUp" />]]>
+          </value>
+        </largeproperty>
+      </then>
+      <else>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<call target="${Packages.CurrentPackage.PackageName}.SetUp" />]]>
+          </value>
+        </largeproperty>
+      </else>
+    </ifthenelse>
 
     <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddSetUp.EndTag}"/>
 
@@ -297,11 +308,22 @@
 
 
   <target name="Private.Packages.AddTearDown" unless="${IsUpgrade}">
-    <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
-      <value xml="false" expand="true">
-        <![CDATA[<call target="${Packages.CurrentPackage.PackageName}.TearDown" />]]>
-      </value>
-    </largeproperty>
+    <ifthenelse test="${Packages.CurrentPackage.PackageType!=''}">
+      <then>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<call target="${Packages.CurrentPackage.PackageType}.TearDown" />]]>
+          </value>
+        </largeproperty>
+      </then>
+      <else>
+        <largeproperty name="Private.Packages.MainBuild.SmartAddString.NewText">
+          <value xml="false" expand="true">
+            <![CDATA[<call target="${Packages.CurrentPackage.PackageName}.TearDown" />]]>
+          </value>
+        </largeproperty>
+      </else>
+    </ifthenelse>
 
     <property name="Private.Packages.MainBuild.SmartAddString.BeforeText" value="${Private.Packages.AddTearDown.EndTag}"/>
 

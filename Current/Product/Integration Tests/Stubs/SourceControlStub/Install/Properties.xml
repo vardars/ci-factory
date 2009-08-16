@@ -13,6 +13,18 @@
     </value>
   </largeproperty>
 
+  <largeproperty name="SourceControl.ReleaseBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
+    </value>
+  </largeproperty>
+
+  <largeproperty name="SourceControl.TestBuildBlock">
+    <value xml="false" expand="true">
+      <![CDATA[<sourcecontrol type="nullSourceControl" />]]>
+    </value>
+  </largeproperty>
+
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.BuildUpdateBlock%', SourceControl.BuildUpdateBlock)}"/>
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%SourceControl.MainBuildBlock%', SourceControl.MainBuildBlock)}"/>
 </project>
