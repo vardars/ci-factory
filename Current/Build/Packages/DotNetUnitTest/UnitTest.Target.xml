@@ -6,7 +6,7 @@
   <include buildfile="UnitTest.Properties.xml" />
 
 	<target name="UnitTest.LoadTasks">
-		<loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
+		<loadtasks assembly="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.Tasks.dll" />
 	</target>
 		 
 	<!--
@@ -82,7 +82,7 @@
         <property name="MbUnit.InTarget.Path" value="${UnitTest.Target.Directory}\MbUnit.Framework.dll"/>
         <ifnot test="${file::exists(MbUnit.InTarget.Path)}">
           <copy todir="${UnitTest.Target.Directory}">
-            <fileset basedir="${ThirdPartyDirectory}\MbUnit">
+            <fileset basedir="${Common.Directory.ThirdParty.Path}\MbUnit">
               <include name="MbUnit.Framework.dll"/>
               <include name="QuickGraph.Algorithms.dll"/>
               <include name="QuickGraph.dll"/>

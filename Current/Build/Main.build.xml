@@ -29,7 +29,7 @@
         <description>End Pre Build Actions</description>
         
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.GetOfThirdPartyDirectory" />
+        <call target="SourceControl.GetOfCommon.Directory.ThirdParty.Path" />
         <call target="SourceControl.GetOfCommon.Directory.Product.Path" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
@@ -65,7 +65,7 @@
         <description>Begin Pre Build Actions</description>
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path" />
         <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
@@ -74,7 +74,7 @@
         <description>End Compile Actions</description>
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
+        <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
           <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
@@ -105,7 +105,7 @@
         <call target="SourceModificationReport.ConsolidateReports" />
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path" />
         <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
@@ -127,7 +127,7 @@
         <description>End Compile Actions</description>
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
+        <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
           <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />

@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
 
   <property name="nDepend.ProductionDirectoryOnly" value="true" overwrite="false"/>
-  <property name="nDepend.ExcludeEntireThirdPartyDirectory" value="false" overwrite="false"/>
+  <property name="nDepend.ExcludeEntireCommon.Directory.ThirdParty.Path" value="false" overwrite="false"/>
 
   <property name="nDepend.BinFolder" value="${Common.Directory.Build.Path}\Packages\nDepend\bin" overwrite="false"/>
   <property name="nDepend.Console" value="${nDepend.BinFolder}\NDepend.Console.exe" overwrite="false"/>
@@ -31,7 +31,7 @@
     <include name="${Common.Directory.ThirdParty.Path}\**\*.exe"/>
     <exclude name="${Common.Directory.ThirdParty.Path}\MbUnit\*.*"/>
   </fileset>
-  <if test="${nDepend.ExcludeEntireThirdPartyDirectory}">
+  <if test="${nDepend.ExcludeEntireCommon.Directory.ThirdParty.Path}">
     <property name="nDepend.DependenciesFileSet.Common.Directory.ThirdParty.Path.PathPattern" value="${Common.Directory.ThirdParty.Path}\**\*.*"/>
     <function execute="${fileset::exclude-add('nDepend.DependenciesFileSet', nDepend.DependenciesFileSet.Common.Directory.ThirdParty.Path.PathPattern)}"/>
   </if>

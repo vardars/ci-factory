@@ -15,7 +15,7 @@
 
   <loadtasks assembly="${TFS.Task}" />
 
-  <target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
+  <target name="SourceControl.CleanGetFromChangeSetCommon.Directory.ThirdParty.Path" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -31,7 +31,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetFromChangeSetThirdPartyDirectory" >
+	<target name="SourceControl.GetFromChangeSetCommon.Directory.ThirdParty.Path" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -47,7 +47,7 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+	<target name="SourceControl.CleanGetFromLabelOfCommon.Directory.ThirdParty.Path" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
 		<property name="SourceControl.Update.All" value="true"/>
 

@@ -30,8 +30,8 @@
 	
 	-->
 
-  <target name="SourceControl.CleanGetOfThirdPartyDirectory" >
-    <property name="SourceControl.CleanGetOf" value="${ThirdPartyDirectory}"/>
+  <target name="SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path" >
+    <property name="SourceControl.CleanGetOf" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
@@ -40,8 +40,8 @@
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfThirdPartyDirectory" >
-    <property name="SourceControl.GetOf" value="${ThirdPartyDirectory}"/>
+  <target name="SourceControl.GetOfCommon.Directory.ThirdParty.Path" >
+    <property name="SourceControl.GetOf" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 

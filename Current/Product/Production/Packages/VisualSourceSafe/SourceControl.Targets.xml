@@ -26,7 +26,7 @@
 	
 	-->
   
-  <target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
+  <target name="SourceControl.CleanGetFromLabelOfCommon.Directory.ThirdParty.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 
@@ -62,7 +62,7 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <target name="SourceControl.SmartCleanGetOfThirdPartyDirectory" >
+  <target name="SourceControl.SmartCleanGetOfCommon.Directory.ThirdParty.Path" >
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
 

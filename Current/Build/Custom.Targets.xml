@@ -4,7 +4,7 @@
   <target name="Custom.CreateDocumentation">
     <call target="Custom.DownloadDocumentation"/>
     <exec
-      program="${ThirdPartyDirectory}\nAnt\bin\nant.exe"
+      program="${Common.Directory.ThirdParty.Path}\nAnt\bin\nant.exe"
       verbose="True"
     >
       <arg line='/f:"${BuildDirectory}\Custom.Targets.xml"'/>
@@ -101,7 +101,7 @@
 			<targetfiles>
 				<include name="${NAntDocumentationDirectory}/*.html" />
 			</targetfiles>
-			<sourcefiles basedir="${ThirdPartyDirectory}/nAnt/bin">
+			<sourcefiles basedir="${Common.Directory.ThirdParty.Path}/nAnt/bin">
 				<include name="NAnt.Core.dll" />
 				<include name="*Task*.dll" />
 				<include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>
@@ -110,7 +110,7 @@
 		</uptodate>
 		<ifnot test="${Help.IsUpToDate}">
 			<ndoc>
-				<assemblies basedir="${ThirdPartyDirectory}/nAnt/bin">
+				<assemblies basedir="${Common.Directory.ThirdParty.Path}/nAnt/bin">
 					<include name="NAnt.Core.dll" />
 					<include name="*Task*.dll" />
 					<include name="${ProductionDirectory}\Packages\**\*Task*.dll"/>

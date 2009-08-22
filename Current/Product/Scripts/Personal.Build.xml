@@ -207,13 +207,13 @@
 	</target>
 
 	<target name="IntegrationTest" depends="Common.SetUp">
-		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+		<exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" >
 			<arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
 		</exec>
 	</target>
 
   <target name="IntegrationTest.Deploy" depends="Common.SetUp">
-    <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+    <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" >
       <arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
       <arg line='CIFactory.TestRunner.Deploy' />
     </exec>

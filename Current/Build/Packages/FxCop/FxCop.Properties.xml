@@ -9,7 +9,7 @@
   <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report"/>
   <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies"/>
   <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules"/>
-  <property name="FxCop.ReferenceAssembliesFolder"  value="${ThirdPartyDirectory}"/>
+  <property name="FxCop.ReferenceAssembliesFolder"  value="${Common.Directory.ThirdParty.Path}"/>
   <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*"/>
   
   <fileset id="FxCop.Target.ProjectFiles">

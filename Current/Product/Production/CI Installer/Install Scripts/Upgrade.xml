@@ -10,7 +10,7 @@
 	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
 	<property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
 	<property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
-	<property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
+	<property name="SourceCommon.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
 	<property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
 	
 	<target name="Upgrade">

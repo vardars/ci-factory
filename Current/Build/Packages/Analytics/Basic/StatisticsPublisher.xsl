@@ -208,7 +208,7 @@
 
       <xsl:variable name="CompileTime"            select="//task[@name='call']/target[@name='Compile.CompileSource']/parent::node()/duration/text()"/>
       <xsl:variable name="ProduceSourceUpdate"    select="//task[@name='call']/target[@name='SourceControl.GetOfCommon.Directory.Product.Path']/parent::node()/duration/text()"/>
-      <xsl:variable name="ThirdPartySourceUpdate" select="//task[@name='call']/target[@name='SourceControl.CleanGetOfThirdPartyDirectory']/parent::node()/duration/text()"/>
+      <xsl:variable name="ThirdPartySourceUpdate" select="//task[@name='call']/target[@name='SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path']/parent::node()/duration/text()"/>
       <xsl:variable name="UnitTests"              select="//task[@name='call']/target[@name='UnitTest.RunTests']/parent::node()/duration/text()"/>
 
       <xsl:call-template name="AddStatistic">
