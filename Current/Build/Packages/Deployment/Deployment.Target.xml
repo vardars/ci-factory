@@ -60,7 +60,7 @@
     <call target="Publish.Link"/>
   </target>
 
-  <target name="Deployment.SetUp">
+  <target name="Publish.SetUp">
     <call target="Publish.EchoWebPath" />
 		<call target="Deployment.EchoDeploymentArtifactPath"/>
   </target>

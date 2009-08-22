@@ -172,7 +172,7 @@
     <call target="Simian.SetUp" />
     <call target="nDepend.SetUp" />
     <call target="LinesOfCode.SetUp" />
-    <call target="Deployment.SetUp" />
+    <call target="Publish.SetUp" />
     <description>End SetUps</description>
     <call target="FxCop.SetUp" />
   </target>

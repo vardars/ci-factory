@@ -6,7 +6,7 @@
   <xsl:key name="changeset" match="//Modification" use="ChangeNumber/text()"/>
 
   <xsl:template match="/">
-    <xsl:variable name="URL" select="/cruisecontrol/build/buildresults//target[@name='Deployment.SetUp']//target[@name='Deployment.EchoDeploymentArtifactPath']/task[@name='echo']/message"  />
+    <xsl:variable name="URL" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Deployment.EchoDeploymentArtifactPath']/task[@name='echo']/message"  />
 
     <xsl:if test="boolean($URL)">
       <xsl:variable name="ChangesDocPath" select="concat($URL, '/SourceModificationReport.xml')"/>
