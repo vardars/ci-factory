@@ -7,7 +7,7 @@
 	The following properties should be specified in the calling script.
   
   <property name="Publish.Source.File.Name" value="TraCHIIPI.tar" />
-  <property name="Deployment.SourceDir"	value="${ProductionDirectory}\lib" />
+  <property name="Publish.Source.Directory.Path"	value="${ProductionDirectory}\lib" />
   <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
   <property name="Deployment.TargetFile"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
   <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
@@ -48,7 +48,7 @@
 
   <target name="Private.Publish.CopyDeploymentToPublicationDir" >
     <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
-    <copy file="${Deployment.SourceDir}/${Publish.Source.File.Name}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
+    <copy file="${Publish.Source.Directory.Path}/${Publish.Source.File.Name}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
   </target>
 
   <target name="Publish.Zip">
