@@ -6,7 +6,7 @@
   <property name="Java.Installer.FileName" value="jdk-6u13-windows-i586-p.exe"/>
   <property name="Java.Installer.Download.URL" value="${Workspace.Ftp.Url}${Java.Installer.FileName}"/>
   
-	<target name="Workspace.RequieredSoftware.Java">
+	<target name="Workspace.RequiredSoftware.Java">
     <ifnot test="${directory::exists(Java.Install.Path)}" >
       <call target="Java.DownloadAndInstall"/>
     </ifnot>

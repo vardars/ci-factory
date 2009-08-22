@@ -46,13 +46,13 @@
 	<include buildfile="Packages\${SourceControl.PackageName}\SourceControl.Target.xml" />
 	
 	<target name="Setup">
-    <ifnot test="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}">
-      <function execute="${stringlist::add('Workspace.RequieredSoftware', SourceControl.PackageName)}" />
+    <ifnot test="${stringlist::contains('Workspace.RequiredSoftware', SourceControl.PackageName)}">
+      <function execute="${stringlist::add('Workspace.RequiredSoftware', SourceControl.PackageName)}" />
     </ifnot>
     <include buildfile="Software\${SourceControl.PackageName}\${SourceControl.PackageName}.Script.xml"
-             unless="${target::exists('Workspace.RequieredSoftware.' + SourceControl.PackageName)}"/>
+             unless="${target::exists('Workspace.RequiredSoftware.' + SourceControl.PackageName)}"/>
     
-		<call target="Workspace.CheckForRequieredSoftware"/>
+		<call target="Workspace.CheckForRequiredSoftware"/>
 		<call target="Workspace.Setup"/>
 		<call target="Workspace.ConfigureEnvironment"/>
 

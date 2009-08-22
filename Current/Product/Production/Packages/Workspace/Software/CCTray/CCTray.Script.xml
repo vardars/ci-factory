@@ -7,7 +7,7 @@
   <property name="CCTray.Installer.FilePath" value="C:\TEMP\${CCTray.Installer.FileName}"/>
   <property name="CCTray.Installer.Download.URL" value="http://${BuildServerHostName}/${string::replace(ProjectName, ' ', '%20')}-${ProjectCodeLineName}/default.aspx?_action_CCTrayDownload=true"/>
   
-	<target name="Workspace.RequieredSoftware.CCTray">
+	<target name="Workspace.RequiredSoftware.CCTray">
     <ifnot test="${directory::exists(CCTray.Install.Path)}" >
       <call target="CCTray.DownloadAndInstall"/>
     </ifnot>

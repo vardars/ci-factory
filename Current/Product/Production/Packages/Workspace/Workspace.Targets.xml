@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace">
   
-  <target name="Workspace.CheckForRequieredSoftware" >
-    <loopthrough property="Workspace.RequieredSoftware.Target">
+  <target name="Workspace.CheckForRequiredSoftware" >
+    <loopthrough property="Workspace.RequiredSoftware.Target">
       <items>
-        <strings refid="Workspace.RequieredSoftware" />
+        <strings refid="Workspace.RequiredSoftware" />
       </items>
       <do>
-        <call target="Workspace.RequieredSoftware.${Workspace.RequieredSoftware.Target}"/>
+        <call target="Workspace.RequiredSoftware.${Workspace.RequiredSoftware.Target}"/>
       </do>
     </loopthrough>
   </target>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.TomCat.Scripts">
 
-  <target name="Workspace.RequieredSoftware.TomCat">
+  <target name="Workspace.RequiredSoftware.TomCat">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Apache Software Foundation\Tomcat 6.0\bin\tomcat6.exe')}" >
       <ask answer="Answer"
            question="It looks like the Tomcat is not installed.  This software is required.  Do you wish to install the software?"

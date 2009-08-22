@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Oracle.Scripts">
 
-  <target name="Workspace.RequieredSoftware.Oracle">
-    <call target="Workspace.RequieredSoftware.Oracle.SqlDeveloper"/>
-    <call target="Workspace.RequieredSoftware.Oracle.Express"/>
+  <target name="Workspace.RequiredSoftware.Oracle">
+    <call target="Workspace.RequiredSoftware.Oracle.SqlDeveloper"/>
+    <call target="Workspace.RequiredSoftware.Oracle.Express"/>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Oracle.Express">
+  <target name="Workspace.RequiredSoftware.Oracle.Express">
     <ifnot test="${directory::exists('C:\Oracle\OracleXE')}" >
       <property name="Answer" value="NaN"/>
       <ask answer="Answer"
@@ -45,7 +45,7 @@
     </ifnot>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Oracle.SqlDeveloper">
+  <target name="Workspace.RequiredSoftware.Oracle.SqlDeveloper">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\sqldeveloper\sqldeveloper.exe')}" >
       <ask answer="Answer"
            question="It looks like the Oracle SQL Developer is not installed.  This software is required.  Do you wish to install the software?"

@@ -18,7 +18,7 @@
   <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml"/>
   
   <target name="SetUp">
-    <call target="Workspace.CheckForRequieredSoftware"/>
+    <call target="Workspace.CheckForRequiredSoftware"/>
     <call target="Workspace.ConfigureEnvironment"/>
   </target>
 

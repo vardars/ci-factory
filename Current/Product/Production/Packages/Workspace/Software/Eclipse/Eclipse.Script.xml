@@ -2,12 +2,12 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Eclipse.Scripts">
 
 
-  <target name="Workspace.RequieredSoftware.Eclipse">
-    <call target="Workspace.RequieredSoftware.Eclipse.IDE"/>
-    <call target="Workspace.RequieredSoftware.Eclipse.JAD"/>
+  <target name="Workspace.RequiredSoftware.Eclipse">
+    <call target="Workspace.RequiredSoftware.Eclipse.IDE"/>
+    <call target="Workspace.RequiredSoftware.Eclipse.JAD"/>
   </target>
   
-  <target name="Workspace.RequieredSoftware.Eclipse.IDE">
+  <target name="Workspace.RequiredSoftware.Eclipse.IDE">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\eclipse\eclipse.exe')}" >
       <ask answer="Answer"
            question="It looks like the Eclipse is not installed.  This software is required.  Do you wish to install the software?"
@@ -37,7 +37,7 @@
     </ifnot>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Eclipse.JAD">
+  <target name="Workspace.RequiredSoftware.Eclipse.JAD">
     <property name="JAD.ExePath" value="C:\Tools\Jad\jad.exe"/>
     <ifnot test="${file::exists(JAD.ExePath)}">
       <get

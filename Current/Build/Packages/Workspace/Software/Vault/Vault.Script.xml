@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Vault.Scripts">
 
 
-	<target name="Workspace.RequieredSoftware.Vault">
+	<target name="Workspace.RequiredSoftware.Vault">
 	</target>
 
 </project>

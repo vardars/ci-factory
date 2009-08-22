@@ -5,7 +5,7 @@
   <property name="Firefox.Version.Minor"    value="5"/>
   <property name="Firefox.Version.Revision"  value="0"/>
 
-  <target name="Workspace.RequieredSoftware.Firefox">
+  <target name="Workspace.RequiredSoftware.Firefox">
     <ifthenelse test="${file::exists(environment::get-variable('ProgramFiles') + '\Mozilla Firefox\firefox.exe')}" >
       <then>
         <call target="Private.Firefox.CheckVersion"/>
@@ -111,7 +111,7 @@ StartMenuDirectoryName=Mozilla Firefox
     </ifthenelse>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Firefox.SeleniumIDE">
+  <target name="Workspace.RequiredSoftware.Firefox.SeleniumIDE">
     <ifnot test="${directory::exists(environment::get-variable('ProgramFiles')+ '\Mozilla Firefox\extensions\{a6fd85ed-e919-4a43-a5af-8da18bda539f}')}">
       <exec program="taskkill" commandline="/IM firefox.exe" verbose="true" failonerror="false"/>
       <unzip

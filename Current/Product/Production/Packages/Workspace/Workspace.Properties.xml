@@ -23,7 +23,7 @@
 
   <property name="Workspace.Ftp.Url" value="%Workspace.Ftp.Url%"/>
   
-  <strings id="Workspace.RequieredSoftware">
+  <strings id="Workspace.RequiredSoftware">
     <string value="CCTray"/>
   </strings>
 
@@ -43,10 +43,10 @@
     <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
   </ifnot>
 
-  <ifnot test="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}">
-    <function execute="${stringlist::add('Workspace.RequieredSoftware', SourceControl.PackageName)}" />
+  <ifnot test="${stringlist::contains('Workspace.RequiredSoftware', SourceControl.PackageName)}">
+    <function execute="${stringlist::add('Workspace.RequiredSoftware', SourceControl.PackageName)}" />
   </ifnot>
   <include buildfile="${Package.Workspace.Directory.Path}\Software\${SourceControl.PackageName}\${SourceControl.PackageName}.Script.xml"
-           unless="${target::exists('Workspace.RequieredSoftware.' + SourceControl.PackageName)}"/>
+           unless="${target::exists('Workspace.RequiredSoftware.' + SourceControl.PackageName)}"/>
 
 </project>

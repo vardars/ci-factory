@@ -3,7 +3,7 @@
 
 	<property name="P4VInstallerPath" value="Z:\p4vinst.exe"/>
 
-	<target name="Workspace.RequieredSoftware.Perforce">
+	<target name="Workspace.RequiredSoftware.Perforce">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4.exe')}" >
 			<ask answer="Answer"
            question="It looks like Perforce is not installed.  This software is required.  Do you wish to install the software?"

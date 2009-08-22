@@ -7,7 +7,7 @@
   <property name="P4SInstallerPath" value="perforce.exe"/>
   <property name="P4SInstallerUrl" value="http://www.perforce.com/downloads/perforce/r07.2/bin.ntx86/perforce.exe"/>
 
-	<target name="Workspace.RequieredSoftware.Perforce">
+	<target name="Workspace.RequiredSoftware.Perforce">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4.exe')}" >
 			<ask answer="Answer"
            question="It looks like Perforce is not installed.  This software is required.  Do you wish to install the software?"
@@ -48,7 +48,7 @@
 		</ifnot>
 	</target>
 
-  <target name="Workspace.RequieredSoftware.PerforceServer">
+  <target name="Workspace.RequiredSoftware.PerforceServer">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4s.exe')}" >
       <ask answer="Answer"
            question="It looks like Perforce Server is not installed.  This software is required for integration testing.  Do you wish to install the software?"

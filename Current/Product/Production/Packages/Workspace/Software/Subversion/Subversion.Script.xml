@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Subversion.Scripts">
 
-  <target name="Workspace.RequieredSoftware.Subversion">
-    <call target="Workspace.RequieredSoftware.Subversion.Tortoise"/>
-    <call target="Workspace.RequieredSoftware.Subversion.Console"/>
+  <target name="Workspace.RequiredSoftware.Subversion">
+    <call target="Workspace.RequiredSoftware.Subversion.Tortoise"/>
+    <call target="Workspace.RequiredSoftware.Subversion.Console"/>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Subversion.Console">
+  <target name="Workspace.RequiredSoftware.Subversion.Console">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Subversion\bin\svn.exe')}" >
       <ask answer="Answer"
            question="It looks like the Subversion command line client is not installed.  This software is required.  Do you wish to install the software?"
@@ -32,7 +32,7 @@
     </ifnot>
   </target>
 
-  <target name="Workspace.RequieredSoftware.Subversion.Tortoise">
+  <target name="Workspace.RequiredSoftware.Subversion.Tortoise">
     <ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\TortoiseSVN\bin\TortoiseProc.exe')}" >
       <ask answer="Answer"
            question="It looks like TortoiseSVN is not installed.  This software is required.  Do you wish to install the software?"

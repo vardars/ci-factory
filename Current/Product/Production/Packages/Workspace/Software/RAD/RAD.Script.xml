@@ -26,13 +26,13 @@
   <property name="IBM.UpdateInstaller.Zip.Download.URL" value="${IBM.WAS.Zip.Download.URLBase}/${IBM.UpdateInstaller.Zip.FileName}"/>
   <property name="IBM.UpdateInstaller.Version.Expected" value="7.003"/>
 
-  <target name="Workspace.RequieredSoftware.RAD">
-    <call target="Workspace.RequieredSoftware.RAD.InitialInstall"/>
-    <call target="Workspace.RequieredSoftware.WAS.Fixes" if="${directory::exists(IBM.Rad.Install.Dir + '\runtimes\base_v7')}"/>
+  <target name="Workspace.RequiredSoftware.RAD">
+    <call target="Workspace.RequiredSoftware.RAD.InitialInstall"/>
+    <call target="Workspace.RequiredSoftware.WAS.Fixes" if="${directory::exists(IBM.Rad.Install.Dir + '\runtimes\base_v7')}"/>
   </target>
 
-  <target name="Workspace.RequieredSoftware.WAS.Fixes">
-    <call target="Workspace.RequieredSoftware.WAS.UpdateInstaller"/>
+  <target name="Workspace.RequiredSoftware.WAS.Fixes">
+    <call target="Workspace.RequiredSoftware.WAS.UpdateInstaller"/>
 
     <exec
       program="cmd"
@@ -107,7 +107,7 @@
     </if>
   </target>
   
-  <target name="Workspace.RequieredSoftware.WAS.UpdateInstaller">
+  <target name="Workspace.RequiredSoftware.WAS.UpdateInstaller">
     <if test="${directory::exists(path::get-directory-name(IBM.UpdateInstaller.ExePath))}">
       <loadfile property="IBM.UpdateInstaller.Version.Text" file="C:\Program Files\IBM\WebSphere\UpdateInstaller\version.txt"/>
       
@@ -167,7 +167,7 @@
     </ifnot>
   </target>
 
-  <target name="Workspace.RequieredSoftware.RAD.InitialInstall">
+  <target name="Workspace.RequiredSoftware.RAD.InitialInstall">
     <ifnot test="${directory::exists(IBM.Rad.Install.Dir + '\runtimes\base_v7')}" >
       <ask answer="Answer"
            question="It looks like RAD is not installed.  This software is optional.  Do you wish to install the software?"

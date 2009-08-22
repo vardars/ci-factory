@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.NCover.Scripts">
 	
-	<target name="Workspace.RequieredSoftware.NCover">
+	<target name="Workspace.RequiredSoftware.NCover">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\NCover\NCover.Console.exe')}" >
 			<ask answer="Answer"
            question="It looks like NCover is not installed.  Do you wish to continue?"

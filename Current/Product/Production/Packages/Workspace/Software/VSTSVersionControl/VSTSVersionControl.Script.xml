@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.VSTSVersionControl.Scripts">
 
 
-	<target name="Workspace.RequieredSoftware.VSTSVersionControl">
+	<target name="Workspace.RequiredSoftware.VSTSVersionControl">
 	</target>
 
 </project>

@@ -65,7 +65,7 @@
   </target>
 
   <target name="UpdateWorkspace">
-    <call target="Workspace.CheckForRequieredSoftware" />
+    <call target="Workspace.CheckForRequiredSoftware" />
     <call target="Workspace.ConfigureEnvironment" />
   </target>
   

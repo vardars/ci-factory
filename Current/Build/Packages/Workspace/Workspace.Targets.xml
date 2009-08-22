@@ -3,13 +3,13 @@
 
   <include buildfile="Workspace.Properties.xml"/>
   
-  <target name="Workspace.CheckForRequieredSoftware" >
-    <loopthrough property="Workspace.RequieredSoftware.Target">
+  <target name="Workspace.CheckForRequiredSoftware" >
+    <loopthrough property="Workspace.RequiredSoftware.Target">
       <items>
-        <strings refid="Workspace.RequieredSoftware" />
+        <strings refid="Workspace.RequiredSoftware" />
       </items>
       <do>
-        <call target="Workspace.RequieredSoftware.${Workspace.RequieredSoftware.Target}"/>
+        <call target="Workspace.RequiredSoftware.${Workspace.RequiredSoftware.Target}"/>
       </do>
     </loopthrough>
   </target>
