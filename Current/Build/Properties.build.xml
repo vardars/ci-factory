@@ -28,7 +28,7 @@
 
   <property name="Common.Directory.Product.Name"       value="&Common.Directory.Product.Name;"/>
   <property name="Common.Directory.ThirdParty.Name"    value="&Common.Directory.ThirdParty.Name;"/>
-  <property name="ProductionDirectoryName"    value="&ProductionDirectoryName;"/>
+  <property name="Common.Directory.Production.Name"    value="&Common.Directory.Production.Name;"/>
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
   <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
   <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>

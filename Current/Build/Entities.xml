@@ -8,7 +8,7 @@
 
 <!ENTITY Common.Directory.Product.Name         'Product'>
 <!ENTITY Common.Directory.ThirdParty.Name      'Third Party' >
-<!ENTITY ProductionDirectoryName      'Production' >
+<!ENTITY Common.Directory.Production.Name      'Production' >
 <!ENTITY BuildDirectoryName           'Build' >
 <!ENTITY Common.Directory.ArtifactRoot.Name    'Artifacts' >
 <!ENTITY PackagesDirectoryName        'Packages' >
@@ -19,7 +19,7 @@
 <!ENTITY Common.Directory.CodeLine.Path '&Common.Directory.ProjectRoot.Path;\&ProjectCodeLineName;' >
 <!ENTITY Common.Directory.Product.Path         '&Common.Directory.CodeLine.Path;\&Common.Directory.Product.Name;' >
 <!ENTITY Common.Directory.ThirdParty.Path      '&Common.Directory.CodeLine.Path;\&Common.Directory.ThirdParty.Name;' >
-<!ENTITY ProductionDirectory      '&Common.Directory.Product.Path;\&ProductionDirectoryName;' >
+<!ENTITY ProductionDirectory      '&Common.Directory.Product.Path;\&Common.Directory.Production.Name;' >
 <!ENTITY BuildDirectory           '&Common.Directory.CodeLine.Path;\&BuildDirectoryName;' >
 <!ENTITY Common.Directory.ArtifactRoot.Path    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
 <!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
