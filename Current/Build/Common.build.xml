@@ -55,7 +55,7 @@
       <property name="Common.ReportDirectory"/>
       <property name="Common.TempDirectory"/>
       <property name="Common.Directory.UnitTest.Path"/>
-      <property name="InstallDirectory"/>
+      <property name="Common.Directory.Install.Path"/>
     </saveproperties>
   </target>
 

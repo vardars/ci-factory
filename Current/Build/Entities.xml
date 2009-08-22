@@ -24,7 +24,7 @@
 <!ENTITY Common.Directory.ArtifactRoot.Path    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
 <!ENTITY Common.Directory.Packages.Path        '&BuildDirectory;\&Common.Directory.Packages.Name;' >
 <!ENTITY Common.Directory.UnitTest.Path      '&Common.Directory.Product.Path;\&Common.Directory.UnitTest.Name;' >
-<!ENTITY InstallDirectory      '&Common.Directory.Product.Path;\&Common.Directory.Install.Name;' >
+<!ENTITY Common.Directory.Install.Path      '&Common.Directory.Product.Path;\&Common.Directory.Install.Name;' >
 
 <!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
 <!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
