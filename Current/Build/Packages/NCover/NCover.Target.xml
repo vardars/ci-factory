@@ -153,7 +153,7 @@
       <property name="ProductionDirectory"/>
       <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
-      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
       <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
       <property name="PackagesDirectory" value="${PackagesDirectory}"/>
       <property name="Common.ArtifactDirectoryPath"/>

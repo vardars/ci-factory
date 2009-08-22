@@ -20,7 +20,7 @@
 
     <xslmultiout xmlInputFilePath="${Analytics.XmlInputFileName}"
       xslTransformFilePath="${Analytics.XslFilePath}" 
-      outputFilePath="${ArtifactRootDirectory}\${Analytics.XmlReportFileName}" 
+      outputFilePath="${Common.Directory.ArtifactRoot.Path}\${Analytics.XmlReportFileName}" 
       append="${Analytics.Append}">
       <parameters>
         <parameter name="CCNetLabel" value="${CCNetLabel}"/>
@@ -76,7 +76,7 @@
         <regex pattern="^*.log(?'PrivateAnalyticsArtifactFolderName'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
         <property name="Common.ArtifactFolderName" value="${PrivateAnalyticsArtifactFolderName}"/>
         <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
-        <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+        <property name="Common.ArtifactDirectoryPath" value="${Common.Directory.ArtifactRoot.Path}\${Common.ArtifactFolderName}"/>
         <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}"/>
         
         <call target="Analytics.CompileReports"/>

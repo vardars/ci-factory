@@ -17,7 +17,7 @@
 
   <property name="Common.ArtifactFolderName" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
   <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
-  <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+  <property name="Common.ArtifactDirectoryPath" value="${Common.Directory.ArtifactRoot.Path}\${Common.ArtifactFolderName}"/>
 
   <property name="Common.ReportDirectory" value="${BuildDirectory}\Reports"/>
   <property name="Common.TempDirectory" value="${BuildDirectory}\Temp"/>
@@ -47,7 +47,7 @@
       <property name="ProductionDirectory"/>
       <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
-      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
       <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
       <property name="PackagesDirectory" value="${PackagesDirectory}"/>
       <property name="Common.ArtifactDirectoryPath"/>

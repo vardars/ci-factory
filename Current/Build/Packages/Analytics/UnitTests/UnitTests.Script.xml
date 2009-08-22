@@ -23,11 +23,11 @@
     <echo message="Generating UnitTestsCountsLineChartData"/>
     <delete>
       <fileset>
-        <include name="${ArtifactRootDirectory}\UnitTestsCountsHistoryLineXAxis.xml"/>
-        <include name="${ArtifactRootDirectory}\UnitTestsCountsHistoryTotal.xml"/>
-        <include name="${ArtifactRootDirectory}\UnitTestsCountsHistoryPassed.xml"/>
-        <include name="${ArtifactRootDirectory}\UnitTestsCountsHistoryIgnored.xml"/>
-        <include name="${ArtifactRootDirectory}\UnitTestsCountsHistoryFailed.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsCountsHistoryLineXAxis.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsCountsHistoryTotal.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsCountsHistoryPassed.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsCountsHistoryIgnored.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsCountsHistoryFailed.xml"/>
       </fileset>
     </delete>
     <property name="Analytics.XmlInputFileName" value="${BuildDirectory}\Packages\Analytics\UnitTests\UnitTests.Statistics.xml"/>

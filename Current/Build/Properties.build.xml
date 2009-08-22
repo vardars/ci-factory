@@ -21,7 +21,7 @@
   <property name="ThirdPartyDirectory"        value="&ThirdPartyDirectory;" />
   <property name="ProductionDirectory"        value="&ProductionDirectory;" />
   <property name="BuildDirectory"             value="&BuildDirectory;" />
-  <property name="ArtifactRootDirectory"      value="&ArtifactRootDirectory;"/>
+  <property name="Common.Directory.ArtifactRoot.Path"      value="&Common.Directory.ArtifactRoot.Path;"/>
   <property name="PackagesDirectory"          value="&PackagesDirectory;"/>
   <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
   <property name="InstallDirectory"           value="&InstallDirectory;"/>

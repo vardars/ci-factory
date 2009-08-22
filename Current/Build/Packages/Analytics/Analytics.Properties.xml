@@ -13,14 +13,14 @@
   <property name="Analytics.PackageDirectory" value="${PackagesDirectory}\Analytics"/>
   
   <fileset id="Analytics.DeleteFileSet">
-    <include name="${ArtifactRootDirectory}\SuccessProgressXAxis.xml"/>
-    <include name="${ArtifactRootDirectory}\SuccessProgressSuccessful.xml"/>
-    <include name="${ArtifactRootDirectory}\SuccessProgressFailed.xml"/>
-    <include name="${ArtifactRootDirectory}\SuccessProgressException.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\SuccessProgressXAxis.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\SuccessProgressSuccessful.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\SuccessProgressFailed.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\SuccessProgressException.xml"/>
     
-    <include name="${ArtifactRootDirectory}\MainAnalyticsReportContent.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\MainAnalyticsReportContent.xml"/>
     
-    <include name="${ArtifactRootDirectory}\UnitTestsContent.xml"/>
+    <include name="${Common.Directory.ArtifactRoot.Path}\UnitTestsContent.xml"/>
   </fileset>
 
   <property name="Analytics.DeleteFileSetRefId" value="Analytics.DeleteFileSet"/>

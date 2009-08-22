@@ -126,7 +126,7 @@
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
         <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
-        <property name="ArtifactRootDirectory"      value="${BranchArtifactRootDirectory}"/>
+        <property name="Common.Directory.ArtifactRoot.Path"      value="${BranchCommon.Directory.ArtifactRoot.Path}"/>
         <property name="PackagesDirectory"          value="${BranchPackagesDirectory}"/>
         <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
@@ -167,7 +167,7 @@
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
         <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
-        <property name="ArtifactRootDirectory"      value="${BranchArtifactRootDirectory}"/>
+        <property name="Common.Directory.ArtifactRoot.Path"      value="${BranchCommon.Directory.ArtifactRoot.Path}"/>
         <property name="PackagesDirectory"          value="${BranchPackagesDirectory}"/>
         <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
@@ -602,7 +602,7 @@ Please note that you don't have to change it.
 		<property name="BranchUnitTestDirectory"        value="${BranchProductDirectory}\${UnitTestDirectoryName}"  />
 		<property name="BranchInstallDirectory"         value="${BranchProductDirectory}\${InstallDirectoryName}"  />
 		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${PackagesDirectoryName}"  />
-    <property name="BranchArtifactRootDirectory"    value="${BranchBuildDirectory}\${Common.Directory.ArtifactRoot.Name}"/>
+    <property name="BranchCommon.Directory.ArtifactRoot.Path"    value="${BranchBuildDirectory}\${Common.Directory.ArtifactRoot.Name}"/>
 	</target>
 
 	<target name="AskForBuildServerPort" unless="${property::exists('BranchBuildServerPort')}">

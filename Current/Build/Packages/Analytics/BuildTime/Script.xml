@@ -8,12 +8,12 @@
     <echo message="Generating BuildTimeHistory"/>
     <delete>
       <fileset>
-        <include name="${ArtifactRootDirectory}\BuildHistoryTotal.xml"/>
-        <include name="${ArtifactRootDirectory}\BuildHistoryCompile.xml"/>
-        <include name="${ArtifactRootDirectory}\BuildHistoryProduceSourceUpdate.xml"/>
-        <include name="${ArtifactRootDirectory}\BuildHistoryThirdPartySourceUpdate.xml"/>
-        <include name="${ArtifactRootDirectory}\BuildHistoryUnitTests.xml"/>
-        <include name="${ArtifactRootDirectory}\BuildHistoryXAxis.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryTotal.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryCompile.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryProduceSourceUpdate.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryThirdPartySourceUpdate.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryUnitTests.xml"/>
+        <include name="${Common.Directory.ArtifactRoot.Path}\BuildHistoryXAxis.xml"/>
       </fileset>
     </delete>
     <property name="Analytics.XmlInputFileName" value="${Analytics.PackageDirectory}\Basic\MainAnalyticsReport.xml"/>
