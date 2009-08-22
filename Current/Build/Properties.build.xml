@@ -31,7 +31,7 @@
   <property name="Common.Directory.Production.Name"    value="&Common.Directory.Production.Name;"/>
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
   <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
-  <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>
+  <property name="Common.Directory.Packages.Name"      value="&Common.Directory.Packages.Name;"/>
   <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
   <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
 

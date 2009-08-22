@@ -136,7 +136,7 @@
         <property name="Common.Directory.Production.Name"    value="${Common.Directory.Production.Name}"/>
         <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
         <property name="Common.Directory.ArtifactRoot.Name"  value="${Common.Directory.ArtifactRoot.Name}"/>
-        <property name="PackagesDirectoryName"      value="${PackagesDirectoryName}"/>
+        <property name="Common.Directory.Packages.Name"      value="${Common.Directory.Packages.Name}"/>
         <property name="UnitTestDirectoryName"      value="${UnitTestDirectoryName}"/>
         <property name="InstallDirectoryName"       value="${InstallDirectoryName}"/>
 
@@ -177,7 +177,7 @@
         <property name="Common.Directory.Production.Name"    value="${Common.Directory.Production.Name}"/>
         <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
         <property name="Common.Directory.ArtifactRoot.Name"  value="${Common.Directory.ArtifactRoot.Name}"/>
-        <property name="PackagesDirectoryName"      value="${PackagesDirectoryName}"/>
+        <property name="Common.Directory.Packages.Name"      value="${Common.Directory.Packages.Name}"/>
         <property name="UnitTestDirectoryName"      value="${UnitTestDirectoryName}"/>
         <property name="InstallDirectoryName"       value="${InstallDirectoryName}"/>
 
@@ -601,7 +601,7 @@ Please note that you don't have to change it.
 		<property name="BranchProductionDirectory"      value="${BranchCommon.Directory.Product.Path}\${Common.Directory.Production.Name}"  />
 		<property name="BranchUnitTestDirectory"        value="${BranchCommon.Directory.Product.Path}\${UnitTestDirectoryName}"  />
 		<property name="BranchInstallDirectory"         value="${BranchCommon.Directory.Product.Path}\${InstallDirectoryName}"  />
-		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${PackagesDirectoryName}"  />
+		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${Common.Directory.Packages.Name}"  />
     <property name="BranchCommon.Directory.ArtifactRoot.Path"    value="${BranchBuildDirectory}\${Common.Directory.ArtifactRoot.Name}"/>
 	</target>
 
