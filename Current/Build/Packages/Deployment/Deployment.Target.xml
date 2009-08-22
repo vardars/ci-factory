@@ -16,7 +16,7 @@
   -->
   
   <target name="Publish.File">
-    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Private.Publish.CopyDeploymentToPublicationDir" />
     <call target="Deployment.PublishLink" />
   </target>
   
@@ -26,7 +26,7 @@
   </target>
 
   <target name="Publish.FileSilently">
-    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Private.Publish.CopyDeploymentToPublicationDir" />
     <call target="Deployment.EchoDeploymentWebPath" />
   </target>
 
@@ -46,7 +46,7 @@
     <echo message="${Deployment.FileWebPath}" level="Info"/>
   </target>
 
-  <target name="Private.Deployment.CopyDeplymentToPublicationDir" >
+  <target name="Private.Publish.CopyDeploymentToPublicationDir" >
     <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
     <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
   </target>
