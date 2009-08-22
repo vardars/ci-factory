@@ -25,7 +25,7 @@
     <call target="Deployment.EchoDeploymentFileWebPath" />
   </target>
 
-  <target name="Deployment.PublishFileSilently">
+  <target name="Publish.FileSilently">
     <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
     <call target="Deployment.EchoDeploymentWebPath" />
   </target>
