@@ -30,7 +30,7 @@
   <property name="ThirdPartyDirectoryName"    value="&ThirdPartyDirectoryName;"/>
   <property name="ProductionDirectoryName"    value="&ProductionDirectoryName;"/>
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
-  <property name="ArtifactRootDirectoryName"  value="&ArtifactRootDirectoryName;"/>
+  <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
   <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>
   <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
   <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>

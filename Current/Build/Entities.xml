@@ -10,7 +10,7 @@
 <!ENTITY ThirdPartyDirectoryName      'Third Party' >
 <!ENTITY ProductionDirectoryName      'Production' >
 <!ENTITY BuildDirectoryName           'Build' >
-<!ENTITY ArtifactRootDirectoryName    'Artifacts' >
+<!ENTITY Common.Directory.ArtifactRoot.Name    'Artifacts' >
 <!ENTITY PackagesDirectoryName        'Packages' >
 <!ENTITY UnitTestDirectoryName        'Unit Test' >
 <!ENTITY InstallDirectoryName         'Install' >
@@ -21,7 +21,7 @@
 <!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
 <!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
 <!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
-<!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&ArtifactRootDirectoryName;' >
+<!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
 <!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
 <!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >
 <!ENTITY InstallDirectory      '&ProductDirectory;\&InstallDirectoryName;' >
