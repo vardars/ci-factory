@@ -121,7 +121,7 @@
         <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
         <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
-        <call target="Deployment.PublishFile" />
+        <call target="Publish.File" />
         
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
@@ -147,7 +147,7 @@
         <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
         <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
-        <call target="Deployment.PublishFile" />
+        <call target="Publish.File" />
         <call target="Simian.Run"/>
         <call target="nDepend.Calculate" />
         <call target="LinesOfCode.CountCodeLines" />

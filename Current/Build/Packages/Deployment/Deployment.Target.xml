@@ -15,7 +15,7 @@
   
   -->
   
-  <target name="Deployment.PublishFile">
+  <target name="Publish.File">
     <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
     <call target="Deployment.PublishLink" />
   </target>
