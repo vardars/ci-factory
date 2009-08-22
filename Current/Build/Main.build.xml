@@ -118,9 +118,9 @@
         <property name="Publish.Source.File.Name" value="CI Factory Release Notes.html" />
         <property name="Publish.Source.Directory.Path" value="${ProductionDirectory}\CI Installer" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
-        <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
-        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <property name="Publish.Target.File.Name" value="Release Notes ${CCNetLabel}.html" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Deployment.FileWebName" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
@@ -144,9 +144,9 @@
         <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
         <property name="Publish.Source.Directory.Path" value="${ProductDirectory}\Install\CI Factory" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
-        <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
-        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <property name="Publish.Target.File.Name" value="CI-Factory-${CCNetLabel}.exe" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Deployment.FileWebName" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         <call target="Simian.Run"/>
         <call target="nDepend.Calculate" />
