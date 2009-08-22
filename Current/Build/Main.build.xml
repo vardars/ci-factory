@@ -115,7 +115,7 @@
         <call target="Custom.CreateDocumentation" />
         
         <call target="Custom.WriteReleaseNotes" />
-        <property name="Deployment.SourceFileName" value="CI Factory Release Notes.html" />
+        <property name="Publish.Source.File.Name" value="CI Factory Release Notes.html" />
         <property name="Deployment.SourceDir" value="${ProductionDirectory}\CI Installer" />
         <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
         <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
@@ -141,7 +141,7 @@
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
-        <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
+        <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
         <property name="Deployment.SourceDir" value="${ProductDirectory}\Install\CI Factory" />
         <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
         <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
