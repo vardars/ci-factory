@@ -97,8 +97,8 @@
 
   <target name="UnitTest.FindTestAssebmlies">
     <fileset id="UnitTest.TestAssemblies" >
-      <include name="${UnitTestDirectory}\**\bin\${UnitTest.TestAssemblyFormat}" />
-      <include name="${UnitTestDirectory}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+      <include name="${Common.Directory.UnitTest.Path}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${Common.Directory.UnitTest.Path}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
     </fileset>
   </target>
 

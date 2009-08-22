@@ -160,7 +160,7 @@
       <property name="Common.ArtifactFolderName"/>
       <property name="Common.ReportDirectory"/>
       <property name="Common.TempDirectory"/>
-      <property name="UnitTestDirectory"/>
+      <property name="Common.Directory.UnitTest.Path"/>
       <property name="InstallDirectory"/>
     </saveproperties>
   </target>

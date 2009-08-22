@@ -128,7 +128,7 @@
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
         <property name="Common.Directory.ArtifactRoot.Path"      value="${BranchCommon.Directory.ArtifactRoot.Path}"/>
         <property name="Common.Directory.Packages.Path"          value="${BranchCommon.Directory.Packages.Path}"/>
-        <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
+        <property name="Common.Directory.UnitTest.Path"          value="${BranchCommon.Directory.UnitTest.Path}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
         <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
@@ -169,7 +169,7 @@
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
         <property name="Common.Directory.ArtifactRoot.Path"      value="${BranchCommon.Directory.ArtifactRoot.Path}"/>
         <property name="Common.Directory.Packages.Path"          value="${BranchCommon.Directory.Packages.Path}"/>
-        <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
+        <property name="Common.Directory.UnitTest.Path"          value="${BranchCommon.Directory.UnitTest.Path}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
         <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
@@ -599,7 +599,7 @@ Please note that you don't have to change it.
 		<property name="BranchCommon.Directory.ThirdParty.Path"      value="${BranchCommon.Directory.CodeLine.Path}\${Common.Directory.ThirdParty.Name}" />
 		<property name="BranchBuildDirectory"           value="${BranchCommon.Directory.CodeLine.Path}\${Common.Directory.Build.Name}"  />
 		<property name="BranchCommon.Directory.Production.Path"      value="${BranchCommon.Directory.Product.Path}\${Common.Directory.Production.Name}"  />
-		<property name="BranchUnitTestDirectory"        value="${BranchCommon.Directory.Product.Path}\${Common.Directory.UnitTest.Name}"  />
+		<property name="BranchCommon.Directory.UnitTest.Path"        value="${BranchCommon.Directory.Product.Path}\${Common.Directory.UnitTest.Name}"  />
 		<property name="BranchInstallDirectory"         value="${BranchCommon.Directory.Product.Path}\${Common.Directory.Install.Name}"  />
 		<property name="BranchCommon.Directory.Packages.Path"        value="${BranchBuildDirectory}\${Common.Directory.Packages.Name}"  />
     <property name="BranchCommon.Directory.ArtifactRoot.Path"    value="${BranchBuildDirectory}\${Common.Directory.ArtifactRoot.Name}"/>

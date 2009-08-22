@@ -23,7 +23,7 @@
   <property name="BuildDirectory"             value="&BuildDirectory;" />
   <property name="Common.Directory.ArtifactRoot.Path"      value="&Common.Directory.ArtifactRoot.Path;"/>
   <property name="Common.Directory.Packages.Path"          value="&Common.Directory.Packages.Path;"/>
-  <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
+  <property name="Common.Directory.UnitTest.Path"          value="&Common.Directory.UnitTest.Path;"/>
   <property name="InstallDirectory"           value="&InstallDirectory;"/>
 
   <property name="Common.Directory.Product.Name"       value="&Common.Directory.Product.Name;"/>
