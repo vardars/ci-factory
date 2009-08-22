@@ -8,7 +8,7 @@
   
   <property name="Publish.Source.File.Name" value="TraCHIIPI.tar" />
   <property name="Publish.Source.Directory.Path"	value="${ProductionDirectory}\lib" />
-  <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+  <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
   <property name="Deployment.TargetFile"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
   <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
   <property name="Deployment.FileWebName"	value="${CCNetLabel} ${DeploymentFileName}" />
@@ -47,13 +47,13 @@
   </target>
 
   <target name="Private.Publish.CopyDeploymentToPublicationDir" >
-    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
-    <copy file="${Publish.Source.Directory.Path}/${Publish.Source.File.Name}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
+    <mkdir if="${directory::exists(Publish.Target.Directory.Path) == false}" dir="${Publish.Target.Directory.Path}" />
+    <copy file="${Publish.Source.Directory.Path}/${Publish.Source.File.Name}" tofile="${Publish.Target.Directory.Path}/${Deployment.TargetFile}" />
   </target>
 
   <target name="Publish.Zip">
-    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
-    <zip zipfile="${Deployment.TargetDir}/${Deployment.ZipFileName}">
+    <mkdir if="${directory::exists(Publish.Target.Directory.Path) == false}" dir="${Publish.Target.Directory.Path}" />
+    <zip zipfile="${Publish.Target.Directory.Path}/${Deployment.ZipFileName}">
       <fileset refid="Deployment.ZipFileSet" />
     </zip>
 

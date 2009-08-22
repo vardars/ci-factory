@@ -58,7 +58,7 @@
     </zip>
     <property name="Publish.Source.File.Name" value="${Compile.ZipFileName}"/>
     <property name="Publish.Source.Directory.Path"	value="${Compile.Bin}\" />
-    <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+    <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
     <property name="Deployment.TargetFile"	value="${Publish.Source.File.Name}" />
     <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
     <property name="Deployment.FileWebName"	value="${Deployment.TargetFile}" />

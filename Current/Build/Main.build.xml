@@ -117,7 +117,7 @@
         <call target="Custom.WriteReleaseNotes" />
         <property name="Publish.Source.File.Name" value="CI Factory Release Notes.html" />
         <property name="Publish.Source.Directory.Path" value="${ProductionDirectory}\CI Installer" />
-        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
         <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
@@ -143,7 +143,7 @@
         <description>Begin Post Build Actions</description>
         <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
         <property name="Publish.Source.Directory.Path" value="${ProductDirectory}\Install\CI Factory" />
-        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
         <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
         <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
