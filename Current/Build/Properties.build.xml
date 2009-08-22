@@ -33,7 +33,7 @@
   <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
   <property name="Common.Directory.Packages.Name"      value="&Common.Directory.Packages.Name;"/>
   <property name="Common.Directory.UnitTest.Name"      value="&Common.Directory.UnitTest.Name;"/>
-  <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
+  <property name="Common.Directory.Install.Name"       value="&Common.Directory.Install.Name;"/>
 
   <property name="NantBinPath" value="&NantBinPath;"/>
   <property name="NantExePath" value="&NantExePath;"/>

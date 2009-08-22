@@ -13,7 +13,7 @@
 <!ENTITY Common.Directory.ArtifactRoot.Name    'Artifacts' >
 <!ENTITY Common.Directory.Packages.Name        'Packages' >
 <!ENTITY Common.Directory.UnitTest.Name        'Unit Test' >
-<!ENTITY InstallDirectoryName         'Install' >
+<!ENTITY Common.Directory.Install.Name         'Install' >
 
 <!ENTITY Common.Directory.ProjectRoot.Path     '&Common.Directory.ProjectsRoot.Path;\&ProjectName;' >
 <!ENTITY Common.Directory.CodeLine.Path '&Common.Directory.ProjectRoot.Path;\&ProjectCodeLineName;' >
@@ -24,7 +24,7 @@
 <!ENTITY Common.Directory.ArtifactRoot.Path    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
 <!ENTITY PackagesDirectory        '&BuildDirectory;\&Common.Directory.Packages.Name;' >
 <!ENTITY UnitTestDirectory      '&Common.Directory.Product.Path;\&Common.Directory.UnitTest.Name;' >
-<!ENTITY InstallDirectory      '&Common.Directory.Product.Path;\&InstallDirectoryName;' >
+<!ENTITY InstallDirectory      '&Common.Directory.Product.Path;\&Common.Directory.Install.Name;' >
 
 <!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
 <!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
