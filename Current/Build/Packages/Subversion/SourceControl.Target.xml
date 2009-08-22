@@ -289,8 +289,8 @@
   </target>
 
   <target name="SourceControl.Repository.Load">
-    <mkdir dir="${Common.Directory.ProjectRoot.Path}\tags" unless="${directory::exists(ProjectsDirectory + '\tags')}"/>
-    <exec program="svn" workingdir="${ProjectsDirectory}" verbose="${SVN.Debug}" >
+    <mkdir dir="${Common.Directory.ProjectRoot.Path}\tags" unless="${directory::exists(Common.Directory.ProjectsRoot.Path + '\tags')}"/>
+    <exec program="svn" workingdir="${Common.Directory.ProjectsRoot.Path}" verbose="${SVN.Debug}" >
       <arg line="import"/>
       <arg line='-m "Initial Load by CI Factory Installer"'/>
       <arg line="${ProjectName}"/>

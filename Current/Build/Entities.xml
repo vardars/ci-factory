@@ -4,7 +4,7 @@
 <!ENTITY LabelPrefix              '1.1.0.'>
 <!ENTITY ProjectName              'CI Factory' >
 <!ENTITY ProjectCodeLineName      'Current' >
-<!ENTITY ProjectsDirectory        'c:\Projects' >
+<!ENTITY Common.Directory.ProjectsRoot.Path        'c:\Projects' >
 
 <!ENTITY Common.Directory.Product.Name         'Product'>
 <!ENTITY ThirdPartyDirectoryName      'Third Party' >
@@ -15,7 +15,7 @@
 <!ENTITY UnitTestDirectoryName        'Unit Test' >
 <!ENTITY InstallDirectoryName         'Install' >
 
-<!ENTITY Common.Directory.ProjectRoot.Path     '&ProjectsDirectory;\&ProjectName;' >
+<!ENTITY Common.Directory.ProjectRoot.Path     '&Common.Directory.ProjectsRoot.Path;\&ProjectName;' >
 <!ENTITY Common.Directory.CodeLine.Path '&Common.Directory.ProjectRoot.Path;\&ProjectCodeLineName;' >
 <!ENTITY ProductDirectory         '&Common.Directory.CodeLine.Path;\&Common.Directory.Product.Name;' >
 <!ENTITY ThirdPartyDirectory      '&Common.Directory.CodeLine.Path;\&ThirdPartyDirectoryName;' >

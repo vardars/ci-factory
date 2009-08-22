@@ -119,7 +119,7 @@
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
-        <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
+        <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
         <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
         <property name="ProductDirectory"           value="${BranchProductDirectory}" />
@@ -160,7 +160,7 @@
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
-        <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
+        <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
         <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
         <property name="ProductDirectory"           value="${BranchProductDirectory}" />

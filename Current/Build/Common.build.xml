@@ -39,7 +39,7 @@
       <property name="EmailHost"/>
       <property name="ProjectName"/>
       <property name="ProjectCodeLineName"/>
-      <property name="ProjectsDirectory"/>
+      <property name="Common.Directory.ProjectsRoot.Path"/>
       <property name="Common.Directory.ProjectRoot.Path"/>
       <property name="Common.Directory.CodeLine.Path"/>
       <property name="ProductDirectory"/>
