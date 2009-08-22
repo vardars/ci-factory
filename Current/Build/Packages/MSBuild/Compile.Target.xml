@@ -29,7 +29,7 @@
       <arg line='/l:XmlLogger,"${Common.Directory.Packages.Path}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
       <environment refid="${Compile.Environment.RefId}" />
     </exec>
-    <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.ArtifactDirectoryPath}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>
+    <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.Directory.Artifact.Path}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>
     <if test="${int::parse(Private.Compile.Result) != 0}">
       <fail message='The compilation failed, for details please click the link named "MSBuild Compile Details" on the left.' />
     </if>
@@ -58,7 +58,7 @@
     </zip>
     <property name="Publish.Source.File.Name" value="${Compile.ZipFileName}"/>
     <property name="Publish.Source.Directory.Path"	value="${Compile.Bin}\" />
-    <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
+    <property name="Publish.Target.Directory.Path"	value="${Common.Directory.Artifact.Path}" />
     <property name="Publish.Target.File.Name"	value="${Publish.Source.File.Name}" />
     <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Publish.Target.File.Name}" />
     <property name="Publish.Web.File.Name"	value="${Publish.Target.File.Name}" />
@@ -73,16 +73,16 @@
       out="${Compile.LogFileDirectory}\Compile.xml" 
       style="${Common.Directory.Build.Path}\Packages\MSBuild\MSBuildMerge.xsl" />
 
-    <delete file="${Common.ArtifactDirectoryPath}\MSBuildReport.html" if="${file::exists(Common.ArtifactDirectoryPath + '\MSBuildReport.html')}" />
+    <delete file="${Common.Directory.Artifact.Path}\MSBuildReport.html" if="${file::exists(Common.Directory.Artifact.Path + '\MSBuildReport.html')}" />
     <style
       in="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"
-      out="${Common.ArtifactDirectoryPath}\MSBuildReport.html"
+      out="${Common.Directory.Artifact.Path}\MSBuildReport.html"
       style="${Common.Directory.Build.Path}\Packages\MSBuild\msbuild.xsl" />
     
     <property name="Common.ShowReport.XmlFile" value="${Compile.LogFileDirectory}\Compile.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${Compile.LogFileDirectory}\CompileReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\MSBuild\compile-msbuild.xsl"/>
-    <property name="Common.ShowReport.DetailsFilePath" value="${Common.ArtifactDirectoryPath}\MSBuildReport.html"/>
+    <property name="Common.ShowReport.DetailsFilePath" value="${Common.Directory.Artifact.Path}\MSBuildReport.html"/>
     <call target="Common.ShowReport"/>
   </target>
   

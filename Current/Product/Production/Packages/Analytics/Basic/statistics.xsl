@@ -99,25 +99,25 @@
   <xsl:template match="/statistics">
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
     <xsl:variable name="Common.Directory.Artifact.Name" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
-    <xsl:variable name="ArtifactDirectoryPath" select="concat('&Common.Directory.ArtifactRoot.Path;\', $Common.Directory.Artifact.Name)"  />
+    <xsl:variable name="Common.Directory.Artifact.Path" select="concat('&Common.Directory.ArtifactRoot.Path;\', $Common.Directory.Artifact.Name)"  />
 
-    <xsl:variable name="simianfile" select="concat($ArtifactDirectoryPath, '\Simian.Statistics.xml')"/>
+    <xsl:variable name="simianfile" select="concat($Common.Directory.Artifact.Path, '\Simian.Statistics.xml')"/>
     <xsl:variable name="simianfileExists" select="ms:FileExists($simianfile)"/>
     <xsl:variable name="simiandoc" select="document($simianfile)"/>
 
-    <xsl:variable name="unittestfile" select="concat($ArtifactDirectoryPath, '\UnitTests.Statistics.xml')"/>
+    <xsl:variable name="unittestfile" select="concat($Common.Directory.Artifact.Path, '\UnitTests.Statistics.xml')"/>
     <xsl:variable name="unittestfileExists" select="ms:FileExists($unittestfile)"/>
     <xsl:variable name="unittestdoc" select="document($unittestfile)"/>
 
-    <xsl:variable name="coveragefile" select="concat($ArtifactDirectoryPath, '\Coverage.Statistics.xml')"/>
+    <xsl:variable name="coveragefile" select="concat($Common.Directory.Artifact.Path, '\Coverage.Statistics.xml')"/>
     <xsl:variable name="coveragefileExists" select="ms:FileExists($coveragefile)"/>
     <xsl:variable name="coveragedoc" select="document($coveragefile)"/>
 
-    <xsl:variable name="DevelopmentIterationSuiteFitNesseFile" select="concat($ArtifactDirectoryPath, '\DevelopmentIterationSuiteFitNesse.Statistics.xml')"/>
+    <xsl:variable name="DevelopmentIterationSuiteFitNesseFile" select="concat($Common.Directory.Artifact.Path, '\DevelopmentIterationSuiteFitNesse.Statistics.xml')"/>
     <xsl:variable name="DevelopmentIterationSuiteFitNesseFileExists" select="ms:FileExists($DevelopmentIterationSuiteFitNesseFile)"/>
     <xsl:variable name="DevelopmentIterationSuiteFitNesseDoc" select="document($DevelopmentIterationSuiteFitNesseFile)"/>
 
-    <xsl:variable name="RegressionSuiteFitNesseFile" select="concat($ArtifactDirectoryPath, '\RegressionSuiteFitNesse.Statistics.xml')"/>
+    <xsl:variable name="RegressionSuiteFitNesseFile" select="concat($Common.Directory.Artifact.Path, '\RegressionSuiteFitNesse.Statistics.xml')"/>
     <xsl:variable name="RegressionSuiteFitNesseFileExists" select="ms:FileExists($RegressionSuiteFitNesseFile)"/>
     <xsl:variable name="RegressionSuiteFitNesseDoc" select="document($RegressionSuiteFitNesseFile)"/>
 
@@ -582,7 +582,7 @@ if(!document.getElementById)
     <br/>
     <hr/>
 
-    <xsl:if test="ms:FileExists(concat($ArtifactDirectoryPath, '\DevelopmentIterationSuiteFitNesseCountsLineChartData.xml'))">
+    <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\DevelopmentIterationSuiteFitNesseCountsLineChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
@@ -602,7 +602,7 @@ if(!document.getElementById)
       <hr/>
     </xsl:if>
 
-    <xsl:if test="ms:FileExists(concat($ArtifactDirectoryPath, '\RegressionSuiteFitNesseCountsLineChartData.xml'))">
+    <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\RegressionSuiteFitNesseCountsLineChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
@@ -622,7 +622,7 @@ if(!document.getElementById)
       <hr/>
     </xsl:if>
 
-    <xsl:if test="ms:FileExists(concat($ArtifactDirectoryPath, '\BugSuiteFitNesseCountsLineChartData.xml'))">
+    <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\BugSuiteFitNesseCountsLineChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
@@ -642,7 +642,7 @@ if(!document.getElementById)
       <hr/>
     </xsl:if>
 
-    <xsl:if test="ms:FileExists(concat($ArtifactDirectoryPath, '\UnitTestsCountsLineChartData.xml'))">
+    <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\UnitTestsCountsLineChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
@@ -682,7 +682,7 @@ if(!document.getElementById)
       <hr/>
     </xsl:if>
 
-    <xsl:if test="ms:FileExists(concat($ArtifactDirectoryPath, '\Simian.ChartData.xml'))">
+    <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\Simian.ChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>

@@ -24,9 +24,9 @@
   </msxsl:script>
   <xsl:output method="xml" omit-xml-declaration="yes" indent="yes"/>
 
-  <xsl:param name="ArtifactDirectoryPath" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Publish.EchoArtifactPath']/task[@name='echo']/message"  />
-  <!--<xsl:param name="ArtifactDirectoryPath" select="'C:\Temp'"  />-->
-  <xsl:variable name="analyticsFile" select="concat($ArtifactDirectoryPath, '\MainAnalyticsReport.xml')" />
+  <xsl:param name="Common.Directory.Artifact.Path" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Publish.EchoArtifactPath']/task[@name='echo']/message"  />
+  <!--<xsl:param name="Common.Directory.Artifact.Path" select="'C:\Temp'"  />-->
+  <xsl:variable name="analyticsFile" select="concat($Common.Directory.Artifact.Path, '\MainAnalyticsReport.xml')" />
   
   <xsl:template match="/">
     <xsl:if test="ms:FileExists($analyticsFile)">

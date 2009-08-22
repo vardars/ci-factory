@@ -32,10 +32,10 @@
         <items refid="${Analytics.CopyFileSetRefId}" />
       </in>
       <do>
-        <echo message="Copying ${Analytics.CompileReport.XmlFileToCopy} to ${Common.ArtifactDirectoryPath + '\' + path::get-file-name(Analytics.CompileReport.XmlFileToCopy)}"/>
+        <echo message="Copying ${Analytics.CompileReport.XmlFileToCopy} to ${Common.Directory.Artifact.Path + '\' + path::get-file-name(Analytics.CompileReport.XmlFileToCopy)}"/>
         <xmlcopy 
           inputFilePath="${Analytics.CompileReport.XmlFileToCopy}" 
-          outputDirectoryPath="${Common.ArtifactDirectoryPath}" 
+          outputDirectoryPath="${Common.Directory.Artifact.Path}" 
           verbose="True" />
       </do>
     </foreach>
@@ -76,8 +76,8 @@
         <regex pattern="^*.log(?'PrivateAnalyticsCommon.Directory.Artifact.Name'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
         <property name="Common.Directory.Artifact.Name" value="${PrivateAnalyticsCommon.Directory.Artifact.Name}"/>
         <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
-        <property name="Common.ArtifactDirectoryPath" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
-        <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}"/>
+        <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
+        <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}"/>
         
         <call target="Analytics.CompileReports"/>
       </do>

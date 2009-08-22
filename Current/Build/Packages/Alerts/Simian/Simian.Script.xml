@@ -11,7 +11,7 @@
     </else>
   </ifthenelse>
 
-  <property name="Alerts.Simian.ReportFilePath" value="${Common.ArtifactDirectoryPath}\SimianReport.xml"/>
+  <property name="Alerts.Simian.ReportFilePath" value="${Common.Directory.Artifact.Path}\SimianReport.xml"/>
 
   <!-- Begin Previous Properties -->
   <property name="Alerts.Simian.Previous.DuplicateLineCount" value="NaN" overwrite="false"/>
@@ -61,12 +61,12 @@
       <arg line="/o /c /p /w /n /r /x /d"/>
       <arg line='"${Alerts.Simian.Previous.ReportFilePath}"' />
       <arg line='"${Alerts.Simian.ReportFilePath}"' />
-      <arg line='"${Common.ArtifactDirectoryPath}\Simian.Diff.xml"' />
+      <arg line='"${Common.Directory.Artifact.Path}\Simian.Diff.xml"' />
     </exec>
 
     <style
-      in="${Common.ArtifactDirectoryPath}\Simian.Diff.xml"
-      out="${Common.ArtifactDirectoryPath}\Simian.Diff.Report.html"
+      in="${Common.Directory.Artifact.Path}\Simian.Diff.xml"
+      out="${Common.Directory.Artifact.Path}\Simian.Diff.Report.html"
       style="${Common.Directory.Packages.Path}\Alerts\Simian\DiffReport.xsl"
     >
       <parameters>
@@ -76,7 +76,7 @@
     </style>
 
     <loadfile
-      file="${Common.ArtifactDirectoryPath}\Simian.Diff.Report.html"
+      file="${Common.Directory.Artifact.Path}\Simian.Diff.Report.html"
       property="Alerts.Simian.Report"
     />
   </target>

@@ -59,12 +59,12 @@
 
         <copy 
 					file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' 
-					todir='${Common.ArtifactDirectoryPath}' 
+					todir='${Common.Directory.Artifact.Path}' 
 					if="${UnitTest.PublishXmlReport and file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"
 				/>
 
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
-               out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
+               out="${Common.Directory.Artifact.Path}\MbUnitReport.html"
                style="${Common.Directory.Packages.Path}\DotNetUnitTest\MBUnitDetails.xsl"
                if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
 			</finally>
@@ -113,7 +113,7 @@
     <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\Summary.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
     <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\MBUnitDisplaySummary.xsl"/>
-    <property name="Common.ShowReport.DetailsFilePath" value="${Common.ArtifactDirectoryPath}\MbUnitReport.html"/>
+    <property name="Common.ShowReport.DetailsFilePath" value="${Common.Directory.Artifact.Path}\MbUnitReport.html"/>
     <call target="Common.ShowReport"/>
   </target>
 

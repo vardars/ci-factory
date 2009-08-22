@@ -8,7 +8,7 @@
   
   <property name="Publish.Source.File.Name" value="TraCHIIPI.tar" />
   <property name="Publish.Source.Directory.Path"	value="${Common.Directory.Production.Path}\lib" />
-  <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
+  <property name="Publish.Target.Directory.Path"	value="${Common.Directory.Artifact.Path}" />
   <property name="Publish.Target.File.Name"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
   <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${DeploymentFileName}" />
   <property name="Publish.Web.File.Name"	value="${CCNetLabel} ${DeploymentFileName}" />
@@ -35,7 +35,7 @@
   </target>
 
 	<target name="Deployment.EchoDeploymentArtifactPath" >
-		<echo message="${Common.ArtifactDirectoryPath}" level="Info"/>
+		<echo message="${Common.Directory.Artifact.Path}" level="Info"/>
 	</target>
 
   <target name="Private.Publish.EchoWebFileName" >

@@ -98,9 +98,9 @@
     ]]>
   </msxsl:script>
 
-  <xsl:param name="ArtifactDirectoryPath" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Publish.EchoArtifactPath']/task[@name='echo']/message"  />
-  <!--<xsl:param name="ArtifactDirectoryPath" select="'C:\Temp'"  />-->
-  <xsl:variable name="alertsFile" select="concat($ArtifactDirectoryPath, '\Alerts.xml')" />
+  <xsl:param name="Common.Directory.Artifact.Path" select="/cruisecontrol/build/buildresults//target[@name='Publish.SetUp']//target[@name='Publish.EchoArtifactPath']/task[@name='echo']/message"  />
+  <!--<xsl:param name="Common.Directory.Artifact.Path" select="'C:\Temp'"  />-->
+  <xsl:variable name="alertsFile" select="concat($Common.Directory.Artifact.Path, '\Alerts.xml')" />
   
   <xsl:template match="/">
     <xsl:if test="ms:FileExists($alertsFile)">

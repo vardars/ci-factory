@@ -8,7 +8,7 @@
   <property name="CSDiff.ProgramPath" value="${Common.Directory.Packages.Path}\CSDiff\bin\csdiff.exe"/>
   <property name="CSDiff.ReportDirectoryName" value="Diffs"/>
   <property name="CSDiff.ReportFileName" value="DiffReport.htm"/>
-  <property name="CSDiff.ReportDirectoryPath" value="${Common.ArtifactDirectoryPath}\${CSDiff.ReportDirectoryName}"/>
+  <property name="CSDiff.ReportDirectoryPath" value="${Common.Directory.Artifact.Path}\${CSDiff.ReportDirectoryName}"/>
 
   <target name="CSDiff.GenerateHtmlReports">
     <exec program="${CSDiff.ProgramPath}" verbose="true">

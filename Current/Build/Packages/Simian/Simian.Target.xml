@@ -21,10 +21,10 @@
       </do>
     </loglevel>
 
-    <copy file='${Simian.ReportFilePath}' todir='${Common.ArtifactDirectoryPath}' if='${Simian.PublishXmlReport}' />
+    <copy file='${Simian.ReportFilePath}' todir='${Common.Directory.Artifact.Path}' if='${Simian.PublishXmlReport}' />
 
     <style in="${Simian.ReportFilePath}"
-           out="${Common.ArtifactDirectoryPath}\SimianReport.html"
+           out="${Common.Directory.Artifact.Path}\SimianReport.html"
            style="${Common.Directory.Packages.Path}\Simian\bin\simian.xsl"/>
   </target>
 

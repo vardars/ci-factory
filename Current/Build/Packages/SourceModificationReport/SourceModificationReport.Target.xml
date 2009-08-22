@@ -135,7 +135,7 @@
 			  tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
 			  verbose="true"
 		/>
-    <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
+    <copy todir="${Common.Directory.Artifact.Path}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
 	</target>
 
 	<target name="SourceModificationReport.PublishOldSource">

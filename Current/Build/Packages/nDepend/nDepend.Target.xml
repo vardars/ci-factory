@@ -46,7 +46,7 @@
         </do>
       </loopthrough>
 
-      <copy todir="${Common.ArtifactDirectoryPath}">
+      <copy todir="${Common.Directory.Artifact.Path}">
         <fileset basedir="${nDepend.BuildFolder}\NDependOut">
 					<include name="NDependReport.html"/>
           <include name="*.png"/>

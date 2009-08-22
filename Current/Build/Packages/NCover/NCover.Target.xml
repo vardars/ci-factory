@@ -127,7 +127,7 @@
     </ncoverexplorer>
     
     <style in="${Coverage.ReportFolder}\CoverageReport.xml"
-           out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+           out="${Common.Directory.Artifact.Path}\NCoverReport.html"
            style="${Common.Directory.Packages.Path}\NCover\NCoverExplorer.xsl"/>
   </target>
 
@@ -156,7 +156,7 @@
       <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
       <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
-      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
       <property name="Common.ReportDirectory"/>
       <property name="Common.TempDirectory"/>

@@ -17,7 +17,7 @@
 
   <property name="Common.Directory.Artifact.Name" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
   <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
-  <property name="Common.ArtifactDirectoryPath" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
+  <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
 
   <property name="Common.ReportDirectory" value="${Common.Directory.Build.Path}\Reports"/>
   <property name="Common.TempDirectory" value="${Common.Directory.Build.Path}\Temp"/>
@@ -50,7 +50,7 @@
       <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
       <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
-      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
       <property name="Common.ReportDirectory"/>
       <property name="Common.TempDirectory"/>
@@ -60,7 +60,7 @@
   </target>
 
   <target name="Common.SetUp">
-    <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}" verbose="true"/>
+    <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}" verbose="true"/>
 
     <delete dir="${Common.ReportDirectory}" if="${directory::exists(Common.ReportDirectory)}"/>
     <mkdir dir="${Common.ReportDirectory}"/>
