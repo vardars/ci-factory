@@ -21,7 +21,7 @@
   </target>
   
   <target name="Deployment.PublishLink">
-    <call target="Private.Deployment.EchoDeploymentFileWebName" />
+    <call target="Private.Publish.EchoWebFileName" />
     <call target="Deployment.EchoDeploymentFileWebPath" />
   </target>
 
@@ -38,7 +38,7 @@
 		<echo message="${Common.ArtifactDirectoryPath}" level="Info"/>
 	</target>
 
-  <target name="Private.Deployment.EchoDeploymentFileWebName" >
+  <target name="Private.Publish.EchoWebFileName" >
     <echo message="${Deployment.FileWebName}" level="Info"/>
   </target>
   
