@@ -372,7 +372,7 @@
       <arg line="${SourceControl.CreateBranch.BranchName}" />
     </exec>
 
-    <property name="BranchSubversionPackageDirectory" value="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\${Common.Directory.Packages.Name}\Subversion"/>
+    <property name="BranchSubversionPackageDirectory" value="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}\${Common.Directory.Build.Name}\${Common.Directory.Packages.Name}\Subversion"/>
     <copy
       unless="${file::exists(BranchSubversionPackageDirectory + '\SourceControl.Credentials.xml')}"
       file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml"

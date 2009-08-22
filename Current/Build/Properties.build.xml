@@ -29,7 +29,7 @@
   <property name="Common.Directory.Product.Name"       value="&Common.Directory.Product.Name;"/>
   <property name="Common.Directory.ThirdParty.Name"    value="&Common.Directory.ThirdParty.Name;"/>
   <property name="Common.Directory.Production.Name"    value="&Common.Directory.Production.Name;"/>
-  <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
+  <property name="Common.Directory.Build.Name"         value="&Common.Directory.Build.Name;"/>
   <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
   <property name="Common.Directory.Packages.Name"      value="&Common.Directory.Packages.Name;"/>
   <property name="Common.Directory.UnitTest.Name"      value="&Common.Directory.UnitTest.Name;"/>

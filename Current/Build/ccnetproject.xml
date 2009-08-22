@@ -108,7 +108,7 @@
       </triggeredIntegrationFilter>
     </integrationFilter>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
+      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&Common.Directory.Build.Name;</trunkUrl>
       <workingDirectory>&BuildDirectory;</workingDirectory>
       <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
       <webUrlBuilder type="websvn">
@@ -182,10 +182,10 @@
           <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
@@ -308,10 +308,10 @@
           <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
@@ -447,10 +447,10 @@
           <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
