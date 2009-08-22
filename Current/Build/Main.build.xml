@@ -81,7 +81,7 @@
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.Directory.Artifact.Path}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.Directory.Artifact.Path}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.xml"
+               out="${Project.Directory.Report.Path}\NAntTestReport.xml"
                style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
                if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>
@@ -134,7 +134,7 @@
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.Directory.Artifact.Path}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.Directory.Artifact.Path}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.xml"
+               out="${Project.Directory.Report.Path}\NAntTestReport.xml"
                style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
                if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>

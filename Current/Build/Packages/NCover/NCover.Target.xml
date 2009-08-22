@@ -158,7 +158,7 @@
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
       <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
-      <property name="Common.ReportDirectory"/>
+      <property name="Project.Directory.Report.Path"/>
       <property name="Common.TempDirectory"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
