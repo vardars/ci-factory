@@ -16,7 +16,7 @@
   
 	<xsl:output method="html"/>
   
-  <xsl:variable name="WebPath" select="(//target[@name='Publish.FileSilently']//target[@name='Deployment.EchoDeploymentWebPath']/task[@name='echo']/message)[1]"/>
+  <xsl:variable name="WebPath" select="(//target[@name='Publish.FileSilently']//target[@name='Publish.EchoWebPath']/task[@name='echo']/message)[1]"/>
 	
   <xsl:template match="/">
     <xsl:apply-templates select="/cruisecontrol/build/root" mode="Statistics"/>
