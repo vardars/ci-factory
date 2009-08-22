@@ -17,10 +17,10 @@
   
   <target name="Publish.File">
     <call target="Private.Publish.CopyDeploymentToPublicationDir" />
-    <call target="Deployment.PublishLink" />
+    <call target="Publish.Link" />
   </target>
   
-  <target name="Deployment.PublishLink">
+  <target name="Publish.Link">
     <call target="Private.Publish.EchoWebFileName" />
     <call target="Publish.EchoWebFilePath" />
   </target>
@@ -57,7 +57,7 @@
       <fileset refid="Deployment.ZipFileSet" />
     </zip>
 
-    <call target="Deployment.PublishLink"/>
+    <call target="Publish.Link"/>
   </target>
 
   <target name="Deployment.SetUp">
