@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Target">
 
   <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Deployment.EchoDeploymentFileWebPath')}"/>
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Publish.EchoWebFilePath')}"/>
 
   <include buildfile="CSDiff.Properties.xml" />
   <property name="CSDiff.ProgramPath" value="${PackagesDirectory}\CSDiff\bin\csdiff.exe"/>
@@ -24,7 +24,7 @@
     </exec>
 
     <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
-    <call target='Deployment.EchoDeploymentFileWebPath'/>
+    <call target='Publish.EchoWebFilePath'/>
   </target>
 
   <target name="CSDiff.SetUp">
