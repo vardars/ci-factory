@@ -70,7 +70,7 @@
       style="${PackagesDirectory}\Alerts\Simian\DiffReport.xsl"
     >
       <parameters>
-        <parameter name="PathPrefix" value="${path::get-short-path(ProductDirectory)}"/>
+        <parameter name="PathPrefix" value="${path::get-short-path(Common.Directory.Product.Path)}"/>
         <parameter name="OriginalDocPath" value="${Alerts.Simian.Previous.ReportFilePath}"/>
       </parameters>
     </style>

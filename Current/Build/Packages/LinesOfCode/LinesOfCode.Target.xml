@@ -12,12 +12,12 @@
     <codestats output="${BuildDirectory}\LinesOfCode\LinesOfCode.xml" append="true" buildname="${CCNetLabel}">
       <counts>
         <count label="C# (*.cs) Files">
-          <fileset basedir="${ProductDirectory}">
+          <fileset basedir="${Common.Directory.Product.Path}">
             <include name="**/*.cs" />
           </fileset>
         </count>
         <count label="VB (*.vb) Files">
-          <fileset basedir="${ProductDirectory}">
+          <fileset basedir="${Common.Directory.Product.Path}">
             <include name="**\*.vb" />
           </fileset>
         </count>

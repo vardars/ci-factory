@@ -142,7 +142,7 @@
 		<mkdir dir="${SourceModificationReport.OldSourcePath}" unless="${directory::exists(SourceModificationReport.OldSourcePath)}"/>
 
 		<copy todir="${SourceModificationReport.OldSourcePath}" verbose="true">
-			<fileset basedir="${ProductDirectory}" refid="SourceModificationReport.ModificationList" />
+			<fileset basedir="${Common.Directory.Product.Path}" refid="SourceModificationReport.ModificationList" />
 		</copy>
 	</target>
 
@@ -155,7 +155,7 @@
 	</target>
 
 	<target name="SourceModificationReport.CreateModificationList">
-		<fileset  basedir="${ProductDirectory}" id="SourceModificationReport.ModificationList" />
+		<fileset  basedir="${Common.Directory.Product.Path}" id="SourceModificationReport.ModificationList" />
 
 		<xmlquery
 		  file="${SourceModificationReport.ReportFile}"
@@ -182,7 +182,7 @@
 					<try>
 						<regex input="${DirtySCPath}" pattern=".*${ProjectCodeLineName}(/|\\)Product(/|\\|)(?'CleanSCPath'.*)"/>
 						<property name="PartialModificationFilePath" value="${path::combine(CleanSCPath, FileName)}"/>
-						<property name="ModificationFilePath" value="${path::combine(ProductDirectory, PartialModificationFilePath)}"/>
+						<property name="ModificationFilePath" value="${path::combine(Common.Directory.Product.Path, PartialModificationFilePath)}"/>
 
 						<echo message="Adding ${ModificationFilePath} to modification list."/>
 

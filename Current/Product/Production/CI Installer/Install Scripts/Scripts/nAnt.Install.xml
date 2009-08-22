@@ -42,7 +42,7 @@
     </copy>
 
 		<copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourceProductDirectory}">
+      <fileset basedir="${SourceCommon.Directory.Product.Path}">
         <include name="*.*"/>
         <exclude name="*.bat"/>
       </fileset>
@@ -50,7 +50,7 @@
     </copy>
 
     <copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourceProductDirectory}">
+      <fileset basedir="${SourceCommon.Directory.Product.Path}">
         <include name="*.bat"/>
       </fileset>
     </copy>

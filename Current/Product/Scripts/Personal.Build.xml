@@ -61,7 +61,7 @@
       <environment refid="${Compile.Environment.RefId}" />
     </setenv>
 
-    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${ProductDirectory}" />
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${Common.Directory.Product.Path}" />
   </target>
 
   <target name="UpdateWorkspace">
@@ -93,10 +93,10 @@
     <if test="${Ant.Included}">
       <call target="Ant.Build"/>
     </if>
-    <fileset id="InfoFiles" basedir="${ProductDirectory}">
+    <fileset id="InfoFiles" basedir="${Common.Directory.Product.Path}">
       <exclude name="${ProductionDirectory}\Packages\**\*"/>
-      <include name="${ProductDirectory}\ProjectInfo.*"/>
-      <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
+      <include name="${Common.Directory.Product.Path}\ProjectInfo.*"/>
+      <include name="${Common.Directory.Product.Path}\**\AssemblyInfo.*"/>
     </fileset>
     <trycatch>
       <try>
@@ -141,9 +141,9 @@
   </target>
 
   <target name="Clean">
-    <fileset id="ProjectFiles" basedir="${ProductDirectory}">
+    <fileset id="ProjectFiles" basedir="${Common.Directory.Product.Path}">
       <exclude name="${ProductionDirectory}\Packages\**\*"/>
-      <include name="${ProductDirectory}\**\*.*proj"/>
+      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
     <foreach item="File" property="ProjectFile.Path">
       <in>
@@ -157,7 +157,7 @@
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
         <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}">
+        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, Common.Directory.Product.Path)}">
           <delete verbose="true">
             <fileset basedir="${Output.Path}">
               <include name="**\*"/>
@@ -208,13 +208,13 @@
 
 	<target name="IntegrationTest" depends="Common.SetUp">
 		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
-			<arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
+			<arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
 		</exec>
 	</target>
 
   <target name="IntegrationTest.Deploy" depends="Common.SetUp">
     <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
-      <arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
+      <arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
       <arg line='CIFactory.TestRunner.Deploy' />
     </exec>
   </target>

@@ -30,7 +30,7 @@
         
         <description>Begin Clean Up Actions</description>
         <call target="SourceControl.GetOfThirdPartyDirectory" />
-        <call target="SourceControl.GetOfProductDirectory" />
+        <call target="SourceControl.GetOfCommon.Directory.Product.Path" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         
@@ -66,7 +66,7 @@
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
         <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
         <call target="Compile.CompileSource" />
@@ -75,14 +75,14 @@
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
+               style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
                if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
@@ -106,7 +106,7 @@
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
         <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-        <call target="SourceControl.CleanGetOfProductDirectory" />
+        <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
@@ -128,21 +128,21 @@
         <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
+          <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
           <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
           <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
         <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
                out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
+               style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
                if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
         <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
-        <property name="Publish.Source.Directory.Path" value="${ProductDirectory}\Install\CI Factory" />
+        <property name="Publish.Source.Directory.Path" value="${Common.Directory.Product.Path}\Install\CI Factory" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="CI-Factory-${CCNetLabel}.exe" />
         <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />

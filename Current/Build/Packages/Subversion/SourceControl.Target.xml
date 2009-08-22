@@ -35,8 +35,8 @@
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
-  <target name="SourceControl.CleanGetOfProductDirectory" >
-    <property name="SourceControl.CleanGetOf" value="${ProductDirectory}"/>
+  <target name="SourceControl.CleanGetOfCommon.Directory.Product.Path" >
+    <property name="SourceControl.CleanGetOf" value="${Common.Directory.Product.Path}"/>
     <call target="SourceControl.CleanGetOf"/>
   </target>
 
@@ -45,8 +45,8 @@
     <call target="SourceControl.GetOf"/>
   </target>
 
-  <target name="SourceControl.GetOfProductDirectory" >
-    <property name="SourceControl.GetOf" value="${ProductDirectory}"/>
+  <target name="SourceControl.GetOfCommon.Directory.Product.Path" >
+    <property name="SourceControl.GetOf" value="${Common.Directory.Product.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 

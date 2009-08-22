@@ -122,7 +122,7 @@
         <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
         <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
-        <property name="ProductDirectory"           value="${BranchProductDirectory}" />
+        <property name="Common.Directory.Product.Path"           value="${BranchCommon.Directory.Product.Path}" />
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
         <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
@@ -163,7 +163,7 @@
         <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
         <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
-        <property name="ProductDirectory"           value="${BranchProductDirectory}" />
+        <property name="Common.Directory.Product.Path"           value="${BranchCommon.Directory.Product.Path}" />
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
         <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
         <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
@@ -233,7 +233,7 @@
     <foreach item="File" property="ProjectFile">
       <in>
         <items>
-          <include name="${ProductDirectory}\**\*.*proj"/>
+          <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
         </items>
       </in>
       <do>
@@ -297,7 +297,7 @@ If yes the script will try to fix the references in the new branch.]]>
     <foreach item="File" property="ProjectFile">
       <in>
         <items>
-          <include name="${BranchProductDirectory}\**\*.*proj"/>
+          <include name="${BranchCommon.Directory.Product.Path}\**\*.*proj"/>
         </items>
       </in>
       <do>
@@ -595,12 +595,12 @@ Please note that you don't have to change it.
   
 	<target name="SetBranchProperties">
 		<property name="BranchCommon.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${BranchName}" />
-		<property name="BranchProductDirectory"         value="${BranchCommon.Directory.CodeLine.Path}\${Common.Directory.Product.Name}"  />
+		<property name="BranchCommon.Directory.Product.Path"         value="${BranchCommon.Directory.CodeLine.Path}\${Common.Directory.Product.Name}"  />
 		<property name="BranchThirdPartyDirectory"      value="${BranchCommon.Directory.CodeLine.Path}\${ThirdPartyDirectoryName}" />
 		<property name="BranchBuildDirectory"           value="${BranchCommon.Directory.CodeLine.Path}\${BuildDirectoryName}"  />
-		<property name="BranchProductionDirectory"      value="${BranchProductDirectory}\${ProductionDirectoryName}"  />
-		<property name="BranchUnitTestDirectory"        value="${BranchProductDirectory}\${UnitTestDirectoryName}"  />
-		<property name="BranchInstallDirectory"         value="${BranchProductDirectory}\${InstallDirectoryName}"  />
+		<property name="BranchProductionDirectory"      value="${BranchCommon.Directory.Product.Path}\${ProductionDirectoryName}"  />
+		<property name="BranchUnitTestDirectory"        value="${BranchCommon.Directory.Product.Path}\${UnitTestDirectoryName}"  />
+		<property name="BranchInstallDirectory"         value="${BranchCommon.Directory.Product.Path}\${InstallDirectoryName}"  />
 		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${PackagesDirectoryName}"  />
     <property name="BranchCommon.Directory.ArtifactRoot.Path"    value="${BranchBuildDirectory}\${Common.Directory.ArtifactRoot.Name}"/>
 	</target>

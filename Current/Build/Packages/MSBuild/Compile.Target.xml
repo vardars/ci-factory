@@ -17,7 +17,7 @@
     
   <target name="Compile.CompileSource">
     <exec 
-	    program="${framework::get-framework-directory('net-3.5')}\msbuild.exe" workingdir="${ProductDirectory}"
+	    program="${framework::get-framework-directory('net-3.5')}\msbuild.exe" workingdir="${Common.Directory.Product.Path}"
 	    failonerror="false"
 	    resultproperty="Private.Compile.Result"
       verbose="true"

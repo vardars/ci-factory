@@ -257,11 +257,11 @@
     <call target="Private.SourceControl.Update"/>
   </target>
 
-  <!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
+  <!-- Needed for SourceControl.CleanGetFromLabelofCommon.Directory.Product.Path
   <property name="SourceControl.GetFromLabel" value=""/>
   -->
 
-  <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
+  <target name="SourceControl.CleanGetFromLabelOfCommon.Directory.Product.Path">
     <property name="Private.SourceControl.ConvertLocalPathToPath.LocalPath" value="${Common.Directory.Product.Path}"/>
     <call target="Private.SourceControl.ConvertLocalPathToPath"/>
     

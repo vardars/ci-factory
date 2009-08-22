@@ -15,33 +15,33 @@
   </target>
 
   <target name="Custom.CreateDocumentationIndex">
-    <property name="IndexDirectoryPath" value="${ProductDirectory}\Documentation"/>
+    <property name="IndexDirectoryPath" value="${Common.Directory.Product.Path}\Documentation"/>
     <copy
       file="${BuildDirectory}\Documentation\Index.htm"
-      tofile="${ProductDirectory}\Documentation\Index.htm"
+      tofile="${Common.Directory.Product.Path}\Documentation\Index.htm"
       overwrite="true"
     />
 
     <property name="ListContainerId" value="CoreDocList"/>
-    <property name="DocDirectory" value="${ProductDirectory}\Documentation\Core"/>
+    <property name="DocDirectory" value="${Common.Directory.Product.Path}\Documentation\Core"/>
     <property name="DocList" value=""/>
     <call target="Custom.GetDocList"/>
     <call target="Custom.WriteDocList"/>
 
     <property name="ListContainerId" value="PackageDocList"/>
-    <property name="DocDirectory" value="${ProductDirectory}\Documentation\Package"/>
+    <property name="DocDirectory" value="${Common.Directory.Product.Path}\Documentation\Package"/>
     <property name="DocList" value=""/>
     <call target="Custom.GetDocList"/>
     <call target="Custom.WriteDocList"/>
 
     <property name="ListContainerId" value="FAQDocList"/>
-    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Configuration"/>
+    <property name="DocDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Configuration"/>
     <property name="DocList" value=""/>
     <call target="Custom.GetDocList"/>
 
-    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Capabilities"/>
+    <property name="DocDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Capabilities"/>
     <call target="Custom.GetDocList"/>
-    <property name="DocDirectory" value="${ProductDirectory}\Documentation\FAQ\Errors and Fixes"/>
+    <property name="DocDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Errors and Fixes"/>
     <call target="Custom.GetDocList"/>
 
     <call target="Custom.WriteDocList"/>
@@ -49,7 +49,7 @@
 
   <target name="Custom.WriteDocList">
     <xmlpoke
-      file="${ProductDirectory}\Documentation\Index.htm"
+      file="${Common.Directory.Product.Path}\Documentation\Index.htm"
       pokemode="Replace"
       value="${DocList}"
       xpath="//h:ul[@id='${ListContainerId}']"
@@ -92,7 +92,7 @@
   </target>
 
   <target name="Custom.NAnt.CreateDocumentation">
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation"/>
 		<property name="NAntDocumentationDirectory" value="${DocumentationDirectory}\NAnt"/>
 		<!--<property name="" value=""/>
     <property name="" value=""/>-->
@@ -139,23 +139,23 @@
 	</target>
 
   <target name="Custom.DownloadDocumentation">
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\Core"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation\Core"/>
     <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=17&amp;Itemid=41"/>
     <call target="Private.Custom.DownloadDocumentation"/>
 
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\Package"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation\Package"/>
     <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=4&amp;id=18&amp;Itemid=41"/>
     <call target="Private.Custom.DownloadDocumentation"/>
 
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Configuration"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Configuration"/>
     <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=7&amp;Itemid=41"/>
     <call target="Private.Custom.DownloadDocumentation"/>
 
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Errors and Fixes"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Errors and Fixes"/>
     <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=15&amp;Itemid=41"/>
     <call target="Private.Custom.DownloadDocumentation"/>
 
-    <property name="DocumentationDirectory" value="${ProductDirectory}\Documentation\FAQ\Capabilities"/>
+    <property name="DocumentationDirectory" value="${Common.Directory.Product.Path}\Documentation\FAQ\Capabilities"/>
     <property name="CategoryUrl" value="http://www.cifactory.org/joomla/index.php?option=com_content&amp;task=category&amp;sectionid=3&amp;id=16&amp;Itemid=41"/>
     <call target="Private.Custom.DownloadDocumentation"/>
   </target>
@@ -255,8 +255,8 @@
     <property name="ReleaseNotesFilePath" value="${ProductionDirectory}\CI Installer\CI Factory Release Notes.html"/>
     <property name="RevisionToLogFrom" value="2312"/>
     
-    <echo message='svn log "${ProductDirectory}" --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; "${TempSvnLogFilePath}"' file="${TempBatchFilePath}"/>
-    <exec program="${TempBatchFilePath}" workingdir="${ProductDirectory}" verbose="true" />
+    <echo message='svn log "${Common.Directory.Product.Path}" --xml -r ${RevisionToLogFrom}:HEAD --non-interactive &gt; "${TempSvnLogFilePath}"' file="${TempBatchFilePath}"/>
+    <exec program="${TempBatchFilePath}" workingdir="${Common.Directory.Product.Path}" verbose="true" />
 
     <property name='NewAndImprovedNotes' value=''/>
     <property name='FixedNotes' value=''/>

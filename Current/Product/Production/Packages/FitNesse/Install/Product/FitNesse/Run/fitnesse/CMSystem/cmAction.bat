@@ -1,4 +1,4 @@
-::start nant /f:%ProductDirectory%\Personal.Build.xml FitNesse.CMSystem.Action -D:FitNesse.CMSystem.Action.Type=%1 -D:FitNesse.CMSystem.Action.Item=%~f2
+::start nant /f:%Common.Directory.Product.Path%\Personal.Build.xml FitNesse.CMSystem.Action -D:FitNesse.CMSystem.Action.Type=%1 -D:FitNesse.CMSystem.Action.Item=%~f2
 ::echo off
 ::echo %~f2
 ::echo %~d2

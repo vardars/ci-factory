@@ -9,7 +9,7 @@
 	<property name="SourceRoot" value="${path::get-full-path('..')}"/>
 	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
 	<property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
-	<property name="SourceProductDirectory" value="${SourceDefaultDirectory}\Product"/>
+	<property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
 	<property name="SourceThirdPartyDirectory" value="${SourceDefaultDirectory}\Third Party"/>
 	<property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
 	

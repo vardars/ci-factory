@@ -17,7 +17,7 @@
   <property name="Common.Directory.ProjectsRoot.Path"          value="&Common.Directory.ProjectsRoot.Path;" />
   <property name="Common.Directory.ProjectRoot.Path"       value="&Common.Directory.ProjectRoot.Path;" />
   <property name="Common.Directory.CodeLine.Path"   value="&Common.Directory.CodeLine.Path;" />
-  <property name="ProductDirectory"           value="&ProductDirectory;" />
+  <property name="Common.Directory.Product.Path"           value="&Common.Directory.Product.Path;" />
   <property name="ThirdPartyDirectory"        value="&ThirdPartyDirectory;" />
   <property name="ProductionDirectory"        value="&ProductionDirectory;" />
   <property name="BuildDirectory"             value="&BuildDirectory;" />

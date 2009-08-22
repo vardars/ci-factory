@@ -42,7 +42,7 @@
       <property name="Common.Directory.ProjectsRoot.Path"/>
       <property name="Common.Directory.ProjectRoot.Path"/>
       <property name="Common.Directory.CodeLine.Path"/>
-      <property name="ProductDirectory"/>
+      <property name="Common.Directory.Product.Path"/>
       <property name="ThirdPartyDirectory"/>
       <property name="ProductionDirectory"/>
       <property name="BuildDirectory"/>
