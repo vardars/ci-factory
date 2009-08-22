@@ -28,7 +28,7 @@
 
         <style in="${FxCop.ReportFolder}\FxCopReport.xml"
                out="${Common.ArtifactDirectoryPath}\FxCopReport.html"
-               style="${PackagesDirectory}\FxCop\FxCopReport.xsl"/>
+               style="${Common.Directory.Packages.Path}\FxCop\FxCopReport.xsl"/>
       </if>
     </if>
   </target>

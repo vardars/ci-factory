@@ -39,7 +39,7 @@
 
 
     <copy todir="${Common.Directory.Build.Path}" >
-      <fileset basedir="${SourcePackagesDirectory}\Analytics\Install\Other">
+      <fileset basedir="${SourceCommon.Directory.Packages.Path}\Analytics\Install\Other">
         <include name="*.*"/>
       </fileset>
       <filterchain refid="Common.FilterChain" />

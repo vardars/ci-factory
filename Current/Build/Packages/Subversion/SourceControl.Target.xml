@@ -5,8 +5,8 @@
     <then>
       <property name="SVN.Task" value="Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
     </then>
-    <elseif if="${file::exists(PackagesDirectory + '\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll')}">
-      <property name="SVN.Task" value="${PackagesDirectory}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
+    <elseif if="${file::exists(Common.Directory.Packages.Path + '\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll')}">
+      <property name="SVN.Task" value="${Common.Directory.Packages.Path}\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll"/>
     </elseif>
     <else>
       <fail message="Can not find ...Packages\Subversion\bin\CIFactory.NAnt.Subversion.Tasks.dll!"/>
@@ -309,12 +309,12 @@
     </exec>
 
     <if test="${SVN.Credentials.SafeStorage}">
-      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="${SVN.Debug}" >
+      <exec program="svn" workingdir="${Common.Directory.Packages.Path}\Subversion" verbose="${SVN.Debug}" >
         <arg line="revert"/>
         <arg line="SourceControl.Credentials.xml" />
       </exec>
 
-      <exec program="svn" workingdir="${PackagesDirectory}\Subversion" verbose="${SVN.Debug}" >
+      <exec program="svn" workingdir="${Common.Directory.Packages.Path}\Subversion" verbose="${SVN.Debug}" >
         <arg line="propset"/>
         <arg line="svn:ignore"/>
         <arg line="SourceControl.Credentials.xml" />
@@ -375,7 +375,7 @@
     <property name="BranchSubversionPackageDirectory" value="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}\${Common.Directory.Build.Name}\${Common.Directory.Packages.Name}\Subversion"/>
     <copy
       unless="${file::exists(BranchSubversionPackageDirectory + '\SourceControl.Credentials.xml')}"
-      file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml"
+      file="${Common.Directory.Packages.Path}\Subversion\SourceControl.Credentials.xml"
       todir="${BranchSubversionPackageDirectory}"
       verbose="${SVN.Debug}"
     />

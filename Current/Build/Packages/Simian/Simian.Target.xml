@@ -25,7 +25,7 @@
 
     <style in="${Simian.ReportFilePath}"
            out="${Common.ArtifactDirectoryPath}\SimianReport.html"
-           style="${PackagesDirectory}\Simian\bin\simian.xsl"/>
+           style="${Common.Directory.Packages.Path}\Simian\bin\simian.xsl"/>
   </target>
 
   <target name="Simian.SetUp">

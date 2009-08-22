@@ -13,7 +13,7 @@
   <target name="Setup" >
     <mkiisdir dirpath="${CCNETDashboard.DashboardDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}"  defaultdoc="Default.aspx" enabledefaultdoc="true"/>
     <mkiisdir dirpath="${Common.Directory.ArtifactRoot.Path}" vdirname="${ProjectName}-${ProjectCodeLineName}/${Common.Directory.ArtifactRoot.Name}" enabledirbrowsing="true"/>
-    <mkiisdir dirpath="${PackagesDirectory}" vdirname="${ProjectName}-${ProjectCodeLineName}/${Common.Directory.Packages.Name}"/>
+    <mkiisdir dirpath="${Common.Directory.Packages.Path}" vdirname="${ProjectName}-${ProjectCodeLineName}/${Common.Directory.Packages.Name}"/>
 
     <script language="C#">
       <imports>

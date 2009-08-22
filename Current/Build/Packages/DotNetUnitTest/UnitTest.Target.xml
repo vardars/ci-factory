@@ -65,7 +65,7 @@
 
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
                out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
-               style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"
+               style="${Common.Directory.Packages.Path}\DotNetUnitTest\MBUnitDetails.xsl"
                if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
 			</finally>
 		</trycatch>

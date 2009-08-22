@@ -37,7 +37,7 @@
 
   <fileset id="PacakgeFinder" />
   <ifnot test="${property::exists('SourceControl.PackageName')}">
-    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
+    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
     <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
     <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
     <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>

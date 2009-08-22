@@ -6,16 +6,16 @@
   <include buildfile="Custom.Targets.xml" />
   
   <description>Begin Package Includes</description>
-  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Target.xml" />
-  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
-  <include buildfile="${PackagesDirectory}\NCover\NCover.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Simian\Simian.Target.xml" />
-  <include buildfile="${PackagesDirectory}\nDepend\nDepend.Target.xml" />
-  <include buildfile="${PackagesDirectory}\LinesOfCode\LinesOfCode.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Versioning\Versioning.Target.xml" />
-  <include buildfile="${PackagesDirectory}\FxCop\FxCop.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\SourceModificationReport\SourceModificationReport.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\Subversion\SourceControl.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\MSBuild\Compile.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\NCover\NCover.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\Simian\Simian.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\nDepend\nDepend.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\LinesOfCode\LinesOfCode.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\Versioning\Versioning.Target.xml" />
+  <include buildfile="${Common.Directory.Packages.Path}\FxCop\FxCop.Target.xml" />
   <description>End Package Includes</description>
   
   <target name="Triggered" depends="SetUps">

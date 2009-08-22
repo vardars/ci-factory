@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Target">
 
-  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Publish.EchoWebFilePath')}"/>
+  <include buildfile="${Common.Directory.Packages.Path}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
+  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" unless="${target::exists('Publish.EchoWebFilePath')}"/>
 
   <include buildfile="CSDiff.Properties.xml" />
-  <property name="CSDiff.ProgramPath" value="${PackagesDirectory}\CSDiff\bin\csdiff.exe"/>
+  <property name="CSDiff.ProgramPath" value="${Common.Directory.Packages.Path}\CSDiff\bin\csdiff.exe"/>
   <property name="CSDiff.ReportDirectoryName" value="Diffs"/>
   <property name="CSDiff.ReportFileName" value="DiffReport.htm"/>
   <property name="CSDiff.ReportDirectoryPath" value="${Common.ArtifactDirectoryPath}\${CSDiff.ReportDirectoryName}"/>
@@ -30,7 +30,7 @@
   <target name="CSDiff.SetUp">
     <mkdir dir="${CSDiff.ReportDirectoryPath}" unless="${directory::exists(CSDiff.ReportDirectoryPath)}"/>
 
-    <property name="CSDiff" value="${PackagesDirectory}\CSDiff\bin"/>
+    <property name="CSDiff" value="${Common.Directory.Packages.Path}\CSDiff\bin"/>
     <property name="Hive" value="CurrentUser"/>
     <property name="BaseKey" value="Software"/>
 

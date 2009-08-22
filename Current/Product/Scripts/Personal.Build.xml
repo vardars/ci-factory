@@ -20,8 +20,8 @@
   <property name="Compile.ConfigName" value="Debug"/>
 
   <description>Begin Package Includes</description>
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
-  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
+  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" if="${file::exists(Common.Directory.Packages.Path + '\Deployment\Deployment.Target.xml')}"/>
+  <include buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Targets.xml" if="${file::exists(Common.Directory.Packages.Path + '\Workspace\Workspace.Targets.xml')}"/>
   
   <fileset id="PacakgeFinder" />
   <loopthrough property="PackageType">
@@ -33,7 +33,7 @@
       </strings>
     </items>
     <do>
-      <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
+      <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\${PackageType}.Target.xml"/>
       <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
       <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
       <if test="${fileset::file-count('PacakgeFinder') > 0}">
@@ -45,8 +45,8 @@
   </loopthrough>
 
   <property name="Ant.Included" value="false"/>
-  <if test="${file::exists(PackagesDirectory + '\Ant\Ant.Target.xml')}" >
-    <include buildfile="${PackagesDirectory}\Ant\Ant.Target.xml" />
+  <if test="${file::exists(Common.Directory.Packages.Path + '\Ant\Ant.Target.xml')}" >
+    <include buildfile="${Common.Directory.Packages.Path}\Ant\Ant.Target.xml" />
     <property name="Ant.Included" value="true"/>
   </if>
   <description>End Package Includes</description>

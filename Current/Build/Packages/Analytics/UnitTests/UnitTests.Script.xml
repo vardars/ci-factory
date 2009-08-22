@@ -2,13 +2,13 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.UnitTests">
 
   <fileset id="Analytics.UnitTests">
-    <include name="${PackagesDirectory}\Analytics\UnitTests\UnitTests.Statistics.xml"/>
+    <include name="${Common.Directory.Packages.Path}\Analytics\UnitTests\UnitTests.Statistics.xml"/>
   </fileset>
 
   <target name="Analytics.UnitTests">
     <echo message="Generating UnitTests"/>
     <property name="Analytics.XmlInputFileName" value="${Analytics.BuildLog}"/>
-    <property name="Analytics.XslFilePath" value="${PackagesDirectory}\Analytics\UnitTests\UnitTests.Publisher.xsl"/>
+    <property name="Analytics.XslFilePath" value="${Common.Directory.Packages.Path}\Analytics\UnitTests\UnitTests.Publisher.xsl"/>
     <property name="Analytics.XmlReportFileName" value="UnitTestsContent.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.UnitTests"/>
     <property name="Analytics.Append" value="true"/>

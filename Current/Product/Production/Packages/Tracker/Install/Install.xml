@@ -27,19 +27,19 @@
     <call target="Packages.AddMergeFiles"/>
 
     <copy todir="${Common.Directory.Build.Path}\server">
-      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+      <fileset basedir="${SourceCommon.Directory.Packages.Path}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
     <copy todir="${Common.Directory.Build.Path}\dashboard\bin">
-      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+      <fileset basedir="${SourceCommon.Directory.Packages.Path}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
     <zip append="true" zipfile="${Common.Directory.Build.Path}\dashboard\cctray\cctray.zip" >
-      <fileset basedir="${SourcePackagesDirectory}\Tracker\Install\CCNet">
+      <fileset basedir="${SourceCommon.Directory.Packages.Path}\Tracker\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </zip>

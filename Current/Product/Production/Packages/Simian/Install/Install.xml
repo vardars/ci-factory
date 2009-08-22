@@ -91,7 +91,7 @@ More information can be found at http://www.redhillconsulting.com.au/products/si
   </target>
 
   <target name="Simian.GetLicense">
-    <property name="License.File" value="${SourcePackagesDirectory}\Simian\bin\LICENSE.txt"/>
+    <property name="License.File" value="${SourceCommon.Directory.Packages.Path}\Simian\bin\LICENSE.txt"/>
     <loadfile file="${License.File}" property="License.Content" />
   </target>
   

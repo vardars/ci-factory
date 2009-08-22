@@ -37,6 +37,6 @@
   <property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
   <property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
   <property name="SourceCommon.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
-  <property name="SourcePackagesDirectory" value="${SourceRoot}\Packages"/>
+  <property name="SourceCommon.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
   
 </project>

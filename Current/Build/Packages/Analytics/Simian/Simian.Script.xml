@@ -2,13 +2,13 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.Simian">
 
   <fileset id="Analytics.Simian">
-    <include name="${PackagesDirectory}\Analytics\Simian\Simian.Statistics.xml"/>
+    <include name="${Common.Directory.Packages.Path}\Analytics\Simian\Simian.Statistics.xml"/>
   </fileset>
 
   <target name="Analytics.Simian">
     <echo message="Generating Simian"/>
     <property name="Analytics.XmlInputFileName" value="${Analytics.BuildLog}"/>
-    <property name="Analytics.XslFilePath" value="${PackagesDirectory}\Analytics\Simian\Simian.Publisher.xsl"/>
+    <property name="Analytics.XslFilePath" value="${Common.Directory.Packages.Path}\Analytics\Simian\Simian.Publisher.xsl"/>
     <property name="Analytics.XmlReportFileName" value="SimianContent.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.Simian"/>
     <property name="Analytics.Append" value="true"/>

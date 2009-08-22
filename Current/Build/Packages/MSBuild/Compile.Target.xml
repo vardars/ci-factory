@@ -26,7 +26,7 @@
       <arg line='/t:Build' />
       <arg line='/p:Configuration="${Compile.ConfigName}"' />
       <arg line='/noconsolelogger' />
-      <arg line='/l:XmlLogger,"${PackagesDirectory}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
+      <arg line='/l:XmlLogger,"${Common.Directory.Packages.Path}\MSBuild\bin\MSBuildLogger.dll";"${Compile.LogFileDirectory}\${Compile.XmlLogFileName}"' />
       <environment refid="${Compile.Environment.RefId}" />
     </exec>
     <copy file="${Compile.LogFileDirectory}\${Compile.XmlLogFileName}" tofile="${Common.ArtifactDirectoryPath}\MSBuildLog.xml" if="${Compile.PublishLogFile}"/>

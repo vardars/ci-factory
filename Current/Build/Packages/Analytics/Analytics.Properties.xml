@@ -10,7 +10,7 @@
   </ifnot>
 
   <property name="Analytics.BuildLog" value="${CCNetLogFilePath}"/>
-  <property name="Analytics.PackageDirectory" value="${PackagesDirectory}\Analytics"/>
+  <property name="Analytics.PackageDirectory" value="${Common.Directory.Packages.Path}\Analytics"/>
   
   <fileset id="Analytics.DeleteFileSet">
     <include name="${Common.Directory.ArtifactRoot.Path}\SuccessProgressXAxis.xml"/>

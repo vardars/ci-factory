@@ -22,7 +22,7 @@
 <!ENTITY Common.Directory.Production.Path      '&Common.Directory.Product.Path;\&Common.Directory.Production.Name;' >
 <!ENTITY BuildDirectory           '&Common.Directory.CodeLine.Path;\&Common.Directory.Build.Name;' >
 <!ENTITY Common.Directory.ArtifactRoot.Path    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
-<!ENTITY PackagesDirectory        '&BuildDirectory;\&Common.Directory.Packages.Name;' >
+<!ENTITY Common.Directory.Packages.Path        '&BuildDirectory;\&Common.Directory.Packages.Name;' >
 <!ENTITY UnitTestDirectory      '&Common.Directory.Product.Path;\&Common.Directory.UnitTest.Name;' >
 <!ENTITY InstallDirectory      '&Common.Directory.Product.Path;\&Common.Directory.Install.Name;' >
 

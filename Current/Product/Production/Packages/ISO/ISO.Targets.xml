@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="ISO.Target">
 
   <property name="ISO.ExeFile" value="CDIMAGE.EXE" />
-  <property name="ISO.BinDirectory" value="${PackagesDirectory}\ISO\bin" />
+  <property name="ISO.BinDirectory" value="${Common.Directory.Packages.Path}\ISO\bin" />
   
   <include buildfile="ISO.Properties.xml"/>
 

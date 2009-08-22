@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.Simian.Scripts">
 
-  <property name="Alerts.Simian.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\Simian\Previous.Properties.xml"/>
+  <property name="Alerts.Simian.PreviousPropertiesFilePath" value="${Common.Directory.Packages.Path}\Alerts\Simian\Previous.Properties.xml"/>
   <ifthenelse test="${file::exists(Alerts.Simian.PreviousPropertiesFilePath)}">
     <then>
       <include buildfile="${Alerts.Simian.PreviousPropertiesFilePath}" />
@@ -67,7 +67,7 @@
     <style
       in="${Common.ArtifactDirectoryPath}\Simian.Diff.xml"
       out="${Common.ArtifactDirectoryPath}\Simian.Diff.Report.html"
-      style="${PackagesDirectory}\Alerts\Simian\DiffReport.xsl"
+      style="${Common.Directory.Packages.Path}\Alerts\Simian\DiffReport.xsl"
     >
       <parameters>
         <parameter name="PathPrefix" value="${path::get-short-path(Common.Directory.Product.Path)}"/>
