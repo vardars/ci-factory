@@ -109,7 +109,7 @@
     </integrationFilter>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
       <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&Common.Directory.Build.Name;</trunkUrl>
-      <workingDirectory>&BuildDirectory;</workingDirectory>
+      <workingDirectory>&Common.Directory.Build.Path;</workingDirectory>
       <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
       <webUrlBuilder type="websvn">
         <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -193,11 +193,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&BuildDirectory;\SourceModificationReports</path>
+        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -210,35 +210,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&BuildDirectory;\Reports\*.xml</file>
-          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
+          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
+          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -246,7 +246,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>
@@ -321,11 +321,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&BuildDirectory;\SourceModificationReports</path>
+        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -338,35 +338,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&BuildDirectory;\Reports\*.xml</file>
-          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
+          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
+          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -374,7 +374,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>
@@ -460,11 +460,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&BuildDirectory;\SourceModificationReports</path>
+        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -477,35 +477,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&BuildDirectory;\Reports\*.xml</file>
-          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
+          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
+          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
             <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
+            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -513,7 +513,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&BuildDirectory;</baseDirectory>
+        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>

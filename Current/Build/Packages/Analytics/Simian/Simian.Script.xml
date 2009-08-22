@@ -16,7 +16,7 @@
   </target>
 
   <fileset id="Analytics.SimianChart">
-    <include name="${BuildDirectory}\Packages\Analytics\Simian\Simian.ChartData.xml"/>
+    <include name="${Common.Directory.Build.Path}\Packages\Analytics\Simian\Simian.ChartData.xml"/>
   </fileset>
 
   <target name="Analytics.SimianChart">
@@ -31,15 +31,15 @@
         <include name="${Common.Directory.ArtifactRoot.Path}\Simian.TotalSignificantLineCount.xml"/>
       </fileset>
     </delete>
-    <property name="Analytics.XmlInputFileName" value="${BuildDirectory}\Packages\Analytics\Simian\Simian.Statistics.xml"/>
-    <property name="Analytics.XslFilePath" value="${BuildDirectory}\Packages\Analytics\Simian\Simian.ChartData.Publisher.xsl"/>
+    <property name="Analytics.XmlInputFileName" value="${Common.Directory.Build.Path}\Packages\Analytics\Simian\Simian.Statistics.xml"/>
+    <property name="Analytics.XslFilePath" value="${Common.Directory.Build.Path}\Packages\Analytics\Simian\Simian.ChartData.Publisher.xsl"/>
     <property name="Analytics.XmlReportFileName" value="Simian.XAxis.xml"/>
     <property name="Analytics.CopyFileSetRefId" value="Analytics.SimianChart"/>
     <property name="Analytics.Append" value="false"/>
 
     <property name="Analytics.SimianChart.Data" value=""/>
     <xmlpeek property="Analytics.SimianChart.Data"
-      file="${BuildDirectory}\Packages\Analytics\Simian\Simian.Statistics.xml"
+      file="${Common.Directory.Build.Path}\Packages\Analytics\Simian\Simian.Statistics.xml"
       nodeindex="0"
       xpath="/Builds/integration[position() > last()-200 and statistic[@name = 'threshold']/text() != '']"
       failonerror="False"/>

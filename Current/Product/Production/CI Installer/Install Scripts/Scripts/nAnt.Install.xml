@@ -5,18 +5,18 @@
 
   <!-- These are private... -->
   
-  <property name="Private.nAnt.DefaultBuildDirectory" value="${SourceRoot}\nAnt"/>
+  <property name="Private.nAnt.DefaultCommon.Directory.Build.Path" value="${SourceRoot}\nAnt"/>
 
   <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
 
     <copy todir="${Common.Directory.Tools.Path}" overwrite="True">
-      <fileset basedir="${SourceBuildDirectory}\Tools">
+      <fileset basedir="${SourceCommon.Directory.Build.Path}\Tools">
         <include name="**\*"/>
       </fileset>
     </copy>
     
     <copy todir="${Common.Directory.Build.Path}" overwrite="true">
-			<fileset basedir="${SourceBuildDirectory}">
+			<fileset basedir="${SourceCommon.Directory.Build.Path}">
 				<include name="Main.build.xml"/>
 				<include name="Properties.build.xml"/>
         <include name="Entities.xml"/>
@@ -36,7 +36,7 @@
 		</copy>
 
     <copy todir="${Common.Directory.Build.Path}" overwrite="true">
-      <fileset basedir="${SourceBuildDirectory}">
+      <fileset basedir="${SourceCommon.Directory.Build.Path}">
         <include name="*.bat"/>
       </fileset>
     </copy>
@@ -64,7 +64,7 @@
 
   <target name="Private.nAnt.CopyToBuild">
     <copy todir="${NAnt.Target.Directory.Path}" overwrite="true">
-      <fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
+      <fileset basedir="${Private.nAnt.DefaultCommon.Directory.Build.Path}">
         <include name="**/*" />
       </fileset>
     </copy>

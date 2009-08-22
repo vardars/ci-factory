@@ -3,14 +3,14 @@
 
   <include buildfile="NCover.Properties.xml" />
   <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
-  <loadtasks assembly="${BuildDirectory}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
+  <loadtasks assembly="${Common.Directory.Build.Path}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
 
   <!--
 	The following properties should be specified in the calling script.
 	
-	<property name="Coverage.ReportFolder" value="${BuildDirectory}\Coverage Reports"/>
+	<property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\Coverage Reports"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
-  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
 
   <fileset id="Coverage.Targets">
@@ -151,10 +151,10 @@
       <property name="Common.Directory.Product.Path"/>
       <property name="Common.Directory.ThirdParty.Path"/>
       <property name="Common.Directory.Production.Path"/>
-      <property name="BuildDirectory"/>
+      <property name="Common.Directory.Build.Path"/>
       <property name="Compile.ConfigName"/>
       <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
-      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
       <property name="Common.ArtifactDirectoryPath"/>
       <property name="Common.ArtifactFolderName"/>
@@ -176,7 +176,7 @@
 
     <call target="Private.Coverage.CreatePropertiesFile"/>
     
-    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
       <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.SetUp"/>
@@ -184,7 +184,7 @@
   </target>
 
   <target name="UnitTest.TearDown">
-    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
+    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
       <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.TearDown"/>

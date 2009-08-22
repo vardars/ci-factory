@@ -3,7 +3,7 @@
 
   <include buildfile="Simian.Properties.xml" />
 
-  <property name="Simian.Console" value="${path::get-short-path(BuildDirectory)}\Packages\Simian\bin\bin\simian-2.2.21.exe"/>
+  <property name="Simian.Console" value="${path::get-short-path(Common.Directory.Build.Path)}\Packages\Simian\bin\bin\simian-2.2.21.exe"/>
 
   <target name="Simian.Run">
     <loglevel level="None">

@@ -2,14 +2,14 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceModificationReport">
 
 	<include buildfile="SourceModificationReport.Properties.xml" />
-	<property name="SourceModificationReport.ReportDirectory" value="${BuildDirectory}\SourceModificationReports" overwrite="false"/>
+	<property name="SourceModificationReport.ReportDirectory" value="${Common.Directory.Build.Path}\SourceModificationReports" overwrite="false"/>
 	<property name="SourceModificationReport.ReportFile" value="${SourceModificationReport.ReportDirectory}\SourceModificationReport.xml" overwrite="false"/>
 	<property name="SourceModificationReport.FilesToDeleteAtSetup" value="" overwrite="false"/>
 
 	<!--
   The following properties should be specified in the calling script.
   
-  <property name="SourceModificationReportDirectory" value="${BuildDirectory}\SourceModificationReports" />
+  <property name="SourceModificationReportDirectory" value="${Common.Directory.Build.Path}\SourceModificationReports" />
   -->
 
 	<!-- The following properties are for internal use only -->
@@ -23,7 +23,7 @@
 	<target name="SourceModificationReport.GetOldestModificationTime">
 		<script language="VB">
 			<references>
-				<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+				<include name="${Common.Directory.Build.Path}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
 			</references>
 			<imports >
 				<import namespace="System.Xml"/>
@@ -72,7 +72,7 @@
 		<if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
 			<script language="VB">
 				<references>
-					<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+					<include name="${Common.Directory.Build.Path}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
 				</references>
 				<imports >
 					<import namespace="System.Xml"/>

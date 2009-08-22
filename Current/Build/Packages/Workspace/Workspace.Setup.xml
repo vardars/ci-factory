@@ -91,7 +91,7 @@ SET /P variable="Hit [Enter] exit."]]>
     </largeproperty>
 
     <property name="Batch.FileName" value="WorkspaceSetup.bat"/>
-    <property name="Batch.FilePath" value="${BuildDirectory}\${Batch.FileName}"/>
+    <property name="Batch.FilePath" value="${Common.Directory.Build.Path}\${Batch.FileName}"/>
     <echo message="${Batch.Content}" file="${Batch.FilePath}"/> 
     
 		<largeproperty name="SfxConfig.Content">
@@ -105,22 +105,22 @@ Title=Setup CI Factory Workspace]]>
 			</value>
 		</largeproperty>
 
-		<property name="SfxConfig.FilePath" value="${BuildDirectory}\SfxConfig.txt"/>
+		<property name="SfxConfig.FilePath" value="${Common.Directory.Build.Path}\SfxConfig.txt"/>
 		<echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
     <property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
 
-		<mkdir dir="${BuildDirectory}\dashboard\WorkspaceSetup" />
-		<property name="WorkspaceSetupExe.FilePath" value="${BuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+		<mkdir dir="${Common.Directory.Build.Path}\dashboard\WorkspaceSetup" />
+		<property name="WorkspaceSetupExe.FilePath" value="${Common.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
 		
 		<delete file="${WorkspaceSetupExe.FilePath}" if="${file::exists(WorkspaceSetupExe.FilePath)}" />
 		<exec program="${WinRarProgramPath}" 
 					commandline='a -ibck -r "${WorkspaceSetupExe.FilePath}" nAnt c -z"${SfxConfig.FilePath}" -sfx'
-					workingdir='${BuildDirectory}'/>
+					workingdir='${Common.Directory.Build.Path}'/>
 
 		<foreach item='File' property='File'>
 			<in>
-				<items basedir='${BuildDirectory}'>
+				<items basedir='${Common.Directory.Build.Path}'>
           <include name='Entities.xml'/>
 					<include name='Properties.build.xml'/>
 					<include name='DevEnv.Targets.xml'/>
@@ -131,10 +131,10 @@ Title=Setup CI Factory Workspace]]>
 				</items>
 			</in>
 			<do>
-				<property name='FileToAdd' value=".\${string::replace(File, BuildDirectory, '')}"/>
+				<property name='FileToAdd' value=".\${string::replace(File, Common.Directory.Build.Path, '')}"/>
 				<exec program="${WinRarProgramPath}"
 				commandline='u -ibck -r "${WorkspaceSetupExe.FilePath}" ${FileToAdd} c -z"${SfxConfig.FilePath}" -sfx'
-				workingdir='${BuildDirectory}'/>
+				workingdir='${Common.Directory.Build.Path}'/>
 			</do>
 		</foreach>
 

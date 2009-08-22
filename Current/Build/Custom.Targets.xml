@@ -7,7 +7,7 @@
       program="${Common.Directory.ThirdParty.Path}\nAnt\bin\nant.exe"
       verbose="True"
     >
-      <arg line='/f:"${BuildDirectory}\Custom.Targets.xml"'/>
+      <arg line='/f:"${Common.Directory.Build.Path}\Custom.Targets.xml"'/>
       <arg line='@"${Common.PropertiesFile}"' />
       <arg line="Custom.NAnt.CreateDocumentation"/>
     </exec>
@@ -17,7 +17,7 @@
   <target name="Custom.CreateDocumentationIndex">
     <property name="IndexDirectoryPath" value="${Common.Directory.Product.Path}\Documentation"/>
     <copy
-      file="${BuildDirectory}\Documentation\Index.htm"
+      file="${Common.Directory.Build.Path}\Documentation\Index.htm"
       tofile="${Common.Directory.Product.Path}\Documentation\Index.htm"
       overwrite="true"
     />

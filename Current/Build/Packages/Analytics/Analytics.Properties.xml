@@ -6,7 +6,7 @@
     <if test="${CCNetIntegrationStatus == 'Success'}">
       <property name="CCNetLogFilePath" value="${CCNetLogFilePath}Lbuild.${CCNetLabel}"/>
     </if>
-    <property name="CCNetLogFilePath" value="${BuildDirectory}\sever\${CCNetProject}\Artifacts\buildlogs\${CCNetLogFilePath}.xml"/>
+    <property name="CCNetLogFilePath" value="${Common.Directory.Build.Path}\sever\${CCNetProject}\Artifacts\buildlogs\${CCNetLogFilePath}.xml"/>
   </ifnot>
 
   <property name="Analytics.BuildLog" value="${CCNetLogFilePath}"/>

@@ -54,7 +54,7 @@
         <call target="SourceControl.GetOf.CodeLineDirectory"/>
       </then>
       <else>
-        <call target="SourceControl.GetOfBuildDirectory"/>
+        <call target="SourceControl.GetOfCommon.Directory.Build.Path"/>
         <call target="SourceControl.GetOf.Common.Directory.ThirdParty.Path"/>
         <call target="SourceControl.GetOf.Common.Directory.Product.Path"/>
       </else>

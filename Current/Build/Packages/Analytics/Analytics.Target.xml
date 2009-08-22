@@ -67,7 +67,7 @@
     <foreach item="File" property="Analytics.BuildLog">
       <in>
         <items>
-          <include name="${BuildDirectory}\server\${CCNetProject}\Artifacts\buildlogs\*.xml"/>
+          <include name="${Common.Directory.Build.Path}\server\${CCNetProject}\Artifacts\buildlogs\*.xml"/>
         </items>
       </in>
       <do>

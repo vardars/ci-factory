@@ -8,7 +8,7 @@
 
 	<property name="SourceRoot" value="${path::get-full-path('..')}"/>
 	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
-	<property name="SourceBuildDirectory" value="${SourceDefaultDirectory}\Build"/>
+	<property name="SourceCommon.Directory.Build.Path" value="${SourceDefaultDirectory}\Build"/>
 	<property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
 	<property name="SourceCommon.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
 	<property name="SourceCommon.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
@@ -187,7 +187,7 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
 Project Name:     ${ProjectName}
 Codeline Name:    ${ProjectCodeLineName}
 Current Version:  ${file::get-product-version(Common.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
-Upgrade Version:  ${file::get-product-version(SourceBuildDirectory + '\server\ThoughtWorks.CruiseControl.Core.dll')}
+Upgrade Version:  ${file::get-product-version(SourceCommon.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
 
 Common.Directory.Product.Path    = ${Common.Directory.Product.Path}
 Common.Directory.ThirdParty.Path = ${Common.Directory.ThirdParty.Path}
@@ -345,9 +345,9 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
 	<target name="Upgrade.NAnt">
 		<property name="NAnt.Target.Directory.Path" value="${Common.Directory.Build.Path}\nAnt"/>
-		<property name="Private.nAnt.DefaultBuildDirectory" value="${SourceRoot}\nAnt"/>
+		<property name="Private.nAnt.DefaultCommon.Directory.Build.Path" value="${SourceRoot}\nAnt"/>
 		<copy todir="${NAnt.Target.Directory.Path}" overwrite="true">
-			<fileset basedir="${Private.nAnt.DefaultBuildDirectory}">
+			<fileset basedir="${Private.nAnt.DefaultCommon.Directory.Build.Path}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
@@ -537,7 +537,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 
     <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
-		<call target="Private.CCNET.InstallBuildDirectoryFiles"/>
+		<call target="Private.CCNET.InstallCommon.Directory.Build.PathFiles"/>
     <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
 		
 		<delete>

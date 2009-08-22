@@ -5,7 +5,7 @@
   <property name="FxCop.DownloadUrl"  value="http://www.gotdotnet.com/Team/FxCop/FxCopInstall1.35.MSI"/>
 
   <property name="FxCop.Console"                    value="${FxCop.BinFolder}\FxCopCmd.exe"/>
-  <property name="FxCop.BuildFolder"                value="${BuildDirectory}\FxCop"/>
+  <property name="FxCop.BuildFolder"                value="${Common.Directory.Build.Path}\FxCop"/>
   <property name="FxCop.ReportFolder"               value="${FxCop.BuildFolder}\Report"/>
   <property name="FxCop.AssembliesFolder"           value="${FxCop.BuildFolder}\Assemblies"/>
   <property name="FxCop.RulesFolder"                value="${FxCop.BinFolder}\Rules"/>

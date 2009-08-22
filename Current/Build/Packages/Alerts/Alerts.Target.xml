@@ -28,7 +28,7 @@
   <trycatch>
     <try>
       <xmlpeek 
-        file="${BuildDirectory}\ccnetproject.xml" 
+        file="${Common.Directory.Build.Path}\ccnetproject.xml" 
         xpath="//email/users/user[@name = '${Alerts.Developer.Name}']/@address" 
         property="Alerts.Developer.Email" 
         nodeindex="0" 

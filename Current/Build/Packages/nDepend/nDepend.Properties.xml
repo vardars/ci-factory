@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
 
-  <property name="nDepend.BinFolder" value="${BuildDirectory}\Packages\nDepend\bin"/>
+  <property name="nDepend.BinFolder" value="${Common.Directory.Build.Path}\Packages\nDepend\bin"/>
   <property name="nDepend.Console" value="${nDepend.BinFolder}\NDepend.Console.exe" />
 
-  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend"/>
+  <property name="nDepend.BuildFolder" value="${Common.Directory.Build.Path}\nDepend"/>
   <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" />
   <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report"/>
   <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>

@@ -23,12 +23,12 @@
 
   <!-- These are private... -->
 
-  <property name="Private.CCNET.DefaultProjectFile" value="${SourceBuildDirectory}\ccnetproject.xml"/>
-  <property name="Private.CCNET.DefaultBatchFile" value="${SourceBuildDirectory}\CCNETServer.Bat"/>
-  <property name="Private.CCNET.DefaultExeConfigFile" value="${SourceBuildDirectory}\server\ccnet.exe.config"/>
-  <property name="Private.CCNET.DefaultBuildServerDirectory" value="${SourceBuildDirectory}\server"/>
+  <property name="Private.CCNET.DefaultProjectFile" value="${SourceCommon.Directory.Build.Path}\ccnetproject.xml"/>
+  <property name="Private.CCNET.DefaultBatchFile" value="${SourceCommon.Directory.Build.Path}\CCNETServer.Bat"/>
+  <property name="Private.CCNET.DefaultExeConfigFile" value="${SourceCommon.Directory.Build.Path}\server\ccnet.exe.config"/>
+  <property name="Private.CCNET.DefaultBuildServerDirectory" value="${SourceCommon.Directory.Build.Path}\server"/>
   <property name="Private.CCNET.DefaultBuildServerXslDirectory" value="${Private.CCNET.DefaultBuildServerDirectory}\xsl"/>
-  <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceBuildDirectory}\dashboard"/>
+  <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceCommon.Directory.Build.Path}\dashboard"/>
   <property name="Private.CCNET.DefaultConfigFile" value="${Private.CCNET.DefaultDashboardDirectory}\dashboard.config"/>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>
@@ -47,7 +47,7 @@
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%CCNET.IntervalTrigger%', CCNET.IntervalTrigger)}"  />
   
   <target name="CCNET.Install">
-    <call target="Private.CCNET.InstallBuildDirectoryFiles"/>
+    <call target="Private.CCNET.InstallCommon.Directory.Build.PathFiles"/>
     <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
 		<call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
 
@@ -91,7 +91,7 @@
 		</copy>
 	</target>
 	
-  <target name="Private.CCNET.InstallBuildDirectoryFiles">
+  <target name="Private.CCNET.InstallCommon.Directory.Build.PathFiles">
 		<copy overwrite="true" tofile="${CCNET.ProjectFile}" file="${Private.CCNET.DefaultProjectFile}">
 			<filterchain refid="Common.FilterChain" />
 		</copy>

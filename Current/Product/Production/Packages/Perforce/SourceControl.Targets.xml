@@ -298,8 +298,8 @@
 	</target>
 
   <!--
-    <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
-    <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Source" value="${BranchCommon.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Target" value="${BranchCommon.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
   -->
   <target name='SourceControl.Rename'>
     <call target="Private.SourceControl.EnsureWorkspace"/>

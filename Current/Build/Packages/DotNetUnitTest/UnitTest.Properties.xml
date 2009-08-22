@@ -7,7 +7,7 @@
     <exclude name="${Common.Directory.UnitTest.Path}\**\TestAssistance.NAnt.*proj"/>
   </fileset>
   
-  <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
+  <property name="UnitTest.ReportFolder" value="${Common.Directory.Build.Path}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${string::replace(ProjectName, ' ', '_')}UnitTests"/>
   <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
 
