@@ -32,7 +32,7 @@
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
   <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
   <property name="Common.Directory.Packages.Name"      value="&Common.Directory.Packages.Name;"/>
-  <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
+  <property name="Common.Directory.UnitTest.Name"      value="&Common.Directory.UnitTest.Name;"/>
   <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
 
   <property name="NantBinPath" value="&NantBinPath;"/>
