@@ -65,7 +65,7 @@
 		<call target="Deployment.EchoDeploymentArtifactPath"/>
   </target>
 
-  <target name="Deployment.TearDown">
+  <target name="Publish.TearDown">
 
   </target>
   

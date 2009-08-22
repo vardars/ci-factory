@@ -187,7 +187,7 @@
     <call target="Simian.TearDown" />
     <call target="nDepend.TearDown" />
     <call target="LinesOfCode.TearDown" />
-    <call target="Deployment.TearDown" />
+    <call target="Publish.TearDown" />
     <description>End TearDowns</description>
     <call target="FxCop.TearDown" />
   </target>
