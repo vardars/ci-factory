@@ -41,7 +41,7 @@
       <property name="ProjectCodeLineName"/>
       <property name="ProjectsDirectory"/>
       <property name="ProjectRootDirectory"/>
-      <property name="ProjectCodeLineDirectory"/>
+      <property name="Common.Directory.CodeLine.Path"/>
       <property name="ProductDirectory"/>
       <property name="ThirdPartyDirectory"/>
       <property name="ProductionDirectory"/>

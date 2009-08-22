@@ -164,7 +164,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -290,7 +290,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -429,7 +429,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
+        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>

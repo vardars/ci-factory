@@ -72,7 +72,7 @@
 	</target>
 
 	<target name="Workspace.Setup">
-		<mkdir dir="${ProjectCodeLineDirectory}"/>
+		<mkdir dir="${Common.Directory.CodeLine.Path}"/>
 
 		<property name="SourceControl.Update.FileTimeStamp" value="Current"/>
 		<property name="SourceControl.Update.ReplaceWritableFiles" value="False"/>

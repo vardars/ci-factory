@@ -16,11 +16,11 @@
 <!ENTITY InstallDirectoryName         'Install' >
 
 <!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
-<!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
-<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&Common.Directory.Product.Name;' >
-<!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
+<!ENTITY Common.Directory.CodeLine.Path '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+<!ENTITY ProductDirectory         '&Common.Directory.CodeLine.Path;\&Common.Directory.Product.Name;' >
+<!ENTITY ThirdPartyDirectory      '&Common.Directory.CodeLine.Path;\&ThirdPartyDirectoryName;' >
 <!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
-<!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
+<!ENTITY BuildDirectory           '&Common.Directory.CodeLine.Path;\&BuildDirectoryName;' >
 <!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&Common.Directory.ArtifactRoot.Name;' >
 <!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
 <!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >

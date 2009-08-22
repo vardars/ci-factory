@@ -51,7 +51,7 @@
   </target>
 
   <target name="SourceControl.GetOfCodeLineDirectory" >
-    <property name="SourceControl.GetOf" value="${ProjectCodeLineDirectory}"/>
+    <property name="SourceControl.GetOf" value="${Common.Directory.CodeLine.Path}"/>
     <call target="SourceControl.GetOf"/>
   </target>
 
@@ -141,7 +141,7 @@
 		<if test="${SourceControl.GetOf.NeedCheckout}">
 			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
 			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
-			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, Common.Directory.CodeLine.Path, SVN.URI.ProjectCodeLine)}"/>
 			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
 			<exec program="${TortoisePath}" workingdir="${SourceControl.GetOf}" verbose="${SVN.Debug}">
 				<arg line="/command:checkout" />
@@ -198,7 +198,7 @@
 		<if test="${SourceControl.GetOf.NeedCheckout}">
 			<property name="Private.SourceControl.DeleteLocal.Directory" value="${SourceControl.GetOf}"/>
 			<call target="Private.SourceControl.DeleteLocal.Directory" unless="${SourceControl.Update.Interactive}" />
-			<property name="Uri" value="${string::replace(SourceControl.GetOf, ProjectCodeLineDirectory, SVN.URI.ProjectCodeLine)}"/>
+			<property name="Uri" value="${string::replace(SourceControl.GetOf, Common.Directory.CodeLine.Path, SVN.URI.ProjectCodeLine)}"/>
 			<property name="Uri" value="${string::replace(Uri, '\', '/')}"/>
 			<svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${Uri}" recursive ="true" destination ="${SourceControl.GetOf}" />
 		</if>
@@ -267,7 +267,7 @@
     <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
   -->
   <target name='SourceControl.Rename'>
-    <exec program='svn' commandline='move "${SourceControl.Rename.Source}" "${SourceControl.Rename.Target}"' workingdir='${ProjectCodeLineDirectory}' verbose="${SVN.Debug}" />
+    <exec program='svn' commandline='move "${SourceControl.Rename.Source}" "${SourceControl.Rename.Target}"' workingdir='${Common.Directory.CodeLine.Path}' verbose="${SVN.Debug}" />
   </target>
 
   <target name="SourceControl.SetUp">
@@ -408,7 +408,7 @@
       <arg line='-m "Adjust Branch by CI Factory Installer"'/>
     </exec>
 
-    <exec program="svn" workingdir="${ProjectCodeLineDirectory}" verbose="${SVN.Debug}">
+    <exec program="svn" workingdir="${Common.Directory.CodeLine.Path}" verbose="${SVN.Debug}">
       <arg line="commit" />
       <arg line="--non-interactive" />
       <arg line="--username ${SVN.Username}" />

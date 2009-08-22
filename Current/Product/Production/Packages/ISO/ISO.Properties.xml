@@ -2,9 +2,9 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="ISO.Properties">
   
   <property name="ISO.FileName" value="${ProjectName}.iso" overwrite="false" />
-  <property name="ISO.SourceDirectory" value="${ProjectCodeLineDirectory}\CDContents" overwrite="false" />
+  <property name="ISO.SourceDirectory" value="${Common.Directory.CodeLine.Path}\CDContents" overwrite="false" />
   <property name="ISO.DirectoryName" value="ISOImage" overwrite="false" />
-  <property name="ISO.DirectoryPath" value="${ProjectCodeLineDirectory}\${ISO.DirectoryName}" overwrite="false" />
+  <property name="ISO.DirectoryPath" value="${Common.Directory.CodeLine.Path}\${ISO.DirectoryName}" overwrite="false" />
   <property name="ISO.FilePath" value="${ISO.DirectoryPath}\${ISO.FileName}" overwrite="false" />
   <property name="ISO.MediaLabel" value="${string::replace(ProjectName, '_', '-')}"/>
 </project>
