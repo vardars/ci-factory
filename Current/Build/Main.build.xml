@@ -119,7 +119,7 @@
         <property name="Publish.Source.Directory.Path" value="${Common.Directory.Production.Path}\CI Installer" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="Release Notes ${CCNetLabel}.html" />
-        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Publish.Target.File.Name}" />
         <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         
@@ -145,7 +145,7 @@
         <property name="Publish.Source.Directory.Path" value="${Common.Directory.Product.Path}\Install\CI Factory" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="CI-Factory-${CCNetLabel}.exe" />
-        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Publish.Target.File.Name}" />
         <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         <call target="Simian.Run"/>

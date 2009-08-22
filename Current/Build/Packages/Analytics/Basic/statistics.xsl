@@ -38,9 +38,9 @@
 	
   <xsl:template match="/statistics">
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
-    <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
+    <xsl:variable name="Common.Directory.Artifact.Name" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
 
-    <xsl:variable name="quietandrecoverytimefile" select="concat('..\..\..\', $ArtifactFolderName, '\quietandrecoverytimehistory.xml')"/>
+    <xsl:variable name="quietandrecoverytimefile" select="concat('..\..\..\', $Common.Directory.Artifact.Name, '\quietandrecoverytimehistory.xml')"/>
     <xsl:variable name="quietandrecoverytimedoc" select="document($quietandrecoverytimefile)"/>
 
     <style>
@@ -209,7 +209,7 @@ if(!document.getElementById)
 		</p>
     <hr/>
 
-    <xsl:variable name="BaseChartUrl" select="concat('/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts.swf?library_path=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts_library&amp;xml_source=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.ArtifactRoot.Name;/', $ArtifactFolderName)"/>
+    <xsl:variable name="BaseChartUrl" select="concat('/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts.swf?library_path=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts_library&amp;xml_source=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.ArtifactRoot.Name;/', $Common.Directory.Artifact.Name)"/>
 
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>

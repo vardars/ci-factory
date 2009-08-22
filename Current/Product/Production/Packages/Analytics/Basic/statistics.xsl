@@ -98,8 +98,8 @@
 
   <xsl:template match="/statistics">
     <xsl:variable name="MostRecentIntegration" select="/statistics/integration[position() = last()]" />
-    <xsl:variable name="ArtifactFolderName" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
-    <xsl:variable name="ArtifactDirectoryPath" select="concat('&Common.Directory.ArtifactRoot.Path;\', $ArtifactFolderName)"  />
+    <xsl:variable name="Common.Directory.Artifact.Name" select="ms:FormatDate($MostRecentIntegration/statistic[@name='StartTime']/text(), 'yyyyMMddHHmmss')" />
+    <xsl:variable name="ArtifactDirectoryPath" select="concat('&Common.Directory.ArtifactRoot.Path;\', $Common.Directory.Artifact.Name)"  />
 
     <xsl:variable name="simianfile" select="concat($ArtifactDirectoryPath, '\Simian.Statistics.xml')"/>
     <xsl:variable name="simianfileExists" select="ms:FileExists($simianfile)"/>
@@ -540,7 +540,7 @@ if(!document.getElementById)
     <hr/>
     </xsl:if>
 
-    <xsl:variable name="BaseChartUrl" select="concat('/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts.swf?library_path=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts_library&amp;xml_source=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.ArtifactRoot.Name;/', $ArtifactFolderName)"/>
+    <xsl:variable name="BaseChartUrl" select="concat('/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts.swf?library_path=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.Packages.Name;/Analytics/charts_library&amp;xml_source=/&ProjectName;-&ProjectCodeLineName;/&Common.Directory.ArtifactRoot.Name;/', $Common.Directory.Artifact.Name)"/>
 
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>

@@ -47,7 +47,7 @@
   <property name="CCNet.Directory.Logs.MessageFile.Path" value="${CCNet.Directory.Logs.Path}\LogMessages.txt"/>
 
   <property name="Common.Directory.Artifact.Name" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
-  <echo message="The ArtifactFolderName is ${Common.Directory.Artifact.Name}"/>
+  <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
   <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
 
   <property name="Common.Project.Common.Directory.Transient.Path" value="${Common.Directory.Transient.Path}\${CCNetProject}"/>

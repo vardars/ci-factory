@@ -157,7 +157,7 @@
       <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
       <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
       <property name="Common.ArtifactDirectoryPath"/>
-      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.Directory.Artifact.Name"/>
       <property name="Common.ReportDirectory"/>
       <property name="Common.TempDirectory"/>
       <property name="Common.Directory.UnitTest.Path"/>
