@@ -10,8 +10,8 @@
   <property name="Compile.Bin" value="${Common.Directory.Product.Path}\${Compile.ConfigName}Bin" overwrite="false"/>
 
   <fileset id="Compile.ToCopy">
-    <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\*.*"/>
-    <include name="${ProductionDirectory}\**\bin\*.*"/>
+    <include name="${Common.Directory.Production.Path}\**\bin\${Compile.ConfigName}\*.*"/>
+    <include name="${Common.Directory.Production.Path}\**\bin\*.*"/>
   </fileset>
 
   <property name="Compile.Environment.ConfigFilePath" value="${Common.Directory.Product.Path}\Scripts\Compile.Environment.xml" overwrite="false"/>

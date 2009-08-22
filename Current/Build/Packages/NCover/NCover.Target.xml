@@ -14,8 +14,8 @@
   <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
 
   <fileset id="Coverage.Targets">
-    <include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
-    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
+    <include name="${Common.Directory.Production.Path}\**\bin\${Coverage.AssemblyNameFormat}" />
+    <include name="${Common.Directory.Production.Path}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
   </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
@@ -107,8 +107,8 @@
 
   <target name="Coverage.FindTargetAssebmlies">
     <fileset id="Coverage.Targets" >
-      <include name="${ProductionDirectory}\**\bin\${Coverage.TargetAssemblyFormat}" />
-      <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
+      <include name="${Common.Directory.Production.Path}\**\bin\${Coverage.TargetAssemblyFormat}" />
+      <include name="${Common.Directory.Production.Path}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
     </fileset>
   </target>
 
@@ -150,7 +150,7 @@
       <property name="Common.Directory.CodeLine.Path"/>
       <property name="Common.Directory.Product.Path"/>
       <property name="Common.Directory.ThirdParty.Path"/>
-      <property name="ProductionDirectory"/>
+      <property name="Common.Directory.Production.Path"/>
       <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
       <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>

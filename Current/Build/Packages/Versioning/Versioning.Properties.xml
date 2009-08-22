@@ -8,8 +8,8 @@
   <property name="Versioning.FixUp.ProjectFile.FileSet" value="Versioning.FixUp.ProjectFile.FileSet" overwrite="false"/>
 
   <fileset id="Versioning.FixUp.ProjectFile.FileSet">
-    <include name="${ProductionDirectory}\**\*.csproj"/>
-    <include name="${ProductionDirectory}\**\*.vbproj"/>
+    <include name="${Common.Directory.Production.Path}\**\*.csproj"/>
+    <include name="${Common.Directory.Production.Path}\**\*.vbproj"/>
   </fileset>
 
 </project>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
 
-  <property name="nDepend.ProductionDirectoryOnly" value="true" overwrite="false"/>
+  <property name="nDepend.Common.Directory.Production.PathOnly" value="true" overwrite="false"/>
   <property name="nDepend.ExcludeEntireCommon.Directory.ThirdParty.Path" value="false" overwrite="false"/>
 
   <property name="nDepend.BinFolder" value="${Common.Directory.Build.Path}\Packages\nDepend\bin" overwrite="false"/>
@@ -12,7 +12,7 @@
   <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report" overwrite="false"/>
   <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies" overwrite="false"/>
 
-  <ifthenelse test="${nDepend.ProductionDirectoryOnly}">
+  <ifthenelse test="${nDepend.Common.Directory.Production.PathOnly}">
     <then>
       <property name="nDepend.AnalysisDirectory" value="${Common.Directory.Production.Path}"/>
     </then>

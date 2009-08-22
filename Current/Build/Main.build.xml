@@ -116,7 +116,7 @@
         
         <call target="Custom.WriteReleaseNotes" />
         <property name="Publish.Source.File.Name" value="CI Factory Release Notes.html" />
-        <property name="Publish.Source.Directory.Path" value="${ProductionDirectory}\CI Installer" />
+        <property name="Publish.Source.Directory.Path" value="${Common.Directory.Production.Path}\CI Installer" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="Release Notes ${CCNetLabel}.html" />
         <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />

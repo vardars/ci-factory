@@ -13,7 +13,7 @@
   <property name="FxCop.FilesToDeleteAtSetup"       value="${FxCop.BuildFolder}\**\*.*"/>
   
   <fileset id="FxCop.Target.ProjectFiles">
-    <include name="${ProductionDirectory}\**\*.*proj"/>
+    <include name="${Common.Directory.Production.Path}\**\*.*proj"/>
   </fileset>
   
 </project>

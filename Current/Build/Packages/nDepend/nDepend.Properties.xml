@@ -10,9 +10,9 @@
   <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
 
   <fileset id="nDepend.Target.ProjectFiles" >
-    <include name="${ProductionDirectory}\Common\**\*.*proj"/>
-    <include name="${ProductionDirectory}\CCNet\**\*.*proj"/>
-    <include name="${ProductionDirectory}\NAnt\**\*.*proj"/>
+    <include name="${Common.Directory.Production.Path}\Common\**\*.*proj"/>
+    <include name="${Common.Directory.Production.Path}\CCNet\**\*.*proj"/>
+    <include name="${Common.Directory.Production.Path}\NAnt\**\*.*proj"/>
   </fileset>
 
   <fileset id="nDepend.DependenciesFileSet" >

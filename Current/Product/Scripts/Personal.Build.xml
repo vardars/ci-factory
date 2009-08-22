@@ -94,7 +94,7 @@
       <call target="Ant.Build"/>
     </if>
     <fileset id="InfoFiles" basedir="${Common.Directory.Product.Path}">
-      <exclude name="${ProductionDirectory}\Packages\**\*"/>
+      <exclude name="${Common.Directory.Production.Path}\Packages\**\*"/>
       <include name="${Common.Directory.Product.Path}\ProjectInfo.*"/>
       <include name="${Common.Directory.Product.Path}\**\AssemblyInfo.*"/>
     </fileset>
@@ -142,7 +142,7 @@
 
   <target name="Clean">
     <fileset id="ProjectFiles" basedir="${Common.Directory.Product.Path}">
-      <exclude name="${ProductionDirectory}\Packages\**\*"/>
+      <exclude name="${Common.Directory.Production.Path}\Packages\**\*"/>
       <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
     </fileset>
     <foreach item="File" property="ProjectFile.Path">
@@ -168,14 +168,14 @@
       </do>
     </foreach>
     <delete>
-      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\dashboard">
+      <fileset basedir="${Common.Directory.Production.Path}\Foundation\Default\Build\dashboard">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
         <exclude name="javascript\**\*"/>
       </fileset>
     </delete>
     <delete>
-      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\server">
+      <fileset basedir="${Common.Directory.Production.Path}\Foundation\Default\Build\server">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
         <exclude name="ccnet.exe.config"/>

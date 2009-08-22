@@ -44,7 +44,7 @@
       <property name="Common.Directory.CodeLine.Path"/>
       <property name="Common.Directory.Product.Path"/>
       <property name="Common.Directory.ThirdParty.Path"/>
-      <property name="ProductionDirectory"/>
+      <property name="Common.Directory.Production.Path"/>
       <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
       <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>

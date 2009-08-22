@@ -15,7 +15,7 @@
   <property name="Private.Versioning.NewerThanDateTime" value="" />
   
   <target name="Versioning.IncrementBuildNumberOfModifiedAssemblies">
-    <mkdir unless="${directory::exists(ProductionDirectory)}" dir="${ProductionDirectory}"/>
+    <mkdir unless="${directory::exists(Common.Directory.Production.Path)}" dir="${Common.Directory.Production.Path}"/>
 
     <fileset id="AssemblyInfoSet" />
     
