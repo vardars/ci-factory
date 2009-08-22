@@ -173,13 +173,13 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
           <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
@@ -299,13 +299,13 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
           <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
@@ -438,13 +438,13 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
           <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>

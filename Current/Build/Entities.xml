@@ -6,7 +6,7 @@
 <!ENTITY ProjectCodeLineName      'Current' >
 <!ENTITY ProjectsDirectory        'c:\Projects' >
 
-<!ENTITY ProductDirectoryName         'Product'>
+<!ENTITY Common.Directory.Product.Name         'Product'>
 <!ENTITY ThirdPartyDirectoryName      'Third Party' >
 <!ENTITY ProductionDirectoryName      'Production' >
 <!ENTITY BuildDirectoryName           'Build' >
@@ -17,7 +17,7 @@
 
 <!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
 <!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
-<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&ProductDirectoryName;' >
+<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&Common.Directory.Product.Name;' >
 <!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
 <!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
 <!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >

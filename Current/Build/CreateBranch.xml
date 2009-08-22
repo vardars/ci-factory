@@ -131,7 +131,7 @@
         <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
-        <property name="ProductDirectoryName"       value="${ProductDirectoryName}"/>
+        <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
         <property name="ThirdPartyDirectoryName"    value="${ThirdPartyDirectoryName}"/>
         <property name="ProductionDirectoryName"    value="${ProductionDirectoryName}"/>
         <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
@@ -172,7 +172,7 @@
         <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
         <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
-        <property name="ProductDirectoryName"       value="${ProductDirectoryName}"/>
+        <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
         <property name="ThirdPartyDirectoryName"    value="${ThirdPartyDirectoryName}"/>
         <property name="ProductionDirectoryName"    value="${ProductionDirectoryName}"/>
         <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
@@ -595,7 +595,7 @@ Please note that you don't have to change it.
   
 	<target name="SetBranchProperties">
 		<property name="BranchProjectCodeLineDirectory" value="${ProjectRootDirectory}\${BranchName}" />
-		<property name="BranchProductDirectory"         value="${BranchProjectCodeLineDirectory}\${ProductDirectoryName}"  />
+		<property name="BranchProductDirectory"         value="${BranchProjectCodeLineDirectory}\${Common.Directory.Product.Name}"  />
 		<property name="BranchThirdPartyDirectory"      value="${BranchProjectCodeLineDirectory}\${ThirdPartyDirectoryName}" />
 		<property name="BranchBuildDirectory"           value="${BranchProjectCodeLineDirectory}\${BuildDirectoryName}"  />
 		<property name="BranchProductionDirectory"      value="${BranchProductDirectory}\${ProductionDirectoryName}"  />

@@ -26,7 +26,7 @@
   <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
   <property name="InstallDirectory"           value="&InstallDirectory;"/>
 
-  <property name="ProductDirectoryName"       value="&ProductDirectoryName;"/>
+  <property name="Common.Directory.Product.Name"       value="&Common.Directory.Product.Name;"/>
   <property name="ThirdPartyDirectoryName"    value="&ThirdPartyDirectoryName;"/>
   <property name="ProductionDirectoryName"    value="&ProductionDirectoryName;"/>
   <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
