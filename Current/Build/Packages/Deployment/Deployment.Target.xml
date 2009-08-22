@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Deployment" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir="Deployment">
 
-  <property name="Deployment.WebPathRoot" value="/${ProjectName}-${ProjectCodeLineName}/Artifacts" readonly="true"/>
+  <property name="Publish.Web.Path.Root" value="/${ProjectName}-${ProjectCodeLineName}/Artifacts" readonly="true"/>
   
   <!--
 	The following properties should be specified in the calling script.
@@ -10,7 +10,7 @@
   <property name="Publish.Source.Directory.Path"	value="${ProductionDirectory}\lib" />
   <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
   <property name="Publish.Target.File.Name"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
-  <property name="Publish.Web.File.Path"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
+  <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
   <property name="Publish.Web.File.Name"	value="${CCNetLabel} ${DeploymentFileName}" />
   
   -->
@@ -31,7 +31,7 @@
   </target>
 
   <target name="Publish.EchoWebPath" >
-    <echo message="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" level="Info"/>
+    <echo message="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}" level="Info"/>
   </target>
 
 	<target name="Deployment.EchoDeploymentArtifactPath" >

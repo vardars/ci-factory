@@ -60,7 +60,7 @@
     <property name="Publish.Source.Directory.Path"	value="${Compile.Bin}\" />
     <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
     <property name="Publish.Target.File.Name"	value="${Publish.Source.File.Name}" />
-    <property name="Publish.Web.File.Path"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+    <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
     <property name="Publish.Web.File.Name"	value="${Publish.Target.File.Name}" />
 
     <call target="Publish.File"/>

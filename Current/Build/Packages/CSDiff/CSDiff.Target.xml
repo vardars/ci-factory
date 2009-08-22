@@ -23,7 +23,7 @@
       <arg line='"New Source"' />
     </exec>
 
-    <property name="Publish.Web.File.Path"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
+    <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
     <call target='Publish.EchoWebFilePath'/>
   </target>
 

@@ -41,7 +41,7 @@
           <xmlpoke
             file="${nDepend.BuildFolder}\NDependOut\NDependReport.html"
             xpath="//IMG[@SRC = '${Image}']/@SRC"
-            value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Image}"
+            value="${Publish.Web.Path.Root}/${Common.ArtifactFolderName}/${Image}"
           />
         </do>
       </loopthrough>
