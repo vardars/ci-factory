@@ -51,7 +51,7 @@
     <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
   </target>
 
-  <target name="Deployment.PublishZip">
+  <target name="Publish.Zip">
     <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
     <zip zipfile="${Deployment.TargetDir}/${Deployment.ZipFileName}">
       <fileset refid="Deployment.ZipFileSet" />
