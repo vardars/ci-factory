@@ -10,8 +10,8 @@
   <property name="Publish.Source.Directory.Path"	value="${ProductionDirectory}\lib" />
   <property name="Publish.Target.Directory.Path"	value="${Common.ArtifactDirectoryPath}" />
   <property name="Publish.Target.File.Name"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
-  <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
-  <property name="Deployment.FileWebName"	value="${CCNetLabel} ${DeploymentFileName}" />
+  <property name="Publish.Web.File.Path"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
+  <property name="Publish.Web.File.Name"	value="${CCNetLabel} ${DeploymentFileName}" />
   
   -->
   
@@ -39,11 +39,11 @@
 	</target>
 
   <target name="Private.Publish.EchoWebFileName" >
-    <echo message="${Deployment.FileWebName}" level="Info"/>
+    <echo message="${Publish.Web.File.Name}" level="Info"/>
   </target>
   
   <target name="Publish.EchoWebFilePath" >
-    <echo message="${Deployment.FileWebPath}" level="Info"/>
+    <echo message="${Publish.Web.File.Path}" level="Info"/>
   </target>
 
   <target name="Private.Publish.CopyDeploymentToPublicationDir" >

@@ -119,8 +119,8 @@
         <property name="Publish.Source.Directory.Path" value="${ProductionDirectory}\CI Installer" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="Release Notes ${CCNetLabel}.html" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
-        <property name="Deployment.FileWebName" value="${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Path" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
@@ -145,8 +145,8 @@
         <property name="Publish.Source.Directory.Path" value="${ProductDirectory}\Install\CI Factory" />
         <property name="Publish.Target.Directory.Path" value="${Common.ArtifactDirectoryPath}" />
         <property name="Publish.Target.File.Name" value="CI-Factory-${CCNetLabel}.exe" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
-        <property name="Deployment.FileWebName" value="${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Path" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Publish.Target.File.Name}" />
+        <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
         <call target="Publish.File" />
         <call target="Simian.Run"/>
         <call target="nDepend.Calculate" />
