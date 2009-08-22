@@ -289,7 +289,7 @@
   </target>
 
   <target name="SourceControl.Repository.Load">
-    <mkdir dir="${ProjectRootDirectory}\tags" unless="${directory::exists(ProjectsDirectory + '\tags')}"/>
+    <mkdir dir="${Common.Directory.ProjectRoot.Path}\tags" unless="${directory::exists(ProjectsDirectory + '\tags')}"/>
     <exec program="svn" workingdir="${ProjectsDirectory}" verbose="${SVN.Debug}" >
       <arg line="import"/>
       <arg line='-m "Initial Load by CI Factory Installer"'/>
@@ -301,9 +301,9 @@
       <arg line="--password ${SVN.Password}" />
     </exec>
 
-    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${Common.Directory.ProjectRoot.Path}" />
 
-    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="${SVN.Debug}" >
+    <exec program="svn" workingdir="${Common.Directory.ProjectRoot.Path}" verbose="${SVN.Debug}" >
       <arg line="add"/>
       <arg line="* --force" />
     </exec>
@@ -334,7 +334,7 @@
 			<arg line="."/>
 		</exec>
 
-    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="${SVN.Debug}">
+    <exec program="svn" workingdir="${Common.Directory.ProjectRoot.Path}" verbose="${SVN.Debug}">
       <arg line="commit" />
       <arg line="--non-interactive" />
       <arg line="--username ${SVN.Username}" />
@@ -351,8 +351,8 @@
 		  </case>
 	  </switch>
 		
-    <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
-    <delete dir='${ProjectRootDirectory}\tags' includeemptydirs='true' />
+    <delete dir='${Common.Directory.ProjectRoot.Path}\${SvnDirName}' includeemptydirs='true'  />
+    <delete dir='${Common.Directory.ProjectRoot.Path}\tags' includeemptydirs='true' />
   </target>
 
   <target name="SourceControl.Bindings.Create">
@@ -364,22 +364,22 @@
   <property name="SourceControl.CreateBranch.BranchName" value="${BranchName}"/>
   -->
   <target name="SourceControl.StartCreateBranch">
-    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${ProjectRootDirectory}" />
+    <svn-checkout username="${SVN.Username}" password="${SVN.Password}" uri="${SVN.URI.ProjectName}" recursive ="false" destination ="${Common.Directory.ProjectRoot.Path}" />
 
-    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="${SVN.Debug}">
+    <exec program="svn" workingdir="${Common.Directory.ProjectRoot.Path}" verbose="${SVN.Debug}">
       <arg line="copy" />
       <arg line="${SVN.URI.ProjectCodeLine}" />
       <arg line="${SourceControl.CreateBranch.BranchName}" />
     </exec>
 
-    <property name="BranchSubversionPackageDirectory" value="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\${PackagesDirectoryName}\Subversion"/>
+    <property name="BranchSubversionPackageDirectory" value="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}\${BuildDirectoryName}\${PackagesDirectoryName}\Subversion"/>
     <copy
       unless="${file::exists(BranchSubversionPackageDirectory + '\SourceControl.Credentials.xml')}"
       file="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml"
       todir="${BranchSubversionPackageDirectory}"
       verbose="${SVN.Debug}"
     />
-    <exec program="svn" workingdir="${ProjectRootDirectory}" verbose="${SVN.Debug}">
+    <exec program="svn" workingdir="${Common.Directory.ProjectRoot.Path}" verbose="${SVN.Debug}">
       <arg line="commit" />
       <arg line="--non-interactive" />
       <arg line="--username ${SVN.Username}" />
@@ -396,11 +396,11 @@
       </case>
     </switch>
 
-    <delete dir='${ProjectRootDirectory}\${SvnDirName}' includeemptydirs='true'  />
+    <delete dir='${Common.Directory.ProjectRoot.Path}\${SvnDirName}' includeemptydirs='true'  />
   </target>
 
   <target name="SourceControl.FinishCreateBranch">
-    <exec program="svn" workingdir="${ProjectRootDirectory}\${SourceControl.CreateBranch.BranchName}" verbose="${SVN.Debug}">
+    <exec program="svn" workingdir="${Common.Directory.ProjectRoot.Path}\${SourceControl.CreateBranch.BranchName}" verbose="${SVN.Debug}">
       <arg line="commit" />
       <arg line="--non-interactive" />
       <arg line="--username ${SVN.Username}" />

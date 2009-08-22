@@ -120,7 +120,7 @@
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
         <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
-        <property name="ProjectRootDirectory"       value="${ProjectRootDirectory}" />
+        <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
         <property name="ProductDirectory"           value="${BranchProductDirectory}" />
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
@@ -161,7 +161,7 @@
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
         <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
-        <property name="ProjectRootDirectory"       value="${ProjectRootDirectory}" />
+        <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
         <property name="Common.Directory.CodeLine.Path"   value="${BranchCommon.Directory.CodeLine.Path}" />
         <property name="ProductDirectory"           value="${BranchProductDirectory}" />
         <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
@@ -594,7 +594,7 @@ Please note that you don't have to change it.
   </target>
   
 	<target name="SetBranchProperties">
-		<property name="BranchCommon.Directory.CodeLine.Path" value="${ProjectRootDirectory}\${BranchName}" />
+		<property name="BranchCommon.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${BranchName}" />
 		<property name="BranchProductDirectory"         value="${BranchCommon.Directory.CodeLine.Path}\${Common.Directory.Product.Name}"  />
 		<property name="BranchThirdPartyDirectory"      value="${BranchCommon.Directory.CodeLine.Path}\${ThirdPartyDirectoryName}" />
 		<property name="BranchBuildDirectory"           value="${BranchCommon.Directory.CodeLine.Path}\${BuildDirectoryName}"  />

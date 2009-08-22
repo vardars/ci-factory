@@ -15,8 +15,8 @@
 <!ENTITY UnitTestDirectoryName        'Unit Test' >
 <!ENTITY InstallDirectoryName         'Install' >
 
-<!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
-<!ENTITY Common.Directory.CodeLine.Path '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+<!ENTITY Common.Directory.ProjectRoot.Path     '&ProjectsDirectory;\&ProjectName;' >
+<!ENTITY Common.Directory.CodeLine.Path '&Common.Directory.ProjectRoot.Path;\&ProjectCodeLineName;' >
 <!ENTITY ProductDirectory         '&Common.Directory.CodeLine.Path;\&Common.Directory.Product.Name;' >
 <!ENTITY ThirdPartyDirectory      '&Common.Directory.CodeLine.Path;\&ThirdPartyDirectoryName;' >
 <!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
