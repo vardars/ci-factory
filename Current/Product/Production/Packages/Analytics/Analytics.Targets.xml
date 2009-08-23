@@ -112,8 +112,8 @@
         
         <property name="CCNetLogFilePath" value="${Analytics.BuildLog}"/>
 
-        <regex pattern="^*.log(?'PrivateAnalyticsCommon.Directory.Artifact.Name'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
-        <property name="Common.Directory.Artifact.Name" value="${PrivateAnalyticsCommon.Directory.Artifact.Name}"/>
+        <regex pattern="^*.log(?'Private.Analytics.Common.Directory.Artifact.Name'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
+        <property name="Common.Directory.Artifact.Name" value="${Private.Analytics.Common.Directory.Artifact.Name}"/>
         <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
         <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
         <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}"/>
