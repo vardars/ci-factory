@@ -225,7 +225,7 @@
     <xmlpeek
       file="${Common.Directory.Build.Path}\Main.build.xml"
       property="trash"
-      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncreamentBuildNumberOfProduct']"
+      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncrementBuildNumberOfProduct']"
     >
       <namespaces>
         <namespace prefix='n' uri='http://nant.sf.net/schemas/nant.xsd' />
@@ -246,7 +246,7 @@
     <xmlpoke
       file="${Common.Directory.Build.Path}\Main.build.xml"
       pokemode="After"
-      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncreamentBuildNumberOfProduct']"
+      xpath="/n:project/n:target[@name = 'Triggered']/n:trycatch/n:try/n:call[@target ='Versioning.IncrementBuildNumberOfProduct']"
       value='&lt;call target="Compile.CompileSource" /&gt;'
     >
       <namespaces>

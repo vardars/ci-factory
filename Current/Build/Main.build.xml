@@ -110,7 +110,7 @@
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
-        <call target="Versioning.IncreamentBuildNumberOfProduct" />
+        <call target="Versioning.IncrementBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
         <call target="Custom.CreateDocumentation" />
         

@@ -39,7 +39,7 @@
 
   </target>
 
-  <target name="Versioning.IncreamentBuildNumberOfProduct">
+  <target name="Versioning.IncrementBuildNumberOfProduct">
     <foreach item="File" property="ReplaceFile">
       <in>
         <items>
