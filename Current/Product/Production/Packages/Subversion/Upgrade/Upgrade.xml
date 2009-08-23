@@ -16,12 +16,12 @@
 
     <xmlpeek
           file='${Common.Directory.Build.Path}\ccnetproject.xml'
-          property='CCNet.SVN.WebRepoUrl'
+          property='CCNet.SVN.WebRepositoryUrl'
           xpath='/cruisecontrol/project//webUrlBuilder/url[1]'
           failonerror='false'
         />
 
-    <property name="SVN.WebVisible" value="${property::exists('CCNet.SVN.WebRepoUrl')}" />
+    <property name="SVN.WebVisible" value="${property::exists('CCNet.SVN.WebRepositoryUrl')}" />
 
     <echo message="SVN.Username exists ${property::exists('SVN.Username')}"/>
 

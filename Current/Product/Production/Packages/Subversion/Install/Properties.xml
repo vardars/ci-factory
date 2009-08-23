@@ -11,7 +11,7 @@
   <property name="CCNet.SVN.URI.ProjectCodeLine" value="${CCNet.SVN.URI.ProjectName}/&amp;ProjectCodeLineName;" overwrite="false" />
   <property name="CCNet.SVN.URI.Tags" value="${CCNet.SVN.URI.ProjectName}/tags" overwrite="false" />
 
-  <property name="CCNet.SVN.WebRepoUrl" value="http://localhost/svn/&amp;ProjectName;" overwrite="false" />
+  <property name="CCNet.SVN.WebRepositoryUrl" value="http://localhost/svn/&amp;ProjectName;" overwrite="false" />
   <property name="SVN.WebVisible" value="true" overwrite="false"/>
 
 
@@ -26,24 +26,24 @@
 
   <ifthenelse test="${SVN.WebVisible}">
     <then>
-      <largeproperty name="SourceControl.BuildUpdateBlock.WebRepoUrl">
+      <largeproperty name="SourceControl.BuildUpdateBlock.WebRepositoryUrl">
         <value xml="false" expand="true">
           <![CDATA[<webUrlBuilder type="websvn">
-          <url>${CCNet.SVN.WebRepoUrl}{0}</url>
+          <url>${CCNet.SVN.WebRepositoryUrl}{0}</url>
         </webUrlBuilder>]]>
         </value>
       </largeproperty>
-      <largeproperty name="SourceControl.MainBuildBlock.WebRepoUrl">
+      <largeproperty name="SourceControl.MainBuildBlock.WebRepositoryUrl">
         <value xml="false" expand="true">
           <![CDATA[<webUrlBuilder type="websvn">
-            <url>${CCNet.SVN.WebRepoUrl}{0}</url>
+            <url>${CCNet.SVN.WebRepositoryUrl}{0}</url>
           </webUrlBuilder>]]>
         </value>
       </largeproperty>
     </then>
     <else>
-      <property name="SourceControl.BuildUpdateBlock.WebRepoUrl" value=""/>
-      <property name="SourceControl.MainBuildBlock.WebRepoUrl" value=""/>
+      <property name="SourceControl.BuildUpdateBlock.WebRepositoryUrl" value=""/>
+      <property name="SourceControl.MainBuildBlock.WebRepositoryUrl" value=""/>
     </else>
   </ifthenelse>
 
@@ -68,7 +68,7 @@
         <workingDirectory>&Common.Directory.Build.Path;</workingDirectory>
         <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
         ${SourceControl.CCNet.Credentials}
-        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+        ${SourceControl.BuildUpdateBlock.WebRepositoryUrl}
       </sourcecontrol>]]></value>
     </largeproperty>
 
@@ -80,7 +80,7 @@
           <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
           <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
           ${SourceControl.CCNet.Credentials}
-          ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+          ${SourceControl.BuildUpdateBlock.WebRepositoryUrl}
           <tagBaseUrl>${CCNet.SVN.URI.Tags}</tagBaseUrl>
         </sourceControlProvider>
         <exclusionFilters>
@@ -114,7 +114,7 @@
         <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
         <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
         ${SourceControl.CCNet.Credentials}
-        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+        ${SourceControl.BuildUpdateBlock.WebRepositoryUrl}
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
@@ -148,7 +148,7 @@
         <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
         <executable>${property::expand(SvnBinPath)}\svn.exe</executable>
         ${SourceControl.CCNet.Credentials}
-        ${SourceControl.BuildUpdateBlock.WebRepoUrl}
+        ${SourceControl.BuildUpdateBlock.WebRepositoryUrl}
       </sourceControlProvider>
     </sourcecontrol>]]>
     </value>

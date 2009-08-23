@@ -32,7 +32,7 @@
   <property name="SVN.URI.ProjectCodeLine" value="${SVN.URI.ProjectName}/${ProjectCodeLineName}"/>
   <property name="SVN.URI.Tags" value="${SVN.URI.ProjectName}/tags" /><!--makes shure that the case is correct, Tags or tags-->
 
-  <property name="SVN.WebRepoUrl" value="${SVN.URI.Root}"/>
+  <property name="SVN.WebRepositoryUrl" value="${SVN.URI.Root}"/>
   <property name="SVN.Credentials.SafeStorage" value="false"/><!--Set to true if you do not want the build users credentials stored in the repository for ?anyone? to see.-->
   <property name="SVN.Username" value="Build" />
   <property name="SVN.Password" value="password" />
