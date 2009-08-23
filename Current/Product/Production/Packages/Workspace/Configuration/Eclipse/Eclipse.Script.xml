@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.Eclipse.Configuration.Scripts">
   
-  <property name="Eclipse.Worksapce.MetaData.Directory" value="${Common.Directory.Product.Path}\.metadata"/>
+  <property name="Eclipse.Workspace.MetaData.Directory" value="${Common.Directory.Product.Path}\.metadata"/>
   
 	<target name="Workspace.Configuration.Eclipse">
-    <copy todir="${Eclipse.Worksapce.MetaData.Directory}">
+    <copy todir="${Eclipse.Workspace.MetaData.Directory}">
       <filterchain>
         <replacestring from="%Java.Jdk%" to="${Java.Jdk}"   />
         <replacestring from="%Java.Jdk.Version%" to="${string::replace(Java.Jdk, 'jdk', '')}"   />
