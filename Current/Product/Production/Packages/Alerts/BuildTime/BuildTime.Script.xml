@@ -57,7 +57,7 @@
   <target name="Alerts.BuildTime.GenerateIncreaseWarning">
     <property name="Alerts.SendMessage.Subject" value="${CCNetProject} ${CCNetLabel}: Build Duration Has Jumped!" />
 
-    <property name="Alerts.BuildTime.WaringTableBody" value=""/>
+    <property name="Alerts.BuildTime.WarningTableBody" value=""/>
 
     <largeproperty name="Alerts.SendMessage.Content">
       <value expand="true" xml="true">
