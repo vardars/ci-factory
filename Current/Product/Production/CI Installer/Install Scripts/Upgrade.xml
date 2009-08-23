@@ -537,7 +537,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
 		<include buildfile="Scripts\CCNET.Install.xml"/>
 
     <call target="Private.CCNET.InstallDashboardDirectoryFiles"/>
-		<call target="Private.CCNET.InstallCommon.Directory.Build.PathFiles"/>
+		<call target="Private.CCNET.Install.Common.Directory.Build.PathFiles"/>
     <call target="Private.CCNET.InstallBuildServerDirectoryFiles"/>
 		
 		<delete>
