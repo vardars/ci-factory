@@ -23,12 +23,12 @@
 
   <!-- These are private... -->
 
-  <property name="Private.CCNET.DefaultProjectFile" value="${SourceCommon.Directory.Build.Path}\ccnetproject.xml"/>
-  <property name="Private.CCNET.DefaultBatchFile" value="${SourceCommon.Directory.Build.Path}\CCNETServer.Bat"/>
-  <property name="Private.CCNET.DefaultExeConfigFile" value="${SourceCommon.Directory.Build.Path}\server\ccnet.exe.config"/>
-  <property name="Private.CCNET.DefaultBuildServerDirectory" value="${SourceCommon.Directory.Build.Path}\server"/>
+  <property name="Private.CCNET.DefaultProjectFile" value="${Source.Common.Directory.Build.Path}\ccnetproject.xml"/>
+  <property name="Private.CCNET.DefaultBatchFile" value="${Source.Common.Directory.Build.Path}\CCNETServer.Bat"/>
+  <property name="Private.CCNET.DefaultExeConfigFile" value="${Source.Common.Directory.Build.Path}\server\ccnet.exe.config"/>
+  <property name="Private.CCNET.DefaultBuildServerDirectory" value="${Source.Common.Directory.Build.Path}\server"/>
   <property name="Private.CCNET.DefaultBuildServerXslDirectory" value="${Private.CCNET.DefaultBuildServerDirectory}\xsl"/>
-  <property name="Private.CCNET.DefaultDashboardDirectory" value="${SourceCommon.Directory.Build.Path}\dashboard"/>
+  <property name="Private.CCNET.DefaultDashboardDirectory" value="${Source.Common.Directory.Build.Path}\dashboard"/>
   <property name="Private.CCNET.DefaultConfigFile" value="${Private.CCNET.DefaultDashboardDirectory}\dashboard.config"/>
 
   <function execute="${filterchain::replacestring-add('Common.FilterChain', '%Developer.List%', Developer.List)}"/>

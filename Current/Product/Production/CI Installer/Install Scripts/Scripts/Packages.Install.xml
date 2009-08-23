@@ -83,7 +83,7 @@
       <strings refid="Packages.InstallList"/>
     </items>
     <do>
-      <property name="InstallScript" value="${SourceCommon.Directory.Packages.Path}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
+      <property name="InstallScript" value="${Source.Common.Directory.Packages.Path}\${Private.Packages.Install.PackageName}\Install\Install.xml"/>
       <echo message="${InstallScript}" />
       <ifthenelse  test="${file::exists(InstallScript)}">
         <then>
@@ -146,7 +146,7 @@
   <target name="Private.Packages.CopyPackage" >
     <mkdir dir="${Common.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}"/>
     <copy todir="${Common.Directory.Packages.Path}" overwrite="true" >
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}">
         <include name="${Packages.CopyPackage.PackageName}\**\*"/>
         <exclude name="${Packages.CopyPackage.PackageName}\Install" />
         <exclude name="${Packages.CopyPackage.PackageName}\Install\**\*"/>
@@ -160,7 +160,7 @@
       </fileset>
     </copy>
     <copy todir="${Common.Directory.Packages.Path}" overwrite="true">
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}">
         <include name="${Packages.CopyPackage.PackageName}\**\*.xml"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.txt"/>
         <include name="${Packages.CopyPackage.PackageName}\**\*.xsl"/>
@@ -175,7 +175,7 @@
     </copy>
 
     <copy todir="${Common.Directory.Product.Path}" overwrite="true" >
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}\Install\Product">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}\Install\Product">
         <include name="**\*"/>
         <exclude name="**\*.bat"/>
       </fileset>
@@ -183,7 +183,7 @@
     </copy>
 
     <copy todir="${Common.Directory.Product.Path}" overwrite="true" >
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}\Install\Product">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\${Packages.CopyPackage.PackageName}\Install\Product">
         <include name="**\*.bat"/>
       </fileset>
     </copy>

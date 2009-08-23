@@ -46,7 +46,7 @@
       </ifnot>
     </ifnot>
 
-    <include buildfile="${SourceCommon.Directory.Packages.Path}\Subversion\Install\Install.xml"/>
+    <include buildfile="${Source.Common.Directory.Packages.Path}\Subversion\Install\Install.xml"/>
   </target>
 
 

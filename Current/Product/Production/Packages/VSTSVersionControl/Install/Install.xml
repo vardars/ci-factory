@@ -11,19 +11,19 @@
     <call target="Packages.AddCleanUpActions"/>
 
     <copy todir="${Common.Directory.Build.Path}\server">
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
     <copy todir="${Common.Directory.Build.Path}\dashboard\bin">
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </copy>
 
     <zip append="true" zipfile="${Common.Directory.Build.Path}\dashboard\cctray\cctray.zip" >
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\VSTSVersionControl\Install\CCNet">
         <include name="*.*"/>
       </fileset>
     </zip>

@@ -7,11 +7,11 @@
   <property name="Compile.OpenSolutionBat" value="${Common.Directory.Product.Path}\OpenSolution.bat"/>
   <property name="Compile.ScratchFile" value="${Common.Directory.Product.Path}\Scratch.build.xml"/>
   
-  <property name="Compile.Default2003SolutionFile" value="${SourceCommon.Directory.Packages.Path}\VS.NETCompile\Install\2003.sln.remove"/>
-  <property name="Compile.Default2005SolutionFile" value="${SourceCommon.Directory.Packages.Path}\VS.NETCompile\Install\2005.sln.remove"/>
-  <property name="Compile.Default2008SolutionFile" value="${SourceCommon.Directory.Packages.Path}\VS.NETCompile\Install\2008.sln.remove"/>
-  <property name="Compile.DefaultOpenSolutionBat" value="${SourceCommon.Directory.Packages.Path}\VS.NETCompile\Install\OpenSolution.bat"/>
-  <property name="Compile.DefaultScratchFile" value="${SourceCommon.Directory.Packages.Path}\VS.NETCompile\Install\Scratch.build.xml"/>
+  <property name="Compile.Default2003SolutionFile" value="${Source.Common.Directory.Packages.Path}\VS.NETCompile\Install\2003.sln.remove"/>
+  <property name="Compile.Default2005SolutionFile" value="${Source.Common.Directory.Packages.Path}\VS.NETCompile\Install\2005.sln.remove"/>
+  <property name="Compile.Default2008SolutionFile" value="${Source.Common.Directory.Packages.Path}\VS.NETCompile\Install\2008.sln.remove"/>
+  <property name="Compile.DefaultOpenSolutionBat" value="${Source.Common.Directory.Packages.Path}\VS.NETCompile\Install\OpenSolution.bat"/>
+  <property name="Compile.DefaultScratchFile" value="${Source.Common.Directory.Packages.Path}\VS.NETCompile\Install\Scratch.build.xml"/>
   
   <target name="VS.NETCompile.Install">
     <largeproperty name="Packages.AddCompileActions.Block">

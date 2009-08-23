@@ -34,9 +34,9 @@
 
   <property name="SourceRoot" value="${path::get-full-path('..')}"/>
   <property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
-  <property name="SourceCommon.Directory.Build.Path" value="${SourceDefaultDirectory}\Build"/>
-  <property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
-  <property name="SourceCommon.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
-  <property name="SourceCommon.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
+  <property name="Source.Common.Directory.Build.Path" value="${SourceDefaultDirectory}\Build"/>
+  <property name="Source.Common.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
+  <property name="Source.Common.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
+  <property name="Source.Common.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
   
 </project>

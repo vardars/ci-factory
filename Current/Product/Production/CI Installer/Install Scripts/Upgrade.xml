@@ -8,10 +8,10 @@
 
 	<property name="SourceRoot" value="${path::get-full-path('..')}"/>
 	<property name="SourceDefaultDirectory"   value="${SourceRoot}\Default"/>
-	<property name="SourceCommon.Directory.Build.Path" value="${SourceDefaultDirectory}\Build"/>
-	<property name="SourceCommon.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
-	<property name="SourceCommon.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
-	<property name="SourceCommon.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
+	<property name="Source.Common.Directory.Build.Path" value="${SourceDefaultDirectory}\Build"/>
+	<property name="Source.Common.Directory.Product.Path" value="${SourceDefaultDirectory}\Product"/>
+	<property name="Source.Common.Directory.ThirdParty.Path" value="${SourceDefaultDirectory}\Third Party"/>
+	<property name="Source.Common.Directory.Packages.Path" value="${SourceRoot}\Packages"/>
 	
 	<target name="Upgrade">
 
@@ -187,7 +187,7 @@ When CI Factory first installed your project it was set to '1.0.0.' in the file 
 Project Name:     ${ProjectName}
 Codeline Name:    ${ProjectCodeLineName}
 Current Version:  ${file::get-product-version(Common.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
-Upgrade Version:  ${file::get-product-version(SourceCommon.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
+Upgrade Version:  ${file::get-product-version(Source.Common.Directory.Build.Path + '\server\ThoughtWorks.CruiseControl.Core.dll')}
 
 Common.Directory.Product.Path    = ${Common.Directory.Product.Path}
 Common.Directory.ThirdParty.Path = ${Common.Directory.ThirdParty.Path}
@@ -305,9 +305,9 @@ A brute force approach is to diff the tree, to identify which if any files need 
   <target name="Upgrade.Package.ValidateParameters">
     <property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
 
-    <if test="${directory::exists(SourceCommon.Directory.Packages.Path + '\' + SourcePackageName)}" >
+    <if test="${directory::exists(Source.Common.Directory.Packages.Path + '\' + SourcePackageName)}" >
       <function execute="${stringlist::add('Packages.InstallList', SourcePackageName)}" />
-      <property name="PackagePathPattern" value="${SourceCommon.Directory.Packages.Path}\${SourcePackageName}\Upgrade\Upgrade.xml"/>
+      <property name="PackagePathPattern" value="${Source.Common.Directory.Packages.Path}\${SourcePackageName}\Upgrade\Upgrade.xml"/>
       <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
       <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
       <if test="${fileset::file-count('PacakgeFinder') > 0}">
@@ -330,7 +330,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
           </if>
           <function execute="${fileset::include-remove('PacakgeFinder', PackagePathPattern)}"/>
 
-          <include buildfile="${SourceCommon.Directory.Packages.Path}\${SourcePackageName}\Install\Install.xml"/>
+          <include buildfile="${Source.Common.Directory.Packages.Path}\${SourcePackageName}\Install\Install.xml"/>
           <call target="${SourcePackageName}.ValidateParameters"/>
         </else>
       </ifthenelse>
@@ -582,7 +582,7 @@ A brute force approach is to diff the tree, to identify which if any files need 
   <target name="Upgrade.Package">
     <property name="SourcePackageName" value="${directory::name(TargetPackageDirectory)}"/>
 
-    <if test="${directory::exists(SourceCommon.Directory.Packages.Path + '\' + SourcePackageName)}" >
+    <if test="${directory::exists(Source.Common.Directory.Packages.Path + '\' + SourcePackageName)}" >
       <call target="Packages.Reset.CurrentPackage" />
       <call target="${SourcePackageName}.SetAsCurrentPackage"/>
       <call target="Packages.Validate.CurrentSetPackage"/>

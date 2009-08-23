@@ -5,12 +5,12 @@
   
   <target name="NUnit.Install">
     <copy todir="${Common.Directory.ThirdParty.Path}\NUnit" overwrite="true">
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\NUnit\Install\NUnit">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\NUnit\Install\NUnit">
         <include name="**\*" />
       </fileset>
     </copy>
 
-    <copy file="${SourceCommon.Directory.Packages.Path}\NUnit\Install\NUnit\Logo.ico" tofile="${Common.Directory.Packages.Path}\NUnit\Logo.ico"  overwrite="true"/>
+    <copy file="${Source.Common.Directory.Packages.Path}\NUnit\Install\NUnit\Logo.ico" tofile="${Common.Directory.Packages.Path}\NUnit\Logo.ico"  overwrite="true"/>
 
     <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
       <then>

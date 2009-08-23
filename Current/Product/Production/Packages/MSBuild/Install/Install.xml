@@ -5,8 +5,8 @@
 
   <property name="Compile.SolutionFile" value="${Common.Directory.Product.Path}\${ProjectName}.sln"/>
   
-  <property name="Compile.Default2005SolutionFile" value="${SourceCommon.Directory.Packages.Path}\MSBuild\Install\2005.sln.remove"/>
-  <property name="Compile.Default2008SolutionFile" value="${SourceCommon.Directory.Packages.Path}\MSBuild\Install\2008.sln.remove"/>
+  <property name="Compile.Default2005SolutionFile" value="${Source.Common.Directory.Packages.Path}\MSBuild\Install\2005.sln.remove"/>
+  <property name="Compile.Default2008SolutionFile" value="${Source.Common.Directory.Packages.Path}\MSBuild\Install\2008.sln.remove"/>
   
   <target name="MSBuild.Install">
     <largeproperty name="Packages.AddCompileActions.Block">

@@ -7,14 +7,14 @@
 
   <!-- These are private... -->
 
-  <property name="Private.BuildVS.DefaultSolutionFile" value="${SourceCommon.Directory.Build.Path}\Build.sln.remove"/>
-  <property name="Private.BuildVS.DefaultPackagesProjectFile" value="${SourceCommon.Directory.Build.Path}\Build.csproj.remove"/>
-  <property name="Private.BuildVS.DefaultOpenSolutionBat" value="${SourceCommon.Directory.Build.Path}\OpenSolution.bat"/>
+  <property name="Private.BuildVS.DefaultSolutionFile" value="${Source.Common.Directory.Build.Path}\Build.sln.remove"/>
+  <property name="Private.BuildVS.DefaultPackagesProjectFile" value="${Source.Common.Directory.Build.Path}\Build.csproj.remove"/>
+  <property name="Private.BuildVS.DefaultOpenSolutionBat" value="${Source.Common.Directory.Build.Path}\OpenSolution.bat"/>
   
   <target name="BuildVS.Install" depends="BuildVS.ValidateParameters" >
     <copy file="${Private.BuildVS.DefaultSolutionFile}" tofile="${BuildVS.SolutionFile}" overwrite="True"/>
     <copy file="${Private.BuildVS.DefaultPackagesProjectFile}" tofile="${BuildVS.PackagesProjectFile}"  overwrite="True"/>
-    <copy file="${SourceCommon.Directory.Build.Path}\Personal.Build.csproj.remove" tofile="${Common.Directory.Build.Path}\Personal.Build.csproj"  overwrite="True"/>
+    <copy file="${Source.Common.Directory.Build.Path}\Personal.Build.csproj.remove" tofile="${Common.Directory.Build.Path}\Personal.Build.csproj"  overwrite="True"/>
     
     <copy tofile="${BuildVS.OpenSolutionBat}" file="${Private.BuildVS.DefaultOpenSolutionBat}" overwrite="True">
       <filterchain refid="Common.FilterChain" />

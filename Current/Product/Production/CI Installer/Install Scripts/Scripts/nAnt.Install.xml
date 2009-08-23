@@ -10,13 +10,13 @@
   <target name="nAnt.Install" depends="nAnt.ValidateParameters" >
 
     <copy todir="${Common.Directory.Tools.Path}" overwrite="True">
-      <fileset basedir="${SourceCommon.Directory.Build.Path}\Tools">
+      <fileset basedir="${Source.Common.Directory.Build.Path}\Tools">
         <include name="**\*"/>
       </fileset>
     </copy>
     
     <copy todir="${Common.Directory.Build.Path}" overwrite="true">
-			<fileset basedir="${SourceCommon.Directory.Build.Path}">
+			<fileset basedir="${Source.Common.Directory.Build.Path}">
 				<include name="Main.build.xml"/>
 				<include name="Properties.build.xml"/>
         <include name="Entities.xml"/>
@@ -36,13 +36,13 @@
 		</copy>
 
     <copy todir="${Common.Directory.Build.Path}" overwrite="true">
-      <fileset basedir="${SourceCommon.Directory.Build.Path}">
+      <fileset basedir="${Source.Common.Directory.Build.Path}">
         <include name="*.bat"/>
       </fileset>
     </copy>
 
 		<copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourceCommon.Directory.Product.Path}">
+      <fileset basedir="${Source.Common.Directory.Product.Path}">
         <include name="*.*"/>
         <exclude name="*.bat"/>
       </fileset>
@@ -50,7 +50,7 @@
     </copy>
 
     <copy todir="${Common.Directory.Product.Path}" overwrite="true">
-      <fileset basedir="${SourceCommon.Directory.Product.Path}">
+      <fileset basedir="${Source.Common.Directory.Product.Path}">
         <include name="*.bat"/>
       </fileset>
     </copy>

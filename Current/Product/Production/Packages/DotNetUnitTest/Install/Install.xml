@@ -5,7 +5,7 @@
   
   <target name="DotNetUnitTest.Install">
     <copy todir="${Common.Directory.ThirdParty.Path}\MbUnit">
-      <fileset basedir="${SourceCommon.Directory.Packages.Path}\DotNetUnitTest\Install\bin">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\DotNetUnitTest\Install\bin">
         <include name="**\*" />
       </fileset>
     </copy>
