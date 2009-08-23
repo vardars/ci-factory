@@ -159,7 +159,7 @@
       <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
       <property name="Project.Directory.Report.Path"/>
-      <property name="Common.TempDirectory"/>
+      <property name="Project.Directory.Temp.Path"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
     </saveproperties>

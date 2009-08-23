@@ -161,7 +161,7 @@
   </target>
   
   <target name="Private.Custom.DownloadDocumentation">
-    <property name="DocListFilePath" value="${Common.TempDirectory}\DocList.html"/>
+    <property name="DocListFilePath" value="${Project.Directory.Temp.Path}\DocList.html"/>
     
     <get
       dest="${DocListFilePath}"
@@ -250,8 +250,8 @@
   </target>
   
   <target name="Custom.WriteReleaseNotes">
-    <property name="TempSvnLogFilePath" value="${Common.TempDirectory}\log.xml"/>
-    <property name="TempBatchFilePath" value="${Common.TempDirectory}\log.bat"/>
+    <property name="TempSvnLogFilePath" value="${Project.Directory.Temp.Path}\log.xml"/>
+    <property name="TempBatchFilePath" value="${Project.Directory.Temp.Path}\log.bat"/>
     <property name="ReleaseNotesFilePath" value="${Common.Directory.Production.Path}\CI Installer\CI Factory Release Notes.html"/>
     <property name="RevisionToLogFrom" value="2312"/>
     
@@ -262,7 +262,7 @@
     <property name='FixedNotes' value=''/>
 
     <xmlquery file='${TempSvnLogFilePath}' query="/log/logentry[author/text() != 'cifactory']/msg" id='Notes' />
-		<property name='TempNotesFilePath' value='${Common.TempDirectory}\Notes.txt'/>
+		<property name='TempNotesFilePath' value='${Project.Directory.Temp.Path}\Notes.txt'/>
 		
 		<loopthrough property='Message'>
 			<items>

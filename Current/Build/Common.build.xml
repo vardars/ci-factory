@@ -20,9 +20,9 @@
   <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
 
   <property name="Project.Directory.Report.Path" value="${Common.Directory.Build.Path}\Reports"/>
-  <property name="Common.TempDirectory" value="${Common.Directory.Build.Path}\Temp"/>
+  <property name="Project.Directory.Temp.Path" value="${Common.Directory.Build.Path}\Temp"/>
   
-  <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
+  <property name="Common.PropertiesFile" value="${Project.Directory.Temp.Path}\Properties.txt"/>
   <target name="Common.CreatePropertiesFile">
     <delete file="${Common.PropertiesFile}" if ="${file::exists(Common.PropertiesFile)}" />
     <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
@@ -53,7 +53,7 @@
       <property name="Common.Directory.Artifact.Path"/>
       <property name="Common.Directory.Artifact.Name"/>
       <property name="Project.Directory.Report.Path"/>
-      <property name="Common.TempDirectory"/>
+      <property name="Project.Directory.Temp.Path"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
     </saveproperties>
@@ -65,8 +65,8 @@
     <delete dir="${Project.Directory.Report.Path}" if="${directory::exists(Project.Directory.Report.Path)}"/>
     <mkdir dir="${Project.Directory.Report.Path}"/>
 
-    <delete dir="${Common.TempDirectory}" if="${directory::exists(Common.TempDirectory)}"/>
-    <mkdir dir="${Common.TempDirectory}"/>
+    <delete dir="${Project.Directory.Temp.Path}" if="${directory::exists(Project.Directory.Temp.Path)}"/>
+    <mkdir dir="${Project.Directory.Temp.Path}"/>
 
     <call target="Common.CreatePropertiesFile"/>
   </target>
