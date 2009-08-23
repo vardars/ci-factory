@@ -2,14 +2,14 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.WAS.Configuration.Scripts">
 
   <property name="WAS.Install.DirectoryPath" value="${environment::get-variable('ProgramFiles')}\IBM\SDP\runtimes\base_v7"/>
-  <property name="WAS.Profile.DriectoryPath" value="${WAS.Install.DirectoryPath}\profiles\was70profile2"/>
+  <property name="WAS.Profile.DirectoryPath" value="${WAS.Install.DirectoryPath}\profiles\was70profile2"/>
   
   <target name="Workspace.Configuration.WAS" if="${directory::exists(WAS.Install.DirectoryPath)}">
-    <ifnot test="${directory::exists(WAS.Profile.DriectoryPath)}">
-      <fail message="We expected there to be a WAS profile was70profile2 yet it does not exist! ${WAS.Profile.DriectoryPath}"/>
+    <ifnot test="${directory::exists(WAS.Profile.DirectoryPath)}">
+      <fail message="We expected there to be a WAS profile was70profile2 yet it does not exist! ${WAS.Profile.DirectoryPath}"/>
     </ifnot>
     
-    <replace file="${WAS.Profile.DriectoryPath}\properties\soap.client.props">
+    <replace file="${WAS.Profile.DirectoryPath}\properties\soap.client.props">
       <filterchain>
         <replacestring from="com.ibm.SOAP.requestTimeout=180" to="com.ibm.SOAP.requestTimeout=600"   />
       </filterchain>
@@ -18,9 +18,9 @@
     <property name="count" value="0"/>
     <foreach item="Folder" property="folder">
       <in>
-        <items basedir="${WAS.Profile.DriectoryPath}\config\cells">
+        <items basedir="${WAS.Profile.DirectoryPath}\config\cells">
           <include name="*"/>
-          <exclude name="${WAS.Profile.DriectoryPath}\config\cells"/>
+          <exclude name="${WAS.Profile.DirectoryPath}\config\cells"/>
         </items>
     </in>
       <do>
@@ -35,9 +35,9 @@
     <property name="count" value="0"/>
     <foreach item="Folder" property="folder">
       <in>
-        <items basedir="${WAS.Profile.DriectoryPath}\config\cells\${WAS.Cell.Name}\nodes">
+        <items basedir="${WAS.Profile.DirectoryPath}\config\cells\${WAS.Cell.Name}\nodes">
           <include name="*"/>
-          <exclude name="${WAS.Profile.DriectoryPath}\config\cells\${WAS.Cell.Name}\nodes"/>
+          <exclude name="${WAS.Profile.DirectoryPath}\config\cells\${WAS.Cell.Name}\nodes"/>
         </items>
       </in>
       <do>
@@ -50,7 +50,7 @@
     <fail message="Could not find a node to configure." if="${int::parse(count) != 1}"/>
     
 
-    <property name="WAS.ServerConfig.FilePath" value="${WAS.Profile.DriectoryPath}\config\cells\${WAS.Cell.Name}\nodes\${WAS.Node.Name}\serverindex.xml"/>
+    <property name="WAS.ServerConfig.FilePath" value="${WAS.Profile.DirectoryPath}\config\cells\${WAS.Cell.Name}\nodes\${WAS.Node.Name}\serverindex.xml"/>
 
     <xmlpeek
       file="${WAS.ServerConfig.FilePath}"
