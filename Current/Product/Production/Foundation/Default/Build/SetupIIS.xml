@@ -26,11 +26,11 @@
             DirectoryEntry IISRoot = new  DirectoryEntry("IIS://localhost/W3SVC/1/Root");
                 
             DirectoryEntry Vdir = null;
-            foreach(DirectoryEntry VdirCanidate in IISRoot.Children)
+            foreach(DirectoryEntry VdirCandidate in IISRoot.Children)
             {
-              if (VdirCanidate.Name == project.Properties["ProjectName"] + "-" + project.Properties["ProjectCodeLineName"])
+              if (VdirCandidate.Name == project.Properties["ProjectName"] + "-" + project.Properties["ProjectCodeLineName"])
               {
-                Vdir = VdirCanidate;
+                Vdir = VdirCandidate;
               }
             }
 

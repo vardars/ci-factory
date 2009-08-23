@@ -60,11 +60,11 @@ namespace ThoughtWorks.CruiseControl.Core.Util
             this.StartTime = process.StartTime.ToString();
 
             Process[] allProcesses = Process.GetProcesses();
-            foreach (Process processCanidate in allProcesses)
+            foreach (Process processCandidate in allProcesses)
             {
-                if (GetParentProcess(processCanidate.Id) == this.Id)
+                if (GetParentProcess(processCandidate.Id) == this.Id)
                 {
-                    this.Children.Add(new ProcessInformation(processCanidate, allProcesses));
+                    this.Children.Add(new ProcessInformation(processCandidate, allProcesses));
                 }
             }
         }
@@ -83,11 +83,11 @@ namespace ThoughtWorks.CruiseControl.Core.Util
             this.PrivateMemory = process.PrivateMemorySize64;
             this.StartTime = process.StartTime.ToString();
 
-            foreach (Process processCanidate in allProcesses)
+            foreach (Process processCandidate in allProcesses)
             {
-                if (GetParentProcess(processCanidate.Id) == this.Id)
+                if (GetParentProcess(processCandidate.Id) == this.Id)
                 {
-                    this.Children.Add(new ProcessInformation(processCanidate, allProcesses));
+                    this.Children.Add(new ProcessInformation(processCandidate, allProcesses));
                 }
             }
         }

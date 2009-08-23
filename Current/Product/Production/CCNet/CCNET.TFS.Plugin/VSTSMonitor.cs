@@ -264,9 +264,9 @@ namespace CCNET.TFS.Plugin
         {
             bool AlreadySubscribed = false;
             Subscription[] Subscriptions = this.EventService.EventSubscriptions(this.Server.AuthenticatedUserName);
-            foreach (Subscription Canidate in Subscriptions)
+            foreach (Subscription Candidate in Subscriptions)
             {
-                if (Canidate.ID == this.State.AlertId)
+                if (Candidate.ID == this.State.AlertId)
                 {
                     AlreadySubscribed = true;
                     break;

@@ -24,7 +24,7 @@
     </else>
   </ifthenelse>
 
-  <foreach item="File" property="Tools.Canidate">
+  <foreach item="File" property="Tools.Candidate">
     <in>
       <items>
         <include name="${Common.Directory.Tools.Path}\**\*.exe"/>
@@ -32,12 +32,12 @@
       </items>
     </in>
     <do>
-      <property name="Tools.${path::get-file-name-without-extension(Tools.Canidate)}.Bin" value="${path::get-directory-name(Tools.Canidate)}"/>
-      <property name="Tools.${path::get-file-name-without-extension(Tools.Canidate)}.Exe" value="${Tools.Canidate}"/>
+      <property name="Tools.${path::get-file-name-without-extension(Tools.Candidate)}.Bin" value="${path::get-directory-name(Tools.Candidate)}"/>
+      <property name="Tools.${path::get-file-name-without-extension(Tools.Candidate)}.Exe" value="${Tools.Candidate}"/>
     </do>
   </foreach>
 
-  <function execute="${property::destroy('Tools.Canidate')}"/>
+  <function execute="${property::destroy('Tools.Candidate')}"/>
 
   <property name="Today" value="${datetime::get-month(datetime::now())}-${datetime::get-day(datetime::now())}-${datetime::get-year(datetime::now())}"/>
   <property name="Time" value="${datetime::get-hour(datetime::now())}.${datetime::get-minute(datetime::now())}.${datetime::get-second(datetime::now())}"/>

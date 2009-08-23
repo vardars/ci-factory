@@ -198,16 +198,16 @@ namespace CIFactory.NAnt.Filters
 
         public void ReplaceIfMatchFound(Line line)
         {
-            StringBuilder Canidate = new StringBuilder();
-            Canidate.Append(line.Text);
+            StringBuilder Candidate = new StringBuilder();
+            Candidate.Append(line.Text);
             foreach (Line NextLine in this.LineQueue)
             {
-                Canidate.Append(NextLine.Text);
+                Candidate.Append(NextLine.Text);
             }
-            if (this.PatternFinder.IsMatch(Canidate.ToString()))
+            if (this.PatternFinder.IsMatch(Candidate.ToString()))
             {
                 string Replaced;
-                Replaced = this.PatternFinder.Replace(Canidate.ToString(), this.Replacment);
+                Replaced = this.PatternFinder.Replace(Candidate.ToString(), this.Replacment);
                 this.CharQueue = new Queue<int>();
                 foreach (char Character in Replaced)
                 {

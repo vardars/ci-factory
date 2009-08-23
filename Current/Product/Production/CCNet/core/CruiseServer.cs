@@ -436,11 +436,11 @@ namespace ThoughtWorks.CruiseControl.Core
 
             XmlLogPublisher XmlPublisher = null;
 
-            foreach (ITask CanidatePublisher in project.Publishers)
+            foreach (ITask CandidatePublisher in project.Publishers)
             {
-                if (CanidatePublisher is XmlLogPublisher)
+                if (CandidatePublisher is XmlLogPublisher)
                 {
-                    XmlPublisher = (XmlLogPublisher)CanidatePublisher;
+                    XmlPublisher = (XmlLogPublisher)CandidatePublisher;
                     break;
                 }
             }

@@ -71,11 +71,11 @@ namespace CIFactory.NAnt.Types
         protected override System.Collections.IEnumerator GetStrings()
         {
             ArrayList TargetList = new ArrayList();
-            foreach (Target Canidate in this.Project.Targets)
+            foreach (Target Candidate in this.Project.Targets)
             {
-                if (this.LookForMatch(Canidate.Name, this.IncludeRegexs) & !this.LookForMatch(Canidate.Name, this.ExcludeRegexs))
+                if (this.LookForMatch(Candidate.Name, this.IncludeRegexs) & !this.LookForMatch(Candidate.Name, this.ExcludeRegexs))
                 {
-                    TargetList.Add(Canidate.Name);
+                    TargetList.Add(Candidate.Name);
                 }
             }
             return TargetList.GetEnumerator();

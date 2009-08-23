@@ -91,11 +91,11 @@ namespace VSTS.Tasks
             {
                 if (_WrappedSubject == null)
                 {
-                    foreach (Type Canidate in TestToolsHelper.CommandLineAssembly.GetTypes())
+                    foreach (Type Candidate in TestToolsHelper.CommandLineAssembly.GetTypes())
                     {
-                        if (Canidate.FullName == "Microsoft.VisualStudio.TestTools.CommandLine.Executor")
+                        if (Candidate.FullName == "Microsoft.VisualStudio.TestTools.CommandLine.Executor")
                         {
-                            _WrappedSubject = Activator.CreateInstance(Canidate, null);
+                            _WrappedSubject = Activator.CreateInstance(Candidate, null);
                             break;
                         }
                     }

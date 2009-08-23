@@ -210,8 +210,8 @@ namespace CCNET.TFS.Plugin
 
         public bool Contains(Changeset set)
         {
-            foreach (Changeset Canidate in this.MyQueue)
-                if (Canidate.ChangesetId == set.ChangesetId)
+            foreach (Changeset Candidate in this.MyQueue)
+                if (Candidate.ChangesetId == set.ChangesetId)
                     return true;
             return false;
         }

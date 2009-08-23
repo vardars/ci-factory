@@ -18,12 +18,12 @@ namespace VSTS.Tasks
             {
                 if (_CommandLineAssembly == null)
                 {
-                    foreach (Assembly Canidate in AppDomain.CurrentDomain.GetAssemblies())
+                    foreach (Assembly Candidate in AppDomain.CurrentDomain.GetAssemblies())
                     {
-                        if (Canidate.GetName().Name == "Microsoft.VisualStudio.QualityTools.CommandLine")
+                        if (Candidate.GetName().Name == "Microsoft.VisualStudio.QualityTools.CommandLine")
                         {
-                            HintDirectories.Add(Path.GetDirectoryName(Canidate.Location));
-                            _CommandLineAssembly = Canidate;
+                            HintDirectories.Add(Path.GetDirectoryName(Candidate.Location));
+                            _CommandLineAssembly = Candidate;
                             break;
                         }
                     }
@@ -49,11 +49,11 @@ namespace VSTS.Tasks
 
         public static Type FindType(String fullName)
         {
-            foreach (Type Canidate in TestToolsHelper.CommandLineAssembly.GetTypes())
+            foreach (Type Candidate in TestToolsHelper.CommandLineAssembly.GetTypes())
             {
-                if (Canidate.FullName == fullName)
+                if (Candidate.FullName == fullName)
                 {
-                    return Canidate;
+                    return Candidate;
                 }
             }
             return null;
@@ -66,11 +66,11 @@ namespace VSTS.Tasks
 
         public static object CreateInstance(String fullName, Object[] args)
         {
-            foreach (Type Canidate in TestToolsHelper.CommandLineAssembly.GetTypes())
+            foreach (Type Candidate in TestToolsHelper.CommandLineAssembly.GetTypes())
             {
-                if (Canidate.FullName == fullName)
+                if (Candidate.FullName == fullName)
                 {
-                    return Activator.CreateInstance(Canidate, args);
+                    return Activator.CreateInstance(Candidate, args);
                 }
             }
             return null;

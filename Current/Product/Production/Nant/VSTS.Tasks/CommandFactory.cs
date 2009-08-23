@@ -16,11 +16,11 @@ namespace VSTS.Tasks
             {
                 if (_CreateCommandMethod == null)
                 {
-                    foreach (Type Canidate in TestToolsHelper.CommandLineAssembly.GetTypes())
+                    foreach (Type Candidate in TestToolsHelper.CommandLineAssembly.GetTypes())
                     {
-                        if (Canidate.FullName == "Microsoft.VisualStudio.TestTools.CommandLine.CommandFactory")
+                        if (Candidate.FullName == "Microsoft.VisualStudio.TestTools.CommandLine.CommandFactory")
                         {
-                            _CreateCommandMethod = Canidate.GetMethod("CreateCommand");
+                            _CreateCommandMethod = Candidate.GetMethod("CreateCommand");
                             break;
                         }
                     }
