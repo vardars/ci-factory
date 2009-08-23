@@ -4,10 +4,10 @@
   <include buildfile="Properties.xml" />
   
   <target name="CoverageEye.Install">
-    <largeproperty name="Packages.AddVarificationActions.Block">
+    <largeproperty name="Packages.AddVerificationActions.Block">
       <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
     </largeproperty>
-    <call target="Packages.AddVarificationActions"/>
+    <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\CoverageEye\CoverageSummary.xsl</xslFile>]]></value>

@@ -19,8 +19,8 @@
     <value xml="false"><![CDATA[<description>End Compile Actions</description>]]></value>
   </largeproperty>
 
-  <largeproperty name="Private.Packages.VarificationActions.EndTag">
-    <value xml="false"><![CDATA[<description>End Varification Actions</description>]]></value>
+  <largeproperty name="Private.Packages.VerificationActions.EndTag">
+    <value xml="false"><![CDATA[<description>End Verification Actions</description>]]></value>
   </largeproperty>
 
   <largeproperty name="Private.Packages.PostBuildActions.EndTag">
@@ -358,11 +358,11 @@
     </AddCallToMainScript>
   </target>
 
-  <property name="Packages.AddVarificationActions.Block" value=""/>
-  <target name="Packages.AddVarificationActions" unless="${IsUpgrade}">
+  <property name="Packages.AddVerificationActions.Block" value=""/>
+  <target name="Packages.AddVerificationActions" unless="${IsUpgrade}">
     <AddCallToMainScript
-      xmlfragment="${Packages.AddVarificationActions.Block}"
-      blockname="Varification">
+      xmlfragment="${Packages.AddVerificationActions.Block}"
+      blockname="Verification">
       <strings refid="NAnt.Main.Targets"/>
     </AddCallToMainScript>
 	</target>

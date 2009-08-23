@@ -7,7 +7,7 @@
     <strings id="NAnt.Main.Targets">
       <string value="Test"/>
     </strings>
-    <largeproperty name="Packages.AddVarificationActions.Block">
+    <largeproperty name="Packages.AddVerificationActions.Block">
       <value xml="false">
         <![CDATA[<property name="FitNesse.IntegrationSuitePath" value="TriservRoot.IntegrationSuite.BugSuite"/>
         <property name="FitNesse.Reports.FileName" value="BugSuiteFitNesseReport.xml"/>
@@ -24,7 +24,7 @@
         <property name="FitNesse.FailBuildForFailingTest" value="true"/>
         <call target="FitNesse.RunTests"/>]]></value>
     </largeproperty>
-    <call target="Packages.AddVarificationActions"/>
+    <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\FitNesse\FitNesseDisplaySummary.xsl</xslFile>]]></value>

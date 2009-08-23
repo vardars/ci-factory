@@ -6,10 +6,10 @@
   <property name="NCover.Install.IsNeeded" value="false" overwrite="false"/>
   
   <target name="NCover.Install">
-    <largeproperty name="Packages.AddVarificationActions.Block">
+    <largeproperty name="Packages.AddVerificationActions.Block">
       <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
     </largeproperty>
-    <call target="Packages.AddVarificationActions"/>
+    <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverDisplaySummary.xsl</xslFile>]]></value>

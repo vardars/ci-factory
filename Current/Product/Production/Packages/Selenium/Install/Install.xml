@@ -7,12 +7,12 @@
     <strings id="NAnt.Main.Targets">
       <string value="Test"/>
     </strings>
-    <largeproperty name="Packages.AddVarificationActions.Block">
+    <largeproperty name="Packages.AddVerificationActions.Block">
       <value xml="false">
         <![CDATA[<call target="Selenium.RunTests"/>]]>
       </value>
     </largeproperty>
-    <call target="Packages.AddVarificationActions"/>
+    <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\Simian\SimianDisplaySummary.xsl</xslFile>]]></value>

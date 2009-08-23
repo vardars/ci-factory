@@ -5,10 +5,10 @@
   
   <target name="LinesOfCode.Install">
 
-    <largeproperty name="Packages.AddVarificationActions.Block">
+    <largeproperty name="Packages.AddVerificationActions.Block">
       <value xml="false"><![CDATA[<call target="LinesOfCode.CountCodeLines" />]]></value>
     </largeproperty>
-    <call target="Packages.AddVarificationActions"/>
+    <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
       <value xml="false"><![CDATA[<xslFile>Packages\LinesOfCode\LinesOfCode.xsl</xslFile>]]></value>

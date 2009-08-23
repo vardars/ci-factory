@@ -19,10 +19,10 @@
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>
       <else>
-        <largeproperty name="Packages.AddVarificationActions.Block">
+        <largeproperty name="Packages.AddVerificationActions.Block">
           <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
         </largeproperty>
-        <call target="Packages.AddVarificationActions"/>
+        <call target="Packages.AddVerificationActions"/>
       </else>
     </ifthenelse>
 

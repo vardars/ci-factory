@@ -39,9 +39,9 @@
         <call target="Compile.CompileSource" />
         <description>End Compile Actions</description>
         
-        <description>Begin Varification Actions</description>
+        <description>Begin Verification Actions</description>
         <call target="UnitTest.RunTests" />
-        <description>End Varification Actions</description>
+        <description>End Verification Actions</description>
         
         <description>Begin Post Build Actions</description>
         <call target="Simian.Run"/>
@@ -72,7 +72,7 @@
         <call target="Compile.CompileSource" />
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
-        <description>Begin Varification Actions</description>
+        <description>Begin Verification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
           <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
@@ -86,7 +86,7 @@
                verbose="true"
                if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
-        <description>End Varification Actions</description>
+        <description>End Verification Actions</description>
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
         <description>End Main Build</description>
@@ -125,7 +125,7 @@
         
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
-        <description>Begin Varification Actions</description>
+        <description>Begin Verification Actions</description>
         <call target="UnitTest.RunTests" />
         <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
           <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
@@ -139,7 +139,7 @@
                verbose="true"
                if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
-        <description>End Varification Actions</description>
+        <description>End Verification Actions</description>
         <description>Begin Post Build Actions</description>
         <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
         <property name="Publish.Source.Directory.Path" value="${Common.Directory.Product.Path}\Install\CI Factory" />

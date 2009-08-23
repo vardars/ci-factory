@@ -24,8 +24,8 @@
         <description>Begin Compile Actions</description>
         <description>End Compile Actions</description>
 
-        <description>Begin Varification Actions</description>
-        <description>End Varification Actions</description>
+        <description>Begin Verification Actions</description>
+        <description>End Verification Actions</description>
 
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -54,8 +54,8 @@
         <description>Begin Compile Actions</description>
         <description>End Compile Actions</description>
 
-        <description>Begin Varification Actions</description>
-        <description>End Varification Actions</description>
+        <description>Begin Verification Actions</description>
+        <description>End Verification Actions</description>
 
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -84,8 +84,8 @@
         <description>Begin Compile Actions</description>
         <description>End Compile Actions</description>
 
-        <description>Begin Varification Actions</description>
-        <description>End Varification Actions</description>
+        <description>Begin Verification Actions</description>
+        <description>End Verification Actions</description>
 
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -114,8 +114,8 @@
         <description>Begin Compile Actions</description>
         <description>End Compile Actions</description>
 
-        <description>Begin Varification Actions</description>
-        <description>End Varification Actions</description>
+        <description>Begin Verification Actions</description>
+        <description>End Verification Actions</description>
 
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
@@ -144,8 +144,8 @@
         <description>Begin Compile Actions</description>
         <description>End Compile Actions</description>
 
-        <description>Begin Varification Actions</description>
-        <description>End Varification Actions</description>
+        <description>Begin Verification Actions</description>
+        <description>End Verification Actions</description>
 
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
