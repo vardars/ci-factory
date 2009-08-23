@@ -15,7 +15,7 @@
 
   <loadtasks assembly="${TFS.Task}" />
 
-  <target name="SourceControl.CleanGetFromChangeSetCommon.Directory.ThirdParty.Path" >
+  <target name="SourceControl.CleanGetFromChangeSetThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -31,7 +31,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetFromChangeSetCommon.Directory.ThirdParty.Path" >
+	<target name="SourceControl.GetFromChangeSetThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -47,7 +47,7 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetFromLabelOfCommon.Directory.ThirdParty.Path" >
+	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
 		<property name="SourceControl.Update.All" value="true"/>
 
@@ -155,7 +155,7 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetFromChangeSetCommon.Directory.Product.Path" >
+	<target name="SourceControl.CleanGetFromChangeSetProductDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -171,7 +171,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetFromChangeSetCommon.Directory.Product.Path" >
+	<target name="SourceControl.GetFromChangeSetProductDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromChangeSet') or SourceControl.GetFromChangeSet == ''}">
 			<property name="SourceControl.GetFromChangeSet" value="${CCNetVSTSChangeSetId}"/>
 		</if>
@@ -187,11 +187,11 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<!-- Needed for SourceControl.CleanGetFromLabelofCommon.Directory.Product.Path
+	<!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
   <property name="SourceControl.GetFromLabel" value=""/>
   -->
 
-  <target name="SourceControl.CleanGetFromLabelOfCommon.Directory.Product.Path">
+  <target name="SourceControl.CleanGetFromLabelOfProductDirectory">
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.Product.Path}"/>
 		<property name="SourceControl.Update.All" value="true"/>
 		

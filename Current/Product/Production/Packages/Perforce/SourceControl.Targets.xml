@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Perforce.Target" >
 
-	<target name="SourceControl.CleanGetFromFileSpecCommon.Directory.ThirdParty.Path" >
+	<target name="SourceControl.CleanGetFromFileSpecThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
 			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
 		</if>
@@ -16,7 +16,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetFromFileSpecCommon.Directory.ThirdParty.Path" >
+	<target name="SourceControl.GetFromFileSpecThirdPartyDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
 			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
 		</if>
@@ -31,7 +31,7 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetFromLabelOfCommon.Directory.ThirdParty.Path" >
+	<target name="SourceControl.CleanGetFromLabelOfThirdPartyDirectory" >
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.ThirdParty.Path}"/>
 		<property name="SourceControl.Update.All" value="true"/>
 
@@ -68,7 +68,7 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<target name="SourceControl.CleanGetFromFileSpecCommon.Directory.Product.Path" >
+	<target name="SourceControl.CleanGetFromFileSpecProductDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
 			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
 		</if>
@@ -83,7 +83,7 @@
 		<call target="Private.SourceControl.CleanUpdate"/>
 	</target>
 
-	<target name="SourceControl.GetFromFileSpecCommon.Directory.Product.Path" >
+	<target name="SourceControl.GetFromFileSpecProductDirectory" >
 		<if test="${not property::exists('SourceControl.GetFromFileSpec') or SourceControl.GetFromFileSpec == ''}">
 			<property name="SourceControl.GetFromFileSpec" value="${CCNetFileSpecId}"/>
 		</if>
@@ -98,11 +98,11 @@
 		<call target="Private.SourceControl.Update"/>
 	</target>
 
-	<!-- Needed for SourceControl.CleanGetFromLabelofCommon.Directory.Product.Path
+	<!-- Needed for SourceControl.CleanGetFromLabelofProductDirectory
   <property name="SourceControl.GetFromLabel" value=""/>
   -->
 
-	<target name="SourceControl.CleanGetFromLabelOfCommon.Directory.Product.Path">
+	<target name="SourceControl.CleanGetFromLabelOfProductDirectory">
 		<property name="Private.SourceControl.Update.LocalPath" value="${Common.Directory.Product.Path}"/>
 		<property name="SourceControl.Update.All" value="true"/>
 

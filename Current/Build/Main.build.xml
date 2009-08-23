@@ -29,8 +29,8 @@
         <description>End Pre Build Actions</description>
         
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.GetOfCommon.Directory.ThirdParty.Path" />
-        <call target="SourceControl.GetOfCommon.Directory.Product.Path" />
+        <call target="SourceControl.GetOfThirdPartyDirectory" />
+        <call target="SourceControl.GetOfProductDirectory" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         
@@ -65,8 +65,8 @@
         <description>Begin Pre Build Actions</description>
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path" />
-        <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
         <call target="Compile.CompileSource" />
@@ -105,8 +105,8 @@
         <call target="SourceModificationReport.ConsolidateReports" />
         <description>End Pre Build Actions</description>
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfCommon.Directory.ThirdParty.Path" />
-        <call target="SourceControl.CleanGetOfCommon.Directory.Product.Path" />
+        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
+        <call target="SourceControl.CleanGetOfProductDirectory" />
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
