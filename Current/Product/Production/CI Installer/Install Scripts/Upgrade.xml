@@ -345,9 +345,9 @@ A brute force approach is to diff the tree, to identify which if any files need 
 
 	<target name="Upgrade.NAnt">
 		<property name="NAnt.Target.Directory.Path" value="${Common.Directory.Build.Path}\nAnt"/>
-		<property name="Private.nAnt.DefaultCommon.Directory.Build.Path" value="${SourceRoot}\nAnt"/>
+		<property name="Private.nAnt.Default.Common.Directory.Build.Path" value="${SourceRoot}\nAnt"/>
 		<copy todir="${NAnt.Target.Directory.Path}" overwrite="true">
-			<fileset basedir="${Private.nAnt.DefaultCommon.Directory.Build.Path}">
+			<fileset basedir="${Private.nAnt.Default.Common.Directory.Build.Path}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
