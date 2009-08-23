@@ -263,8 +263,8 @@
   </target>
 
   <!--
-    <property name="SourceControl.Rename.Source" value="${BranchCommon.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
-    <property name="SourceControl.Rename.Target" value="${BranchCommon.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Source" value="${Branch.Common.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+    <property name="SourceControl.Rename.Target" value="${Branch.Common.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
   -->
   <target name='SourceControl.Rename'>
     <exec program='svn' commandline='move "${SourceControl.Rename.Source}" "${SourceControl.Rename.Target}"' workingdir='${Common.Directory.CodeLine.Path}' verbose="${SVN.Debug}" />
