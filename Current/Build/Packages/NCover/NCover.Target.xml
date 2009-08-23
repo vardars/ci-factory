@@ -44,7 +44,7 @@
     </foreach>
 
     <if test="${fileset::file-count('Coverage.Targets') == 0}">
-      <call target="Coverage.FindTargetAssebmlies"/>
+      <call target="Coverage.FindTargetAssemblies"/>
     </if>
 
     <trycatch>
@@ -105,7 +105,7 @@
     </trycatch>
   </target>
 
-  <target name="Coverage.FindTargetAssebmlies">
+  <target name="Coverage.FindTargetAssemblies">
     <fileset id="Coverage.Targets" >
       <include name="${Common.Directory.Production.Path}\**\bin\${Coverage.TargetAssemblyFormat}" />
       <include name="${Common.Directory.Production.Path}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />

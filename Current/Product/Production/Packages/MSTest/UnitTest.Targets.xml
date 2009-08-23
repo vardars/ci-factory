@@ -30,7 +30,7 @@
     </foreach>
 
     <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
-      <call target="UnitTest.FindTestAssebmlies"/>
+      <call target="UnitTest.FindTestAssemblies"/>
     </if>
     
     <mstest resultsfile="${UnitTest.ReportFolder}\${UnitTest.ReportFile}"
@@ -40,7 +40,7 @@
     </mstest>
 	</target>
 
-  <target name="UnitTest.FindTestAssebmlies">
+  <target name="UnitTest.FindTestAssemblies">
     <fileset id="UnitTest.TestAssemblies" >
       <include name="${Common.Directory.UnitTest.Path}\**\bin\${UnitTest.TestAssemblyFormat}" />
       <include name="${Common.Directory.UnitTest.Path}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
