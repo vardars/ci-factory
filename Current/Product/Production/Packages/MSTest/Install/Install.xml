@@ -40,7 +40,7 @@
   <target name="MSTest.SetAsCurrentPackage">
     <property name="Packages.CurrentPackage.PackageName" value="MSTest"/>
     <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
-    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclusion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
   </target>
 
   <target name="MSTest.ValidateParameters">

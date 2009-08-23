@@ -5,7 +5,7 @@
 
   <property name="Packages.CurrentPackage.PackageType" value=""/>
   <property name="Packages.CurrentPackage.PackageName" value=""/>
-  <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="false" />
+  <property name="Packages.CurrentPackage.SkipMainBuildInclusion" value="false" />
 
   <largeproperty name="Private.Packages.PreBuildActions.EndTag">
     <value xml="false"><![CDATA[<description>End Pre Build Actions</description>]]></value>
@@ -109,9 +109,9 @@
         <property name="Packages.CopyPackage.PackageName" value="${Private.Packages.Install.PackageName}"/>
         <call target="Private.Packages.CopyPackage"/>
 
-        <call target="Private.Packages.AddInclude" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
-        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
-        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrentPackage.SkipMainBuildInclucion}" />
+        <call target="Private.Packages.AddInclude" unless="${Packages.CurrentPackage.SkipMainBuildInclusion}" />
+        <call target="Private.Packages.AddSetUp" unless="${Packages.CurrentPackage.SkipMainBuildInclusion}" />
+        <call target="Private.Packages.AddTearDown" unless="${Packages.CurrentPackage.SkipMainBuildInclusion}" />
 
         <call target="${Private.Packages.Install.PackageName}.Install"/>
       </do>
@@ -122,7 +122,7 @@
     <property name="Packages.CurrentPackage.PackageType" value=""/>
     <property name="Packages.CurrentPackage.PackageName" value=""/>
     <property name="Current.BuildFile" value="${Common.Directory.Build.Path}\Main.Build.xml"/>
-    <property name="Packages.CurrentPackage.SkipMainBuildInclucion" value="false" />
+    <property name="Packages.CurrentPackage.SkipMainBuildInclusion" value="false" />
 
     <strings id="NAnt.Main.Targets">
       <string value="Triggered"/>
