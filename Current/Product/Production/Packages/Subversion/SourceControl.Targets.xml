@@ -90,10 +90,10 @@
 
     <ifthenelse test="${SourceControl.Update.Interactive}">
       <then>
-        <call target="Private.SourceControl.IteractiveGetOf"/>
+        <call target="Private.SourceControl.InteractiveGetOf"/>
       </then>
       <else>
-        <call target="Private.SourceControl.NonIteractiveGetOf"/>
+        <call target="Private.SourceControl.NonInteractiveGetOf"/>
       </else>
     </ifthenelse>
   </target>
@@ -132,7 +132,7 @@
     </trycatch>
   </target>
 
-  <target name="Private.SourceControl.IteractiveGetOf">
+  <target name="Private.SourceControl.InteractiveGetOf">
     <property name="SourceControl.GetOf.NeedCheckout" value="false"/>
     <property name="SourceControl.GetOf.CleanUp" value="false"/>
 
@@ -195,7 +195,7 @@
     </if>
   </target>
 
-  <target name="Private.SourceControl.NonIteractiveGetOf">
+  <target name="Private.SourceControl.NonInteractiveGetOf">
     <trycatch>
       <try>
         <ifthenelse test="${svn::is-versioned(SourceControl.GetOf)}">

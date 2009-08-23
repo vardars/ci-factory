@@ -156,7 +156,7 @@
 						verbose="true"/>
 	</target>
 
-  <target name="Private.SourceControl.IteractiveUpdate">
+  <target name="Private.SourceControl.InteractiveUpdate">
     <exec program="p4" commandline="login -s" outputproperty="Perforce.RawTicketStatus" />
 
     <regex input="${Perforce.RawTicketStatus}" pattern="^User\s+.*?\s+ticket\s+(?'Valid'expires)\s+in\s+\d+\s+hours\s+\d+\s+minutes\." failonerror="false"/>
@@ -283,7 +283,7 @@
 		<p4set port="${Perforce.ServerName}:${Perforce.ServerPort}" />
     
     <if test="${SourceControl.Update.Interactive}">
-      <call target="Private.SourceControl.IteractiveUpdate"/>
+      <call target="Private.SourceControl.InteractiveUpdate"/>
     </if>
     
 		<ifnot test="${perforce::workspace-exists(Perforce.WorkspaceName, Perforce.ServerName + ':' + Perforce.ServerPort)}">
