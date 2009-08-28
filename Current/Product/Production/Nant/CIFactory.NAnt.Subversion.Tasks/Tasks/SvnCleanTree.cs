@@ -185,7 +185,7 @@ namespace CIFactory.NAnt.Tasks
                 {
                     if (entry.KeyAsString == "svn:ignore")
                     {
-                        foreach (String ignored in new SvnString(entry.Value).Data.Value.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                        foreach (String ignored in new SvnString(entry.Value).Data.Value.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
                         {
                             string FullPath = Path.Combine(property.NodeName.ToString(), ignored);
 
