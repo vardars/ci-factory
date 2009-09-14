@@ -7,22 +7,31 @@
 	<include buildfile="..\..\Build\Properties.Build.xml"/>
 	<include buildfile="Scratch.Lib.xml"/>
 
-  <loadtasks assembly="C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.TargetProcess.Tasks\bin\Debug\CIFactory.TargetProcess.NAnt.Tasks.dll" />
+  <script language="C#" prefix="version" >
+    <imports>
+      <import namespace="System.IO" />
+    </imports>
+
+    <code>
+      <![CDATA[
+         [Function("compare")]
+         public static int Compare(Version versionA, Version versionB)
+         {
+                 return versionA.CompareTo(versionB);
+         }
+      ]]>
+    </code>
+  </script>
 
   <target name="test">
-
-    <connectioninformation
-      id="TargetProcess.ConnectionInformation"
-      rootserviceurl="http://ch33tp.agilexhealth.com"
-      username="flowersj"
-      password="password"
-	  />
-
-    <property name="TargetProcess.ProjectName" value="Team 1 - Search and Create"/>
+    <echo message="${version::compare(operating-system::get-version(environment::get-operating-system()), version::parse('5.2.0.0')) &lt; 0}"/>
     
-    <echo message="${TargetProcess.ProjectName}"/>
-    
-    <echo message="${tp::get-current-iteration-name('TargetProcess.ConnectionInformation', TargetProcess.ProjectName)}"/>
+    <exec program="C:\Temp\fail.bat" failonerror="true" verbose="true" resultproperty="ErrorLevel">
+      <environment>
+        <variable name="XPFunk" value="yes" if="${version::compare(operating-system::get-version(environment::get-operating-system()), version::parse('5.2.0.0')) &lt; 0}"/>
+      </environment>
+    </exec>
+    <echo message="ErrorLevel=${ErrorLevel}"/>
   </target>
 
   <macrodef name="Boo">
