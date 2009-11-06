@@ -57,7 +57,14 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
                 string LogMessagesFilePath = Path.Combine(BuildLogDirectoryPath, "LogMessages.txt");
                 if (File.Exists(LogMessagesFilePath))
                 {
-                    Messages = File.ReadAllLines(LogMessagesFilePath);
+                    try
+                    {
+                        Messages = File.ReadAllLines(LogMessagesFilePath);
+                    }
+                    catch (IOException ex)
+                    {
+                        //swallow
+                    }
                 }
             }
             return Messages;

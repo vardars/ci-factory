@@ -30,6 +30,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		private readonly object _SyncObject = new object();
 		private IIntegrationResult _IntegrationResult;
 		private readonly IIntegrationResultManager resultManager;
+        private readonly Object syncCheck = new Object();
 		
 		#endregion
 
@@ -263,22 +264,25 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		private bool ShouldRunIntegration()
 		{
-			if (this.ShouldForceBuild)
-			{
-				this.ShouldForceBuild = false;
-				this.IntegrationResult.BuildCondition = BuildCondition.ForceBuild;
-				return true;
-			}
+            lock (syncCheck)
+            {
+                if (this.ShouldForceBuild)
+                {
+                    this.ShouldForceBuild = false;
+                    this.IntegrationResult.BuildCondition = BuildCondition.ForceBuild;
+                    return true;
+                }
 
-			BuildCondition ShouldIntegration = _trigger.ShouldRunIntegration();
-			
-			if (ShouldIntegration != BuildCondition.NoBuild)
-			{
-				this.IntegrationResult = resultManager.StartNewIntegration();
-				this.IntegrationResult.BuildCondition = ShouldIntegration;
-				return true;
-			}
-			return false;
+                BuildCondition ShouldIntegration = _trigger.ShouldRunIntegration();
+
+                if (ShouldIntegration != BuildCondition.NoBuild)
+                {
+                    this.IntegrationResult = resultManager.StartNewIntegration();
+                    this.IntegrationResult.BuildCondition = ShouldIntegration;
+                    return true;
+                }
+                return false;
+            }
 		}
 
 		

@@ -8,6 +8,7 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.WebDashboard.IO;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC;
 using ThoughtWorks.CruiseControl.WebDashboard.MVC.Cruise;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
 {
@@ -36,11 +37,16 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard.Actions
             WebRequest request = WebRequest.Create(url);
             WebResponse response = request.GetResponse();
             StringWriter output = new StringWriter();
+            XsltArgumentList XslParams = new XsltArgumentList();
+            XslParams.AddParam("CCNetServer", "", cruiseRequest.ServerName);
+            XslParams.AddParam("CCNetBuild", "", cruiseRequest.BuildName);
+            XslParams.AddParam("CCNetProject", "", cruiseRequest.ProjectName);
+            XslParams.AddParam("applicationPath", "", cruiseRequest.Request.ApplicationPath);
             using (Stream inputReader = response.GetResponseStream())
             {
                 XslTransform transform = new XslTransform();
                 transform.Load(System.Web.HttpContext.Current.Server.MapPath(xslFileName));
-                transform.Transform(new XPathDocument(inputReader), null, output);
+                transform.Transform(new XPathDocument(inputReader), XslParams, output);
             }
 
 			return new HtmlFragmentResponse(output.ToString());

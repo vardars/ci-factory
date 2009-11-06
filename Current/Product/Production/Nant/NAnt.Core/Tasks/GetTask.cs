@@ -27,6 +27,7 @@ using System.Security.Cryptography.X509Certificates;
 using NAnt.Core.Attributes;
 using NAnt.Core.Types;
 using NAnt.Core.Util;
+using System.Net.Security;
 
 namespace NAnt.Core.Tasks {
     /// <summary>
@@ -188,6 +189,15 @@ namespace NAnt.Core.Tasks {
             set { _certificates = value; }
         }
 
+        /// <summary>
+        /// Allow download if the SSL is over a self-signed certificate
+        /// HTTPS only. The default is <see langword="false" />.
+        /// </summary>
+        [TaskAttribute("allowselfsigned")]
+        [BooleanValidator()]
+        public bool AllowSelfSigned
+        {get;set;}
+
         #endregion Public Instance Properties
 
         #region Override implementation of Task
@@ -211,14 +221,29 @@ namespace NAnt.Core.Tasks {
         /// This is where the work is done 
         /// </summary>
         protected override void ExecuteTask() {
-            try {
+            RemoteCertificateValidationCallback sslCallback = default(RemoteCertificateValidationCallback);
+
+            try
+            {
                 //set the timestamp to the file date.
                 DateTime fileTimeStamp = new DateTime();
 
-                if (UseTimeStamp && DestinationFile.Exists) {
+                if (UseTimeStamp && DestinationFile.Exists)
+                {
                     fileTimeStamp = DestinationFile.LastWriteTime;
-                    Log(Level.Verbose, "Local file time stamp is {0}.", 
+                    Log(Level.Verbose, "Local file time stamp is {0}.",
                         fileTimeStamp.ToString(CultureInfo.InvariantCulture));
+                }
+
+                if (this.AllowSelfSigned)
+                {
+                    sslCallback = delegate(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors sslError)
+                        {
+                            bool validationResult = true;
+                            return validationResult;
+                        };
+                    ServicePointManager.ServerCertificateValidationCallback += sslCallback;
+
                 }
 
                 //set up the URL connection
@@ -231,20 +256,27 @@ namespace NAnt.Core.Tasks {
                 // try three times, then error out
                 int tryCount = 1;
 
-                while (true) {
-                    try {
+                while (true)
+                {
+                    try
+                    {
                         responseStream = webResponse.GetResponseStream();
                         break;
-                    } catch (IOException ex) {
-                        if (tryCount > 3) {
-                            throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                                ResourceUtils.GetString("NA1125"), Source, 
+                    }
+                    catch (IOException ex)
+                    {
+                        if (tryCount > 3)
+                        {
+                            throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                                ResourceUtils.GetString("NA1125"), Source,
                                 DestinationFile.FullName), Location);
-                        } else {
+                        }
+                        else
+                        {
                             Log(Level.Warning, "Unable to open connection to '{0}' (try {1} of 3): " + ex.Message, Source, tryCount);
                         }
                     }
-                
+
                     // increment try count
                     tryCount++;
                 }
@@ -252,8 +284,8 @@ namespace NAnt.Core.Tasks {
                 // open file for writing
                 BinaryWriter destWriter = new BinaryWriter(new FileStream(
                     DestinationFile.FullName, FileMode.Create));
-                
-                Log(Level.Info, "Retrieving '{0}' to '{1}'.", 
+
+                Log(Level.Info, "Retrieving '{0}' to '{1}'.",
                     Source, DestinationFile.FullName);
 
                 // Read in stream from URL and write data in chunks
@@ -264,17 +296,21 @@ namespace NAnt.Core.Tasks {
                 int totalBytesReadFromStream = 0;
                 int totalBytesReadSinceLastDot = 0;
 
-                do {
+                do
+                {
                     totalReadCount = responseStream.Read(buffer, 0, bufferSize);
-                    if (totalReadCount != 0) { // zero means EOF
+                    if (totalReadCount != 0)
+                    { // zero means EOF
                         // write buffer into file
                         destWriter.Write(buffer, 0, totalReadCount);
                         // increment byte counters
                         totalBytesReadFromStream += totalReadCount;
                         totalBytesReadSinceLastDot += totalReadCount;
                         // display progress
-                        if (Verbose && totalBytesReadSinceLastDot > bufferSize) {
-                            if (totalBytesReadSinceLastDot == totalBytesReadFromStream) {
+                        if (Verbose && totalBytesReadSinceLastDot > bufferSize)
+                        {
+                            if (totalBytesReadSinceLastDot == totalBytesReadFromStream)
+                            {
                                 // TO-DO !!!!
                                 //Log.Write(LogPrefix);
                             }
@@ -285,10 +321,11 @@ namespace NAnt.Core.Tasks {
                     }
                 } while (totalReadCount != 0);
 
-                if (totalBytesReadFromStream > bufferSize) {
+                if (totalBytesReadFromStream > bufferSize)
+                {
                     Log(Level.Verbose, "");
                 }
-                Log(Level.Verbose, "Number of bytes read: {0}.", 
+                Log(Level.Verbose, "Number of bytes read: {0}.",
                     totalBytesReadFromStream.ToString(CultureInfo.InvariantCulture));
 
                 // clean up response streams
@@ -299,23 +336,26 @@ namespace NAnt.Core.Tasks {
                 DestinationFile.Refresh();
 
                 // check to see if we actually have a file...
-                if(!DestinationFile.Exists) {
-                    throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                        ResourceUtils.GetString("NA1125"), Source, 
+                if (!DestinationFile.Exists)
+                {
+                    throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                        ResourceUtils.GetString("NA1125"), Source,
                         DestinationFile.FullName), Location);
                 }
 
                 // if (and only if) the use file time option is set, then the
                 // saved file now has its timestamp set to that of the downloaded file
-                if (UseTimeStamp)  {
+                if (UseTimeStamp)
+                {
                     // HTTP only
-                    if (webRequest is HttpWebRequest) {
-                        HttpWebResponse httpResponse = (HttpWebResponse) webResponse;
+                    if (webRequest is HttpWebRequest)
+                    {
+                        HttpWebResponse httpResponse = (HttpWebResponse)webResponse;
 
                         // get timestamp of remote file
                         DateTime remoteTimestamp = httpResponse.LastModified;
 
-                        Log(Level.Verbose, "'{0}' last modified on {1}.", 
+                        Log(Level.Verbose, "'{0}' last modified on {1}.",
                             Source, remoteTimestamp.ToString(CultureInfo.InvariantCulture));
 
                         // update timestamp of local file to match that of the 
@@ -323,39 +363,58 @@ namespace NAnt.Core.Tasks {
                         TouchFile(DestinationFile, remoteTimestamp);
                     }
                 }
-            } catch (BuildException) {
+            }
+            catch (BuildException)
+            {
                 // re-throw the exception
                 throw;
-            } catch (WebException ex) {
+            }
+            catch (WebException ex)
+            {
                 // If status is WebExceptionStatus.ProtocolError,
                 //   there has been a protocol error and a WebResponse
                 //   should exist. Display the protocol error.
-                if (ex.Status == WebExceptionStatus.ProtocolError) {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
                     // test for a 304 result (HTTP only)
                     // Get HttpWebResponse so we can check the HTTP status code
-                    HttpWebResponse httpResponse = (HttpWebResponse) ex.Response;
-                    if (httpResponse.StatusCode == HttpStatusCode.NotModified) {
+                    HttpWebResponse httpResponse = (HttpWebResponse)ex.Response;
+                    if (httpResponse.StatusCode == HttpStatusCode.NotModified)
+                    {
                         //not modified so no file download. just return instead
                         //and trace out something so the user doesn't think that the
                         //download happened when it didn't
 
-                        Log(Level.Verbose, "'{0}' not downloaded.  Not modified since {1}.", 
+                        Log(Level.Verbose, "'{0}' not downloaded.  Not modified since {1}.",
                             Source, httpResponse.LastModified.ToString(CultureInfo.InvariantCulture));
                         return;
-                    } else {
-                        throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                            ResourceUtils.GetString("NA1125"), Source, 
+                    }
+                    else
+                    {
+                        throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                            ResourceUtils.GetString("NA1125"), Source,
                             DestinationFile.FullName), Location, ex);
                     }
-                } else {
-                    throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                        ResourceUtils.GetString("NA1125"), Source, DestinationFile.FullName), 
+                }
+                else
+                {
+                    throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                        ResourceUtils.GetString("NA1125"), Source, DestinationFile.FullName),
                         Location, ex);
                 }
-            } catch (Exception ex) {
-                throw new BuildException(string.Format(CultureInfo.InvariantCulture, 
-                    ResourceUtils.GetString("NA1125"), Source, DestinationFile.FullName), 
+            }
+            catch (Exception ex)
+            {
+                throw new BuildException(string.Format(CultureInfo.InvariantCulture,
+                    ResourceUtils.GetString("NA1125"), Source, DestinationFile.FullName),
                     Location, ex);
+            }
+            finally
+            {
+                if (sslCallback != null)
+                {
+                    ServicePointManager.ServerCertificateValidationCallback -= sslCallback;
+                }
             }
         }
 
