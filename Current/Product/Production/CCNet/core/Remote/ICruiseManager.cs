@@ -12,6 +12,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
 		ProjectStatus [] GetProjectStatus();
         ProjectStatus GetProjectStatus(string projectName);
+        ProjectStatus[] GetProjectStatusLite();
+        ProjectStatus GetProjectStatusLite(string projectName);
 
         string[] GetProjectNames();
 
@@ -85,5 +87,6 @@ namespace ThoughtWorks.CruiseControl.Remote
         void Start();
         void Stop(string projectName);
         void Start(string projectName);
+        void Kill(string projectName);
 	}
 }

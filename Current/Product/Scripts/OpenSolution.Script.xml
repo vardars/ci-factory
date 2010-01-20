@@ -15,10 +15,10 @@
   <property name="CCNetProject" value="${ProjectName}"/>
   <include buildfile="Common.Build.xml" />
 
-  <include buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Targets.xml"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml"/>
   
   <target name="SetUp">
-    <call target="Workspace.CheckForRequiredSoftware"/>
+    <call target="Workspace.CheckForRequieredSoftware"/>
     <call target="Workspace.ConfigureEnvironment"/>
   </target>
 

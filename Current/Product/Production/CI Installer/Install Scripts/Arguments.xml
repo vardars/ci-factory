@@ -99,9 +99,9 @@
       <arg line="/f:UpdatenAntSchema.xml"/>
     </exec>
     
+    <call target="CleanExtraXmlNs"/>
     <call target="SetOrderForVersioning"/>
     <call target="SetOrderForCSDiff"/>
-    <call target="CleanExtraXmlNs"/>
 
     <exec
       program="${Common.Directory.Tools.Path}\nAnt\bin\nant.exe"

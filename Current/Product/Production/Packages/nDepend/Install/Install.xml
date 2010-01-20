@@ -84,7 +84,7 @@ More information can be found at http://www.ndepend.com]]>
   </target>
 
   <target name="nDepend.GetLicense">
-    <property name="License.File" value="${Source.Common.Directory.Packages.Path}\nDepend\bin\EULA.txt"/>
+    <property name="License.File" value="${Source.Common.Directory.Packages.Path}\nDepend\bin\EULA_NDepend.txt"/>
     <loadfile file="${License.File}" property="License.Content" />
   </target>
 

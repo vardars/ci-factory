@@ -51,7 +51,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
             ManagedProcessInformationListCache = tempManagedProcessInformationListCache;
         }
 
-        private class CacheItem
+        public class CacheItem
         {
 
             private DateTime _Age;
@@ -83,7 +83,7 @@ namespace ThoughtWorks.CruiseControl.Core.Util
         }
 
         private static Dictionary<string, CacheItem> _ManagedProcessInformationListCache;
-        private static Dictionary<string, CacheItem> ManagedProcessInformationListCache
+        public static Dictionary<string, CacheItem> ManagedProcessInformationListCache
         {
             get
             {

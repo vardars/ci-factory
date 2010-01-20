@@ -27,7 +27,6 @@
       <property name="Common.Directory.Production.Path"/>
       <property name="Common.Directory.Build.Path"/>
       <property name="Common.Directory.ArtifactRoot.Path"/>
-      <property name="NantBinPath"/>
       <property name="Tools.NAnt.Exe"/>
       <property name="Common.Directory.Packages.Path"/>
       <property name="Common.Directory.Artifact.Path"/>

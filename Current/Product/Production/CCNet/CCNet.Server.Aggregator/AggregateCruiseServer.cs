@@ -211,6 +211,31 @@ namespace CCNet.Server.Aggregator
             return Stati.ToArray();
         }
 
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            Log.Debug(string.Format("Get project status for {0}", projectName));
+
+            try
+            {
+                return this.Projects[projectName].GetProjectStatusLite(projectName);
+            }
+            catch { }
+
+            return new List<ProjectStatus>(this.Projects[projectName].GetProjectStatusLite()).Find(FindStatus(projectName));
+        }
+
+        public ProjectStatus[] GetProjectStatusLite()
+        {
+            List<ProjectStatus> Stati = new List<ProjectStatus>();
+
+            foreach (KeyValuePair<string, ICruiseManager> Pair in this.Projects)
+            {
+                Log.Debug(string.Format("Get status for {0}", Pair.Key));
+                Stati.Add(new List<ProjectStatus>(Pair.Value.GetProjectStatusLite()).Find(FindStatus(Pair.Key)));
+            }
+            return Stati.ToArray();
+        }
+
         Predicate<ProjectStatus> FindStatus(string projectName)
         {
             return delegate(ProjectStatus item) { return item.Name == projectName; };
@@ -219,7 +244,12 @@ namespace CCNet.Server.Aggregator
 		public void Stop(string projectName)
 		{
 			this.Projects[projectName].Stop(projectName);
-		}
+        }
+
+        public void Kill(string projectName)
+        {
+            this.Projects[projectName].Kill(projectName);
+        }
 
 		public void Start(string projectName)
 		{
@@ -325,5 +355,6 @@ namespace CCNet.Server.Aggregator
         }
 
         #endregion
+
     }
 }

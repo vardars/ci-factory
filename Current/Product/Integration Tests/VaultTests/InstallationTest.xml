@@ -27,8 +27,7 @@
     <property name="Common.Directory.Production.Path"  value="${Common.Directory.Product.Path}\Production" />
     <property name="Common.Directory.Build.Path" value="${Common.Directory.CodeLine.Path}\Build" />
     <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.Build.Path}\Artifacts"/>
-    <property name="NantBinPath" value="${Common.Directory.Build.Path}\nAnt\bin"/>
-    <property name="Tools.NAnt.Exe" value="${NantBinPath}\nant.exe"/>
+    <property name="Tools.NAnt.Exe" value="${Common.Directory.Build.Path}\Tools\nAnt\bin\nant.exe"/>
     <property name="Common.Directory.Packages.Path" value="${Common.Directory.Build.Path}\Packages"/>
 
     <property name="Vault.Username" value="admin"  />

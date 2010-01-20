@@ -17,7 +17,10 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			XmlNodeList logEntries = svnLogRoot.SelectNodes("/log/logentry");
 			foreach (XmlNode logEntry in logEntries)
 			{
-				mods.AddRange(ParseModificationsFromLogEntry(logEntry, from, to));
+                if (logEntry.InnerText != null && logEntry.InnerText.Length > 0)
+                {
+                    mods.AddRange(ParseModificationsFromLogEntry(logEntry, from, to));
+                }
 			}
 			return (Modification[]) mods.ToArray(typeof(Modification));
 		}
@@ -107,7 +110,8 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 		private DateTime ParseDate(XmlNode logEntry)
 		{
 			XmlNode dateNode = logEntry.SelectSingleNode("date");
-			return ParseDate(dateNode.InnerText);
+            return ParseDate(dateNode.InnerText);
+
 		}
 
 		private int ParseChangeNumber(XmlNode logEntry)

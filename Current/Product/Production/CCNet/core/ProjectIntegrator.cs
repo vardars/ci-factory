@@ -30,7 +30,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		private readonly object _SyncObject = new object();
 		private IIntegrationResult _IntegrationResult;
 		private readonly IIntegrationResultManager resultManager;
-        private readonly Object syncCheck = new Object();
+        private static readonly Object syncCheck = new Object();
 		
 		#endregion
 
@@ -195,6 +195,7 @@ namespace ThoughtWorks.CruiseControl.Core
 			{
 				Log.Info("Aborting integrator for project: " + _project.Name);
 				_thread.Abort();
+                this.SetState = ProjectIntegratorState.Stopped;
 			}
 		}
 
@@ -202,6 +203,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		{
 			if (_thread != null && _thread.IsAlive)
 			{
+                Log.Info("Wait for exit in integrator for project: " + _project.Name);
 				_thread.Join();
 			}
 		}

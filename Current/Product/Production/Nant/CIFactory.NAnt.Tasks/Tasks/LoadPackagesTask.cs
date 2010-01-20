@@ -38,20 +38,20 @@ namespace CIFactory.NAnt.Tasks
     public class LoadPackagesTask : Task {
         #region Private Instance Fields
 
-        private string _Common.Directory.Packages.Path = null;
+        private string _PackagesDirectory = null;
         private PackageElement[] _Packages;
 
         #endregion Private Static Fields
 
         #region Public Instance Properties
 
-        private string Common.Directory.Packages.Path
+        private string PackagesDirectory
         {
             get
             {
-                if (_Common.Directory.Packages.Path == null)
-                    _Common.Directory.Packages.Path = this.Properties["Common.Directory.Packages.Path"];
-                return _Common.Directory.Packages.Path;
+                if (_PackagesDirectory == null)
+                    _PackagesDirectory = this.Properties["Common.Directory.Packages.Path"];
+                return _PackagesDirectory;
             }
         }
 
@@ -85,7 +85,7 @@ namespace CIFactory.NAnt.Tasks
 
                 this.SetProperty("Package." + package.PackageName + ".Name", package.PackageName);
 
-                String packageDirectoryPath = Path.Combine(this.Common.Directory.Packages.Path, package.PackageName);
+                String packageDirectoryPath = Path.Combine(this.PackagesDirectory, package.PackageName);
                 this.SetProperty("Package." + package.PackageName + ".Directory.Path", packageDirectoryPath);
 
                 String PropertiesFilePath = GenerateFilePath("{0}.Properties.xml", package, packageDirectoryPath);

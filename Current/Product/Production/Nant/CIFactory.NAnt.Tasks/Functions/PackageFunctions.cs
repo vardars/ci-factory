@@ -13,15 +13,15 @@ namespace CIFactory.NAnt.Functions
     [FunctionSet("package", "Package")]
     public class PackageFunctions : FunctionSetBase
     {
-        private string _Common.Directory.Packages.Path = null;
+        private string _PackagesDirectory = null;
         
-        private string Common.Directory.Packages.Path
+        private string PackagesDirectory
         {
             get
             {
-                if (_Common.Directory.Packages.Path == null)
-                    _Common.Directory.Packages.Path = this.Properties["Common.Directory.Packages.Path"];
-                return _Common.Directory.Packages.Path;
+                if (_PackagesDirectory == null)
+                    _PackagesDirectory = this.Properties["Common.Directory.Packages.Path"];
+                return _PackagesDirectory;
             }
         }
 
@@ -40,7 +40,7 @@ namespace CIFactory.NAnt.Functions
             FileSet fileset = new FileSet();
             fileset.Parent = this.Project;
             fileset.Project = this.Project;
-            fileset.Includes.Add(String.Format(@"{0}\**\{1}.*.xml", this.Common.Directory.Packages.Path, type));
+            fileset.Includes.Add(String.Format(@"{0}\**\{1}.*.xml", this.PackagesDirectory, type));
             return new DirectoryInfo(Path.GetDirectoryName(fileset.FileNames[0])).Name;
         }
     }

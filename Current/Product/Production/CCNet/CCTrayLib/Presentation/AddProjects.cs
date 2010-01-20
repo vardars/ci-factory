@@ -249,7 +249,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 
 				RemoteCruiseManagerFactory factory = new RemoteCruiseManagerFactory();
 				ICruiseManager manager = factory.GetCruiseManager(server.ServerUrl);
-				ProjectStatus[] projectStatuses = manager.GetProjectStatus();
+				ProjectStatus[] projectStatuses = manager.GetProjectStatusLite();
 
 				foreach (ProjectStatus status in projectStatuses)
 				{

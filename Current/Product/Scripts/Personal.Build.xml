@@ -20,8 +20,8 @@
   <property name="Compile.ConfigName" value="Debug"/>
 
   <description>Begin Package Includes</description>
-  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" if="${file::exists(Common.Directory.Packages.Path + '\Deployment\Deployment.Target.xml')}"/>
-  <include buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Targets.xml" if="${file::exists(Common.Directory.Packages.Path + '\Workspace\Workspace.Targets.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" if="${file::exists(PackagesDirectory + '\Deployment\Deployment.Target.xml')}"/>
+  <include buildfile="${PackagesDirectory}\Workspace\Workspace.Targets.xml" if="${file::exists(PackagesDirectory + '\Workspace\Workspace.Targets.xml')}"/>
   
   <fileset id="PacakgeFinder" />
   <loopthrough property="PackageType">
@@ -33,7 +33,7 @@
       </strings>
     </items>
     <do>
-      <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\${PackageType}.Target.xml"/>
+      <property name="PackagePathPattern" value="${PackagesDirectory}\**\${PackageType}.Target.xml"/>
       <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
       <echo message="${fileset::file-count('PacakgeFinder')} files found in pattern '${PackagePathPattern}'."/>
       <if test="${fileset::file-count('PacakgeFinder') > 0}">
@@ -45,8 +45,8 @@
   </loopthrough>
 
   <property name="Ant.Included" value="false"/>
-  <if test="${file::exists(Common.Directory.Packages.Path + '\Ant\Ant.Target.xml')}" >
-    <include buildfile="${Common.Directory.Packages.Path}\Ant\Ant.Target.xml" />
+  <if test="${file::exists(PackagesDirectory + '\Ant\Ant.Target.xml')}" >
+    <include buildfile="${PackagesDirectory}\Ant\Ant.Target.xml" />
     <property name="Ant.Included" value="true"/>
   </if>
   <description>End Package Includes</description>
@@ -61,11 +61,11 @@
       <environment refid="${Compile.Environment.RefId}" />
     </setenv>
 
-    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${Common.Directory.Product.Path}" />
+    <asyncexec createnowindow="false" redirectoutput="false" useshellexecute="true" waitforexit="false" program="cmd" commandline="/K title ${ProjectName} ${ProjectCodeLineName} Console" workingdir="${ProductDirectory}" />
   </target>
 
   <target name="UpdateWorkspace">
-    <call target="Workspace.CheckForRequiredSoftware" />
+    <call target="Workspace.CheckForRequieredSoftware" />
     <call target="Workspace.ConfigureEnvironment" />
   </target>
   
@@ -93,10 +93,10 @@
     <if test="${Ant.Included}">
       <call target="Ant.Build"/>
     </if>
-    <fileset id="InfoFiles" basedir="${Common.Directory.Product.Path}">
-      <exclude name="${Common.Directory.Production.Path}\Packages\**\*"/>
-      <include name="${Common.Directory.Product.Path}\ProjectInfo.*"/>
-      <include name="${Common.Directory.Product.Path}\**\AssemblyInfo.*"/>
+    <fileset id="InfoFiles" basedir="${ProductDirectory}">
+      <exclude name="${ProductionDirectory}\Packages\**\*"/>
+      <include name="${ProductDirectory}\ProjectInfo.*"/>
+      <include name="${ProductDirectory}\**\AssemblyInfo.*"/>
     </fileset>
     <trycatch>
       <try>
@@ -141,9 +141,9 @@
   </target>
 
   <target name="Clean">
-    <fileset id="ProjectFiles" basedir="${Common.Directory.Product.Path}">
-      <exclude name="${Common.Directory.Production.Path}\Packages\**\*"/>
-      <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
+    <fileset id="ProjectFiles" basedir="${ProductDirectory}">
+      <exclude name="${ProductionDirectory}\Packages\**\*"/>
+      <include name="${ProductDirectory}\**\*.*proj"/>
     </fileset>
     <foreach item="File" property="ProjectFile.Path">
       <in>
@@ -157,7 +157,7 @@
         <delete dir="${Obj.Path}" if="${directory::exists(Obj.Path)}" verbose="true" />
 
         <property name="Output.Path" value="${vsproject::get-output-directory(ProjectFile.Path, Compile.ConfigName)}"/>
-        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, Common.Directory.Product.Path)}">
+        <if test="${Output.Path != '' and directory::exists(Output.Path) and string::starts-with(Output.Path, ProductDirectory)}">
           <delete verbose="true">
             <fileset basedir="${Output.Path}">
               <include name="**\*"/>
@@ -168,14 +168,14 @@
       </do>
     </foreach>
     <delete>
-      <fileset basedir="${Common.Directory.Production.Path}\Foundation\Default\Build\dashboard">
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\dashboard">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
         <exclude name="javascript\**\*"/>
       </fileset>
     </delete>
     <delete>
-      <fileset basedir="${Common.Directory.Production.Path}\Foundation\Default\Build\server">
+      <fileset basedir="${ProductionDirectory}\Foundation\Default\Build\server">
         <include name="**\*"/>
         <exclude name="xsl\**\*"/>
         <exclude name="ccnet.exe.config"/>
@@ -207,14 +207,14 @@
 	</target>
 
 	<target name="IntegrationTest" depends="Common.SetUp">
-		<exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" >
-			<arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
+		<exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+			<arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
 		</exec>
 	</target>
 
   <target name="IntegrationTest.Deploy" depends="Common.SetUp">
-    <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" >
-      <arg line='-buildfile:"${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml"'/>
+    <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" >
+      <arg line='-buildfile:"${ProductDirectory}\Integration Tests\TestRunner.Build.xml"'/>
       <arg line='CIFactory.TestRunner.Deploy' />
     </exec>
   </target>
@@ -227,8 +227,8 @@
 			</try>
 			<catch property="ExceptionMessage">
 				<property name="Common.ShowReport.XmlFile" value="${AntBuildLogFile}"/>
-				<property name="Common.ShowReport.HtmlFile" value="${Common.Directory.Build.Path}\AntLogs\AntReport.html"/>
-				<property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\Ant\AntReport.xsl"/>
+				<property name="Common.ShowReport.HtmlFile" value="${BuildDirectory}\AntLogs\AntReport.html"/>
+				<property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\Ant\AntReport.xsl"/>
 				<call target="Common.ShowReport"/>
 
 				<fail message="${ExceptionMessage}"/>

@@ -27,6 +27,16 @@ namespace ThoughtWorks.CruiseControl.Core
             return cruiseServer.GetProjectStatus(projectName);
         }
 
+        public ProjectStatus[] GetProjectStatusLite()
+        {
+            return cruiseServer.GetProjectStatusLite();
+        }
+
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            return cruiseServer.GetProjectStatusLite(projectName);
+        }
+
 		public bool ForceBuild(string project)
 		{
 			return this.ForceBuild(project, null);
@@ -125,6 +135,11 @@ namespace ThoughtWorks.CruiseControl.Core
             cruiseServer.Stop(projectName);
         }
 
+        public void Kill(string projectName)
+        {
+            cruiseServer.Kill(projectName);
+        }
+
         public void Start(string projectName)
         {
             cruiseServer.Start(projectName);
@@ -159,5 +174,6 @@ namespace ThoughtWorks.CruiseControl.Core
         }
 
         #endregion
+
     }
 }

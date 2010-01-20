@@ -29,6 +29,16 @@ namespace ThoughtWorks.CruiseControl.Core
             return RemoteCruiseServer.Instance.GetProjectStatus(projectName);
         }
 
+        public ProjectStatus[] GetProjectsStatusLite()
+        {
+            return RemoteCruiseServer.Instance.GetProjectStatusLite();
+        }
+
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            return RemoteCruiseServer.Instance.GetProjectStatusLite(projectName);
+        }
+
         public string GetLatestBuildName(string projectName)
         {
             return RemoteCruiseServer.Instance.GetLatestBuildName(projectName);
@@ -65,5 +75,6 @@ namespace ThoughtWorks.CruiseControl.Core
         }
 
         #endregion
+
     }
 }

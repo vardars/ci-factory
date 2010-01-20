@@ -1989,5 +1989,30 @@ namespace ThoughtWorks.CruiseControl.Remote.TestDoubles
         }
 
         #endregion
+
+        #region ICruiseManager Members
+
+
+        public void Kill(string projectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region ICruiseManager Members
+
+
+        public ProjectStatus[] GetProjectStatusLite()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

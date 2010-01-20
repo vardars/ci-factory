@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E281FB3-FD8A-452D-830A-247ABB71CD1F}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -49,6 +49,7 @@
     <Compile Include="Functions\CCNetFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\CCNetForceTask.cs" />
+    <Compile Include="Tasks\CCNetKillTask.cs" />
     <Compile Include="Tasks\CCNetStartTask.cs" />
     <Compile Include="Tasks\CCNetStopTask.cs" />
     <Compile Include="Tasks\LaunchCruiseControlBuildTask.cs" />

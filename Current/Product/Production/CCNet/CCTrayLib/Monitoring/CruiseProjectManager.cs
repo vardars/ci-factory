@@ -80,7 +80,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 		{
 			get
 			{
-                return manager.GetProjectStatus(ProjectName);
+                return manager.GetProjectStatusLite(ProjectName);
 			}
 		}
 

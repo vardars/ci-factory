@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="GetTests" default="GetTests.RunAllTests" basedir="..\..\">
+
+  <ifnot test="${task::exists('testrunner')}">
+    <call target="Solo"/>
+  </ifnot>
+
+  <target name="Solo">
+    <loadtasks assembly="bin\CIFactory.NAnt.UnitTest.Tasks.dll" />
+    <property name="IntegrationTest.ReportFilePath" value="C:\Temp\Report.xml" overwrite="false"/>
+    <strings id="fixtures" />
+  </target>
+
+  <function execute="${stringlist::add('fixtures', 'GetTests')}"/>
+
+  <target name="GetTests.RunAllTests">
+    <testrunner reportfilepath="${IntegrationTest.ReportFilePath}">
+      <fixtures refid="fixtures" />
+    </testrunner>
+  </target>
+
+
+  <target name="GetTests.FixtureSetUp">
+
+  </target>
+
+  <target name="GetTests.FixtureTearDown">
+
+  </target>
+
+  <target name="GetTests.SetUp">
+    <mkdir dir="c:\temp"/>
+    <delete file="c:\temp\selfsigned.html" if="${file::exists('c:\temp\selfsigned.html')}"  />
+  </target>
+
+  <target name="GetTests.TearDown">
+
+  </target>
+
+  <target name="GetTests.SelfSigned.Test">
+    <get  dest="c:\temp\selfsigned.html"
+          src="https://wiki.agilexhealth.com/confluence"
+          failonerror="True"
+          verbose="True" allowselfsigned="True" />
+
+    <assertfail unless="${file::exists('c:\temp\selfsigned.html')}" message="Get did not download the file for a self signed SSL." />
+    
+  </target>
+
+
+</project>

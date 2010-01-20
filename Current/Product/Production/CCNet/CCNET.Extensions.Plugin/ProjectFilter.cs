@@ -125,17 +125,17 @@ namespace CCNET.Extensions
 
         private ProjectStatus GetCurrentProjectStatus()
         {
-            Log.Debug("Retrieving ProjectStatus from server: " + ServerUri);
+            //Log.Debug("Retrieving ProjectStatus from server: " + ServerUri);
             ICruiseManager cruiseManager = (ICruiseManager)this.RemoteService.Connect(typeof(ICruiseManager), ServerUri);
-            ProjectStatus[] currentStatuses = cruiseManager.GetProjectStatus();
-            foreach (ProjectStatus currentStatus in currentStatuses)
+            try
             {
-                if (currentStatus.Name == Project)
-                {
-                    return currentStatus;
-                }
+                return cruiseManager.GetProjectStatusLite(Project);
             }
-            throw new NoSuchProjectException(Project);
+            catch (Exception ex)
+            {
+                Log.Error(ex.ToString());
+            }
+            return new ProjectStatus(ProjectIntegratorState.Stopped, IntegrationStatus.Unknown, ProjectActivity.Sleeping, Project, "", new DateTime(), new TimeSpan(), "", "", new DateTime(), "", new Modification[] { }, new DateTime(), BuildCondition.NoBuild);
         }
 
 #endregion

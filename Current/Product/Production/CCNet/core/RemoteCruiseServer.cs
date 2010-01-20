@@ -145,6 +145,16 @@ namespace ThoughtWorks.CruiseControl.Core
             return _server.GetProjectStatus(projectName);
         }
 
+        public ProjectStatus[] GetProjectStatusLite()
+        {
+            return _server.GetProjectStatusLite();
+        }
+
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            return _server.GetProjectStatusLite(projectName);
+        }
+
         public string GetServerLog()
         {
             return _server.GetServerLog();
@@ -173,6 +183,11 @@ namespace ThoughtWorks.CruiseControl.Core
         public void Stop(string projectName)
         {
             _server.Stop(projectName);
+        }
+
+        public void Kill(string projectName)
+        {
+            _server.Kill(projectName);
         }
 
         public void UpdateProject(string projectName, string serializedProject)

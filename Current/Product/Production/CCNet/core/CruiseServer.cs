@@ -9,6 +9,8 @@ using ThoughtWorks.CruiseControl.Core.Logging;
 using ThoughtWorks.CruiseControl.Core.Publishers;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -199,7 +201,7 @@ namespace ThoughtWorks.CruiseControl.Core
 
                 string forcee = string.Empty;
                 if (integrator.CurrentIntegrationResult.IntegrationProperties.Contains("CCNetForcedBy"))
-                    forcee = (string) integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
+                    forcee = (string)integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
 
                 projectStatusList.Add(new ProjectStatus(integrator.State,
                                                         project.LatestBuildStatus,
@@ -210,10 +212,10 @@ namespace ThoughtWorks.CruiseControl.Core
                                                         project.LastIntegrationResult.TotalIntegrationTime,
                                                         project.LastIntegrationResult.Label,
                                                         project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
-                                                        integrator.Trigger.NextBuild, 
+                                                        integrator.Trigger.NextBuild,
                                                         forcee,
                                                         integrator.CurrentIntegrationResult.Modifications,
-                                                        integrator.CurrentIntegrationResult.StartTime, 
+                                                        integrator.CurrentIntegrationResult.StartTime,
                                                         integrator.CurrentIntegrationResult.BuildCondition));
             }
 
@@ -241,8 +243,66 @@ namespace ThoughtWorks.CruiseControl.Core
                 project.LastIntegrationResult.Label,
                 project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
                 integrator.Trigger.NextBuild,
-                forcee, 
+                forcee,
                 integrator.CurrentIntegrationResult.Modifications,
+                integrator.CurrentIntegrationResult.StartTime,
+                integrator.CurrentIntegrationResult.BuildCondition);
+        }
+
+
+        public ProjectStatus[] GetProjectStatusLite()
+        {
+            ArrayList projectStatusList = new ArrayList();
+            foreach (IProjectIntegrator integrator in projectIntegrators)
+            {
+                Project project = (Project)integrator.Project;
+
+                string forcee = string.Empty;
+                if (integrator.CurrentIntegrationResult.IntegrationProperties.Contains("CCNetForcedBy"))
+                    forcee = (string) integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
+
+                projectStatusList.Add(new ProjectStatus(integrator.State,
+                                                        project.LatestBuildStatus,
+                                                        project.CurrentActivity,
+                                                        project.Name,
+                                                        project.WebURL,
+                                                        project.LastIntegrationResult.StartTime,
+                                                        project.LastIntegrationResult.TotalIntegrationTime,
+                                                        project.LastIntegrationResult.Label,
+                                                        project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
+                                                        integrator.Trigger.NextBuild, 
+                                                        forcee,
+                                                        new Modification[] {},
+                                                        integrator.CurrentIntegrationResult.StartTime, 
+                                                        integrator.CurrentIntegrationResult.BuildCondition));
+            }
+
+            return (ProjectStatus[])projectStatusList.ToArray(typeof(ProjectStatus));
+        }
+
+        public ProjectStatus GetProjectStatusLite(string projectName)
+        {
+            IProjectIntegrator integrator = projectIntegrators[projectName];
+            if (integrator == null)
+                throw new InvalidOperationException(string.Format("Unable to find an integrator for project name: '{0}'.", projectName));
+            Project project = (Project)integrator.Project;
+
+            string forcee = string.Empty;
+            if (integrator.CurrentIntegrationResult.IntegrationProperties.Contains("CCNetForcedBy"))
+                forcee = (string)integrator.CurrentIntegrationResult.IntegrationProperties["CCNetForcedBy"];
+
+            return new ProjectStatus(integrator.State,
+                project.LatestBuildStatus,
+                project.CurrentActivity,
+                project.Name,
+                project.WebURL,
+                project.LastIntegrationResult.StartTime,
+                project.LastIntegrationResult.TotalIntegrationTime,
+                project.LastIntegrationResult.Label,
+                project.LastIntegrationResult.LastSuccessfulIntegrationLabel,
+                integrator.Trigger.NextBuild,
+                forcee, 
+                new Modification[] {},
                 integrator.CurrentIntegrationResult.StartTime,
                 integrator.CurrentIntegrationResult.BuildCondition);
         }
@@ -313,6 +373,35 @@ namespace ThoughtWorks.CruiseControl.Core
         {
             IProjectIntegrator integrator = GetIntegrator(project);
             integrator.Stop();
+        }
+        public void Kill(string project)
+        {
+            IProjectIntegrator integrator = GetIntegrator(project);
+            integrator.Abort();
+
+            Log.Warning("Kill all child processes.");
+
+            foreach (ProcessInformation processInfo in ProcessExecutor.RetrieveProcessInformation(project))
+            {
+            	try
+                {
+                    Log.Warning(string.Format("Trying to kill process: {0} {1}", processInfo.ProcessName, processInfo.Id));
+                    KillUtil.KillPid(processInfo.Id);
+                    Log.Warning(string.Format("The process has been killed: {0} {1}", processInfo.ProcessName, processInfo.Id));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(string.Format("Error trying to kill process: {0} {1}", processInfo.ProcessName, processInfo.Id));
+                    Log.Error(ex.ToString());
+                }
+            }
+
+            ProcessExecutor.ManagedProcesses[project] = new List<Process>();
+            ProcessExecutor.ManagedProcessInformationListCache[project] = new ThoughtWorks.CruiseControl.Core.Util.ProcessExecutor.CacheItem(DateTime.Now, new ProcessInformationList());
+
+            integrator.WaitForExit();
+
+            integrator.Start();
         }
 
         // ToDo - this done TDD

@@ -50,6 +50,24 @@ namespace ThoughtWorks.CruiseControl.Remote
             BodyStyle = WebMessageBodyStyle.Bare,
             RequestFormat = WebMessageFormat.Xml,
             ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "/GetProjectsStatusLite"
+        )]
+        ProjectStatus[] GetProjectsStatusLite();
+
+        [OperationContract]
+        [WebGet(
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "/GetProjectStatusLite/{projectName}"
+        )]
+        ProjectStatus GetProjectStatusLite(string projectName);
+
+        [OperationContract]
+        [WebGet(
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
             UriTemplate = "/GetLatestBuildName/{projectName}"
         )]
         string GetLatestBuildName(string projectName);

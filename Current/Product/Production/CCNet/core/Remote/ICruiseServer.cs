@@ -19,6 +19,7 @@ namespace ThoughtWorks.CruiseControl.Remote
 
         void Stop(string projectName);
         void Start(string projectName);
+        void Kill(string projectName);
 
 		/// <summary>
 		/// Terminates the CruiseControl.NET server immediately, stopping all started projects
@@ -43,6 +44,8 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// </summary>
         ProjectStatus[] GetProjectStatus();
         ProjectStatus GetProjectStatus(string projectName);
+        ProjectStatus[] GetProjectStatusLite();
+        ProjectStatus GetProjectStatusLite(string projectName);
 
 		bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo);
 
