@@ -140,8 +140,8 @@
         <property name="Common.Directory.UnitTest.Name"      value="${Common.Directory.UnitTest.Name}"/>
         <property name="Common.Directory.Install.Name"       value="${Common.Directory.Install.Name}"/>
 
-        <property name="NantBinPath" value="${Branch.Common.Directory.Build.Path}\nant\bin"/>
-        <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+        <property name="NantBinPath" value="${Tools.Nant.Bin}"/>
+        <property name="NantExePath" value="${Tools.Nant.Exe}"/>
 
         <property name="webURL" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
@@ -181,8 +181,8 @@
         <property name="Common.Directory.UnitTest.Name"      value="${Common.Directory.UnitTest.Name}"/>
         <property name="Common.Directory.Install.Name"       value="${Common.Directory.Install.Name}"/>
 
-        <property name="NantBinPath" value="${Branch.Common.Directory.Build.Path}\nant\bin"/>
-        <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
+        <property name="NantBinPath" value="${Tools.Nant.Bin}"/>
+        <property name="NantExePath" value="${Tools.Nant.Exe}"/>
 
         <property name="webURL" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
