@@ -14,26 +14,26 @@
   <property name="ProjectName"                value="&ProjectName;" />
   <property name="ProjectCodeLineName"        value="&ProjectCodeLineName;" />
   
-  <property name="Common.Directory.ProjectsRoot.Path"          value="&Common.Directory.ProjectsRoot.Path;" />
-  <property name="Common.Directory.ProjectRoot.Path"       value="&Common.Directory.ProjectRoot.Path;" />
-  <property name="Common.Directory.CodeLine.Path"   value="&Common.Directory.CodeLine.Path;" />
-  <property name="Common.Directory.Product.Path"           value="&Common.Directory.Product.Path;" />
-  <property name="Common.Directory.ThirdParty.Path"        value="&Common.Directory.ThirdParty.Path;" />
-  <property name="Common.Directory.Production.Path"        value="&Common.Directory.Production.Path;" />
-  <property name="Common.Directory.Build.Path"             value="&Common.Directory.Build.Path;" />
-  <property name="Common.Directory.ArtifactRoot.Path"      value="&Common.Directory.ArtifactRoot.Path;"/>
-  <property name="Common.Directory.Packages.Path"          value="&Common.Directory.Packages.Path;"/>
-  <property name="Common.Directory.UnitTest.Path"          value="&Common.Directory.UnitTest.Path;"/>
-  <property name="Common.Directory.Install.Path"           value="&Common.Directory.Install.Path;"/>
+  <property name="ProjectsDirectory"          value="&ProjectsDirectory;" />
+  <property name="ProjectRootDirectory"       value="&ProjectRootDirectory;" />
+  <property name="ProjectCodeLineDirectory"   value="&ProjectCodeLineDirectory;" />
+  <property name="ProductDirectory"           value="&ProductDirectory;" />
+  <property name="ThirdPartyDirectory"        value="&ThirdPartyDirectory;" />
+  <property name="ProductionDirectory"        value="&ProductionDirectory;" />
+  <property name="BuildDirectory"             value="&BuildDirectory;" />
+  <property name="ArtifactRootDirectory"      value="&ArtifactRootDirectory;"/>
+  <property name="PackagesDirectory"          value="&PackagesDirectory;"/>
+  <property name="UnitTestDirectory"          value="&UnitTestDirectory;"/>
+  <property name="InstallDirectory"           value="&InstallDirectory;"/>
 
-  <property name="Common.Directory.Product.Name"       value="&Common.Directory.Product.Name;"/>
-  <property name="Common.Directory.ThirdParty.Name"    value="&Common.Directory.ThirdParty.Name;"/>
-  <property name="Common.Directory.Production.Name"    value="&Common.Directory.Production.Name;"/>
-  <property name="Common.Directory.Build.Name"         value="&Common.Directory.Build.Name;"/>
-  <property name="Common.Directory.ArtifactRoot.Name"  value="&Common.Directory.ArtifactRoot.Name;"/>
-  <property name="Common.Directory.Packages.Name"      value="&Common.Directory.Packages.Name;"/>
-  <property name="Common.Directory.UnitTest.Name"      value="&Common.Directory.UnitTest.Name;"/>
-  <property name="Common.Directory.Install.Name"       value="&Common.Directory.Install.Name;"/>
+  <property name="ProductDirectoryName"       value="&ProductDirectoryName;"/>
+  <property name="ThirdPartyDirectoryName"    value="&ThirdPartyDirectoryName;"/>
+  <property name="ProductionDirectoryName"    value="&ProductionDirectoryName;"/>
+  <property name="BuildDirectoryName"         value="&BuildDirectoryName;"/>
+  <property name="ArtifactRootDirectoryName"  value="&ArtifactRootDirectoryName;"/>
+  <property name="PackagesDirectoryName"      value="&PackagesDirectoryName;"/>
+  <property name="UnitTestDirectoryName"      value="&UnitTestDirectoryName;"/>
+  <property name="InstallDirectoryName"       value="&InstallDirectoryName;"/>
 
   <property name="NantBinPath" value="&NantBinPath;"/>
   <property name="NantExePath" value="&NantExePath;"/>

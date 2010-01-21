@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="Deployment" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir="Deployment">
 
-  <property name="Publish.Web.Path.Root" value="/${ProjectName}-${ProjectCodeLineName}/Artifacts" readonly="true"/>
+  <property name="Deployment.WebPathRoot" value="/${ProjectName}-${ProjectCodeLineName}/Artifacts" readonly="true"/>
   
   <!--
 	The following properties should be specified in the calling script.
   
-  <property name="Publish.Source.File.Name" value="TraCHIIPI.tar" />
-  <property name="Publish.Source.Directory.Path"	value="${Common.Directory.Production.Path}\lib" />
-  <property name="Publish.Target.Directory.Path"	value="${Common.Directory.Artifact.Path}" />
-  <property name="Publish.Target.File.Name"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
-  <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${DeploymentFileName}" />
-  <property name="Publish.Web.File.Name"	value="${CCNetLabel} ${DeploymentFileName}" />
+  <property name="Deployment.SourceFileName" value="TraCHIIPI.tar" />
+  <property name="Deployment.SourceDir"	value="${ProductionDirectory}\lib" />
+  <property name="Deployment.TargetDir"	value="${Common.ArtifactDirectoryPath}" />
+  <property name="Deployment.TargetFile"	value="${DeploymentTargetDir}\${DeploymentFileName}" />
+  <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${DeploymentFileName}" />
+  <property name="Deployment.FileWebName"	value="${CCNetLabel} ${DeploymentFileName}" />
   
   -->
   
-  <target name="Publish.File">
-    <call target="Private.Publish.CopyDeploymentToPublicationDir" />
-    <call target="Publish.Link" />
+  <target name="Deployment.PublishFile">
+    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Deployment.PublishLink" />
   </target>
   
-  <target name="Publish.Link">
-    <call target="Private.Publish.EchoWebFileName" />
-    <call target="Publish.EchoWebFilePath" />
+  <target name="Deployment.PublishLink">
+    <call target="Private.Deployment.EchoDeploymentFileWebName" />
+    <call target="Deployment.EchoDeploymentFileWebPath" />
   </target>
 
-  <target name="Publish.FileSilently">
-    <call target="Private.Publish.CopyDeploymentToPublicationDir" />
-    <call target="Publish.EchoWebPath" />
+  <target name="Deployment.PublishFileSilently">
+    <call target="Private.Deployment.CopyDeplymentToPublicationDir" />
+    <call target="Deployment.EchoDeploymentWebPath" />
   </target>
 
-  <target name="Publish.EchoWebPath" >
-    <echo message="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}" level="Info"/>
+  <target name="Deployment.EchoDeploymentWebPath" >
+    <echo message="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}" level="Info"/>
   </target>
 
 	<target name="Deployment.EchoDeploymentArtifactPath" >
-		<echo message="${Common.Directory.Artifact.Path}" level="Info"/>
+		<echo message="${Common.ArtifactDirectoryPath}" level="Info"/>
 	</target>
 
-  <target name="Private.Publish.EchoWebFileName" >
-    <echo message="${Publish.Web.File.Name}" level="Info"/>
+  <target name="Private.Deployment.EchoDeploymentFileWebName" >
+    <echo message="${Deployment.FileWebName}" level="Info"/>
   </target>
   
-  <target name="Publish.EchoWebFilePath" >
-    <echo message="${Publish.Web.File.Path}" level="Info"/>
+  <target name="Deployment.EchoDeploymentFileWebPath" >
+    <echo message="${Deployment.FileWebPath}" level="Info"/>
   </target>
 
-  <target name="Private.Publish.CopyDeploymentToPublicationDir" >
-    <mkdir if="${directory::exists(Publish.Target.Directory.Path) == false}" dir="${Publish.Target.Directory.Path}" />
-    <copy file="${Publish.Source.Directory.Path}/${Publish.Source.File.Name}" tofile="${Publish.Target.Directory.Path}/${Publish.Target.File.Name}" />
+  <target name="Private.Deployment.CopyDeplymentToPublicationDir" >
+    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
+    <copy file="${Deployment.SourceDir}/${Deployment.SourceFileName}" tofile="${Deployment.TargetDir}/${Deployment.TargetFile}" />
   </target>
 
-  <target name="Publish.Zip">
-    <mkdir if="${directory::exists(Publish.Target.Directory.Path) == false}" dir="${Publish.Target.Directory.Path}" />
-    <zip zipfile="${Publish.Target.Directory.Path}/${Deployment.ZipFileName}">
+  <target name="Deployment.PublishZip">
+    <mkdir if="${directory::exists(Deployment.TargetDir) == false}" dir="${Deployment.TargetDir}" />
+    <zip zipfile="${Deployment.TargetDir}/${Deployment.ZipFileName}">
       <fileset refid="Deployment.ZipFileSet" />
     </zip>
 
-    <call target="Publish.Link"/>
+    <call target="Deployment.PublishLink"/>
   </target>
 
-  <target name="Publish.SetUp">
-    <call target="Publish.EchoWebPath" />
+  <target name="Deployment.SetUp">
+    <call target="Deployment.EchoDeploymentWebPath" />
 		<call target="Deployment.EchoDeploymentArtifactPath"/>
   </target>
 
-  <target name="Publish.TearDown">
+  <target name="Deployment.TearDown">
 
   </target>
   

@@ -55,24 +55,6 @@
               </activities>
             </exclusionFilters>
           </projectFilter>'>
-  <!ENTITY Dev1.0Building '<projectFilter
-               serverUri="tcp://localhost:21267/CruiseManager.rem"
-               project="&ProjectName;-Current Dev">
-            <exclusionFilters>
-              <activities>
-                <activity>Building</activity>
-              </activities>
-            </exclusionFilters>
-          </projectFilter>'>
-  <!ENTITY Release1.0Building '<projectFilter
-               serverUri="tcp://localhost:21267/CruiseManager.rem"
-               project="&ProjectName;-Current Release">
-            <exclusionFilters>
-              <activities>
-                <activity>Building</activity>
-              </activities>
-            </exclusionFilters>
-          </projectFilter>'>
 ]>
 <cruisecontrol>
   <project name="&ProjectName;-&ProjectCodeLineName; Build Scripts">
@@ -84,8 +66,6 @@
         <projectFilters>
           &DevBuilding;
           &ReleaseBuilding;
-          &Dev1.0Building;
-          &Release1.0Building;
         </projectFilters>
       </projectTriggerFilter>
     </triggers>
@@ -95,8 +75,6 @@
         <projectFilters>
           &DevBuilding;
           &ReleaseBuilding;
-          &Dev1.0Building;
-          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
@@ -108,8 +86,8 @@
       </triggeredIntegrationFilter>
     </integrationFilter>
     <sourcecontrol  type="svn" tagOnSuccess="false" autoGetSource="true" >
-      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&Common.Directory.Build.Name;</trunkUrl>
-      <workingDirectory>&Common.Directory.Build.Path;</workingDirectory>
+      <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;/&BuildDirectoryName;</trunkUrl>
+      <workingDirectory>&BuildDirectory;</workingDirectory>
       <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
       <webUrlBuilder type="websvn">
         <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -164,7 +142,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="true" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
+        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -173,19 +151,19 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
@@ -193,11 +171,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
+        <path>&BuildDirectory;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -210,35 +188,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
-          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
+          <file>&BuildDirectory;\Reports\*.xml</file>
+          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -246,7 +224,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>
@@ -268,8 +246,6 @@
           &ScriptsBuilding;
           &DevBuilding;
           &ReleaseBuilding;
-          &Dev1.0Building;
-          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
@@ -290,7 +266,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
+        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -299,19 +275,19 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
@@ -321,11 +297,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
+        <path>&BuildDirectory;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -338,35 +314,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
-          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
+          <file>&BuildDirectory;\Reports\*.xml</file>
+          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -374,7 +350,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>
@@ -395,8 +371,6 @@
           &ScriptsBuilding;
           &DevBuilding;
           &DevFailed;
-          &Dev1.0Building;
-          &Release1.0Building;
         </projectFilters>
       </projectTriggerFilter>
     </triggers>
@@ -407,8 +381,6 @@
           &ScriptsBuilding;
           &DevBuilding;
           &DevFailed;
-          &Dev1.0Building;
-          &Release1.0Building;
         </projectFilters>
       </projectForceFilter>
     </forceFilters>
@@ -429,7 +401,7 @@
     <sourcecontrol type="filtered">
       <sourceControlProvider  type="svn" tagOnSuccess="false" autoGetSource="false" >
         <trunkUrl>https://ci-factory.googlecode.com/svn/&ProjectCodeLineName;</trunkUrl>
-        <workingDirectory>&Common.Directory.CodeLine.Path;</workingDirectory>
+        <workingDirectory>&ProjectCodeLineDirectory;</workingDirectory>
         <executable>C:\Program Files\Subversion\bin\svn.exe</executable>
         <webUrlBuilder type="websvn">
           <url>http://ci-factory.googlecode.com/svn{0}</url>
@@ -438,19 +410,19 @@
       </sourceControlProvider>
       <exclusionFilters>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/AssemblyInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/AssemblyInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Product.Name;/**/ProjectInfo.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&ProductDirectoryName;/**/ProjectInfo.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/*.*</pattern>
         </pathFilter>
         <pathFilter>
-          <pattern>**/&ProjectCodeLineName;/&Common.Directory.Build.Name;/**/*.*</pattern>
+          <pattern>**/&ProjectCodeLineName;/&BuildDirectoryName;/**/*.*</pattern>
         </pathFilter>
       </exclusionFilters>
     </sourcecontrol>
@@ -460,11 +432,11 @@
     <tasks>
       <modificationWriter>
         <filename>SourceModificationReport.xml</filename>
-        <path>&Common.Directory.Build.Path;\SourceModificationReports</path>
+        <path>&BuildDirectory;\SourceModificationReports</path>
       </modificationWriter>
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Main.build.xml</buildFile>
         <targetList>
@@ -477,35 +449,35 @@
     <publishers>
       <merge>
         <files>
-          <file>&Common.Directory.Build.Path;\Reports\*.xml</file>
-          <file>&Common.Directory.Build.Path;\LinesOfCode\*.xml</file>
+          <file>&BuildDirectory;\Reports\*.xml</file>
+          <file>&BuildDirectory;\LinesOfCode\*.xml</file>
         </files>
       </merge>
       <xslmerger>
         <filepairs>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\DotNetUnitTest\MBUnitSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\Unit Test Reports\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\FxCop\FxCopSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\FxCop\Report\FxCopReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\FxCop\FxCopSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\FxCop\Report\FxCopReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\MSBuild\MSBuildMerge.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CompileLogs\*.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\MSBuild\MSBuildMerge.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CompileLogs\*.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\nDepend\ndependsummary-ccnet.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\nDepend\NDependMain.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\nDepend\ndependsummary-ccnet.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\nDepend\NDependMain.xml</xmlfile>
           </filepair>
           <filepair>
-            <xslfile>&Common.Directory.Packages.Path;\Simian\SimianSummary.xsl</xslfile>
-            <xmlfile>&Common.Directory.Build.Path;\SimianReport\SimianReport.xml</xmlfile>
+            <xslfile>&PackagesDirectory;\Simian\SimianSummary.xsl</xslfile>
+            <xmlfile>&BuildDirectory;\SimianReport\SimianReport.xml</xmlfile>
           </filepair>
         </filepairs>
       </xslmerger>
@@ -513,7 +485,7 @@
       &email;
       <nant>
         <executable>&NantExePath;</executable>
-        <baseDirectory>&Common.Directory.Build.Path;</baseDirectory>
+        <baseDirectory>&BuildDirectory;</baseDirectory>
         <logger>NAnt.Core.XmlLogger </logger>
         <buildFile>Post.Shim.xml</buildFile>
         <targetList>

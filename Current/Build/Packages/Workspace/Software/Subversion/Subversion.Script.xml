@@ -7,7 +7,7 @@
   <property name="SvnServerInstallerPath" value="CollabNetSubversion-server-1.4.5-1.win32.exe"/>
   <property name="SvnServerInstallerUrl" value="http://downloads-guests.open.collab.net/files/documents/61/297/CollabNetSubversion-server-1.4.5-1.win32.exe"/>
 
-  <target name="Workspace.RequiredSoftware.Subversion">
+  <target name="Workspace.RequieredSoftware.Subversion">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\TortoiseSVN\bin\TortoiseProc.exe')}" >
 			<ask answer="Answer"
            question="It looks like TortoiseSVN is not installed.  This software is required.  Do you wish to install the software?"
@@ -48,7 +48,7 @@
 		</ifnot>
 	</target>
 
-  <target name="Workspace.RequiredSoftware.SubversionServer">
+  <target name="Workspace.RequieredSoftware.SubversionServer">
     <exec program="svn" commandline='list http://localhost:81/svn' failonerror='false' resultproperty='FoundSvnRepo.ExitCode'/>
     <property name="FoundSvnRepo" value="${int::parse(FoundSvnRepo.ExitCode) == 0}"/>
     

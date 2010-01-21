@@ -17,7 +17,7 @@
     </code>
   </script>
   
-  <strings id="Workspace.RequiredSoftware">
+  <strings id="Workspace.RequieredSoftware">
     <string value="VisualStudio2005"/>
     <string value="NCover"/>
     <string value="TeamExplorer"/>
@@ -37,16 +37,16 @@
 
   <fileset id="PacakgeFinder" />
   <ifnot test="${property::exists('SourceControl.PackageName')}">
-    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
+    <property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
     <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
     <property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
     <property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
   </ifnot>
 
-  <ifnot test="${stringlist::contains('Workspace.RequiredSoftware', SourceControl.PackageName)}">
-    <function execute="${stringlist::add('Workspace.RequiredSoftware', SourceControl.PackageName)}" />
+  <ifnot test="${stringlist::contains('Workspace.RequieredSoftware', SourceControl.PackageName)}">
+    <function execute="${stringlist::add('Workspace.RequieredSoftware', SourceControl.PackageName)}" />
   </ifnot>
   <include buildfile="Software\${SourceControl.PackageName}\${SourceControl.PackageName}.Script.xml"
-           unless="${target::exists('Workspace.RequiredSoftware.' + SourceControl.PackageName)}"/>
+           unless="${target::exists('Workspace.RequieredSoftware.' + SourceControl.PackageName)}"/>
 
 </project>

@@ -20,7 +20,7 @@
 
     <xslmultiout xmlInputFilePath="${Analytics.XmlInputFileName}"
       xslTransformFilePath="${Analytics.XslFilePath}" 
-      outputFilePath="${Common.Directory.ArtifactRoot.Path}\${Analytics.XmlReportFileName}" 
+      outputFilePath="${ArtifactRootDirectory}\${Analytics.XmlReportFileName}" 
       append="${Analytics.Append}">
       <parameters>
         <parameter name="CCNetLabel" value="${CCNetLabel}"/>
@@ -32,10 +32,10 @@
         <items refid="${Analytics.CopyFileSetRefId}" />
       </in>
       <do>
-        <echo message="Copying ${Analytics.CompileReport.XmlFileToCopy} to ${Common.Directory.Artifact.Path + '\' + path::get-file-name(Analytics.CompileReport.XmlFileToCopy)}"/>
+        <echo message="Copying ${Analytics.CompileReport.XmlFileToCopy} to ${Common.ArtifactDirectoryPath + '\' + path::get-file-name(Analytics.CompileReport.XmlFileToCopy)}"/>
         <xmlcopy 
           inputFilePath="${Analytics.CompileReport.XmlFileToCopy}" 
-          outputDirectoryPath="${Common.Directory.Artifact.Path}" 
+          outputDirectoryPath="${Common.ArtifactDirectoryPath}" 
           verbose="True" />
       </do>
     </foreach>
@@ -67,17 +67,17 @@
     <foreach item="File" property="Analytics.BuildLog">
       <in>
         <items>
-          <include name="${Common.Directory.Build.Path}\server\${CCNetProject}\Artifacts\buildlogs\*.xml"/>
+          <include name="${BuildDirectory}\server\${CCNetProject}\Artifacts\buildlogs\*.xml"/>
         </items>
       </in>
       <do>
         <regex input="${Analytics.BuildLog}" pattern="log\d+Lbuild\.(?'CCNetLabel'.*)\.xml$" failonerror="false"/>
 
-        <regex pattern="^*.log(?'Private.Analytics.Common.Directory.Artifact.Name'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
-        <property name="Common.Directory.Artifact.Name" value="${Private.Analytics.Common.Directory.Artifact.Name}"/>
-        <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
-        <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
-        <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}"/>
+        <regex pattern="^*.log(?'PrivateAnalyticsArtifactFolderName'\d+)(?(?=Lbuild)Lbuild\.[\w+|\.|-]+\.xml$|\.xml$)" input="${Analytics.BuildLog}"/>
+        <property name="Common.ArtifactFolderName" value="${PrivateAnalyticsArtifactFolderName}"/>
+        <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
+        <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
+        <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}"/>
         
         <call target="Analytics.CompileReports"/>
       </do>

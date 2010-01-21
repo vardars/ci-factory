@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="CSDiff.Target">
 
-  <include buildfile="${Common.Directory.Packages.Path}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
-  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" unless="${target::exists('Publish.EchoWebFilePath')}"/>
+  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" unless="${property::exists('SourceModificationReport.OldSourcePath')}" />
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" unless="${target::exists('Deployment.EchoDeploymentFileWebPath')}"/>
 
   <include buildfile="CSDiff.Properties.xml" />
-  <property name="CSDiff.ProgramPath" value="${Common.Directory.Packages.Path}\CSDiff\bin\csdiff.exe"/>
+  <property name="CSDiff.ProgramPath" value="${PackagesDirectory}\CSDiff\bin\csdiff.exe"/>
   <property name="CSDiff.ReportDirectoryName" value="Diffs"/>
   <property name="CSDiff.ReportFileName" value="DiffReport.htm"/>
-  <property name="CSDiff.ReportDirectoryPath" value="${Common.Directory.Artifact.Path}\${CSDiff.ReportDirectoryName}"/>
+  <property name="CSDiff.ReportDirectoryPath" value="${Common.ArtifactDirectoryPath}\${CSDiff.ReportDirectoryName}"/>
 
   <target name="CSDiff.GenerateHtmlReports">
     <exec program="${CSDiff.ProgramPath}" verbose="true">
@@ -23,14 +23,14 @@
       <arg line='"New Source"' />
     </exec>
 
-    <property name="Publish.Web.File.Path"	value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${CSDiff.ReportDirectoryName}" />
-    <call target='Publish.EchoWebFilePath'/>
+    <property name="Deployment.FileWebPath"	value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${CSDiff.ReportDirectoryName}" />
+    <call target='Deployment.EchoDeploymentFileWebPath'/>
   </target>
 
   <target name="CSDiff.SetUp">
     <mkdir dir="${CSDiff.ReportDirectoryPath}" unless="${directory::exists(CSDiff.ReportDirectoryPath)}"/>
 
-    <property name="CSDiff" value="${Common.Directory.Packages.Path}\CSDiff\bin"/>
+    <property name="CSDiff" value="${PackagesDirectory}\CSDiff\bin"/>
     <property name="Hive" value="CurrentUser"/>
     <property name="BaseKey" value="Software"/>
 

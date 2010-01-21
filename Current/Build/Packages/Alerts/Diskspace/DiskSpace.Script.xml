@@ -5,7 +5,7 @@
 
   <target name="Alerts.DiskSpace">
 
-		<property name="DiskSpace" value="${drive::get-avalible-space(path::get-path-root(Common.Directory.CodeLine.Path)) / 1024 / 1024 / 1024}"/>
+		<property name="DiskSpace" value="${drive::get-avalible-space(path::get-path-root(ProjectCodeLineDirectory)) / 1024 / 1024 / 1024}"/>
 
     <echo message="DiskSpace is ${DiskSpace}"/>
 
@@ -35,7 +35,7 @@
             </p>
 
             <p>Build Master,</p>
-            <p>Please take note that there are ${DiskSpace} Gigs left avalible on the ${path::get-path-root(Common.Directory.CodeLine.Path)} drive.</p>
+            <p>Please take note that there are ${DiskSpace} Gigs left avalible on the ${path::get-path-root(ProjectCodeLineDirectory)} drive.</p>
             <br/>
             <p>Cheers,</p>
             <p>Your pal, the build server.</p>

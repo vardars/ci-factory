@@ -15,11 +15,11 @@
   <property name="Private.Versioning.NewerThanDateTime" value="" />
   
   <target name="Versioning.IncrementBuildNumberOfModifiedAssemblies">
-    <mkdir unless="${directory::exists(Common.Directory.Production.Path)}" dir="${Common.Directory.Production.Path}"/>
+    <mkdir unless="${directory::exists(ProductionDirectory)}" dir="${ProductionDirectory}"/>
 
     <fileset id="AssemblyInfoSet" />
     
-    <GenerateAssemblyInfoList rootdirectory="${Common.Directory.Product.Path}">
+    <GenerateAssemblyInfoList rootdirectory="${ProductDirectory}">
       <assemblyinfoset refid="AssemblyInfoSet" />
       <changeset refid="SourceModificationReport.ModificationList" />
     </GenerateAssemblyInfoList>
@@ -39,7 +39,7 @@
 
   </target>
 
-  <target name="Versioning.IncrementBuildNumberOfProduct">
+  <target name="Versioning.IncreamentBuildNumberOfProduct">
     <foreach item="File" property="ReplaceFile">
       <in>
         <items>
@@ -68,7 +68,7 @@
         <echo message="Checking ${Versioning.FixUp.ProjectFile}"/>
         <regex input="${Versioning.FixUp.ProjectFile}" pattern=".*\.(?'ext'\w\w)proj$"/>
         <property name="Versioning.FixUp.ProjectFile.Ext" value="${ext}"/>
-        <property name="Versioning.ProjectInfo" value="${Common.Directory.Product.Path}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
+        <property name="Versioning.ProjectInfo" value="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}"/>
         <property name="Versioning.FixUp.XPath.ProjectInfo" value="b:Project/b:ItemGroup/b:Compile[contains(@Include,'ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}')]"/>
         <property name="Versioning.FixUp.FilterChain.${Versioning.FixUp.ProjectFile.Ext}.Created" value="false" overwrite="false"/>
 
@@ -129,7 +129,7 @@
     <largeproperty name="Versioning.FixUp.XPath.Replacment" >
       <value xml="false" expand="true">
         <![CDATA[
-        <Compile Include="${Common.Directory.Product.Path}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}">
+        <Compile Include="${ProductDirectory}\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}">
           <Link>Properties\ProjectInfo.${Versioning.FixUp.ProjectFile.Ext}</Link>
         </Compile>
 ]]>

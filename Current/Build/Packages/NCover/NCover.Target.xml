@@ -3,19 +3,19 @@
 
   <include buildfile="NCover.Properties.xml" />
   <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
-  <loadtasks assembly="${Common.Directory.Build.Path}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
+  <loadtasks assembly="${BuildDirectory}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
 
   <!--
 	The following properties should be specified in the calling script.
 	
-	<property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\Coverage Reports"/>
+	<property name="Coverage.ReportFolder" value="${BuildDirectory}\Coverage Reports"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${BuildDirectory}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
   <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
 
   <fileset id="Coverage.Targets">
-    <include name="${Common.Directory.Production.Path}\**\bin\${Coverage.AssemblyNameFormat}" />
-    <include name="${Common.Directory.Production.Path}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
+    <include name="${ProductionDirectory}\**\bin\${Coverage.AssemblyNameFormat}" />
+    <include name="${ProductionDirectory}\**\bin\Debug\${Coverage.AssemblyNameFormat}" />
   </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
@@ -44,7 +44,7 @@
     </foreach>
 
     <if test="${fileset::file-count('Coverage.Targets') == 0}">
-      <call target="Coverage.FindTargetAssemblies"/>
+      <call target="Coverage.FindTargetAssebmlies"/>
     </if>
 
     <trycatch>
@@ -105,10 +105,10 @@
     </trycatch>
   </target>
 
-  <target name="Coverage.FindTargetAssemblies">
+  <target name="Coverage.FindTargetAssebmlies">
     <fileset id="Coverage.Targets" >
-      <include name="${Common.Directory.Production.Path}\**\bin\${Coverage.TargetAssemblyFormat}" />
-      <include name="${Common.Directory.Production.Path}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
+      <include name="${ProductionDirectory}\**\bin\${Coverage.TargetAssemblyFormat}" />
+      <include name="${ProductionDirectory}\**\bin\${Compile.ConfigName}\${Coverage.TargetAssemblyFormat}" />
     </fileset>
   </target>
 
@@ -127,8 +127,8 @@
     </ncoverexplorer>
     
     <style in="${Coverage.ReportFolder}\CoverageReport.xml"
-           out="${Common.Directory.Artifact.Path}\NCoverReport.html"
-           style="${Common.Directory.Packages.Path}\NCover\NCoverExplorer.xsl"/>
+           out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+           style="${PackagesDirectory}\NCover\NCoverExplorer.xsl"/>
   </target>
 
   <target name="Private.Coverage.CreatePropertiesFile">
@@ -145,23 +145,23 @@
       <property name="CCNetWorkingDirectory"/>
       <property name="ProjectName"/>
       <property name="ProjectCodeLineName"/>
-      <property name="Common.Directory.ProjectsRoot.Path"/>
-      <property name="Common.Directory.ProjectRoot.Path"/>
-      <property name="Common.Directory.CodeLine.Path"/>
-      <property name="Common.Directory.Product.Path"/>
-      <property name="Common.Directory.ThirdParty.Path"/>
-      <property name="Common.Directory.Production.Path"/>
-      <property name="Common.Directory.Build.Path"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
-      <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
-      <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
-      <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
-      <property name="Common.Directory.Artifact.Path"/>
-      <property name="Common.Directory.Artifact.Name"/>
-      <property name="Project.Directory.Report.Path"/>
-      <property name="Project.Directory.Temp.Path"/>
-      <property name="Common.Directory.UnitTest.Path"/>
-      <property name="Common.Directory.Install.Path"/>
+      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.ReportDirectory"/>
+      <property name="Common.TempDirectory"/>
+      <property name="UnitTestDirectory"/>
+      <property name="InstallDirectory"/>
     </saveproperties>
   </target>
 
@@ -176,7 +176,7 @@
 
     <call target="Private.Coverage.CreatePropertiesFile"/>
     
-    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
       <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.SetUp"/>
@@ -184,7 +184,7 @@
   </target>
 
   <target name="UnitTest.TearDown">
-    <exec program="${Common.Directory.Build.Path}\nAnt\bin\nant.exe">
+    <exec program="${BuildDirectory}\nAnt\bin\nant.exe">
       <arg line='-buildfile:"${Coverage.UnitTestPackageInclude}"'/>
       <arg line='@"${Coverage.CommonPropertiesFile}"' />
       <arg line="UnitTest.TearDown"/>

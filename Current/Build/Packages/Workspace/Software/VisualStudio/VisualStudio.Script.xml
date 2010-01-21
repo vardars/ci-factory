@@ -4,7 +4,7 @@
 	<property name="VS2005WebDeployInstallPath" value="Z:\WebDeploymentSetup.msi"/>
 	<property name="VS2005SP1InstallPath" value="Z:\VS80sp1-KB926601-X86-ENU.exe"/>
 	
-	<target name="Workspace.RequiredSoftware.VisualStudio2005WebDeploy">
+	<target name="Workspace.RequieredSoftware.VisualStudio2005WebDeploy">
 		<property name="VisualStudioWebDeploy" value=""/>
 		<readregistry hive="LocalMachine"
                   key="SOFTWARE\Microsoft\VisualStudio\8.0\Packages\{CBA82673-3810-4290-BC4F-06BE9BF845A1}\"
@@ -48,7 +48,7 @@
 		</ifnot>
 	</target>
 
-	<target name="Workspace.RequiredSoftware.VisualStudio2005">
+	<target name="Workspace.RequieredSoftware.VisualStudio2005">
 		<property name="VisualStudioServicePack" value=""/>
 		<readregistry hive="LocalMachine"
                   key="SOFTWARE\Microsoft\DevDiv\VS\Servicing\8.0\SP"
@@ -85,7 +85,7 @@
 		</ifnot>
 	</target>
 
-	<target name="Workspace.RequiredSoftware.TeamExplorer">
+	<target name="Workspace.RequieredSoftware.TeamExplorer">
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Microsoft Visual Studio 8\Common7\IDE\PrivateAssemblies\Microsoft.TeamFoundation.VersionControl.Client.dll')}" >
 			<ask answer="Answer"
            question="It looks like Team Explorer is not installed.  Do you wish to continue?"

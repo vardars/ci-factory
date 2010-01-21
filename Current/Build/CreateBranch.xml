@@ -50,7 +50,7 @@
 
 	<fileset id="PacakgeFinder" />
 	<ifnot test="${property::exists('SourceControl.PackageName')}">
-		<property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
+		<property name="PackagePathPattern" value="${PackagesDirectory}\**\SourceControl.Target.xml"/>
 		<function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
 		<property name="PackagePath" value="${fileset::get-name-at-index('PacakgeFinder', 0)}"/>
 		<property name="SourceControl.PackageName" value="${directory::name(path::get-directory-name(PackagePath))}"/>
@@ -63,7 +63,7 @@
 		<property name="CCNetProjectName" value="CIFactory-CurrentDev"/>
 		<property name="CCNetServerUrl" value="tcp://${BuildServerHostName}:${BuildServerPort}/CruiseManager.rem"/>
 
-		<property name="StateFilePath" value="${Common.Directory.Build.Path}\server\${CCNetProjectName}.state"/>
+		<property name="StateFilePath" value="${BuildDirectory}\server\${CCNetProjectName}.state"/>
 		
 		<ifnot test="${file::exists(StateFilePath)}">
 			<fail message="Please execute this on the build server."/>
@@ -106,10 +106,10 @@
     
 		<call target="SetBranchParentCCNetLabels"/>-->
 
-    <nant buildfile="${Branch.Common.Directory.Packages.Path}\${SourceControl.PackageName}\SourceControl.Target.xml" target="SourceControl.Rename" inheritall="false" inheritrefs="false" >
+    <nant buildfile="${BranchPackagesDirectory}\${SourceControl.PackageName}\SourceControl.Target.xml" target="SourceControl.Rename" inheritall="false" inheritrefs="false" >
       <properties>
-        <property name="SourceControl.Rename.Source" value="${Branch.Common.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
-        <property name="SourceControl.Rename.Target" value="${Branch.Common.Directory.Build.Path}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
+        <property name="SourceControl.Rename.Source" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+        <property name="SourceControl.Rename.Target" value="${BranchBuildDirectory}\dashboard\WorkspaceSetup\${ProjectName}-${BranchName}-WorkspaceSetup.exe"/>
         <property name="CCNetBuildDate" value="2006-09-12"/>
         <property name="CCNetBuildTime" value="11:10:00"/>
 
@@ -119,37 +119,37 @@
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
-        <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
-        <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
-        <property name="Common.Directory.CodeLine.Path"   value="${Branch.Common.Directory.CodeLine.Path}" />
-        <property name="Common.Directory.Product.Path"           value="${Branch.Common.Directory.Product.Path}" />
-        <property name="Common.Directory.ThirdParty.Path"        value="${Branch.Common.Directory.ThirdParty.Path}" />
-        <property name="Common.Directory.Production.Path"        value="${Branch.Common.Directory.Production.Path}" />
-        <property name="Common.Directory.Build.Path"             value="${Branch.Common.Directory.Build.Path}" />
-        <property name="Common.Directory.ArtifactRoot.Path"      value="${Branch.Common.Directory.ArtifactRoot.Path}"/>
-        <property name="Common.Directory.Packages.Path"          value="${Branch.Common.Directory.Packages.Path}"/>
-        <property name="Common.Directory.UnitTest.Path"          value="${Branch.Common.Directory.UnitTest.Path}"/>
-        <property name="Common.Directory.Install.Path"           value="${Branch.Common.Directory.Install.Path}"/>
+        <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
+        <property name="ProjectRootDirectory"       value="${ProjectRootDirectory}" />
+        <property name="ProjectCodeLineDirectory"   value="${BranchProjectCodeLineDirectory}" />
+        <property name="ProductDirectory"           value="${BranchProductDirectory}" />
+        <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
+        <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
+        <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
+        <property name="ArtifactRootDirectory"      value="${BranchArtifactRootDirectory}"/>
+        <property name="PackagesDirectory"          value="${BranchPackagesDirectory}"/>
+        <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
+        <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
-        <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
-        <property name="Common.Directory.ThirdParty.Name"    value="${Common.Directory.ThirdParty.Name}"/>
-        <property name="Common.Directory.Production.Name"    value="${Common.Directory.Production.Name}"/>
-        <property name="Common.Directory.Build.Name"         value="${Common.Directory.Build.Name}"/>
-        <property name="Common.Directory.ArtifactRoot.Name"  value="${Common.Directory.ArtifactRoot.Name}"/>
-        <property name="Common.Directory.Packages.Name"      value="${Common.Directory.Packages.Name}"/>
-        <property name="Common.Directory.UnitTest.Name"      value="${Common.Directory.UnitTest.Name}"/>
-        <property name="Common.Directory.Install.Name"       value="${Common.Directory.Install.Name}"/>
+        <property name="ProductDirectoryName"       value="${ProductDirectoryName}"/>
+        <property name="ThirdPartyDirectoryName"    value="${ThirdPartyDirectoryName}"/>
+        <property name="ProductionDirectoryName"    value="${ProductionDirectoryName}"/>
+        <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
+        <property name="ArtifactRootDirectoryName"  value="${ArtifactRootDirectoryName}"/>
+        <property name="PackagesDirectoryName"      value="${PackagesDirectoryName}"/>
+        <property name="UnitTestDirectoryName"      value="${UnitTestDirectoryName}"/>
+        <property name="InstallDirectoryName"       value="${InstallDirectoryName}"/>
 
-        <property name="NantBinPath" value="${Tools.Nant.Bin}"/>
-        <property name="NantExePath" value="${Tools.Nant.Exe}"/>
+        <property name="NantBinPath" value="${BranchBuildDirectory}\nant\bin"/>
+        <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
 
         <property name="webURL" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
     </nant>
     
-    <nant buildfile="${Branch.Common.Directory.Packages.Path}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+    <nant buildfile="${BranchPackagesDirectory}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
 
-    <nant buildfile="${Branch.Common.Directory.Build.Path}\Common.Build.xml" target="Common.CreateCCTraySfx" inheritall="false" inheritrefs="false" >
+    <nant buildfile="${BranchBuildDirectory}\Common.Build.xml" target="Common.CreateCCTraySfx" inheritall="false" inheritrefs="false" >
       <properties>
         <property name="CCNetBuildDate" value="2006-09-12"/>
         <property name="CCNetBuildTime" value="11:10:00"/>
@@ -160,29 +160,29 @@
         <property name="ProjectName"                value="${ProjectName}" />
         <property name="ProjectCodeLineName"        value="${BranchName}" />
 
-        <property name="Common.Directory.ProjectsRoot.Path"          value="${Common.Directory.ProjectsRoot.Path}" />
-        <property name="Common.Directory.ProjectRoot.Path"       value="${Common.Directory.ProjectRoot.Path}" />
-        <property name="Common.Directory.CodeLine.Path"   value="${Branch.Common.Directory.CodeLine.Path}" />
-        <property name="Common.Directory.Product.Path"           value="${Branch.Common.Directory.Product.Path}" />
-        <property name="Common.Directory.ThirdParty.Path"        value="${Branch.Common.Directory.ThirdParty.Path}" />
-        <property name="Common.Directory.Production.Path"        value="${Branch.Common.Directory.Production.Path}" />
-        <property name="Common.Directory.Build.Path"             value="${Branch.Common.Directory.Build.Path}" />
-        <property name="Common.Directory.ArtifactRoot.Path"      value="${Branch.Common.Directory.ArtifactRoot.Path}"/>
-        <property name="Common.Directory.Packages.Path"          value="${Branch.Common.Directory.Packages.Path}"/>
-        <property name="Common.Directory.UnitTest.Path"          value="${Branch.Common.Directory.UnitTest.Path}"/>
-        <property name="Common.Directory.Install.Path"           value="${Branch.Common.Directory.Install.Path}"/>
+        <property name="ProjectsDirectory"          value="${ProjectsDirectory}" />
+        <property name="ProjectRootDirectory"       value="${ProjectRootDirectory}" />
+        <property name="ProjectCodeLineDirectory"   value="${BranchProjectCodeLineDirectory}" />
+        <property name="ProductDirectory"           value="${BranchProductDirectory}" />
+        <property name="ThirdPartyDirectory"        value="${BranchThirdPartyDirectory}" />
+        <property name="ProductionDirectory"        value="${BranchProductionDirectory}" />
+        <property name="BuildDirectory"             value="${BranchBuildDirectory}" />
+        <property name="ArtifactRootDirectory"      value="${BranchArtifactRootDirectory}"/>
+        <property name="PackagesDirectory"          value="${BranchPackagesDirectory}"/>
+        <property name="UnitTestDirectory"          value="${BranchUnitTestDirectory}"/>
+        <property name="InstallDirectory"           value="${BranchInstallDirectory}"/>
 
-        <property name="Common.Directory.Product.Name"       value="${Common.Directory.Product.Name}"/>
-        <property name="Common.Directory.ThirdParty.Name"    value="${Common.Directory.ThirdParty.Name}"/>
-        <property name="Common.Directory.Production.Name"    value="${Common.Directory.Production.Name}"/>
-        <property name="Common.Directory.Build.Name"         value="${Common.Directory.Build.Name}"/>
-        <property name="Common.Directory.ArtifactRoot.Name"  value="${Common.Directory.ArtifactRoot.Name}"/>
-        <property name="Common.Directory.Packages.Name"      value="${Common.Directory.Packages.Name}"/>
-        <property name="Common.Directory.UnitTest.Name"      value="${Common.Directory.UnitTest.Name}"/>
-        <property name="Common.Directory.Install.Name"       value="${Common.Directory.Install.Name}"/>
+        <property name="ProductDirectoryName"       value="${ProductDirectoryName}"/>
+        <property name="ThirdPartyDirectoryName"    value="${ThirdPartyDirectoryName}"/>
+        <property name="ProductionDirectoryName"    value="${ProductionDirectoryName}"/>
+        <property name="BuildDirectoryName"         value="${BuildDirectoryName}"/>
+        <property name="ArtifactRootDirectoryName"  value="${ArtifactRootDirectoryName}"/>
+        <property name="PackagesDirectoryName"      value="${PackagesDirectoryName}"/>
+        <property name="UnitTestDirectoryName"      value="${UnitTestDirectoryName}"/>
+        <property name="InstallDirectoryName"       value="${InstallDirectoryName}"/>
 
-        <property name="NantBinPath" value="${Tools.Nant.Bin}"/>
-        <property name="NantExePath" value="${Tools.Nant.Exe}"/>
+        <property name="NantBinPath" value="${BranchBuildDirectory}\nant\bin"/>
+        <property name="NantExePath" value="${NantBinPath}\nant.exe"/>
 
         <property name="webURL" value="http://${BuildServerHostName}/${ProjectName}-${BranchName}/default.aspx?_action_ViewFarmReport=true"/>
       </properties>
@@ -196,7 +196,7 @@
 
     <xmlpoke  
       value="${ParentBranchCCNetDashboardConfig}"
-      file="${Branch.Common.Directory.Build.Path}\dashboard\dashboard.config"
+      file="${BranchBuildDirectory}\dashboard\dashboard.config"
       pokemode="Add"
       xpath="/dashboard/remoteServices/servers"
     />
@@ -209,12 +209,12 @@
 
     <xmlpoke
       value="${BranchCCNetDashboardConfig}"
-      file="${Common.Directory.Build.Path}\dashboard\dashboard.config"
+      file="${BuildDirectory}\dashboard\dashboard.config"
       pokemode="Add"
       xpath="/dashboard/remoteServices/servers"
     />
     
-    <nant buildfile="${Branch.Common.Directory.Build.Path}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
+    <nant buildfile="${BranchBuildDirectory}\SetupIIS.xml" inheritall="false" inheritrefs="false" />
 
     <echo message="HasBadRefPath = ${HasBadRefPath}"/>
     <call target="FixReferenceIssues" if="${HasBadRefPath}"/>
@@ -233,7 +233,7 @@
     <foreach item="File" property="ProjectFile">
       <in>
         <items>
-          <include name="${Common.Directory.Product.Path}\**\*.*proj"/>
+          <include name="${ProductDirectory}\**\*.*proj"/>
         </items>
       </in>
       <do>
@@ -247,7 +247,7 @@
           </items>
           <do>
             <echo message="${HintPath}"/>
-            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(Common.Directory.CodeLine.Path))}">
+            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory))}">
               <property name="HasBadRefPath" value="true"/>
               <echo message="HasBadRefPath = ${HasBadRefPath}"/>
 
@@ -297,7 +297,7 @@ If yes the script will try to fix the references in the new branch.]]>
     <foreach item="File" property="ProjectFile">
       <in>
         <items>
-          <include name="${Branch.Common.Directory.Product.Path}\**\*.*proj"/>
+          <include name="${BranchProductDirectory}\**\*.*proj"/>
         </items>
       </in>
       <do>
@@ -308,12 +308,12 @@ If yes the script will try to fix the references in the new branch.]]>
             <strings refid="hintpaths"/>
           </items>
           <do>
-            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(Common.Directory.CodeLine.Path))}">
+            <if test="${string::starts-with(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory))}">
               <echo message="HintPath = ${HintPath}"/>
               <echo message="ProjectFile = ${ProjectFile}"/>
-              <echo message="Common.Directory.CodeLine.Path = ${Common.Directory.CodeLine.Path}"/>
-              <echo message="Branch.Common.Directory.CodeLine.Path = ${Branch.Common.Directory.CodeLine.Path}"/>
-              <property name="NewHintPath" value="${string::replace(string::to-lower(HintPath), string::to-lower(Common.Directory.CodeLine.Path), string::to-lower(Branch.Common.Directory.CodeLine.Path))}"/>
+              <echo message="ProjectCodeLineDirectory = ${ProjectCodeLineDirectory}"/>
+              <echo message="BranchProjectCodeLineDirectory = ${BranchProjectCodeLineDirectory}"/>
+              <property name="NewHintPath" value="${string::replace(string::to-lower(HintPath), string::to-lower(ProjectCodeLineDirectory), string::to-lower(BranchProjectCodeLineDirectory))}"/>
               <echo message="NewHintPath = ${NewHintPath}"/>
               <property name="NewHintPath" value="${path::get-relative-path(NewHintPath, path::get-directory-name(ProjectFile))}"/>
               <echo message="NewHintPath = ${NewHintPath}"/>
@@ -356,13 +356,13 @@ The current prefix is ${LabelPrefix}.
 			</value>
 		</largeproperty>
     
-		<replace file="${Branch.Common.Directory.Build.Path}\Entities.xml">
+		<replace file="${BranchBuildDirectory}\Entities.xml">
 			<filterchain>
 				<regexreplace replacment="${NewLabelPrefixEntity}" pattern="${LabelPrefixPattern}" lines="1" />
 			</filterchain>
 		</replace>
 		
-		<xmlquery query='/cruisecontrol/project/@name' file='${Branch.Common.Directory.Build.Path}\ccnetproject.xml' id='CCNetProjects' />
+		<xmlquery query='/cruisecontrol/project/@name' file='${BranchBuildDirectory}\ccnetproject.xml' id='CCNetProjects' />
 
     <loopthrough property='CCNetProjectName'>
       <items>
@@ -371,7 +371,7 @@ The current prefix is ${LabelPrefix}.
       <do>
 
         <xmlpeek 
-          file='${Branch.Common.Directory.Build.Path}\ccnetproject.xml'
+          file='${BranchBuildDirectory}\ccnetproject.xml'
           property='ProjectLabelPrefix'
           xpath='/cruisecontrol/project[@name = "${CCNetProjectName}"]/labeller/prefix'
         />
@@ -432,7 +432,7 @@ You may change the prefix: '${ProjectLabelPrefix}'.
             <regex input='${ProjectInitialVersion}' pattern="(?'CCNetProjectLabelPrefix'.*?)\d+$"/>
 
             <xmlpoke 
-              file="${Branch.Common.Directory.Build.Path}\ccnetproject.xml" 
+              file="${BranchBuildDirectory}\ccnetproject.xml" 
               value="${CCNetProjectLabelPrefix}" 
               xpath='/cruisecontrol/project[@name = "${CCNetProjectName}"]/labeller/prefix'
             />
@@ -451,7 +451,7 @@ You may change the prefix: '${ProjectLabelPrefix}'.
         </largeproperty>
 
         <write append="false" encoding="utf-16"
-               file="${Branch.Common.Directory.Build.Path}\server\${CCNetProjectName}.state">
+               file="${BranchBuildDirectory}\server\${CCNetProjectName}.state">
           <text expand="true" xml="false">${StateFile.Content}</text>
         </write>
       </do>
@@ -496,7 +496,7 @@ You may change the prefix: '${ProjectLabelPrefix}'.
 			</value>
 		</largeproperty>
 
-		<replace file="${Branch.Common.Directory.Build.Path}\Entities.xml">
+		<replace file="${BranchBuildDirectory}\Entities.xml">
 			<filterchain>
 				<regexreplace replacment="${NewCodeLineEntity}" pattern="${CodeLinePattern}" lines="1" />
 				<regexreplace replacment="${NewBuildServerPortEntity}" pattern="${BuildServerPortPattern}" lines="1" />
@@ -536,13 +536,13 @@ It is currently set to ${LabelPrefix}.
       </value>
     </largeproperty>
 
-    <replace file="${Common.Directory.Build.Path}\Entities.xml">
+    <replace file="${BuildDirectory}\Entities.xml">
       <filterchain>
         <regexreplace replacment="${NewLabelPrefixEntity}" pattern="${LabelPrefixPattern}" lines="1" />
       </filterchain>
     </replace>
 
-    <xmlquery query='/cruisecontrol/project/@name' file='${Common.Directory.Build.Path}\ccnetproject.xml' id='CCNetProjects' />
+    <xmlquery query='/cruisecontrol/project/@name' file='${BuildDirectory}\ccnetproject.xml' id='CCNetProjects' />
 
     <loopthrough property='CCNetProjectName'>
       <items>
@@ -551,7 +551,7 @@ It is currently set to ${LabelPrefix}.
       <do>
 
         <xmlpeek
-          file='${Common.Directory.Build.Path}\ccnetproject.xml'
+          file='${BuildDirectory}\ccnetproject.xml'
           property='ProjectLabelPrefix'
           xpath='/cruisecontrol/project[@name = "${CCNetProjectName}"]/labeller/prefix'
         />
@@ -583,7 +583,7 @@ Please note that you don't have to change it.
           </ifthenelse>
 
           <xmlpoke
-            file="${Common.Directory.Build.Path}\ccnetproject.xml"
+            file="${BuildDirectory}\ccnetproject.xml"
             value="${CCNetProject.LabelPrefix}"
             xpath='/cruisecontrol/project[@name = "${CCNetProjectName}"]/labeller/prefix'
           />
@@ -594,15 +594,15 @@ Please note that you don't have to change it.
   </target>
   
 	<target name="SetBranchProperties">
-		<property name="Branch.Common.Directory.CodeLine.Path" value="${Common.Directory.ProjectRoot.Path}\${BranchName}" />
-		<property name="Branch.Common.Directory.Product.Path"         value="${Branch.Common.Directory.CodeLine.Path}\${Common.Directory.Product.Name}"  />
-		<property name="Branch.Common.Directory.ThirdParty.Path"      value="${Branch.Common.Directory.CodeLine.Path}\${Common.Directory.ThirdParty.Name}" />
-		<property name="Branch.Common.Directory.Build.Path"           value="${Branch.Common.Directory.CodeLine.Path}\${Common.Directory.Build.Name}"  />
-		<property name="Branch.Common.Directory.Production.Path"      value="${Branch.Common.Directory.Product.Path}\${Common.Directory.Production.Name}"  />
-		<property name="Branch.Common.Directory.UnitTest.Path"        value="${Branch.Common.Directory.Product.Path}\${Common.Directory.UnitTest.Name}"  />
-		<property name="Branch.Common.Directory.Install.Path"         value="${Branch.Common.Directory.Product.Path}\${Common.Directory.Install.Name}"  />
-		<property name="Branch.Common.Directory.Packages.Path"        value="${Branch.Common.Directory.Build.Path}\${Common.Directory.Packages.Name}"  />
-    <property name="Branch.Common.Directory.ArtifactRoot.Path"    value="${Branch.Common.Directory.Build.Path}\${Common.Directory.ArtifactRoot.Name}"/>
+		<property name="BranchProjectCodeLineDirectory" value="${ProjectRootDirectory}\${BranchName}" />
+		<property name="BranchProductDirectory"         value="${BranchProjectCodeLineDirectory}\${ProductDirectoryName}"  />
+		<property name="BranchThirdPartyDirectory"      value="${BranchProjectCodeLineDirectory}\${ThirdPartyDirectoryName}" />
+		<property name="BranchBuildDirectory"           value="${BranchProjectCodeLineDirectory}\${BuildDirectoryName}"  />
+		<property name="BranchProductionDirectory"      value="${BranchProductDirectory}\${ProductionDirectoryName}"  />
+		<property name="BranchUnitTestDirectory"        value="${BranchProductDirectory}\${UnitTestDirectoryName}"  />
+		<property name="BranchInstallDirectory"         value="${BranchProductDirectory}\${InstallDirectoryName}"  />
+		<property name="BranchPackagesDirectory"        value="${BranchBuildDirectory}\${PackagesDirectoryName}"  />
+    <property name="BranchArtifactRootDirectory"    value="${BranchBuildDirectory}\${ArtifactRootDirectoryName}"/>
 	</target>
 
 	<target name="AskForBuildServerPort" unless="${property::exists('BranchBuildServerPort')}">

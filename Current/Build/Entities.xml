@@ -4,29 +4,29 @@
 <!ENTITY LabelPrefix              '1.1.0.'>
 <!ENTITY ProjectName              'CI Factory' >
 <!ENTITY ProjectCodeLineName      'Current' >
-<!ENTITY Common.Directory.ProjectsRoot.Path        'c:\Projects' >
+<!ENTITY ProjectsDirectory        'c:\Projects' >
 
-<!ENTITY Common.Directory.Product.Name         'Product'>
-<!ENTITY Common.Directory.ThirdParty.Name      'Third Party' >
-<!ENTITY Common.Directory.Production.Name      'Production' >
-<!ENTITY Common.Directory.Build.Name           'Build' >
-<!ENTITY Common.Directory.ArtifactRoot.Name    'Artifacts' >
-<!ENTITY Common.Directory.Packages.Name        'Packages' >
-<!ENTITY Common.Directory.UnitTest.Name        'Unit Test' >
-<!ENTITY Common.Directory.Install.Name         'Install' >
+<!ENTITY ProductDirectoryName         'Product'>
+<!ENTITY ThirdPartyDirectoryName      'Third Party' >
+<!ENTITY ProductionDirectoryName      'Production' >
+<!ENTITY BuildDirectoryName           'Build' >
+<!ENTITY ArtifactRootDirectoryName    'Artifacts' >
+<!ENTITY PackagesDirectoryName        'Packages' >
+<!ENTITY UnitTestDirectoryName        'Unit Test' >
+<!ENTITY InstallDirectoryName         'Install' >
 
-<!ENTITY Common.Directory.ProjectRoot.Path     '&Common.Directory.ProjectsRoot.Path;\&ProjectName;' >
-<!ENTITY Common.Directory.CodeLine.Path '&Common.Directory.ProjectRoot.Path;\&ProjectCodeLineName;' >
-<!ENTITY Common.Directory.Product.Path         '&Common.Directory.CodeLine.Path;\&Common.Directory.Product.Name;' >
-<!ENTITY Common.Directory.ThirdParty.Path      '&Common.Directory.CodeLine.Path;\&Common.Directory.ThirdParty.Name;' >
-<!ENTITY Common.Directory.Production.Path      '&Common.Directory.Product.Path;\&Common.Directory.Production.Name;' >
-<!ENTITY Common.Directory.Build.Path           '&Common.Directory.CodeLine.Path;\&Common.Directory.Build.Name;' >
-<!ENTITY Common.Directory.ArtifactRoot.Path    '&Common.Directory.Build.Path;\&Common.Directory.ArtifactRoot.Name;' >
-<!ENTITY Common.Directory.Packages.Path        '&Common.Directory.Build.Path;\&Common.Directory.Packages.Name;' >
-<!ENTITY Common.Directory.UnitTest.Path      '&Common.Directory.Product.Path;\&Common.Directory.UnitTest.Name;' >
-<!ENTITY Common.Directory.Install.Path      '&Common.Directory.Product.Path;\&Common.Directory.Install.Name;' >
+<!ENTITY ProjectRootDirectory     '&ProjectsDirectory;\&ProjectName;' >
+<!ENTITY ProjectCodeLineDirectory '&ProjectRootDirectory;\&ProjectCodeLineName;' >
+<!ENTITY ProductDirectory         '&ProjectCodeLineDirectory;\&ProductDirectoryName;' >
+<!ENTITY ThirdPartyDirectory      '&ProjectCodeLineDirectory;\&ThirdPartyDirectoryName;' >
+<!ENTITY ProductionDirectory      '&ProductDirectory;\&ProductionDirectoryName;' >
+<!ENTITY BuildDirectory           '&ProjectCodeLineDirectory;\&BuildDirectoryName;' >
+<!ENTITY ArtifactRootDirectory    '&BuildDirectory;\&ArtifactRootDirectoryName;' >
+<!ENTITY PackagesDirectory        '&BuildDirectory;\&PackagesDirectoryName;' >
+<!ENTITY UnitTestDirectory      '&ProductDirectory;\&UnitTestDirectoryName;' >
+<!ENTITY InstallDirectory      '&ProductDirectory;\&InstallDirectoryName;' >
 
-<!ENTITY NantBinPath              '&Common.Directory.Build.Path;\nAnt\bin' >
+<!ENTITY NantBinPath              '&BuildDirectory;\nAnt\bin' >
 <!ENTITY NantExePath              '&NantBinPath;\nant.exe' >
 
 <!ENTITY webURL                   'http://&HostName;/&ProjectName;-&ProjectCodeLineName;/default.aspx?_action_ViewFarmReport=true'>

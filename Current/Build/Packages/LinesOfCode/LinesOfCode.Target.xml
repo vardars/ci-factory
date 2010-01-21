@@ -9,15 +9,15 @@
   </target>
   
   <target name="LinesOfCode.CountCodeLines">
-    <codestats output="${Common.Directory.Build.Path}\LinesOfCode\LinesOfCode.xml" append="true" buildname="${CCNetLabel}">
+    <codestats output="${BuildDirectory}\LinesOfCode\LinesOfCode.xml" append="true" buildname="${CCNetLabel}">
       <counts>
         <count label="C# (*.cs) Files">
-          <fileset basedir="${Common.Directory.Product.Path}">
+          <fileset basedir="${ProductDirectory}">
             <include name="**/*.cs" />
           </fileset>
         </count>
         <count label="VB (*.vb) Files">
-          <fileset basedir="${Common.Directory.Product.Path}">
+          <fileset basedir="${ProductDirectory}">
             <include name="**\*.vb" />
           </fileset>
         </count>

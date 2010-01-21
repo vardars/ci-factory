@@ -41,12 +41,12 @@
           <xmlpoke
             file="${nDepend.BuildFolder}\NDependOut\NDependReport.html"
             xpath="//IMG[@SRC = '${Image}']/@SRC"
-            value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Image}"
+            value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Image}"
           />
         </do>
       </loopthrough>
 
-      <copy todir="${Common.Directory.Artifact.Path}">
+      <copy todir="${Common.ArtifactDirectoryPath}">
         <fileset basedir="${nDepend.BuildFolder}\NDependOut">
 					<include name="NDependReport.html"/>
           <include name="*.png"/>

@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Workspace.VisualSourceSafe.Scripts">
 
 
-	<target name="Workspace.RequiredSoftware.VisualSourceSafe">
+	<target name="Workspace.RequieredSoftware.VisualSourceSafe">
 	</target>
 
 </project>

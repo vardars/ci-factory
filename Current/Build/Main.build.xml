@@ -6,16 +6,16 @@
   <include buildfile="Custom.Targets.xml" />
   
   <description>Begin Package Includes</description>
-  <include buildfile="${Common.Directory.Packages.Path}\SourceModificationReport\SourceModificationReport.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\Subversion\SourceControl.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\MSBuild\Compile.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\NCover\NCover.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\Simian\Simian.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\nDepend\nDepend.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\LinesOfCode\LinesOfCode.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\Deployment\Deployment.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\Versioning\Versioning.Target.xml" />
-  <include buildfile="${Common.Directory.Packages.Path}\FxCop\FxCop.Target.xml" />
+  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Target.xml" />
+  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
+  <include buildfile="${PackagesDirectory}\NCover\NCover.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Simian\Simian.Target.xml" />
+  <include buildfile="${PackagesDirectory}\nDepend\nDepend.Target.xml" />
+  <include buildfile="${PackagesDirectory}\LinesOfCode\LinesOfCode.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" />
+  <include buildfile="${PackagesDirectory}\Versioning\Versioning.Target.xml" />
+  <include buildfile="${PackagesDirectory}\FxCop\FxCop.Target.xml" />
   <description>End Package Includes</description>
   
   <target name="Triggered" depends="SetUps">
@@ -39,9 +39,9 @@
         <call target="Compile.CompileSource" />
         <description>End Compile Actions</description>
         
-        <description>Begin Verification Actions</description>
+        <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <description>End Verification Actions</description>
+        <description>End Varification Actions</description>
         
         <description>Begin Post Build Actions</description>
         <call target="Simian.Run"/>
@@ -72,21 +72,21 @@
         <call target="Compile.CompileSource" />
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
-        <description>Begin Verification Actions</description>
+        <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
+          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.Directory.Artifact.Path}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.Directory.Artifact.Path}\NAntTestReport.xml&quot;" />
+          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
-        <style in="${Common.Directory.Artifact.Path}\NAntTestReport.xml"
-               out="${Project.Directory.Report.Path}\NAntTestReport.xml"
-               style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
+        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
+               out="${Common.ReportDirectory}\NAntTestReport.xml"
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
-               if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>
+               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
-        <description>End Verification Actions</description>
+        <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
         <description>End Post Build Actions</description>
         <description>End Main Build</description>
@@ -110,44 +110,44 @@
         <call target="SourceModificationReport.PublishNewSource" />
         <description>End Clean Up Actions</description>
         <description>Begin Compile Actions</description>
-        <call target="Versioning.IncrementBuildNumberOfProduct" />
+        <call target="Versioning.IncreamentBuildNumberOfProduct" />
         <call target="Compile.CompileSource" />
         <call target="Custom.CreateDocumentation" />
         
         <call target="Custom.WriteReleaseNotes" />
-        <property name="Publish.Source.File.Name" value="CI Factory Release Notes.html" />
-        <property name="Publish.Source.Directory.Path" value="${Common.Directory.Production.Path}\CI Installer" />
-        <property name="Publish.Target.Directory.Path" value="${Common.Directory.Artifact.Path}" />
-        <property name="Publish.Target.File.Name" value="Release Notes ${CCNetLabel}.html" />
-        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Publish.Target.File.Name}" />
-        <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
-        <call target="Publish.File" />
+        <property name="Deployment.SourceFileName" value="CI Factory Release Notes.html" />
+        <property name="Deployment.SourceDir" value="${ProductionDirectory}\CI Installer" />
+        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <call target="Deployment.PublishFile" />
         
         <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
         <description>End Compile Actions</description>
-        <description>Begin Verification Actions</description>
+        <description>Begin Varification Actions</description>
         <call target="UnitTest.RunTests" />
-        <exec program="${Common.Directory.ThirdParty.Path}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${Common.Directory.Product.Path}\Integration Tests\TestRunner.Build.xml&quot;" />
+        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
+          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
           <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.Directory.Artifact.Path}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.Directory.Artifact.Path}\NAntTestReport.xml&quot;" />
+          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
+          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
         </exec>
-        <style in="${Common.Directory.Artifact.Path}\NAntTestReport.xml"
-               out="${Project.Directory.Report.Path}\NAntTestReport.xml"
-               style="${Common.Directory.Product.Path}\Integration Tests\IntegrationSummaryReport.xsl"
+        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
+               out="${Common.ReportDirectory}\NAntTestReport.xml"
+               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
                verbose="true"
-               if="${file::exists(Common.Directory.Artifact.Path + '\NAntTestReport.xml')}"/>
+               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
         <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
-        <description>End Verification Actions</description>
+        <description>End Varification Actions</description>
         <description>Begin Post Build Actions</description>
-        <property name="Publish.Source.File.Name" value="CIFactorySetup.exe" />
-        <property name="Publish.Source.Directory.Path" value="${Common.Directory.Product.Path}\Install\CI Factory" />
-        <property name="Publish.Target.Directory.Path" value="${Common.Directory.Artifact.Path}" />
-        <property name="Publish.Target.File.Name" value="CI-Factory-${CCNetLabel}.exe" />
-        <property name="Publish.Web.File.Path" value="${Publish.Web.Path.Root}/${Common.Directory.Artifact.Name}/${Publish.Target.File.Name}" />
-        <property name="Publish.Web.File.Name" value="${Publish.Target.File.Name}" />
-        <call target="Publish.File" />
+        <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
+        <property name="Deployment.SourceDir" value="${ProductDirectory}\Install\CI Factory" />
+        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
+        <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
+        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
+        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
+        <call target="Deployment.PublishFile" />
         <call target="Simian.Run"/>
         <call target="nDepend.Calculate" />
         <call target="LinesOfCode.CountCodeLines" />
@@ -172,7 +172,7 @@
     <call target="Simian.SetUp" />
     <call target="nDepend.SetUp" />
     <call target="LinesOfCode.SetUp" />
-    <call target="Publish.SetUp" />
+    <call target="Deployment.SetUp" />
     <description>End SetUps</description>
     <call target="FxCop.SetUp" />
   </target>
@@ -187,7 +187,7 @@
     <call target="Simian.TearDown" />
     <call target="nDepend.TearDown" />
     <call target="LinesOfCode.TearDown" />
-    <call target="Publish.TearDown" />
+    <call target="Deployment.TearDown" />
     <description>End TearDowns</description>
     <call target="FxCop.TearDown" />
   </target>

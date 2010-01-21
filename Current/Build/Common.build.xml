@@ -15,14 +15,14 @@
     </foreach>
   </target>
 
-  <property name="Common.Directory.Artifact.Name" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
-  <echo message="The Common.Directory.Artifact.Name is ${Common.Directory.Artifact.Name}"/>
-  <property name="Common.Directory.Artifact.Path" value="${Common.Directory.ArtifactRoot.Path}\${Common.Directory.Artifact.Name}"/>
+  <property name="Common.ArtifactFolderName" value="${string::replace(CCNetBuildDate, '-', '')}${string::replace(CCNetBuildTime, ':', '')}"/>
+  <echo message="The ArtifactFolderName is ${Common.ArtifactFolderName}"/>
+  <property name="Common.ArtifactDirectoryPath" value="${ArtifactRootDirectory}\${Common.ArtifactFolderName}"/>
 
-  <property name="Project.Directory.Report.Path" value="${Common.Directory.Build.Path}\Reports"/>
-  <property name="Project.Directory.Temp.Path" value="${Common.Directory.Build.Path}\Temp"/>
+  <property name="Common.ReportDirectory" value="${BuildDirectory}\Reports"/>
+  <property name="Common.TempDirectory" value="${BuildDirectory}\Temp"/>
   
-  <property name="Common.PropertiesFile" value="${Project.Directory.Temp.Path}\Properties.txt"/>
+  <property name="Common.PropertiesFile" value="${Common.TempDirectory}\Properties.txt"/>
   <target name="Common.CreatePropertiesFile">
     <delete file="${Common.PropertiesFile}" if ="${file::exists(Common.PropertiesFile)}" />
     <property name="Compile.ConfigName" value="Debug" overwrite="false"/>
@@ -39,34 +39,34 @@
       <property name="EmailHost"/>
       <property name="ProjectName"/>
       <property name="ProjectCodeLineName"/>
-      <property name="Common.Directory.ProjectsRoot.Path"/>
-      <property name="Common.Directory.ProjectRoot.Path"/>
-      <property name="Common.Directory.CodeLine.Path"/>
-      <property name="Common.Directory.Product.Path"/>
-      <property name="Common.Directory.ThirdParty.Path"/>
-      <property name="Common.Directory.Production.Path"/>
-      <property name="Common.Directory.Build.Path"/>
+      <property name="ProjectsDirectory"/>
+      <property name="ProjectRootDirectory"/>
+      <property name="ProjectCodeLineDirectory"/>
+      <property name="ProductDirectory"/>
+      <property name="ThirdPartyDirectory"/>
+      <property name="ProductionDirectory"/>
+      <property name="BuildDirectory"/>
       <property name="Compile.ConfigName"/>
-      <property name="Common.Directory.ArtifactRoot.Path" value="${Common.Directory.ArtifactRoot.Path}"/>
-      <property name="NantExePath" value="${Common.Directory.Build.Path}\nAnt\bin\nant.exe"/>
-      <property name="Common.Directory.Packages.Path" value="${Common.Directory.Packages.Path}"/>
-      <property name="Common.Directory.Artifact.Path"/>
-      <property name="Common.Directory.Artifact.Name"/>
-      <property name="Project.Directory.Report.Path"/>
-      <property name="Project.Directory.Temp.Path"/>
-      <property name="Common.Directory.UnitTest.Path"/>
-      <property name="Common.Directory.Install.Path"/>
+      <property name="ArtifactRootDirectory" value="${ArtifactRootDirectory}"/>
+      <property name="NantExePath" value="${BuildDirectory}\nAnt\bin\nant.exe"/>
+      <property name="PackagesDirectory" value="${PackagesDirectory}"/>
+      <property name="Common.ArtifactDirectoryPath"/>
+      <property name="Common.ArtifactFolderName"/>
+      <property name="Common.ReportDirectory"/>
+      <property name="Common.TempDirectory"/>
+      <property name="UnitTestDirectory"/>
+      <property name="InstallDirectory"/>
     </saveproperties>
   </target>
 
   <target name="Common.SetUp">
-    <mkdir dir="${Common.Directory.Artifact.Path}" unless="${directory::exists(Common.Directory.Artifact.Path)}" verbose="true"/>
+    <mkdir dir="${Common.ArtifactDirectoryPath}" unless="${directory::exists(Common.ArtifactDirectoryPath)}" verbose="true"/>
 
-    <delete dir="${Project.Directory.Report.Path}" if="${directory::exists(Project.Directory.Report.Path)}"/>
-    <mkdir dir="${Project.Directory.Report.Path}"/>
+    <delete dir="${Common.ReportDirectory}" if="${directory::exists(Common.ReportDirectory)}"/>
+    <mkdir dir="${Common.ReportDirectory}"/>
 
-    <delete dir="${Project.Directory.Temp.Path}" if="${directory::exists(Project.Directory.Temp.Path)}"/>
-    <mkdir dir="${Project.Directory.Temp.Path}"/>
+    <delete dir="${Common.TempDirectory}" if="${directory::exists(Common.TempDirectory)}"/>
+    <mkdir dir="${Common.TempDirectory}"/>
 
     <call target="Common.CreatePropertiesFile"/>
   </target>
@@ -88,7 +88,7 @@
 <HTML>
   <HEAD>
               <title>Build Report</title>
-              <link type="text/css" rel="stylesheet" href="file://${Common.Directory.Build.Path}\dashboard\cruisecontrol.css"/>
+              <link type="text/css" rel="stylesheet" href="file://${BuildDirectory}\dashboard\cruisecontrol.css"/>
   </HEAD>
   <body>]]>
       </value>
@@ -107,7 +107,7 @@
         <xmlpoke
           file="${Common.ShowReport.HtmlFile}"
           xpath="//img[@src = '${Image}']/@src"
-          value="file://${Common.Directory.Build.Path}/${Image}"
+          value="file://${BuildDirectory}/${Image}"
           />
       </do>
     </loopthrough>
@@ -123,7 +123,7 @@
         <xmlpoke
           file="${Common.ShowReport.DetailsFilePath}"
           xpath="//img[@src = '${Image}']/@src"
-          value="file://${Common.Directory.Build.Path}/${string::replace(string::replace(string::trim(Image), '&#xD;', ''), '&#xA;', '')}"
+          value="file://${BuildDirectory}/${string::replace(string::replace(string::trim(Image), '&#xD;', ''), '&#xA;', '')}"
           />
       </do>
     </loopthrough>
@@ -149,7 +149,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
       </value>
     </largeproperty>
 
-    <xmlquery query='/cruisecontrol/project/@name' file='${Common.Directory.Build.Path}\ccnetproject.xml' id='CCNetProjects' />
+    <xmlquery query='/cruisecontrol/project/@name' file='${BuildDirectory}\ccnetproject.xml' id='CCNetProjects' />
     <property name='CCTrayProjects' value=''/>
 
     <loopthrough property='CCNetProjectName'>
@@ -166,7 +166,7 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
       </do>
     </loopthrough>
 
-    <property name="SfxConfig.FilePath" value="${Common.Directory.Build.Path}\SfxConfig.txt"/>
+    <property name="SfxConfig.FilePath" value="${BuildDirectory}\SfxConfig.txt"/>
     <echo message="${SfxConfig.Content}" file="${SfxConfig.FilePath}"/>
 
     <largeproperty name="CCTraySettings.Content">
@@ -210,26 +210,26 @@ Setup=cmd /C copy "%ProgramFiles%\cctray\cctray.exe.lnk" "%APPDATA%\Microsoft\Wi
     </largeproperty>
 
 		<property name="CCTraySettings.FileName" value="Settings.xml"/>
-    <property name="CCTraySettings.FilePath" value="${Common.Directory.Build.Path}\${CCTraySettings.FileName}"/>
+    <property name="CCTraySettings.FilePath" value="${BuildDirectory}\${CCTraySettings.FileName}"/>
     <echo message="${CCTraySettings.Content}" file="${CCTraySettings.FilePath}"/>
 
     <property name="WinRarProgramPath" value="${environment::get-variable('ProgramFiles')}\winrar\winrar.exe" overwrite="false"/>
-    <property name="CCTraySetupExe.FilePath" value="${Common.Directory.Build.Path}\dashboard\cctray\CCTraySetup.exe"/>
+    <property name="CCTraySetupExe.FilePath" value="${BuildDirectory}\dashboard\cctray\CCTraySetup.exe"/>
 
-    <property name="CCTrayZip.FilePath" value="${Common.Directory.Build.Path}\dashboard\cctray\cctray.zip"/>
+    <property name="CCTrayZip.FilePath" value="${BuildDirectory}\dashboard\cctray\cctray.zip"/>
     <if test="${file::exists(CCTrayZip.FilePath)}">
       <delete file="${CCTraySetupExe.FilePath}" if="${file::exists(CCTraySetupExe.FilePath)}" />
       <exec program="${WinRarProgramPath}"
             commandline='s -ibck "${CCTrayZip.FilePath}" c -z"${SfxConfig.FilePath}"'
-            workingdir='${Common.Directory.Build.Path}'
+            workingdir='${BuildDirectory}'
             verbose='true'/>
       <delete file='${CCTrayZip.FilePath}' if='${file::exists(CCTrayZip.FilePath)}' />
-      <move file='${Common.Directory.Build.Path}\dashboard\cctray\cctray.exe' tofile='${CCTraySetupExe.FilePath}' />
+      <move file='${BuildDirectory}\dashboard\cctray\cctray.exe' tofile='${CCTraySetupExe.FilePath}' />
     </if>
 
     <exec program="${WinRarProgramPath}"
 				  commandline='u -ibck -r "${CCTraySetupExe.FilePath}" ${CCTraySettings.FileName} c -z"${SfxConfig.FilePath}" -sfx'
-				  workingdir='${Common.Directory.Build.Path}'/>
+				  workingdir='${BuildDirectory}'/>
 
 		<delete file="${SfxConfig.FilePath}" />
 		<delete file="${CCTraySettings.FilePath}" />

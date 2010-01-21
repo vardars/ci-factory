@@ -5,12 +5,12 @@
   <property name="SVN.URI.ProjectName" value="https://ci-factory.googlecode.com/svn" overwrite="false" />
   <property name="SVN.URI.ProjectCodeLine" value="https://ci-factory.googlecode.com/svn/Current" overwrite="false" />
   
-  <ifthenelse test="${file::exists(Common.Directory.Packages.Path + '\Subversion\SourceControl.Credentials.xml')}">
+  <ifthenelse test="${file::exists(PackagesDirectory + '\Subversion\SourceControl.Credentials.xml')}">
     <then>
-      <include buildfile="${Common.Directory.Packages.Path}\Subversion\SourceControl.Credentials.xml" />
+      <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml" />
     </then>
     <else>
-      <echo level="Warning" message="SourceControl.Credentials.xml was not found. This might be okay, if say you are running a personal build."/>
+      <echo level="Warning" message="${PackagesDirectory}\Subversion\SourceControl.Credentials.xml was not found. This might be okay, if say you are running a personal build."/>
     </else>
   </ifthenelse>
   

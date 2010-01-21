@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd"  name="Coverage.Properties">
   
-  <property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\CoverageReports" overwrite="false"/>
+  <property name="Coverage.ReportFolder" value="${BuildDirectory}\CoverageReports" overwrite="false"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt"  overwrite="false" />
   <property name="Coverage.UnitTestPackageInclude" value="c:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\UnitTest.Target.xml"  overwrite="false" />
   <property name="Coverage.UnitTestPropertiesInclude" value="c:\Projects\CI Factory\Current\Build\Packages\DotNetUnitTest\UnitTest.Properties.xml"  overwrite="false" />
@@ -9,8 +9,8 @@
   <property name="Coverage.TargetAssemblyFormat" value="${ProjectName}.*.dll" overwrite="false"/>
     
   <fileset id="Coverage.Target.ProjectFiles">
-    <include name="${Common.Directory.Production.Path}\CCNet\**\*.*proj"/>
-    <include name="${Common.Directory.Production.Path}\NAnt\**\*.*proj"/>
+    <include name="${ProductionDirectory}\CCNet\**\*.*proj"/>
+    <include name="${ProductionDirectory}\NAnt\**\*.*proj"/>
   </fileset>
 
   <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>

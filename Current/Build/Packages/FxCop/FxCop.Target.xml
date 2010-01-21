@@ -27,8 +27,8 @@
       <if test="${file::exists(FxCop.ReportFolder + '\FxCopReport.xml')}">
 
         <style in="${FxCop.ReportFolder}\FxCopReport.xml"
-               out="${Common.Directory.Artifact.Path}\FxCopReport.html"
-               style="${Common.Directory.Packages.Path}\FxCop\FxCopReport.xsl"/>
+               out="${Common.ArtifactDirectoryPath}\FxCopReport.html"
+               style="${PackagesDirectory}\FxCop\FxCopReport.xsl"/>
       </if>
     </if>
   </target>

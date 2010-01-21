@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Alerts.UnitTests.Scripts">
 
-  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${Common.Directory.Packages.Path}\Alerts\UnitTests\Previous.Properties.xml"/>
+  <property name="Alerts.UnitTests.PreviousPropertiesFilePath" value="${PackagesDirectory}\Alerts\UnitTests\Previous.Properties.xml"/>
   <ifthenelse test="${file::exists(Alerts.UnitTests.PreviousPropertiesFilePath)}">
     <then>
       <include buildfile="${Alerts.UnitTests.PreviousPropertiesFilePath}" />
@@ -21,7 +21,7 @@
 		<property name="Alerts.UnitTests.Count" value="notset"/>
 
 		<switch value="True">
-			<case value="${directory::exists(Common.Directory.Packages.Path + '\MSTest')}" break="true">
+			<case value="${directory::exists(PackagesDirectory + '\MSTest')}" break="true">
 				<xmlpeek
 					file="${Alerts.BuildLog}"
 					xpath="//Tests/TestRun/result/totalTestCount"
@@ -30,9 +30,9 @@
 					failonerror="false"
 				/>			 
 			</case>
-			<case value="${directory::exists(Common.Directory.Packages.Path + '\DotNetUnitTest')}" break="true">
+			<case value="${directory::exists(PackagesDirectory + '\DotNetUnitTest')}" break="true">
 				<xmlpeek
-					file="${Common.Directory.Artifact.Path}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"
+					file="${Common.ArtifactDirectoryPath}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"
 					xpath="sum(//report-result/counter/@run-count)"
 					property="Alerts.UnitTests.Count"
 					nodeindex="0"

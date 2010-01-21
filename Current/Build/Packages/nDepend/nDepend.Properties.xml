@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="nDepend.Properties" >
 
-  <property name="nDepend.BinFolder" value="${Common.Directory.Build.Path}\Packages\nDepend\bin"/>
+  <property name="nDepend.BinFolder" value="${BuildDirectory}\Packages\nDepend\bin"/>
   <property name="nDepend.Console" value="${nDepend.BinFolder}\NDepend.Console.exe" />
 
-  <property name="nDepend.BuildFolder" value="${Common.Directory.Build.Path}\nDepend"/>
+  <property name="nDepend.BuildFolder" value="${BuildDirectory}\nDepend"/>
   <property name="nDepend.ConfigurationFile" value="${nDepend.BuildFolder}\Configuration.xml" />
   <property name="nDepend.ReportFolder" value="${nDepend.BuildFolder}\Report"/>
   <property name="nDepend.AssembliesFolder" value="${nDepend.BuildFolder}\Assemblies"/>
 
   <fileset id="nDepend.Target.ProjectFiles" >
-    <include name="${Common.Directory.Production.Path}\Common\**\*.*proj"/>
-    <include name="${Common.Directory.Production.Path}\CCNet\**\*.*proj"/>
-    <include name="${Common.Directory.Production.Path}\NAnt\**\*.*proj"/>
+    <include name="${ProductionDirectory}\Common\**\*.*proj"/>
+    <include name="${ProductionDirectory}\CCNet\**\*.*proj"/>
+    <include name="${ProductionDirectory}\NAnt\**\*.*proj"/>
   </fileset>
 
   <fileset id="nDepend.DependenciesFileSet" >
-    <include name="${Common.Directory.ThirdParty.Path}\**\*.dll"/>
-    <include name="${Common.Directory.ThirdParty.Path}\**\*.exe"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\MbUnit\*.*"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\ICSharpCode\scvs.exe"/>
+    <include name="${ThirdPartyDirectory}\**\*.dll"/>
+    <include name="${ThirdPartyDirectory}\**\*.exe"/>
+    <exclude name="${ThirdPartyDirectory}\MbUnit\*.*"/>
+    <exclude name="${ThirdPartyDirectory}\ICSharpCode\scvs.exe"/>
 
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\intl3_svn.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\libapr.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\libapriconv.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\libaprutil.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\libdb44d.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\libeay32.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\ssleay32.dll"/>
-    <exclude name="${Common.Directory.ThirdParty.Path}\Svn.Net\svn_client-1.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\intl3_svn.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libapr.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libapriconv.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libaprutil.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libdb44d.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\libeay32.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\ssleay32.dll"/>
+    <exclude name="${ThirdPartyDirectory}\Svn.Net\svn_client-1.dll"/>
     
   </fileset>
 

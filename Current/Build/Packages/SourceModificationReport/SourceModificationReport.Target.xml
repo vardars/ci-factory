@@ -2,14 +2,14 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="SourceModificationReport">
 
 	<include buildfile="SourceModificationReport.Properties.xml" />
-	<property name="SourceModificationReport.ReportDirectory" value="${Common.Directory.Build.Path}\SourceModificationReports" overwrite="false"/>
+	<property name="SourceModificationReport.ReportDirectory" value="${BuildDirectory}\SourceModificationReports" overwrite="false"/>
 	<property name="SourceModificationReport.ReportFile" value="${SourceModificationReport.ReportDirectory}\SourceModificationReport.xml" overwrite="false"/>
 	<property name="SourceModificationReport.FilesToDeleteAtSetup" value="" overwrite="false"/>
 
 	<!--
   The following properties should be specified in the calling script.
   
-  <property name="SourceModificationReportDirectory" value="${Common.Directory.Build.Path}\SourceModificationReports" />
+  <property name="SourceModificationReportDirectory" value="${BuildDirectory}\SourceModificationReports" />
   -->
 
 	<!-- The following properties are for internal use only -->
@@ -23,7 +23,7 @@
 	<target name="SourceModificationReport.GetOldestModificationTime">
 		<script language="VB">
 			<references>
-				<include name="${Common.Directory.Build.Path}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+				<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
 			</references>
 			<imports >
 				<import namespace="System.Xml"/>
@@ -72,7 +72,7 @@
 		<if test="${CCNetLastIntegrationStatus   != 'Success' and file::exists(Private.SourceModificationReport.OldSourceModificationReportFile)}" >
 			<script language="VB">
 				<references>
-					<include name="${Common.Directory.Build.Path}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
+					<include name="${BuildDirectory}\nAnt\bin\ThoughtWorks.CruiseControl.Core.dll" />
 				</references>
 				<imports >
 					<import namespace="System.Xml"/>
@@ -135,14 +135,14 @@
 			  tofile="${Private.SourceModificationReport.OldSourceModificationReportFile}"
 			  verbose="true"
 		/>
-    <copy todir="${Common.Directory.Artifact.Path}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
+    <copy todir="${Common.ArtifactDirectoryPath}" file="${SourceModificationReport.ReportFile}" if="${file::exists(SourceModificationReport.ReportFile)}" />
 	</target>
 
 	<target name="SourceModificationReport.PublishOldSource">
 		<mkdir dir="${SourceModificationReport.OldSourcePath}" unless="${directory::exists(SourceModificationReport.OldSourcePath)}"/>
 
 		<copy todir="${SourceModificationReport.OldSourcePath}" verbose="true">
-			<fileset basedir="${Common.Directory.Product.Path}" refid="SourceModificationReport.ModificationList" />
+			<fileset basedir="${ProductDirectory}" refid="SourceModificationReport.ModificationList" />
 		</copy>
 	</target>
 
@@ -155,7 +155,7 @@
 	</target>
 
 	<target name="SourceModificationReport.CreateModificationList">
-		<fileset  basedir="${Common.Directory.Product.Path}" id="SourceModificationReport.ModificationList" />
+		<fileset  basedir="${ProductDirectory}" id="SourceModificationReport.ModificationList" />
 
 		<xmlquery
 		  file="${SourceModificationReport.ReportFile}"
@@ -182,7 +182,7 @@
 					<try>
 						<regex input="${DirtySCPath}" pattern=".*${ProjectCodeLineName}(/|\\)Product(/|\\|)(?'CleanSCPath'.*)"/>
 						<property name="PartialModificationFilePath" value="${path::combine(CleanSCPath, FileName)}"/>
-						<property name="ModificationFilePath" value="${path::combine(Common.Directory.Product.Path, PartialModificationFilePath)}"/>
+						<property name="ModificationFilePath" value="${path::combine(ProductDirectory, PartialModificationFilePath)}"/>
 
 						<echo message="Adding ${ModificationFilePath} to modification list."/>
 

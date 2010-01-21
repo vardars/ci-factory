@@ -3,11 +3,11 @@
   <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll"/>
   
   <fileset id="UnitTest.ProjectFiles">
-    <include name="${Common.Directory.UnitTest.Path}\**\*.*proj"/>
-    <exclude name="${Common.Directory.UnitTest.Path}\**\TestAssistance.NAnt.*proj"/>
+    <include name="${UnitTestDirectory}\**\*.*proj"/>
+    <exclude name="${UnitTestDirectory}\**\TestAssistance.NAnt.*proj"/>
   </fileset>
   
-  <property name="UnitTest.ReportFolder" value="${Common.Directory.Build.Path}\Unit Test Reports"/>
+  <property name="UnitTest.ReportFolder" value="${BuildDirectory}\Unit Test Reports"/>
   <property name="UnitTest.ReportNameFormat" value="${string::replace(ProjectName, ' ', '_')}UnitTests"/>
   <property name="UnitTest.ReportFormat" value="Xml" overwrite="false"/>
 

@@ -6,7 +6,7 @@
   <include buildfile="UnitTest.Properties.xml" />
 
 	<target name="UnitTest.LoadTasks">
-		<loadtasks assembly="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.Tasks.dll" />
+		<loadtasks assembly="${ThirdPartyDirectory}\MbUnit\MbUnit.Tasks.dll" />
 	</target>
 		 
 	<!--
@@ -37,7 +37,7 @@
     </foreach>
 
     <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
-      <call target="UnitTest.FindTestAssemblies"/>
+      <call target="UnitTest.FindTestAssebmlies"/>
     </if>
 
 		<if test="${fileset::file-count('UnitTest.TestAssemblies') != 0}">
@@ -59,13 +59,13 @@
 
         <copy 
 					file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' 
-					todir='${Common.Directory.Artifact.Path}' 
+					todir='${Common.ArtifactDirectoryPath}' 
 					if="${UnitTest.PublishXmlReport and file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"
 				/>
 
         <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
-               out="${Common.Directory.Artifact.Path}\MbUnitReport.html"
-               style="${Common.Directory.Packages.Path}\DotNetUnitTest\MBUnitDetails.xsl"
+               out="${Common.ArtifactDirectoryPath}\MbUnitReport.html"
+               style="${PackagesDirectory}\DotNetUnitTest\MBUnitDetails.xsl"
                if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
 			</finally>
 		</trycatch>
@@ -82,7 +82,7 @@
         <property name="MbUnit.InTarget.Path" value="${UnitTest.Target.Directory}\MbUnit.Framework.dll"/>
         <ifnot test="${file::exists(MbUnit.InTarget.Path)}">
           <copy todir="${UnitTest.Target.Directory}">
-            <fileset basedir="${Common.Directory.ThirdParty.Path}\MbUnit">
+            <fileset basedir="${ThirdPartyDirectory}\MbUnit">
               <include name="MbUnit.Framework.dll"/>
               <include name="QuickGraph.Algorithms.dll"/>
               <include name="QuickGraph.dll"/>
@@ -95,10 +95,10 @@
     </foreach>
   </target>
 
-  <target name="UnitTest.FindTestAssemblies">
+  <target name="UnitTest.FindTestAssebmlies">
     <fileset id="UnitTest.TestAssemblies" >
-      <include name="${Common.Directory.UnitTest.Path}\**\bin\${UnitTest.TestAssemblyFormat}" />
-      <include name="${Common.Directory.UnitTest.Path}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTestDirectory}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${UnitTestDirectory}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
     </fileset>
   </target>
 
@@ -107,13 +107,13 @@
     <style
       in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
       out="${UnitTest.ReportFolder}\Summary.xml"
-      style="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\MBUnitSummary.xsl"
+      style="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitSummary.xsl"
     />
 
     <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\Summary.xml"/>
     <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
-    <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\MBUnitDisplaySummary.xsl"/>
-    <property name="Common.ShowReport.DetailsFilePath" value="${Common.Directory.Artifact.Path}\MbUnitReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${BuildDirectory}\Packages\DotNetUnitTest\MBUnitDisplaySummary.xsl"/>
+    <property name="Common.ShowReport.DetailsFilePath" value="${Common.ArtifactDirectoryPath}\MbUnitReport.html"/>
     <call target="Common.ShowReport"/>
   </target>
 
