@@ -12,10 +12,10 @@
   </target>
 
   <target name="Workspace.ValidateParameters">
-    <call target="WinRar.InsureInstallationExists"/>
+    <call target="WinRar.EnsureInstallationExists"/>
   </target>
 
-  <target name="WinRar.InsureInstallationExists" unless="${file::exists(property::expand(WinRarProgramPath))}">
+  <target name="WinRar.EnsureInstallationExists" unless="${file::exists(property::expand(WinRarProgramPath))}">
     <ask answer="Answer"
            question="It looks like WinRar 3.71 is not installed.  This software is required.  Do you wish to install the software?"
            caption="WinRar is Required Software!"

@@ -29,11 +29,11 @@
   <target name="Alerts.ValidateParameters">
     <property name="XmlDiffPath" value="${environment::get-variable('ProgramFiles')}\XmlDiffPatch\Bin\XmlDiff.exe"/>
     <if test="${stringlist::contains('Packages.InstallList', 'Simian')}">
-      <call target="Alerts.InsureXmlDiffInstallationExists"/>
+      <call target="Alerts.EnsureXmlDiffInstallationExists"/>
     </if>
   </target>
 
-  <target name="Alerts.InsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">
+  <target name="Alerts.EnsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">
     <ask answer="Answer"
            question="It looks like XmlDiff is not installed.  This software is required.  Do you wish to install the software?"
            caption="XmlDiff is Required Software!"

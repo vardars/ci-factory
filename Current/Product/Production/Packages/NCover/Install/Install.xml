@@ -40,7 +40,7 @@
   <target name="NCover.ValidateParameters">
     <fail unless="${property::exists('Coverage.UnitTestPackageInclude')}" message="Please set the property Coverage.UnitTestPackageInclude"/>
     <fail unless="${property::exists('Coverage.UnitTestPropertiesInclude')}" message="Please set the property Coverage.UnitTestPropertiesInclude"/>
-    <call target="NCover.InsureNCoverInstallation"/>
+    <call target="NCover.EnsureNCoverInstallation"/>
 
 		<if test="${not property::exists('NCover.ProcessToMonitor')}">
 			<property name="NCover.ProcessToMonitor" value="" />
@@ -48,9 +48,9 @@
 		<function execute="${filterchain::replacestring-add('Common.FilterChain', '%NCover.ProcessToMonitor%', NCover.ProcessToMonitor)}"/>
   </target>
 
-  <target name="NCover.InsureNCoverInstallation" >
-    <call target="NCover.InsureNCoverInstallation.Exists"/>
-    <call target="NCover.InsureNCoverInstallation.Version" if="${file::exists(property::expand(NCover.ExePath))}"/>
+  <target name="NCover.EnsureNCoverInstallation" >
+    <call target="NCover.EnsureNCoverInstallation.Exists"/>
+    <call target="NCover.EnsureNCoverInstallation.Version" if="${file::exists(property::expand(NCover.ExePath))}"/>
     <call target="NCover.Install.NCover" if="${NCover.Install.IsNeeded}"/>
   </target>
 
@@ -71,7 +71,7 @@
     </if>
   </target>
 
-  <target name="NCover.InsureNCoverInstallation.Exists" unless="${file::exists(property::expand(NCover.ExePath))}">
+  <target name="NCover.EnsureNCoverInstallation.Exists" unless="${file::exists(property::expand(NCover.ExePath))}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The file ${property::expand(NCover.ExePath)} could not be found.
@@ -93,7 +93,7 @@ More information on NCover can be found at http://www.ncover.org]]>
   <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
 </target>
 
-<target name="NCover.InsureNCoverInstallation.Version" unless="${file::get-version(property::expand(NCover.ExePath)) == NCover.Version}">
+<target name="NCover.EnsureNCoverInstallation.Version" unless="${file::get-version(property::expand(NCover.ExePath)) == NCover.Version}">
     <largeproperty name="NCover.Ask.Question">
       <value xml="false" expand="true">
         <![CDATA[The version of NCover found, ${file::get-version(property::expand(NCover.ExePath))}, is not supported.

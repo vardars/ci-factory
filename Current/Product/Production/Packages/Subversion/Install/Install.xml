@@ -48,10 +48,10 @@
   </target>
 
   <target name="Subversion.ValidateParameters">
-    <call target="Subversion.InsureInstallationExists"/>
+    <call target="Subversion.EnsureInstallationExists"/>
   </target>
 
-  <target name="Subversion.InsureInstallationExists" unless="${directory::exists(property::expand(SvnBinPath))}">
+  <target name="Subversion.EnsureInstallationExists" unless="${directory::exists(property::expand(SvnBinPath))}">
     <ask answer="Answer"
            question="It looks like Subversion is not installed.  This software is required.  Do you wish to install the software?"
            caption="Subversion is Required Software!"

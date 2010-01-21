@@ -35,10 +35,10 @@
   </target>
 
   <target name="FxCop.ValidateParameters">
-    <call target="FxCop.InsureInstallationExists"/>
+    <call target="FxCop.EnsureInstallationExists"/>
   </target>
 
-  <target name="FxCop.InsureInstallationExists" unless="${directory::exists(property::expand(FxCop.BinFolder))}">
+  <target name="FxCop.EnsureInstallationExists" unless="${directory::exists(property::expand(FxCop.BinFolder))}">
     <ask answer="Answer"
            question="It looks like FxCop 1.35 is not installed.  This software is required.  Do you wish to install the software?"
            caption="FxCop is Required Software!"

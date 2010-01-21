@@ -79,7 +79,7 @@
           </loopthrough>
 
           <ask answer="trash"
-             question="Please insure that IBM Websphere Application Server is not currently running before continuing."
+             question="Please ensure that IBM Websphere Application Server is not currently running before continuing."
              caption="Is IBM Websphere Application Server Running?"
              showdialog="true"
              unless="${Workspace.Silent}"
