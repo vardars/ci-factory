@@ -133,7 +133,7 @@ namespace ThoughtWorks.CruiseControl.Core.Tasks
 			foreach (string key in result.IntegrationProperties.Keys)
 			{
 				object value = result.IntegrationProperties[key];
-				if (value != null)
+                if (value != null && !StringUtil.IsBlank(value.ToString()))
 					buffer.AppendArgument(string.Format("-D:{0}={1}", key, SurroundInQuotesIfContainsSpace(RemoveTrailingSlash(value.ToString()))));
 			}
 		}

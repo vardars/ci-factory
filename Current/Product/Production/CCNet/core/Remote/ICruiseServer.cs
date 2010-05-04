@@ -1,6 +1,7 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Remote
 {
@@ -47,7 +48,7 @@ namespace ThoughtWorks.CruiseControl.Remote
         ProjectStatus[] GetProjectStatusLite();
         ProjectStatus GetProjectStatusLite(string projectName);
 
-		bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo);
+		bool ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo);
 
 		void WaitForExit(string projectName);
 		

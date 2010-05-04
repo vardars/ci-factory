@@ -101,7 +101,7 @@ namespace CIFactory.TargetProcess.NAnt.Tasks
         {
             ProjectService projectService = ServicesCF.GetService<ProjectService>();
 
-            string hqlQuery = "select from Project as project where project.Name = ?";
+            string hqlQuery = "from Project as project where project.Name = ?";
             ProjectDTO[] projects = projectService.Retrieve(hqlQuery, new object[] { this.TargetProcessProject });
 
             if (projects.Length == 0)

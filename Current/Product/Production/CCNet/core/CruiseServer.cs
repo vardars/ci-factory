@@ -121,9 +121,9 @@ namespace ThoughtWorks.CruiseControl.Core
             }
         }
 
-        public bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
+        public bool ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo)
         {
-            return GetIntegrator(projectName).ForceBuild(clientInfo);
+            return GetIntegrator(projectName).ForceBuild(webParams, clientInfo);
         }
 
         

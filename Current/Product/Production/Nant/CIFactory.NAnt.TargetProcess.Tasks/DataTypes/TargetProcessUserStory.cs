@@ -181,7 +181,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         private int FindUserStoryId()
         {
-            string hqlQuery = "select from UserStory as story where story.Name = ?";
+            string hqlQuery = "from UserStory as story where story.Name = ?";
             UserStoryDTO[] storyies = StoryService.Retrieve(hqlQuery, new object[] { this.EntityName });
 
             if (storyies.Length == 0)

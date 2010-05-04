@@ -162,10 +162,10 @@ namespace CCNet.Server.Aggregator
 			}
         }
 
-        public bool  ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
+        public bool  ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo)
         {
             Log.Debug(string.Format("Forcing {0}.", projectName));
-            return this.Projects[projectName].ForceBuild(projectName, clientInfo);
+            return this.Projects[projectName].ForceBuild(projectName, webParams, clientInfo);
         }
 
         public string[]  GetBuildNames(string projectName)

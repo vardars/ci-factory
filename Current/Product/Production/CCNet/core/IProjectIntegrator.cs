@@ -1,4 +1,5 @@
 using ThoughtWorks.CruiseControl.Remote;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -44,6 +45,6 @@ namespace ThoughtWorks.CruiseControl.Core
 		/// </summary>
 		ProjectIntegratorState State { get; }
 
-		bool ForceBuild(ForceFilterClientInfo[] clientInfo);
+		bool ForceBuild(Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo);
 	}
 }

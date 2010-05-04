@@ -176,7 +176,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         private int FindBugIdByName(string entityName)
         {
-            string hqlQuery = "select from Bug as bug where bug.Name = ?";
+            string hqlQuery = "from Bug as bug where bug.Name = ?";
             BugDTO[] bugs = BugService.Retrieve(hqlQuery, new object[] { entityName });
 
             if (bugs.Length == 0)
@@ -189,7 +189,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         {
             UserStoryWebService.UserStoryService storyService = ServicesCF.GetService<UserStoryWebService.UserStoryService>();
 
-            string hqlQuery = "select from UserStory as story where story.Name = ?";
+            string hqlQuery = "from UserStory as story where story.Name = ?";
             UserStoryWebService.UserStoryDTO[] storyies = storyService.Retrieve(hqlQuery, new object[] { userStory });
 
             if (storyies.Length == 0)

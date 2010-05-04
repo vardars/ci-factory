@@ -3,6 +3,7 @@ using System.Threading;
 using ThoughtWorks.CruiseControl.Core.Triggers;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -146,9 +147,26 @@ namespace ThoughtWorks.CruiseControl.Core
 			}
 		}
 
-		public bool ForceBuild(ForceFilterClientInfo[] clientInfo)
-		{
-			IIntegrationResult result = result = resultManager.StartNewIntegration();
+        public bool ForceBuild(Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo)
+        {
+            IIntegrationResult result = null;
+            try
+            {
+                result = resultManager.StartNewIntegration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return false;
+            }
+            if (webParams != null)
+            {
+                foreach (KeyValuePair<string, string> webParam in webParams)
+                {
+                    result.AddIntegrationProperty(webParam.Key, webParam.Value);
+                }
+            }
+
 			if (this.Project.ForceFilters != null && this.Project.ForceFilters.Length != 0)
 			{
 				foreach (IForceFilter Filter in this.Project.ForceFilters)
@@ -279,9 +297,17 @@ namespace ThoughtWorks.CruiseControl.Core
 
                 if (ShouldIntegration != BuildCondition.NoBuild)
                 {
-                    this.IntegrationResult = resultManager.StartNewIntegration();
-                    this.IntegrationResult.BuildCondition = ShouldIntegration;
-                    return true;
+                    try
+                    {
+                        this.IntegrationResult = resultManager.StartNewIntegration();
+                        this.IntegrationResult.BuildCondition = ShouldIntegration;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                        return false;
+                    }
                 }
                 return false;
             }
@@ -310,7 +336,7 @@ namespace ThoughtWorks.CruiseControl.Core
             get
             {
                 if (_IntegrationResult == null)
-                    _IntegrationResult = resultManager.StartNewIntegration();
+                    _IntegrationResult = resultManager.LastIntegrationResult;
                 return this._IntegrationResult;
             }
         }

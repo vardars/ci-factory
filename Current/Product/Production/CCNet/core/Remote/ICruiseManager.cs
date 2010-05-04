@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 namespace ThoughtWorks.CruiseControl.Remote
 {
 	/// <remarks>
@@ -23,7 +24,11 @@ namespace ThoughtWorks.CruiseControl.Remote
 		/// <param name="projectName"></param>
 		bool ForceBuild(string projectName);
 
-		bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo);
+        bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo);
+
+        bool ForceBuild(string projectName, Dictionary<string, string> webParams);
+
+        bool ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo);
 
 		void WaitForExit(string projectName);
 

@@ -40,17 +40,22 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 			if (buildCondition == BuildCondition.NoBuild) return buildCondition;
 			IntegrationCompleted();	// reset inner trigger
 
-			ProjectStatus currentStatus = GetCurrentProjectStatus();
-			if (lastStatus == null)
-			{
-				lastStatus = currentStatus;
-				return BuildCondition.NoBuild;
-			}
-			if (currentStatus.LastBuildDate > lastStatus.LastBuildDate && currentStatus.BuildStatus == TriggerStatus)
-			{
-				lastStatus = currentStatus;
-				return buildCondition;
-			}
+            try
+            {
+                ProjectStatus currentStatus = GetCurrentProjectStatus();
+                if (lastStatus == null)
+                {
+                    lastStatus = currentStatus;
+                    return BuildCondition.NoBuild;
+                }
+                if (currentStatus.LastBuildDate > lastStatus.LastBuildDate && currentStatus.BuildStatus == TriggerStatus)
+                {
+                    lastStatus = currentStatus;
+                    return buildCondition;
+                }
+            }
+            catch (Exception ex) { }
+
 			return BuildCondition.NoBuild;
 		}
 
@@ -72,6 +77,7 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
             {
                 Log.Debug("Error connecting to server: " + ServerUri);
                 Log.Debug(ex.ToString());
+                throw;
             }
 
             foreach (ProjectStatus currentStatus in currentStatuses)
@@ -81,6 +87,7 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
                     return currentStatus;
                 }
             }
+            Log.Error(String.Format("The project {0} does not exist to be triggered from...", Project));
             throw new NoSuchProjectException(Project);
 		}
 

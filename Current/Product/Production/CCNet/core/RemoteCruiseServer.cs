@@ -9,6 +9,7 @@ using System.Xml;
 using System.Xml.XPath;
 using System.ServiceModel.Web;
 using System.ServiceModel;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -100,9 +101,9 @@ namespace ThoughtWorks.CruiseControl.Core
             _server.DeleteProject(projectName, purgeWorkingDirectory, purgeArtifactDirectory, purgeSourceControlEnvironment);
         }
 
-        public bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
+        public bool ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo)
         {
-            return _server.ForceBuild(projectName, clientInfo);
+            return _server.ForceBuild(projectName, webParams, clientInfo);
         }
 
         public string[] GetBuildNames(string projectName)

@@ -2119,8 +2119,8 @@
     <None Include="NCover\Install\Install.xml" />
     <None Include="NCover\Install\Properties.xml" />
     <None Include="NCover\logo.ico" />
-    <None Include="NCover\NCover.Properties.xml" />
-    <None Include="NCover\NCover.Targets.xml" />
+    <None Include="NCover\UnitTest.Properties.xml" />
+    <None Include="NCover\UnitTest.Targets.xml" />
     <None Include="NCover\NCoverDisplayReport.xsl" />
     <None Include="NCover\NCoverDisplaySummary.xsl" />
     <None Include="NCover\NCoverExplorer-Legacy.xsl" />

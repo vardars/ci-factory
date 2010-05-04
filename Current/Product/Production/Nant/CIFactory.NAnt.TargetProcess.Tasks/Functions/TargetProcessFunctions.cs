@@ -50,7 +50,7 @@ namespace CIFactory.TargetProcess.NAnt.Functions
         {
             ProjectService projectService = ServicesCF.GetService<ProjectService>();
 
-            string hqlQuery = "select from Project as project where project.Name = ?";
+            string hqlQuery = "from Project as project where project.Name = ?";
             ProjectDTO[] projects = projectService.Retrieve(hqlQuery, new object[] { projectName });
 
             if (projects.Length == 0)

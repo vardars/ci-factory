@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Collections;
 using ThoughtWorks.CruiseControl.Core;
@@ -6,6 +7,7 @@ using ThoughtWorks.CruiseControl.Core.Reporting.Dashboard.Navigation;
 using ThoughtWorks.CruiseControl.Remote;
 using ThoughtWorks.CruiseControl.WebDashboard.Configuration;
 using ThoughtWorks.CruiseControl.WebDashboard.Dashboard;
+using System.Web;
 
 namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 {
@@ -126,15 +128,23 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 					}
 				}
 			}
+
+            Dictionary<string, string> webParams = new Dictionary<string, string>();
+            foreach (String key in HttpContext.Current.Request.Form.Keys)
+            {
+                String value = HttpContext.Current.Request.Params[key];
+                webParams.Add(key, value);
+            }
+
 			if (clientInfoRequired)
 			{
 				ForceFilterClientInfo[] clientInfo;
 				clientInfo = (ForceFilterClientInfo[]) clientInfoList.ToArray(typeof(ForceFilterClientInfo));
-				return manager.ForceBuild(projectSpecifier.ProjectName, clientInfo);
+				return manager.ForceBuild(projectSpecifier.ProjectName, webParams, clientInfo);
 			}
 			else
 			{
-				return manager.ForceBuild(projectSpecifier.ProjectName);
+				return manager.ForceBuild(projectSpecifier.ProjectName, webParams);
 			}
 		}
 

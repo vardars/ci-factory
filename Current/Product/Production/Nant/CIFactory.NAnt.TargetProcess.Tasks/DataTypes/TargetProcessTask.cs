@@ -196,7 +196,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
         private int FindTaskIdByName(string entityName)
         {
-            string hqlQuery = "select from Task as task where task.Name = ?";
+            string hqlQuery = "from Task as task where task.Name = ?";
             TaskDTO[] tasks = TaskService.Retrieve(hqlQuery, new object[] { entityName });
 
             if (tasks.Length == 0)
@@ -214,7 +214,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
         {
             UserStoryWebService.UserStoryService storyService = ServicesCF.GetService<UserStoryWebService.UserStoryService>();
 
-            string hqlQuery = "select from UserStory as story where story.Name = ?";
+            string hqlQuery = "from UserStory as story where story.Name = ?";
             UserStoryWebService.UserStoryDTO[] storyies = storyService.Retrieve(hqlQuery, new object[] { userStory });
 
             if (storyies.Length == 0)

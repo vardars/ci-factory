@@ -1,6 +1,7 @@
 using System;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
+using System.Collections.Generic;
 
 namespace ThoughtWorks.CruiseControl.Core 
 {
@@ -37,15 +38,25 @@ namespace ThoughtWorks.CruiseControl.Core
             return cruiseServer.GetProjectStatusLite(projectName);
         }
 
-		public bool ForceBuild(string project)
-		{
-			return this.ForceBuild(project, null);
-		}
+        public bool ForceBuild(string projectName)
+        {
+            return this.ForceBuild(projectName, new Dictionary<string, string>(), new ForceFilterClientInfo[] { });
+        }
 	
-		public bool ForceBuild(string project, ForceFilterClientInfo[] clientInfo)
+		public bool ForceBuild(string projectName, ForceFilterClientInfo[] clientInfo)
 		{
-			return cruiseServer.ForceBuild(project, clientInfo);
-		}
+            return this.ForceBuild(projectName, new Dictionary<string, string>(), clientInfo);
+        }
+
+        public bool ForceBuild(string projectName, Dictionary<string, string> webParams)
+        {
+            return this.ForceBuild(projectName, webParams, new ForceFilterClientInfo[] { });
+        }
+
+        public bool ForceBuild(string projectName, Dictionary<string, string> webParams, ForceFilterClientInfo[] clientInfo)
+        {
+            return cruiseServer.ForceBuild(projectName, webParams, clientInfo);
+        }
 
 		public void WaitForExit(string project)
 		{
@@ -174,6 +185,7 @@ namespace ThoughtWorks.CruiseControl.Core
         }
 
         #endregion
+
 
     }
 }

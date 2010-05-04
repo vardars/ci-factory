@@ -53,7 +53,7 @@ namespace CIFactory.TargetProcess.NAnt.DataTypes
 
             UserService userService = ServicesCF.GetService<UserService>();
 
-            string hqlQuery = "select from User as user where user.Login = ?";
+            string hqlQuery = "from User as user where user.Login = ?";
             UserDTO[] users = userService.Retrieve(hqlQuery, new object[] { this.LoginName });
 
             if (users.Length == 0)
