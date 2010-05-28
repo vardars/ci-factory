@@ -21,22 +21,22 @@
 
 		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
 		
-    <foreach item="File" property="UnitTest.ProjectFile.Path">
-      <in>
-        <items refid="UnitTest.ProjectFiles" />
-      </in>
-      <do>
-        <property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
-        <property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
-        <function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
-				<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.exe"/>
-				<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
-      </do>
-    </foreach>
+		<foreach item="File" property="UnitTest.ProjectFile.Path">
+		  <in>
+			<items refid="UnitTest.ProjectFiles" />
+		  </in>
+		  <do>
+			<property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+			<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
+			<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+					<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.exe"/>
+					<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+		  </do>
+		</foreach>
 
-    <if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
-      <call target="UnitTest.FindTestAssemblies"/>
-    </if>
+		<if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+		  <call target="UnitTest.FindTestAssemblies"/>
+		</if>
 
 		<if test="${fileset::file-count('UnitTest.TestAssemblies') != 0}">
 			<property name="UnitTest.Assembly" value="${fileset::get-name-at-index('UnitTest.TestAssemblies', 0)}"/>
@@ -44,30 +44,64 @@
 			<function execute="${directory::setcurrentdirectory(UnitTest.BinDirectory)}"/>
 		</if>
 		
-    <call target="MbUnit.EnsureDependencies"/>
+		<call target="MbUnit.EnsureDependencies"/>
 
 		<trycatch>
 			<try>
-				<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
-					<assemblies refid="UnitTest.TestAssemblies" />
-				</mbunit>
+				<ifthenelse test="${UnitTest.AdvancedConfiguration.Enabled}">
+					<then>
+						<!--Convert the 'UnitTest.TestAssemblies' fileset into a space-delimited string (using the NAntContrib 'to-string' function) -->
+						<!--<property name="UnitTest.AdvancedConfiguration.AssembliesToTest" value="${fileset::to-string('UnitTest.TestAssemblies', ' ')}"/>-->
+
+						<!--Convert the 'UnitTest.TestAssemblies' fileset into a space-delimited string (using a foreach task since the 'to-string' function isn't in the version of NAntContrib we are using) -->
+						<property name="UnitTest.AdvancedConfiguration.AssembliesToTest" value=""/>
+						<foreach item="File" property="file">
+							<in>
+								<items refid="UnitTest.TestAssemblies"/>
+							</in>
+							<do>
+								<property name="UnitTest.AdvancedConfiguration.AssembliesToTest" value="${UnitTest.AdvancedConfiguration.AssembliesToTest} ${file}"/>
+							</do>
+						</foreach>
+
+						<echo message="Use the EXEC task to invoke MbUnit, since the MbUnit task doesn't support very many parameters."/>
+						<exec program="${UnitTest.AdvancedConfiguration.MbUnitConsExe}">
+							<arg line=" ${UnitTest.AdvancedConfiguration.AssembliesToTest} " />
+							<arg value="/report-type:${UnitTest.ReportFormat}" />
+							<arg value="/report-name-format:${UnitTest.ReportNameFormat}" />
+							<arg value="/report-folder:${UnitTest.ReportFolder}" />
+							<arg if="${UnitTest.AdvancedConfiguration.ExcludeByCategory != ''}"   value="/exclude-category:${UnitTest.AdvancedConfiguration.ExcludeByCategory}" />
+							<arg if="${UnitTest.AdvancedConfiguration.FilterByAuthor != ''}"      value="/filter-author:${UnitTest.AdvancedConfiguration.FilterByAuthor}" />
+							<arg if="${UnitTest.AdvancedConfiguration.FilterByCategory != ''}"    value="/filter-category:${UnitTest.AdvancedConfiguration.FilterByCategory}" />
+							<arg if="${UnitTest.AdvancedConfiguration.FilterByNamespace != ''}"   value="/filter-namespace:${UnitTest.AdvancedConfiguration.FilterByNamespace}" />
+							<arg if="${UnitTest.AdvancedConfiguration.FilterByType != ''}"        value="/filter-type:${UnitTest.AdvancedConfiguration.FilterByType}" />
+							<arg if="${UnitTest.AdvancedConfiguration.Other != ''}"               line=" ${UnitTest.AdvancedConfiguration.Other}" />
+						</exec>
+					</then>
+					<else>
+						<echo message="Use the MbUnit task (the original package implementation)."/>
+						<mbunit report-types="${UnitTest.ReportFormat}" report-filename-format="${UnitTest.ReportNameFormat}" report-output-directory="${UnitTest.ReportFolder}">
+							<assemblies refid="UnitTest.TestAssemblies" />
+						</mbunit>
+					</else>
+				</ifthenelse>
 			</try>
 			<finally>
 				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
 
-        <copy 
+				<copy 
 					file='${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}' 
 					todir='${Common.Directory.Artifact.Path}' 
 					if="${UnitTest.PublishXmlReport and file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"
 				/>
 
-        <style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
-               out="${Common.Directory.Artifact.Path}\MbUnitReport.html"
-               style="${Common.Directory.Packages.Path}\DotNetUnitTest\MBUnitDetails.xsl"
-               if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
+				<style in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
+					   out="${Common.Directory.Artifact.Path}\MbUnitReport.html"
+					   style="${Common.Directory.Packages.Path}\DotNetUnitTest\MBUnitDetails.xsl"
+					   if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}"/>
 			</finally>
 		</trycatch>
-		
+
 	</target>
 
   <target name="MbUnit.EnsureDependencies">

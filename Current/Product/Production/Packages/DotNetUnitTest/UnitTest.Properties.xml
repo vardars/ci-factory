@@ -12,6 +12,15 @@
 
   <property name="UnitTest.PublishXmlReport" value="False"/>
 
+  <property name="UnitTest.AdvancedConfiguration.Enabled"              value="false" overwrite="false"/>
+  <property name="UnitTest.AdvancedConfiguration.ExcludeByCategory"    value="" overwrite="false"/> <!-- Can be comma-delimited -->
+  <property name="UnitTest.AdvancedConfiguration.FilterByAuthor"       value="" overwrite="false"/> <!-- Can be comma-delimited -->
+  <property name="UnitTest.AdvancedConfiguration.FilterByCategory"     value="" overwrite="false"/> <!-- Can be comma-delimited -->
+  <property name="UnitTest.AdvancedConfiguration.FilterByNamespace"    value="" overwrite="false"/> <!-- Can be comma-delimited -->
+  <property name="UnitTest.AdvancedConfiguration.FilterByType"         value="" overwrite="false"/> <!-- Can be comma-delimited -->
+  <property name="UnitTest.AdvancedConfiguration.Other"                value="" overwrite="false"/> <!-- Can be used to support any other switches not covered by the above properties. -->
+  <property name="UnitTest.AdvancedConfiguration.MbUnitConsExe"        value="${Common.Directory.ThirdParty.Path}\MbUnit\MbUnit.Cons.exe" overwrite="false"/>
+
   <if test="${file::exists(Common.Directory.Packages.Path + '\Alerts\Alerts.Properties.xml')}">
     <property name="Package.Alerts.Directory.Path" value="${Common.Directory.Packages.Path}\Alerts"/>
     <include buildfile="${Common.Directory.Packages.Path}\Alerts\Alerts.Properties.xml"/>
