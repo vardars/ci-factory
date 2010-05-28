@@ -193,6 +193,7 @@
       <property name="Project.Directory.Temp.Path"/>
       <property name="Common.Directory.UnitTest.Path"/>
       <property name="Common.Directory.Install.Path"/>
+      <property name="UnitTest.Timeout"/>
     </saveproperties>
   </target>
 
