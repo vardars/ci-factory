@@ -25,8 +25,8 @@
 
 		<switch value="True">
 			<case value="${directory::exists(Common.Directory.Packages.Path + '\MSTest')}" break="true">
-        <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MSTest"/>
-        <xmlpeek
+				<property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MSTest"/>
+				<xmlpeek
 					file="${Alerts.BuildLog}"
 					xpath="//Tests/TestRun/result/totalTestCount"
 					property="Alerts.UnitTests.Count"
@@ -35,8 +35,8 @@
 				/>			 
 			</case>
 			<case value="${directory::exists(Common.Directory.Packages.Path + '\DotNetUnitTest')}" break="true">
-        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"/>
-        <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MbUnit"/>
+				<property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"/>
+				<property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.MbUnit"/>
 				<xmlpeek
 					file="${Alerts.UnitTests.ReportFilePath}"
 					xpath="sum(//report-result/counter/@run-count)"
@@ -45,10 +45,21 @@
 					failonerror="false"
 				/>
 			</case>
-      <case value="${directory::exists(Common.Directory.Packages.Path + '\JUnit')}" break="true">
-        <property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\unittests.xml"/>
-        <property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.JUnit"/>
-        <xmlpeek
+			<case value="${directory::exists(PackagesDirectory + '\Gallio')}" break="true">
+				<property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\${string::replace(ProjectName, ' ', '_')}UnitTests.xml"/>
+				<property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.Gallio"/>
+				<xmlpeek
+					file="${Alerts.UnitTests.ReportFilePath}"
+					xpath="sum(//report/testPackageRun/statistics/@testCount)"
+					property="Alerts.UnitTests.Count"
+					nodeindex="0"
+					failonerror="false"
+				/>
+			</case>
+			<case value="${directory::exists(Common.Directory.Packages.Path + '\JUnit')}" break="true">
+				<property name="Alerts.UnitTests.ReportFilePath" value="${Common.Directory.Artifact.Path}\unittests.xml"/>
+				<property name="Alerts.UnitTests.GenerateReport.Target" value="Alerts.UnitTests.GenerateReport.JUnit"/>
+				<xmlpeek
 					file="${Alerts.UnitTests.ReportFilePath}"
 					xpath="count(//testcase)"
 					property="Alerts.UnitTests.Count"
@@ -100,23 +111,31 @@
 
   </target>
 
-  <target name="Alerts.UnitTests.GenerateReport.MSTest">
-    <largeproperty name="Alerts.UnitTests.DiffReport.Content">
-      <value expand="true" xml="true">
-        <p>Not yet implemented!</p>
-      </value>
-    </largeproperty>
-  </target>
-  
-  <target name="Alerts.UnitTests.GenerateReport.MbUnit">
-    <largeproperty name="Alerts.UnitTests.DiffReport.Content">
-      <value expand="true" xml="true">
-        <p>Not yet implemented!</p>
-      </value>
-    </largeproperty>
-  </target>
-  
-  <target name="Alerts.UnitTests.GenerateReport.JUnit">
+	<target name="Alerts.UnitTests.GenerateReport.MSTest">
+		<largeproperty name="Alerts.UnitTests.DiffReport.Content">
+			<value expand="true" xml="true">
+				<p>Not yet implemented!</p>
+			</value>
+		</largeproperty>
+	</target>
+
+	<target name="Alerts.UnitTests.GenerateReport.MbUnit">
+		<largeproperty name="Alerts.UnitTests.DiffReport.Content">
+			<value expand="true" xml="true">
+				<p>Not yet implemented!</p>
+			</value>
+		</largeproperty>
+	</target>
+
+	<target name="Alerts.UnitTests.GenerateReport.Gallio">
+		<largeproperty name="Alerts.UnitTests.DiffReport.Content">
+			<value expand="true" xml="true">
+				<p>Not yet implemented!</p>
+			</value>
+		</largeproperty>
+	</target>
+
+	<target name="Alerts.UnitTests.GenerateReport.JUnit">
     <strings id="Alerts.UnitTests.CurrentList"/>
     
     <property name="Alerts.UnitTests.NodeIndex" value="${Alerts.UnitTests.Count}"/>
