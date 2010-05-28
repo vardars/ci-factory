@@ -22,6 +22,7 @@
     <include name="${Analytics.ContentDirectoryPath}\UnitTestsContent.xml"/>
     <include name="${Analytics.ContentDirectoryPath}\FitNesseContent.xml"/>
     <include name="${Analytics.ContentDirectoryPath}\CoverageContent.xml"/>
+    <include name="${Analytics.ContentDirectoryPath}\NCoverContent.xml"/>
   </fileset>
 
   <property name="Analytics.DeleteFileSetRefId" value="Analytics.DeleteFileSet"/>
@@ -51,6 +52,12 @@
     <include buildfile="${Package.Analytics.Directory.Path}\FitNesse\FitNesse.Script.xml"/>
     <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.FitNesse')}"/>
     <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.FitNesseCountsLineChartData')}"/>
+  </if>
+
+  <if test="${file::exists(Common.Directory.Packages.Path + '\NCover\UnitTest.Properties.xml')}">
+    <include buildfile="${Package.Analytics.Directory.Path}\NCover\NCover.Script.xml"/>
+    <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.NCover')}"/>
+    <function execute="${stringlist::add('Analytics.TargetListId', 'Analytics.NCoverChart')}"/>
   </if>
 
   <if test="${file::exists(Common.Directory.Packages.Path + '\Simian\Simian.Properties.xml')}">

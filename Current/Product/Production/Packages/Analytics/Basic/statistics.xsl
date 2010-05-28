@@ -113,6 +113,10 @@
     <xsl:variable name="coveragefileExists" select="ms:FileExists($coveragefile)"/>
     <xsl:variable name="coveragedoc" select="document($coveragefile)"/>
 
+    <xsl:variable name="ncoverfile" select="concat($Common.Directory.Artifact.Path, '\NCover.Statistics.xml')"/>
+    <xsl:variable name="ncoverfileExists" select="ms:FileExists($ncoverfile)"/>
+    <xsl:variable name="ncoverdoc" select="document($ncoverfile)"/>
+
     <xsl:variable name="DevelopmentIterationSuiteFitNesseFile" select="concat($Common.Directory.Artifact.Path, '\DevelopmentIterationSuiteFitNesse.Statistics.xml')"/>
     <xsl:variable name="DevelopmentIterationSuiteFitNesseFileExists" select="ms:FileExists($DevelopmentIterationSuiteFitNesseFile)"/>
     <xsl:variable name="DevelopmentIterationSuiteFitNesseDoc" select="document($DevelopmentIterationSuiteFitNesseFile)"/>
@@ -315,6 +319,19 @@ if(!document.getElementById)
 
       <xsl:call-template name="GetStatCounts">
         <xsl:with-param name="doc" select="$coveragedoc"/>
+        <xsl:with-param name="statName" select="'linecoverage'"/>
+        <xsl:with-param name="countName" select="'linecoverage'"/>
+        <xsl:with-param name="ignore-initial-value" select="$false"/>
+        <xsl:with-param name="debug" select="$false"/>
+        <xsl:with-param name="day" select="$day"/>
+        <xsl:with-param name="month" select="$month"/>
+        <xsl:with-param name="year" select="$year"/>
+        <xsl:with-param name="dayofyear" select="$dayofyear"/>
+        <xsl:with-param name="iteration" select="$iteration"/>
+      </xsl:call-template>
+
+      <xsl:call-template name="GetStatCounts">
+        <xsl:with-param name="doc" select="$ncoverdoc"/>
         <xsl:with-param name="statName" select="'linecoverage'"/>
         <xsl:with-param name="countName" select="'linecoverage'"/>
         <xsl:with-param name="ignore-initial-value" select="$false"/>
@@ -682,6 +699,26 @@ if(!document.getElementById)
       <hr/>
     </xsl:if>
 
+    <xsl:if test="$ncoverfileExists">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td>
+            <p style="width: 25em;">
+              This chart displays a trend of code coverage.
+            </p>
+          </td>
+          <td>
+            <xsl:call-template name="ShowChart">
+              <xsl:with-param name="Url" select="concat($BaseChartUrl, '/NCover.ChartData.xml')"/>
+            </xsl:call-template>
+          </td>
+        </tr>
+      </table>
+
+      <br/>
+      <hr/>
+    </xsl:if>
+
     <xsl:if test="ms:FileExists(concat($Common.Directory.Artifact.Path, '\Simian.ChartData.xml'))">
       <table cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -717,6 +754,9 @@ if(!document.getElementById)
           <th>Unit Test Count</th>
         </xsl:if>
         <xsl:if test="$coveragefileExists">
+          <th>Line Coverage</th>
+        </xsl:if>
+        <xsl:if test="$ncoverfileExists">
           <th>Line Coverage</th>
         </xsl:if>
         <xsl:if test="$simianfileExists">
@@ -821,6 +861,11 @@ if(!document.getElementById)
           <xsl:if test="$coveragefileExists">
             <td>
               <xsl:value-of select="($coveragedoc)/Builds/integration[statistic[@name = 'StartTime' and text() = $StartTime]]/statistic[@name = 'linecoverage']/text()"/>%
+            </td>
+          </xsl:if>
+          <xsl:if test="$ncoverfileExists">
+            <td>
+              <xsl:value-of select="($ncoverdoc)/Builds/integration[statistic[@name = 'StartTime' and text() = $StartTime]]/statistic[@name = 'linecoverage']/text()"/>%
             </td>
           </xsl:if>
           <xsl:if test="$simianfileExists">

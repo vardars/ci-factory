@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chart [
+  <!ENTITY XAxis SYSTEM     "..\..\..\Artifacts\NCover.XAxis.xml">
+  <!ENTITY SolutionTotalCoveragePercentage SYSTEM     "..\..\..\Artifacts\NCover.SolutionTotalCoveragePercentage.xml">
+  <!ENTITY SolutionFunctionCoveragePercentage SYSTEM     "..\..\..\Artifacts\NCover.SolutionFunctionCoveragePercentage.xml">
+]>
+<chart>
+
+  <chart_data>
+    <row>
+      <null/>
+      &XAxis;
+    </row>
+    <row>
+      <string>SolutionTotalCoveragePercentage</string>
+      &SolutionTotalCoveragePercentage;
+    </row>
+    <row>
+      <string>SolutionFunctionCoveragePercentage</string>
+      &SolutionFunctionCoveragePercentage;
+    </row>
+  </chart_data>
+
+  <chart_type>line</chart_type>
+  <axis_category skip='10' />
+
+  <draw>
+    <text color='000000' rotation='-90' size='20' x='5' y='275' width='200' height='80' h_align='center'>Percentage</text>
+  </draw>
+</chart>

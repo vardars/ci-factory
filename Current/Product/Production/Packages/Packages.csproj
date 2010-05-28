@@ -2992,6 +2992,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Analytics\NCover\NCover.ChartData.Publisher.xsl" />
+    <Content Include="Analytics\NCover\NCover.ChartData.xml" />
+    <Content Include="Analytics\NCover\NCover.Publisher.xsl" />
+    <Content Include="Analytics\NCover\NCover.Script.xml" />
+    <Content Include="Analytics\NCover\NCover.Statistics.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Ant\Java\" />
     <Folder Include="Workspace\Configuration\Eclipse\.metadata\.plugins\org.tigris.subversion.subclipse.core\" />
   </ItemGroup>

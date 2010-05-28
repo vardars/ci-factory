@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Analytics.NCover">
+
+  <fileset id="Analytics.NCover">
+    <include name="${PackagesDirectory}\Analytics\NCover\NCover.Statistics.xml"/>
+  </fileset>
+
+  <property name="Analytics.NCover.ReportFilePath" value="${Common.ArtifactDirectoryPath}\CoverageReports\CoverageReport.xml" dynamic="true"/>
+  <property name="Analytics.NCover.Success" value="False"/>
+  
+  <target name="Analytics.NCover" if="${file::exists(Analytics.NCover.ReportFilePath)}">
+    <echo message="Generating NCover"/>
+    <property name="Analytics.XmlInputFileName" value="${Analytics.NCover.ReportFilePath}"/>
+    <property name="Analytics.XslFilePath" value="${PackagesDirectory}\Analytics\NCover\NCover.Publisher.xsl"/>
+    <property name="Analytics.XmlReportFileName" value="NCoverContent.xml"/>
+    <property name="Analytics.CopyFileSetRefId" value="Analytics.NCover"/>
+    <property name="Analytics.Append" value="true"/>
+    <call target="Analytics.CompileReport" failonerror="false"/>
+    <property name="Analytics.NCover.Success" value="True"/>
+  </target>
+
+  <fileset id="Analytics.NCoverChart">
+    <include name="${BuildDirectory}\Packages\Analytics\NCover\NCover.ChartData.xml"/>
+  </fileset>
+
+  <target name="Analytics.NCoverChart" if="${Analytics.NCover.Success}">
+    <property name="Analytics.NCover.Success" value="False"/>
+    <echo message="Generating NCoverChart"/>
+    <delete>
+      <fileset>
+        <include name="${ArtifactRootDirectory}\NCover.XAxis.xml"/>
+        <include name="${ArtifactRootDirectory}\NCover.SolutionTotalCoveragePercentage.xml"/>
+        <include name="${ArtifactRootDirectory}\NCover.SolutionFunctionCoveragePercentage.xml"/>
+      </fileset>
+    </delete>
+    <property name="Analytics.XmlInputFileName" value="${BuildDirectory}\Packages\Analytics\NCover\NCover.Statistics.xml"/>
+    <property name="Analytics.XslFilePath" value="${BuildDirectory}\Packages\Analytics\NCover\NCover.ChartData.Publisher.xsl"/>
+    <property name="Analytics.XmlReportFileName" value="NCover.XAxis.xml"/>
+    <property name="Analytics.CopyFileSetRefId" value="Analytics.NCoverChart"/>
+    <property name="Analytics.Append" value="false"/>
+
+    <property name="Analytics.NCoverChart.Data" value=""/>
+    <xmlpeek property="Analytics.NCoverChart.Data"
+      file="${BuildDirectory}\Packages\Analytics\NCover\NCover.Statistics.xml"
+      nodeindex="0"
+      xpath="/Builds/integration[position() > last()-200]"
+      failonerror="False"/>
+
+    <call if="${Analytics.NCoverChart.Data != ''}" target="Analytics.CompileReport"/>
+  </target>
+  
+</project>
