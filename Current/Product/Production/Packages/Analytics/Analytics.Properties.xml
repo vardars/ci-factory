@@ -23,6 +23,7 @@
     <include name="${Analytics.ContentDirectoryPath}\FitNesseContent.xml"/>
     <include name="${Analytics.ContentDirectoryPath}\CoverageContent.xml"/>
     <include name="${Analytics.ContentDirectoryPath}\NCoverContent.xml"/>
+    <include name="${Analytics.ContentDirectoryPath}\SimianContent.xml"/>
   </fileset>
 
   <property name="Analytics.DeleteFileSetRefId" value="Analytics.DeleteFileSet"/>
