@@ -63,11 +63,11 @@
            showdialog="true" >
       <options>
         <string value="Continue"/>
-        <string value="Quit"/>
+        <string value="Exit"/>
       </options>
     </ask>
-    <if test="${Answer == 'Quit'}">
-      <fail message="Your answer was was to quit." />
+    <if test="${Answer == 'Exit'}">
+      <fail message="Please install NCover!" />
     </if>
   </target>
 
@@ -83,12 +83,12 @@ More information on NCover can be found at http://www.ncover.org]]>
   <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
     <options>
       <string value="Install NCover"/>
-      <string value="Don't Install NCover"/>
-      <string value="Quit"/>
+      <string value="Exit"/>
+      <string value="Continue without installing (NOT RECOMMENDED)"/>
     </options>
   </ask>
-  <if test="${Answer == 'Quit'}">
-    <fail message="Your answer was was to quit." />
+  <if test="${Answer == 'Exit'}">
+    <fail message="Please install NCover!" />
   </if>
   <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
 </target>
@@ -105,12 +105,12 @@ More information on NCover can be found at http://www.ncover.org]]>
     <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
       <options>
         <string value="Install NCover"/>
-        <string value="Don't Install NCover"/>
-        <string value="Quit"/>
+        <string value="Exit"/>
+        <string value="Continue without installing (NOT RECOMMENDED)"/>
       </options>
     </ask>
-    <if test="${Answer == 'Quit'}">
-      <fail message="Your answer was was to quit." />
+    <if test="${Answer == 'Exit'}">
+      <fail message="Please instal NCover!" />
     </if>
     <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
   </target>
