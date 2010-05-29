@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest.Properties">
+  <property name="UnitTest.TestAssemblyFormat" value="Test.*.dll"/>
+  
+  <fileset id="UnitTest.ProjectFiles">
+    <include name="${Common.Directory.UnitTest.Path}\**\*.*proj"/>
+  </fileset>
+  
+  <property name="UnitTest.ReportFolder" value="${Common.Directory.Build.Path}\Unit Test Reports"/>
+  <property name="UnitTest.ReportNameFormat" value="${string::replace(ProjectName, ' ', '_')}UnitTests"/>
+	<property name="UnitTest.ReportFormat" value="Xml;Text" overwrite="false"/>
+
+	<!--The Timeout threshhold (in seconds) for the Gallio task (86400 seconds = 24 hours). -->
+	<property name="UnitTest.Timeout" value="86400" overwrite="false"/>
+	<property name="UnitTest.Filter" value="" overwrite="false"/>
+
+	<!--NOTE: Configure the NCover package's properties to be compatible with the Gallio package. -->
+	<property name="NCover.ProcessToMonitor" value="Gallio.Host.exe" overwrite="true" />
+
+	<if test="${file::exists(Common.Directory.Packages.Path + '\Alerts\Alerts.Properties.xml')}">
+		<include buildfile="${Common.Directory.Packages.Path}\Alerts\Alerts.Properties.xml"/>
+	</if>
+
+</project>

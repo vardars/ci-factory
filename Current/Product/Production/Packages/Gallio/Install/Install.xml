@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Gallio.Install" default="Gallio.Install">
+
+  <include buildfile="Properties.xml" />
+  
+  <target name="Gallio.Install">
+    <copy todir="${Common.Directory.ThirdParty.Path}\Gallio">
+      <fileset basedir="${Source.Common.Directory.Packages.Path}\Gallio\Install\bin">
+        <include name="**\*" />
+      </fileset>
+    </copy>
+
+    <ifthenelse test="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}">
+      <then>
+        <property name="Private.Packages.MainBuild.Replace.To" value=""/>
+        <largeproperty name="Private.Packages.MainBuild.Replace.From">
+          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\Gallio\UnitTest.Target.xml" />]]></value>
+        </largeproperty>
+        <call target="Private.Packages.MainBuild.Replace"/>  
+      </then>
+      <else>
+        <largeproperty name="Packages.AddVerificationActions.Block">
+          <value xml="false"><![CDATA[<call target="UnitTest.RunTests" />]]></value>
+        </largeproperty>
+        <call target="Packages.AddVerificationActions"/>
+      </else>
+    </ifthenelse>
+
+    <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
+      <value xml="false"><![CDATA[<xslFile>Packages\Gallio\GallioDisplaySummary.xsl</xslFile>]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildReportBuildPlugin"/>
+
+    <largeproperty name="Packages.AddbuildPlugins.Block">
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\Gallio\GallioDisplayReport.xsl" imageFileName="Packages\Gallio\logo.gif" />]]></value>
+    </largeproperty>
+    <call target="Packages.AddbuildPlugins"/>
+
+    <largeproperty name="Packages.AddXslMerger.Block">
+      <value expand="true">
+        <![CDATA[<filepair>
+            <xslfile>&Common.Directory.Packages.Path;\Gallio\GallioSummary.xsl</xslfile>
+            <xmlfile>&Common.Directory.Build.Path;\Unit Test Reports\*.xml</xmlfile>
+          </filepair>]]>
+      </value>
+    </largeproperty>
+    <call target="Packages.AddXslMerger"/>
+  </target>
+
+  <target name="Gallio.SetAsCurrentPackage">
+    <property name="Packages.CurrentPackage.PackageName" value="Gallio"/>
+    <property name="Packages.CurrentPackage.PackageType" value="UnitTest"/>
+    <property name="Packages.CurrentPackage.SkipMainBuildInclusion" value="true" if="${stringlist::contains('Packages.InstallList', 'CoverageEye') or stringlist::contains('Packages.InstallList', 'NCover')}"/>
+  </target>
+
+  <target name="Gallio.ValidateParameters">
+
+  </target>
+  
+</project>

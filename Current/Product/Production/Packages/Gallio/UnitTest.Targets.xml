@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd" name="UnitTest">
+
+  <fileset id="UnitTest.TestAssemblies" />
+  
+	<target name="UnitTest.LoadTasks">
+		<loadtasks assembly="${Common.Directory.ThirdParty.Path}\Gallio\bin\Gallio.NAntTasks.dll" />
+	</target>
+		 
+	<!--
+	The following properties should be specified in the calling script.
+	
+	<property name="UnitTest.TestAssemblyFormat" value=""/>
+	<property name="UnitTest.ReportFolder" value=""/>
+	<property name="UnitTest.ReportNameFormat" value=""/>
+	-->
+	
+	<!-- The following properties are for internal use only -->
+
+	<target name="UnitTest.RunTests" depends="UnitTest.LoadTasks">
+
+		<property name="OldCurrentDirectory" value="${directory::getcurrentdirectory()}"/>
+		
+		<foreach item="File" property="UnitTest.ProjectFile.Path">
+		  <in>
+			<items refid="UnitTest.ProjectFiles" />
+		  </in>
+		  <do>
+			<property name="UniTestAssemblyName" value="${vsproject::get-assemblyname(UnitTest.ProjectFile.Path)}"/>
+			<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.dll"/>
+			<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+					<property name="UniTestAssemblyPath" value="${vsproject::get-output-directory(UnitTest.ProjectFile.Path, Compile.ConfigName)}\${UniTestAssemblyName}.exe"/>
+					<function execute="${fileset::include-add('UnitTest.TestAssemblies', UniTestAssemblyPath)}" if="${file::exists(UniTestAssemblyPath)}"/>
+		  </do>
+		</foreach>
+
+		<if test="${fileset::file-count('UnitTest.TestAssemblies') == 0}">
+		  <call target="UnitTest.FindTestAssemblies"/>
+		</if>
+
+		<if test="${fileset::file-count('UnitTest.TestAssemblies') != 0}">
+			<property name="UnitTest.Assembly" value="${fileset::get-name-at-index('UnitTest.TestAssemblies', 0)}"/>
+			<property name="UnitTest.BinDirectory" value="${path::get-directory-name(UnitTest.Assembly)}" />
+			<function execute="${directory::setcurrentdirectory(UnitTest.BinDirectory)}"/>
+		</if>
+		
+		<call target="Gallio.EnsureDependencies"/>
+
+		<trycatch>
+			<try>
+				<echo message="Invoke the Gallio task."/>
+				<gallio report-types="${UnitTest.ReportFormat}"
+						report-name-format="${UnitTest.ReportNameFormat}"
+						report-directory="${UnitTest.ReportFolder}"
+						show-reports="false"
+						failonerror="true"
+						verbosity="Verbose"
+						echo-results="true"
+						run-time-limit="${UnitTest.Timeout}"
+						filter="${UnitTest.Filter}"
+						>
+					<files refid="UnitTest.TestAssemblies" />
+						</gallio>
+			</try>
+			<finally>
+				<function execute="${directory::setcurrentdirectory(OldCurrentDirectory)}"/>
+
+				<echo message="Publish the report(s) to the artifact directory."/>
+				<copy
+					todir='${Common.Directory.Artifact.Path}'
+					failonerror='false'
+					verbose='true'
+				>
+					<fileset basedir="${UnitTest.ReportFolder}\">
+						<include name="${UnitTest.ReportNameFormat}.*" />
+					</fileset>
+				</copy>
+			</finally>
+		</trycatch>
+
+	</target>
+
+  <target name="Gallio.EnsureDependencies">
+    <foreach item="File" property="UnitTest.Target.Path">
+      <in>
+        <items refid="UnitTest.TestAssemblies" />
+      </in>
+      <do>
+        <property name="UnitTest.Target.Directory" value="${path::get-directory-name(UnitTest.Target.Path)}"/>
+        <property name="Gallio.InTarget.Path" value="${UnitTest.Target.Directory}\Gallio.Framework.dll"/>
+        <ifnot test="${file::exists(Gallio.InTarget.Path)}">
+          <copy todir="${UnitTest.Target.Directory}">
+            <fileset basedir="${Common.Directory.ThirdParty.Path}\Gallio">
+              <include name="Gallio.Framework.dll"/>
+              <include name="QuickGraph.Algorithms.dll"/>
+              <include name="QuickGraph.dll"/>
+              <include name="Refly.dll"/>
+              <include name="TestFu.dll"/>
+            </fileset>
+          </copy>
+        </ifnot>
+      </do>
+    </foreach>
+  </target>
+
+  <target name="UnitTest.FindTestAssemblies">
+    <fileset id="UnitTest.TestAssemblies" >
+      <include name="${Common.Directory.UnitTest.Path}\**\bin\${UnitTest.TestAssemblyFormat}" />
+      <include name="${Common.Directory.UnitTest.Path}\**\bin\${Compile.ConfigName}\${UnitTest.TestAssemblyFormat}" />
+    </fileset>
+  </target>
+
+  <target name="UnitTest.ShowReport" if="${file::exists(UnitTest.ReportFolder + '\' + UnitTest.ReportNameFormat + '.' + UnitTest.ReportFormat)}">
+    <delete file="${UnitTest.ReportFolder}\Summary.xml" if="${file::exists(UnitTest.ReportFolder + '\Summary.xml')}" />
+    <style
+      in="${UnitTest.ReportFolder}\${UnitTest.ReportNameFormat}.${UnitTest.ReportFormat}"
+      out="${UnitTest.ReportFolder}\Summary.xml"
+      style="${Common.Directory.Build.Path}\Packages\Gallio\GallioSummary.xsl"
+    />
+
+    <property name="Common.ShowReport.XmlFile" value="${UnitTest.ReportFolder}\Summary.xml"/>
+    <property name="Common.ShowReport.HtmlFile" value="${UnitTest.ReportFolder}\TestReport.html"/>
+    <property name="Common.ShowReport.XslFile" value="${Common.Directory.Build.Path}\Packages\Gallio\GallioDisplaySummary.xsl"/>
+    <property name="Common.ShowReport.DetailsFilePath" value="${Common.Directory.Artifact.Path}\GallioReport.html"/>
+    <call target="Common.ShowReport"/>
+  </target>
+
+  <target name="UnitTest.SetUp">
+    <delete dir="${UnitTest.ReportFolder}" if="${directory::exists(UnitTest.ReportFolder)}" />
+    <mkdir dir="${UnitTest.ReportFolder}"/>
+  </target>
+
+  <target name="UnitTest.TearDown">
+
+  </target>
+
+	<script language="C#" prefix="directory" >
+		<imports>
+			<import namespace="System.IO" />
+		</imports>
+
+		<code>
+			<![CDATA[
+         [Function("getcurrentdirectory")]
+         public static string GetCurrentDirectory()
+         {
+                 return Directory.GetCurrentDirectory();
+         }
+		 
+		 [Function("setcurrentdirectory")]
+         public static void SetCurrentDirectory(string path)
+         {
+                 Directory.SetCurrentDirectory(path);
+         }
+      ]]>
+		</code>
+	</script>
+
+</project>
