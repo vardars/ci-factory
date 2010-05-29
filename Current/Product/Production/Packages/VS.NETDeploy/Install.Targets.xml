@@ -4,7 +4,7 @@
 	<property name="Install.ToCopyToBin" value="false" overwrite="false" />
   <property name="Install.ToDeployZip" value="false"   overwrite="false"/>
 
-  <property name="Install.CompilePackageInclude" value="${Common.Directory.Packages.Path}\VS.NetCompile\Compile.Target.xml"/>
+  <property name="Install.CompilePackageInclude" value="${Common.Directory.Packages.Path}\VS.NetCompile\Compile.Targets.xml"/>
 	
   <target name="Private.Install.CreatePropertiesFile">
     <saveproperties file="${Install.CommonPropertiesFile}" format="CommandLine" >
