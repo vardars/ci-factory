@@ -124,6 +124,8 @@
         <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
       </environment>
     </setenv>
+    <!-- NOTE: When using the DotNetUnitTest package's AdvancedConfiguration mode ("UnitTest.AdvancedConfiguration.Enabled"=true), the NCover.ProcessToMonitor property must be specified since EXEC is used intead of the mbunit task. -->
+    <property name="NCover.ProcessToMonitor" value="MbUnit.Cons.exe" if="${UnitTest.AdvancedConfiguration.Enabled}"/>
     <ncover
       program="${NCover.ExePath}"
       commandLineExe="${Tools.NAnt.Exe}"
