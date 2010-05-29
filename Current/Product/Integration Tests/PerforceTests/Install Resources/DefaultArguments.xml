@@ -67,7 +67,7 @@
     </nant>
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${Common.Directory.Packages.Path}\Perforce\SourceControl.Target.xml"/>
+        <include name="${Common.Directory.Packages.Path}\Perforce\SourceControl.Targets.xml"/>
       </buildfiles>
     </nant>
 

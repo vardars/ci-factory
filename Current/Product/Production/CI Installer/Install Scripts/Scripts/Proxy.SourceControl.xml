@@ -28,7 +28,7 @@
   
   <fileset id="PacakgeFinder" />
   <ifnot test="${property::exists('SourceControl.PackageName')}">
-    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Target.xml"/>
+    <property name="PackagePathPattern" value="${Common.Directory.Packages.Path}\**\SourceControl.Targets.xml"/>
     <echo message="${PackagePathPattern}" />
     <function execute="${fileset::include-add('PacakgeFinder', PackagePathPattern)}"/>
     <fail if="${fileset::file-count('PacakgeFinder') == 0}" message="Could not find a Source Control Package in ${Common.Directory.Packages.Path}." />
@@ -41,7 +41,7 @@
   <property name="SourceControl.Update.MakeWritable" value="False"/>
   <property name="SourceControl.Update.Interactive" value="True"/>
 
-  <include buildfile="${Common.Directory.Packages.Path}\${SourceControl.PackageName}\SourceControl.Target.xml"/>
+  <include buildfile="${Common.Directory.Packages.Path}\${SourceControl.PackageName}\SourceControl.Targets.xml"/>
 
   <target name="Proxy.SourceControl.CheckoutAll">
     <property name="SourceControl.CheckOut.File" value="${Common.Directory.CodeLine.Path}"/>

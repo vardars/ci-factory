@@ -67,7 +67,7 @@
     
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${Common.Directory.Packages.Path}\Subversion\SourceControl.Target.xml"/>
+        <include name="${Common.Directory.Packages.Path}\Subversion\SourceControl.Targets.xml"/>
       </buildfiles>
     </nant>
 

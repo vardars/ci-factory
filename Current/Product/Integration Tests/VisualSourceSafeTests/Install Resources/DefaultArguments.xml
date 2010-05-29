@@ -69,12 +69,12 @@
     </nant>
     <nant target="SourceControl.Repository.Create">
       <buildfiles>
-        <include name="${Common.Directory.Packages.Path}\VisualSourceSafe\SourceControl.Target.xml"/>
+        <include name="${Common.Directory.Packages.Path}\VisualSourceSafe\SourceControl.Targets.xml"/>
       </buildfiles>
     </nant>
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${Common.Directory.Packages.Path}\VisualSourceSafe\SourceControl.Target.xml"/>
+        <include name="${Common.Directory.Packages.Path}\VisualSourceSafe\SourceControl.Targets.xml"/>
       </buildfiles>
     </nant>
     

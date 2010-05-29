@@ -72,7 +72,7 @@
     </nant>
     <nant target="SourceControl.Repository.Load">
       <buildfiles>
-        <include name="${Common.Directory.Packages.Path}\Vault\SourceControl.Target.xml"/>
+        <include name="${Common.Directory.Packages.Path}\Vault\SourceControl.Targets.xml"/>
       </buildfiles>
     </nant>
 
