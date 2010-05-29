@@ -9,7 +9,7 @@
 	
 	<property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\Coverage Reports"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\UnitTest.Targets.xml" />
   <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
 
   <fileset id="Coverage.Targets">

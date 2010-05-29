@@ -27,7 +27,7 @@
   <property name="NCover.ExePath" value="${environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe"/>
   <property name="NCover.Version" value="${file::get-version(NCover.ExePath)}"/>
 
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\NUnit\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\NUnit\UnitTest.Targets.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${Common.Directory.Packages.Path.Ref}\NUnit\UnitTest.Properties.xml" />
 
   <strings id="Packages.InstallList">

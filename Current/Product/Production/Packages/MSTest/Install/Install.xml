@@ -9,7 +9,7 @@
       <then>
         <property name="Private.Packages.MainBuild.Replace.To" value=""/>
         <largeproperty name="Private.Packages.MainBuild.Replace.From">
-          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\Packages\MSTest\UnitTest.Target.xml" />]]></value>
+          <value xml="false"><![CDATA[<include buildfile="${Common.Directory.Packages.Path}\Packages\MSTest\UnitTest.Targets.xml" />]]></value>
         </largeproperty>
         <call target="Private.Packages.MainBuild.Replace"/>  
       </then>

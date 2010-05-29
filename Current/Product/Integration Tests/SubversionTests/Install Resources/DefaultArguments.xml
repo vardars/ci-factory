@@ -38,7 +38,7 @@
   <property name="SVN.Password" value="password" />
   <property name="SVN.WebVisible" value="true" />
 
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Targets.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
 
   <property name="Install.Quiet" value="true"/>

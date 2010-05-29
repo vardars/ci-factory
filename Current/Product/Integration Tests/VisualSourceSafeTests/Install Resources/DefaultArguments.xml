@@ -32,7 +32,7 @@
   <property name="VSS.Username" value="build" />
   <property name="VSS.Password" value="password"  />
 
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Target.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Targets.xml" />
   <property name="Coverage.UnitTestPropertiesInclude" value="${Common.Directory.Packages.Path.Ref}\DotNetUnitTest\UnitTest.Properties.xml" />
 
   <property name="Install.Quiet" value="true"/>
