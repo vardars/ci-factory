@@ -30,6 +30,7 @@
     <include name="${Common.Directory.ThirdParty.Path}\**\*.dll"/>
     <include name="${Common.Directory.ThirdParty.Path}\**\*.exe"/>
     <exclude name="${Common.Directory.ThirdParty.Path}\MbUnit\*.*"/>
+    <exclude name="${Common.Directory.ThirdParty.Path}\Gallio\*.*"/>
   </fileset>
   <if test="${nDepend.ExcludeEntireCommon.Directory.ThirdParty.Path}">
     <property name="nDepend.DependenciesFileSet.Common.Directory.ThirdParty.Path.PathPattern" value="${Common.Directory.ThirdParty.Path}\**\*.*"/>
