@@ -249,7 +249,7 @@ function refresh()
 
           minutefield=dayfield*24*60+hourfield*60+minutefield
 
-          var result={minutes:minutefield, seconds:secondfield}
+          var result={days:dayfield, hours:hourfield, minutes:minutefield, seconds:secondfield}
           this.oncountup(result)
           setTimeout(function(){thisobj.start(timediff)}, 1000) //update results every second
           }
@@ -266,7 +266,7 @@ function refresh()
 
           BuildTimeElapsed.oncountup=function(result){
           var mycountainer=document.getElementById("clock")
-          mycountainer.innerHTML="Build Time Elpased: "+result['minutes']+":"+result['seconds']
+          mycountainer.innerHTML="Build Time Elapsed: "+((result['hours'] < 10) ? "0" : "")+result['hours']+":"+((result['minutes'] < 10) ? "0" : "")+result['minutes']+":"+((result['seconds'] < 10) ? "0" : "")+result['seconds']
           }
 
         </script>
