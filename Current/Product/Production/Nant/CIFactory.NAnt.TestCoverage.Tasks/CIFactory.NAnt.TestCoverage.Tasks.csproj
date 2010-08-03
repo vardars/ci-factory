@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+    <Compile Include="..\..\..\..\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="CreateTestCoverageReport.cs" />

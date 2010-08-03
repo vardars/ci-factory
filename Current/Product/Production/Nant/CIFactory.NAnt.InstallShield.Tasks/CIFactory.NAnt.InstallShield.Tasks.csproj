@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="BuildInstallShieldBase.cs" />
     <Compile Include="BuildInstallShieldMsi.cs" />
-    <Compile Include="c:\Projects\CI Factory\Current\Product\ProjectInfo.cs">
+    <Compile Include="..\..\..\..\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="IsmCodeStatsTask.cs" />
