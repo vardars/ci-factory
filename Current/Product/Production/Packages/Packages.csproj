@@ -4053,6 +4053,21 @@
     <Content Include="Gallio\xsl\Gallio-Report.ccnet-details.xsl" />
     <Content Include="Gallio\xsl\Gallio-Report.common.xsl" />
     <Content Include="Gallio\xsl\Gallio-Report.html+xhtml.xsl" />
+    <Content Include="NCoverVersion2\bin\CIFactory.NAnt.NCover.dll" />
+    <Content Include="NCoverVersion2\bin\CIFactory.NAnt.NCover.pdb" />
+    <Content Include="NCoverVersion2\bin\License.txt" />
+    <Content Include="NCoverVersion2\Install\Install.xml" />
+    <Content Include="NCoverVersion2\Install\Properties.xml" />
+    <Content Include="NCoverVersion2\logo.ico" />
+    <Content Include="NCoverVersion2\NCoverDisplayReport.xsl" />
+    <Content Include="NCoverVersion2\NCoverDisplaySummary.xsl" />
+    <Content Include="NCoverVersion2\NCoverExplorer-Legacy.xsl" />
+    <Content Include="NCoverVersion2\NCoverExplorer.xsl" />
+    <Content Include="NCoverVersion2\NCoverExplorerSummary-Legacy.xsl" />
+    <Content Include="NCoverVersion2\NCoverExplorerSummary.xsl" />
+    <Content Include="NCoverVersion2\transparent.gif" />
+    <Content Include="NCoverVersion2\UnitTest.Properties.xml" />
+    <Content Include="NCoverVersion2\UnitTest.Targets.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ant\Java\" />

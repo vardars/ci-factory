@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project xmlns="http://nant.sf.net/schemas/nant.xsd"  name="Coverage.Properties">
+  
+  <property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\CoverageReports" overwrite="false"/>
+  <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt"  overwrite="false" />
+  <property name="Coverage.UnitTestPackageInclude" value="%Coverage.UnitTestPackageInclude%"  overwrite="false" />
+  <property name="Coverage.UnitTestPropertiesInclude" value="%Coverage.UnitTestPropertiesInclude%"  overwrite="false" />
+	<property name="NCover.ProcessToMonitor" value="%NCover.ProcessToMonitor%" overwrite="false"/>
+  <property name="Coverage.TargetAssemblyFormat" value="${ProjectName}.*.dll" overwrite="false"/>
+    
+  <fileset id="Coverage.Target.ProjectFiles">
+    <include name="${Common.Directory.Production.Path}\**\*.*proj"/>
+  </fileset>
+
+  <property name="Coverage.FilesToDeleteAtSetup" value="${Coverage.ReportFolder}\*.*"/>
+
+  <switch value="True">
+    <case break="true" value="${environment::variable-exists('ProgramW6432') and directory::exists(environment::get-variable('ProgramW6432') + '\NCover')}">
+      <property name="NCover.InstallPath" value="${environment::get-variable('ProgramW6432')}\NCover"/>
+    </case>
+    <case break="true" value="${environment::variable-exists('ProgramFiles') and directory::exists(environment::get-variable('ProgramFiles') + '\NCover')}">
+      <property name="NCover.InstallPath" value="${environment::get-variable('ProgramFiles')}\NCover"/>
+    </case>
+    <case break="true" value="${environment::variable-exists('ProgramFiles(x86)') and directory::exists(environment::get-variable('ProgramFiles(x86)') + '\NCover')}">
+      <property name="NCover.InstallPath" value="${environment::get-variable('ProgramFiles(x86)')}\NCover"/>
+    </case>
+  </switch>
+
+  <property name="NCover.ExePath" value="${NCover.InstallPath}\NCover.Console.exe"  overwrite="false" />
+  <property name="NCover.ExplorerExePath" value="${NCover.InstallPath}\NCoverExplorer.Console.exe"  overwrite="false" />
+  
+  <property name="NCover.IIS" value="%NCover.IIS%" overwrite="false"/>
+  <property name="NCover.IIS.Timeout" value="%NCover.IIS.Timeout%" overwrite="false"/>
+
+  <property name="NCover.SatisfactoryCoverage" value="80" overwrite="false"/>
+</project>
