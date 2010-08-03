@@ -25,7 +25,7 @@
               <xsl:attribute name="href">
                 /<xsl:value-of select="$CCNetServer" />/default.aspx?_action_NCoverDetails=true&amp;server=<xsl:value-of select="$CCNetServer" />&amp;project=<xsl:value-of select="$CCNetProject" />&amp;build=<xsl:value-of select="$CCNetBuild" />
               </xsl:attribute>
-              <img src="Packages\NCover\logo.ico" class="sectionheader-title-image"/>
+              <img src="Packages\NCoverVersion2\logo.ico" class="sectionheader-title-image"/>
               <div class="sectionheader-text">
                 NCoverExplorer Code Coverage Summary (<xsl:value-of select="$stuff/@totalpercent"/>%)
               </div>

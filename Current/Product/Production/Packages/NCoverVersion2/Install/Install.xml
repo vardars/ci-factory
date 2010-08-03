@@ -12,12 +12,12 @@
     <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverDisplaySummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\NCoverVersion2\NCoverDisplaySummary.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverDisplayReport.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCoverVersion2\NCoverDisplayReport.xsl" imageFileName="Packages\NCoverVersion2\logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 

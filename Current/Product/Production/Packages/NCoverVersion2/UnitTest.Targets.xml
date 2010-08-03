@@ -2,7 +2,7 @@
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Coverage" >
 
   <include buildfile="${Coverage.UnitTestPropertiesInclude}" />
-  <loadtasks assembly="${Common.Directory.Build.Path}\Packages\NCover\bin\CIFactory.NAnt.NCover.dll" />
+  <loadtasks assembly="${Common.Directory.Build.Path}\Packages\NCoverVersion2\bin\CIFactory.NAnt.NCover.dll" />
 
   <!--
 	The following properties should be specified in the calling script.
