@@ -32,7 +32,23 @@
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="Unit Test Details" actionName="UnitTestDetailsBuildReport" xslFileName="Packages\Gallio\GallioDisplayReport.xsl" imageFileName="Packages\Gallio\logo.gif" />]]></value>
+      <value xml="false">
+		  <![CDATA[<artifactXslBuildPlugin
+	  description="Gallio Test Report (Condensed)"
+	  actionName="GallioTestReportCondensed"
+	  xslFileName="Packages\Gallio\xsl\Gallio-Report.ccnet-details-condensed.xsl"
+	  artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+	  xmlFileName="&ProjectName;UnitTests.xml"
+	  imageFileName="Packages\Gallio\logo.gif"
+	/>
+	<artifactXslBuildPlugin
+	  description="Gallio Test Report (Full)"
+	  actionName="GallioTestReport"
+	  xslFileName="Packages\Gallio\xsl\Gallio-Report.ccnet-details.xsl"
+	  artifactRootUrl="/&ProjectName;-&ProjectCodeLineName;/Artifacts"
+	  xmlFileName="&ProjectName;UnitTests.xml"
+	  imageFileName="Packages\Gallio\logo.gif"
+	/>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
