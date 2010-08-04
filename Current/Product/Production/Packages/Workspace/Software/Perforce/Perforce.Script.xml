@@ -7,11 +7,12 @@
 		<ifnot test="${file::exists(environment::get-variable('ProgramFiles') + '\Perforce\p4.exe')}" >
 			<ask answer="Answer"
            question="It looks like Perforce is not installed.  This software is required.  Do you wish to install the software?"
-           caption="Perforce is Required Software!"
+           caption="Proceed Without Required Software?"
            showdialog="true" >
 				<options>
 					<string value="Install"/>
 					<string value="Exit"/>
+					<string value="Continue without installing (NOT RECOMMENDED)"/>
 				</options>
 			</ask>
 			<ifthenelse test="${Answer == 'Install'}">

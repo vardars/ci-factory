@@ -36,7 +36,7 @@
   <target name="Alerts.EnsureXmlDiffInstallationExists" unless="${file::exists(XmlDiffPath)}">
     <ask answer="Answer"
            question="It looks like XmlDiff is not installed.  This software is required.  Do you wish to install the software?"
-           caption="XmlDiff is Required Software!"
+           caption="Proceed Without Required Software?"
            showdialog="true" >
       <options>
         <string value="Install"/>

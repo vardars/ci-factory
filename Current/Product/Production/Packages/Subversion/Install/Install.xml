@@ -54,7 +54,7 @@
   <target name="Subversion.EnsureInstallationExists" unless="${directory::exists(property::expand(SvnBinPath))}">
     <ask answer="Answer"
            question="It looks like Subversion is not installed.  This software is required.  Do you wish to install the software?"
-           caption="Subversion is Required Software!"
+           caption="Proceed Without Required Software?"
            showdialog="true" >
       <options>
         <string value="Install"/>

@@ -16,9 +16,9 @@
            caption="Proceed Without Required Software?"
            showdialog="true" >
 				<options>
-					<string value="Continue"/>
 					<string value="Stop and Install Web Deployment"/>
 					<string value="Exit"/>
+					<string value="Continue without installing (NOT RECOMMENDED)"/>
 				</options>
 			</ask>
 			<ifthenelse test="${Answer == 'Stop and Install Web Deployment'}">
@@ -60,9 +60,9 @@
            caption="Proceed Without Required Software?"
            showdialog="true" >
 				<options>
-					<string value="Continue"/>
 					<string value="Stop and Install SP1"/>
 					<string value="Exit"/>
+					<string value="Continue without installing (NOT RECOMMENDED)"/>
 				</options>
 			</ask>
 			<ifthenelse test="${Answer == 'Stop and Install SP1'}">
@@ -92,9 +92,9 @@
            caption="Proceed Without Required Software?"
            showdialog="true" >
 				<options>
-					<string value="Continue"/>
 					<string value="Stop and Install Team Explorer"/>
 					<string value="Exit"/>
+					<string value="Continue without installing (NOT RECOMMENDED)"/>
 				</options>
 			</ask>
 			<ifthenelse test="${Answer == 'Stop and Install Team Explorer'}">

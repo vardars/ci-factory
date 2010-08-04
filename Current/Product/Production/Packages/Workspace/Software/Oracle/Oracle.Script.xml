@@ -18,6 +18,7 @@
         <options>
           <string value="Install"/>
           <string value="Exit"/>
+          <string value="Continue without installing (NOT RECOMMENDED)"/>
         </options>
       </ask>
       <ifthenelse test="${Answer == 'Install' or bool::parse(Workspace.Silent)}">
@@ -54,6 +55,7 @@
         <options>
           <string value="Install"/>
           <string value="Exit"/>
+          <string value="Continue without installing (NOT RECOMMENDED)"/>
         </options>
       </ask>
       <ifthenelse test="${Answer == 'Install'}">

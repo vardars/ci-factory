@@ -59,7 +59,7 @@
 
     <ask answer="Answer"
            question="Do you wish to continue?"
-           caption="Have you finished installing NCover?"
+           caption="Click Continue after you have finished installing NCover."
            showdialog="true" >
       <options>
         <string value="Continue"/>
@@ -82,7 +82,7 @@ More information on NCover can be found at http://www.ncover.org]]>
   </largeproperty>
   <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
     <options>
-      <string value="Install NCover"/>
+      <string value="I will manually install NCover"/>
       <string value="Exit"/>
       <string value="Continue without installing (NOT RECOMMENDED)"/>
     </options>
@@ -90,7 +90,7 @@ More information on NCover can be found at http://www.ncover.org]]>
   <if test="${Answer == 'Exit'}">
     <fail message="Please install NCover!" />
   </if>
-  <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
+  <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'I will manually install NCover'}"/>
 </target>
 
 <target name="NCover.EnsureNCoverInstallation.Version" unless="${file::get-version(property::expand(NCover.ExePath)) == NCover.Version}">
@@ -102,9 +102,9 @@ The NCover package needs NCover version ${NCover.Version}.
 More information on NCover can be found at http://www.ncover.org]]>
       </value>
     </largeproperty>
-    <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
+    <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to upgrade NCover, not upgrade NCover, or quit?" >
       <options>
-        <string value="Install NCover"/>
+        <string value="I will manually upgrade NCover"/>
         <string value="Exit"/>
         <string value="Continue without installing (NOT RECOMMENDED)"/>
       </options>
@@ -112,7 +112,7 @@ More information on NCover can be found at http://www.ncover.org]]>
     <if test="${Answer == 'Exit'}">
       <fail message="Please install NCover!" />
     </if>
-    <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
+    <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'I will manually upgrade NCover'}"/>
   </target>
 
 </project>
