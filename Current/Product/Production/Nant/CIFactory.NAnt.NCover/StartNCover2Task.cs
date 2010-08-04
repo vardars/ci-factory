@@ -90,7 +90,7 @@ namespace NCoverExplorer.NAntTasks
         private const string DefaultApplicationName = "NCover.Console.exe";
 
         // Methods
-        public StartNCoverTask()
+        public StartNCover2Task()
         {
             this.ExeName = "NCover.Console.exe";
         }
