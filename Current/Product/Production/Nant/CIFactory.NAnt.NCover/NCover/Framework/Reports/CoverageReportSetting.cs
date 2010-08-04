@@ -101,35 +101,33 @@ namespace NCover.Framework.Reports
             this.XmlRebasedPaths.Add(new CoverageViewRebasedPath { RebasedPath = path.RebasedPath, SourcePath = path.SourcePath });
         }
 
-        public virtual void AddReportOutput(IReportOutputData report)
-        {
-			//NOTE: JW: Reflector failed to decompile this method correctly (it wouldn't compile), so I had to manually reverse engineer it.
-			//The implementation below appears to work, and I _think_ it is equivalent to the original implementation in the NCover DLLs.
-            if (this.XmlReports == null)
-            {
-                this.XmlReports = new List<ReportOutputData>();
-            }
-        	Func<ReportOutputData, bool> predicate1 = x =>
-        	                 ((x.Format == report.Format) && (x.ReportType == report.ReportType))
-        	                 && (x.OutputPath == report.OutputPath);
-        	bool isDuplicate = (this.XmlReports.Where(predicate1)).Any<ReportOutputData>();
-        	if (!isDuplicate)
-            {
-                if (report.Params != null)
-                {
-            		//Func<INameValuePair, NameValuePair> selector = CS$<>9__CachedAnonymousMethodDelegate8;
-					//List<NameValuePair> list = (selector != null) ? null : report.Params.Select<INameValuePair, NameValuePair>(selector).ToList<NameValuePair>();
-                	List<NameValuePair> xmlParams =
-                		report.Params.Select(
-                			p => p as NameValuePair ?? new NameValuePair(p.Name, p.Value)).ToList();
-					this.XmlReports.Add(new ReportOutputData { Format = report.Format, OutputPath = report.OutputPath, ReportType = report.ReportType, XmlParams = xmlParams });
-                }
-                else
-                {
-					this.XmlReports.Add(new ReportOutputData { Format = report.Format, OutputPath = report.OutputPath, ReportType = report.ReportType });
-				}
-            }
-        }
+		public virtual void AddReportOutput(IReportOutputData report)
+		{
+			if (XmlReports == null)
+				XmlReports = new List<ReportOutputData>();
+
+			var exists = (from x in XmlReports
+						  where x.Format == report.Format
+						  && x.ReportType == report.ReportType
+						  && x.OutputPath == report.OutputPath
+						  select x).Any();
+
+			if (!exists)
+			{
+
+				var list = report.Params == null ? null : (from p in report.Params
+														   select new NameValuePair(p.Name, p.Value)).ToList();
+
+				XmlReports.Add(new ReportOutputData()
+				{
+					Format = report.Format,
+					OutputPath = report.OutputPath,
+					ReportType = report.ReportType,
+					XmlParams = list
+				});
+			}
+		}
+
 
         public virtual void AddReportOutput(CoverageReportType reportType, ReportOutputFormats format)
         {
