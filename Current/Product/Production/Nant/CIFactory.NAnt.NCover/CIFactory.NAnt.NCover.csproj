@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0CC426E4-AEF2-4C35-9947-B7025FDB3B51}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -27,6 +27,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -77,6 +78,9 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
@@ -90,25 +94,128 @@
     <Compile Include="CoverageReportType.cs" />
     <Compile Include="ModuleThresholdElement.cs" />
     <Compile Include="ModuleThresholdElementCollection.cs" />
+    <Compile Include="NCover2ExplorerTask.cs" />
+    <Compile Include="NCover2Task.cs" />
+    <Compile Include="NCover\Framework\Configuration\AbstractConfigFile.cs" />
+    <Compile Include="NCover\Framework\Configuration\CoverageConfig.cs" />
+    <Compile Include="NCover\Framework\Configuration\IConfig.cs" />
+    <Compile Include="NCover\Framework\Configuration\ICoverageConfig.cs" />
+    <Compile Include="NCover\Framework\Configuration\SaveFileResult.cs" />
+    <Compile Include="NCover\Framework\Configuration\XmlSerializeHelper.cs" />
+    <Compile Include="NCover\Framework\CoverageDefaults.cs" />
+    <Compile Include="NCover\Framework\Exceptions\ExceptionWriter.cs" />
+    <Compile Include="NCover\Framework\FileUtilities.cs" />
+    <Compile Include="NCover\Framework\KeyValueAttribute.cs" />
+    <Compile Include="NCover\Framework\NCoverUtilities.cs" />
+    <Compile Include="NCover\Framework\PathSearch.cs" />
+    <Compile Include="NCover\Framework\ReplacesFeatureAttribute.cs" />
+    <Compile Include="NCover\Framework\Reports\CoverageReportSetting.cs" />
+    <Compile Include="NCover\Framework\Reports\CoverageThreshold.cs" />
+    <Compile Include="NCover\Framework\Reports\ReportOutputData.cs" />
+    <Compile Include="NCover\Framework\Scripting\BuildTaskIgnoreAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\CommandLineSwitchAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertCoverageTypeEnumAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertEnumValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertPathToDirectory.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertPathToFilename.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertReportOutputFormatEnumAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertStringArrayAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertSymbolSearchPolicyEnumAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ConvertValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ForcePositionAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\GroupKeyAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeBoolAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeInverseBoolAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeStringArrayValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeStringValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\IncludeWhenNotDefaultValueAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\NCoverReportingSettingsFileWriter.cs" />
+    <Compile Include="NCover\Framework\Scripting\ScriptArgumentAttribute.cs" />
+    <Compile Include="NCover\Framework\Scripting\ScriptArgumentCollectionAttribute.cs" />
+    <Compile Include="NCover\Framework\Views\CoverageViewFilterBase.cs" />
+    <Compile Include="NCover\Framework\Views\CoverageViewRebasedPath.cs" />
+    <Compile Include="NCover\Framework\Views\RebasedPathEqualForInsertion.cs" />
+    <Compile Include="NCover\Interfaces\Common\ICoverageViewFilter.cs" />
+    <Compile Include="NCover\Interfaces\CoverageTypeMappingAttribute.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\CoverageFilterType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\CoverageMetric.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\CoverageReportType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\CoverageType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\CoverageViewElementType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\FilterVersion.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\LogLevel.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\LogType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\MemoryDumpLevel.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\MergeFilterMode.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\NCoverFeature.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\ReportOutputFormats.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\ScriptOutputType.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\SymbolSearchPolicy.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\ViewFilterStyle.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\ViewReportStyle.cs" />
+    <Compile Include="NCover\Interfaces\Enumerations\ViewSortStyle.cs" />
+    <Compile Include="NCover\Interfaces\Extensions\EnumExpansions.cs" />
+    <Compile Include="NCover\Interfaces\Extensions\EnumExtensions.cs" />
+    <Compile Include="NCover\Interfaces\Extensions\ParseExtensions.cs" />
+    <Compile Include="NCover\Interfaces\ForNCoverFeatureAttribute.cs" />
+    <Compile Include="NCover\Interfaces\NameValuePair.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\ICoverageReportSettings.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\ICoverageThreshold.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\INameValuePair.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\IReportGenerateAndPrepareCommon.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\IReportGenerateSettings.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\IReportOutputData.cs" />
+    <Compile Include="NCover\Interfaces\Reporting\IReportPrepareSettings.cs" />
+    <Compile Include="NCover\Interfaces\ReportStyleMappingAttribute.cs" />
+    <Compile Include="NCover\Interfaces\SystemAdapters\IDirectoryProvider.cs" />
+    <Compile Include="NCover\Interfaces\SystemAdapters\IFileProvider.cs" />
+    <Compile Include="NCover\Interfaces\SystemAdapters\IPathProvider.cs" />
+    <Compile Include="NCover\Interfaces\Tuple!2.cs" />
+    <Compile Include="NCover\Interfaces\Tuple!3.cs" />
+    <Compile Include="NCover\Interfaces\Tuple!4.cs" />
+    <Compile Include="NCover\Interfaces\Tuple!5.cs" />
+    <Compile Include="NCover\Interfaces\Tuple!6.cs" />
+    <Compile Include="NCover\Interfaces\Tuple.cs" />
+    <Compile Include="NCover\Interfaces\View\ICoverageViewRebasedPath.cs" />
+    <Compile Include="NCover\NAntTasks\NCoverReportingTask.cs" />
+    <Compile Include="NCover\NAntTasks\NCoverTask.cs" />
+    <Compile Include="NCover\NAntTasks\NDoc2Task.cs" />
+    <Compile Include="NCover\NAntTasks\NUnitProjectTask.cs" />
+    <Compile Include="NCover\NAntTasks\Types\CoverageExclusionElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\CoverageExclusionElementCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\CoverageThresholdElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\FilterElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\FilterElementCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ModuleThresholdElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ModuleThresholdElementCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ParamsCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ParamsElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\RebasedPathElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\RebasedPathElementCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ReportOutputDataCollection.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ReportOutputDataElement.cs" />
+    <Compile Include="NCover\NAntTasks\Types\ThresholdElementCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FileUtilities.cs" />
     <Compile Include="NCoverCoverageType.cs" />
-    <Compile Include="NCoverExplorerTask.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="NCoverInfo.cs" />
     <Compile Include="NCoverLogLevel.cs" />
     <Compile Include="NCoverSettingsFileWriter.cs" />
-    <Compile Include="NCoverTask.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="StartNCover2Task.cs" />
     <Compile Include="StartNCoverTask.cs" />
     <Compile Include="NCoverUtilities.cs" />
     <Compile Include="NCoverXmlFormat.cs" />
     <Compile Include="PathSearch.cs" />
     <Compile Include="StopNCoverTask.cs" />
+    <Compile Include="System\IO\DirectoryStub.cs" />
+    <Compile Include="System\IO\FileStub.cs" />
+    <Compile Include="System\IO\PathStub.cs" />
+    <Compile Include="System\Linq\Linq.cs" />
+    <Compile Include="System\StringExtensions.cs" />
+    <Compile Include="System\Xml\XmlWriterExtensions.cs" />
     <Compile Include="TreeFilterStyle.cs" />
     <Compile Include="TreeSortStyle.cs" />
     <Compile Include="Types\CoverageExclusion.cs">
