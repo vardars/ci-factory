@@ -110,7 +110,7 @@ More information on NCover can be found at http://www.ncover.org]]>
       </options>
     </ask>
     <if test="${Answer == 'Exit'}">
-      <fail message="Please instal NCover!" />
+      <fail message="Please install NCover!" />
     </if>
     <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
   </target>
