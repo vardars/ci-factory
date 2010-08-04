@@ -128,7 +128,6 @@ namespace NCover.Framework.Reports
 			}
 		}
 
-
         public virtual void AddReportOutput(CoverageReportType reportType, ReportOutputFormats format)
         {
             this.AddReportOutput(new ReportOutputData { Format = format, ReportType = reportType });
