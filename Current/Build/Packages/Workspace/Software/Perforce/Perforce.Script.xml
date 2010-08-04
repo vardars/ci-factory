@@ -16,6 +16,7 @@
 				<options>
 					<string value="Install"/>
 					<string value="Exit"/>
+					<string value="Continue without installing (NOT RECOMMENDED)"/>
 				</options>
 			</ask>
 			<ifthenelse test="${Answer == 'Install'}">
@@ -57,6 +58,7 @@
         <options>
           <string value="Install"/>
           <string value="Exit"/>
+          <string value="Continue without installing (NOT RECOMMENDED)"/>
         </options>
       </ask>
       <ifthenelse test="${Answer == 'Install'}">
