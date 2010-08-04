@@ -12,19 +12,19 @@
     <call target="Packages.AddVerificationActions"/>
 
     <largeproperty name="Packages.AddbuildReportBuildPlugin.Block">
-      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCoverDisplaySummary.xsl</xslFile>]]></value>
+      <value xml="false"><![CDATA[<xslFile>Packages\NCover\NCover3\NCoverDisplayReport.xsl</xslFile>]]></value>
     </largeproperty>
     <call target="Packages.AddbuildReportBuildPlugin"/>
 
     <largeproperty name="Packages.AddbuildPlugins.Block">
-      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Details" actionName="NCoverDetails" xslFileName="Packages\NCover\NCoverDisplayReport.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
+      <value xml="false"><![CDATA[<xslReportBuildPlugin description="NCover Report (Summary)" actionName="NCoverDetails" xslFileName="Packages\NCover\NCover3\NCoverDisplayReport.xsl" imageFileName="Packages\NCover\logo.ico" />]]></value>
     </largeproperty>
     <call target="Packages.AddbuildPlugins"/>
 
     <largeproperty name="Packages.AddXslMerger.Block">
       <value expand="true">
         <![CDATA[<filepair>
-            <xslfile>&Common.Directory.Packages.Path;\NCover\NCoverExplorerSummary.xsl</xslfile>
+            <xslfile>&Common.Directory.Packages.Path;\NCover\NCover3\NCoverReporting30.xsl</xslfile>
             <xmlfile>&Common.Directory.Build.Path;\CoverageReports\CoverageReport.xml</xmlfile>
           </filepair>]]>
       </value>
@@ -77,7 +77,7 @@
         <![CDATA[The file ${property::expand(NCover.ExePath)} could not be found.
 The NCover package needs NCover version ${NCover.Version}.
 
-More information on NCover can be found at http://www.ncover.org]]>
+More information on NCover can be found at http://www.ncover.com]]>
     </value>
   </largeproperty>
   <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
@@ -99,7 +99,7 @@ More information on NCover can be found at http://www.ncover.org]]>
         <![CDATA[The version of NCover found, ${file::get-version(property::expand(NCover.ExePath))}, is not supported.
 The NCover package needs NCover version ${NCover.Version}.
 
-More information on NCover can be found at http://www.ncover.org]]>
+More information on NCover can be found at http://www.ncover.com]]>
       </value>
     </largeproperty>
     <ask answer="Answer" question="${NCover.Ask.Question}" caption="Do you wish to continue, and install NCover, not install NCover, or quit?" >
@@ -110,7 +110,7 @@ More information on NCover can be found at http://www.ncover.org]]>
       </options>
     </ask>
     <if test="${Answer == 'Exit'}">
-      <fail message="Please instal NCover!" />
+      <fail message="Please install NCover!" />
     </if>
     <property name="NCover.Install.IsNeeded" value="true" if="${Answer == 'Install NCover'}"/>
   </target>

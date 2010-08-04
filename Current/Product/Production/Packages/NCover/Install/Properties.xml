@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="NCover.Install.Properties">
 
-  <property name="NCover.Version" value="2.0.3.0" overwrite="false"/>
+  <property name="NCover.Version" value="3.4.6.0" overwrite="false"/>
   <property name="NCover.ExePath" value="${'$'}{environment::get-variable('ProgramFiles')}\NCover\NCover.Console.exe" overwrite="false"/>
   <property name="NCover.ExplorerExePath" value="${'$'}{environment::get-variable('ProgramFiles')}\NCover\NCoverExplorer.Console.exe" overwrite="false"/>
   <property name="NCover.IIS" value="false" overwrite="false"/>

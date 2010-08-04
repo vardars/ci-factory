@@ -11,7 +11,7 @@
   <xsl:param name="CCNetBuild"/>
 
   <xsl:template match = "/">
-    <xsl:variable name="stuff" select="//ncoversummary" />
+    <xsl:variable name="stuff" select="//trendcoveragedata" />
     <xsl:if test="$stuff/node()">
       <table
           class = "section-table"
@@ -32,7 +32,7 @@
             </a>
           </td>
         </tr>
-        <xsl:copy-of select="//ncoversummary"/>
+        <xsl:copy-of select="//trendcoveragedata"/>
       </table>
     </xsl:if>
   </xsl:template>

@@ -9,7 +9,7 @@
 	
 	<property name="Coverage.ReportFolder" value="${Common.Directory.Build.Path}\Coverage Reports"/>
   <property name="Coverage.CommonPropertiesFile" value="${Coverage.ReportFolder}\Properties.txt" />
-  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\DotNetUnitTest\UnitTest.Targets.xml" />
+  <property name="Coverage.UnitTestPackageInclude" value="${Common.Directory.Build.Path}\Packages\Gallio\UnitTest.Targets.xml" />
   <property name="Coverage.AssemblyNameFormat" value="*.dll"/>
 
   <fileset id="Coverage.Targets">
@@ -24,7 +24,9 @@
 	
   <property name="Private.Coverage.ConfigFile" value="" />
   <property name="Private.Coverage.COMServer" value="" />
-  <property name="Private.Coverage.CorProfiler" value="{18656C37-035D-41CD-82C2-85DEF2DD5F7B}" />
+	<property name="Private.Coverage.CorProfiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
+	<!--<property name="Private.Coverage.CorProfiler" value="{18656C37-035D-41CD-82C2-85DEF2DD5F7B}" />-->
+	<property name="Private.Coverage.AsynchNCoverProcessName" value="NCoverAsynchIIS" />
 
   <target name="UnitTest.RunTests">
     <call target="Private.Coverage.CreatePropertiesFile"/>
@@ -46,14 +48,34 @@
       <call target="Coverage.FindTargetAssemblies"/>
     </if>
 
+		<property name="Private.Coverage.NCover.CoverageFile.IIS" value="${Coverage.ReportFolder}\${ProjectName}RawCoverage.IIS.xml" overwrite="false"/>
+		<property name="Private.Coverage.NCover.CoverageFile.Console" value="${Coverage.ReportFolder}\${ProjectName}RawCoverage.Console.xml" overwrite="false"/>
+
     <trycatch>
       <try>
-        <ifthenelse test="${NCover.IIS == 'both'}">
+				<ifthenelse test="${(NCover.IIS == 'concurrent') or (NCover.IIS == 'both') or (NCover.IIS == 'parallel') or (NCover.IIS == 'simultaneous')}">
+					<then>
+						<call target="Private.Coverage.NCover.ProfileBothIISAndConsole.Concurrent" />
+					</then>
+					<else>
+						<!-- NOTE: The following 3 lines using the if and else conditions should be functionally equivalent to the nasty, nested ifthenelse commented out below.-->
+						<call target="Private.Coverage.NCover.ProfileIIS" if="${NCover.IIS == 'first'}" />
+						<call target="Private.Coverage.NCover.ProfileConsole" unless="${NCover.IIS}" />
+						<call target="Private.Coverage.NCover.ProfileIIS" if="${NCover.IIS or (NCover.IIS == 'second')}" />
+
+						<!--
+						<ifthenelse test="${NCover.IIS == 'second'}">
           <then>
             <call target="Private.Coverage.NCover.ProfileConsole" />
             <call target="Private.Coverage.NCover.ProfileIIS" />
           </then>
           <else>
+								<ifthenelse test="${NCover.IIS == 'first'}">
+									<then>
+										<call target="Private.Coverage.NCover.ProfileIIS" />
+										<call target="Private.Coverage.NCover.ProfileConsole" />
+									</then>
+									<else>
             <ifthenelse test="${NCover.IIS}">
               <then>
                 <call target="Private.Coverage.NCover.ProfileIIS" />
@@ -64,12 +86,18 @@
             </ifthenelse>
           </else>
         </ifthenelse>
+							</else>
+						</ifthenelse>
+						-->
+					</else>
+				</ifthenelse>
       </try>
       <catch property="failure">
         <fail message="Test suite execution (and/or code coverage profiling) failed. Check the Unit Test, Code Coverage, and NAnt Output reports for details. Error: ${failure}"/>
       </catch>
       <finally>
         <call target="Private.Coverage.NCoverExplorer" />
+				<!--<call target="Private.Coverage.NCover.DisableProfiling" />-->
       </finally>
     </trycatch>
   </target>
@@ -81,26 +109,92 @@
     </fileset>
   </target>
 
+	<target name="Private.Coverage.NCover.RestartIIS">
+		<exec program="iisreset" verbose="true" />
+		<!--<servicecontroller service="W3SVC" action="Restart"/>-->
+	</target>
+
+	<target name="Private.Coverage.NCover.ProfileBothIISAndConsole.Concurrent">
+		<echo message="Starting NCover dual profiling (of both IIS and Console)..."/>
+
+		<echo message="Starting NCover IIS profiling (without actually running any tests yet)..."/>
+
+		<!-- First: Wait for any asynch NCover processes that are already running to exit. -->
+		<!-- NOTE: By using the same asyncexec taskname (for the IIS profiling all) builds of all projects (of all build types), 
+			we reduce the probability of having 1 build reset IIS while another is profiling IIS 
+			(although the probability is still non-zero).
+		-->
+		<waitforexit failonerror="false">
+			<tasknames>
+				<string value="${Private.Coverage.AsynchNCoverProcessName}" />
+			</tasknames>
+		</waitforexit>
+
+		<!-- Next: Start NCover profiling (asynchronously) of IIS (but without actually running any tests yet). -->
+		<echo message="Starting asynchronous NCover IIS profiling (without test execution) ..."/>
+		<call target="Private.Coverage.NCover.InitTargetAssembliesProperty" />
+		<call target="Private.Coverage.NCover.EnableProfiling" />
+		<asyncexec program="${NCover.ExePath}"
+			taskname="${Private.Coverage.AsynchNCoverProcessName}"
+			failonerror="false"
+			resultproperty="NCover.AsyncExecOutput"
+			output="${BuildDirectory}\asyncexec.ncover.iis.log"
+			append="false"
+			verbose="true"
+		>
+			<arg value="//iis" />
+			<arg value="//service-timeout" />
+			<arg value="${NCover.IIS.Timeout}" />
+			<arg value="//xml" />
+			<arg file="${Private.Coverage.NCover.CoverageFile.IIS}" />
+			<arg value="//include-assemblies" />
+			<arg value="${Private.Coverage.NCover.TargetAssemblies}" />
+			<arg value="//log-file" />
+			<arg file="${BuildDirectory}\coverage.iis.log" />
+			<!--<arg value="//log-level" />
+			<arg value="Verbose" />-->
+		</asyncexec>
+		<!--commandline="//iis //service-timeout ${NCover.IIS.Timeout} //xml ${Private.Coverage.NCover.CoverageFile.IIS} //assemblies ${Private.Coverage.NCover.TargetAssemblies} /l ${BuildDirectory}\coverage.iis.log /ll Verbose"-->
+
+		<!-- Next: Wait until NCover profiling of IIS has fully initialized (e.g. IIS finished restarting, etc.). Otherwise, some tests might get excluded from the IIS coverage data. -->
+		<sleep seconds="10" />
+
+		<!-- Next: Have NCover start profiling the console AND run the tests. -->
+		<echo message="Starting NCover console profiling and test execution..."/>
+		<call target="Private.Coverage.NCover.ProfileConsole" />
+
+		<!-- Next: After test execution has finished, we must force the asynchronous NCover process to stop IIS profiling (so it will generate the report files, etc.). -->
+		<!-- NOTE: Restarting IIS is not the ideal way to signal NCover to stop profiling IIS, but until NCover supports a "NCover Server Service" that we can stop elegantly, it is our best option. -->
+		<echo message="Stopping NCover profiling (by restarting the IIS process)..."/>
+		<call target="Private.Coverage.NCover.RestartIIS" failonerror="false" />
+
+		<!-- Finally: Wait for the asynch NCover process (started above) to exit (which should happen automatically once it detects that IIS was stopped/restarted). -->
+		<waitforexit failonerror="false">
+			<tasknames>
+				<string value="${Private.Coverage.AsynchNCoverProcessName}" />
+			</tasknames>
+		</waitforexit>
+
+		<!-- Log the asyncexec exit code. -->
+		<echo message="NCover IIS profiling exited with an exit code of: ${NCover.AsyncExecOutput}."/>
+
+		<echo message="Finished NCover dual profiling (of both IIS and Console)."/>
+	</target>
+
   <target name="Private.Coverage.NCover.ProfileIIS">
     <echo message="Starting NCover Profiling of IIS..."/>
     <trycatch>
       <try>
+				<call target="Private.Coverage.NCover.EnableProfiling" />
         <startncover 
           program="${NCover.ExePath}"
-          coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.IIS.xml"
+					coverageFile="${Private.Coverage.NCover.CoverageFile.IIS}"
           profileIIS="true" serviceTimeout="${NCover.IIS.Timeout}"
         >
           <assemblies refid="Coverage.Targets"/>
         </startncover>
 
-        <!--Begin Hack-->
-        <!--MbUnit MbUnit.Core.Reports.ReportBase.Render won't emit report if cor_enable_profiling == 1-->
-        <setenv>
-          <environment>
-            <variable name="Cor_Enable_Profiling" value="" />
-          </environment>
-        </setenv>
-        <!--End Hack-->
+				<!--<call target="Private.Coverage.NCover.Hack.DisableProfiling" />-->
         <nant buildfile="${Coverage.UnitTestPackageInclude}" target="UnitTest.RunTests" />
         
         <!--Sessions and what not need to be given an opportunity to end-->
@@ -118,47 +212,173 @@
 
   <target name="Private.Coverage.NCover.ProfileConsole">
     <echo message="Starting NCover Profiling via the command line..."/>
-    <setenv>
-      <environment>
-        <variable name="Cor_Enable_Profiling" value="1" />
-        <variable name="Cor_Profiler" value="{6287B5F9-08A1-45e7-9498-B5B2E7B02995}" />
-      </environment>
-    </setenv>
+		<call target="Private.Coverage.NCover.EnableProfiling" />
 	<!--NOTE: This property of the DotNetUnitTest package must be defaulted before being used in case the DotNetUnitTest package is not being used. -->
 	<property name="UnitTest.AdvancedConfiguration.Enabled" value="false" overwrite="false"/>
+		<!--NOTE: This property of the Gallio package must be defaulted before being used in case the Gallio package is not being used. -->
+		<property name="UnitTest.RunnerType" value="" overwrite="false"/>
     <!-- NOTE: When using the DotNetUnitTest package's AdvancedConfiguration mode ("UnitTest.AdvancedConfiguration.Enabled"=true), the NCover.ProcessToMonitor property must be specified since EXEC is used intead of the mbunit task. -->
     <property name="NCover.ProcessToMonitor" value="MbUnit.Cons.exe" if="${UnitTest.AdvancedConfiguration.Enabled}"/>
+		<property name="NCover.ProcessToMonitor" value="" if="${UnitTest.RunnerType == 'IsolatedAppDomain'}"/>
+		<!--<property name="NCover.ProcessToMonitor" value="nant.exe" if="${UnitTest.RunnerType == 'IsolatedAppDomain'}"/>-->
+		<property name="NCover.ProcessToMonitor" value="Gallio.Host.exe" if="${UnitTest.RunnerType == 'IsolatedProcess'}"/>
+		<property name="NCover.ProcessToMonitor" value="" if="${UnitTest.RunnerType == 'Local'}"/>
+		<!--<property name="NCover.ProcessToMonitor" value="Gallio.Host.exe" if="${UnitTest.RunnerType == 'Local'}"/>-->
     <ncover
       program="${NCover.ExePath}"
-      commandLineExe="${Tools.NAnt.Exe}"
-      commandLineArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
+			testRunnerExe="${NantExePath}"
+			testRunnerArgs='-buildfile:"${Coverage.UnitTestPackageInclude}" @"${Coverage.CommonPropertiesFile}" UnitTest.RunTests'
       workingDirectory="${Coverage.ReportFolder}"
-      coverageFile="${Coverage.ReportFolder}\${ProjectName}RawCoverage.xUnit.xml"
-      profiledProcessModule="${NCover.ProcessToMonitor}"
+			coverageFile="${Private.Coverage.NCover.CoverageFile.Console}"
+			coverChildProcess="${NCover.ProcessToMonitor}"
+			logFile="${BuildDirectory}\coverage.console.log"
     >
       <assemblies refid="Coverage.Targets" />
     </ncover>
   </target>
 
+	<target name="Private.Coverage.NCover.EnableProfiling">
+		<echo message="Configuring the 'Cor_Profiler' and 'Cor_Enable_Profiling' environment variables..."/>
+		<!--<setenv>
+			<environment>
+				<variable name="Cor_Enable_Profiling" value="1" />
+				<variable name="Cor_Profiler" value="${Private.Coverage.CorProfiler}" />
+			</environment>
+		</setenv>-->
+	</target>
+
+	<target name="Private.Coverage.NCover.DisableProfiling">
+		<echo message="Configuring the 'Cor_Profiler' and 'Cor_Enable_Profiling' environment variables..."/>
+		<!--<setenv>
+			<environment>
+				<variable name="Cor_Enable_Profiling" value="" />
+				<variable name="Cor_Profiler" value="" />
+			</environment>
+		</setenv>-->
+	</target>
+
+	<target name="Private.Coverage.NCover.Hack.DisableProfiling">
+		<echo message="Modifying the 'Cor_Enable_Profiling' environment variable (as a workaround for a bug/behavior in MbUnit.Core.Reports.ReportBase.Render) ..."/>
+		<!-- NOTE: MbUnit MbUnit.Core.Reports.ReportBase.Render won't emit report if cor_enable_profiling == 1 -->
+		<!--<setenv>
+			<environment>
+				<variable name="Cor_Enable_Profiling" value="" />
+			</environment>
+		</setenv>-->
+	</target>
+
+	<target name="Private.Coverage.NCover.InitTargetAssembliesProperty">
+		<!--Convert the 'Coverage.Targets' fileset into a semicolon-delimited string (using the NAntContrib 'to-string' function) -->
+		<!--<property name="Private.Coverage.NCover.TargetAssemblies" value="${fileset::to-string('Coverage.Targets', ';')}"/>-->
+
+		<!--Convert the 'Coverage.Targets' fileset into a space-delimited string (using a foreach task since the 'to-string' function isn't in the version of NAntContrib we are using) -->
+		<property name="Private.Coverage.NCover.TargetAssemblies" value=""/>
+		<foreach item="File" property="file">
+			<in>
+				<items refid="Coverage.Targets"/>
+			</in>
+			<do>
+				<property name="Private.Coverage.NCover.TargetAssemblies" value="${Private.Coverage.NCover.TargetAssemblies};${file}"/>
+			</do>
+		</foreach>
+
+		<!-- Remove any leading or trailing delimiters -->
+		<!-- HACK: The following is a crappy, hack implementation. -->
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 1, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::starts-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 0, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::ends-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<!-- HACK: Repeat a few times in case there were multiple leading/trailing delimiters. Note that this should really be implemented as a loop. -->
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 1, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::starts-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 0, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::ends-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 1, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::starts-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 0, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::ends-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 1, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::starts-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+		<property name="Private.Coverage.NCover.TargetAssemblies" value="${string::substring(Private.Coverage.NCover.TargetAssemblies, 0, (string::get-length(Private.Coverage.NCover.TargetAssemblies) - 1) )}" if="${string::ends-with(Private.Coverage.NCover.TargetAssemblies, ';')}"/>
+	</target>
+
   <target name="Private.Coverage.NCoverExplorer">
-    <echo message="Starting NCoverExplorer report generation..."/>
-    <ncoverexplorer program="${NCover.ExplorerExePath}"
-						projectName="${ProjectName}"
-						reportType="4"
-						outputDir="${Coverage.ReportFolder}" 
-						xmlReportName="CoverageReport.xml"
-						showExcluded="True"
-						satisfactoryCoverage="${NCover.SatisfactoryCoverage}" >
-      <fileset>
+		<echo message="Starting NCover report generation..."/>
+
+		<fileset id="Coverage.RawCoverageFiles">
         <include name="${Coverage.ReportFolder}\${ProjectName}RawCoverage*.xml"/>
       </fileset>
-    </ncoverexplorer>
+		<echo message="Validating NCover coverage files..."/>
+		<echo message="Detected ${fileset::file-count('Coverage.RawCoverageFiles')} NCover coverage files."/>
     
-    <style in="${Coverage.ReportFolder}\CoverageReport.xml"
-           out="${Common.Directory.Artifact.Path}\NCoverReport.html"
-           style="${Common.Directory.Packages.Path}\NCover\NCoverExplorer.xsl"/>
+		<!--NOTE: Don't even try to generate the NCover reports if there are no raw coverage files.-->
+		<if test="${fileset::file-count('Coverage.RawCoverageFiles') != 0}">
+			<ncoverreporting program="${NCover.ReportingExePath}"
+							projectName="${ProjectName}"
+							outputPath="${Coverage.ReportFolder}"
+							mergeFileName="${Coverage.ReportFolder}\${ProjectName}RawCoverage.merged.xml"
+							reportInvalidFiles="true"
+							coverageTrendPath="${Coverage.ReportFolder}\${ProjectName}Coverage.trend"
+							failonerror="false"
+			>
+				<coverageDataPaths>
+					<include name="${Coverage.ReportFolder}\${ProjectName}RawCoverage*.xml"/>
+				</coverageDataPaths>
+				<satisfactoryCoverage>
+					<threshold coverageMetric="BranchCoverage" type="View" value="${NCover.SatisfactoryCoverage}" />
+				</satisfactoryCoverage>
+				<reports>
+					<report reportType="SymbolModuleNamespace" format="Xml" outputPath="${Coverage.ReportFolder}\CoverageReport.xml" />
+					<report reportType="Summary" format="Html" outputPath="${Common.ArtifactDirectoryPath}\NCoverReport.html" />
 
-    <echo level="Debug" message="Publishing raw coverage data to the Artifacts folder..."/>
+					<report reportType="Diff" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.Diff.html" />
+					<!--<report reportType="Diff" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.Diff.xml" />-->
+					<report reportType="FullCoverageReport" format="Html" outputPath="${Coverage.ReportFolder}\FullCoverageReport\" />
+					<report reportType="MethodCCModuleClassCoverageTop" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodCCModuleClassCoverageTop.html" />
+					<!--<report reportType="MethodCCModuleClassCoverageTop" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodCCModuleClassCoverageTop.xml" />-->
+					<report reportType="MethodCCModuleClassFailedCoverageTop" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodCCModuleClassFailedCoverageTop.html" />
+					<!--<report reportType="MethodCCModuleClassFailedCoverageTop" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodCCModuleClassFailedCoverageTop.xml" />-->
+					<!--<report reportType="MethodModule" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModule.html" />-->
+					<!--<report reportType="MethodModule" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModule.xml" />-->
+					<!--<report reportType="MethodModuleNamespace" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespace.html" />-->
+					<!--<report reportType="MethodModuleNamespace" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespace.xml" />-->
+					<!--<report reportType="MethodModuleNamespaceClass" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespaceClass.html" />-->
+					<!--<report reportType="MethodModuleNamespaceClass" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespaceClass.xml" />-->
+					<!--<report reportType="MethodModuleNamespaceClassMethod" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespaceClassMethod.html" />-->
+					<!--<report reportType="MethodModuleNamespaceClassMethod" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodModuleNamespaceClassMethod.xml" />-->
+					<!--<report reportType="MethodSourceCode" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCode.html" />-->
+					<!--<report reportType="MethodSourceCode" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCode.xml" />-->
+					<report reportType="MethodSourceCodeClass" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCodeClass.html" />
+					<!--<report reportType="MethodSourceCodeClass" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCodeClass.xml" />-->
+					<report reportType="MethodSourceCodeClassMethod" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCodeClassMethod.html" />
+					<!--<report reportType="MethodSourceCodeClassMethod" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.MethodSourceCodeClassMethod.xml" />-->
+					<!--<report reportType="Summary" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.Summary.html" />-->
+					<report reportType="SymbolCCByGroup" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCByGroup.html" />
+					<!--<report reportType="SymbolCCByGroup" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCByGroup.xml" />-->
+					<report reportType="SymbolCCModuleClassCoverageTop" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCModuleClassCoverageTop.html" />
+					<!--<report reportType="SymbolCCModuleClassCoverageTop" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCModuleClassCoverageTop.xml" />-->
+					<report reportType="SymbolCCModuleClassFailedCoverageTop" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCModuleClassFailedCoverageTop.html" />
+					<!--<report reportType="SymbolCCModuleClassFailedCoverageTop" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolCCModuleClassFailedCoverageTop.xml" />-->
+					<!--<report reportType="SymbolModule" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModule.html" />-->
+					<!--<report reportType="SymbolModule" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModule.xml" />-->
+					<report reportType="SymbolModuleNamespace" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespace.html" />
+					<!--<report reportType="SymbolModuleNamespace" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespace.xml" />-->
+					<!--<report reportType="SymbolModuleNamespaceClass" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespaceClass.html" />-->
+					<!--<report reportType="SymbolModuleNamespaceClass" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespaceClass.xml" />-->
+					<report reportType="SymbolModuleNamespaceClassMethod" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespaceClassMethod.html" />
+					<!--<report reportType="SymbolModuleNamespaceClassMethod" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolModuleNamespaceClassMethod.xml" />-->
+					<!--<report reportType="SymbolSourceCode" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCode.html" />-->
+					<!--<report reportType="SymbolSourceCode" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCode.xml" />-->
+					<!--<report reportType="SymbolSourceCodeClass" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCodeClass.html" />-->
+					<!--<report reportType="SymbolSourceCodeClass" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCodeClass.xml" />-->
+					<!--<report reportType="SymbolSourceCodeClassMethod" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCodeClassMethod.html" />-->
+					<!--<report reportType="SymbolSourceCodeClassMethod" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.SymbolSourceCodeClassMethod.xml" />-->
+					<report reportType="Trends" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.Trends.html" />
+					<!--<report reportType="Trends" format="Xml" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.Trends.xml" />-->
+					<report reportType="UncoveredCodeSections" format="Html" outputPath="${Coverage.ReportFolder}\${ProjectName}Coverage.UncoveredCodeSections.html" />
+
+				</reports>
+			</ncoverreporting>
+
+			<!--<style in="${Coverage.ReportFolder}\CoverageReport.xml"
+				 out="${Common.ArtifactDirectoryPath}\NCoverReport.html"
+				 style="${PackagesDirectory}\NCover\NCover3\NCoverReporting30.xsl"/>-->
+		</if>
+
+		<echo level="Debug" message="Publishing coverage data to the Artifacts folder..."/>
     <copy todir="${Common.Directory.Artifact.Path}\CoverageReports">
       <fileset basedir="${Coverage.ReportFolder}">
         <include name="**\*.*"/>
@@ -209,6 +429,8 @@
         <include name="${Coverage.ReportFolder}\**\*"/>
       </fileset>
     </delete>
+
+		<mkdir if="${directory::exists(Coverage.ReportFolder) == false}" dir="${Coverage.ReportFolder}"/>
 
     <call target="Private.Coverage.CreatePropertiesFile"/>
     

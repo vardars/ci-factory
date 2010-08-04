@@ -28,6 +28,7 @@
 
   <property name="NCover.ExePath" value="${NCover.InstallPath}\NCover.Console.exe"  overwrite="false" />
   <property name="NCover.ExplorerExePath" value="${NCover.InstallPath}\NCoverExplorer.Console.exe"  overwrite="false" />
+  <property name="NCover.ReportingExePath" value="${NCover.InstallPath}\NCover.Reporting.exe"  overwrite="false" />
   
   <property name="NCover.IIS" value="%NCover.IIS%" overwrite="false"/>
   <property name="NCover.IIS.Timeout" value="%NCover.IIS.Timeout%" overwrite="false"/>
