@@ -45,8 +45,8 @@ using NCoverExplorer.NAntTasks.Types;
 
 namespace NCoverExplorer.NAntTasks
 {
-	[TaskName("ncoverexplorer")]
-    public class NCoverExplorerTask : ExternalProgramBase
+	[TaskName("ncover2explorer")]
+    public class NCover2ExplorerTask : ExternalProgramBase
     {
         // Fields
         private string _configName = string.Empty;
@@ -70,7 +70,7 @@ namespace NCoverExplorer.NAntTasks
         private const string DefaultApplicationName = "NCoverExplorer.Console.exe";
 
         // Methods
-        public NCoverExplorerTask()
+        public NCover2ExplorerTask()
         {
             this.ExeName = "NCoverExplorer.Console.exe";
         }

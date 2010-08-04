@@ -32,6 +32,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -49,8 +50,8 @@ using Microsoft.Win32;
 
 namespace NCoverExplorer.NAntTasks
 {
-    [TaskName("ncover")]
-    public class NCoverTask : ExternalProgramBase
+    [TaskName("ncover2")]
+    public class NCover2Task : ExternalProgramBase
     {
         // Fields
         private string _additionalArgs = string.Empty;
@@ -82,7 +83,7 @@ namespace NCoverExplorer.NAntTasks
         private const string DefaultApplicationName = "NCover.Console.exe";
 
         // Methods
-        public NCoverTask()
+        public NCover2Task()
         {
             this.ExeName = "NCover.Console.exe";
             this._programArguments = string.Empty;
@@ -90,16 +91,9 @@ namespace NCoverExplorer.NAntTasks
 
         private string _AppendAssemblyNames(string assemblyList, string[] fileNames)
         {
-            foreach (string str in fileNames)
-            {
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(str);
-                assemblyList = assemblyList + ";" + fileNameWithoutExtension;
-            }
-            if (assemblyList.StartsWith(";"))
-            {
-                assemblyList = assemblyList.Substring(1);
-            }
-            return assemblyList;
+			assemblyList = assemblyList + ";" + string.Join(";", fileNames.Select(s => Path.GetFileNameWithoutExtension(s)).ToArray()).TrimStart(";".ToCharArray());
+			assemblyList = assemblyList.Trim(";".ToCharArray());
+			return assemblyList;
         }
 
         private string[] _ConvertStringCollectionToArray(StringCollection files)
