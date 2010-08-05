@@ -88,7 +88,7 @@ namespace NAnt.Core.Filters {
         private bool _ignoreCase;
 
         //Method used for Read
-        private AcquireCharDelegate ReadChar = null;
+        private AcquireCharDelegate ReadChar;
 
         #endregion Private Instance Fields
 
