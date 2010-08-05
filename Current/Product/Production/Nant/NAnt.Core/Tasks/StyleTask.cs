@@ -19,6 +19,7 @@
 // Gerry Shaw (gerry_shaw@yahoo.com)
 // Scott Hernandez (ScottHernandez@hotmail.com)
 // Tim Noll (tim.noll@gmail.com)
+// Giuseppe Greco (giuseppe.greco@agamura.com)
 
 using System;
 using System.Collections;
