@@ -219,6 +219,12 @@ namespace NAnt.Core.Tasks {
             }
         }
 
+        protected override BuildException CreateSourceFileNotFoundException (string sourceFile) {
+            return new BuildException(string.Format(CultureInfo.InvariantCulture,
+                "Could not find file '{0}' to move.", sourceFile),
+                Location);
+        }
+
         #endregion Override implementation of CopyTask
     }
 }
