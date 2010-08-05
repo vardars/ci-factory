@@ -493,7 +493,7 @@ namespace NAnt.Core.Tasks {
     public class InElement : Element {
         #region Private Instance Fields
 
-        private FileSet _items = null;
+        private FileSet _items;
 
         #endregion Private Instance Fields
 
