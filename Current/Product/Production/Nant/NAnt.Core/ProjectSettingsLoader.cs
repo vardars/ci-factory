@@ -51,7 +51,7 @@ namespace NAnt.Core {
         /// Holds a value indicating whether a scan for tasks, types and functions
         /// has already been performed for the current runtime framework.
         /// </summary>
-        private static bool ScannedTasks = false;
+        private static bool ScannedTasks;
 
         #endregion Private Static Fields
 
@@ -130,6 +130,10 @@ namespace NAnt.Core {
         #region Private Instance Methods
 
         private void ProcessPlatform(XmlNode platformNode) {
+            if (platformNode == null) {
+                throw new ArgumentNullException("platformNode");
+            }
+
             // process platform task assemblies
             if (!ScannedTasks) {
                 FileSet platformTaskAssemblies = new FileSet();
