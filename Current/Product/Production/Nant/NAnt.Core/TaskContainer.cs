@@ -30,32 +30,7 @@ using NAnt.Core.Types;
 using NAnt.Core.Util;
 
 namespace NAnt.Core {
-
-    [TaskName("break")]
-    public class BreakTask : Task
-    {
-
-        private static bool _Break;
-
-        public static bool Break
-        {
-            get
-            {
-                return _Break;
-            }
-            set
-            {
-                _Break = value;
-            }
-        }
-
-        protected override void ExecuteTask()
-        {
-            Break = true;
-        }
-    }
-
-    /// <summary>
+	/// <summary>
     /// Executes embedded tasks in the order in which they are defined.
     /// </summary>
     public class TaskContainer : Task {

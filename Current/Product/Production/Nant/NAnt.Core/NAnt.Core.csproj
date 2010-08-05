@@ -337,6 +337,7 @@
     <Compile Include="Tasks\AvailableTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\BreakTask.cs" />
     <Compile Include="Tasks\CallTask.cs">
       <SubType>Code</SubType>
     </Compile>
