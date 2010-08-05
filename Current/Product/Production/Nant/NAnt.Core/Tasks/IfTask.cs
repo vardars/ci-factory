@@ -149,6 +149,7 @@ namespace NAnt.Core.Tasks {
     ///   </code>
     /// </example>
     [TaskName("ifnot")]
+    [Obsolete("Use the <if> task instead.", false)]
     public class IfNotTask : IfTask {
         #region Override implementation of IfTask
 
