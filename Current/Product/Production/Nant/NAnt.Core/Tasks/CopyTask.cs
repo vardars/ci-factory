@@ -155,6 +155,7 @@ namespace NAnt.Core.Tasks {
 
         #region Public Instance Properties
 
+		//TODO: newext should be made Obsolete and replaced with a better named equivalent.
         [TaskAttribute("newext"), StringValidator(AllowEmpty = false)]
         public string NewExt
         {
