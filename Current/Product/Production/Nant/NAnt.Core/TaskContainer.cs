@@ -77,8 +77,7 @@ namespace NAnt.Core {
                 }
 
                 BuildElementAttribute buildElemAttr = (BuildElementAttribute) Attribute.GetCustomAttribute(memInfo, typeof(BuildElementAttribute), true);
-                if (buildElemAttr != null)
-                {
+                if (buildElemAttr != null) {
                     _subXMLElements.Add(buildElemAttr.Name);
                 }
             }
@@ -119,6 +118,7 @@ namespace NAnt.Core {
                     if (task != null)
                     {
                         task.Parent = this;
+                        // execute task
                         task.Execute();
                     }
                 }
@@ -130,14 +130,10 @@ namespace NAnt.Core {
                     if (!Project.DataTypeReferences.Contains(dataType.ID))
                     {
                         Project.DataTypeReferences.Add(dataType.ID, dataType);
-                    }
-                    else
-                    {
+                    } else {
                         Project.DataTypeReferences[dataType.ID] = dataType; // overwrite with the new reference.
                     }
-                }
-                else
-                {
+                } else {
                     throw new BuildException(string.Format(CultureInfo.InvariantCulture,
                         ResourceUtils.GetString("NA1071"),
                         childNode.Name), Project.LocationMap.GetLocation(childNode));
