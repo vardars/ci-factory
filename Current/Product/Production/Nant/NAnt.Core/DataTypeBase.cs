@@ -15,7 +15,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// Ian MacLean (ian_maclean@another.com)
+// Ian MacLean (imaclean@gmail.com)
 
 using System;
 using System.Globalization;
@@ -40,14 +40,18 @@ namespace NAnt.Core {
 
         #region Public Instance Properties
 
-        /// <summary>        /// The ID used to be referenced later.        /// </summary>
+        /// <summary>
+        /// The ID used to be referenced later.
+        /// </summary>
         [TaskAttribute("id" )]
         public string ID {
             get { return _id; }
             set { _id = StringUtils.ConvertEmptyToNull(value); }
         }
 
-        /// <summary>        /// The ID to use as the reference.        /// </summary>
+        /// <summary>
+        /// The ID to use as the reference.
+        /// </summary>
         [TaskAttribute("refid")]
         public string RefID {
             get { return _refID; }
