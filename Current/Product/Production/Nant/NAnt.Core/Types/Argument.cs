@@ -29,6 +29,13 @@ namespace NAnt.Core.Types {
     /// <summary>
     /// Represents a command-line argument.
     /// </summary>
+    /// <remarks>
+    ///   <para>
+    ///   When passed to an external application, the argument will be quoted
+    ///   when appropriate. This does not apply to the <see cref="Line" />
+    ///   parameter, which is always passed as is.
+    ///   </para>
+    /// </remarks>
     /// <example>
     ///   <para>
     ///   A single command-line argument containing a space character.
@@ -60,11 +67,13 @@ namespace NAnt.Core.Types {
     ///     ]]>
     ///   </code>
     /// </example>
+    [Serializable]
     [ElementName("arg")]
     public class Argument : Element {
         #region Private Instance Fields
 
         private FileInfo _file;
+        private DirectoryInfo _directory;
         private PathSet _path;
         private string _value;
         private string _line;
@@ -121,7 +130,9 @@ namespace NAnt.Core.Types {
         public override string ToString() {
             if (File != null) {
                 return QuoteArgument(File.FullName);
-            } else if (Path != null) {
+            } else if (Directory != null) {
+                return QuoteArgument(Directory.FullName);
+            }  else if (Path != null) {
                 return QuoteArgument(Path.ToString());
             } else if (Value != null) {
                 return QuoteArgument(Value);
@@ -153,6 +164,16 @@ namespace NAnt.Core.Types {
         public FileInfo File {
             get { return _file; }
             set { _file = value; }
+        }
+
+        /// <summary>
+        /// The value for a directory-based command-line argument; will be
+        /// replaced with the absolute path of the directory.
+        /// </summary>
+        [TaskAttribute("dir")]
+        public DirectoryInfo Directory {
+            get { return _directory; }
+            set { _directory = value; }
         }
 
         /// <summary>
@@ -243,6 +264,8 @@ namespace NAnt.Core.Types {
             get {
                 if (File != null) {
                     return File.FullName;
+                } else if (Directory != null) {
+                    return Directory.FullName;
                 } else if (Path != null) {
                     return Path.ToString();
                 } else if (Line != null) {
