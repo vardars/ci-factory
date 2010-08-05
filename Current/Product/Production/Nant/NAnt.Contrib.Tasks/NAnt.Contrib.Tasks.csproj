@@ -102,6 +102,7 @@
     <Reference Include="System.DirectoryServices">
       <Name>System.DirectoryServices</Name>
     </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web">
       <Name>System.Web</Name>
     </Reference>
@@ -130,9 +131,11 @@
     <Compile Include="Tasks\AstyleTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\ChangeDirectory.cs" />
     <Compile Include="Tasks\ChecksumTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\ChooseTask.cs" />
     <Compile Include="Tasks\CodeStatsTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -181,9 +184,12 @@
     <Compile Include="Tasks\HxRegTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\IniReadTask.cs" />
+    <Compile Include="Tasks\IniWriteTask.cs" />
     <Compile Include="Tasks\MgmtClassGenTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\MSBuildTask.cs" />
     <Compile Include="Tasks\NGenTask.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -344,6 +350,7 @@
     <Compile Include="Util\FileUtils.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Util\IniFile.cs" />
     <Compile Include="Util\SqlHelper.cs">
       <SubType>Code</SubType>
     </Compile>
