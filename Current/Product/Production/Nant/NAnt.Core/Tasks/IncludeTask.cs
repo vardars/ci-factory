@@ -83,6 +83,9 @@ namespace NAnt.Core.Tasks {
         private static string _currentBasedir = "";
         private static int _nestinglevel = 0;
 
+        //non-global includes are used extensively in (and by) CI Factory
+        private const bool RequireAllIncludesToBeGlobalIncludes = false;
+
         #endregion Private Static Fields
 
         #region Public Instance Properties
@@ -106,12 +109,17 @@ namespace NAnt.Core.Tasks {
         /// </summary>
         /// <param name="taskNode">Xml taskNode used to define this task instance.</param>
         protected override void InitializeTask(XmlNode taskNode) {
-            // Task can only be included as a global task.
-            // This might not be a firm requirement but you could get some real 
-            // funky errors if you start including targets wily-nily.
-            //if (Parent != null && !(Parent is Project)) {
-            //    throw new BuildException(ResourceUtils.GetString("NA1180"), Location);
-            //}
+
+            if (RequireAllIncludesToBeGlobalIncludes)
+            {
+                // Task can only be included as a global task.
+                // This might not be a firm requirement but you could get some real 
+                // funky errors if you start including targets wily-nily.
+                if (Parent != null && !(Parent is Project)) {
+                    throw new BuildException(ResourceUtils.GetString("NA1180"), Location);
+                }
+            }
+
             if (StringUtils.IsNullOrEmpty(_currentBasedir) || _nestinglevel == 0) {
                 _currentBasedir = Project.BaseDirectory;
             }
