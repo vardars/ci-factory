@@ -56,8 +56,8 @@ namespace NAnt.Core.Util {
                 // determine actual input encoding to use. if no explicit input
                 // encoding is specified, we'll use the system's current ANSI
                 // code page
-                Encoding actualInputEncoding = (inputEncoding != null) ? 
-                inputEncoding : Encoding.Default;
+                Encoding actualInputEncoding = (inputEncoding != null) ?
+                    inputEncoding : Encoding.Default;
 
                 // get base filter built on the file's reader. Use a 8k buffer.
                 using (StreamReader sourceFileReader = new StreamReader(sourceFileName, actualInputEncoding, true, 8192)) {
@@ -110,8 +110,8 @@ namespace NAnt.Core.Util {
         /// <summary>
         /// Moves a file filtering its content through the filter chain.
         /// </summary>
-        /// <param name="sourceFileName">The file to move</param>
-        /// <param name="destFileName">The file to move move to</param>
+        /// <param name="sourceFileName">The file to move.</param>
+        /// <param name="destFileName">The file to move move to.</param>
         /// <param name="filterChain">Chain of filters to apply when moving, or <see langword="null" /> is no filters should be applied.</param>
         /// <param name="inputEncoding">The encoding used to read the soure file.</param>
         /// <param name="outputEncoding">The encoding used to write the destination file.</param>
@@ -124,6 +124,44 @@ namespace NAnt.Core.Util {
                 CopyFile(sourceFileName, destFileName, filterChain, inputEncoding, outputEncoding);
                 File.Delete(sourceFileName);
             }
+        }
+
+        /// <summary>
+        /// Reads a file filtering its content through the filter chain.
+        /// </summary>
+        /// <param name="fileName">The file to read.</param>
+        /// <param name="filterChain">Chain of filters to apply when reading, or <see langword="null" /> is no filters should be applied.</param>
+        /// <param name="inputEncoding">The encoding used to read the file.</param>
+        /// <remarks>
+        /// If <paramref name="inputEncoding" /> is <see langword="null" />,
+        /// then the system's ANSI code page will be used to read the file.
+        /// </remarks>
+        public static string ReadFile(string fileName, FilterChain filterChain, Encoding inputEncoding) {
+            string content = null;
+
+            // determine character encoding to use
+            Encoding encoding = (inputEncoding != null) ? inputEncoding : Encoding.Default;
+
+            // read file
+            using (StreamReader sr = new StreamReader(fileName, encoding, true)) {
+                if (filterChain == null || filterChain.Filters.Count == 0) {
+                    content = sr.ReadToEnd();
+                } else {
+                    Filter baseFilter = filterChain.GetBaseFilter(
+                        new PhysicalTextReader(sr));
+
+                    StringWriter sw = new StringWriter();
+                    while (true) {
+                        int character = baseFilter.Read();
+                        if (character == -1)
+                            break;
+                        sw.Write((char) character);
+                    }
+                    content = sw.ToString();
+                }
+            }
+
+            return content;
         }
 
         /// <summary>
@@ -177,6 +215,10 @@ namespace NAnt.Core.Util {
                 throw new ArgumentNullException("path2");
             }
 
+            if (Path.IsPathRooted(path2)) {
+                return path2;
+            }
+
             char separatorChar = Path.DirectorySeparatorChar;
             char[] splitChars = new char[] {'/', separatorChar};
 
@@ -185,21 +227,40 @@ namespace NAnt.Core.Util {
 
             ArrayList arList = new ArrayList();
             
-            // for each Item in the path that differs from ".." we just add it to the ArrayList
+            // for each Item in the path that differs from ".." we just add it 
+            // to the ArrayList, but skip empty parts
             for (int iCount = 0; iCount < path2Parts.Length; iCount++) {
-                // If we get a ".." Try to remove the last item added (as if going up in the Directory Structure)
-                if (path2Parts[iCount] == "..") {
+                string currentPart = path2Parts[iCount];
+
+                // skip empty parts or single dot parts
+                if (currentPart.Length == 0 || currentPart == ".") {
+                    continue;
+                }
+
+                // if we get a ".." Try to remove the last item added (as if 
+                // going up in the Directory Structure)
+                if (currentPart == "..") {
                     if (arList.Count > 0 && ((string) arList[arList.Count - 1] != "..")) {
                         arList.RemoveAt(arList.Count -1);
                     } else {
-                        arList.Add(path2Parts[iCount]);
+                        arList.Add(currentPart);
                     }
                 } else {
-                    arList.Add(path2Parts[iCount]);
+                    arList.Add(currentPart);
                 }
             }
 
-            string[] path1Parts = path1.Split(splitChars);
+            bool trailingSeparator = (path1.Length > 0 && path1.IndexOfAny(splitChars, path1.Length - 1) != -1);
+            
+            // if the first path ends in directory seperator character, then 
+            // we need to omit that trailing seperator when we split the path
+            string[] path1Parts;
+            if (trailingSeparator) {
+                path1Parts = path1.Substring(0, path1.Length - 1).Split(splitChars);
+            } else {
+                path1Parts = path1.Split(splitChars);
+            }
+            
             int counter = path1Parts.Length;
 
             // if the second path starts with parts to move up the directory tree, 
@@ -214,7 +275,8 @@ namespace NAnt.Core.Util {
             //     path2 = test
             ArrayList arList2 = (ArrayList) arList.Clone();
             for (int i = 0; i < arList2.Count; i++) {
-                if ((string) arList2[i] != ".." || counter < 3) {
+                // never discard first part of path1
+                if ((string) arList2[i] != ".." || counter < 2) {
                     break;
                 }
 
@@ -226,8 +288,24 @@ namespace NAnt.Core.Util {
 
             string separatorString = separatorChar.ToString(CultureInfo.InvariantCulture);
 
-            return Path.Combine(string.Join(separatorString, path1Parts,
+            // if path1 only has one remaining part, and the original path had
+            // a trailing separator character or the remaining path had multiple
+            // parts (which were discarded by a relative path in path2), then
+            // add separator to remaining part
+            if (counter == 1 && (trailingSeparator || path1Parts.Length > 1)) {
+                path1Parts[0] += separatorString;
+            }
+
+            string combinedPath = Path.Combine(string.Join(separatorString, path1Parts,
                 0, counter), string.Join(separatorString, (String[]) arList.ToArray(typeof(String))));
+
+            // if path2 ends in directory separator character, then make sure
+            // combined path has trailing directory separator character
+            if (path2.EndsWith("/") || path2.EndsWith(separatorString)) {
+                combinedPath += Path.DirectorySeparatorChar;
+            }
+
+            return combinedPath;
         }
 
         /// <summary>
@@ -254,6 +332,72 @@ namespace NAnt.Core.Util {
                 Directory.GetCurrentDirectory(), path);
 
             return Path.GetFullPath(combinedPath);
+        }
+
+        /// <summary>
+        /// Returns the home directory of the current user.
+        /// </summary>
+        /// <returns>
+        /// The home directory of the current user.
+        /// </returns>
+        public static string GetHomeDirectory() {
+            if (PlatformHelper.IsUnix) {
+                return Environment.GetEnvironmentVariable("HOME");
+            } else {
+                return Environment.GetEnvironmentVariable("USERPROFILE");
+            }
+        }
+
+        /// <summary>
+        /// Scans a list of directories for the specified filename.
+        /// </summary>
+        /// <param name="directories">The list of directories to search.</param>
+        /// <param name="fileName">The name of the file to look for.</param>
+        /// <param name="recursive">Specifies whether the directory should be searched recursively.</param>
+        /// <remarks>
+        /// The directories are scanned in the order in which they are defined.
+        /// </remarks>
+        /// <returns>
+        /// The absolute path to the specified file, or null if the file was
+        /// not found.
+        /// </returns>
+        public static string ResolveFile(string[] directories, string fileName, bool recursive) {
+            if (directories == null)
+                throw new ArgumentNullException("directories");
+            if (fileName == null)
+                throw new ArgumentNullException("fileName");
+
+            string resolvedFile = null;
+
+            foreach (string directory in directories) {
+                if (!Directory.Exists(directory))
+                    continue;
+
+                resolvedFile = ScanDirectory (directory, fileName, recursive);
+                if (resolvedFile != null)
+                    break;
+            }
+
+            return resolvedFile;
+        }
+
+        private static string ScanDirectory(string directory, string fileName, bool recursive) {
+            string absolutePath = Path.Combine(directory, fileName);
+            if (File.Exists(absolutePath))
+                return absolutePath;
+
+            if (!recursive)
+                return null;
+
+            string[] subDirs = Directory.GetDirectories(directory);
+            foreach (string subDir in subDirs) {
+                absolutePath = ScanDirectory (Path.Combine (directory, subDir),
+                    fileName, recursive);
+                if (absolutePath != null)
+                    return absolutePath;
+            }
+
+            return null;
         }
 
         #endregion Public Static Methods
