@@ -168,6 +168,11 @@ namespace NAnt.Core.Types {
     ///     </item>
     ///     <item>
     ///         <description>
+    ///         **/vssver2.scc
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///         **/_vti_cnf/**
     ///         </description>
     ///     </item>
@@ -609,6 +614,7 @@ namespace NAnt.Core.Types {
                 Excludes.Add("**/SCCS");
                 Excludes.Add("**/SCCS/**");
                 Excludes.Add("**/vssver.scc");
+                Excludes.Add("**/vssver2.scc");
                 Excludes.Add("**/_vti_cnf/**");
             }
             base.InitializeElement(elementNode);
