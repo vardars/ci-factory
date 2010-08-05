@@ -27,10 +27,6 @@ namespace NAnt.Core.Attributes {
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Should only be applied to properties exposing strongly typed arrays or 
-    /// strongly typed collections.
-    /// </para>
-    /// <para>
     /// The XML format is like this:
     /// <code>
     ///     <![CDATA[
@@ -115,7 +111,7 @@ namespace NAnt.Core.Attributes {
         #region Private Instance Fields
 
         private string _name;
-        private bool _required = false;
+        private bool _required;
         private bool _processXml = true;
 
         #endregion Private Instance Fields
