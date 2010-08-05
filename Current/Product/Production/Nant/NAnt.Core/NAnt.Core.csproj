@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
@@ -81,6 +81,8 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="AppendListener.cs" />
+    <Compile Include="Functions\FrameworkFunctions.cs" />
+    <Compile Include="Functions\ScriptFileFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Attributes\BooleanValidatorAttribute.cs">
       <SubType>Code</SubType>
