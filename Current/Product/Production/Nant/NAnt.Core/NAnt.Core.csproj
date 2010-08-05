@@ -81,6 +81,9 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="AppendListener.cs" />
+    <Compile Include="Functions\DnsFunctions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Functions\FrameworkFunctions.cs" />
     <Compile Include="Functions\ScriptFileFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
