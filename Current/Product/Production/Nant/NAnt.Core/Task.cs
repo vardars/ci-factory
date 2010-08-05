@@ -47,9 +47,9 @@ namespace NAnt.Core {
         #region Private Instance Fields
 
         private bool _failOnError = true;
-        private bool _verbose = false;
+        private bool _verbose;
         private bool _ifDefined = true;
-        private bool _unlessDefined = false;
+        private bool _unlessDefined;
         private Level _threshold;
 
         #endregion Private Instance Fields
@@ -221,7 +221,7 @@ namespace NAnt.Core {
         /// <para>
         /// If the <see cref="Verbose" /> attribute is set on the task and a 
         /// message is logged with level <see cref="Level.Verbose" />, the 
-        /// priority of the message will be increased to <see cref="Level.Info" />.
+        /// priority of the message will be increased to <see cref="Level.Info" />
         /// when the threshold of the build log is <see cref="Level.Info" />.
         /// </para>
         /// <para>
@@ -364,7 +364,7 @@ namespace NAnt.Core {
                             // holds the attribute value converted to the property type
                             object propertyValue = null;
 
-                            // If the object is an emum
+                            // If the object is an enum
                             if (propertyType.IsEnum) {
                                 try {
                                     propertyValue = Enum.Parse(propertyType, attributeValue);
