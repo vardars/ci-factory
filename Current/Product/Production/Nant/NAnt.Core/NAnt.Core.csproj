@@ -469,6 +469,9 @@
     <Compile Include="Types\PathSet.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Types\Pattern.cs" />
+    <Compile Include="Types\PatternCollection.cs" />
+    <Compile Include="Types\PatternSet.cs" />
     <Compile Include="Types\Proxy.cs">
       <SubType>Code</SubType>
     </Compile>

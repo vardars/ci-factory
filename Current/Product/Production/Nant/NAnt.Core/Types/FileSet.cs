@@ -22,6 +22,7 @@ using System;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Xml;
 
 using NAnt.Core.Attributes;
@@ -268,6 +269,7 @@ namespace NAnt.Core.Types {
     ///     </item>
     /// </list>
     /// </example>
+    /// <seealso cref="PatternSet" />
     [Serializable()]
     [ElementName("fileset")]
     public class FileSet : DataTypeBase {
@@ -667,6 +669,15 @@ namespace NAnt.Core.Types {
 
         #region Public Instance Methods
 
+        /// <summary>
+        /// Adds a nested set of patterns, or references a standalone patternset.
+        /// </summary>
+        [BuildElement("patternset")]
+        public void AddPatternSet (PatternSet patternSet) {
+            Includes.AddRange(patternSet.GetIncludePatterns());
+            Excludes.AddRange(patternSet.GetExcludePatterns());
+        }
+
         public virtual void Scan() {
             try {
                 _scanner.BaseDirectory = BaseDirectory;
@@ -919,10 +930,18 @@ namespace NAnt.Core.Types {
                     }
 
                     try {
-                        using (Stream file = File.OpenRead(PatternFile.FullName)) {
-                            StreamReader rd = new StreamReader(file);
-                            while (rd.Peek() > -1) {
-                                patterns.Add(rd.ReadLine());
+                        using (StreamReader sr = new StreamReader(PatternFile.FullName, Encoding.Default, true)) {
+                            string line = sr.ReadLine ();
+                            while (line != null) {
+                                // remove leading and trailing whitespace
+                                line = line.Trim ();
+                                // only consider non-empty lines that are not comments
+                                if (line.Length != 0 && line [0] != '#') {
+                                    // add line as pattern
+                                    patterns.Add(line);
+                                }
+                                // read next line
+                                line = sr.ReadLine ();
                             }
                         }
                         return patterns;
