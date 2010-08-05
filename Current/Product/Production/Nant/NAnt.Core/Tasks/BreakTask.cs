@@ -1,6 +1,6 @@
 using NAnt.Core.Attributes;
 
-namespace NAnt.Core
+namespace NAnt.Core.Tasks
 {
 	[TaskName("break")]
 	public class BreakTask : Task
