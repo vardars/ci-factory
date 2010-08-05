@@ -904,6 +904,7 @@ namespace NAnt.Core {
                     return;
                 }
 
+                // create message to send
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = GetPropertyValue(properties, "from", null);
                 mailMessage.To = GetPropertyValue(properties, prefix + ".to", null);
@@ -1237,6 +1238,9 @@ namespace NAnt.Core {
             _message += value;
         }
 
+        /// <summary>
+        /// Writes an empty string to the logging infrastructure.
+        /// </summary>
         public override void WriteLine() {
             WriteLine(string.Empty);
         }
