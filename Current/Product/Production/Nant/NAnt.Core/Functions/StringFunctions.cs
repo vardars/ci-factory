@@ -348,13 +348,13 @@ namespace NAnt.Core.Functions {
         /// <code>string::last-index-of('testing string', 'test') ==> 0</code>
         /// </example>
         /// <example>
-        /// <code>string::last-index-of('testing string', '') ==> 0</code>
+        /// <code>string::last-index-of('testing string', '') ==> 13</code>
         /// </example>
         /// <example>
         /// <code>string::last-index-of('testing string', 'Test') ==> -1</code>
         /// </example>
         /// <example>
-        /// <code>string::last-index-of('testing string', 'ing') ==> 4</code>
+        /// <code>string::last-index-of('testing string', 'ing') ==> 11</code>
         /// </example>
         [Function("last-index-of")]
         public static int LastIndexOf(string source, string value) {

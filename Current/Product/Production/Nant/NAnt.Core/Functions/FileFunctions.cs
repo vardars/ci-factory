@@ -31,6 +31,9 @@ using NAnt.Core.Types;
 using NAnt.Core.Attributes;
 
 namespace NAnt.Core.Functions {
+    /// <summary>
+    /// Groups a set of functions for dealing with files.
+    /// </summary>
     [FunctionSet("file", "File")]
     public class FileFunctions : FunctionSetBase {
         #region Public Instance Constructors

@@ -30,6 +30,9 @@ using NAnt.Core.Types;
 using NAnt.Core.Util;
 
 namespace NAnt.Core.Functions {
+    /// <summary>
+    /// Groups a set of functions for dealing with directories.
+    /// </summary>
     [FunctionSet("directory", "Directory")]
     public class DirectoryFunctions : FunctionSetBase {
         #region Public Instance Constructors
