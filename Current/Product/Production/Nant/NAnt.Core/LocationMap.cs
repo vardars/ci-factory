@@ -116,7 +116,7 @@ namespace NAnt.Core {
                         if (reader.Depth < previousDepth) {
                             // Clear vars for new depth
                             string[] list = parentXPath.Split('/');
-                            string newXPath = ""; // once appended to / will be root node ...
+                            string newXPath = ""; // once appended to / will be root node
 
                             for (int j = 1; j < level+1; j++) {
                                 newXPath += "/" + list[j];
@@ -172,7 +172,6 @@ namespace NAnt.Core {
 
             // add map at the end to prevent adding maps that had errors
             _fileMap.Add(fileName, map);
-
         }
 
         /// <summary>

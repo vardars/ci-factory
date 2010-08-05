@@ -170,7 +170,7 @@ namespace NAnt.Core {
 
                 if (Char.IsDigit(ch)) {
                     _tokenType = TokenType.Number;
-                    string s = "";
+                    string s = string.Empty;
 
                     s += ch;
                     ReadChar();
@@ -182,8 +182,8 @@ namespace NAnt.Core {
                             s += (char)ReadChar();
                         } else {
                             break;
-                        };
-                    };
+                        }
+                    }
 
                     _tokenText = s;
                     return ;
@@ -204,7 +204,7 @@ namespace NAnt.Core {
                                 break;
                         }
                         s += ch;
-                    };
+                    }
 
                     _tokenText = s;
                     return ;
@@ -214,9 +214,7 @@ namespace NAnt.Core {
                     _tokenType = TokenType.Keyword;
 
                     StringBuilder sb = new StringBuilder();
-
                     sb.Append((char)ch);
-
                     ReadChar();
 
                     while ((i = PeekChar()) != -1) {
@@ -224,8 +222,8 @@ namespace NAnt.Core {
                             sb.Append((char)ReadChar());
                         } else {
                             break;
-                        };
-                    };
+                        }
+                    }
 
                     _tokenText = sb.ToString();
                     if (_tokenText.EndsWith("-"))
@@ -273,9 +271,10 @@ namespace NAnt.Core {
                 ReadChar();
             }
             _tokenText = new String(ch, 1);
-            _tokenType = TokenType.Punctuation;
             if (ch >= 32 && ch < 128) {
                 _tokenType = charIndexToTokenType[ch];
+            } else {
+                _tokenType = TokenType.Punctuation;
             }
         }
 
@@ -310,20 +309,20 @@ namespace NAnt.Core {
                 if (!Char.IsWhiteSpace((char)ch))
                     break;
                 ReadChar();
-            };
+            }
         }
 
         #endregion Private Instance Methods
 
         #region Private Instance Fields
 
-        private string _text = null;
+        private string _text;
         private int _position;
         private Position _tokenStartPosition;
         private TokenType _tokenType;
         private string _tokenText;
         private bool _ignoreWhiteSpace = true;
-        private bool _singleCharacterMode = false;
+        private bool _singleCharacterMode;
 
         #endregion Private Instance Fields
 
