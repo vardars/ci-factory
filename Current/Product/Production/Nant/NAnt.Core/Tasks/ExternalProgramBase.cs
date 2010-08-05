@@ -17,7 +17,7 @@
 //
 // Gerry Shaw (gerry_shaw@yahoo.com)
 // Scott Hernandez (ScottHernandez@hotmail.com)
-// Gert Driesen (gert.driesen@ardatis.com)
+// Gert Driesen (driesen@users.sourceforge.net)
 
 using System;
 using System.Collections;
@@ -540,7 +540,9 @@ namespace NAnt.Core.Tasks {
 
         #region Private Instance Methods
 
-        /// <summary>        /// Reads from the stream until the external program is ended.        /// </summary>
+        /// <summary>
+        /// Reads from the stream until the external program is ended.
+        /// </summary>
         protected virtual void StreamReaderThread_Output() {
             StreamReader reader = _stdOut;
             bool doAppend = OutputAppend;
@@ -575,7 +577,10 @@ namespace NAnt.Core.Tasks {
             
             OutputWriter.Flush();
         }
-        /// <summary>        /// Reads from the stream until the external program is ended.        /// </summary>
+
+        /// <summary>
+        /// Reads from the stream until the external program is ended.
+        /// </summary>
         protected virtual void StreamReaderThread_Error() {
             StreamReader reader = _stdError;
             bool doAppend = OutputAppend;
