@@ -145,6 +145,7 @@
     <Compile Include="Tasks\ConcatTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\DependsTask.cs" />
     <Compile Include="Tasks\DiscoTask.cs">
       <SubType>Code</SubType>
     </Compile>
