@@ -262,6 +262,14 @@
     <Compile Include="Tasks\SqlTask.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\StarTeam\LabelTask.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamAutoLabel.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamCheckin.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamCheckout.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamLabel.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamList.cs" />
+    <Compile Include="Tasks\StarTeam\StarTeamTask.cs" />
+    <Compile Include="Tasks\StarTeam\TreeBasedTask.cs" />
     <Compile Include="Tasks\Svn\AbstractSvnTask.cs">
       <SubType>Code</SubType>
     </Compile>
