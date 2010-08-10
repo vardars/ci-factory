@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
@@ -126,9 +126,18 @@
     <Compile Include="..\..\..\..\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Dashboard\Actions\HtmlReportAction.cs" />
+    <Compile Include="Dashboard\Actions\XsltParameter.cs" />
     <Compile Include="Dashboard\Change.cs" />
     <Compile Include="Dashboard\ChangeSet.cs" />
     <Compile Include="Dashboard\ChangeSetList.cs" />
+    <Compile Include="Dashboard\GenericPlugins\HtmlReportPlugin.cs" />
+    <Compile Include="IO\ConditionalGetFingerprint.cs" />
+    <Compile Include="IO\FingerprintFactory.cs" />
+    <Compile Include="IO\IConditionalGetFingerprintProvider.cs" />
+    <Compile Include="IO\IVersionProvider.cs" />
+    <Compile Include="IO\UncombinableFingerprintException.cs" />
+    <Compile Include="MVC\IFingerprintFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
