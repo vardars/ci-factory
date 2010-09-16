@@ -50,7 +50,19 @@ namespace ThoughtWorks.CruiseControl.Core.Label
             {
                 if (resultFromThisBuild.ToString().Contains(p.Name))
                 {
-                    Svn svn = p.SourceControl as Svn;
+                    Svn svn = null;
+                    if (p.SourceControl is FilteredSourceControl)
+                    {
+                        svn = ((FilteredSourceControl)p.SourceControl).SourceControlProvider as Svn;
+                    }
+                    else if (p.SourceControl is Svn)
+                    {
+                        svn = p.SourceControl as Svn;
+                    }
+                    else
+                    {
+                        throw new Exception("The source control provider of the following type is not supported by the svnRevisionLabeller: " + p.SourceControl.GetType().Name);
+                    }
                     ProcessResult result = svn.GetInfo(resultFromThisBuild);
                     XmlDocument info = new XmlDocument();
                     info.LoadXml(result.StandardOutput);
