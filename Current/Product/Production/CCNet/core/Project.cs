@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Label;
 using ThoughtWorks.CruiseControl.Core.Publishers;
@@ -33,7 +34,7 @@ namespace ThoughtWorks.CruiseControl.Core
 	[ReflectorType("project")]
 	public class Project : ProjectBase, IProject, IIntegrationRunnerTarget
 	{
-		private string webUrl = DefaultUrl();
+        private string webUrl = DefaultUrl();
 		private ISourceControl sourceControl = new NullSourceControl();
 		private ITask builder = new NullTask();
 		private ILabeller labeller = new DefaultLabeller();
@@ -53,7 +54,7 @@ namespace ThoughtWorks.CruiseControl.Core
 				return _IntegrationResultManager;
 			}
 		}
-
+        
 		public Project()
 		{
 			_IntegrationResultManager = new IntegrationResultManager(this);

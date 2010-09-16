@@ -108,7 +108,7 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 		public void Test2()
 		{
 			Project TestProject = new Project();
-			TestProject.Name = "Test Project";
+            TestProject.Name = "Test Project";
 
 			TestProject.IntegrationFilter = this;
 

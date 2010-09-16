@@ -5,6 +5,6 @@ namespace ThoughtWorks.CruiseControl.Core
 {
 	public interface IProjectList : IEnumerable
 	{
-		IProject this[string projectName] { get; }
+		IProject this[string projectName] { get; }        
 	}
 }

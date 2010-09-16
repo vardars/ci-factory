@@ -110,6 +110,12 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			}
 		}
 
+        // Added to support SvnRevisionLabeller
+        public ProcessResult GetInfo(IIntegrationResult result)
+        {
+            return Execute(NewInfoProcessInfo(result), result.ProjectName);
+        }
+
 		private void CheckoutSource(IIntegrationResult result)
 		{
 			if (StringUtil.IsBlank(TrunkUrl))
@@ -172,6 +178,19 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			AppendCommonSwitches(buffer);
 			return NewProcessInfo(buffer.ToString(), to);
 		}
+
+        // Added to support SvnRevisionLabeller
+        private ProcessInfo NewInfoProcessInfo(IIntegrationResult result)
+        {
+            ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
+            buffer.AddArgument("info");
+            buffer.AddArgument(TrunkUrl);
+            buffer.AppendArgument(string.Format("-r \"{{{0}}}\"",
+                DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)));
+            buffer.AppendArgument("--xml");
+            AppendCommonSwitches(buffer);
+            return NewProcessInfo(buffer.ToString(), result);
+        }
 
 		private static string TagMessage(string label)
 		{

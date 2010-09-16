@@ -134,6 +134,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CIFactoryServer.cs" />
+    <Compile Include="label\SvnRevisionLabeller.cs" />
+    <Compile Include="label\LastChangeLabeller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

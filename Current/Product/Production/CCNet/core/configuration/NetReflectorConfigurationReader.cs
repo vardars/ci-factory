@@ -28,7 +28,7 @@ namespace ThoughtWorks.CruiseControl.Core.Config
 			VerifyDocumentHasValidRootElement(document);
 			try
 			{
-				Configuration configuration = new Configuration();
+				Configuration configuration = Configuration.Instance();
 				foreach (XmlNode node in document.DocumentElement)
 				{
 					if (!(node is XmlComment))
@@ -38,12 +38,12 @@ namespace ThoughtWorks.CruiseControl.Core.Config
 					}
 				}
 				return configuration;
-			}
-			catch (NetReflectorException ex)
-			{
-				throw new ConfigurationException("Unable to instantiate CruiseControl projects from configuration document. " +
-					"Configuration document is likely missing Xml nodes required for properly populating CruiseControl configuration." + ex.Message, ex);
-			}
+            }
+            catch (NetReflectorException ex)
+            {
+                throw new ConfigurationException("Unable to instantiate CruiseControl projects from configuration document. " +
+                    "Configuration document is likely missing Xml nodes required for properly populating CruiseControl configuration." + ex.Message, ex);
+            }
 		}
 
 		private void VerifyDocumentHasValidRootElement(XmlDocument configXml)
