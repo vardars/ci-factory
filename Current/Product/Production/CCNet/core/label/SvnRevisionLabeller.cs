@@ -5,6 +5,7 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Core.Config;
 using ThoughtWorks.CruiseControl.Core.Sourcecontrol;
+using ThoughtWorks.CruiseControl.Remote;
 //using ThoughtWorks.CruiseControl.Remote;
 
 namespace ThoughtWorks.CruiseControl.Core.Label
@@ -42,40 +43,55 @@ namespace ThoughtWorks.CruiseControl.Core.Label
         /// </summary>
         /// <param name="resultFromThisBuild">IntegrationResult object for the current build</param>
         /// <returns>the new label</returns>
-        public string Generate(IIntegrationResult resultFromThisBuild)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult resultLastBuild)
         {
+            string label = LabelPrefix + "UNKNOWN";
+            if (resultLastBuild.LastSuccessfulIntegrationLabel != "UNKNOWN")
+            {
+                label = resultLastBuild.LastSuccessfulIntegrationLabel;
+            }
+
             Configuration config = Configuration.Instance();
             
             foreach (Project p in config.Projects)
             {
-                if (resultFromThisBuild.ToString().Contains(p.Name))
+                if (currentResult.ToString().Contains(p.Name))
                 {
-                    Svn svn = null;
-                    if (p.SourceControl is FilteredSourceControl)
+                    int greatest = 0;
+                    foreach (Modification modification in p.SourceControl.GetModifications(resultLastBuild, currentResult))
                     {
-                        svn = ((FilteredSourceControl)p.SourceControl).SourceControlProvider as Svn;
+                        if (modification.ChangeNumber > greatest)
+                            greatest = modification.ChangeNumber;
                     }
-                    else if (p.SourceControl is Svn)
-                    {
-                        svn = p.SourceControl as Svn;
-                    }
-                    else
-                    {
-                        throw new Exception("The source control provider of the following type is not supported by the svnRevisionLabeller: " + p.SourceControl.GetType().Name);
-                    }
-                    ProcessResult result = svn.GetInfo(resultFromThisBuild);
-                    XmlDocument info = new XmlDocument();
-                    info.LoadXml(result.StandardOutput);
-                    XmlNodeList xmlNL = info.GetElementsByTagName("commit");
-                    return LabelPrefix + xmlNL[0].Attributes[0].Value;                    
+                    if (greatest > 0)
+                        label = LabelPrefix + greatest.ToString();
+                    break;
                 }
             }
-            return string.Empty;
+
+            if (label == resultLastBuild.LastSuccessfulIntegrationLabel)
+            {
+                label = this.IncrementLabel(label);
+            }
+
+            return label;
+        }
+
+        private string IncrementLabel(string label)
+        {
+            int current = 0;
+            Match match = Regex.Match(label, @"^(" + LabelPrefix + @"\d+)\.(\d+)$");
+            if (match.Success)
+            {
+                current = Int32.Parse(match.Groups[2].Value);
+                label = match.Groups[1].Value;
+            }
+            return String.Format("{0}.{1}", label, current + 1);
         }
 
         public void Run(IIntegrationResult result)
         {
-            result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
         }
     }
 }

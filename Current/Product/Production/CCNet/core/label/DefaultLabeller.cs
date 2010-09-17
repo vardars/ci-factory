@@ -15,7 +15,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 		[ReflectorProperty("incrementOnFailure", Required=false)]
 		public bool IncrementOnFailed = false;
 
-		public string Generate(IIntegrationResult previousResult)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult previousResult)
 		{
 			if (previousResult == null || previousResult.IsInitial())
 			{
@@ -38,7 +38,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 
 		public void Run(IIntegrationResult result)
 		{
-			result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
 		}
 
 		private string IncrementLabel(string label)

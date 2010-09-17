@@ -7,6 +7,6 @@ namespace ThoughtWorks.CruiseControl.Core
 		/// </summary>
 		/// <param name="resultFromLastBuild">IntegrationResult from last build used to determine the next label</param>
 		/// <returns>the label for the new build</returns>
-		string Generate(IIntegrationResult resultFromLastBuild);
+		string Generate(IIntegrationResult currentResult, IIntegrationResult resultFromLastBuild);
 	}
 }

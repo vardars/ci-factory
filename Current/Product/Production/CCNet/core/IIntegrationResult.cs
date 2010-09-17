@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using ThoughtWorks.CruiseControl.Remote;
+using System.Xml.Serialization;
 
 namespace ThoughtWorks.CruiseControl.Core
 {
@@ -39,5 +40,8 @@ namespace ThoughtWorks.CruiseControl.Core
 		string BaseFromArtifactsDirectory(string pathToBase);
 		string BaseFromWorkingDirectory(string pathToBase);
 		IDictionary IntegrationProperties { get; }
+
+        [XmlIgnore]
+        IIntegrationResult PreviousIntegrationResult { get; set; }
 	}
 }

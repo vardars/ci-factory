@@ -37,9 +37,9 @@ namespace ThoughtWorks.CruiseControl.Core
 		public IIntegrationResult StartNewIntegration()
 		{
 			currentResult = new IntegrationResult(project.Name, project.WorkingDirectory, project.ArtifactDirectory);
+            currentResult.PreviousIntegrationResult = LastIntegrationResult;
 			currentResult.LastIntegrationStatus = LastIntegrationResult.Status;
 			currentResult.BuildCondition = DetermineBuildCondition(BuildCondition.NoBuild);
-			currentResult.Label = project.Labeller.Generate(LastIntegrationResult);
 			currentResult.ArtifactDirectory = project.ArtifactDirectory;
 			currentResult.ProjectUrl = project.WebURL;
 			currentResult.LastSuccessfulIntegrationLabel = LastIntegrationResult.LastSuccessfulIntegrationLabel;

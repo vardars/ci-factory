@@ -48,10 +48,10 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 		/// <param name="result"></param>
 		public void Run(IIntegrationResult result)
 		{
-			result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
 		}
 
-		public string Generate(IIntegrationResult previousResult)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult previousResult)
 		{
 			if (previousResult == null || previousResult.Label == null || previousResult.IsInitial())
 			{

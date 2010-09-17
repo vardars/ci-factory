@@ -19,14 +19,14 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 		[ReflectorProperty("project")]
 		public string Project;
 
-		public string Generate(IIntegrationResult resultFromLastBuild)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult resultFromLastBuild)
 		{
 			return stateManager.LoadState(Project).LastSuccessfulIntegrationLabel;
 		}
 
 		public void Run(IIntegrationResult result)
 		{
-			result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
 		}
 	}
 }

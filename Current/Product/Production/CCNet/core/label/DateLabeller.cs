@@ -18,7 +18,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 			this.dateTimeProvider = dateTimeProvider;
 		}
 
-		public string Generate(IIntegrationResult resultFromLastBuild)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult resultFromLastBuild)
 		{
 			DateTime now = dateTimeProvider.Now;
 
@@ -39,7 +39,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 
 		public void Run(IIntegrationResult result)
 		{
-			result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
 		}
 
 		private Version MakeDefaultVersion(DateTime date)

@@ -11,7 +11,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		public IIntegrationRunnerTarget target;
 		private readonly IIntegrationResultManager resultManager;
 		private readonly IQuietPeriod quietPeriod;
-		private readonly IProject _Project;
+		private readonly Project _Project;
 
 		public IIntegrationFilter IntegrationFilter
 		{
@@ -21,7 +21,7 @@ namespace ThoughtWorks.CruiseControl.Core
 			}
 		}
 
-		public IntegrationRunner(IIntegrationResultManager resultManager, IIntegrationRunnerTarget target, IQuietPeriod quietPeriod, IProject project)
+		public IntegrationRunner(IIntegrationResultManager resultManager, IIntegrationRunnerTarget target, IQuietPeriod quietPeriod, Project project)
 		{
 			this.target = target;
 			this.quietPeriod = quietPeriod;
@@ -43,6 +43,7 @@ namespace ThoughtWorks.CruiseControl.Core
 				IsRunable = this.IntegrationFilter.ShouldRunBuild(result);
 				if (IsRunable)
 				{
+                    result.Label = _Project.Labeller.Generate(result, lastResult);
 					target.Activity = ProjectActivity.Building;
 					target.SourceControl.GetSource(result);
 					this.RunBuild(result);

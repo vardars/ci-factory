@@ -22,7 +22,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 		[ReflectorProperty("project")]
 		public string ProjectName;
 
-		public string Generate(IIntegrationResult result)
+        public string Generate(IIntegrationResult currentResult, IIntegrationResult result)
 		{
 			ICruiseManager manager = (ICruiseManager) remotingService.Connect(typeof (ICruiseManager), ServerUri);
 
@@ -39,7 +39,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 
 		public void Run(IIntegrationResult result)
 		{
-			result.Label = Generate(result);
+            result.Label = Generate(result, result.PreviousIntegrationResult);
 		}
 	}
 }

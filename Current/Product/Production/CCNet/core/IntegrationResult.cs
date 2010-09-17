@@ -26,6 +26,17 @@ namespace ThoughtWorks.CruiseControl.Core
 		private bool initial = false;
         private Util.BuildProgressInformation buildProgressInformation = new BuildProgressInformation("");
 
+        private IIntegrationResult _PreviousIntegrationResult;
+
+        [XmlIgnore]
+        public IIntegrationResult PreviousIntegrationResult
+        {
+            get { return _PreviousIntegrationResult; }
+            set
+            {
+                _PreviousIntegrationResult = value;
+            }
+        }
 
         [XmlIgnore]
         public Util.BuildProgressInformation BuildProgressInformation
