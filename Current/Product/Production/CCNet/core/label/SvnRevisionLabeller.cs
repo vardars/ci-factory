@@ -46,17 +46,19 @@ namespace ThoughtWorks.CruiseControl.Core.Label
         public string Generate(IIntegrationResult currentResult, IIntegrationResult resultLastBuild)
         {
             string label = LabelPrefix + "UNKNOWN";
-            if (resultLastBuild.LastSuccessfulIntegrationLabel != "UNKNOWN")
+            if (resultLastBuild.LastIntegrationLabel != "UNKNOWN")
             {
-                label = resultLastBuild.LastSuccessfulIntegrationLabel;
+                label = resultLastBuild.LastIntegrationLabel;
             }
 
             Configuration config = Configuration.Instance();
+
             
             foreach (Project p in config.Projects)
             {
                 if (currentResult.ToString().Contains(p.Name))
                 {
+                    
                     int greatest = 0;
                     foreach (Modification modification in p.SourceControl.GetModifications(resultLastBuild, currentResult))
                     {

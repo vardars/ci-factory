@@ -12,6 +12,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		string WorkingDirectory { get; set; }
 		string Label { get; set; }
 		string LastSuccessfulIntegrationLabel { get; }
+        string LastIntegrationLabel { get; }
 		IntegrationStatus Status { get; set; }
 		IntegrationStatus LastIntegrationStatus { get; }
 		DateTime StartTime { get; set; }

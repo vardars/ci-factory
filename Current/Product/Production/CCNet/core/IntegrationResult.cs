@@ -17,6 +17,7 @@ namespace ThoughtWorks.CruiseControl.Core
 	{
 		public const string InitialLabel = "UNKNOWN";
 		private string lastSuccessfulIntegrationLabel;
+        private string lastIntegrationLabel;
 		private DateTime startTime;
 		private DateTime endTime;
 		private Modification[] modifications = new Modification[0];
@@ -49,6 +50,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		{
 			BuildCondition = BuildCondition.NoBuild;
 			Label = InitialLabel;
+            LastIntegrationLabel = InitialLabel;
 			Status = IntegrationStatus.Unknown;
 			LastIntegrationStatus = IntegrationStatus.Unknown;
 		}
@@ -118,7 +120,13 @@ namespace ThoughtWorks.CruiseControl.Core
 		{
 			get { return (Succeeded || lastSuccessfulIntegrationLabel == null) ? Label : lastSuccessfulIntegrationLabel; }
 			set { lastSuccessfulIntegrationLabel = value; }
-		}
+        }
+
+        public string LastIntegrationLabel
+        {
+            get { return lastIntegrationLabel; }
+            set { lastIntegrationLabel = value; }
+        }
 
 		/// <summary>
 		/// Gets and sets the date and time at which the integration commenced.

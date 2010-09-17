@@ -43,6 +43,7 @@ namespace ThoughtWorks.CruiseControl.Core
 			currentResult.ArtifactDirectory = project.ArtifactDirectory;
 			currentResult.ProjectUrl = project.WebURL;
 			currentResult.LastSuccessfulIntegrationLabel = LastIntegrationResult.LastSuccessfulIntegrationLabel;
+            currentResult.LastIntegrationLabel = LastIntegrationResult.Label;
 			return currentResult;
 		}
 
