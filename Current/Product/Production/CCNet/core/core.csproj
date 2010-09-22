@@ -442,6 +442,8 @@
     <Compile Include="sourcecontrol\ClearCaseHistoryParser.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="sourcecontrol\FileSvnQueue.cs" />
+    <Compile Include="sourcecontrol\SvnQueue.cs" />
     <Compile Include="sourcecontrol\Cvs.cs">
       <SubType>Code</SubType>
     </Compile>

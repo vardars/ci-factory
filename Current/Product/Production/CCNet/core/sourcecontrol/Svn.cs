@@ -211,7 +211,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			return string.Format("{0}/{1}", TagBaseUrl, label);
 		}
 
-		private void AppendCommonSwitches(ProcessArgumentBuilder buffer)
+		protected void AppendCommonSwitches(ProcessArgumentBuilder buffer)
 		{
 			buffer.AddArgument("--username", Username);
 			buffer.AddArgument("--password", Password);
@@ -224,7 +224,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 			buffer.AppendIf(revision > 0, "--revision {0}", revision.ToString());
 		}
 
-		private ProcessInfo NewProcessInfo(string args, IIntegrationResult result)
+		protected ProcessInfo NewProcessInfo(string args, IIntegrationResult result)
 		{
 		    ProcessInfo processInfo = new ProcessInfo(Executable, args, result.BaseFromWorkingDirectory(WorkingDirectory));
 		    processInfo.StreamEncoding = Encoding.UTF8;

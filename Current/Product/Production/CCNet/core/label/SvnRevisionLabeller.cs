@@ -52,21 +52,27 @@ namespace ThoughtWorks.CruiseControl.Core.Label
             }
 
             Configuration config = Configuration.Instance();
-
-            
+                        
             foreach (Project p in config.Projects)
             {
                 if (currentResult.ToString().Contains(p.Name))
                 {
-                    
-                    int greatest = 0;
-                    foreach (Modification modification in p.SourceControl.GetModifications(resultLastBuild, currentResult))
+                    if (p.SourceControl.ToString().ToLower().Contains("svnqueue"))
                     {
-                        if (modification.ChangeNumber > greatest)
-                            greatest = modification.ChangeNumber;
+                        FileSvnQueue fsq = new FileSvnQueue(p);
+                        label = LabelPrefix + fsq.ReadLastSvnRevision();
                     }
-                    if (greatest > 0)
-                        label = LabelPrefix + greatest.ToString();
+                    else
+                    {
+                        int greatest = 0;
+                        foreach (Modification modification in p.SourceControl.GetModifications(resultLastBuild, currentResult))
+                        {
+                            if (modification.ChangeNumber > greatest)
+                                greatest = modification.ChangeNumber;
+                        }
+                        if (greatest > 0)
+                            label = LabelPrefix + greatest.ToString();
+                    }
                     break;
                 }
             }
