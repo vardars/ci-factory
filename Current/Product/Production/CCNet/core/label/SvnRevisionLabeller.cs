@@ -46,9 +46,14 @@ namespace ThoughtWorks.CruiseControl.Core.Label
         public string Generate(IIntegrationResult currentResult, IIntegrationResult resultLastBuild)
         {
             string label = LabelPrefix + "UNKNOWN";
-            if (resultLastBuild.LastIntegrationLabel != "UNKNOWN")
+            //if (resultLastBuild.LastIntegrationLabel != "UNKNOWN")
+            //{
+            //    label = resultLastBuild.LastIntegrationLabel;
+            //}
+
+            if (resultLastBuild.Label != "UNKNOWN")
             {
-                label = resultLastBuild.LastIntegrationLabel;
+                label = resultLastBuild.Label;
             }
 
             Configuration config = Configuration.Instance();
