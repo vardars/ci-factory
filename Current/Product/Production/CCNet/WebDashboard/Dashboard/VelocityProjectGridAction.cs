@@ -98,22 +98,33 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.Dashboard
 
 		private string ForceBuildIfNecessary(IRequest request)
 		{
-			if (request.FindParameterStartingWith("forcebuild") != string.Empty)
-			{
-				string forceBuildProject = request.GetText("forceBuildProject");
-				bool forceWasAllowed = false;
-				forceWasAllowed = farmService.ForceBuild(
-					new DefaultProjectSpecifier(
-						new DefaultServerSpecifier(request.GetText("forceBuildServer")),
-						forceBuildProject));
-				if (forceWasAllowed)
-				{
-					return string.Format("Build successfully forced for {0}", forceBuildProject);
-				}
-				else
-				{
-					return string.Format("Build was not allowed to be forced for {0}", forceBuildProject);
-				}
+			// Previousely the mere existence of the forcebuild field on the webform would trigger a build. A secod condition was
+            // added to check that the field's value is set to true.
+            if (request.FindParameterStartingWith("forcebuild") != string.Empty)
+            {
+                string forceBuildProject = request.GetText("forceBuildProject");
+                string forceBuildServer = request.GetText("forceBuildServer");
+                IProjectSpecifier projectSpecifier = new DefaultProjectSpecifier(
+                                                        new DefaultServerSpecifier(forceBuildServer), forceBuildProject);
+
+                if (request.GetText("forcebuild").ToLower() == "true")
+                {
+                    bool forceWasAllowed = false;
+                    forceWasAllowed = farmService.ForceBuild(projectSpecifier);
+                    if (forceWasAllowed)
+                    {
+                        return string.Format("Build successfully forced for {0}", forceBuildProject);
+                    }
+                    else
+                    {
+                        return string.Format("Build was not allowed to be forced for {0}", forceBuildProject);
+                    }
+                }
+                else //Kill Button
+                {
+                    farmService.Kill(projectSpecifier);
+                    return string.Format("Build for {0} was successfully killed", forceBuildProject);
+                }
 			}
 			else
 			{

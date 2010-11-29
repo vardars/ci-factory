@@ -191,13 +191,22 @@ if(!document.getElementById)
             <input type="hidden" name="forceBuildProject" value="$projectGridRow.Name" />
             <input type="hidden" name="forceBuildServer" value="$projectGridRow.ServerName" />
             <input type="hidden" name="action" value=""/>
-            <!--<input type="password" name="password" maxlength="6" size="10" />-->
-            #if (($projectGridRow.Activity != "Sleeping") || ($forceBuildMessage.Length > 0 && $forceBuildMessage.EndsWith($projectGridRow.Name)))
-            <input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>
+            <input type="password" name="password" maxlength="6" size="10" />
+            #if (($projectGridRow.Activity != "Sleeping") || (($forceBuildMessage.Length > 0) && ($forceBuildMessage.EndsWith($projectGridRow.Name))))
+            <!--<input disabled="" type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" style="cursor:default"/>-->
+            <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Kill" onclick="this.form.elements['forcebuild'].value = 'false'; this.form.action.value = this.value;"/>
             #else
-            <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.action.value = this.value;"/>
+            <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Force" onclick="this.form.elements['forcebuild'].value = 'true'; this.form.action.value = this.value;"/>            
             #end
           </td>
+          <!--<td class="ProjectGridCell">
+            <input type="hidden" name="killtask" value="true" />
+            <input type="hidden" name="killBuildProject" value="$projectGridRow.Name" />
+            <input type="hidden" name="killBuildServer" value="$projectGridRow.ServerName" />
+            <input type="hidden" name="action" value=""/>
+            <input type="password" name="password" maxlength="6" size="10" />
+            <input type="submit" name="$projectGridRow.ForceBuildButtonName" value="Kill" onclick="this.form.elements['forcebuild'].value = 'false'; this.form.action.value = this.value;"/>
+          </td>-->
         </form>
       </tr>
   <tr>

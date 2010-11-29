@@ -13,6 +13,7 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
         string GetLog(IBuildSpecifier buildSpecifier);
         string[] GetLogMessages(IProjectSpecifier projectSpecifier);
 		bool ForceBuild(IProjectSpecifier projectSpecifier);
+        void Kill(IProjectSpecifier projectSpecifier);
 		ProjectStatusListAndExceptions GetProjectStatusListAndCaptureExceptions();
 		ProjectStatusListAndExceptions GetProjectStatusListAndCaptureExceptions(IServerSpecifier serverSpecifier);
 		ExternalLink[] GetExternalLinks(IProjectSpecifier projectSpecifier);

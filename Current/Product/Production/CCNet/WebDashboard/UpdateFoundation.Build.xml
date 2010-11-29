@@ -24,6 +24,7 @@
         <exclude name="**\*.pdb"/>
       </fileset>
     </copy>
+	
     <copy todir="${BinDir}" overwrite="true">
       <fileset basedir="${TargetDir}">
         <include name="**\*.dll"/>
@@ -42,6 +43,19 @@
         <include name="**\*"/>
       </fileset>
     </copy>
+	
+	<copy todir="C:\Projects\testproject\trunk\Build\dashboard\templates" overwrite="true">
+		<fileset basedir="${ProjectDir}\templates">
+        <include name="ProjectGrid.vm"/>
+      </fileset>
+    </copy>
+	
+	<copy todir="C:\Projects\testproject\trunk\Build\dashboard\bin" overwrite="true">
+		<fileset basedir="${ProjectDir}\bin\Debug">
+        <include name="ThoughtWorks.CruiseControl.WebDashboard.*"/>
+      </fileset>
+    </copy>
+	
   </target>
 
   <!--:: "$(ProjectDir)UpdateFoundation.bat" "$(SolutionDir)" "$(TargetDir)"

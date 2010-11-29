@@ -148,6 +148,13 @@ namespace ThoughtWorks.CruiseControl.WebDashboard.ServerConnection
 			}
 		}
 
+        public void Kill(IProjectSpecifier projectSpecifier)
+        {
+            ICruiseManager manager = GetCruiseManager(projectSpecifier.ServerSpecifier);
+
+            manager.Kill(projectSpecifier.ProjectName);
+        }
+
 		private string GetServerUrl(IServerSpecifier serverSpecifier)
 		{
 			foreach (ServerLocation serverLocation in ServerLocations)
