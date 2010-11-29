@@ -213,6 +213,7 @@ namespace ThoughtWorks.CruiseControl.Core
 			{
 				Log.Info("Aborting integrator for project: " + _project.Name);
 				_thread.Abort();
+                _thread.Join();
                 this.SetState = ProjectIntegratorState.Stopped;
 			}
 		}

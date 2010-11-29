@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using Exortech.NetReflector;
@@ -33,35 +34,53 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
             ProcessResult result = Execute(NextRevisionProcessInfo(LastRevisionBuilt, to), to.ProjectName);
             from.StartTime = DateTime.Parse("01/01/01");
             Modification[] modifications = ParseModifications(result, from.StartTime, to.StartTime);
-            Modification[] mod = new Modification[1];
-
-            if (modifications.GetLength(0) > 1)
+            List<Modification[]> revisions = GroupModifications(modifications);
+            Modification[] mods = new Modification[0];
+            
+            if (revisions.Count > 1)
             {
-                fsq.LastRevisionBuilt = modifications[1].ChangeNumber.ToString();
-                mod[0] = modifications[1];
+                mods = revisions[1];
+                fsq.LastRevisionBuilt = mods[0].ChangeNumber.ToString();
             }
-            else if(modifications.GetLength(0) == 1)
+            else if(revisions.Count == 1)
             {
-                if (modifications[0].ChangeNumber > int.Parse(fsq.LastRevisionBuilt))
+                if (revisions[0][0].ChangeNumber > int.Parse(fsq.LastRevisionBuilt))
                 {
-                    fsq.LastRevisionBuilt = modifications[0].ChangeNumber.ToString();
-                    mod[0] = modifications[0];
-                }
-                else
-                {
-                    ArrayList mods = new ArrayList();
-                    mod = (Modification[]) mods.ToArray(typeof(Modification));
-                }
+                    mods = revisions[0];
+                    fsq.LastRevisionBuilt = mods[0].ChangeNumber.ToString();                    
+                }                
 			}
 			
             fsq.SaveLastSvnRevision();
-
+            
             if (UrlBuilder != null)
             {
                 UrlBuilder.SetupModification(modifications);
             }
 
-            return mod;   
+            return mods;
+        }
+
+        private List<Modification[]> GroupModifications(Modification[] mods)
+        {
+            List<Modification[]> revisions = new List<Modification[]>();
+            List<Modification> revModSet = new List<Modification>();
+            int currentRevision = 0;
+            
+            foreach (Modification mod in mods)
+            {
+                if (currentRevision != mod.ChangeNumber)
+                {
+                    if (currentRevision != 0) revisions.Add(revModSet.ToArray());
+                    currentRevision = mod.ChangeNumber;
+                    revModSet = new List<Modification>();
+                }
+
+                revModSet.Add(mod);
+            }
+
+            if (currentRevision != 0) revisions.Add(revModSet.ToArray());
+            return revisions;
         }
 
 //      HISTORY_COMMAND_FORMAT = "log TrunkUrl -r LastBuildRevision --verbose --xml --non-interactive";

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Collections;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.IntegrationFilters;
 using ThoughtWorks.CruiseControl.Core.Triggers;
@@ -19,7 +20,8 @@ namespace ThoughtWorks.CruiseControl.Core
 		private ExternalLink[] externalLinks = new ExternalLink[0];
 		private IForceFilter[] forceFilters;
 		private IntegrationFilter integrationFilter;
-
+        private ArrayList killExceptions = new ArrayList();
+		
 		[ReflectorProperty("integrationFilter", InstanceType = typeof(IntegrationFilter), Required=true)]
 		public IntegrationFilter IntegrationFilter
 		{
@@ -92,6 +94,13 @@ namespace ThoughtWorks.CruiseControl.Core
 				return new DirectoryInfo(configuredWorkingDirectory).FullName;
 			}
 		}
+
+        [ReflectorProperty("killExceptions", Required = false)]
+        public ArrayList KillExceptions
+        {
+            get { return killExceptions; }
+            set { killExceptions = value; }
+        }
 
 		public string ArtifactDirectory
 		{

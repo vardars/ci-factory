@@ -40,7 +40,7 @@ namespace ThoughtWorks.CruiseControl.Core
 		private ILabeller labeller = new DefaultLabeller();
 		private ITask[] tasks = new ITask[0];
 		private ITask[] publishers = new ITask[] {new XmlLogPublisher()};
-		private ProjectActivity currentActivity = ProjectActivity.Sleeping;
+        private ProjectActivity currentActivity = ProjectActivity.Sleeping;
 		private IStateManager state = new FileStateManager();
 		private IIntegrationResultManager _IntegrationResultManager;
 		private bool publishExceptions = true;

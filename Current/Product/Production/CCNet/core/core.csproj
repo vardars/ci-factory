@@ -737,6 +737,7 @@
     <Compile Include="util\ProcessArgumentBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="util\ProcessAPI.cs" />
     <Compile Include="util\ProcessExecutor.cs">
       <SubType>Code</SubType>
     </Compile>

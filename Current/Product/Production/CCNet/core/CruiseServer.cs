@@ -374,10 +374,11 @@ namespace ThoughtWorks.CruiseControl.Core
             IProjectIntegrator integrator = GetIntegrator(project);
             integrator.Stop();
         }
+        
         public void Kill(string project)
         {
-            IProjectIntegrator integrator = GetIntegrator(project);
-            integrator.Abort();
+            //IProjectIntegrator integrator = GetIntegrator(project);
+            //integrator.Abort();
 
             Log.Warning("Kill all child processes.");
 
@@ -386,7 +387,8 @@ namespace ThoughtWorks.CruiseControl.Core
             	try
                 {
                     Log.Warning(string.Format("Trying to kill process: {0} {1}", processInfo.ProcessName, processInfo.Id));
-                    KillUtil.KillPid(processInfo.Id);
+                    Project p = GetProjectInstance(project);
+                    KillUtil.KillPid(processInfo.Id, p.KillExceptions);
                     Log.Warning(string.Format("The process has been killed: {0} {1}", processInfo.ProcessName, processInfo.Id));
                 }
                 catch (Exception ex)
@@ -399,9 +401,8 @@ namespace ThoughtWorks.CruiseControl.Core
             ProcessExecutor.ManagedProcesses[project] = new List<Process>();
             ProcessExecutor.ManagedProcessInformationListCache[project] = new ThoughtWorks.CruiseControl.Core.Util.ProcessExecutor.CacheItem(DateTime.Now, new ProcessInformationList());
 
-            integrator.WaitForExit();
-
-            integrator.Start();
+            //integrator.WaitForExit();
+            //integrator.Start();
         }
 
         // ToDo - this done TDD
@@ -475,7 +476,8 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		private Project GetProjectInstance(string projectName)
 		{
-			return (Project)this.GetIntegrator(projectName);
+			IProjectIntegrator pi = this.GetIntegrator(projectName);
+            return (Project)pi.Project;
 		}
 
         void IDisposable.Dispose()

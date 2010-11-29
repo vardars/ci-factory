@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace ThoughtWorks.CruiseControl.Core.Util
 {
@@ -12,6 +14,11 @@ namespace ThoughtWorks.CruiseControl.Core.Util
         public const string WIN2K_SUPPORT_TOOLS_DIR = @"C:\\Program Files\\Support Tools";
 
         public static void KillPid(int pid)
+        {
+            KillPid(pid, null);
+        }
+
+        public static void KillPid(int pid, ArrayList killExceptions)
         {
             Process process = new Process();
 
@@ -32,7 +39,24 @@ namespace ThoughtWorks.CruiseControl.Core.Util
                     {
                         process.StartInfo.FileName = string.Format("{0}\\taskkill.exe",
                                 Environment.GetFolderPath(Environment.SpecialFolder.System));
-                        process.StartInfo.Arguments = string.Format("/pid {0} /t /f", pid);
+                        if (killExceptions == null)
+                        {
+                            process.StartInfo.Arguments = string.Format("/pid {0} /t /f", pid);
+                        }
+                        else
+                        {
+                            ProcessAPI pEx = new ProcessAPI();
+                            ArrayList cPids = pEx.GetChildren(pid, killExceptions);
+                            StringBuilder args = new StringBuilder();
+
+                            foreach (int id in cPids)
+                            {
+                                args.AppendFormat("/pid {0} ", id);
+                            }
+
+                            args.AppendFormat("/pid {0} /f", pid);
+                            process.StartInfo.Arguments = args.ToString();
+                        }
                         break;
                     }
 

@@ -118,7 +118,13 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 
             foreach (Process process in ManagedProcesses[projectName])
             {
-                list.Add(new ProcessInformation(process));
+                try
+                {
+                    list.Add(new ProcessInformation(process));
+                }
+                catch // Catches all the old dead processes so that the above list is updated with only live processes 
+                {                    
+                }
             }
 
             LockCookie lockCookie = readWriterLock.UpgradeToWriterLock(100);
@@ -160,11 +166,12 @@ namespace ThoughtWorks.CruiseControl.Core.Util
 					}
 					else
 					{
-						Kill(process, processInfo, standardOutput, standardError);
+						Kill(process, processInfo, standardOutput, standardError);                        
 					}
+
+                    RemoveFromManagedProcessList(projectName, process);
 					return new ProcessResult(standardOutput.Output, standardError.Output, process.ExitCode, ! hasExited);
-				}
-                RemoveFromManagedProcessList(projectName, process);
+				}                
 			}
 		}
 
