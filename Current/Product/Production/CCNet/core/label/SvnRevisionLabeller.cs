@@ -62,7 +62,7 @@ namespace ThoughtWorks.CruiseControl.Core.Label
             {
                 if (currentResult.ToString().Contains(p.Name))
                 {
-                    if (p.SourceControl.ToString().ToLower().Contains("svnqueue"))
+                    if (((FilteredSourceControl)(p.SourceControl)).SourceControlProvider.ToString().ToLower().Contains("svnqueue"))
                     {
                         FileSvnQueue fsq = new FileSvnQueue(p);
                         label = LabelPrefix + fsq.ReadLastSvnRevision();
