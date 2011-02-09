@@ -1,0 +1,17 @@
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\CIFactory.RTC.NAnt.Tasks.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\CIFactory.RTC.NAnt.Tasks.pdb
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\CIFactory.NAnt.Tasks.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\NAnt.Core.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\log4net.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\NDepend.Helpers.FileDirectoryPath.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\SgmlReaderDll.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\Zeta.WebSpider.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\ICSharpCode.NRefactory.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\NAnt.Core.pdb
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\NAnt.Core.xml
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\Zeta.WebSpider.pdb
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\CIFactory.NAnt.Tasks.pdb
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\bin\Release\CIFactory.NAnt.Tasks.xml
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\obj\Release\ResolveAssemblyReference.cache
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\obj\Release\CIFactory.RTC.NAnt.Tasks.dll
+C:\Projects\CI Factory\Current\Product\Production\Nant\CIFactory.NAnt.RTC.Tasks\obj\Release\CIFactory.RTC.NAnt.Tasks.pdb
