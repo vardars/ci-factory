@@ -855,7 +855,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetDir)ThoughtWorks.CruiseControl.Core.*" "C:\Projects\Chapter33\Trunk\Build\server"</PostBuildEvent>
   </PropertyGroup>
 </Project>
