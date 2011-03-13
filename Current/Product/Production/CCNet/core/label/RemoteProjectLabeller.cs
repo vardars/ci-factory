@@ -24,24 +24,22 @@ namespace ThoughtWorks.CruiseControl.Core.Label
 
         public string Generate(IIntegrationResult currentResult, IIntegrationResult result)
 		{
-            if (result.IntegrationProperties["Deploy.Version"] == null)
+            if (currentResult.IntegrationProperties["Deploy.Version"] != null && currentResult.IntegrationProperties["Deploy.Version"].ToString() != "")
             {
-                ICruiseManager manager = (ICruiseManager)remotingService.Connect(typeof(ICruiseManager), ServerUri);
+                return currentResult.IntegrationProperties["Deploy.Version"].ToString();
+            }
 
-                ProjectStatus[] statuses = manager.GetProjectStatus();
-                foreach (ProjectStatus status in statuses)
-                {
-                    if (status.Name == ProjectName)
-                    {
-                        return status.LastSuccessfulBuildLabel;
-                    }
-                }
-                throw new NoSuchProjectException(ProjectName);
-            }
-            else
+            ICruiseManager manager = (ICruiseManager)remotingService.Connect(typeof(ICruiseManager), ServerUri);
+
+            ProjectStatus[] statuses = manager.GetProjectStatus();
+            foreach (ProjectStatus status in statuses)
             {
-                return result.IntegrationProperties["Deploy.Version"].ToString();
+                if (status.Name == ProjectName)
+                {
+                    return status.LastSuccessfulBuildLabel;
+                }
             }
+            throw new NoSuchProjectException(ProjectName);            
 		}
 
 		public void Run(IIntegrationResult result)
