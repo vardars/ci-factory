@@ -7,6 +7,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 		IProjectMonitor[] GetProjectStatusMonitors();
 
 		Project[] Projects { get; set; }
+        string ProxyServerUrl { get; set; }
 		bool ShouldShowBalloonOnBuildTransition { get; set; }
 		int PollPeriodSeconds { get; set; }
 		AudioFiles Audio { get; }

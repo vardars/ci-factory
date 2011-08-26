@@ -377,6 +377,7 @@
     <Compile Include="Remote\CruiseControlStatus.cs" />
     <Compile Include="Remote\ExternalLink.cs" />
     <Compile Include="Remote\ForceFilterClientInfo.cs" />
+    <Compile Include="Remote\HostInformation.cs" />
     <Compile Include="Remote\ICIFactoryServer.cs" />
     <Compile Include="Remote\ICruiseManager.cs" />
     <Compile Include="Remote\ICruiseServer.cs" />
@@ -385,11 +386,13 @@
     <Compile Include="Remote\ITrigger.cs" />
     <Compile Include="Remote\Modification.cs" />
     <Compile Include="Remote\NoSuchProjectException.cs" />
+    <Compile Include="Remote\PasswordInformation.cs" />
     <Compile Include="Remote\ProjectActivity.cs" />
     <Compile Include="Remote\ProjectConfiguration.cs" />
     <Compile Include="Remote\ProjectIntegratorState.cs" />
     <Compile Include="Remote\ProjectStatus.cs" />
     <Compile Include="Remote\RemotingServiceAdapter.cs" />
+    <Compile Include="Remote\UserName.cs" />
     <Compile Include="Reporting\Dashboard\Navigation\AbsolutePathUrlBuilderDecorator.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -12,7 +12,9 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection
 		// This is not unit tested right now
 		public ICruiseManager GetCruiseManager(string url)
 		{
-			return (ICruiseManager) RemotingServices.Connect(typeof (ICruiseManager), url);
+			ICruiseManager cruiseManager = (ICruiseManager) RemotingServices.Connect(typeof (ICruiseManager), url);
+
+            return cruiseManager;
 		}
 	}
 }

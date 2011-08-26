@@ -5,10 +5,10 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
-using CCNET.Extensions.ForceFilters.UserFilter;
 using System.Web;
-using CCNET.Extensions.Plugin.ForceFilters.PasswordFilter;
 using System.Windows.Forms;
+//using CCNET.Extensions.Plugin.ForceFilters.UserFilter;
+using CCNET.Extensions.Plugin.ForceFilters.PasswordFilter;
 
 namespace CCNET.Extensions.Plugin.ForceFilters
 {
@@ -19,7 +19,7 @@ namespace CCNET.Extensions.Plugin.ForceFilters
         private string _Password;
         private IPasswordHelper _PasswordHelper;
         private ILogHelper _Logger;
-
+        
         public ILogHelper Logger
         {
             get

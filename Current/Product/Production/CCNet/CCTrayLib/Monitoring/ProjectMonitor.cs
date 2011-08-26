@@ -1,19 +1,23 @@
 using System;
 using System.Diagnostics;
 using ThoughtWorks.CruiseControl.Remote;
+using ThoughtWorks.CruiseControl.CCTrayLib.Configuration;
+//using ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection; //TODO -- Delete
+//using ThoughtWorks.CruiseControl.Core; //TODO -- Delete
+//using System.IO;  //TODO -- Delete
 
 namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 {	
 	public class ProjectMonitor : IProjectMonitor, ISingleProjectDetail
 	{
-		private ICruiseProjectManager cruiseProjectManager;
-		private ProjectStatus lastProjectStatus;
+        private ICruiseProjectManager cruiseProjectManager;
+        private ProjectStatus lastProjectStatus;
 		private Exception connectException;
 		private BuildDurationTracker buildDurationTracker = new BuildDurationTracker();
 
-		public ProjectMonitor(ICruiseProjectManager cruiseProjectManager)
-		{
-			this.cruiseProjectManager = cruiseProjectManager;
+        public ProjectMonitor(ICruiseProjectManager cruiseProjectManager)
+        {
+            this.cruiseProjectManager = cruiseProjectManager;        
 		}
 
 		// public for testing only
@@ -89,7 +93,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 
 		public void ForceBuild()
 		{
-			cruiseProjectManager.ForceBuild();
+            cruiseProjectManager.ForceBuild();
 		}
 
 		public void Poll()
@@ -182,8 +186,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 				return ProjectName + ": " + state;
 			}
 		}
-
-
+        
 		public TimeSpan EstimatedTimeRemainingOnCurrentBuild
 		{
 			get { return buildDurationTracker.EstimatedTimeRemainingOnCurrentBuild; }

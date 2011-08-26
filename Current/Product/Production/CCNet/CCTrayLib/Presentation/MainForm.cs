@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using ThoughtWorks.CruiseControl.CCTrayLib.Configuration;
 using ThoughtWorks.CruiseControl.CCTrayLib.Monitoring;
+using ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection;
 
 namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 {
@@ -41,7 +42,8 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 		private MenuItem mnuTrayExit;
 		private MenuItem menuItem5;
 		private ICCTrayMultiConfiguration configuration;
-		private ColumnHeader colLastBuildTime;
+        private ColumnHeader colLastBuildTime;
+        private Label loginStatusLbl;
 		private bool systemShutdownInProgress;
 
 		public MainForm(ICCTrayMultiConfiguration configuration)
@@ -67,6 +69,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 
 			controller.IsProjectSelectedChanged += new EventHandler(Controller_IsProjectSelectedChanged);
 			btnForceBuild.DataBindings.Add("Enabled", controller, "IsProjectSelected");
+            setLoginStatus();
 		}
 
 		/// <summary>
@@ -93,6 +96,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.MenuItem mnuLogin;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lvProjects = new System.Windows.Forms.ListView();
             this.colProject = new System.Windows.Forms.ColumnHeader();
@@ -121,9 +125,17 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             this.mnuTrayExit = new System.Windows.Forms.MenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnForceBuild = new System.Windows.Forms.Button();
+            this.loginStatusLbl = new System.Windows.Forms.Label();
             this.trayIcon = new ThoughtWorks.CruiseControl.CCTrayLib.Presentation.TrayIcon();
+            mnuLogin = new System.Windows.Forms.MenuItem();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // mnuLogin
+            // 
+            mnuLogin.Index = 2;
+            mnuLogin.Text = "&Login";
+            mnuLogin.Click += new System.EventHandler(this.mnuLogin_Click);
             // 
             // lvProjects
             // 
@@ -139,13 +151,13 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             this.lvProjects.Location = new System.Drawing.Point(0, 0);
             this.lvProjects.MultiSelect = false;
             this.lvProjects.Name = "lvProjects";
-            this.lvProjects.Size = new System.Drawing.Size(892, 239);
+            this.lvProjects.Size = new System.Drawing.Size(892, 155);
             this.lvProjects.SmallImageList = this.iconList;
             this.lvProjects.TabIndex = 0;
             this.lvProjects.UseCompatibleStateImageBehavior = false;
             this.lvProjects.View = System.Windows.Forms.View.Details;
-            this.lvProjects.DoubleClick += new System.EventHandler(this.lvProjects_DoubleClick);
             this.lvProjects.SelectedIndexChanged += new System.EventHandler(this.lvProjects_SelectedIndexChanged);
+            this.lvProjects.DoubleClick += new System.EventHandler(this.lvProjects_DoubleClick);
             this.lvProjects.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvProjects_ColumnClick);
             // 
             // colProject
@@ -207,7 +219,8 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             // 
             this.mainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuFile,
-            this.mnuView});
+            this.mnuView,
+            mnuLogin});
             // 
             // menuFile
             // 
@@ -298,9 +311,10 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.loginStatusLbl);
             this.panel1.Controls.Add(this.btnForceBuild);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 239);
+            this.panel1.Location = new System.Drawing.Point(0, 155);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(892, 45);
             this.panel1.TabIndex = 1;
@@ -315,6 +329,17 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             this.btnForceBuild.Text = "Force Build";
             this.btnForceBuild.Click += new System.EventHandler(this.btnForceBuild_Click);
             // 
+            // loginStatusLbl
+            // 
+            this.loginStatusLbl.AutoSize = true;
+            this.loginStatusLbl.Location = new System.Drawing.Point(585, 25);
+            this.loginStatusLbl.MinimumSize = new System.Drawing.Size(300, 0);
+            this.loginStatusLbl.Name = "loginStatusLbl";
+            this.loginStatusLbl.Size = new System.Drawing.Size(300, 13);
+            this.loginStatusLbl.TabIndex = 1;
+            this.loginStatusLbl.Text = "You are currently not logged into the proxy server.";
+            this.loginStatusLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // trayIcon
             // 
             this.trayIcon.ContextMenu = this.mnuTrayContextMenu;
@@ -327,7 +352,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(892, 284);
+            this.ClientSize = new System.Drawing.Size(892, 200);
             this.Controls.Add(this.lvProjects);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -339,6 +364,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
             this.Text = "CruiseControl.NET";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -543,5 +569,28 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 				return compare;
 			}
 		}
+
+        private void mnuLogin_Click(object sender, EventArgs e)
+        {
+            controller.StopMonitoring();
+                        
+            if (new LoginForm(configuration.ProxyServerUrl).ShowDialog() == DialogResult.OK)
+            {
+                configuration.Reload();
+                lvProjects.Items.Clear();
+                DataBindings.Clear();
+                btnForceBuild.DataBindings.Clear();
+                CreateController();                    
+            }
+            
+            controller.StartMonitoring();            
+        }
+
+        private void setLoginStatus()
+        {
+            loginStatusLbl.Text = (Credentials.UserName == "") ? 
+                "You are not logged into the proxy server." : 
+                "You are logged into the proxy server as " + Credentials.UserName;
+        }
 	}
 }

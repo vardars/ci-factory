@@ -8,6 +8,6 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection
 	// is shared.
 	public interface ICruiseManagerFactory
 	{
-		ICruiseManager GetCruiseManager(string url);
+        ICruiseManager GetCruiseManager(string url);         
 	}
 }

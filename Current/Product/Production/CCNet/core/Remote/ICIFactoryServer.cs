@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace ThoughtWorks.CruiseControl.Remote
@@ -8,6 +11,23 @@ namespace ThoughtWorks.CruiseControl.Remote
     [ServiceContract]
     public interface ICIFactoryServer
     {
+        [OperationContract]
+        [WebGet(
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "/ForceBuild2?ProjectName={projectName}&ClientInfo={serializedClientInfo}"
+        )]
+        bool ForceBuild(string projectName, string serializedClientInfo);
+
+        [OperationContract]
+        [WebGet(
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Xml,
+            ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate = "/GetProject/{projectName}"
+        )]
+        string GetProject(string projectName);
 
         [OperationContract]
         [WebGet(
@@ -26,7 +46,7 @@ namespace ThoughtWorks.CruiseControl.Remote
             UriTemplate = "/GetHostServerName/{projectName}"
         )]
         string GetHostServerName(string projectName);
-
+        
         [OperationContract]
         [WebGet(
             BodyStyle = WebMessageBodyStyle.Bare,

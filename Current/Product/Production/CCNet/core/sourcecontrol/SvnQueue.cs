@@ -26,6 +26,7 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
                 if (p.Name.Equals(to.ProjectName))
                 {
                     fsq = new FileSvnQueue(p);
+                    //TODO -- If svn.queue file doesn't exist create it and populate with a revision number.
                     LastRevisionBuilt = fsq.ReadLastSvnRevision();
                     break;
                 }

@@ -54,8 +54,9 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 
 		public void ForceBuild()
 		{
-			if (IsProjectSelected)
+            if (IsProjectSelected){
 				SelectedProject.ForceBuild();
+            }
 		}
 
 		public void DisplayWebPage()

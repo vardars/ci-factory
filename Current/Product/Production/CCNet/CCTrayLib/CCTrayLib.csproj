@@ -1,7 +1,7 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C8043AD9-0F30-4366-A263-E2FC0D6A57A9}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -27,6 +27,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -82,11 +83,20 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
@@ -94,6 +104,10 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
+    <ProjectReference Include="..\CCNET.Extensions.Plugin\CCNET.Extensions.Plugin.csproj">
+      <Project>{160AD2B8-639E-4C91-A050-C14193D7481B}</Project>
+      <Name>CCNET.Extensions.Plugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\core\core.csproj">
       <Name>core</Name>
       <Project>{F8113DB9-6C47-4FD1-8A01-655FCF151747}</Project>
@@ -104,10 +118,17 @@
     <Compile Include="..\..\..\..\Product\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <None Include="Monitoring\TProjectStatus.cs" />
+    <Compile Include="Presentation\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Audio.cs">
+    <Compile Include="ServerConnection\Audio.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BuildOccurredEventArgs.cs">
@@ -272,12 +293,20 @@
     <Compile Include="Presentation\TrayIcon.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ServerConnection\Credentials.cs" />
+    <Compile Include="ServerConnection\IWebCruiseManager.cs" />
     <Compile Include="ServerConnection\ICruiseManagerFactory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ServerConnection\IWebCruiseManagerFactory.cs" />
     <Compile Include="ServerConnection\RemoteCruiseManagerFactory.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ServerConnection\WebCruiseManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServerConnection\WebCruiseManagerFactory.cs" />
+    <Compile Include="ServerConnection\WClient.cs" />
     <Compile Include="StatusIcon.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -292,6 +321,9 @@
     <EmbeddedResource Include="Presentation\CCTrayMultiSettingsForm.resx">
       <DependentUpon>CCTrayMultiSettingsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

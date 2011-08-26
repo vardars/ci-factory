@@ -5,9 +5,9 @@ using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
-using CCNET.Extensions.ForceFilters.UserFilter;
+//using CCNET.Extensions.Plugin.ForceFilters.UserFilter;
 
-namespace CCNET.Extensions.ForceFilters
+namespace CCNET.Extensions.Plugin.ForceFilters
 {
     [ReflectorType("userForceFilter")]
     public class UserForceFilter : IForceFilter

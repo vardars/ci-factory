@@ -5,7 +5,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 {
 	public class Project
 	{
-		private const int DefaultPort = 21234;
+		private const int DefaultPort = 21237;
 
 		public Project()
 		{
@@ -26,7 +26,11 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 		{
 			get
 			{
-				Uri serverUri = new Uri(ServerUrl);
+                Uri serverUri = new Uri(ServerUrl);
+
+                if (ServerUrl.ToLower().Contains("proxy"))
+                    return serverUri.Segments[serverUri.Segments.Length - 1] + ":proxy";
+                
 				if (serverUri.Port == DefaultPort)
 					return serverUri.Host;
 
@@ -34,25 +38,32 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 			}
 		}
 
-		public void SetServerUrlFromDisplayName(string displayName)
+		public void SetServerUrlFromDisplayName(string displayName, string proxyServerUrl)
 		{
 			string[] displayNameParts = displayName.Split(':');
 
 			if (displayNameParts.Length == 1)
 			{
-				ServerUrl = string.Format("tcp://{0}:{1}/CruiseManager.rem", displayNameParts[0], DefaultPort);
+				ServerUrl = string.Format("http://{0}:{1}", displayNameParts[0], DefaultPort);
 			}
 			else if (displayNameParts.Length == 2)
 			{
-				try
-				{
-					ServerUrl =
-						string.Format("tcp://{0}:{1}/CruiseManager.rem", displayNameParts[0], Convert.ToInt32(displayNameParts[1]));
-				}
-				catch (FormatException)
-				{
-					throw new ApplicationException("Port number must be an integer");
-				}
+                if (displayNameParts[1].ToLower() == "proxy")
+                {
+                    ServerUrl = string.Format("{0}/{1}", proxyServerUrl, displayNameParts[0]);
+                }
+                else
+                {
+                    try
+                    {
+                        ServerUrl =
+                            string.Format("http://{0}:{1}", displayNameParts[0], Convert.ToInt32(displayNameParts[1]));
+                    }
+                    catch (FormatException)
+                    {
+                        throw new ApplicationException("Port number must be an integer");
+                    }
+                }
 			}
 			else
 			{

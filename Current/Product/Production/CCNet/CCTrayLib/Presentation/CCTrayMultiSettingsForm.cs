@@ -54,6 +54,8 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 		private RadioButton rdoWebPage;
 		private RadioButton rdoStatusWindow;
 		private Label label4;
+        private Label lblProxyServerUrl;
+        private TextBox txtProxyServerUrl;
 		private SelectAudioFileController successfulAudio;
 
 		public CCTrayMultiSettingsForm(ICCTrayMultiConfiguration configuration)
@@ -69,6 +71,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 				(configuration.TrayIconDoubleClickAction == TrayIconDoubleClickAction.NavigateToWebPageOfFirstProject);
 
 			numPollPeriod.Value = configuration.PollPeriodSeconds;
+            txtProxyServerUrl.Text = configuration.ProxyServerUrl;
 
 			BindListView();
 
@@ -126,432 +129,469 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(CCTrayMultiSettingsForm));
-			this.chkShowBalloons = new System.Windows.Forms.CheckBox();
-			this.grpServers = new System.Windows.Forms.GroupBox();
-			this.lvProjects = new System.Windows.Forms.ListView();
-			this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-			this.label1 = new System.Windows.Forms.Label();
-			this.btnAdd = new System.Windows.Forms.Button();
-			this.btnMoveDown = new System.Windows.Forms.Button();
-			this.btnMoveUp = new System.Windows.Forms.Button();
-			this.btnRemove = new System.Windows.Forms.Button();
-			this.btnOK = new System.Windows.Forms.Button();
-			this.btnCancel = new System.Windows.Forms.Button();
-			this.grpAudio = new System.Windows.Forms.GroupBox();
-			this.btnStillFailingPlay = new System.Windows.Forms.Button();
-			this.btnStillFailingBrowse = new System.Windows.Forms.Button();
-			this.btnBrokenPlay = new System.Windows.Forms.Button();
-			this.btnBrokenBrowse = new System.Windows.Forms.Button();
-			this.btnFixedPlay = new System.Windows.Forms.Button();
-			this.btnFixedBrowse = new System.Windows.Forms.Button();
-			this.btnSuccessfulPlay = new System.Windows.Forms.Button();
-			this.btnSuccessfulBrowse = new System.Windows.Forms.Button();
-			this.txtAudioFileSuccess = new System.Windows.Forms.TextBox();
-			this.chkAudioSuccessful = new System.Windows.Forms.CheckBox();
-			this.chkAudioBroken = new System.Windows.Forms.CheckBox();
-			this.chkAudioFixed = new System.Windows.Forms.CheckBox();
-			this.chkAudioStillFailing = new System.Windows.Forms.CheckBox();
-			this.txtAudioFileFixed = new System.Windows.Forms.TextBox();
-			this.txtAudioFileBroken = new System.Windows.Forms.TextBox();
-			this.txtAudioFileFailing = new System.Windows.Forms.TextBox();
-			this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.numPollPeriod = new System.Windows.Forms.NumericUpDown();
-			this.rdoWebPage = new System.Windows.Forms.RadioButton();
-			this.rdoStatusWindow = new System.Windows.Forms.RadioButton();
-			this.label4 = new System.Windows.Forms.Label();
-			this.grpServers.SuspendLayout();
-			this.grpAudio.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numPollPeriod)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// chkShowBalloons
-			// 
-			this.chkShowBalloons.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.chkShowBalloons.Location = new System.Drawing.Point(15, 10);
-			this.chkShowBalloons.Name = "chkShowBalloons";
-			this.chkShowBalloons.Size = new System.Drawing.Size(248, 24);
-			this.chkShowBalloons.TabIndex = 0;
-			this.chkShowBalloons.Text = "Show balloon notifications";
-			// 
-			// grpServers
-			// 
-			this.grpServers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.grpServers.Controls.Add(this.lvProjects);
-			this.grpServers.Controls.Add(this.label1);
-			this.grpServers.Controls.Add(this.btnAdd);
-			this.grpServers.Controls.Add(this.btnMoveDown);
-			this.grpServers.Controls.Add(this.btnMoveUp);
-			this.grpServers.Controls.Add(this.btnRemove);
-			this.grpServers.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.grpServers.Location = new System.Drawing.Point(15, 250);
-			this.grpServers.Name = "grpServers";
-			this.grpServers.Size = new System.Drawing.Size(580, 245);
-			this.grpServers.TabIndex = 8;
-			this.grpServers.TabStop = false;
-			this.grpServers.Text = "Build Servers";
-			// 
-			// lvProjects
-			// 
-			this.lvProjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.lvProjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-																						 this.columnHeader1,
-																						 this.columnHeader2});
-			this.lvProjects.FullRowSelect = true;
-			this.lvProjects.HideSelection = false;
-			this.lvProjects.Location = new System.Drawing.Point(10, 55);
-			this.lvProjects.Name = "lvProjects";
-			this.lvProjects.Size = new System.Drawing.Size(475, 180);
-			this.lvProjects.TabIndex = 1;
-			this.lvProjects.View = System.Windows.Forms.View.Details;
-			this.lvProjects.SelectedIndexChanged += new System.EventHandler(this.lvProjects_SelectedIndexChanged);
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "Build Server";
-			this.columnHeader1.Width = 135;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "Project";
-			this.columnHeader2.Width = 287;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.Location = new System.Drawing.Point(10, 25);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(560, 20);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Use this section to define the CruiseControl.NET projects to monitor. ";
-			// 
-			// btnAdd
-			// 
-			this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnAdd.Location = new System.Drawing.Point(495, 60);
-			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.TabIndex = 2;
-			this.btnAdd.Text = "&Add...";
-			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-			// 
-			// btnMoveDown
-			// 
-			this.btnMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnMoveDown.Location = new System.Drawing.Point(495, 200);
-			this.btnMoveDown.Name = "btnMoveDown";
-			this.btnMoveDown.TabIndex = 6;
-			this.btnMoveDown.Text = "Move &Down";
-			this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
-			// 
-			// btnMoveUp
-			// 
-			this.btnMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnMoveUp.Location = new System.Drawing.Point(495, 165);
-			this.btnMoveUp.Name = "btnMoveUp";
-			this.btnMoveUp.TabIndex = 5;
-			this.btnMoveUp.Text = "Move &Up";
-			this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
-			// 
-			// btnRemove
-			// 
-			this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnRemove.Location = new System.Drawing.Point(495, 95);
-			this.btnRemove.Name = "btnRemove";
-			this.btnRemove.TabIndex = 4;
-			this.btnRemove.Text = "&Remove";
-			this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
-			// 
-			// btnOK
-			// 
-			this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnOK.Location = new System.Drawing.Point(224, 508);
-			this.btnOK.Name = "btnOK";
-			this.btnOK.TabIndex = 9;
-			this.btnOK.Text = "OK";
-			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnCancel.Location = new System.Drawing.Point(314, 508);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.TabIndex = 10;
-			this.btnCancel.Text = "Cancel";
-			// 
-			// grpAudio
-			// 
-			this.grpAudio.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.grpAudio.Controls.Add(this.btnStillFailingPlay);
-			this.grpAudio.Controls.Add(this.btnStillFailingBrowse);
-			this.grpAudio.Controls.Add(this.btnBrokenPlay);
-			this.grpAudio.Controls.Add(this.btnBrokenBrowse);
-			this.grpAudio.Controls.Add(this.btnFixedPlay);
-			this.grpAudio.Controls.Add(this.btnFixedBrowse);
-			this.grpAudio.Controls.Add(this.btnSuccessfulPlay);
-			this.grpAudio.Controls.Add(this.btnSuccessfulBrowse);
-			this.grpAudio.Controls.Add(this.txtAudioFileSuccess);
-			this.grpAudio.Controls.Add(this.chkAudioSuccessful);
-			this.grpAudio.Controls.Add(this.chkAudioBroken);
-			this.grpAudio.Controls.Add(this.chkAudioFixed);
-			this.grpAudio.Controls.Add(this.chkAudioStillFailing);
-			this.grpAudio.Controls.Add(this.txtAudioFileFixed);
-			this.grpAudio.Controls.Add(this.txtAudioFileBroken);
-			this.grpAudio.Controls.Add(this.txtAudioFileFailing);
-			this.grpAudio.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.grpAudio.Location = new System.Drawing.Point(15, 115);
-			this.grpAudio.Name = "grpAudio";
-			this.grpAudio.Size = new System.Drawing.Size(580, 128);
-			this.grpAudio.TabIndex = 7;
-			this.grpAudio.TabStop = false;
-			this.grpAudio.Text = "Audio";
-			// 
-			// btnStillFailingPlay
-			// 
-			this.btnStillFailingPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnStillFailingPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnStillFailingPlay.Location = new System.Drawing.Point(495, 95);
-			this.btnStillFailingPlay.Name = "btnStillFailingPlay";
-			this.btnStillFailingPlay.TabIndex = 15;
-			this.btnStillFailingPlay.Text = "Play!";
-			// 
-			// btnStillFailingBrowse
-			// 
-			this.btnStillFailingBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnStillFailingBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnStillFailingBrowse.Location = new System.Drawing.Point(410, 95);
-			this.btnStillFailingBrowse.Name = "btnStillFailingBrowse";
-			this.btnStillFailingBrowse.TabIndex = 14;
-			this.btnStillFailingBrowse.Text = "Browse...";
-			// 
-			// btnBrokenPlay
-			// 
-			this.btnBrokenPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrokenPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnBrokenPlay.Location = new System.Drawing.Point(495, 71);
-			this.btnBrokenPlay.Name = "btnBrokenPlay";
-			this.btnBrokenPlay.TabIndex = 11;
-			this.btnBrokenPlay.Text = "Play!";
-			// 
-			// btnBrokenBrowse
-			// 
-			this.btnBrokenBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrokenBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnBrokenBrowse.Location = new System.Drawing.Point(410, 71);
-			this.btnBrokenBrowse.Name = "btnBrokenBrowse";
-			this.btnBrokenBrowse.TabIndex = 10;
-			this.btnBrokenBrowse.Text = "Browse...";
-			// 
-			// btnFixedPlay
-			// 
-			this.btnFixedPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFixedPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnFixedPlay.Location = new System.Drawing.Point(495, 47);
-			this.btnFixedPlay.Name = "btnFixedPlay";
-			this.btnFixedPlay.TabIndex = 7;
-			this.btnFixedPlay.Text = "Play!";
-			// 
-			// btnFixedBrowse
-			// 
-			this.btnFixedBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFixedBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnFixedBrowse.Location = new System.Drawing.Point(410, 47);
-			this.btnFixedBrowse.Name = "btnFixedBrowse";
-			this.btnFixedBrowse.TabIndex = 6;
-			this.btnFixedBrowse.Text = "Browse...";
-			// 
-			// btnSuccessfulPlay
-			// 
-			this.btnSuccessfulPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSuccessfulPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnSuccessfulPlay.Location = new System.Drawing.Point(495, 23);
-			this.btnSuccessfulPlay.Name = "btnSuccessfulPlay";
-			this.btnSuccessfulPlay.TabIndex = 3;
-			this.btnSuccessfulPlay.Text = "Play!";
-			// 
-			// btnSuccessfulBrowse
-			// 
-			this.btnSuccessfulBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSuccessfulBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.btnSuccessfulBrowse.Location = new System.Drawing.Point(410, 23);
-			this.btnSuccessfulBrowse.Name = "btnSuccessfulBrowse";
-			this.btnSuccessfulBrowse.TabIndex = 2;
-			this.btnSuccessfulBrowse.Text = "Browse...";
-			// 
-			// txtAudioFileSuccess
-			// 
-			this.txtAudioFileSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAudioFileSuccess.Location = new System.Drawing.Point(112, 24);
-			this.txtAudioFileSuccess.Name = "txtAudioFileSuccess";
-			this.txtAudioFileSuccess.Size = new System.Drawing.Size(288, 20);
-			this.txtAudioFileSuccess.TabIndex = 1;
-			this.txtAudioFileSuccess.Text = "";
-			// 
-			// chkAudioSuccessful
-			// 
-			this.chkAudioSuccessful.BackColor = System.Drawing.SystemColors.Control;
-			this.chkAudioSuccessful.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.chkAudioSuccessful.Location = new System.Drawing.Point(16, 24);
-			this.chkAudioSuccessful.Name = "chkAudioSuccessful";
-			this.chkAudioSuccessful.Size = new System.Drawing.Size(96, 16);
-			this.chkAudioSuccessful.TabIndex = 0;
-			this.chkAudioSuccessful.Text = "Successful";
-			// 
-			// chkAudioBroken
-			// 
-			this.chkAudioBroken.BackColor = System.Drawing.SystemColors.Control;
-			this.chkAudioBroken.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.chkAudioBroken.Location = new System.Drawing.Point(16, 72);
-			this.chkAudioBroken.Name = "chkAudioBroken";
-			this.chkAudioBroken.Size = new System.Drawing.Size(96, 16);
-			this.chkAudioBroken.TabIndex = 8;
-			this.chkAudioBroken.Text = "Broken";
-			// 
-			// chkAudioFixed
-			// 
-			this.chkAudioFixed.BackColor = System.Drawing.SystemColors.Control;
-			this.chkAudioFixed.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.chkAudioFixed.Location = new System.Drawing.Point(16, 48);
-			this.chkAudioFixed.Name = "chkAudioFixed";
-			this.chkAudioFixed.Size = new System.Drawing.Size(96, 16);
-			this.chkAudioFixed.TabIndex = 4;
-			this.chkAudioFixed.Text = "Fixed";
-			// 
-			// chkAudioStillFailing
-			// 
-			this.chkAudioStillFailing.BackColor = System.Drawing.SystemColors.Control;
-			this.chkAudioStillFailing.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.chkAudioStillFailing.Location = new System.Drawing.Point(16, 96);
-			this.chkAudioStillFailing.Name = "chkAudioStillFailing";
-			this.chkAudioStillFailing.Size = new System.Drawing.Size(96, 16);
-			this.chkAudioStillFailing.TabIndex = 12;
-			this.chkAudioStillFailing.Text = "Still failing";
-			// 
-			// txtAudioFileFixed
-			// 
-			this.txtAudioFileFixed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAudioFileFixed.Location = new System.Drawing.Point(112, 48);
-			this.txtAudioFileFixed.Name = "txtAudioFileFixed";
-			this.txtAudioFileFixed.Size = new System.Drawing.Size(288, 20);
-			this.txtAudioFileFixed.TabIndex = 5;
-			this.txtAudioFileFixed.Text = "";
-			// 
-			// txtAudioFileBroken
-			// 
-			this.txtAudioFileBroken.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAudioFileBroken.Location = new System.Drawing.Point(112, 72);
-			this.txtAudioFileBroken.Name = "txtAudioFileBroken";
-			this.txtAudioFileBroken.Size = new System.Drawing.Size(288, 20);
-			this.txtAudioFileBroken.TabIndex = 9;
-			this.txtAudioFileBroken.Text = "";
-			// 
-			// txtAudioFileFailing
-			// 
-			this.txtAudioFileFailing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAudioFileFailing.Location = new System.Drawing.Point(112, 96);
-			this.txtAudioFileFailing.Name = "txtAudioFileFailing";
-			this.txtAudioFileFailing.Size = new System.Drawing.Size(288, 20);
-			this.txtAudioFileFailing.TabIndex = 13;
-			this.txtAudioFileFailing.Text = "";
-			// 
-			// dlgOpenFile
-			// 
-			this.dlgOpenFile.DefaultExt = "wav";
-			this.dlgOpenFile.Filter = "Wave Files|*.wav|All Files|*.*";
-			this.dlgOpenFile.Title = "Select wave file";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(15, 40);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 20);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "Poll servers every";
-			// 
-			// label3
-			// 
-			this.label3.Location = new System.Drawing.Point(175, 40);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 20);
-			this.label3.TabIndex = 3;
-			this.label3.Text = "seconds";
-			// 
-			// numPollPeriod
-			// 
-			this.numPollPeriod.Location = new System.Drawing.Point(115, 37);
-			this.numPollPeriod.Name = "numPollPeriod";
-			this.numPollPeriod.Size = new System.Drawing.Size(50, 20);
-			this.numPollPeriod.TabIndex = 2;
-			// 
-			// rdoWebPage
-			// 
-			this.rdoWebPage.Location = new System.Drawing.Point(195, 85);
-			this.rdoWebPage.Name = "rdoWebPage";
-			this.rdoWebPage.Size = new System.Drawing.Size(310, 20);
-			this.rdoWebPage.TabIndex = 6;
-			this.rdoWebPage.Text = "navigate to the web page of the first project on the list";
-			// 
-			// rdoStatusWindow
-			// 
-			this.rdoStatusWindow.Location = new System.Drawing.Point(195, 65);
-			this.rdoStatusWindow.Name = "rdoStatusWindow";
-			this.rdoStatusWindow.Size = new System.Drawing.Size(230, 20);
-			this.rdoStatusWindow.TabIndex = 5;
-			this.rdoStatusWindow.Text = "show the status window";
-			// 
-			// label4
-			// 
-			this.label4.Location = new System.Drawing.Point(15, 65);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(185, 20);
-			this.label4.TabIndex = 4;
-			this.label4.Text = "When I double-click the tray icon,";
-			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// CCTrayMultiSettingsForm
-			// 
-			this.AcceptButton = this.btnOK;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(612, 546);
-			this.Controls.Add(this.rdoWebPage);
-			this.Controls.Add(this.rdoStatusWindow);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.numPollPeriod);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.grpAudio);
-			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnOK);
-			this.Controls.Add(this.grpServers);
-			this.Controls.Add(this.chkShowBalloons);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "CCTrayMultiSettingsForm";
-			this.Text = "CruiseControl.NET Tray Settings";
-			this.grpServers.ResumeLayout(false);
-			this.grpAudio.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.numPollPeriod)).EndInit();
-			this.ResumeLayout(false);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CCTrayMultiSettingsForm));
+            this.chkShowBalloons = new System.Windows.Forms.CheckBox();
+            this.grpServers = new System.Windows.Forms.GroupBox();
+            this.lvProjects = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnMoveDown = new System.Windows.Forms.Button();
+            this.btnMoveUp = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.grpAudio = new System.Windows.Forms.GroupBox();
+            this.btnStillFailingPlay = new System.Windows.Forms.Button();
+            this.btnStillFailingBrowse = new System.Windows.Forms.Button();
+            this.btnBrokenPlay = new System.Windows.Forms.Button();
+            this.btnBrokenBrowse = new System.Windows.Forms.Button();
+            this.btnFixedPlay = new System.Windows.Forms.Button();
+            this.btnFixedBrowse = new System.Windows.Forms.Button();
+            this.btnSuccessfulPlay = new System.Windows.Forms.Button();
+            this.btnSuccessfulBrowse = new System.Windows.Forms.Button();
+            this.txtAudioFileSuccess = new System.Windows.Forms.TextBox();
+            this.chkAudioSuccessful = new System.Windows.Forms.CheckBox();
+            this.chkAudioBroken = new System.Windows.Forms.CheckBox();
+            this.chkAudioFixed = new System.Windows.Forms.CheckBox();
+            this.chkAudioStillFailing = new System.Windows.Forms.CheckBox();
+            this.txtAudioFileFixed = new System.Windows.Forms.TextBox();
+            this.txtAudioFileBroken = new System.Windows.Forms.TextBox();
+            this.txtAudioFileFailing = new System.Windows.Forms.TextBox();
+            this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.numPollPeriod = new System.Windows.Forms.NumericUpDown();
+            this.rdoWebPage = new System.Windows.Forms.RadioButton();
+            this.rdoStatusWindow = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblProxyServerUrl = new System.Windows.Forms.Label();
+            this.txtProxyServerUrl = new System.Windows.Forms.TextBox();
+            this.grpServers.SuspendLayout();
+            this.grpAudio.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPollPeriod)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // chkShowBalloons
+            // 
+            this.chkShowBalloons.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkShowBalloons.Location = new System.Drawing.Point(15, 10);
+            this.chkShowBalloons.Name = "chkShowBalloons";
+            this.chkShowBalloons.Size = new System.Drawing.Size(248, 24);
+            this.chkShowBalloons.TabIndex = 0;
+            this.chkShowBalloons.Text = "Show balloon notifications";
+            // 
+            // grpServers
+            // 
+            this.grpServers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpServers.Controls.Add(this.lvProjects);
+            this.grpServers.Controls.Add(this.label1);
+            this.grpServers.Controls.Add(this.btnAdd);
+            this.grpServers.Controls.Add(this.btnMoveDown);
+            this.grpServers.Controls.Add(this.btnMoveUp);
+            this.grpServers.Controls.Add(this.btnRemove);
+            this.grpServers.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.grpServers.Location = new System.Drawing.Point(15, 291);
+            this.grpServers.Name = "grpServers";
+            this.grpServers.Size = new System.Drawing.Size(580, 238);
+            this.grpServers.TabIndex = 8;
+            this.grpServers.TabStop = false;
+            this.grpServers.Text = "Build Servers";
+            // 
+            // lvProjects
+            // 
+            this.lvProjects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvProjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lvProjects.FullRowSelect = true;
+            this.lvProjects.HideSelection = false;
+            this.lvProjects.Location = new System.Drawing.Point(10, 55);
+            this.lvProjects.Name = "lvProjects";
+            this.lvProjects.Size = new System.Drawing.Size(475, 173);
+            this.lvProjects.TabIndex = 1;
+            this.lvProjects.UseCompatibleStateImageBehavior = false;
+            this.lvProjects.View = System.Windows.Forms.View.Details;
+            this.lvProjects.SelectedIndexChanged += new System.EventHandler(this.lvProjects_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Build Server";
+            this.columnHeader1.Width = 135;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Project";
+            this.columnHeader2.Width = 287;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Location = new System.Drawing.Point(10, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(560, 20);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Use this section to define the CruiseControl.NET projects to monitor. ";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnAdd.Location = new System.Drawing.Point(495, 60);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 2;
+            this.btnAdd.Text = "&Add...";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnMoveDown
+            // 
+            this.btnMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveDown.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnMoveDown.Location = new System.Drawing.Point(495, 200);
+            this.btnMoveDown.Name = "btnMoveDown";
+            this.btnMoveDown.Size = new System.Drawing.Size(75, 23);
+            this.btnMoveDown.TabIndex = 6;
+            this.btnMoveDown.Text = "Move &Down";
+            this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
+            // 
+            // btnMoveUp
+            // 
+            this.btnMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMoveUp.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnMoveUp.Location = new System.Drawing.Point(495, 165);
+            this.btnMoveUp.Name = "btnMoveUp";
+            this.btnMoveUp.Size = new System.Drawing.Size(75, 23);
+            this.btnMoveUp.TabIndex = 5;
+            this.btnMoveUp.Text = "Move &Up";
+            this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnRemove.Location = new System.Drawing.Point(495, 95);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.TabIndex = 4;
+            this.btnRemove.Text = "&Remove";
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnOK.Location = new System.Drawing.Point(224, 542);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 9;
+            this.btnOK.Text = "OK";
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnCancel.Location = new System.Drawing.Point(314, 542);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 10;
+            this.btnCancel.Text = "Cancel";
+            // 
+            // grpAudio
+            // 
+            this.grpAudio.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAudio.Controls.Add(this.btnStillFailingPlay);
+            this.grpAudio.Controls.Add(this.btnStillFailingBrowse);
+            this.grpAudio.Controls.Add(this.btnBrokenPlay);
+            this.grpAudio.Controls.Add(this.btnBrokenBrowse);
+            this.grpAudio.Controls.Add(this.btnFixedPlay);
+            this.grpAudio.Controls.Add(this.btnFixedBrowse);
+            this.grpAudio.Controls.Add(this.btnSuccessfulPlay);
+            this.grpAudio.Controls.Add(this.btnSuccessfulBrowse);
+            this.grpAudio.Controls.Add(this.txtAudioFileSuccess);
+            this.grpAudio.Controls.Add(this.chkAudioSuccessful);
+            this.grpAudio.Controls.Add(this.chkAudioBroken);
+            this.grpAudio.Controls.Add(this.chkAudioFixed);
+            this.grpAudio.Controls.Add(this.chkAudioStillFailing);
+            this.grpAudio.Controls.Add(this.txtAudioFileFixed);
+            this.grpAudio.Controls.Add(this.txtAudioFileBroken);
+            this.grpAudio.Controls.Add(this.txtAudioFileFailing);
+            this.grpAudio.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.grpAudio.Location = new System.Drawing.Point(15, 115);
+            this.grpAudio.Name = "grpAudio";
+            this.grpAudio.Size = new System.Drawing.Size(580, 128);
+            this.grpAudio.TabIndex = 7;
+            this.grpAudio.TabStop = false;
+            this.grpAudio.Text = "Audio";
+            // 
+            // btnStillFailingPlay
+            // 
+            this.btnStillFailingPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStillFailingPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnStillFailingPlay.Location = new System.Drawing.Point(495, 95);
+            this.btnStillFailingPlay.Name = "btnStillFailingPlay";
+            this.btnStillFailingPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnStillFailingPlay.TabIndex = 15;
+            this.btnStillFailingPlay.Text = "Play!";
+            // 
+            // btnStillFailingBrowse
+            // 
+            this.btnStillFailingBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStillFailingBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnStillFailingBrowse.Location = new System.Drawing.Point(410, 95);
+            this.btnStillFailingBrowse.Name = "btnStillFailingBrowse";
+            this.btnStillFailingBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnStillFailingBrowse.TabIndex = 14;
+            this.btnStillFailingBrowse.Text = "Browse...";
+            // 
+            // btnBrokenPlay
+            // 
+            this.btnBrokenPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrokenPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrokenPlay.Location = new System.Drawing.Point(495, 71);
+            this.btnBrokenPlay.Name = "btnBrokenPlay";
+            this.btnBrokenPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnBrokenPlay.TabIndex = 11;
+            this.btnBrokenPlay.Text = "Play!";
+            // 
+            // btnBrokenBrowse
+            // 
+            this.btnBrokenBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrokenBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnBrokenBrowse.Location = new System.Drawing.Point(410, 71);
+            this.btnBrokenBrowse.Name = "btnBrokenBrowse";
+            this.btnBrokenBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrokenBrowse.TabIndex = 10;
+            this.btnBrokenBrowse.Text = "Browse...";
+            // 
+            // btnFixedPlay
+            // 
+            this.btnFixedPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFixedPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnFixedPlay.Location = new System.Drawing.Point(495, 47);
+            this.btnFixedPlay.Name = "btnFixedPlay";
+            this.btnFixedPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnFixedPlay.TabIndex = 7;
+            this.btnFixedPlay.Text = "Play!";
+            // 
+            // btnFixedBrowse
+            // 
+            this.btnFixedBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFixedBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnFixedBrowse.Location = new System.Drawing.Point(410, 47);
+            this.btnFixedBrowse.Name = "btnFixedBrowse";
+            this.btnFixedBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnFixedBrowse.TabIndex = 6;
+            this.btnFixedBrowse.Text = "Browse...";
+            // 
+            // btnSuccessfulPlay
+            // 
+            this.btnSuccessfulPlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSuccessfulPlay.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnSuccessfulPlay.Location = new System.Drawing.Point(495, 23);
+            this.btnSuccessfulPlay.Name = "btnSuccessfulPlay";
+            this.btnSuccessfulPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnSuccessfulPlay.TabIndex = 3;
+            this.btnSuccessfulPlay.Text = "Play!";
+            // 
+            // btnSuccessfulBrowse
+            // 
+            this.btnSuccessfulBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSuccessfulBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnSuccessfulBrowse.Location = new System.Drawing.Point(410, 23);
+            this.btnSuccessfulBrowse.Name = "btnSuccessfulBrowse";
+            this.btnSuccessfulBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnSuccessfulBrowse.TabIndex = 2;
+            this.btnSuccessfulBrowse.Text = "Browse...";
+            // 
+            // txtAudioFileSuccess
+            // 
+            this.txtAudioFileSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAudioFileSuccess.Location = new System.Drawing.Point(112, 24);
+            this.txtAudioFileSuccess.Name = "txtAudioFileSuccess";
+            this.txtAudioFileSuccess.Size = new System.Drawing.Size(288, 20);
+            this.txtAudioFileSuccess.TabIndex = 1;
+            // 
+            // chkAudioSuccessful
+            // 
+            this.chkAudioSuccessful.BackColor = System.Drawing.SystemColors.Control;
+            this.chkAudioSuccessful.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkAudioSuccessful.Location = new System.Drawing.Point(16, 24);
+            this.chkAudioSuccessful.Name = "chkAudioSuccessful";
+            this.chkAudioSuccessful.Size = new System.Drawing.Size(96, 16);
+            this.chkAudioSuccessful.TabIndex = 0;
+            this.chkAudioSuccessful.Text = "Successful";
+            this.chkAudioSuccessful.UseVisualStyleBackColor = false;
+            // 
+            // chkAudioBroken
+            // 
+            this.chkAudioBroken.BackColor = System.Drawing.SystemColors.Control;
+            this.chkAudioBroken.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkAudioBroken.Location = new System.Drawing.Point(16, 72);
+            this.chkAudioBroken.Name = "chkAudioBroken";
+            this.chkAudioBroken.Size = new System.Drawing.Size(96, 16);
+            this.chkAudioBroken.TabIndex = 8;
+            this.chkAudioBroken.Text = "Broken";
+            this.chkAudioBroken.UseVisualStyleBackColor = false;
+            // 
+            // chkAudioFixed
+            // 
+            this.chkAudioFixed.BackColor = System.Drawing.SystemColors.Control;
+            this.chkAudioFixed.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkAudioFixed.Location = new System.Drawing.Point(16, 48);
+            this.chkAudioFixed.Name = "chkAudioFixed";
+            this.chkAudioFixed.Size = new System.Drawing.Size(96, 16);
+            this.chkAudioFixed.TabIndex = 4;
+            this.chkAudioFixed.Text = "Fixed";
+            this.chkAudioFixed.UseVisualStyleBackColor = false;
+            // 
+            // chkAudioStillFailing
+            // 
+            this.chkAudioStillFailing.BackColor = System.Drawing.SystemColors.Control;
+            this.chkAudioStillFailing.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.chkAudioStillFailing.Location = new System.Drawing.Point(16, 96);
+            this.chkAudioStillFailing.Name = "chkAudioStillFailing";
+            this.chkAudioStillFailing.Size = new System.Drawing.Size(96, 16);
+            this.chkAudioStillFailing.TabIndex = 12;
+            this.chkAudioStillFailing.Text = "Still failing";
+            this.chkAudioStillFailing.UseVisualStyleBackColor = false;
+            // 
+            // txtAudioFileFixed
+            // 
+            this.txtAudioFileFixed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAudioFileFixed.Location = new System.Drawing.Point(112, 48);
+            this.txtAudioFileFixed.Name = "txtAudioFileFixed";
+            this.txtAudioFileFixed.Size = new System.Drawing.Size(288, 20);
+            this.txtAudioFileFixed.TabIndex = 5;
+            // 
+            // txtAudioFileBroken
+            // 
+            this.txtAudioFileBroken.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAudioFileBroken.Location = new System.Drawing.Point(112, 72);
+            this.txtAudioFileBroken.Name = "txtAudioFileBroken";
+            this.txtAudioFileBroken.Size = new System.Drawing.Size(288, 20);
+            this.txtAudioFileBroken.TabIndex = 9;
+            // 
+            // txtAudioFileFailing
+            // 
+            this.txtAudioFileFailing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAudioFileFailing.Location = new System.Drawing.Point(112, 96);
+            this.txtAudioFileFailing.Name = "txtAudioFileFailing";
+            this.txtAudioFileFailing.Size = new System.Drawing.Size(288, 20);
+            this.txtAudioFileFailing.TabIndex = 13;
+            // 
+            // dlgOpenFile
+            // 
+            this.dlgOpenFile.DefaultExt = "wav";
+            this.dlgOpenFile.Filter = "Wave Files|*.wav|All Files|*.*";
+            this.dlgOpenFile.Title = "Select wave file";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(15, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 20);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Poll servers every";
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(175, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 20);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "seconds";
+            // 
+            // numPollPeriod
+            // 
+            this.numPollPeriod.Location = new System.Drawing.Point(115, 37);
+            this.numPollPeriod.Name = "numPollPeriod";
+            this.numPollPeriod.Size = new System.Drawing.Size(50, 20);
+            this.numPollPeriod.TabIndex = 2;
+            // 
+            // rdoWebPage
+            // 
+            this.rdoWebPage.Location = new System.Drawing.Point(195, 85);
+            this.rdoWebPage.Name = "rdoWebPage";
+            this.rdoWebPage.Size = new System.Drawing.Size(310, 20);
+            this.rdoWebPage.TabIndex = 6;
+            this.rdoWebPage.Text = "navigate to the web page of the first project on the list";
+            // 
+            // rdoStatusWindow
+            // 
+            this.rdoStatusWindow.Location = new System.Drawing.Point(195, 65);
+            this.rdoStatusWindow.Name = "rdoStatusWindow";
+            this.rdoStatusWindow.Size = new System.Drawing.Size(230, 20);
+            this.rdoStatusWindow.TabIndex = 5;
+            this.rdoStatusWindow.Text = "show the status window";
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(15, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(185, 20);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "When I double-click the tray icon,";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblProxyServerUrl
+            // 
+            this.lblProxyServerUrl.AutoSize = true;
+            this.lblProxyServerUrl.Location = new System.Drawing.Point(12, 263);
+            this.lblProxyServerUrl.Name = "lblProxyServerUrl";
+            this.lblProxyServerUrl.Size = new System.Drawing.Size(95, 13);
+            this.lblProxyServerUrl.TabIndex = 11;
+            this.lblProxyServerUrl.Text = "Proxy Server URL:";
+            // 
+            // txtProxyServerUrl
+            // 
+            this.txtProxyServerUrl.Location = new System.Drawing.Point(127, 262);
+            this.txtProxyServerUrl.Name = "txtProxyServerUrl";
+            this.txtProxyServerUrl.Size = new System.Drawing.Size(287, 20);
+            this.txtProxyServerUrl.TabIndex = 12;
+            // 
+            // CCTrayMultiSettingsForm
+            // 
+            this.AcceptButton = this.btnOK;
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(612, 580);
+            this.Controls.Add(this.txtProxyServerUrl);
+            this.Controls.Add(this.lblProxyServerUrl);
+            this.Controls.Add(this.rdoWebPage);
+            this.Controls.Add(this.rdoStatusWindow);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.numPollPeriod);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.grpAudio);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.grpServers);
+            this.Controls.Add(this.chkShowBalloons);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "CCTrayMultiSettingsForm";
+            this.Text = "CruiseControl.NET Tray Settings";
+            this.grpServers.ResumeLayout(false);
+            this.grpAudio.ResumeLayout(false);
+            this.grpAudio.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPollPeriod)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -615,7 +655,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
-			AddProjects addProjectDialog = new AddProjects(BuildProjectListFromListView());
+			AddProjects addProjectDialog = new AddProjects(BuildProjectListFromListView(), configuration.ProxyServerUrl);
 			Project[] projects = addProjectDialog.GetListOfNewProjects(this);
 
 			if (projects != null)
@@ -634,6 +674,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Presentation
 			configuration.Projects = newProjectList;
 			configuration.ShouldShowBalloonOnBuildTransition = chkShowBalloons.Checked;
 			configuration.PollPeriodSeconds = (int) numPollPeriod.Value;
+            configuration.ProxyServerUrl = txtProxyServerUrl.Text;
 
 			configuration.TrayIconDoubleClickAction =
 				(rdoStatusWindow.Checked

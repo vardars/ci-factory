@@ -68,6 +68,7 @@
     <Compile Include="Functions\PathFunctions.cs" />
     <Compile Include="Functions\ProcessFunctions.cs" />
     <Compile Include="Functions\VSProjectFunctions.cs" />
+    <Compile Include="Functions\WinAPIFunctions.cs" />
     <Compile Include="Tasks\AskTask.cs" />
     <Compile Include="Tasks\Ask\AskQuestion.cs">
       <SubType>Form</SubType>

@@ -1,8 +1,8 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{160AD2B8-639E-4C91-A050-C14193D7481B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -51,7 +51,6 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="ForceFilters\HostForceFilter.cs" />
-    <Compile Include="ForceFilters\HostInformation.cs" />
     <Compile Include="ForceFilters\HostNameHelper.cs" />
     <Compile Include="ForceFilters\IHostNameHelper.cs" />
     <Compile Include="ForceFilters\ILogHelper.cs" />
@@ -65,11 +64,9 @@
     </Compile>
     <Compile Include="ForceFilters\PasswordForceFilter.cs" />
     <Compile Include="ForceFilters\PasswordGetter.cs" />
-    <Compile Include="ForceFilters\PasswordInformation.cs" />
     <Compile Include="ForceFilters\ProjectForceFilter.cs" />
     <Compile Include="ExclusionFilters.cs" />
     <Compile Include="ForceFilters\UserForceFilter.cs" />
-    <Compile Include="ForceFilters\UserForceFilter\UserName.cs" />
     <Compile Include="InclusionFilters.cs" />
     <Compile Include="ProjectFilter.cs" />
     <Compile Include="ProjectFilterList.cs" />
@@ -95,6 +92,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ForceFilters\UserForceFilter\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

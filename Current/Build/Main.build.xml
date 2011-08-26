@@ -1,55 +1,106 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <project xmlns="http://nant.sf.net/schemas/nant.xsd" name="Main Build" default="Triggered">
-  
+
   <include buildfile="Properties.build.xml" />
   <include buildfile="Common.Build.xml" />
-  <include buildfile="Custom.Targets.xml" />
-  
+  <include buildfile="Custom.Build.xml" />
+
   <description>Begin Package Includes</description>
-  <include buildfile="${PackagesDirectory}\SourceModificationReport\SourceModificationReport.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Subversion\SourceControl.Target.xml" />
-  <include buildfile="${PackagesDirectory}\MSBuild\Compile.Target.xml" />
-  <include buildfile="${PackagesDirectory}\NCover\NCover.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Simian\Simian.Target.xml" />
-  <include buildfile="${PackagesDirectory}\nDepend\nDepend.Target.xml" />
-  <include buildfile="${PackagesDirectory}\LinesOfCode\LinesOfCode.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Deployment\Deployment.Target.xml" />
-  <include buildfile="${PackagesDirectory}\Versioning\Versioning.Target.xml" />
-  <include buildfile="${PackagesDirectory}\FxCop\FxCop.Target.xml" />
+  <loadpackages>
+    <package name="Publish" />
+    <package name="Subversion" type="SourceControl" />
+    <package name="SourceModificationReport" />
+    <package name="RTC" />
+    <package name="Simian" />
+    <package name="Ant" />
+    <package name="Maven" />
+    <package name="Database" />
+    <package name="WebLogic" />
+    <package name="Selenium" />
+    <package name="FitNesse" />
+    <package name="JUnit" type="UnitTest" />
+    <package name="SoapUI" />
+    <package name="IntegrationTest" />
+    <package name="Corbertura" type="Coverage" />
+    <package name="Workspace" />
+  </loadpackages>
   <description>End Package Includes</description>
-  
-  <target name="Triggered" depends="SetUps">
+
+  <target name="Build.Server.Update.Workspace">
+    <call target="Common.SetUp" />
+    <call target="Workspace.SetUp" />
+    <call target="Workspace.Configuration.Host" />
+  </target>
+
+  <target name="Build.Server.Rebuild.Stuff">
+    <call target="Common.SetUp" />
+    <call target="Workspace.SetUp" />
+
+    <fileset basedir="${Common.Directory.Build.Path}" id="Rebuild.File.List">
+      <include name="dashboard\WorkspaceSetup\Chapter33-${ProjectCodeLineName}-WorkspaceSetup.exe"/>
+      <include name="dashboard\cctray\CCTraySetup.exe"/>
+      <include name="SetEnv.bat"/>
+    </fileset>
+
+    <foreach item="File" property="SourceControl.CheckOut.File">
+      <in>
+        <items refid="Rebuild.File.List"/>
+      </in>
+      <do>
+        <call target="SourceControl.CheckOut"/>
+      </do>
+    </foreach>
+
+    <call target="Common.WriteSetEnvBatchFile" />
+
+    <nant buildfile="${Common.Directory.Packages.Path}\Workspace\Workspace.Setup.xml" inheritall="false" inheritrefs="false" target="WorkspaceSetup.CreateSfx" />
+
+    <property name="CCNetProject" value="${ProjectName}-${ProjectCodeLineName}" />
+    <call target="Common.CreateCCTraySfx" />
+
+    <foreach item="File" property="SourceControl.CheckIn.File">
+      <in>
+        <items refid="Rebuild.File.List"/>
+      </in>
+      <do>
+        <call target="SourceControl.CheckIn"/>
+      </do>
+    </foreach>
+  </target>
+
+  <target name="Dev-Dirty" depends="SetUps">
     <trycatch>
       <try>
         <description>Begin Main Build</description>
-        
+
         <description>Begin Pre Build Actions</description>
-        <call target="SourceModificationReport.PublishOldSource" />
         <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
         <description>End Pre Build Actions</description>
-        
+
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.GetOfThirdPartyDirectory" />
-        <call target="SourceControl.GetOfProductDirectory" />
-        <call target="SourceModificationReport.PublishNewSource" />
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+
+        <call target="Svn.Update.Product.Folder.Skip.FitNesse" />
+
         <description>End Clean Up Actions</description>
-        
+
         <description>Begin Compile Actions</description>
-        <call target="Versioning.IncrementBuildNumberOfModifiedAssemblies" />
-        <call target="Compile.CompileSource" />
+
+        <call target="Maven.Install" />
+
         <description>End Compile Actions</description>
-        
+
         <description>Begin Varification Actions</description>
-        <call target="UnitTest.RunTests" />
+
+        <call target="UnitTest.Run.Tests.With.Small.Report"/>
+
         <description>End Varification Actions</description>
-        
+
         <description>Begin Post Build Actions</description>
-        <call target="Simian.Run"/>
-        <call target="nDepend.Calculate" />
-        <call target="LinesOfCode.CountCodeLines" />
-        <call target="FxCop.Calculate" />
         <description>End Post Build Actions</description>
-        
+
         <description>End Main Build</description>
       </try>
       <finally>
@@ -57,38 +108,106 @@
       </finally>
     </trycatch>
   </target>
-  
+
+  <target name="Dev-Metrics" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+        <call target="Svn.Clean.Update.Product.Folder.Skip.FitNesse" />
+        <delete dir ="${Maven.Local.Repo.Directory.Path}\gov" includeemptydirs="True" if="${directory::exists(Maven.Local.Repo.Directory.Path + '\gov')}"/>
+
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+        <asyncexec taskname="Simian" program="${Tools.NAnt.Exe}" failonerror="False" verbose="True">
+          <arg line="-buildfile:${Common.Directory.Packages.Path}\Simian\Simian.Targets.xml"/>
+          <arg line='@"${Common.PropertiesFile}"' />
+          <arg line='-D:Simian.Directory="${Simian.Directory}"' />
+          <arg line='-D:Simian.ReportFilePath="${Simian.ReportFilePath}"' />
+          <arg line='-D:Simian.PublishXmlReport="${Simian.PublishXmlReport}"' />
+          <arg line="Simian.Run"/>
+          <arg line="-logger:NAnt.Core.XmlLogger"/>
+          <arg line='-logfile:"${Common.Project.ReportDirectory}\Simian.xml"' />
+        </asyncexec>
+
+        <call target="Maven.Install" />
+        <description>End Compile Actions</description>
+
+        <description>Begin Varification Actions</description>
+        <property name="UnitTests.HaveFailed" value="False"/>
+        <trycatch>
+          <try>
+            <call target="UnitTest.RunTests"/>
+          </try>
+          <catch property="exception">
+            <property name="UnitTest.Exception.Message" value="${exception}"/>
+            <property name="UnitTests.HaveFailed" value="True"/>
+          </catch>
+        </trycatch>
+
+        <call target="Coverage.PublishReports"/>
+        <if test="${UnitTests.HaveFailed}">
+          <fail message="${UnitTest.Exception.Message}"/>
+        </if>
+
+        <waitforexit>
+          <tasknames>
+            <string value="Simian"/>
+          </tasknames>
+        </waitforexit>
+        <description>End Varification Actions</description>
+
+        <description>Begin Post Build Actions</description>
+        <description>End Post Build Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
   <target name="Heavy" depends="SetUps">
     <trycatch>
       <try>
         <description>Begin Main Build</description>
+
         <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
         <description>End Pre Build Actions</description>
+
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-        <call target="SourceControl.CleanGetOfProductDirectory" />
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+        <call target="Svn.Clean.Update.Product.Folder.Skip.FitNesse" />
+        <delete dir ="${Maven.Local.Repo.Directory.Path}\gov" includeemptydirs="True" if="${directory::exists(Maven.Local.Repo.Directory.Path + '\gov')}"/>
         <description>End Clean Up Actions</description>
+
         <description>Begin Compile Actions</description>
-        <call target="Compile.CompileSource" />
-        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+        <call target="Maven.Install" />
         <description>End Compile Actions</description>
+
         <description>Begin Varification Actions</description>
-        <call target="UnitTest.RunTests" />
-        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
-          <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
-        </exec>
-        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
-               verbose="true"
-               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
-        <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
+
+        <call target="UnitTest.Run.Tests.With.Small.Report"/>
+
         <description>End Varification Actions</description>
+
         <description>Begin Post Build Actions</description>
+
         <description>End Post Build Actions</description>
+
         <description>End Main Build</description>
       </try>
       <finally>
@@ -96,63 +215,1054 @@
       </finally>
     </trycatch>
   </target>
+
   <target name="Release" depends="SetUps">
     <trycatch>
       <try>
         <description>Begin Main Build</description>
+
         <description>Begin Pre Build Actions</description>
-        <call target="SourceModificationReport.PublishOldSource" />
         <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
         <description>End Pre Build Actions</description>
+
         <description>Begin Clean Up Actions</description>
-        <call target="SourceControl.CleanGetOfThirdPartyDirectory" />
-        <call target="SourceControl.CleanGetOfProductDirectory" />
-        <call target="SourceModificationReport.PublishNewSource" />
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+        <call target="Svn.Clean.Update.Product.Folder.Skip.FitNesse" />
+
+        <property name="SourceControl.CleanGetOf" value="${Common.Directory.CodeLine.Path}\UI\assets"/>
+        <call target="SourceControl.CleanGetOf"/>
+
+        <delete dir ="${Maven.Local.Repo.Directory.Path}\gov" includeemptydirs="True" if="${directory::exists(Maven.Local.Repo.Directory.Path + '\gov')}"/>
         <description>End Clean Up Actions</description>
+
         <description>Begin Compile Actions</description>
-        <call target="Versioning.IncreamentBuildNumberOfProduct" />
-        <call target="Compile.CompileSource" />
-        <call target="Custom.CreateDocumentation" />
-        
-        <call target="Custom.WriteReleaseNotes" />
-        <property name="Deployment.SourceFileName" value="CI Factory Release Notes.html" />
-        <property name="Deployment.SourceDir" value="${ProductionDirectory}\CI Installer" />
-        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
-        <property name="Deployment.TargetFile" value="Release Notes ${CCNetLabel}.html" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
-        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
-        <call target="Deployment.PublishFile" />
-        
-        <nant buildfile="..\Product\Install\CI Factory\Packager.xml" inheritrefs="false" inheritall="true" />
+        <asyncexec taskname="Simian" program="${Tools.NAnt.Exe}" failonerror="False" verbose="True">
+          <arg line="-buildfile:${Common.Directory.Packages.Path}\Simian\Simian.Targets.xml"/>
+          <arg line='@"${Common.PropertiesFile}"' />
+          <arg line='-D:Simian.Directory="${Simian.Directory}"' />
+          <arg line='-D:Simian.ReportFilePath="${Simian.ReportFilePath}"' />
+          <arg line='-D:Simian.PublishXmlReport="${Simian.PublishXmlReport}"' />
+          <arg line="Simian.Run"/>
+          <arg line="-logger:NAnt.Core.XmlLogger"/>
+          <arg line='-logfile:"${Common.Project.ReportDirectory}\Simian.xml"' />
+        </asyncexec>
+
+        <asyncexec taskname="IntegrationTest.Prep" program="${Tools.NAnt.Exe}" verbose="True">
+          <arg line="-buildfile:${Common.Directory.Packages.Path}\IntegrationTest\IntegrationTest.Run.xml"/>
+          <arg line='@"${Common.PropertiesFile}"' />
+          <arg line="IntegrationTest.CI.Prep.For.Test"/>
+          <arg line="-logger:NAnt.Core.XmlLogger"/>
+          <arg line='-logfile:"${Common.Project.ReportDirectory}\IntegrationTest.Prep.xml"' />
+        </asyncexec>
+
+        <call target="Maven.Set.Version"/>
+        <call target="Maven.Install" />
+
+        <waitforexit>
+          <tasknames>
+            <string value="IntegrationTest.Prep"/>
+          </tasknames>
+        </waitforexit>
         <description>End Compile Actions</description>
+
         <description>Begin Varification Actions</description>
-        <call target="UnitTest.RunTests" />
-        <exec program="${ThirdPartyDirectory}\NAnt\bin\nant.exe" resultproperty="IntegrationTest.Result" failonerror="false" verbose="true">
-          <arg line="-buildfile:&quot;${ProductDirectory}\Integration Tests\TestRunner.Build.xml&quot;" />
-          <arg line="-logger:NAnt.Core.XmlLogger" />
-          <arg line="-logfile:&quot;${Common.ArtifactDirectoryPath}\NAntTests.xml&quot;" />
-          <arg line="-D:IntegrationTest.ReportFilePath=&quot;${Common.ArtifactDirectoryPath}\NAntTestReport.xml&quot;" />
-        </exec>
-        <style in="${Common.ArtifactDirectoryPath}\NAntTestReport.xml"
-               out="${Common.ReportDirectory}\NAntTestReport.xml"
-               style="${ProductDirectory}\Integration Tests\IntegrationSummaryReport.xsl"
-               verbose="true"
-               if="${file::exists(Common.ArtifactDirectoryPath + '\NAntTestReport.xml')}"/>
-        <fail if="${int::parse(IntegrationTest.Result) != 0}" message="At least one integration test failed!"/>
+        <asyncexec taskname="IntegrationTest.RunTests" program="${Tools.NAnt.Exe}" verbose="True">
+          <arg line="-buildfile:${Common.Directory.Packages.Path}\IntegrationTest\IntegrationTest.Run.xml"/>
+          <arg line='@"${Common.PropertiesFile}"' />
+          <arg line="IntegrationTest.RunTests"/>
+          <arg line="-logger:NAnt.Core.XmlLogger"/>
+          <arg line='-logfile:"${Common.Project.ReportDirectory}\IntegrationTest.RunTests.xml"' />
+        </asyncexec>
+
+        <property name="UnitTests.HaveFailed" value="False"/>
+        <trycatch>
+          <try>
+            <call target="UnitTest.RunTests"/>
+          </try>
+          <catch property="exception">
+            <property name="UnitTest.Exception.Message" value="${exception}"/>
+            <property name="UnitTests.HaveFailed" value="True"/>
+          </catch>
+        </trycatch>
+
+        <property name="IntegrationTest.HaveFailed" value="False"/>
+        <trycatch>
+          <try>
+            <waitforexit>
+              <tasknames>
+                <string value="IntegrationTest.RunTests"/>
+              </tasknames>
+            </waitforexit>
+          </try>
+          <catch property="exception">
+            <property name="IntegrationTest.Exception.Message" value="${exception}"/>
+            <property name="IntegrationTest.HaveFailed" value="True"/>
+          </catch>
+        </trycatch>
+
+        <call target="Coverage.PublishReports"/>
+
+        <if test="${UnitTests.HaveFailed}">
+          <fail message="${UnitTest.Exception.Message}"/>
+        </if>
+
+        <if test="${IntegrationTest.HaveFailed}">
+          <fail message="${IntegrationTest.Exception.Message}"/>
+        </if>
         <description>End Varification Actions</description>
+
         <description>Begin Post Build Actions</description>
-        <property name="Deployment.SourceFileName" value="CIFactorySetup.exe" />
-        <property name="Deployment.SourceDir" value="${ProductDirectory}\Install\CI Factory" />
-        <property name="Deployment.TargetDir" value="${Common.ArtifactDirectoryPath}" />
-        <property name="Deployment.TargetFile" value="CI-Factory-${CCNetLabel}.exe" />
-        <property name="Deployment.FileWebPath" value="${Deployment.WebPathRoot}/${Common.ArtifactFolderName}/${Deployment.TargetFile}" />
-        <property name="Deployment.FileWebName" value="${Deployment.TargetFile}" />
-        <call target="Deployment.PublishFile" />
-        <call target="Simian.Run"/>
-        <call target="nDepend.Calculate" />
-        <call target="LinesOfCode.CountCodeLines" />
-        <call target="FxCop.Calculate" />
+
+	<!--
+        <maven
+          goal="deploy"
+          pomfile="${Maven.Pom.File.Path}"
+        >
+          <environment refid="${Common.EnvironmentVariables.RefId}"/>
+          <args>
+            <arg line="-Dcompile.debug=${Compile.Debug}"/>
+            <arg line="-Dmaven.test.skip"/>
+            <arg line="-P deploy,integration-test-coverage"/>
+          </args>
+        </maven>
+	-->
+
+        <asyncexec taskname="CreateInstallPackageAndPublish.Instrumented" program="${Tools.NAnt.Exe}" verbose="True">
+          <arg line="-buildfile:${Common.Directory.Build.Path}\Main.Build.xml"/>
+          <arg line='@"${Common.PropertiesFile}"' />
+          <arg line='-D:Config.To.Package=Instrumented' />
+          <arg line='-D:"Corbertura.ClassPath=${Corbertura.ClassPath}"'/>
+          <arg line="CreateInstallPackageAndPublish"/>
+          <arg line="-logger:NAnt.Core.XmlLogger"/>
+          <arg line='-logfile:"${Common.Project.ReportDirectory}\CreateInstallPackageAndPublish.Instrumented.xml"' />
+        </asyncexec>
+
+        <property name="Config.To.Package" value="Debug"/>
+        <call target="CreateInstallPackageAndPublish"/>
+
+        <waitforexit>
+          <tasknames>
+            <string value="CreateInstallPackageAndPublish.Instrumented"/>
+          </tasknames>
+        </waitforexit>
+
+        <property name="Compile.Debug" value="False"/>
+        <call target="Maven.Clean"/>
+        <maven
+          goal="install"
+          pomfile="${Common.Directory.Production.Path}\pom.xml"
+        >
+          <environment refid="${Common.EnvironmentVariables.RefId}"/>
+          <args>
+            <arg line="-Dcompile.debug=${Compile.Debug}"/>
+            <arg line="-Dmaven.test.skip"/>
+          </args>
+        </maven>
+
+        <property name="Config.To.Package" value="Release"/>
+        <call target="CreateInstallPackageAndPublish"/>
+
+        <property name="Database.Password" value="oracle" overwrite="False" />
+        <property name="Database.Contexts" value="dba,ddl,seed,test,fet"  />
+        <property name="Database.Variables.Database.OS" value="windows" />
+        <property name="Database.Variables.Database.SID" value="XE"/>
+
+        <property name="Database.Environment" value="Development" />
+        <call target="Database.Set.Environment.Properties"/>
+
+        <call target="Database.Create.Install.Package.And.Publish" />
+        <call target="Database.Create.And.Publish.Data.Dictionary"/>
+
+        <call target="PublishJasperReports"/>
+        <call target="CreateHttpContentPackageAndPublish"/>
+
+        <waitforexit>
+          <tasknames>
+            <string value="Simian"/>
+          </tasknames>
+        </waitforexit>
         <description>End Post Build Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="Maven.Revert.Version"/>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.Selenium.Firefox.SmokeTest.Small">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.IExplorer.SmokeTest.Small">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="IExplorer"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.Firefox.SmokeTest.Medium">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.IExplorer.SmokeTest.Medium">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="IExplorer"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+  
+  <target name="Test.Selenium.Firefox.SmokeTest.Big">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.IExplorer.SmokeTest.Big">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="IExplorer"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+  
+  <target name="Test.Selenium.Firefox.SmokeTest.Big2">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/smoketest/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big2"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.Firefox.RegressionLite.Big">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/RegressionLite/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.IExplorer.RegressionLite.Big">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/RegressionLite/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="IExplorer"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.Firefox.Regression.Big">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/Regression/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\Regression\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="Test.Selenium.Firefox.CurrentIteration.Small">
+    <property name="JUnit.Selenium.Test.Pattern" value="gov/va/ch33/tests/**/*.java"/>
+    <property name="JUnit.Selenium.Test.POM.Path" value="${Common.Directory.Product.Path}\FunctionalTest\CurrentIteration\pom.xml"/>
+    <property name="JUnit.Selenium.Test.Browser" value="Firefox"/>
+    <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+    <call target="JUnit.Selenium.Test"/>
+  </target>
+
+  <target name="JUnit.Selenium.Test" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="Svn.Clean.Update.Product.Folder.Skip.FitNesse" />
+        <delete dir ="${Maven.Local.Repo.Directory.Path}\gov" includeemptydirs="True" if="${directory::exists(Maven.Local.Repo.Directory.Path + '\gov')}"/>
+
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <maven
+          goal="install"
+          pomfile="${Common.Directory.Product.Path}\pom.xml"
+            >
+          <environment refid="${Common.EnvironmentVariables.RefId}"/>
+          <args>
+            <arg line="-Dcompile.debug=${Compile.Debug}"/>
+            <arg line="--non-recursive"/>
+          </args>
+        </maven>
+
+        <maven
+          goal="install"
+          pomfile="${Common.Directory.Product.Path}\FunctionalTest\pom.xml"
+            >
+          <environment refid="${Common.EnvironmentVariables.RefId}"/>
+          <args>
+            <arg line="-Dcompile.debug=${Compile.Debug}"/>
+            <arg line="-Dmaven.test.skip=true"/>
+          </args>
+        </maven>
+
+        <call target="Coverage.Prep.Deployed"/>
+        <call target="WebLogic.Delete.Server.Log.Files"/>
+
+        <ant
+          target="fix.state"
+          antbat="${WebLogic.Deploy.Ant.Bat}"
+          buildfile="${WebLogic.Deploy.Script.File.Path}"
+          logfile="${Ant.Log.Directory.Path}\fix.state.1.log.xml"
+        >
+          <environment refid="${WebLogic.Deploy.EnvironmentVariables.RefId}"/>
+          <args>
+            <arg line="-Dcompile.debug=${Compile.Debug}"/>
+            <arg line='-propertyfile "${Database.Ant.Properties.File.Path}"' />
+            <arg line='-propertyfile "${WebLogic.Ant.Properties.File.Path}"' />
+          </args>
+        </ant>
+
+        <trycatch>
+          <try>
+            <maven
+              goal="test"
+              pomfile="${JUnit.Selenium.Test.POM.Path}"
+            >
+              <environment refid="${Common.EnvironmentVariables.RefId}"/>
+              <args>
+                <arg line="-Dcompile.debug=${Compile.Debug}"/>
+
+                <arg line="-DdriverSession.domainUrl=${Chapter33.Apache.Root.URL}"/>
+                <arg line="-DFunctionalTest.Database.DbHost=${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}"/>
+                <arg line="-DFunctionalTest.Database.User=test_user"/>
+                <arg line="-DFunctionalTest.Databse.Password=test_user"/>
+                <arg line="-DdriverSession.browserType=${JUnit.Selenium.Test.Browser}"/>
+                <arg line="-Dtest=${JUnit.Selenium.Test.Pattern}"/>
+              </args>
+            </maven>
+          </try>
+          <finally>
+            <trycatch>
+              <try>
+                <property name="UnitTest.Projects.Directory.Path" value="${Common.Directory.Product.Path}\FunctionalTest"/>
+                <call target="UnitTest.Generate.Aggrigate.Test.Report"/>
+              </try>
+              <finally>
+                <call target="UnitTest.Publish.Test.Reports"/>
+                <copy todir="${Common.Directory.Artifact.Path}\ScreenCapture">
+                  <fileset>
+                    <include name="${Common.Directory.Product.Path}\FunctionalTest\**\output\*.png"/>
+                  </fileset>
+                </copy>
+                <call target="Coverage.Post.Deployed"/>
+                <call target="WebLogic.Move.Server.Log.Files" />
+
+                <ant
+                  target="fix.state"
+                  antbat="${WebLogic.Deploy.Ant.Bat}"
+                  buildfile="${WebLogic.Deploy.Script.File.Path}"
+                  logfile="${Ant.Log.Directory.Path}\fix.state.2.log.xml"
+                >
+                  <environment refid="${WebLogic.Deploy.EnvironmentVariables.RefId}"/>
+                  <args>
+                    <arg line="-Dcompile.debug=${Compile.Debug}"/>
+                    <arg line='-propertyfile "${Database.Ant.Properties.File.Path}"' />
+                    <arg line='-propertyfile "${WebLogic.Ant.Properties.File.Path}"' />
+                  </args>
+                </ant>
+              </finally>
+            </trycatch>
+          </finally>
+        </trycatch>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.JUnit.Integration" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+
+        <ifthenelse test="${CCNetLastIntegrationStatus == 'Success'}">
+          <then>
+            <call target="Svn.Update.Product.Folder.Skip.FitNesse" />
+          </then>
+          <else>
+            <call target="Svn.Clean.Update.Product.Folder.Skip.FitNesse" />
+            <delete dir ="${Maven.Local.Repo.Directory.Path}\gov" includeemptydirs="True" if="${directory::exists(Maven.Local.Repo.Directory.Path + '\gov')}"/>
+          </else>
+        </ifthenelse>
+
+        <property name="Database.Password" value="oracle" overwrite="False" />
+        <property name="Database.Contexts" value="dba,ddl,seed,test,fet"  />
+        <property name="Database.Variables.Database.OS" value="windows" />
+        <property name="Database.Variables.Database.SID" value="XE"/>
+
+        <property name="Database.Environment" value="Development" />
+        <call target="Database.Set.Environment.Properties"/>
+
+        <ifnot test="${CCNetLastIntegrationStatus == 'Success'}">
+          <call target="Database.Drop"/>
+          <call target="Database.Rebaseline"/>
+        </ifnot>
+
+        <call target="Database.Update"/>
+
+        <call target="Maven.Install" />
+
+        <property name="IntegrationTest.HaveFailed" value="False"/>
+        <trycatch>
+          <try>
+            <call target="IntegrationTest.RunTests"/>
+          </try>
+          <catch property="exception">
+            <property name="IntegrationTest.Exception.Message" value="${exception}"/>
+            <property name="IntegrationTest.HaveFailed" value="True"/>
+          </catch>
+        </trycatch>
+
+        <!-- Delete Unit Test coverage ser files, don't want to have them merged in... -->
+        <delete>
+          <fileset basedir="${Common.Directory.Production.Path}">
+            <include name="**\target\cobertura\*.ser"/>
+          </fileset>
+        </delete>
+        <call target="Coverage.PublishReports"/>
+
+        <if test="${IntegrationTest.HaveFailed}">
+          <fail message="${IntegrationTest.Exception.Message}"/>
+        </if>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.RegressionReady" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionReadySuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.RegressionReady2" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionReady2" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.RegressionReady3" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionReady3" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.Letters" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.LetterSuite1" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.Letters2" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.LetterSuite2" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.Letters3" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+        
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.LetterSuite3" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.Sandbox" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.SandboxSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="False" />
+
+        <call target="FitNesse.RunTests" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.Sandbox2" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Medium"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.SandboxSuite2" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="False" />
+
+        <call target="FitNesse.RunTests" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.SmokeTest.Small" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Small"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.SmokeTestSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.InternetExplorer.SmokeTest.Big" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="InternetExplorer" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.SmokeTestSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.SmokeTest.Big" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.SmokeTestSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+    
+  <target name="Test.FitNesse.InternetExplorer.Regression" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+
+        <property name="FitNesse.Target.Browser"              value="InternetExplorer" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.Regression" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionSuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Test.FitNesse.Firefox.RegressionHeavy" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionHeavySuite" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.RegressionHeavy2" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big2"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionHeavy2" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+  
+  <target name="Test.FitNesse.Firefox.RegressionHeavy3" depends="SetUps">
+    <trycatch>
+      <try>
+        <call target="SourceModificationReport.ConsolidateReports" />
+
+        <call target="RTC.CreateReport" />
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path)}" unless="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <property name="Deployment.Environment.Name" value="Deploy-Test-Big2"/>
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Coverage.Prep.Deployed"/>
+
+        <property name="FitNesse.Variables.Portal.Url"        value="${Chapter33.Apache.Root.URL}" />
+        <property name="FitNesse.Variables.Apache.Url"        value="${Chapter33.Apache.URI}" />
+        <property name="FitNesse.Variables.DBHOST"            value="${Database.Variables.Oracle.HostUri}:1521:${Database.Variables.Database.SID}" />
+        <property name="FitNesse.Target.Browser"              value="Firefox" />
+        <property name="FitNesse.IntegrationSuitePath"        value="ProjectRoot.${FitNesse.Target.Browser}Suite.RegressionHeavy3" />
+        <property name="FitNesse.FailBuildForFailingTest"     value="false" />
+
+        <call target="FitNesse.RunTests" />
+
+        <call target="Coverage.Post.Deployed"/>
+
+        <call target="FitNesse.FailBuildForFailingTest" />
+      </try>
+      <finally>
+        <call target="TearDowns" />
+        <exec program="cmd" commandline='/C "rmdir /S /Q "${Common.Directory.Product.Path}""' if="${directory::exists(Common.Directory.Product.Path + '\FitNesse')}"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Database.Heavy" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+
+        <property name="SourceControl.GetOf" value="${Common.Directory.Production.Path}\Database"/>
+        <call target="SourceControl.GetOf"/>
+
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+
+        <property name="Database.Environment" value="Development" />
+        <call target="Database.Set.Environment.Properties"/>
+
+        <call target="Database.Drop"/>
+        <call target="Database.Rebaseline"/>
+        <call target="Database.Dump"/>
+
+        <description>End Compile Actions</description>
+
         <description>End Main Build</description>
       </try>
       <finally>
@@ -160,35 +1270,206 @@
       </finally>
     </trycatch>
   </target>
+
+  <target name="Database" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Main Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+
+        <property name="SourceControl.GetOf" value="${Common.Directory.Production.Path}\Database"/>
+        <call target="SourceControl.GetOf"/>
+
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Compile Actions</description>
+
+        <property name="Database.Environment" value="Development" />
+        <call target="Database.Set.Environment.Properties"/>
+
+        <ifnot test="${CCNetLastIntegrationStatus == 'Success'}">
+          <ifthenelse test="${file::exists(Common.Directory.ArtifactRoot.Path + '\database\dump\CH33.DMP')}">
+            <then>
+              <call target="Database.Restore.From.Dump"/>
+            </then>
+            <else>
+              <call target="Database.Drop"/>
+              <call target="Database.Rebaseline"/>
+            </else>
+          </ifthenelse>
+        </ifnot>
+
+        <property name="Database.Version" value="${CCNetLabel}" overwrite="True"/>
+        <call target="Database.Tag"/>
+
+        <call target="Database.Update"/>
+
+        <call target="Database.Dump"/>
+
+        <description>End Compile Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Deploy" depends="SetUps">
+    <trycatch>
+      <try>
+
+        <call target="SourceModificationReport.Create.Release.Report"/>
+
+        <if test="${property::exists('Deploy.Version')}">
+          <script language="C#">
+            <imports>
+              <import namespace="System.Reflection"/>
+              <import namespace="System.Collections.Specialized"/>
+            </imports>
+            <code>
+              <![CDATA[
+                public static void ScriptMain(Project project)
+                {
+                  FieldInfo fieldInfo =  project.Properties.GetType().GetField("_readOnlyProperties", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
+                  StringCollection strings = (StringCollection)fieldInfo.GetValue(project.Properties);
+                  strings.Remove("CCNetLabel");
+                }
+              ]]>
+            </code>
+          </script>
+          <property name="CCNetLabel" value="${Deploy.Version}"/>
+        </if>
+        <if test="${CCNetLabel =='UNKNOWN'}">
+          <script language="C#">
+            <imports>
+              <import namespace="System.Reflection"/>
+              <import namespace="System.Collections.Specialized"/>
+            </imports>
+            <code>
+              <![CDATA[
+                public static void ScriptMain(Project project)
+                {
+                  FieldInfo fieldInfo =  project.Properties.GetType().GetField("_readOnlyProperties", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
+                  StringCollection strings = (StringCollection)fieldInfo.GetValue(project.Properties);
+                  strings.Remove("CCNetLabel");
+                }
+              ]]>
+            </code>
+          </script>
+          <get.last.good.build resultproperty="CCNetLabel"/>
+        </if>
+
+        <call target="RTC.Get.Release.Report" failonerror="False" />
+
+        <property name="Deployment.Environment.Name" value="${regex::capture(CCNetProject, '^' + ProjectName + '-' + ProjectCodeLineName +'-(.*)$')}"/>
+
+        <call target="Set.Deployment.Environment.Properties"/>
+
+        <call target="Chapter33.Deploy"/>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="SoapUI-Regression" depends="SetUps">
+    <trycatch>
+      <try>
+        <description>Begin Build</description>
+
+        <description>Begin Pre Build Actions</description>
+        <call target="SourceModificationReport.ConsolidateReports" />
+        <call target="RTC.CreateReport" />
+        <description>End Pre Build Actions</description>
+
+        <description>Begin Clean Up Actions</description>
+
+        <svn.set.revision.number.by.ccnet.build.time/>
+
+        <call target="SourceControl.CleanGetOf.Common.Directory.Product.Path" />
+
+        <description>End Clean Up Actions</description>
+
+        <description>Begin Verification Actions</description>
+
+
+        <property name="SoapUI.Suite" value="RegressionSuite"/>
+
+        <call target="SoapUI.RunTests"/>
+
+        <description>End Verification Actions</description>
+
+        <description>End Main Build</description>
+      </try>
+      <finally>
+        <call target="TearDowns" />
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="Publish.Logs.If.Exeception" if="${CCNetIntegrationStatus=='Exception'}">
+    <copy todir="${Common.Directory.Artifact.Path}\Transient">
+      <fileset basedir="${Common.Project.Common.Directory.Transient.Path}">
+        <include name="**\*"/>
+      </fileset>
+    </copy>
+  </target>
+
   <target name="SetUps">
+    <fail message="CCNet label of UKNOWN is invalid" if="${CCNetLabel == 'UNKNOWN'}" />
     <call target="Common.SetUp" />
     <description>Begin SetUps</description>
-    <call target="SourceModificationReport.SetUp" />
-    <call target="Versioning.SetUp" />
+    <call target="Publish.SetUp" />
     <call target="SourceControl.SetUp" />
-    <call target="UnitTest.SetUp" />
-    <call target="Compile.SetUp" />
-    <call target="UnitTest.SetUp" />
+    <call target="SourceModificationReport.SetUp" />
+    <call target="RTC.SetUp" />
     <call target="Simian.SetUp" />
-    <call target="nDepend.SetUp" />
-    <call target="LinesOfCode.SetUp" />
-    <call target="Deployment.SetUp" />
+    <call target="Ant.SetUp" />
+    <call target="Selenium.SetUp" />
+    <call target="FitNesse.SetUp" />
+    <call target="UnitTest.SetUp" />
+    <call target="IntegrationTest.SetUp" />
+    <call target="Coverage.SetUp" />
+    <call target="Workspace.SetUp" />
     <description>End SetUps</description>
-    <call target="FxCop.SetUp" />
   </target>
+
   <target name="TearDowns">
     <description>Begin TearDowns</description>
-    <call target="SourceModificationReport.TearDown" />
-    <call target="Versioning.TearDown" />
+    <call target="Publish.TearDown" />
     <call target="SourceControl.TearDown" />
-    <call target="UnitTest.TearDown" />
-    <call target="Compile.TearDown" />
-    <call target="UnitTest.TearDown" />
+    <call target="SourceModificationReport.TearDown" />
+    <call target="RTC.TearDown" />
     <call target="Simian.TearDown" />
-    <call target="nDepend.TearDown" />
-    <call target="LinesOfCode.TearDown" />
-    <call target="Deployment.TearDown" />
+    <call target="Ant.TearDown" />
+    <call target="Selenium.TearDown" />
+    <call target="FitNesse.TearDown" />
+    <call target="UnitTest.TearDown" />
+    <call target="IntegrationTest.TearDown" />
+    <call target="Coverage.TearDown" />
+    <call target="Workspace.TearDown" />
     <description>End TearDowns</description>
-    <call target="FxCop.TearDown" />
   </target>
+
+    <target  name="IDontKnow"  depends="SetUps">
+        <echo>Box=${Box}</echo>
+        <call target="TearDowns" />
+    </target>
+    <target  name="SmokeIt"  depends="SetUps">
+        <echo>Box=${Box}</echo>
+        <call target="TearDowns" />
+    </target>
+
+
 </project>

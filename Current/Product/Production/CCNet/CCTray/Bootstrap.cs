@@ -22,13 +22,15 @@ namespace ThoughtWorks.CruiseControl.CCTray
 
 			try
 			{
-				ICruiseManagerFactory remoteCruiseManagerFactory = new RemoteCruiseManagerFactory();
-				ICruiseProjectManagerFactory cruiseProjectManagerFactory = new CruiseProjectManagerFactory( remoteCruiseManagerFactory );
+				IWebCruiseManagerFactory webCruiseManagerFactory = new WebCruiseManagerFactory();
+                ICruiseProjectManagerFactory cruiseProjectManagerFactory = new CruiseProjectManagerFactory(webCruiseManagerFactory);
 				CCTrayMultiConfiguration configuration = new CCTrayMultiConfiguration( cruiseProjectManagerFactory, GetSettingsFilename() );
 
+                LoginForm loginForm = new LoginForm(configuration.ProxyServerUrl);
+                Application.Run(loginForm);
+                
 				MainForm mainForm = new MainForm(configuration);
-
-				Application.Run(mainForm);
+                Application.Run(mainForm);
 			}
 			catch (Exception ex)
 			{

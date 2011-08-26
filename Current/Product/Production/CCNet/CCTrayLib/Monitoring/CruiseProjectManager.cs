@@ -1,9 +1,17 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
+//using System.Runtime.Serialization;
 using ThoughtWorks.CruiseControl.Core;
 using ThoughtWorks.CruiseControl.Remote;
+using Exortech.NetReflector;
 using Exortech.NetReflector.Util;
+using ThoughtWorks.CruiseControl.CCTrayLib.ServerConnection;
+//using FF=CCNET.Extensions.Plugin.ForceFilters;
+//using UFF=CCNET.Extensions.Plugin.ForceFilters.UserFilter; 
 
 namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 {
@@ -12,7 +20,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 	/// </summary>
 	public class CruiseProjectManager : ICruiseProjectManager
 	{
-		private readonly ICruiseManager manager;
+        private readonly IWebCruiseManager manager;
 		private readonly string projectName;
 		private readonly IProjectSerializer projectSerializer = new NetReflectorProjectSerializer();
 		
@@ -20,26 +28,25 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 		{
 			get
 			{
-				string serializedProject = string.Empty;
-				serializedProject = manager.GetProject(projectName);
-				try
-				{
-					return this.projectSerializer.Deserialize(serializedProject);
-				}
-				catch (Exception ex)
-				{
-					foreach (string filePath in Directory.GetFiles(Path.GetDirectoryName(this.GetType().Assembly.Location), "*plugin*.dll"))
-					{
-						System.Reflection.Assembly.LoadFile(filePath);
-					}
-					serializedProject = manager.GetProject(projectName);
-					return this.projectSerializer.Deserialize(serializedProject);
-				}
+                string serializedProject = string.Empty;
+                serializedProject = manager.GetProject(projectName);
+                try
+                {
+                    return this.projectSerializer.Deserialize(serializedProject);
+                }
+                catch
+                {
+                    foreach (string filePath in Directory.GetFiles(Path.GetDirectoryName(this.GetType().Assembly.Location), "*plugin*.dll"))
+                    {
+                        System.Reflection.Assembly.LoadFile(filePath);
+                    }
+                    serializedProject = manager.GetProject(projectName);
+                    return this.projectSerializer.Deserialize(serializedProject);
+                }                
 			}
 		}
-
-
-		public CruiseProjectManager(ICruiseManager server, string projectName)
+        
+		public CruiseProjectManager(IWebCruiseManager server, string projectName)
 		{
 			this.manager = server;
 			this.projectName = projectName;
@@ -47,33 +54,42 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Monitoring
 
 		public void ForceBuild()
 		{
-			bool clientInfoRequired = false;
-			ArrayList clientInfoList = new ArrayList();
+            bool clientInfoRequired = false;
+            List<ForceFilterClientInfo> clientInfoList = new List<ForceFilterClientInfo>();
+            
+            IForceFilter[] forceFilters = this.project.ForceFilters;
 
-			IForceFilter[] forceFilters = this.project.ForceFilters;
-			
-			if (forceFilters != null && forceFilters.Length != 0)
-			{
-				foreach (IForceFilter forceFilter in forceFilters)
-				{
-					if (forceFilter.RequiresClientInformation)
-					{
-						clientInfoRequired = true;
-						ForceFilterClientInfo info = forceFilter.GetClientInfo();
-						clientInfoList.Add(info);
-					}
-				}
-			}
-			if (clientInfoRequired)
-			{
-				ForceFilterClientInfo[] clientInfo;
-				clientInfo = (ForceFilterClientInfo[]) clientInfoList.ToArray(typeof(ForceFilterClientInfo));
-					manager.ForceBuild(ProjectName, clientInfo);
-			}
-			else
-			{
-				manager.ForceBuild(ProjectName);
-			}
+            if (forceFilters != null && forceFilters.Length != 0)
+            {
+                foreach (IForceFilter forceFilter in forceFilters)
+                {
+                    if (forceFilter.RequiresClientInformation)
+                    {
+                        clientInfoRequired = true;
+                        ForceFilterClientInfo info = forceFilter.GetClientInfo();
+                        clientInfoList.Add(info);                        
+                    }
+                }
+            }
+            if (clientInfoRequired)
+            {
+                Type[] extraTypes = new Type[] { typeof(PasswordInformation), typeof(HostInformation), typeof(UserInformation) };
+                ForceFilterClientInfo[] forceFilterClientInfoList = new ForceFilterClientInfo[clientInfoList.Count];
+                forceFilterClientInfoList = clientInfoList.ToArray();
+
+                XmlSerializer clientInfoSerializer = new XmlSerializer(typeof(ForceFilterClientInfo[]), extraTypes);
+                StringWriter clientInfoBuffer = new StringWriter();
+                clientInfoSerializer.Serialize(clientInfoBuffer, forceFilterClientInfoList);
+                string serializedClientInfo = clientInfoBuffer.ToString();
+                clientInfoBuffer.Close();
+
+                manager.ForceBuild(ProjectName, serializedClientInfo);
+                
+            }
+            else
+            {
+                manager.ForceBuild(ProjectName, string.Empty);
+            }            
 		}
 
 		public ProjectStatus ProjectStatus

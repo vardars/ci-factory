@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Specialized;
-using Exortech.NetReflector;
+//using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core;
-using ThoughtWorks.CruiseControl.Core.Util;
-using ThoughtWorks.CruiseControl.Remote;
+//using ThoughtWorks.CruiseControl.Core.Util;
+//using ThoughtWorks.CruiseControl.Remote;
 
-namespace CCNET.Extensions.Plugin.ForceFilters.UserFilter
+namespace ThoughtWorks.CruiseControl.Remote
 {
     [Serializable]
     public class UserInformation : ForceFilterClientInfo

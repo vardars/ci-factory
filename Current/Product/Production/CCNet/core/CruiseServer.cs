@@ -125,9 +125,7 @@ namespace ThoughtWorks.CruiseControl.Core
         {
             return GetIntegrator(projectName).ForceBuild(webParams, clientInfo);
         }
-
         
-
         public string[] GetBuildNames(string projectName)
         {
 			string logDirectory = this.GetBuildLogDirectory(projectName);
@@ -188,7 +186,7 @@ namespace ThoughtWorks.CruiseControl.Core
         // ToDo - this done TDD
         public string GetProject(string name)
         {
-            Log.Info("Getting project - " + name);
+            //Log.Info("Getting project - " + name);
             return new NetReflectorProjectSerializer().Serialize((Project)configurationService.Load().Projects[name]);
         }
 

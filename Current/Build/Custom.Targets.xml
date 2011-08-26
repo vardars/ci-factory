@@ -166,7 +166,7 @@
     <get
       dest="${DocListFilePath}"
       src="${CategoryUrl}"
-      />
+    />
 
     <delete dir="${DocumentationDirectory}" if="${directory::exists(DocumentationDirectory)}" />
     <mkdir dir="${DocumentationDirectory}"/>

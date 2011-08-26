@@ -12,7 +12,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 		private readonly string configFileName;
 
 		public CCTrayMultiConfiguration(ICruiseProjectManagerFactory managerFactory, string configFileName)
-		{
+        {
 			this.managerFactory = managerFactory;
 			this.configFileName = configFileName;
 
@@ -26,7 +26,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 			{
 				Project project = Projects[i];
 				ICruiseProjectManager projectManager = managerFactory.Create(project.ServerUrl, project.ProjectName);
-				retVal[i] = new ProjectMonitor(projectManager);
+				retVal[i] = new ProjectMonitor(projectManager);                
 			}
 			return retVal;
 		}
@@ -36,6 +36,12 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 			get { return persistentConfiguration.Projects; }
 			set { persistentConfiguration.Projects = value; }
 		}
+
+        public string ProxyServerUrl
+        {
+            get { return persistentConfiguration.ProxyServerUrl; }
+            set { persistentConfiguration.ProxyServerUrl = value; }
+        }
 
 		public bool ShouldShowBalloonOnBuildTransition
 		{
@@ -84,6 +90,7 @@ namespace ThoughtWorks.CruiseControl.CCTrayLib.Configuration
 		public ICCTrayMultiConfiguration Clone()
 		{
 			return new CCTrayMultiConfiguration(managerFactory, configFileName);
+            //TODO -- R return new CCTrayMultiConfiguration(configFileName);
 		}
 
 		public AudioFiles Audio
