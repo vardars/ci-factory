@@ -30,7 +30,7 @@ using NAnt.Core.Util;
 
 namespace NAnt.Core {
     [Serializable()]
-    public sealed class Target : Element, ICloneable {
+    public class Target : Element, ICloneable {
         #region Private Instance Fields
 
         private string _name;
@@ -258,7 +258,7 @@ namespace NAnt.Core {
         /// <summary>
         /// Executes dependent targets first, then the target.
         /// </summary>
-        public void Execute() {
+        public virtual void Execute() {
             if (IfDefined && !UnlessDefined) {
                 try {
                     Project.OnTargetStarted(this, new BuildEventArgs(this));

@@ -29,6 +29,10 @@ namespace NAnt.Core {
     public class TaskBuilder {
         #region Public Instance Constructors
 
+        public TaskBuilder()
+        {
+        }
+
         /// <summary>
         /// Creates a new instance of the <see cref="TaskBuilder" /> class
         /// for the specified task class in the assembly specified.
@@ -96,6 +100,7 @@ namespace NAnt.Core {
         /// create.
         /// </value>
         public string TaskName {
+            set { this._taskName = value;  }
             get { return _taskName; }
         }
 
@@ -104,7 +109,7 @@ namespace NAnt.Core {
         #region Public Instance Methods
 
         [ReflectionPermission(SecurityAction.Demand, Flags=ReflectionPermissionFlag.NoFlags)]
-        public Task CreateTask() {
+        public virtual Task CreateTask() {
             Assembly assembly = GetAssembly();
             return (Task) assembly.CreateInstance(
                 ClassName, 
