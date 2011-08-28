@@ -30,6 +30,7 @@ using NAnt.Core;
 using NAnt.Core.Attributes;
 using NAnt.Core.Util;
 using CIFactory.NAnt.Types;
+using CIFactory.NAnt.Groovy.Tasks;
 using NAnt.Core.Types;
 
 namespace CIFactory.NAnt.Tasks
@@ -37,7 +38,7 @@ namespace CIFactory.NAnt.Tasks
     [TaskName("loadpackages")]
     public class LoadPackagesTask : Task {
         #region Private Instance Fields
-
+        private Groovy.Tasks.GroovyClassManager _groovyClassManager = new CIFactory.NAnt.Groovy.Tasks.GroovyClassManager(new java.io.File("C:\\Projects\\Groovy\\groovy-binary-1.8.1\\groovy-1.8.1"));
         private string _PackagesDirectory = null;
         private PackageElement[] _Packages;
 
@@ -126,6 +127,46 @@ namespace CIFactory.NAnt.Tasks
                     this.Properties["Package." + package.PackageName + ".Custom.File.Loaded"] = true.ToString();
                 }
 
+                String GroovyFilePath = GenerateFilePath("{0}.Targets.groovy", package, packageDirectoryPath);
+                this.SetProperty("Package." + package.PackageName + ".Targets.Groovy.File.Loaded", false.ToString());
+                this.SetProperty("Package." + package.PackageName + ".Targets.Groovy.File.Path", GroovyFilePath);
+                if (File.Exists(GroovyFilePath))
+                {
+                    loadGroovyTargetFile(new java.io.File(GroovyFilePath));
+                    this.Properties["Package." + package.PackageName + ".Targets.Groovy.File.Loaded"] = true.ToString();
+                }
+
+            }
+        }
+
+        private void loadGroovyTargetFile(java.io.File file)
+        {
+            java.lang.Class clazz = _groovyClassManager.parseClass(file);
+
+            loadGroovyTargetsFromClass(clazz);
+            loadGroovyTasksFromClass(clazz);
+        }
+
+        private void loadGroovyTasksFromClass(java.lang.Class clazz)
+        {
+            java.lang.reflect.Method[] methods = GroovyUtil.getMethodsAnnotatedWith(clazz, "com.agilex.ci.cifactory.nant.task");
+
+            foreach (java.lang.reflect.Method method in methods)
+            {
+                Console.WriteLine("Adding new task: " + method.getName());
+                TypeFactory.TaskBuilders.Add(new GroovyTaskBuilder(method.getName(), clazz, method));
+            }
+        }
+
+        private void loadGroovyTargetsFromClass(java.lang.Class clazz)
+        {
+            java.lang.reflect.Method[] methods = GroovyUtil.getMethodsAnnotatedWith(clazz, "com.agilex.ci.cifactory.nant.target");
+
+            foreach (java.lang.reflect.Method method in methods)
+            {
+                GroovyTarget target = new GroovyTarget(this.Project, clazz, method);
+                target.Name = clazz.getPackage().getName() + "." + method.getName();
+                this.Project.Targets.Add(target);
             }
         }
 
