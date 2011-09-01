@@ -211,7 +211,7 @@ namespace NAnt.Core {
         /// Derived classes that wish to add custom initialization should override 
         /// the <see cref="InitializeElement" /> method.
         /// </remarks>
-        public void Initialize(XmlNode elementNode) {
+        public virtual void Initialize(XmlNode elementNode) {
             Initialize(elementNode, Project.Properties, Project.TargetFramework);
         }
 
