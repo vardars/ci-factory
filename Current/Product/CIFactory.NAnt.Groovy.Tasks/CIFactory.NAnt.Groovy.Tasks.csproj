@@ -139,6 +139,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\ikvmbin-7.0.4245\ikvm\bin\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
+    <Reference Include="paranamer-2.3-SNAPSHOT, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Chapter33\Trunk\Build\Tools\nAnt\bin\paranamer-2.3-SNAPSHOT.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>

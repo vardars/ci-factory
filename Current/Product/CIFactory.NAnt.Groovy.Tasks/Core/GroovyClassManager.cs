@@ -1,12 +1,19 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+
+using java.lang.reflect;
+using java.lang;
 
 namespace CIFactory.NAnt.Groovy.Tasks
 {
     public class GroovyClassManager
     {
+        public static Dictionary<Method, string[]> GroovyParameterNames = new Dictionary<Method, string[]>();
+
         private java.io.File _groovyHome;
         private java.lang.Class _groovyClassLoaderClass;
         private java.lang.ClassLoader _classLoader;
@@ -51,19 +58,19 @@ namespace CIFactory.NAnt.Groovy.Tasks
         public java.lang.Class parseClass(java.io.File file)
         {
             java.lang.Class[] args = new java.lang.Class[] { java.lang.Class.forName("java.io.File") };
-
             java.lang.reflect.Method parseClass = this._groovyClassLoaderClass.getMethod("parseClass", args);
+            java.lang.Class clazz = (java.lang.Class)parseClass.invoke(this._classLoader, file);
 
-            return (java.lang.Class)parseClass.invoke(this._classLoader, file);
+            return clazz;
         }
 
         public java.lang.Class parseClass(string text)
         {
             java.lang.Class[] args = new java.lang.Class[] { java.lang.Class.forName("java.lang.String") };
-
             java.lang.reflect.Method parseClass = this._groovyClassLoaderClass.getMethod("parseClass", args);
+            java.lang.Class clazz = (java.lang.Class)parseClass.invoke(this._classLoader, text);
 
-            return (java.lang.Class)parseClass.invoke(this._classLoader, text);
+            return clazz;
         }
     }
 }

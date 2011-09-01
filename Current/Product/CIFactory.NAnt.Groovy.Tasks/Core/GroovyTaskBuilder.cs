@@ -14,9 +14,11 @@ namespace CIFactory.NAnt.Groovy.Tasks
         string _name;
         Method _method;
         Class _clazz;
-        
-        public GroovyTaskBuilder(string name, Class clazz, Method method)
+        string[] _args;
+
+        public GroovyTaskBuilder(string name, Class clazz, Method method, string[] args)
         {
+            this._args = args;
             this._clazz = clazz;
             this._method = method;
             this._name = name;
@@ -25,7 +27,7 @@ namespace CIFactory.NAnt.Groovy.Tasks
 
         public override Task CreateTask()
         {
-            return new GroovyTask(_clazz, _method);
+            return new GroovyTask(_clazz, _method, _args);
         }
     }
 }
