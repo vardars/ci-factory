@@ -141,8 +141,15 @@ namespace CIFactory.NAnt.Tasks
 
         private void loadGroovyTargetFile(java.io.File file)
         {
-            java.lang.Class clazz = _groovyClassManager.parseClass(file);
-
+            java.lang.Class clazz;
+            try
+            {
+                clazz = _groovyClassManager.parseClass(file);
+            }
+            catch (java.lang.reflect.InvocationTargetException e)
+            {
+                throw new BuildException("File " + file.getAbsolutePath() + " did not compile correctly.", e);
+            }
             loadGroovyTargetsFromClass(clazz);
             loadGroovyTasksFromClass(clazz, file);
         }
