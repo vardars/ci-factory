@@ -144,17 +144,18 @@ namespace CIFactory.NAnt.Tasks
             java.lang.Class clazz = _groovyClassManager.parseClass(file);
 
             loadGroovyTargetsFromClass(clazz);
-            loadGroovyTasksFromClass(clazz);
+            loadGroovyTasksFromClass(clazz, file);
         }
 
-        private void loadGroovyTasksFromClass(java.lang.Class clazz)
+        private void loadGroovyTasksFromClass(java.lang.Class clazz, java.io.File file)
         {
             java.lang.reflect.Method[] methods = GroovyUtil.getMethodsAnnotatedWith(clazz, "com.agilex.ci.cifactory.nant.task");
 
             foreach (java.lang.reflect.Method method in methods)
             {
-                Console.WriteLine("Adding new task: " + method.getName());
-                TypeFactory.TaskBuilders.Add(new GroovyTaskBuilder(method.getName(), clazz, method));
+                string[] args = GroovyUtil.extractTaskArgumentNames(method.getName(), new StreamReader(file.getAbsolutePath()).ReadToEnd());
+                GroovyTaskBuilder builder = new GroovyTaskBuilder(method.getName(), clazz, method, args);
+                TypeFactory.TaskBuilders.Add(builder);
             }
         }
 
