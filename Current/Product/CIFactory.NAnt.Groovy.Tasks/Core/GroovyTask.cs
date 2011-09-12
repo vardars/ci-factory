@@ -57,9 +57,9 @@ namespace CIFactory.NAnt.Groovy.Tasks
             {
                 this._method.invoke(script, _parameters);
             }
-            catch (java.lang.Exception e)
+            catch (java.lang.reflect.InvocationTargetException e)
             {
-                throw new BuildException("Failed while attempting to execute task " + this._method.getName(), e);
+                throw new BuildException("Failed while attempting to execute task '" + this._method.getName() + "'. Exception follows:\n" + e.getCause().Message + "\n" + e.getCause().StackTrace, e);
             }
         }
     }
