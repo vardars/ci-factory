@@ -40,7 +40,8 @@ namespace ThoughtWorks.CruiseControl.Core
 			try
 			{
 				result.Modifications = this.GetModifications(lastResult, result);
-				IsRunable = this.IntegrationFilter.ShouldRunBuild(result);
+                Log.Info(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                IsRunable = this.IntegrationFilter.ShouldRunBuild(result);
 				if (IsRunable)
 				{
                     result.Label = _Project.Labeller.Generate(result, lastResult);

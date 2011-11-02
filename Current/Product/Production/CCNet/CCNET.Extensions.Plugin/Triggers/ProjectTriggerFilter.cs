@@ -52,8 +52,12 @@ namespace CCNET.Extensions.Triggers
 
         public void IntegrationCompleted()
         {
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
             this.InnerTrigger.IntegrationCompleted();
+            Log.Info(string.Format("{0}:End", System.Reflection.MethodBase.GetCurrentMethod().Name));
         }
+
+        
 
         public DateTime NextBuild
         {
@@ -65,6 +69,8 @@ namespace CCNET.Extensions.Triggers
 
 		public BuildCondition ShouldRunIntegration()
 		{
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
+
 			BuildCondition ShouldRun = this.InnerTrigger.ShouldRunIntegration();
 			if (ShouldRun == BuildCondition.NoBuild)
 				return BuildCondition.NoBuild;
@@ -73,11 +79,14 @@ namespace CCNET.Extensions.Triggers
 			{
 				if (!Project.IsAllowed())
 				{
+                    Log.Info(string.Format("{0}:this.InnerTrigger.IntegrationNotRun()", System.Reflection.MethodBase.GetCurrentMethod().Name));
+                    this.InnerTrigger.IntegrationNotRun();
 					return BuildCondition.NoBuild;
 				}
 			}
 
-			return ShouldRun;
+            Log.Info(string.Format("{0}:ShouldRun={1}", System.Reflection.MethodBase.GetCurrentMethod().Name, ShouldRun.ToString()));
+            return ShouldRun;
 		}
         
 #endregion
@@ -88,8 +97,10 @@ namespace CCNET.Extensions.Triggers
 
 		public void IntegrationNotRun()
 		{
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
 			this.InnerTrigger.IntegrationNotRun();
-		}
+            Log.Info(string.Format("{0}:End", System.Reflection.MethodBase.GetCurrentMethod().Name));
+        }
 
 		#endregion
 	}

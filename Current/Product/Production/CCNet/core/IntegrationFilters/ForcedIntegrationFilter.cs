@@ -3,6 +3,7 @@ using System.Xml;
 using System.IO;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Remote;
+using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 {
@@ -87,7 +88,8 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 		{
 			foreach (IIntegrationFilter filter in filters)
 			{
-				bool ShouldRun = filter.ShouldRunBuild(this.Result);
+                Log.Info(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                bool ShouldRun = filter.ShouldRunBuild(this.Result);
 				bool IsRunnable = ShouldRun == positive;
 				if (!IsRunnable)
 					return false;

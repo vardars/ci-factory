@@ -53,7 +53,7 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 		#region ITrigger Members
 
 
-		public void IntegrationNotRun()
+		public virtual void IntegrationNotRun()
 		{
 		}
 

@@ -79,8 +79,9 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 
 		public override Modification[] GetModifications(IIntegrationResult from, IIntegrationResult to)
 		{
-			ProcessResult result = Execute(NewHistoryProcessInfo(from, to), to.ProjectName);
+            ProcessResult result = Execute(NewHistoryProcessInfo(from, to), to.ProjectName);
 			Modification[] modifications = ParseModifications(result, from.StartTime, to.StartTime);
+            Log.Info(string.Format("{0}:modifications={1}", System.Reflection.MethodBase.GetCurrentMethod().Name, modifications.Length));
 			if (UrlBuilder != null)
 			{
 				UrlBuilder.SetupModification(modifications);
@@ -170,10 +171,13 @@ namespace ThoughtWorks.CruiseControl.Core.Sourcecontrol
 //		HISTORY_COMMAND_FORMAT = "log TrunkUrl --revision \"{{{StartDate}}}:{{{EndDate}}}\" --verbose --xml --non-interactive";
 		private ProcessInfo NewHistoryProcessInfo(IIntegrationResult from, IIntegrationResult to)
 		{
-			ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
+            ProcessArgumentBuilder buffer = new ProcessArgumentBuilder();
 			buffer.AddArgument("log");
-			buffer.AddArgument(TrunkUrl);
-			buffer.AppendArgument(string.Format("-r \"{{{0}}}:{{{1}}}\"", FormatCommandDate(from.StartTime), FormatCommandDate(to.StartTime)));
+            Log.Info(string.Format("{0}:TrunkUrl={1}", System.Reflection.MethodBase.GetCurrentMethod().Name, TrunkUrl));
+            buffer.AddArgument(TrunkUrl);
+            Log.Info(string.Format("{0}:-r '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, string.Format("-r \"{{{0}}}:{{{1}}}\"", FormatCommandDate(from.StartTime), FormatCommandDate(to.StartTime))));
+            buffer.AppendArgument(string.Format("-r \"{{{0}}}:{{{1}}}\"", FormatCommandDate(from.StartTime), FormatCommandDate(to.StartTime)));
 			buffer.AppendArgument("--verbose --xml");
 			AppendCommonSwitches(buffer);
 			return NewProcessInfo(buffer.ToString(), to);

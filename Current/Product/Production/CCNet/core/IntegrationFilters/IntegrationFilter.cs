@@ -64,13 +64,17 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 
 		public bool ShouldRunBuild(IIntegrationResult result)
 		{
-			this.Result = result;
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
+            this.Result = result;
 			bool IsRunnable;
 			
 			if (result.BuildCondition != BuildCondition.ForceBuild)
 			{
-				IsRunnable = this.CheckIfRunnable(this.Triggered);
-				if (!IsRunnable)
+                Log.Info(string.Format("{0}:'result.BuildCondition != BuildCondition.ForceBuild'", System.Reflection.MethodBase.GetCurrentMethod().Name));
+
+                IsRunnable = this.CheckIfRunnable(this.Triggered);
+                Log.Info(string.Format("{0}.{1}:IsRunnable={1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, IsRunnable.ToString()));
+                if (!IsRunnable)
 				{
 					Log.Info("Trigger blocked by integration filter.");
 					return false;
@@ -80,7 +84,8 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 			if (result.BuildCondition == BuildCondition.ForceBuild)
 			{
 				IsRunnable = this.CheckIfRunnable(this.Forced);
-				if (!IsRunnable)
+                Log.Info(string.Format("{0}.{1}:IsRunnable={1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, IsRunnable.ToString()));
+                if (!IsRunnable)
 				{
 					Log.Info("Force blocked by integration filter.");
 					return false;
@@ -98,7 +103,8 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 		{
 			if (filter != null)
 			{
-				return filter.ShouldRunBuild(this.Result);
+                Log.Info(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                return filter.ShouldRunBuild(this.Result);
 			}
 			return true;
 		}
@@ -118,6 +124,8 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 			Project Clone = Izer.Deserialize(Serialized);
 
 		}
+
+        
 
 	}
 

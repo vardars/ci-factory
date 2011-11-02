@@ -45,7 +45,9 @@ namespace ThoughtWorks.CruiseControl.Core.Label
         /// <returns>the new label</returns>
         public string Generate(IIntegrationResult currentResult, IIntegrationResult resultLastBuild)
         {
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
             string label = LabelPrefix + "UNKNOWN";
+            Log.Info(string.Format("{0}:label={1}", System.Reflection.MethodBase.GetCurrentMethod().Name,label));
             //if (resultLastBuild.LastIntegrationLabel != "UNKNOWN")
             //{
             //    label = resultLastBuild.LastIntegrationLabel;
@@ -57,37 +59,79 @@ namespace ThoughtWorks.CruiseControl.Core.Label
             }
 
             Configuration config = Configuration.Instance();
-                        
+            
+            Log.Info(string.Format("{0}:Enumerating projects (Begin)", System.Reflection.MethodBase.GetCurrentMethod().Name));
+            Log.Info(string.Format("{0}:Looking for currentResult='{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, currentResult.ToString()));
+            
+
+            
+
             foreach (Project p in config.Projects)
             {
+                Log.Info(string.Format("{0}:Examining project '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.Name));
+
                 if (currentResult.ToString().Contains(p.Name))
                 {
-                    if (p.SourceControl.GetType().Name.ToLower().Equals("svnqueue") ||
-                        (p.SourceControl.GetType().Name.ToLower().Equals("filteredsourcecontrol") &&
-                        ((FilteredSourceControl)(p.SourceControl)).SourceControlProvider.GetType().Name.ToLower().Equals("svnqueue")))
+
+                    if (p.SourceControl != null)
                     {
+                        Log.Info(string.Format("{0}:p.SourceControl.GetType().Name='{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.SourceControl.GetType().Name));
+                        Log.Info(string.Format("{0}:(FilteredSourceControl)(p.SourceControl)).SourceControlProvider.GetType().Name='{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.SourceControl.GetType().Name));
+                    }
+                    else
+                    {
+                        Log.Warning(string.Format("{0}:Project '{1}' SourceControl is null ", System.Reflection.MethodBase.GetCurrentMethod().Name, p.Name));
+                    }
+
+                    if ((p.SourceControl != null
+                            && p.SourceControl.GetType().Name.ToLower().Equals("svnqueue"))
+                            ||
+                            (p.SourceControl != null
+                            && p.SourceControl.GetType().Name.ToLower().Equals("filteredsourcecontrol") &&
+                            ((FilteredSourceControl)(p.SourceControl)).SourceControlProvider.GetType().Name.ToLower().Equals("svnqueue")))
+                    {
+                        Log.Info(string.Format("{0}:p.SourceControl.GetType().Name.ToLower().Equals('svnqueue') for project '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.Name));
+
                         FileSvnQueue fsq = new FileSvnQueue(p);
+
+                        Log.Info(string.Format("{0}:fsq '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, fsq.ToString()));
+                        Log.Info(string.Format("{0}:fsq.ReadLastSvnRevision() = '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, fsq.ReadLastSvnRevision()));
                         label = LabelPrefix + fsq.ReadLastSvnRevision();
+                        Log.Info(string.Format("{0}:label = '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, label));
                     }
                     else
                     {
                         int greatest = 0;
+                        Log.Info(string.Format("{0}:p.SourceControl.GetModifications(resultLastBuild, currentResult) = '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.SourceControl.GetModifications(resultLastBuild, currentResult).Length.ToString()));
+
                         foreach (Modification modification in p.SourceControl.GetModifications(resultLastBuild, currentResult))
                         {
+                            Log.Info(string.Format("{0}:modification-->{1},{2}", System.Reflection.MethodBase.GetCurrentMethod().Name, modification.ChangeNumber, modification.UserName));
                             if (modification.ChangeNumber > greatest)
                                 greatest = modification.ChangeNumber;
                         }
                         if (greatest > 0)
+                        {
                             label = LabelPrefix + greatest.ToString();
+                        }
                     }
                     break;
                 }
+                else
+                {
+                    Log.Info(string.Format("{0}:currentResult.ToString().Contains(p.Name) for project '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, p.Name));
+                }
             }
+
+            Log.Info(string.Format("{0}:Enumerating projects (End)", System.Reflection.MethodBase.GetCurrentMethod().Name));
+            Log.Info(string.Format("{0}:label = '{1}'", System.Reflection.MethodBase.GetCurrentMethod().Name, label));
 
             if (label == resultLastBuild.LastSuccessfulIntegrationLabel)
             {
                 label = this.IncrementLabel(label);
             }
+
+            Log.Info(string.Format("{0}:label = '{1}' (after final if)", System.Reflection.MethodBase.GetCurrentMethod().Name, label));
 
             return label;
         }

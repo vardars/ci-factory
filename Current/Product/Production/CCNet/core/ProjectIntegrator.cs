@@ -261,13 +261,19 @@ namespace ThoughtWorks.CruiseControl.Core
 
 		private void Integrate()
 		{
-			// should we integrate this pass?
+            Log.Info(string.Format("{0}:Begin", System.Reflection.MethodBase.GetCurrentMethod().Name));
+            // should we integrate this pass?
 			bool ShouldIntegration = this.ShouldRunIntegration();
 			if (ShouldIntegration)
 			{
+                IntegrationStatus status = IntegrationStatus.Unknown;
 				try
 				{
-					_integratable.RunIntegration(this.IntegrationResult);
+                    Log.Info(string.Format("{0}.{1}:Before _integratable.RunIntegration", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                    status = _integratable.RunIntegration(this.IntegrationResult).Status;
+                    Log.Info(string.Format("{0}.{1}:results.Status={2}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, status.ToString()));
+                    Log.Info(string.Format("{0}.{1}:After _integratable.RunIntegration", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+
 				}
 				catch (Exception ex)
 				{
@@ -275,13 +281,19 @@ namespace ThoughtWorks.CruiseControl.Core
 				}
 
 				// notify the schedule whether the build was successful or not
-				_trigger.IntegrationCompleted();
-			}
+                Log.Info(string.Format("{0}.{1}:Before _trigger.IntegrationCompleted", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                if (status != IntegrationStatus.Unknown && status != IntegrationStatus.Exception)
+                {
+                    _trigger.IntegrationCompleted();
+                }
+                Log.Info(string.Format("{0}.{1}:After _trigger.IntegrationCompleted", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+            }
 			else
 			{
 				_trigger.IntegrationNotRun();
 			}
-		}
+            Log.Info(string.Format("{0}:End", System.Reflection.MethodBase.GetCurrentMethod().Name));
+        }
 
 		private bool ShouldRunIntegration()
 		{

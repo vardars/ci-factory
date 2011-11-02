@@ -1,5 +1,6 @@
 using System;
 using Exortech.NetReflector;
+using ThoughtWorks.CruiseControl.Core.Util;
 
 namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 {
@@ -62,18 +63,22 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 
 		public bool ShouldRunBuild(IIntegrationResult result)
 		{
-			this.Result = result;
+            Log.Info(string.Format("{0}.{1}:Begin", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+            this.Result = result;
 			bool IsRunnable;
 					
 			IsRunnable = this.CheckIfRunnable(this.Allowed, true);
-			if (!IsRunnable)
+            Log.Info(string.Format("{0}.{1}:IsRunnable={1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, IsRunnable.ToString()));
+            if (!IsRunnable)
 				return false;
 
 			IsRunnable = this.CheckIfRunnable(this.Blocked, false);
-			if (!IsRunnable)
+            Log.Info(string.Format("{0}.{1}:IsRunnable={1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, IsRunnable.ToString()));
+            if (!IsRunnable)
 				return false;
 
-			return true;
+            Log.Info(string.Format("{0}.{1}:IsRunnable={1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name, IsRunnable.ToString()));
+            return true;
 		}
 
 		#endregion
@@ -84,7 +89,8 @@ namespace ThoughtWorks.CruiseControl.Core.IntegrationFilters
 		{
 			foreach (IIntegrationFilter filter in filters)
 			{
-				bool ShouldRun = filter.ShouldRunBuild(this.Result);
+                Log.Info(string.Format("{0}.{1}", System.Reflection.MethodBase.GetCurrentMethod().ReflectedType.Name, System.Reflection.MethodBase.GetCurrentMethod().Name));
+                bool ShouldRun = filter.ShouldRunBuild(this.Result);
 				bool IsRunnable = ShouldRun == positive;
 				if (!IsRunnable)
 					return false;

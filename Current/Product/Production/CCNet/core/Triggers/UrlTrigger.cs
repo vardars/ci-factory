@@ -2,6 +2,7 @@ using System;
 using Exortech.NetReflector;
 using ThoughtWorks.CruiseControl.Core.Util;
 using ThoughtWorks.CruiseControl.Remote;
+using System.Diagnostics;
 
 namespace ThoughtWorks.CruiseControl.Core.Triggers
 {
@@ -10,6 +11,7 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 	{
 		private HttpWrapper httpRequest;
 		private DateTime lastModified;
+        private DateTime oldLastModifiedDate;
 		private Uri uri;
 
 		public UrlTrigger() : this(new DateTimeProvider(), new HttpWrapper())
@@ -45,11 +47,20 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 			try
 			{
 				DateTime newModifiedTime = httpRequest.GetLastModifiedTimeFor(uri, lastModified);
-				if (newModifiedTime > lastModified)
+                Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+                Log.Info(string.Format("newModifiedTime: {0}", newModifiedTime.ToString()));
+                Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+                if (lastModified == new DateTime() || newModifiedTime > lastModified)
 				{
-					lastModified = newModifiedTime;
-					return true;
+                    oldLastModifiedDate = lastModified;
+                    lastModified = newModifiedTime;
+                    Log.Info("Modifying Dates...");
+                    Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+                    Log.Info(string.Format("newModifiedTime: {0}", newModifiedTime.ToString()));
+                    Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+                    return true;
 				}
+
 			}
 			catch (Exception e)
 			{
@@ -58,5 +69,39 @@ namespace ThoughtWorks.CruiseControl.Core.Triggers
 			}
 			return false;
 		}
+
+
+        public override void IntegrationNotRun()
+        {
+            Log.Info("IntegrationNotRun...");
+            Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+            Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+            base.IntegrationNotRun();
+            lastModified = oldLastModifiedDate;
+            Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+            Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+        }
+
+        public override void IntegrationCompleted()
+        {
+            Log.Info("IntegrationCompleted...");
+
+            StackTrace stackTrace = new StackTrace();           // get call stack
+            StackFrame[] stackFrames = stackTrace.GetFrames();  // get method calls (frames)
+
+            // write call stack method names
+            foreach (StackFrame stackFrame in stackFrames)
+            {
+                Log.Info(string.Format("{0}:({1}){2}", stackFrame.GetFileName(), stackFrame.GetFileLineNumber(), stackFrame.GetMethod().Name));   // write method name
+            }
+
+            Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+            Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+            oldLastModifiedDate = lastModified;
+            base.IntegrationCompleted();
+            Log.Info(string.Format("lastModified: {0}", lastModified.ToString()));
+            Log.Info(string.Format("oldLastModifiedDate: {0}", oldLastModifiedDate.ToString()));
+        }
 	}
+   
 }
